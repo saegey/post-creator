@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -6,8 +7,17 @@
     "start": "next start"
   },
   "dependencies": {
+    "@saegey/posts.ui.power-curve-graph": "^0.0.0-fb04e5fcf67013dfde8143f13fed82ab4f2134c4",
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "slate": "^0.94.1",
+    "slate-react": "^0.98.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.9",
+    "@types/react": "^18.2.19",
+    "theme-ui": "^0.16.0",
+    "typescript": "^5.1.6"
   }
 }
