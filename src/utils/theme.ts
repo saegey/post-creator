@@ -1,9 +1,9 @@
-// src/utils/theme.js
+// src/utils/theme.ts
 export default {
   colors: {
     text: '#111',
     background: '#fff',
-    primary: 'tomato',
+    primary: 'black',
     secondary: '#3f3f3f',
     muted: '#e0e0e0',
     highlight: '#9f9f9f',
@@ -34,7 +34,7 @@ export default {
   },
   sizes: {
     container: {
-      maxWidth: '800px',
+      maxWidth: '1100px',
     },
   },
 };

@@ -1,0 +1,33 @@
+{
+  "id": "uw-file3",
+  "batchId": "uw-batch2",
+  "asset_id": "fdc547275302e5c106cb3f65111434c5",
+  "public_id": "user_images/gyqhevvdy52q1xveqcfd",
+  "version": 1691622056,
+  "version_id": "28091307feacff19560312775fd3c201",
+  "signature": "b7c58124c285ce580f5e398245a7acc49f6ce297",
+  "width": 2912,
+  "height": 1984,
+  "format": "jpg",
+  "resource_type": "image",
+  "created_at": "2023-08-09T23:00:56Z",
+  "tags": [],
+  "bytes": 4519112,
+  "type": "upload",
+  "etag": "7d323f83e1461c4254b3673a37583fb3",
+  "placeholder": false,
+  "url": "http://res.cloudinary.com/dprifih4o/image/upload/v1691622056/user_images/gyqhevvdy52q1xveqcfd.jpg",
+  "secure_url": "https://res.cloudinary.com/dprifih4o/image/upload/v1691622056/user_images/gyqhevvdy52q1xveqcfd.jpg",
+  "folder": "user_images",
+  "access_mode": "public",
+  "context": {
+    "custom": {
+      "alt": "user_uploaded"
+    }
+  },
+  "original_filename": "IMG_1134-Original File",
+  "path": "v1691622056/user_images/gyqhevvdy52q1xveqcfd.jpg",
+  "thumbnail_url": "https://res.cloudinary.com/dprifih4o/image/upload/c_limit,h_60,w_90/v1691622056/user_images/gyqhevvdy52q1xveqcfd.jpg"
+}
+
+https://res.cloudinary.com/image/upload/c_fill,w_100,h_100,g_face,dpr_2.0/v1691622056/user_images/gyqhevvdy52q1xveqcfd.jpg

@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { Text } from 'theme-ui';
-import styles from '../styles/Home.module.css';
+import { Flex, Text, Box } from 'theme-ui';
+import CloudinaryUpload from '../src/components/CloudinaryUpload'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Create Next App</title>
         <link rel='icon' href='/favicon.ico' />
@@ -16,13 +16,15 @@ export default function Home() {
           Welcome to Race Journal
         </Text>
 
-        <div className={styles.grid}>
+        <div>
           <Link href='/posts/new'>
             <Text as='p' sx={{ color: 'red', fontFamily: 'body' }}>
               Create a new post.
             </Text>
           </Link>
         </div>
+				<CloudinaryUpload />
+        <img id="uploadedimage" src=""></img>
       </main>
     </div>
   );

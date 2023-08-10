@@ -1,16 +1,17 @@
 // src/pages/_app.js
 import * as React from 'react';
 import NextApp from 'next/app';
-import { ThemeProvider } from 'theme-ui';
+import { ThemeUIProvider } from 'theme-ui';
 import theme from '../src/utils/theme'; // theme object from step 2
+import '../styles/globals.css';
 
 export default class App extends NextApp {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeUIProvider theme={theme}>
         <Component {...pageProps} />
-      </ThemeProvider>
+      </ThemeUIProvider>
     );
   }
 }
