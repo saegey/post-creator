@@ -1,15 +1,17 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import { Flex, Text, Box } from 'theme-ui';
-import CloudinaryUpload from '../src/components/CloudinaryUpload';
+// import Head from 'next/head';
+// import Link from 'next/link';
+// import { Flex, Text, Box } from 'theme-ui';
+// import CloudinaryUpload from '../src/components/CloudinaryUpload';
 
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Authenticator } from '@aws-amplify/ui-react';
-import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
+import { API, withSSRContext } from 'aws-amplify';
+import { GraphQLResult } from "@aws-amplify/api";
 
-import awsExports from '../src/aws-exports';
+// import awsExports from '../src/aws-exports';
 import { createPost } from '../src/graphql/mutations';
 import { listPosts } from '../src/graphql/queries';
+import { CreatePostMutation } from '../src/API';
 
 export async function getServerSideProps({ req }) {
   const SSR = withSSRContext({ req });
@@ -38,7 +40,7 @@ async function handleCreatePost(event) {
   const form = new FormData(event.target);
 
   try {
-    const { data } = await API.graphql({
+    const response = await API.graphql({
       authMode: 'AMAZON_COGNITO_USER_POOLS',
       query: createPost,
       variables: {
@@ -47,10 +49,9 @@ async function handleCreatePost(event) {
           content: form.get('content'),
         },
       },
-    });
+    }) as GraphQLResult<CreatePostMutation>;
 
-    window.location.href = `/posts/${data.createPost.id}`;
-    // window.location.href = `/`;
+    window.location.href = `/posts/${response.data.createPost.id}`;
   } catch ({ errors }) {
     console.error(...errors);
     throw new Error(errors[0].message);

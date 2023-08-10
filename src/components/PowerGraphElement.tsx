@@ -1,23 +1,19 @@
 import {
-  Slate,
-  Editable,
-  withReact,
   useSlateStatic,
   ReactEditor,
 } from 'slate-react';
 import { Transforms } from 'slate';
-import { Box, Text, Button, Flex } from 'theme-ui';
+import { Box, Button, Flex } from 'theme-ui';
 
 import { PowerCurveGraph } from '@saegey/posts.ui.power-curve-graph';
 
 const PowerGraph = ({ attributes, children, element }) => {
-  const editor = useSlateStatic();
+  const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
 
   return (
     <Box
       sx={{
-        // border: '1px solid gray',
         backgroundColor: 'lightgray',
         borderRadius: '5px',
         padding: '20px',

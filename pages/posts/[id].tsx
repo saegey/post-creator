@@ -70,7 +70,7 @@ function Post({ signOut, user, renderedAt, post }) {
         <p className={styles.description}>{post.content}</p>
       </main>
       <footer className={styles.footer}>
-        <button onClick={handleDelete}>💥 Delete post</button>
+        <button onClick={handleDelete}>Delete post</button>
       </footer>
     </div>
   );
