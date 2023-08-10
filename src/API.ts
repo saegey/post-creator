@@ -74,6 +74,7 @@ export type Post = {
   __typename: "Post",
   id: string,
   title: string,
+  components?: string | null,
   blog?: Blog | null,
   createdAt: string,
   updatedAt: string,
@@ -93,11 +94,13 @@ export type DeleteBlogInput = {
 export type CreatePostInput = {
   id?: string | null,
   title: string,
+  components?: string | null,
   blogPostsId?: string | null,
 };
 
 export type ModelPostConditionInput = {
   title?: ModelStringInput | null,
+  components?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
@@ -123,6 +126,7 @@ export type ModelIDInput = {
 export type UpdatePostInput = {
   id: string,
   title?: string | null,
+  components?: string | null,
   blogPostsId?: string | null,
 };
 
@@ -147,6 +151,7 @@ export type ModelBlogConnection = {
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  components?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
@@ -193,6 +198,7 @@ export type ModelSubscriptionStringInput = {
 export type ModelSubscriptionPostFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
+  components?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
 };
@@ -213,6 +219,7 @@ export type CreateBlogMutation = {
         __typename: "Post",
         id: string,
         title: string,
+        components?: string | null,
         createdAt: string,
         updatedAt: string,
         blogPostsId?: string | null,
@@ -242,6 +249,7 @@ export type UpdateBlogMutation = {
         __typename: "Post",
         id: string,
         title: string,
+        components?: string | null,
         createdAt: string,
         updatedAt: string,
         blogPostsId?: string | null,
@@ -271,6 +279,7 @@ export type DeleteBlogMutation = {
         __typename: "Post",
         id: string,
         title: string,
+        components?: string | null,
         createdAt: string,
         updatedAt: string,
         blogPostsId?: string | null,
@@ -294,6 +303,7 @@ export type CreatePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    components?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
@@ -323,6 +333,7 @@ export type UpdatePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    components?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
@@ -352,6 +363,7 @@ export type DeletePostMutation = {
     __typename: "Post",
     id: string,
     title: string,
+    components?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
@@ -386,6 +398,7 @@ export type GetBlogQuery = {
         __typename: "Post",
         id: string,
         title: string,
+        components?: string | null,
         createdAt: string,
         updatedAt: string,
         blogPostsId?: string | null,
@@ -433,6 +446,7 @@ export type GetPostQuery = {
     __typename: "Post",
     id: string,
     title: string,
+    components?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
@@ -465,6 +479,7 @@ export type ListPostsQuery = {
       __typename: "Post",
       id: string,
       title: string,
+      components?: string | null,
       blog?:  {
         __typename: "Blog",
         id: string,
@@ -498,6 +513,7 @@ export type OnCreateBlogSubscription = {
         __typename: "Post",
         id: string,
         title: string,
+        components?: string | null,
         createdAt: string,
         updatedAt: string,
         blogPostsId?: string | null,
@@ -527,6 +543,7 @@ export type OnUpdateBlogSubscription = {
         __typename: "Post",
         id: string,
         title: string,
+        components?: string | null,
         createdAt: string,
         updatedAt: string,
         blogPostsId?: string | null,
@@ -556,6 +573,7 @@ export type OnDeleteBlogSubscription = {
         __typename: "Post",
         id: string,
         title: string,
+        components?: string | null,
         createdAt: string,
         updatedAt: string,
         blogPostsId?: string | null,
@@ -579,6 +597,7 @@ export type OnCreatePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    components?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
@@ -608,6 +627,7 @@ export type OnUpdatePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    components?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
@@ -637,6 +657,7 @@ export type OnDeletePostSubscription = {
     __typename: "Post",
     id: string,
     title: string,
+    components?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
