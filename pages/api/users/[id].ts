@@ -19,11 +19,7 @@ export default function userHandler(
 
   switch (method) {
     case 'GET':
-      // Get data from your database
-      const results = Storage.list('public/'); // for listing
-      // .then(({ results }) => console.log(results))
-      // .catch((err) => console.log(err));
-      res.status(200).json({ id, name: `User ${id}`, results });
+      res.status(200).json({ id, name: `User ${id}`});
       break;
     case 'POST':
       res.json({ id, name: `User ${id}`, body: body });
