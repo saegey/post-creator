@@ -22,7 +22,7 @@ function FirstPost({ signOut, user, renderedAt }) {
   const [fileData, setFileData] = useState<File>();
   const [fileStatus, setFileStatus] = useState(false);
 
-  const save = async (editor) => {
+  const save = async (editor: any) => {
     const res = await fetch('/api/users/420', {
       headers: {
         Accept: 'application/json',

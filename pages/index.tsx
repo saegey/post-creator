@@ -1,14 +1,14 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import { Flex, Text, Box } from 'theme-ui';
-import CloudinaryUpload from '../src/components/CloudinaryUpload';
+// import Head from 'next/head';
+// import Link from 'next/link';
+// import { Flex, Text, Box } from 'theme-ui';
+// import CloudinaryUpload from '../src/components/CloudinaryUpload';
 
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Authenticator } from '@aws-amplify/ui-react';
-import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
+import { API, withSSRContext } from 'aws-amplify';
 import { GraphQLResult } from "@aws-amplify/api";
 
-import awsExports from '../src/aws-exports';
+// import awsExports from '../src/aws-exports';
 import { createPost } from '../src/graphql/mutations';
 import { listPosts } from '../src/graphql/queries';
 import { CreatePostMutation } from '../src/API';
