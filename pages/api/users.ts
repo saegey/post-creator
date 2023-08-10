@@ -12,7 +12,7 @@ export default function handler(
   _req: NextApiRequest,
   res: NextApiResponse<User[]>
 ) {
-	console.log(_req)
+	// console.log(_req)
   // Get data from your database
   res.status(200).json(users)
 }

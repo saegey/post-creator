@@ -7,7 +7,7 @@ import {
   ReactEditor,
 } from 'slate-react';
 import { createEditor, Transforms, Editor } from 'slate';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Button, Box, Text, Container, Flex } from 'theme-ui';
 import PowerGraphElement from '../../src/components/PowerGraphElement';
 import ImageElement from '../../src/components/ImageElement';
@@ -15,6 +15,9 @@ import ImageElement from '../../src/components/ImageElement';
 export default function FirstPost() {
   const [editor] = useState(() => withReact(createEditor()));
   const [uploadModal, setUploadModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const inputFileRef = useRef<HTMLInputElement | null>(null);
+  const [file, setFile] = useState<File>();
 
   const save = async (editor) => {
     const res = await fetch('/api/users/420', {
@@ -33,6 +36,26 @@ export default function FirstPost() {
   const upload = (editor) => {
     setUploadModal(true);
     console.log('yupload');
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!file) return;
+
+    try {
+      const data = new FormData();
+      data.set('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+      });
+      // handle the error
+      if (!res.ok) throw new Error(await res.text());
+    } catch (e: any) {
+      // Handle errors here
+      console.error(e);
+    }
   };
 
   useEffect(() => {
@@ -111,6 +134,8 @@ export default function FirstPost() {
               marginLeft: 'auto',
               marginRight: 'auto',
               maxWidth: '690px',
+              fontSize: '20px',
+              fontWeight: 400,
             }}
             {...attributes}
           >
@@ -121,40 +146,95 @@ export default function FirstPost() {
   };
 
   return (
-    <Container p={4} bg='muted' sx={{ maxWidth: '1100px' }}>
-      <h1>First Post</h1>
-      <Flex sx={{ marginBottom: '20px', gap: '10px' }}>
-        <Button onClick={() => addGraph(editor)}>+ Power Graph</Button>
-        <Button onClick={() => addImage(editor)}>+ Image </Button>
-        <Button onClick={() => save(editor)}>Save</Button>
-        <Button onClick={() => upload(editor)}>Upload GPX</Button>
-      </Flex>
-      <Box bg='background' sx={{ padding: '20px' }}>
-        <Slate
-          editor={editor}
-          initialValue={[{ id: 5, type: 'text', children: [{ text: '' }] }]}
-          onChange={(value) => {
-            const isAstChange = editor.operations.some(
-              (op) => 'set_selection' !== op.type
-            );
-            if (isAstChange) {
-              const content = JSON.stringify(value);
-              localStorage.setItem('content', content);
-            }
+    <>
+      {uploadModal && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: '0',
+            height: '100%',
+            width: '100%',
+            left: '0',
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            zIndex: 10000,
+            display: 'flex',
           }}
         >
-          <Editable
-            spellCheck
-            autoFocus
-            renderElement={renderElement}
-            style={{ padding: '2px' }}
-          />
-        </Slate>
-      </Box>
+          <Box
+            sx={{
+              width: '80%',
+              height: '70%',
+              margin: 'auto',
+              background: 'white',
+              borderRadius: '5px',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  marginLeft: 'auto',
+                  paddingRight: '10px',
+                  paddingTop: '10px',
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setUploadModal(false);
+                  }}
+                >
+                  X
+                </Button>
+              </Box>
+            </Flex>
 
-      <Link href='/'>
-        <p>Back to home</p>
-      </Link>
-    </Container>
+            <Box>
+              <form onSubmit={onSubmit}>
+                <input
+                  type='file'
+                  name='file'
+                  onChange={(e) => setFile(e.target.files?.[0])}
+                />
+                <input type='submit' value='Upload' />
+              </form>
+            </Box>
+          </Box>
+        </Box>
+      )}
+      <Container p={4} bg='muted' sx={{ maxWidth: '1100px' }}>
+        <h1>Post Name</h1>
+        <Flex sx={{ marginBottom: '20px', gap: '10px' }}>
+          <Button onClick={() => addGraph(editor)}>+ Power Graph</Button>
+          <Button onClick={() => addImage(editor)}>+ Image </Button>
+          <Button onClick={() => save(editor)}>Save</Button>
+          <Button onClick={() => upload(editor)}>Upload GPX</Button>
+        </Flex>
+        <Box bg='background' sx={{ padding: '20px' }}>
+          <Slate
+            editor={editor}
+            initialValue={[{ id: 5, type: 'text', children: [{ text: '' }] }]}
+            onChange={(value) => {
+              const isAstChange = editor.operations.some(
+                (op) => 'set_selection' !== op.type
+              );
+              if (isAstChange) {
+                const content = JSON.stringify(value);
+                localStorage.setItem('content', content);
+              }
+            }}
+          >
+            <Editable
+              spellCheck
+              autoFocus
+              renderElement={renderElement}
+              style={{ padding: '2px' }}
+            />
+          </Slate>
+        </Box>
+
+        <Link href='/'>
+          <p>Back to home</p>
+        </Link>
+      </Container>
+    </>
   );
 }
