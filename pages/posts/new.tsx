@@ -50,6 +50,9 @@ function FirstPost({ signOut, user, renderedAt }) {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('content'));
+    if (!data) {
+      return;
+    }
 
     // Delete all entries leaving 1 empty node
     Transforms.delete(editor, {
@@ -85,8 +88,8 @@ function FirstPost({ signOut, user, renderedAt }) {
         type: 'image',
         children: [{ text: '' }],
         void: true,
-      }  as Descendant,
-      { type: 'text', children: [{ text: '' }] }  as Descendant,
+      } as Descendant,
+      { type: 'text', children: [{ text: '' }] } as Descendant,
     ]);
   };
 
