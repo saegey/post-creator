@@ -1,17 +1,13 @@
 import {
-  Slate,
-  Editable,
-  withReact,
   useSlateStatic,
   ReactEditor,
 } from 'slate-react';
 import { Transforms } from 'slate';
-import { Box, Text, Button, Flex } from 'theme-ui';
+import { Box, Button } from 'theme-ui';
 
 const ImageElement = ({ attributes, children, element }) => {
-  const editor = useSlateStatic();
+  const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
-  console.log(path);
 
   return (
     <Box
