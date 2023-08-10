@@ -9,15 +9,18 @@ import {
 import { createEditor, Transforms, Editor } from 'slate';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { Button, Box, Text, Container, Flex } from 'theme-ui';
+import { Storage } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+
 import PowerGraphElement from '../../src/components/PowerGraphElement';
 import ImageElement from '../../src/components/ImageElement';
 
-export default function FirstPost() {
+function FirstPost({ signOut, user, renderedAt }) {
   const [editor] = useState(() => withReact(createEditor()));
   const [uploadModal, setUploadModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const inputFileRef = useRef<HTMLInputElement | null>(null);
-  const [file, setFile] = useState<File>();
+  const [fileData, setFileData] = useState();
+  const [fileStatus, setFileStatus] = useState(false);
 
   const save = async (editor) => {
     const res = await fetch('/api/users/420', {
@@ -29,8 +32,6 @@ export default function FirstPost() {
       body: JSON.stringify(editor.children),
     });
     const payload = await res.json();
-    console.log(payload);
-    // console.log(editor.children);
   };
 
   const upload = (editor) => {
@@ -38,24 +39,12 @@ export default function FirstPost() {
     console.log('yupload');
   };
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!file) return;
-
-    try {
-      const data = new FormData();
-      data.set('file', file);
-
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: data,
-      });
-      // handle the error
-      if (!res.ok) throw new Error(await res.text());
-    } catch (e: any) {
-      // Handle errors here
-      console.error(e);
-    }
+  const uploadFile = async () => {
+    const result = await Storage.put(fileData.name, fileData, {
+      contentType: fileData.type,
+    });
+    setFileStatus(true);
+    console.log(21, result);
   };
 
   useEffect(() => {
@@ -188,19 +177,23 @@ export default function FirstPost() {
             </Flex>
 
             <Box>
-              <form onSubmit={onSubmit}>
+              <div>
                 <input
                   type='file'
-                  name='file'
-                  onChange={(e) => setFile(e.target.files?.[0])}
+                  onChange={(e) => setFileData(e.target.files[0])}
                 />
-                <input type='submit' value='Upload' />
-              </form>
+              </div>
+              <div>
+                <button onClick={uploadFile}>Upload file</button>
+              </div>
+              {fileStatus ? 'File uploaded successfully' : ''}
             </Box>
           </Box>
         </Box>
       )}
       <Container p={4} bg='muted' sx={{ maxWidth: '1100px' }}>
+        <p>Logged in as {user.username}.</p>
+        <button onClick={signOut}>Sign out</button>
         <h1>Post Name</h1>
         <Flex sx={{ marginBottom: '20px', gap: '10px' }}>
           <Button onClick={() => addGraph(editor)}>+ Power Graph</Button>
@@ -238,3 +231,5 @@ export default function FirstPost() {
     </>
   );
 }
+
+export default withAuthenticator(FirstPost);

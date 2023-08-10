@@ -1,31 +1,100 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { Flex, Text, Box } from 'theme-ui';
-import CloudinaryUpload from '../src/components/CloudinaryUpload'
+import CloudinaryUpload from '../src/components/CloudinaryUpload';
 
-export default function Home() {
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import { Authenticator } from '@aws-amplify/ui-react';
+import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
+
+import awsExports from '../src/aws-exports';
+import { createPost } from '../src/graphql/mutations';
+import { listPosts } from '../src/graphql/queries';
+
+export async function getServerSideProps({ req }) {
+  const SSR = withSSRContext({ req });
+
+  try {
+    const response = await SSR.API.graphql({
+      query: listPosts,
+      authMode: 'API_KEY',
+    });
+    return {
+      props: {
+        posts: response.data.listPosts.items,
+      },
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {},
+    };
+  }
+}
+
+async function handleCreatePost(event) {
+  event.preventDefault();
+
+  const form = new FormData(event.target);
+
+  try {
+    const { data } = await API.graphql({
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      query: createPost,
+      variables: {
+        input: {
+          title: form.get('title'),
+          content: form.get('content'),
+        },
+      },
+    });
+
+    window.location.href = `/posts/${data.createPost.id}`;
+    // window.location.href = `/`;
+  } catch ({ errors }) {
+    console.error(...errors);
+    throw new Error(errors[0].message);
+  }
+}
+
+function Home({ signOut, user, renderedAt, posts = [] }) {
   return (
-    <div>
-      <Head>
-        <title>Create Next App</title>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
+    <div style={{ padding: 50 }}>
+      <h1>Logged in as {user.username}.</h1>
+      <div>
+        <button onClick={signOut}>Sign out</button>
+      </div>
+      {posts.map((post) => (
+        <a href={`/posts/${post.id}`} key={post.id}>
+          <h3>{post.title}</h3>
+          <p>{post.content}</p>
+        </a>
+      ))}
 
-      <main>
-        <Text as='h1' sx={{ fontFamily: 'body' }}>
-          Welcome to Race Journal
-        </Text>
+      <Authenticator>
+        <form onSubmit={handleCreatePost}>
+          <fieldset>
+            <legend>Title</legend>
+            <input
+              defaultValue={`Today, ${new Date().toLocaleTimeString()}`}
+              name='title'
+            />
+          </fieldset>
 
-        <div>
-          <Link href='/posts/new'>
-            <Text as='p' sx={{ color: 'red', fontFamily: 'body' }}>
-              Create a new post.
-            </Text>
-          </Link>
-        </div>
-				<CloudinaryUpload />
-        <img id="uploadedimage" src=""></img>
-      </main>
+          <fieldset>
+            <legend>Content</legend>
+            <textarea
+              defaultValue='I built an Amplify project with Next.js!'
+              name='content'
+            />
+          </fieldset>
+
+          <button>Create Post</button>
+        </form>
+      </Authenticator>
+      <p>This page was server-side rendered on {renderedAt}.</p>
     </div>
   );
 }
+
+export default withAuthenticator(Home);

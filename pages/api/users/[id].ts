@@ -1,5 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { User } from '../../../interfaces';
+// import type { User } from '../../../interfaces';
+import { Amplify, Storage } from 'aws-amplify';
+import awsconfig from '../../../src/aws-exports';
+Amplify.configure(awsconfig);
+
+export type User = {
+  id: number
+  name?: string
+}
 
 export default function userHandler(
   req: NextApiRequest,
@@ -12,7 +20,10 @@ export default function userHandler(
   switch (method) {
     case 'GET':
       // Get data from your database
-      res.status(200).json({ id, name: `User ${id}` });
+      const results = Storage.list('public/'); // for listing
+      // .then(({ results }) => console.log(results))
+      // .catch((err) => console.log(err));
+      res.status(200).json({ id, name: `User ${id}`, results });
       break;
     case 'POST':
       res.json({ id, name: `User ${id}`, body: body });

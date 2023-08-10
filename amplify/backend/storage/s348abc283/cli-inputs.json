@@ -1,0 +1,13 @@
+{
+  "resourceName": "s348abc283",
+  "policyUUID": "48abc283",
+  "bucketName": "nextjsblogd9331478333f42feb032b0ed76319c7c",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "S3Trigger71ba5706",
+  "groupAccess": {}
+}

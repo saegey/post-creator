@@ -6,9 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^5.1.0",
     "@cloudinary/react": "^1.11.2",
     "@cloudinary/url-gen": "^1.11.1",
     "@saegey/posts.ui.power-curve-graph": "^0.0.0-71d949b3d68692bf48390a2950ce23b2e1076ae5",
+    "aws-amplify": "^5.3.6",
     "cloudinary-react": "^1.8.1",
     "formidable": "^3.5.0",
     "next": "latest",

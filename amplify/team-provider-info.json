@@ -10,6 +10,23 @@
       "StackName": "amplify-nextjsblog-dev-233823",
       "StackId": "arn:aws:cloudformation:us-east-1:373376418880:stack/amplify-nextjsblog-dev-233823/8208c590-3748-11ee-b919-12c387ec1a7d",
       "AmplifyAppId": "d15noiwtuwwref"
+    },
+    "categories": {
+      "auth": {
+        "nextjsbloga585e058": {}
+      },
+      "function": {
+        "S3Trigger71ba5706": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/S3Trigger71ba5706-762b395753776a654c4e-build.zip"
+        }
+      },
+      "storage": {
+        "s348abc283": {}
+      },
+      "api": {
+        "nextjsblog": {}
+      }
     }
   }
 }
