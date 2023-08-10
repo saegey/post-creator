@@ -6,7 +6,7 @@ import {
   useSlateStatic,
   ReactEditor,
 } from 'slate-react';
-import { createEditor, Transforms, Editor } from 'slate';
+import { createEditor, Transforms, Editor, Descendant } from 'slate';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { Button, Box, Text, Container, Flex } from 'theme-ui';
 import { Storage } from 'aws-amplify';
@@ -19,7 +19,7 @@ import ImageElement from '../../src/components/ImageElement';
 function FirstPost({ signOut, user, renderedAt }) {
   const [editor] = useState(() => withReact(createEditor()));
   const [uploadModal, setUploadModal] = useState(false);
-  const [fileData, setFileData] = useState();
+  const [fileData, setFileData] = useState<File>();
   const [fileStatus, setFileStatus] = useState(false);
 
   const save = async (editor) => {
@@ -40,6 +40,7 @@ function FirstPost({ signOut, user, renderedAt }) {
   };
 
   const uploadFile = async () => {
+    if (!fileData || !fileData.name) return;
     const result = await Storage.put(fileData.name, fileData, {
       contentType: fileData.type,
     });
@@ -70,24 +71,22 @@ function FirstPost({ signOut, user, renderedAt }) {
   const addGraph = (editor) => {
     Transforms.insertNodes(editor, [
       {
-        id: 3,
         type: 'powergraph',
         children: [{ text: '' }],
         void: true,
-      },
-      { id: 5, type: 'text', children: [{ text: '' }] },
+      } as Descendant,
+      { type: 'text', children: [{ text: '' }] } as Descendant,
     ]);
   };
 
   const addImage = (editor) => {
     Transforms.insertNodes(editor, [
       {
-        id: 4,
         type: 'image',
         children: [{ text: '' }],
         void: true,
-      },
-      { id: 5, type: 'text', children: [{ text: '' }] },
+      }  as Descendant,
+      { type: 'text', children: [{ text: '' }] }  as Descendant,
     ]);
   };
 
@@ -204,7 +203,9 @@ function FirstPost({ signOut, user, renderedAt }) {
         <Box bg='background' sx={{ padding: '20px' }}>
           <Slate
             editor={editor}
-            initialValue={[{ id: 5, type: 'text', children: [{ text: '' }] }]}
+            initialValue={[
+              { type: 'text', children: [{ text: '' }] } as Descendant,
+            ]}
             onChange={(value) => {
               const isAstChange = editor.operations.some(
                 (op) => 'set_selection' !== op.type
