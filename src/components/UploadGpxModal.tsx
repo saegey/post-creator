@@ -1,8 +1,12 @@
 import { Box, Flex, Button } from 'theme-ui';
 import { useState } from 'react';
-import { Storage } from 'aws-amplify';
+import { Storage, API } from 'aws-amplify';
+import { GraphQLResult } from '@aws-amplify/api';
 
-const UploadGpxModal = ({openModal}) => {
+import { UpdatePostMutation } from '../../src/API';
+import { updatePost } from '../../src/graphql/mutations';
+
+const UploadGpxModal = ({ openModal, post }) => {
   const [fileData, setFileData] = useState<File>();
   const [fileStatus, setFileStatus] = useState(false);
 
@@ -10,9 +14,27 @@ const UploadGpxModal = ({openModal}) => {
     if (!fileData || !fileData.name) return;
     const result = await Storage.put(fileData.name, fileData, {
       contentType: fileData.type,
+      level: 'public',
     });
-    setFileStatus(true);
-    console.log(21, result);
+
+    try {
+      const response = (await API.graphql({
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        query: updatePost,
+        variables: {
+          input: {
+            id: post.id,
+            gpxFile: result.key,
+          },
+        },
+      })) as GraphQLResult<UpdatePostMutation>;
+      console.log(response);
+      console.log(21, result);
+      setFileStatus(true);
+    } catch (error) {
+      console.error(error);
+      // throw new Error(errors[0].message);
+    }
   };
 
   return (
@@ -55,7 +77,7 @@ const UploadGpxModal = ({openModal}) => {
           </Box>
         </Flex>
 
-        <Box>
+        <Box sx={{ padding: '20px' }}>
           <div>
             <input
               type='file'
@@ -63,7 +85,7 @@ const UploadGpxModal = ({openModal}) => {
             />
           </div>
           <div>
-            <button onClick={uploadFile}>Upload file</button>
+            <Button onClick={uploadFile}>Upload file</Button>
           </div>
           {fileStatus ? 'File uploaded successfully' : ''}
         </Box>
@@ -72,4 +94,4 @@ const UploadGpxModal = ({openModal}) => {
   );
 };
 
-export default UploadGpxModal
+export default UploadGpxModal;

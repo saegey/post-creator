@@ -44,4 +44,4 @@ const renderElement = ({ attributes, children, element }) => {
   }
 };
 
-export default renderElement
+export default renderElement;

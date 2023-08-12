@@ -16,6 +16,8 @@ type Post
   @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
   id: ID!
   title: String!
+  gpxFile: String
+  images: AWSJSON
   components: AWSJSON
   blog: Blog @belongsTo
   # comments: [Comment] @hasMany

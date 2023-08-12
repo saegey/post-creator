@@ -14,6 +14,8 @@ export const onCreateBlog = /* GraphQL */ `
         items {
           id
           title
+          gpxFile
+          images
           components
           createdAt
           updatedAt
@@ -43,6 +45,8 @@ export const onUpdateBlog = /* GraphQL */ `
         items {
           id
           title
+          gpxFile
+          images
           components
           createdAt
           updatedAt
@@ -72,6 +76,8 @@ export const onDeleteBlog = /* GraphQL */ `
         items {
           id
           title
+          gpxFile
+          images
           components
           createdAt
           updatedAt
@@ -97,6 +103,8 @@ export const onCreatePost = /* GraphQL */ `
     onCreatePost(filter: $filter, owner: $owner) {
       id
       title
+      gpxFile
+      images
       components
       blog {
         id
@@ -126,6 +134,8 @@ export const onUpdatePost = /* GraphQL */ `
     onUpdatePost(filter: $filter, owner: $owner) {
       id
       title
+      gpxFile
+      images
       components
       blog {
         id
@@ -155,6 +165,8 @@ export const onDeletePost = /* GraphQL */ `
     onDeletePost(filter: $filter, owner: $owner) {
       id
       title
+      gpxFile
+      images
       components
       blog {
         id

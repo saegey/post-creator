@@ -1,21 +1,17 @@
-import {
-  useSlateStatic,
-  ReactEditor,
-} from 'slate-react';
+import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
 import { Box, Button } from 'theme-ui';
 
 const ImageElement = ({ attributes, children, element }) => {
+  console.log(element.src);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
 
   return (
-    <Box
-      contentEditable={false}
-    >
+    <Box contentEditable={false}>
       <Box sx={{ position: 'relative' }}>
         <img
-          src='https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/v1/user_images/gyqhevvdy52q1xveqcfd'
+          src={element.src}
           style={{ width: '100%', height: 'auto', borderRadius: '5px' }}
         />
         <Box sx={{ position: 'absolute', right: '10px', top: '10px' }}>

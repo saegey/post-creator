@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700&family=Public+Sans:ital,wght@0,200;0,400;0,600;0,700;1,400;1,500&display=swap');
 
+* {
+margin: 0;
+padding: 0;
+}
 
 /* This allow me to have the full width of the page without the initial padding/margin*/
 body,
@@ -143,4 +147,11 @@ input:focus {
 
 .form-control {
   margin-left: 15px;
+}
+
+button:disabled,
+button[disabled]{
+  /* border: 1px solid #999999; */
+  background-color: #cccccc;
+  color: #666666;
 }

@@ -11,6 +11,8 @@ export const getBlog = /* GraphQL */ `
         items {
           id
           title
+          gpxFile
+          images
           components
           createdAt
           updatedAt
@@ -57,6 +59,8 @@ export const getPost = /* GraphQL */ `
     getPost(id: $id) {
       id
       title
+      gpxFile
+      images
       components
       blog {
         id
@@ -88,6 +92,8 @@ export const listPosts = /* GraphQL */ `
       items {
         id
         title
+        gpxFile
+        images
         components
         blog {
           id

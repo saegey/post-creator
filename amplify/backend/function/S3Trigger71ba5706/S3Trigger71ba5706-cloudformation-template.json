@@ -131,6 +131,17 @@
             {
               "Effect": "Allow",
               "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem"
+              ],
+              "Resource": "arn:aws:dynamodb:*:*:table/*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
