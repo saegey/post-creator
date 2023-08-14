@@ -3,6 +3,7 @@ import { withSSRContext, Amplify } from 'aws-amplify';
 import Head from 'next/head';
 import { Button } from 'theme-ui';
 import { useState } from 'react';
+import { useViewport } from '@saegey/posts.viewport';
 
 import { listPosts } from '../src/graphql/queries';
 import Header from '../src/components/Header';
@@ -31,6 +32,7 @@ export async function getServerSideProps({ req }) {
 
 function Home({ signOut, user, posts = [] }) {
   const [newPost, setNewPost] = useState(false);
+  const { width } = useViewport();
 
   return (
     <>
@@ -50,6 +52,7 @@ function Home({ signOut, user, posts = [] }) {
               marginRight: 'auto',
             }}
           >
+						<p>Width: {width}</p>
             <div>
               <Button onClick={() => setNewPost(true)}>New Post</Button>
             </div>

@@ -18,8 +18,17 @@ type Post
   title: String!
   gpxFile: String
   images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  stravaUrl: String
+  type: String
+  subType: String
+  teaser: String
   components: AWSJSON
   blog: Blog @belongsTo
+  related: [Post] @hasMany
   # comments: [Comment] @hasMany
 }
 

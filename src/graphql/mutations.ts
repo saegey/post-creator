@@ -16,10 +16,19 @@ export const createBlog = /* GraphQL */ `
           title
           gpxFile
           images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
           components
           createdAt
           updatedAt
           blogPostsId
+          postRelatedId
           owner
           __typename
         }
@@ -47,10 +56,19 @@ export const updateBlog = /* GraphQL */ `
           title
           gpxFile
           images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
           components
           createdAt
           updatedAt
           blogPostsId
+          postRelatedId
           owner
           __typename
         }
@@ -78,10 +96,19 @@ export const deleteBlog = /* GraphQL */ `
           title
           gpxFile
           images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
           components
           createdAt
           updatedAt
           blogPostsId
+          postRelatedId
           owner
           __typename
         }
@@ -105,6 +132,14 @@ export const createPost = /* GraphQL */ `
       title
       gpxFile
       images
+      headerImage
+      date
+      publishedDate
+      location
+      stravaUrl
+      type
+      subType
+      teaser
       components
       blog {
         id
@@ -118,9 +153,35 @@ export const createPost = /* GraphQL */ `
         owner
         __typename
       }
+      related {
+        items {
+          id
+          title
+          gpxFile
+          images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
+          components
+          createdAt
+          updatedAt
+          blogPostsId
+          postRelatedId
+          owner
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
+      postRelatedId
       owner
       __typename
     }
@@ -136,6 +197,14 @@ export const updatePost = /* GraphQL */ `
       title
       gpxFile
       images
+      headerImage
+      date
+      publishedDate
+      location
+      stravaUrl
+      type
+      subType
+      teaser
       components
       blog {
         id
@@ -149,9 +218,35 @@ export const updatePost = /* GraphQL */ `
         owner
         __typename
       }
+      related {
+        items {
+          id
+          title
+          gpxFile
+          images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
+          components
+          createdAt
+          updatedAt
+          blogPostsId
+          postRelatedId
+          owner
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
+      postRelatedId
       owner
       __typename
     }
@@ -167,6 +262,14 @@ export const deletePost = /* GraphQL */ `
       title
       gpxFile
       images
+      headerImage
+      date
+      publishedDate
+      location
+      stravaUrl
+      type
+      subType
+      teaser
       components
       blog {
         id
@@ -180,9 +283,35 @@ export const deletePost = /* GraphQL */ `
         owner
         __typename
       }
+      related {
+        items {
+          id
+          title
+          gpxFile
+          images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
+          components
+          createdAt
+          updatedAt
+          blogPostsId
+          postRelatedId
+          owner
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
+      postRelatedId
       owner
       __typename
     }

@@ -19,7 +19,7 @@ import { UpdatePostMutation } from '../../src/API';
 import Header from '../../src/components/Header';
 import UploadGpxModal from '../../src/components/UploadGpxModal';
 import { MyContext } from '../../src/MyContext';
-import { calcBestPowers } from '../../src/utils/gpxHelper';
+import { calcBestPowers, downsampleElevation } from '../../src/utils/gpxHelper';
 import AddImage from '../../src/components/AddImage';
 
 const timeIntervals = (end: number) => [
@@ -43,7 +43,7 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
-  let powers, powerAnalysis, result;
+  let powers, powerAnalysis: Record<number | string, number>, result, elevation, coordinates;
 
   try {
     result = await Storage.get(`${post.gpxFile}`, {
@@ -69,27 +69,39 @@ export async function getServerSideProps({ req, params }) {
   gpxData.features.forEach((feature) => {
     // const { powers, heart, times, atemps, cads } =
     //   feature.properties.coordinateProperties;
-    // const { coordinates } = feature.geometry;
+    coordinates = feature.geometry.coordinates
     powers = feature.properties.coordinateProperties.powers;
     powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
+    elevation = downsampleElevation(coordinates);
   });
 
   return {
     props: {
       post,
-      // powers: powers ? powers : [],
       powerAnalysis: powerAnalysis ? powerAnalysis : {},
+      elevation: elevation ? elevation : [],
+      coordinates: coordinates,
     },
   };
 }
 
-function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
+const Post = ({
+  signOut,
+  user,
+  renderedAt,
+  post,
+  powerAnalysis,
+  elevation,
+  coordinates,
+}) => {
   const router = useRouter();
   const [editor] = useState(() => withReact(createEditor()));
 
   const [isSaving, setIsSaving] = useState(false);
   const [uploadModal, setUploadModal] = useState(false);
   const [addImageModal, setAddImageModal] = useState(false);
+  // const [addMap, setAddMap] = useState(false)
+
   const [text, setText] = useState('');
   const [title, setTitle] = useState(post.title);
 
@@ -123,6 +135,12 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
       throw new Error(errors[0].message);
     }
   }
+
+  const addMap = (editor: ReactEditor) => {
+    Transforms.insertNodes(editor, [
+      { type: 'visualOverview', children: [{ text: '' }] } as Descendant,
+    ]);
+  };
 
   const addGraph = (editor: ReactEditor) => {
     Transforms.insertNodes(editor, [
@@ -163,7 +181,7 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
   };
 
   return (
-    <MyContext.Provider value={{ powerAnalysis }}>
+    <MyContext.Provider value={{ powerAnalysis, elevation, coordinates }}>
       <div>
         <Head>
           <title>{post.title}</title>
@@ -183,8 +201,7 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
                 zIndex: 10000,
                 display: 'flex',
               }}
-            >
-            </Box>
+            ></Box>
           )}
           {uploadModal && (
             <UploadGpxModal openModal={setUploadModal} post={post} />
@@ -201,18 +218,15 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
               marginRight: 'auto',
             }}
           >
-            {/* <p>{JSON.stringify(powers)}</p> */}
             <h1
               style={{ marginBottom: '20px' }}
               contentEditable='true'
               onBlur={(event) => {
-                // console.log(event.target.textContent);
                 setTitle(event.target.textContent);
               }}
             >
               {post.title}
             </h1>
-            <pre style={{ marginBottom: '20px' }}>{post.gpxFile}</pre>
             <Flex sx={{ marginBottom: '20px', gap: '10px' }}>
               <Button onClick={() => addGraph(editor)} disabled={!post.gpxFile}>
                 + Power Graph
@@ -221,6 +235,7 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
               <Button onClick={() => save(editor)}>Save</Button>
               <Button onClick={handleDelete}>Delete</Button>
               <Button onClick={() => upload(editor)}>Upload GPX</Button>
+              <Button onClick={() => addMap(editor)}>Add Map</Button>
             </Flex>
 
             <Slate editor={editor} initialValue={initialState}>
@@ -237,6 +252,6 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
       </div>
     </MyContext.Provider>
   );
-}
+};
 
 export default withAuthenticator(Post);

@@ -1,5 +1,6 @@
 import PowerGraphElement from '../components/PowerGraphElement';
 import ImageElement from '../components/ImageElement';
+import VisualOverviewWrapper from '../components/VisualOverviewWrapper'
 
 const renderElement = ({ attributes, children, element }) => {
   const style = { textAlign: element.align };
@@ -7,6 +8,14 @@ const renderElement = ({ attributes, children, element }) => {
     case 'powergraph':
       return (
         <PowerGraphElement
+          attributes={attributes}
+          children={children}
+          element={element}
+        />
+      );
+    case 'visualOverview':
+      return (
+        <VisualOverviewWrapper
           attributes={attributes}
           children={children}
           element={element}
