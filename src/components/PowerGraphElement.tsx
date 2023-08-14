@@ -1,15 +1,23 @@
-import {
-  useSlateStatic,
-  ReactEditor,
-} from 'slate-react';
+import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
 import { Box, Button, Flex } from 'theme-ui';
+import { useContext } from 'react';
 
 import { PowerCurveGraph } from '@saegey/posts.ui.power-curve-graph';
+import { MyContext } from '../MyContext';
 
 const PowerGraph = ({ attributes, children, element }) => {
+  const { powerAnalysis } = useContext(MyContext);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
+
+  const graphData = Object.keys(powerAnalysis)
+    .map((k, i) => {
+      if (Number(k) > 0) {
+        return { x: Number(k), y: powerAnalysis[k] };
+      }
+    })
+    .filter((p) => p !== undefined);
 
   return (
     <Box
@@ -28,18 +36,9 @@ const PowerGraph = ({ attributes, children, element }) => {
           </Button>
         </Box>
       </Flex>
+
       <Box sx={{ width: '100%', height: '200px' }}>
-        <PowerCurveGraph
-          ftp={280}
-          data={[
-            { x: 1, y: 800 },
-            { x: 5, y: 700 },
-            { x: 20, y: 600 },
-            { x: 60, y: 590 },
-            { x: 300, y: 500 },
-            { x: 3600, y: 200 },
-          ]}
-        />
+        <PowerCurveGraph ftp={280} data={graphData} />
       </Box>
     </Box>
   );

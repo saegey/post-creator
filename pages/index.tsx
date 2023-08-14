@@ -1,17 +1,12 @@
-// import Head from 'next/head';
-// import Link from 'next/link';
-// import { Flex, Text, Box } from 'theme-ui';
-// import CloudinaryUpload from '../src/components/CloudinaryUpload';
-
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import { Authenticator } from '@aws-amplify/ui-react';
-import { API, withSSRContext } from 'aws-amplify';
-import { GraphQLResult } from '@aws-amplify/api';
+import { withSSRContext, Amplify } from 'aws-amplify';
+import Head from 'next/head';
+import { Button } from 'theme-ui';
+import { useState } from 'react';
 
-// import awsExports from '../src/aws-exports';
-import { createPost } from '../src/graphql/mutations';
 import { listPosts } from '../src/graphql/queries';
-import { CreatePostMutation } from '../src/API';
+import Header from '../src/components/Header';
+import CreatePostModal from '../src/components/CreatePostModal';
 
 export async function getServerSideProps({ req }) {
   const SSR = withSSRContext({ req });
@@ -34,70 +29,44 @@ export async function getServerSideProps({ req }) {
   }
 }
 
-async function handleCreatePost(event) {
-  event.preventDefault();
+function Home({ signOut, user, posts = [] }) {
+  const [newPost, setNewPost] = useState(false);
 
-  const form = new FormData(event.target);
-
-  try {
-    const response = (await API.graphql({
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
-      query: createPost,
-      variables: {
-        input: {
-          title: form.get('title'),
-          // content: form.get('content'),
-          components: JSON.stringify([
-            { type: 'text', children: [{ text: '' }] },
-          ]),
-        },
-      },
-    })) as GraphQLResult<CreatePostMutation>;
-
-    window.location.href = `/posts/${response.data.createPost.id}`;
-  } catch ({ errors }) {
-    console.error(...errors);
-    throw new Error(errors[0].message);
-  }
-}
-
-function Home({ signOut, user, renderedAt, posts = [] }) {
   return (
-    <div style={{ padding: 50 }}>
-      <h1>Logged in as {user.username}.</h1>
+    <>
+      {newPost && <CreatePostModal setMenuOpen={setNewPost} />}
       <div>
-        <button onClick={signOut}>Sign out</button>
+        <Head>
+          <title>Home</title>
+          <link rel='icon' href='/favicon.ico' />
+        </Head>
+        <main>
+          <Header user={user} signOut={signOut} />
+          <div
+            style={{
+              marginTop: '60px',
+              maxWidth: '900px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
+          >
+            <div>
+              <Button onClick={() => setNewPost(true)}>New Post</Button>
+            </div>
+            <ul>
+              {posts.map((post) => (
+                <li style={{ paddingTop: '20px', listStyleType: 'none' }}>
+                  <a href={`/posts/${post.id}`} key={post.id}>
+                    <p>{post.title}</p>
+                    <p>{post.content}</p>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </main>
       </div>
-      {posts.map((post) => (
-        <a href={`/posts/${post.id}`} key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.content}</p>
-        </a>
-      ))}
-
-      <Authenticator>
-        <form onSubmit={handleCreatePost}>
-          <fieldset>
-            <legend>Title</legend>
-            <input
-              defaultValue={`Today, ${new Date().toLocaleTimeString()}`}
-              name='title'
-            />
-          </fieldset>
-
-          <fieldset>
-            <legend>Content</legend>
-            <textarea
-              defaultValue='I built an Amplify project with Next.js!'
-              name='content'
-            />
-          </fieldset>
-
-          <button>Create Post</button>
-        </form>
-      </Authenticator>
-      <p>This page was server-side rendered on {renderedAt}.</p>
-    </div>
+    </>
   );
 }
 

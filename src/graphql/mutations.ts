@@ -14,6 +14,8 @@ export const createBlog = /* GraphQL */ `
         items {
           id
           title
+          gpxFile
+          images
           components
           createdAt
           updatedAt
@@ -43,6 +45,8 @@ export const updateBlog = /* GraphQL */ `
         items {
           id
           title
+          gpxFile
+          images
           components
           createdAt
           updatedAt
@@ -72,6 +76,8 @@ export const deleteBlog = /* GraphQL */ `
         items {
           id
           title
+          gpxFile
+          images
           components
           createdAt
           updatedAt
@@ -97,6 +103,8 @@ export const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       id
       title
+      gpxFile
+      images
       components
       blog {
         id
@@ -126,6 +134,8 @@ export const updatePost = /* GraphQL */ `
     updatePost(input: $input, condition: $condition) {
       id
       title
+      gpxFile
+      images
       components
       blog {
         id
@@ -155,6 +165,8 @@ export const deletePost = /* GraphQL */ `
     deletePost(input: $input, condition: $condition) {
       id
       title
+      gpxFile
+      images
       components
       blog {
         id
