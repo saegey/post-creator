@@ -4,14 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.calcBestPowers = exports.downsampleElevation = void 0;
-const { gpx } = require('@tmcw/togeojson');
-const { DOMParser } = require('@xmldom/xmldom');
+const togeojson_1 = require("@tmcw/togeojson");
+const xmldom_1 = require("@xmldom/xmldom");
 const length_1 = __importDefault(require("@turf/length"));
 const helpers_1 = require("@turf/helpers");
-const AWS = require('aws-sdk');
-const S3 = new AWS.S3();
-const docClient = new AWS.DynamoDB.DocumentClient();
-const zlib = require('zlib');
+const aws_sdk_1 = __importDefault(require("aws-sdk"));
+const aws_xray_sdk_1 = __importDefault(require("aws-xray-sdk"));
+const zlib_1 = __importDefault(require("zlib"));
+// https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
+const S3 = new aws_sdk_1.default.S3();
+const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
 const timeIntervals = (end) => [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 35, 40, 45, 50,
     55, 60, 70, 80, 90, 100, 110, 120, 180, 240, 300, 360, 420, 480, 540, 600,
@@ -82,11 +84,8 @@ const calcBestPowers = (times, powers, removeZeros = false) => {
 };
 exports.calcBestPowers = calcBestPowers;
 const compress = async (input) => {
-    // const segment = AWSXRay.getSegment();
-    // const subsegment = segment.addNewSubsegment("subseg");
     return new Promise((resolve, reject) => {
-        zlib.gzip(JSON.stringify(input), (err, buffer) => {
-            // subsegment.close();
+        zlib_1.default.gzip(JSON.stringify(input), (err, buffer) => {
             if (!err) {
                 resolve(buffer);
             }
@@ -97,7 +96,6 @@ const compress = async (input) => {
     });
 };
 const shrinkify = async ({ field, name }) => {
-    // console.log(`${name}: ${field.length} length.`);
     // compress the content
     const fieldString = JSON.stringify(field);
     const fieldCompressed = await compress(field);
@@ -107,25 +105,30 @@ const shrinkify = async ({ field, name }) => {
     return fieldCompressed;
 };
 exports.handler = async function (event) {
+    const segment = aws_xray_sdk_1.default.getSegment();
     let postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-dev';
     if (process.env.ENV === 'master') {
-        // console.log('Prod env');
         postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-prod';
     }
     // console.log('Received S3 event:', JSON.stringify(event, null, 2));
-    const eventName = event.Records[0].eventName;
+    // const eventName = event.Records[0].eventName;
     const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
     let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
     // const imgSize = event.Records[0].s3.object.size;
     // const maxSize = 5000000; // More that 5Mb images would be rejected
     // const filename = key.split('.').slice(0, -1).join('.');
     const fileParams = { Bucket: bucket, Key: key };
-    const file = await S3.getObject(fileParams).promise();
+    const s3getTimer = segment.addNewSubsegment("s3get");
+    const file = await S3.getObject({ Bucket: bucket, Key: key }).promise();
+    s3getTimer.close();
+    const s3metaTimer = segment.addNewSubsegment("s3meta");
     const metaData = await S3.headObject(fileParams).promise();
     console.log('metadata', JSON.stringify(metaData));
-    const xmlDoc = new DOMParser().parseFromString(file.Body.toString('utf-8'));
+    s3metaTimer.close();
+    const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString('utf-8'));
+    // subsegment.close()
     console.log('gpx parsing');
-    const gpxData = gpx(xmlDoc);
+    const gpxData = (0, togeojson_1.gpx)(xmlDoc);
     let coordinates = [];
     let powers, powerAnalysis, elevation;
     gpxData.features.map((feature) => {
@@ -136,21 +139,6 @@ exports.handler = async function (event) {
         powerAnalysis = (0, exports.calcBestPowers)(timeIntervals(powers.length), powers);
         elevation = (0, exports.downsampleElevation)(coordinates, 10);
     });
-    // console.log(`Coordinates: ${coordinates.length} length.`);
-    // // compress the content
-    // const coordinatesString = JSON.stringify(coordinates);
-    // const coordinatesCompressed: any = await compress(coordinatesString);
-    // // more stats about the content
-    // console.log(
-    //   `total size (uncompressed): ~${Math.round(
-    //     coordinatesString.length / 1024
-    //   )} KB`
-    // );
-    // console.log(
-    //   `total size (compressed): ~${Math.round(
-    //     coordinatesCompressed.length / 1024
-    //   )} KB`
-    // );
     const res = await docClient
         .update({
         TableName: postTable,
@@ -166,7 +154,5 @@ exports.handler = async function (event) {
         },
     })
         .promise();
-    // console.log(params, JSON.stringify(powerAnalysis));
-    // const res = await DynamoDB.putItem(params).promise();
     console.log(JSON.stringify(res));
 };

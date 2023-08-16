@@ -1,12 +1,15 @@
-const { gpx } = require('@tmcw/togeojson');
-const { DOMParser } = require('@xmldom/xmldom');
+import {gpx} from '@tmcw/togeojson';
+import {DOMParser} from '@xmldom/xmldom';
 import length from '@turf/length';
 import { lineString } from '@turf/helpers';
-const AWS = require('aws-sdk');
+import AWS from 'aws-sdk';
+import AWSXRay from "aws-xray-sdk";
+import zlib from 'zlib';
+
+// https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
+
 const S3 = new AWS.S3();
 const docClient = new AWS.DynamoDB.DocumentClient();
-const zlib = require('zlib');
-// const DynamoDB = new AWS.DynamoDB();
 import { Callback, Context, Handler } from 'aws-lambda';
 
 const timeIntervals = (end: number) => [
@@ -106,11 +109,8 @@ export const calcBestPowers = (
 };
 
 const compress = async (input: any) => {
-  // const segment = AWSXRay.getSegment();
-  // const subsegment = segment.addNewSubsegment("subseg");
   return new Promise((resolve, reject) => {
     zlib.gzip(JSON.stringify(input), (err: any, buffer: any) => {
-      // subsegment.close();
       if (!err) {
         resolve(buffer);
       } else {
@@ -122,20 +122,18 @@ const compress = async (input: any) => {
 
 interface TriggerEvent {
   Records: Array<{
-    eventVersion: String;
-    eventName: String;
+    eventVersion: string;
+    eventName: string;
     s3: {
       bucket: {
-        name: String;
+        name: string;
       };
-      object: { key: String; size: number; etag: String };
+      object: { key: string; size: number; etag: string };
     };
   }>;
 }
 
-const shrinkify = async ({ field, name }: { field: any; name: String }) => {
-  // console.log(`${name}: ${field.length} length.`);
-
+const shrinkify = async ({ field, name }: { field: any; name: string }) => {
   // compress the content
   const fieldString = JSON.stringify(field);
   const fieldCompressed: any = await compress(field);
@@ -156,24 +154,31 @@ const shrinkify = async ({ field, name }: { field: any; name: String }) => {
 };
 
 exports.handler = async function (event: TriggerEvent) {
+	const segment = AWSXRay.getSegment();
   let postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-dev';
   if (process.env.ENV === 'master') {
-    // console.log('Prod env');
     postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-prod';
   }
   // console.log('Received S3 event:', JSON.stringify(event, null, 2));
-  const eventName = event.Records[0].eventName;
+  // const eventName = event.Records[0].eventName;
   const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
   let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
   // const imgSize = event.Records[0].s3.object.size;
   // const maxSize = 5000000; // More that 5Mb images would be rejected
   // const filename = key.split('.').slice(0, -1).join('.');
   const fileParams = { Bucket: bucket, Key: key };
-  const file = await S3.getObject(fileParams).promise();
+
+	const s3getTimer = segment.addNewSubsegment("s3get");
+  const file = await S3.getObject({ Bucket: bucket as string, Key: key }).promise();
+	s3getTimer.close()
+
+	const s3metaTimer = segment.addNewSubsegment("s3meta");
   const metaData = await S3.headObject(fileParams).promise();
   console.log('metadata', JSON.stringify(metaData));
+	s3metaTimer.close()
 
   const xmlDoc = new DOMParser().parseFromString(file.Body.toString('utf-8'));
+	// subsegment.close()
 
   console.log('gpx parsing');
   const gpxData = gpx(xmlDoc);
@@ -189,24 +194,6 @@ exports.handler = async function (event: TriggerEvent) {
     powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
     elevation = downsampleElevation(coordinates, 10);
   });
-
-  // console.log(`Coordinates: ${coordinates.length} length.`);
-
-  // // compress the content
-  // const coordinatesString = JSON.stringify(coordinates);
-  // const coordinatesCompressed: any = await compress(coordinatesString);
-
-  // // more stats about the content
-  // console.log(
-  //   `total size (uncompressed): ~${Math.round(
-  //     coordinatesString.length / 1024
-  //   )} KB`
-  // );
-  // console.log(
-  //   `total size (compressed): ~${Math.round(
-  //     coordinatesCompressed.length / 1024
-  //   )} KB`
-  // );
 
   const res = await docClient
     .update({
@@ -225,7 +212,5 @@ exports.handler = async function (event: TriggerEvent) {
     })
     .promise();
 
-  // console.log(params, JSON.stringify(powerAnalysis));
-  // const res = await DynamoDB.putItem(params).promise();
   console.log(JSON.stringify(res));
 };

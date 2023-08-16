@@ -9,7 +9,8 @@
     "@xmldom/xmldom": "^0.8.10",
     "@turf/helpers": "^6.5.0",
     "@turf/length": "^6.5.0",
-    "aws-sdk": "^2.1435.0"
+    "aws-sdk": "^2.1435.0",
+    "aws-xray-sdk": "^3.5.1"
   },
   "scripts": {
     "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -"
