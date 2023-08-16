@@ -32,12 +32,16 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
+	const powersRaw = await uncompress(post.powers) as string
+	const coordinatesRaw = await uncompress(post.coordinates) as string
+	const elevationRaw = await uncompress(post.elevation) as string
+
   const powers =
-    post && post.powers ? JSON.parse(await uncompress(post.powers)) : {};
+    post && post.powers ? JSON.parse(powersRaw) : {};
   const coordinates =
-    post && post.powers ? JSON.parse(await uncompress(post.coordinates)) : {};
+    post && post.coordinates ? JSON.parse(coordinatesRaw) : {};
   const elevation =
-    post && post.powers ? JSON.parse(await uncompress(post.elevation)) : {};
+    post && post.elevation ? JSON.parse(elevationRaw) : {};
 
   return {
     props: {
