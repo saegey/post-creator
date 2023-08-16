@@ -1,9 +1,9 @@
-import {gpx} from '@tmcw/togeojson';
-import {DOMParser} from '@xmldom/xmldom';
+import { gpx } from '@tmcw/togeojson';
+import { DOMParser } from '@xmldom/xmldom';
 import length from '@turf/length';
 import { lineString } from '@turf/helpers';
 import AWS from 'aws-sdk';
-import AWSXRay from "aws-xray-sdk";
+import AWSXRay from 'aws-xray-sdk';
 import zlib from 'zlib';
 
 // https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
@@ -155,7 +155,7 @@ const shrinkify = async ({ field, name }: { field: any; name: string }) => {
 };
 
 exports.handler = async function (event: TriggerEvent) {
-	const segment = AWSXRay.getSegment();
+  const segment = AWSXRay.getSegment();
   let postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-dev';
   if (process.env.ENV === 'master') {
     postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-prod';
@@ -169,20 +169,25 @@ exports.handler = async function (event: TriggerEvent) {
   // const filename = key.split('.').slice(0, -1).join('.');
   const fileParams = { Bucket: bucket, Key: key };
 
-	const s3getTimer = segment.addNewSubsegment("s3get");
-  const file = await S3.getObject({ Bucket: bucket as string, Key: key }).promise();
-	s3getTimer.close()
+  const s3getTimer = segment.addNewSubsegment('s3get');
+  const file = await S3.getObject({
+    Bucket: bucket as string,
+    Key: key,
+  }).promise();
+  s3getTimer.close();
 
-	const s3metaTimer = segment.addNewSubsegment("s3meta");
+  const s3metaTimer = segment.addNewSubsegment('s3meta');
   const metaData = await S3.headObject(fileParams).promise();
   console.log('metadata', JSON.stringify(metaData));
-	s3metaTimer.close()
+  s3metaTimer.close();
 
+  const xmlParseTimer = segment.addNewSubsegment('xmlParse');
   const xmlDoc = new DOMParser().parseFromString(file.Body.toString('utf-8'));
-	// subsegment.close()
+  xmlParseTimer.close();
 
-  console.log('gpx parsing');
+  const gpxParseTimer = segment.addNewSubsegment('gpxParse');
   const gpxData = gpx(xmlDoc);
+  gpxParseTimer.close();
 
   let coordinates: Array<any> = [];
   let powers, powerAnalysis, elevation;
@@ -192,10 +197,17 @@ exports.handler = async function (event: TriggerEvent) {
     //   feature.properties.coordinateProperties;
     coordinates = feature.geometry.coordinates;
     powers = feature.properties.coordinateProperties.powers;
+
+    const powerAnalysisTimer = segment.addNewSubsegment('powerAnalysis');
     powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
+    powerAnalysisTimer.close();
+
+    const downsampleElevationTimer = segment.addNewSubsegment('powerAnalysis');
     elevation = downsampleElevation(coordinates, 10);
+    downsampleElevationTimer.close();
   });
 
+  const updateDynamoTimer = segment.addNewSubsegment('updateDynamo');
   const res = await docClient
     .update({
       TableName: postTable,
@@ -212,6 +224,6 @@ exports.handler = async function (event: TriggerEvent) {
       },
     })
     .promise();
-
+  updateDynamoTimer.close();
   console.log(JSON.stringify(res));
 };

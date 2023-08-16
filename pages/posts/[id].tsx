@@ -32,16 +32,26 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
-	const powersRaw = await uncompress(post.powers) as string
-	const coordinatesRaw = await uncompress(post.coordinates) as string
-	const elevationRaw = await uncompress(post.elevation) as string
+  const powersRaw = post.power
+    ? ((await uncompress(post.powers)) as string)
+    : '{}';
+  const coordinatesRaw = post.coordinates
+    ? ((await uncompress(post.coordinates)) as string)
+    : '{}';
+  const elevationRaw = post.elevation
+    ? ((await uncompress(post.elevation)) as string)
+    : '{}';
 
-  const powers =
-    post && post.powers ? JSON.parse(powersRaw) : {};
-  const coordinates =
-    post && post.coordinates ? JSON.parse(coordinatesRaw) : {};
-  const elevation =
-    post && post.elevation ? JSON.parse(elevationRaw) : {};
+  const powers = JSON.parse(powersRaw);
+  const coordinates = JSON.parse(coordinatesRaw);
+  const elevation = JSON.parse(elevationRaw);
+
+  // console.log({
+  //   post,
+  //   powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
+  //   elevation: elevation ? elevation : [],
+  //   coordinates: coordinates,
+  // });
 
   return {
     props: {
