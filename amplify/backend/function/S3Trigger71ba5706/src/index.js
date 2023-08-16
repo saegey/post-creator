@@ -12,8 +12,10 @@ const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const aws_xray_sdk_1 = __importDefault(require("aws-xray-sdk"));
 const zlib_1 = __importDefault(require("zlib"));
 // https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
+// https://medium.com/develop-and-deploy-a-complex-serverless-web-app/use-s3-trigger-to-create-a-dynamodb-entry-when-uploading-images-to-s3-part-9-4d7489a4584b
 const S3 = new aws_sdk_1.default.S3();
 const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
+// import { Callback, Context, Handler } from 'aws-lambda';
 const timeIntervals = (end) => [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 35, 40, 45, 50,
     55, 60, 70, 80, 90, 100, 110, 120, 180, 240, 300, 360, 420, 480, 540, 600,
@@ -118,17 +120,22 @@ exports.handler = async function (event) {
     // const maxSize = 5000000; // More that 5Mb images would be rejected
     // const filename = key.split('.').slice(0, -1).join('.');
     const fileParams = { Bucket: bucket, Key: key };
-    const s3getTimer = segment.addNewSubsegment("s3get");
-    const file = await S3.getObject({ Bucket: bucket, Key: key }).promise();
+    const s3getTimer = segment.addNewSubsegment('s3get');
+    const file = await S3.getObject({
+        Bucket: bucket,
+        Key: key,
+    }).promise();
     s3getTimer.close();
-    const s3metaTimer = segment.addNewSubsegment("s3meta");
+    const s3metaTimer = segment.addNewSubsegment('s3meta');
     const metaData = await S3.headObject(fileParams).promise();
     console.log('metadata', JSON.stringify(metaData));
     s3metaTimer.close();
+    const xmlParseTimer = segment.addNewSubsegment('xmlParse');
     const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString('utf-8'));
-    // subsegment.close()
-    console.log('gpx parsing');
+    xmlParseTimer.close();
+    const gpxParseTimer = segment.addNewSubsegment('gpxParse');
     const gpxData = (0, togeojson_1.gpx)(xmlDoc);
+    gpxParseTimer.close();
     let coordinates = [];
     let powers, powerAnalysis, elevation;
     gpxData.features.map((feature) => {
@@ -136,9 +143,14 @@ exports.handler = async function (event) {
         //   feature.properties.coordinateProperties;
         coordinates = feature.geometry.coordinates;
         powers = feature.properties.coordinateProperties.powers;
+        const powerAnalysisTimer = segment.addNewSubsegment('powerAnalysis');
         powerAnalysis = (0, exports.calcBestPowers)(timeIntervals(powers.length), powers);
+        powerAnalysisTimer.close();
+        const downsampleElevationTimer = segment.addNewSubsegment('powerAnalysis');
         elevation = (0, exports.downsampleElevation)(coordinates, 10);
+        downsampleElevationTimer.close();
     });
+    const updateDynamoTimer = segment.addNewSubsegment('updateDynamo');
     const res = await docClient
         .update({
         TableName: postTable,
@@ -154,5 +166,6 @@ exports.handler = async function (event) {
         },
     })
         .promise();
+    updateDynamoTimer.close();
     console.log(JSON.stringify(res));
 };
