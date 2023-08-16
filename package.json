@@ -20,6 +20,7 @@
     "@xmldom/xmldom": "^0.8.10",
     "aws-amplify": "^5.3.6",
     "aws-sdk": "^2.1435.0",
+    "aws-xray-sdk": "^3.5.1",
     "cloudinary-react": "^1.8.1",
     "formidable": "^3.5.0",
     "next": "latest",
