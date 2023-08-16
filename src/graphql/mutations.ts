@@ -25,6 +25,10 @@ export const createBlog = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
@@ -65,6 +69,10 @@ export const updateBlog = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
@@ -105,6 +113,10 @@ export const deleteBlog = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
@@ -141,6 +153,10 @@ export const createPost = /* GraphQL */ `
       subType
       teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -168,6 +184,10 @@ export const createPost = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
@@ -206,6 +226,10 @@ export const updatePost = /* GraphQL */ `
       subType
       teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -233,6 +257,10 @@ export const updatePost = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
@@ -271,6 +299,10 @@ export const deletePost = /* GraphQL */ `
       subType
       teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -298,6 +330,10 @@ export const deletePost = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId

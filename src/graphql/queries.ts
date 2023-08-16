@@ -22,6 +22,10 @@ export const getBlog = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
@@ -79,6 +83,10 @@ export const getPost = /* GraphQL */ `
       subType
       teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -106,6 +114,10 @@ export const getPost = /* GraphQL */ `
           subType
           teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
@@ -146,6 +158,10 @@ export const listPosts = /* GraphQL */ `
         subType
         teaser
         components
+        powerAnalysis
+        coordinates
+        powers
+        elevation
         blog {
           id
           name

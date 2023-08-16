@@ -1,4 +1,4 @@
-import { Amplify, API, withSSRContext, Storage } from 'aws-amplify';
+import { API, withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { withAuthenticator } from '@aws-amplify/ui-react';
@@ -7,8 +7,7 @@ import { useState } from 'react';
 import { createEditor, Descendant, Transforms } from 'slate';
 import { Button, Flex, Box } from 'theme-ui';
 import { GraphQLResult } from '@aws-amplify/api';
-import { gpx } from '@tmcw/togeojson';
-import { DOMParser } from '@xmldom/xmldom';
+import zlib from 'zlib';
 
 import { deletePost } from '../../src/graphql/mutations';
 import { getPost } from '../../src/graphql/queries';
@@ -19,17 +18,7 @@ import { UpdatePostMutation } from '../../src/API';
 import Header from '../../src/components/Header';
 import UploadGpxModal from '../../src/components/UploadGpxModal';
 import { MyContext } from '../../src/MyContext';
-import { calcBestPowers, downsampleElevation } from '../../src/utils/gpxHelper';
 import AddImage from '../../src/components/AddImage';
-
-const timeIntervals = (end: number) => [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 35, 40, 45, 50,
-  55, 60, 70, 80, 90, 100, 110, 120, 180, 240, 300, 360, 420, 480, 540, 600,
-  660, 720, 780, 840, 900, 960, 1020, 1080, 1140, 1200, 1500, 1800, 2100, 2400,
-  2700, 3000, 3300, 3600, 4200, 4800, 5400, 6000, 6600, 7200, 7800, 8400, 9000,
-  9600, 10200, 10800, 12000, 13200, 14400, 15600, 16800, 18000, 19200, 20400,
-  21600,
-];
 
 export async function getServerSideProps({ req, params }) {
   const SSR = withSSRContext({ req });
@@ -43,47 +32,38 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
-  let powers, powerAnalysis: Record<number | string, number>, result, elevation, coordinates;
-
-  try {
-    result = await Storage.get(`${post.gpxFile}`, {
-      download: true,
-    });
-  } catch (e) {
-    console.log(e);
-  }
-  if (!result) {
-    return {
-      props: {
-        post,
-        powers: [],
-        powerAnalysis: {},
-      },
-    };
-  }
-
-  const body = await result.Body.text();
-  const xmlDoc = new DOMParser().parseFromString(body);
-  const gpxData = gpx(xmlDoc);
-
-  gpxData.features.forEach((feature) => {
-    // const { powers, heart, times, atemps, cads } =
-    //   feature.properties.coordinateProperties;
-    coordinates = feature.geometry.coordinates
-    powers = feature.properties.coordinateProperties.powers;
-    powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
-    elevation = downsampleElevation(coordinates);
-  });
+  const powers =
+    post && post.powers ? JSON.parse(await uncompress(post.powers)) : {};
+  const coordinates =
+    post && post.powers ? JSON.parse(await uncompress(post.coordinates)) : {};
+  const elevation =
+    post && post.powers ? JSON.parse(await uncompress(post.elevation)) : {};
 
   return {
     props: {
       post,
-      powerAnalysis: powerAnalysis ? powerAnalysis : {},
+      powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
       elevation: elevation ? elevation : [],
       coordinates: coordinates,
     },
   };
 }
+
+const uncompress = async (input: any) => {
+  return new Promise((resolve, reject) => {
+    return zlib.gunzip(
+      Buffer.from(input, 'base64'),
+      (err: any, buffer: any) => {
+        if (!err) {
+          const widgetString = buffer.toString('utf-8');
+          resolve(widgetString);
+        } else {
+          reject(err);
+        }
+      }
+    );
+  });
+};
 
 const Post = ({
   signOut,

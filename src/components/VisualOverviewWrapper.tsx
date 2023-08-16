@@ -1,7 +1,11 @@
 import React from 'react';
-import VisualOverview from '@saegey/posts.visual-overview';
+import dynamic from 'next/dynamic';
 
 import { MyContext } from '../MyContext';
+
+const VisualOverview = dynamic(import('@saegey/posts.visual-overview'), {
+  ssr: false,
+}); // Async API cannot be server-side rendered
 
 const VisualOverviewWrapper = ({ attributes, children, element }) => {
   const { elevation, coordinates } = React.useContext(MyContext);
@@ -10,7 +14,7 @@ const VisualOverviewWrapper = ({ attributes, children, element }) => {
     <VisualOverview
       elevationData={{
         data: elevation,
-        downsampleRate: 20,
+        downsampleRate: 2,
         axisXTickValues: {
           imperial: [[2, 4, 6, 8]],
           metric: [[4, 8, 12]],

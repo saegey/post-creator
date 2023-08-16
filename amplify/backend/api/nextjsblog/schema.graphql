@@ -27,6 +27,10 @@ type Post
   subType: String
   teaser: String
   components: AWSJSON
+  powerAnalysis: AWSJSON
+  coordinates: AWSJSON
+  powers: AWSJSON
+  elevation: AWSJSON
   blog: Blog @belongsTo
   related: [Post] @hasMany
   # comments: [Comment] @hasMany
