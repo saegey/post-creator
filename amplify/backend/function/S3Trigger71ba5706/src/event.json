@@ -1,5 +1,38 @@
 {
-  "key1": "value1",
-  "key2": "value2",
-  "key3": "value3"
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "us-east-1",
+      "eventTime": "2023-08-16T01:45:36.923Z",
+      "eventName": "ObjectCreated:CompleteMultipartUpload",
+      "userIdentity": {
+        "principalId": "AWS:AROAVN3XYARALPHSY2QQU:CognitoIdentityCredentials"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "98.59.229.66"
+      },
+      "responseElements": {
+        "x-amz-request-id": "VTD0DC6NVY1WTVW7",
+        "x-amz-id-2": "I7J/TDWJJtXTkzzOnsDG+RKE82fmqyXH4b9O4b9fV2tEZAkvYaaB8b55UwMP1HrdXjDVW1CGMA7KdAhJIbWaTfAS5GgbSFdo"
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "a26189a2-6316-42a7-8b2c-bf6cc482a8e1",
+        "bucket": {
+          "name": "nextjsblog619f9308251149be95e1a59d89c85e5e233823-dev",
+          "ownerIdentity": {
+            "principalId": "A16SA0H5NFM8TJ"
+          },
+          "arn": "arn:aws:s3:::nextjsblog619f9308251149be95e1a59d89c85e5e233823-dev"
+        },
+        "object": {
+          "key": "public/Gorge_Gravel_Grinder.gpx",
+          "size": 6737726,
+          "eTag": "10f460fa587879cef8530c7e9943b6fd-2",
+          "sequencer": "0064DC2A3ACDFC89B2"
+        }
+      }
+    }
+  ]
 }

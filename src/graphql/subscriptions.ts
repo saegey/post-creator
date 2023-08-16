@@ -16,10 +16,23 @@ export const onCreateBlog = /* GraphQL */ `
           title
           gpxFile
           images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
+          postRelatedId
           owner
           __typename
         }
@@ -47,10 +60,23 @@ export const onUpdateBlog = /* GraphQL */ `
           title
           gpxFile
           images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
+          postRelatedId
           owner
           __typename
         }
@@ -78,10 +104,23 @@ export const onDeleteBlog = /* GraphQL */ `
           title
           gpxFile
           images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
+          postRelatedId
           owner
           __typename
         }
@@ -105,7 +144,19 @@ export const onCreatePost = /* GraphQL */ `
       title
       gpxFile
       images
+      headerImage
+      date
+      publishedDate
+      location
+      stravaUrl
+      type
+      subType
+      teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -118,9 +169,39 @@ export const onCreatePost = /* GraphQL */ `
         owner
         __typename
       }
+      related {
+        items {
+          id
+          title
+          gpxFile
+          images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
+          components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
+          createdAt
+          updatedAt
+          blogPostsId
+          postRelatedId
+          owner
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
+      postRelatedId
       owner
       __typename
     }
@@ -136,7 +217,19 @@ export const onUpdatePost = /* GraphQL */ `
       title
       gpxFile
       images
+      headerImage
+      date
+      publishedDate
+      location
+      stravaUrl
+      type
+      subType
+      teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -149,9 +242,39 @@ export const onUpdatePost = /* GraphQL */ `
         owner
         __typename
       }
+      related {
+        items {
+          id
+          title
+          gpxFile
+          images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
+          components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
+          createdAt
+          updatedAt
+          blogPostsId
+          postRelatedId
+          owner
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
+      postRelatedId
       owner
       __typename
     }
@@ -167,7 +290,19 @@ export const onDeletePost = /* GraphQL */ `
       title
       gpxFile
       images
+      headerImage
+      date
+      publishedDate
+      location
+      stravaUrl
+      type
+      subType
+      teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -180,9 +315,39 @@ export const onDeletePost = /* GraphQL */ `
         owner
         __typename
       }
+      related {
+        items {
+          id
+          title
+          gpxFile
+          images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
+          components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
+          createdAt
+          updatedAt
+          blogPostsId
+          postRelatedId
+          owner
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
+      postRelatedId
       owner
       __typename
     }

@@ -25,8 +25,8 @@ export const dateDiff = (dateFrom: Date, dateTo: Date) => {
 }
 
 export const downsampleElevation = (
-  coordinates: Coordinate[]
-  // rate: number
+  coordinates: Coordinate[],
+  rate: number
 ) => {
   const downsampled: ProcessedCoordinate[] = []
   let totalDistance = 0
@@ -51,14 +51,14 @@ export const downsampleElevation = (
         (totalDistance - distances[index - 30])
     }
 
-    downsampled.push({
-      x: index,
-      y: Number(item[2]).toFixed(0),
-      distance: totalDistance,
-      grade: !Number.isNaN(grade) && isFinite(grade) ? grade : 0,
-    })
-
-    // if (index % rate === 0 || index === 0) {
+    if (index % rate === 0 || index === 0) {
+			downsampled.push({
+				x: index,
+				y: Number(item[2]).toFixed(0),
+				distance: totalDistance,
+				grade: !Number.isNaN(grade) && isFinite(grade) ? grade : 0,
+			})
+		}
   })
 
   return downsampled

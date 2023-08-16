@@ -1,4 +1,4 @@
-import { Amplify, API, withSSRContext, Storage } from 'aws-amplify';
+import { API, withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { withAuthenticator } from '@aws-amplify/ui-react';
@@ -7,8 +7,7 @@ import { useState } from 'react';
 import { createEditor, Descendant, Transforms } from 'slate';
 import { Button, Flex, Box } from 'theme-ui';
 import { GraphQLResult } from '@aws-amplify/api';
-import { gpx } from '@tmcw/togeojson';
-import { DOMParser } from '@xmldom/xmldom';
+import zlib from 'zlib';
 
 import { deletePost } from '../../src/graphql/mutations';
 import { getPost } from '../../src/graphql/queries';
@@ -19,17 +18,7 @@ import { UpdatePostMutation } from '../../src/API';
 import Header from '../../src/components/Header';
 import UploadGpxModal from '../../src/components/UploadGpxModal';
 import { MyContext } from '../../src/MyContext';
-import { calcBestPowers } from '../../src/utils/gpxHelper';
 import AddImage from '../../src/components/AddImage';
-
-const timeIntervals = (end: number) => [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 35, 40, 45, 50,
-  55, 60, 70, 80, 90, 100, 110, 120, 180, 240, 300, 360, 420, 480, 540, 600,
-  660, 720, 780, 840, 900, 960, 1020, 1080, 1140, 1200, 1500, 1800, 2100, 2400,
-  2700, 3000, 3300, 3600, 4200, 4800, 5400, 6000, 6600, 7200, 7800, 8400, 9000,
-  9600, 10200, 10800, 12000, 13200, 14400, 15600, 16800, 18000, 19200, 20400,
-  21600,
-];
 
 export async function getServerSideProps({ req, params }) {
   const SSR = withSSRContext({ req });
@@ -43,53 +32,70 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
-  let powers, powerAnalysis, result;
+  const powersRaw = post.power
+    ? ((await uncompress(post.powers)) as string)
+    : '{}';
+  const coordinatesRaw = post.coordinates
+    ? ((await uncompress(post.coordinates)) as string)
+    : '{}';
+  const elevationRaw = post.elevation
+    ? ((await uncompress(post.elevation)) as string)
+    : '{}';
 
-  try {
-    result = await Storage.get(`${post.gpxFile}`, {
-      download: true,
-    });
-  } catch (e) {
-    console.log(e);
-  }
-  if (!result) {
-    return {
-      props: {
-        post,
-        powers: [],
-        powerAnalysis: {},
-      },
-    };
-  }
+  const powers = JSON.parse(powersRaw);
+  const coordinates = JSON.parse(coordinatesRaw);
+  const elevation = JSON.parse(elevationRaw);
 
-  const body = await result.Body.text();
-  const xmlDoc = new DOMParser().parseFromString(body);
-  const gpxData = gpx(xmlDoc);
-
-  gpxData.features.forEach((feature) => {
-    // const { powers, heart, times, atemps, cads } =
-    //   feature.properties.coordinateProperties;
-    // const { coordinates } = feature.geometry;
-    powers = feature.properties.coordinateProperties.powers;
-    powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
-  });
+  // console.log({
+  //   post,
+  //   powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
+  //   elevation: elevation ? elevation : [],
+  //   coordinates: coordinates,
+  // });
 
   return {
     props: {
       post,
-      // powers: powers ? powers : [],
-      powerAnalysis: powerAnalysis ? powerAnalysis : {},
+      powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
+      elevation: elevation ? elevation : [],
+      coordinates: coordinates,
     },
   };
 }
 
-function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
+const uncompress = async (input: any) => {
+  return new Promise((resolve, reject) => {
+    return zlib.gunzip(
+      Buffer.from(input, 'base64'),
+      (err: any, buffer: any) => {
+        if (!err) {
+          const widgetString = buffer.toString('utf-8');
+          resolve(widgetString);
+        } else {
+          reject(err);
+        }
+      }
+    );
+  });
+};
+
+const Post = ({
+  signOut,
+  user,
+  renderedAt,
+  post,
+  powerAnalysis,
+  elevation,
+  coordinates,
+}) => {
   const router = useRouter();
   const [editor] = useState(() => withReact(createEditor()));
 
   const [isSaving, setIsSaving] = useState(false);
   const [uploadModal, setUploadModal] = useState(false);
   const [addImageModal, setAddImageModal] = useState(false);
+  // const [addMap, setAddMap] = useState(false)
+
   const [text, setText] = useState('');
   const [title, setTitle] = useState(post.title);
 
@@ -123,6 +129,12 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
       throw new Error(errors[0].message);
     }
   }
+
+  const addMap = (editor: ReactEditor) => {
+    Transforms.insertNodes(editor, [
+      { type: 'visualOverview', children: [{ text: '' }] } as Descendant,
+    ]);
+  };
 
   const addGraph = (editor: ReactEditor) => {
     Transforms.insertNodes(editor, [
@@ -163,7 +175,7 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
   };
 
   return (
-    <MyContext.Provider value={{ powerAnalysis }}>
+    <MyContext.Provider value={{ powerAnalysis, elevation, coordinates }}>
       <div>
         <Head>
           <title>{post.title}</title>
@@ -183,8 +195,7 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
                 zIndex: 10000,
                 display: 'flex',
               }}
-            >
-            </Box>
+            ></Box>
           )}
           {uploadModal && (
             <UploadGpxModal openModal={setUploadModal} post={post} />
@@ -201,18 +212,15 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
               marginRight: 'auto',
             }}
           >
-            {/* <p>{JSON.stringify(powers)}</p> */}
             <h1
               style={{ marginBottom: '20px' }}
               contentEditable='true'
               onBlur={(event) => {
-                // console.log(event.target.textContent);
                 setTitle(event.target.textContent);
               }}
             >
               {post.title}
             </h1>
-            <pre style={{ marginBottom: '20px' }}>{post.gpxFile}</pre>
             <Flex sx={{ marginBottom: '20px', gap: '10px' }}>
               <Button onClick={() => addGraph(editor)} disabled={!post.gpxFile}>
                 + Power Graph
@@ -221,6 +229,7 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
               <Button onClick={() => save(editor)}>Save</Button>
               <Button onClick={handleDelete}>Delete</Button>
               <Button onClick={() => upload(editor)}>Upload GPX</Button>
+              <Button onClick={() => addMap(editor)}>Add Map</Button>
             </Flex>
 
             <Slate editor={editor} initialValue={initialState}>
@@ -237,6 +246,6 @@ function Post({ signOut, user, renderedAt, post, powerAnalysis }) {
       </div>
     </MyContext.Provider>
   );
-}
+};
 
 export default withAuthenticator(Post);

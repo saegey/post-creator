@@ -13,10 +13,23 @@ export const getBlog = /* GraphQL */ `
           title
           gpxFile
           images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
           components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
           createdAt
           updatedAt
           blogPostsId
+          postRelatedId
           owner
           __typename
         }
@@ -61,7 +74,19 @@ export const getPost = /* GraphQL */ `
       title
       gpxFile
       images
+      headerImage
+      date
+      publishedDate
+      location
+      stravaUrl
+      type
+      subType
+      teaser
       components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
       blog {
         id
         name
@@ -74,9 +99,39 @@ export const getPost = /* GraphQL */ `
         owner
         __typename
       }
+      related {
+        items {
+          id
+          title
+          gpxFile
+          images
+          headerImage
+          date
+          publishedDate
+          location
+          stravaUrl
+          type
+          subType
+          teaser
+          components
+          powerAnalysis
+          coordinates
+          powers
+          elevation
+          createdAt
+          updatedAt
+          blogPostsId
+          postRelatedId
+          owner
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
+      postRelatedId
       owner
       __typename
     }
@@ -94,7 +149,19 @@ export const listPosts = /* GraphQL */ `
         title
         gpxFile
         images
+        headerImage
+        date
+        publishedDate
+        location
+        stravaUrl
+        type
+        subType
+        teaser
         components
+        powerAnalysis
+        coordinates
+        powers
+        elevation
         blog {
           id
           name
@@ -103,9 +170,14 @@ export const listPosts = /* GraphQL */ `
           owner
           __typename
         }
+        related {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         blogPostsId
+        postRelatedId
         owner
         __typename
       }

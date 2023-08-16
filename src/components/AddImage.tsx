@@ -1,17 +1,16 @@
-import { Box, Close, Flex, Image, Button } from 'theme-ui';
+import { Box, Close, Flex, Image, Button, Grid } from 'theme-ui';
 import CloudinaryUpload from './CloudinaryUpload';
 import { useState } from 'react';
 import { createEditor, Descendant, Transforms } from 'slate';
 
 const AddImage = ({ isOpen, post, editor }) => {
-  // console.log(post.images)
   const images = JSON.parse(post.images);
   const [selectedImage, setSelectedImage] = useState('');
   const [uploadedImages, setUploadedImages] = useState(images ? images : []);
 
   const insertImage = () => {
     isOpen(false);
-    console.log(selectedImage);
+
     Transforms.insertNodes(editor, [
       {
         type: 'image',
@@ -44,9 +43,7 @@ const AddImage = ({ isOpen, post, editor }) => {
           background: 'white',
           borderRadius: '5px',
         }}
-        // onClick={() => {
-        //   console.log('blah');
-        // }}
+        onClick={() => console.log('box clicked')}
       >
         <Box
           sx={{
@@ -62,36 +59,52 @@ const AddImage = ({ isOpen, post, editor }) => {
             </Box>
           </Flex>
           <CloudinaryUpload post={post} setUploadedImages={setUploadedImages} />
-          <Flex sx={{ marginTop: '50px', gap: '20px' }}>
+          {/* <Flex sx={{ marginTop: '50px', gap: '20px' }}> */}
+          <Grid
+            gap={'20px'}
+            columns={[2, 2, 2]}
+            sx={{ marginTop: '50px', overflowY: 'auto' }}
+          >
             {uploadedImages.map((image) => (
               <Box
-                onClick={() => {
-                  // console.log(image);
-                  setSelectedImage(image.secureUrl);
-                }}
-                onBlur={() => {
-                  console.log('blur');
-                }}
+                // onBlur={() => {
+                //   console.log('blur');
+                // }}
                 sx={{
-                  height: '310px',
-                  border:
-                    image.secureUrl === selectedImage
-                      ? '2px solid blue'
-                      : 'none',
+                  height: '100%',
+                  // border:
+                  //   image.secureUrl === selectedImage
+                  //     ? '2px solid blue'
+                  //     : 'none',
                 }}
               >
                 <Image
+                  onClick={() => {
+                    setSelectedImage(image.secureUrl);
+                  }}
                   src={image.secureUrl}
-                  sx={{ height: '100%', width: 'auto' }}
+                  sx={{
+                    maxWidth: '300px',
+                    maxHeight: '200px',
+                    width: 'auto',
+                    height: 'auto',
+                    // width: 'auto',
+                    border:
+                      image.secureUrl === selectedImage
+                        ? '2px solid blue'
+                        : 'none',
+                  }}
                 />
-                {/* <p>{image.secureUrl}</p> */}
               </Box>
             ))}
-          </Flex>
+          </Grid>
           <Box sx={{ marginTop: '20px' }}>
-            {/* <p>{JSON.stringify(uploadedImages)}</p> */}
-            {/* <p>{selectedImage}</p> */}
-            <Button onClick={insertImage}>Choose</Button>
+            <Button
+              onClick={insertImage}
+              disabled={selectedImage ? false : true}
+            >
+              Choose
+            </Button>
           </Box>
         </Box>
       </Box>
