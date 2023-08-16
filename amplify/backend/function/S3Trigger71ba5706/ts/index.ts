@@ -7,10 +7,11 @@ import AWSXRay from "aws-xray-sdk";
 import zlib from 'zlib';
 
 // https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
+// https://medium.com/develop-and-deploy-a-complex-serverless-web-app/use-s3-trigger-to-create-a-dynamodb-entry-when-uploading-images-to-s3-part-9-4d7489a4584b
 
 const S3 = new AWS.S3();
 const docClient = new AWS.DynamoDB.DocumentClient();
-import { Callback, Context, Handler } from 'aws-lambda';
+// import { Callback, Context, Handler } from 'aws-lambda';
 
 const timeIntervals = (end: number) => [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 35, 40, 45, 50,
