@@ -156,10 +156,8 @@ const shrinkify = async ({ field, name }: { field: any; name: string }) => {
 
 exports.handler = async function (event: TriggerEvent) {
   const segment = AWSXRay.getSegment();
-  let postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-dev';
-  if (process.env.ENV === 'master') {
-    postTable = 'Post-xcbzvot3xjf2tiwawkbuc7dwoy-prod';
-  }
+  const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
+  console.log('Dynamo Table: ', postTable);
   // console.log('Received S3 event:', JSON.stringify(event, null, 2));
   // const eventName = event.Records[0].eventName;
   const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line

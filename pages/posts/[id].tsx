@@ -32,6 +32,7 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
+	// console.log('coordinates', post.coordinates ? true : false)
   const powersRaw = post.power
     ? ((await uncompress(post.powers)) as string)
     : '{}';
@@ -150,7 +151,7 @@ const Post = ({
   const save = async (editor: any) => {
     setIsSaving(true);
     event.preventDefault();
-    console.log(post);
+    // console.log(post);
 
     try {
       const response = (await API.graphql({

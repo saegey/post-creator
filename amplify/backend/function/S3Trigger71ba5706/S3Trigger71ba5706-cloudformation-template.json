@@ -10,6 +10,18 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "apinextjsblogGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apinextjsblogGraphQLAPIIdOutput"
+    },
+    "apinextjsblogGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apinextjsblogGraphQLAPIEndpointOutput"
+    },
+    "apinextjsblogGraphQLAPIKeyOutput": {
+      "Type": "String",
+      "Default": "apinextjsblogGraphQLAPIKeyOutput"
     }
   },
   "Conditions": {
@@ -53,6 +65,18 @@
           "Variables": {
             "ENV": {
               "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apinextjsblogGraphQLAPIIdOutput"
+            },
+            "API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apinextjsblogGraphQLAPIEndpointOutput"
+            },
+            "API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT": {
+              "Ref": "apinextjsblogGraphQLAPIKeyOutput"
             }
           }
         },
@@ -163,6 +187,53 @@
                   }
                 ]
               }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "appsync:GraphQL"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apinextjsblogGraphQLAPIIdOutput"
+                      },
+                      "/types/Query/*"
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }

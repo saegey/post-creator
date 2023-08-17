@@ -65,6 +65,17 @@
   "function": {
     "S3Trigger71ba5706": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
