@@ -65,26 +65,19 @@
   "function": {
     "S3Trigger71ba5706": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_S3Trigger71ba5706_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger71ba5706"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Trigger71ba5706_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger71ba5706"
-        }
-      ]
     }
   },
   "storage": {
