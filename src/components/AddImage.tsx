@@ -3,6 +3,8 @@ import CloudinaryUpload from './CloudinaryUpload';
 import { useState } from 'react';
 import { createEditor, Descendant, Transforms } from 'slate';
 
+import BlackBox from './BlackBox';
+
 const AddImage = ({ isOpen, post, editor }) => {
   const images = JSON.parse(post.images);
   const [selectedImage, setSelectedImage] = useState('');
@@ -23,18 +25,7 @@ const AddImage = ({ isOpen, post, editor }) => {
   };
 
   return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: '0',
-        height: '100%',
-        width: '100%',
-        left: '0',
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        zIndex: 10000,
-        display: 'flex',
-      }}
-    >
+    <BlackBox>
       <Box
         sx={{
           width: '70%',
@@ -108,7 +99,7 @@ const AddImage = ({ isOpen, post, editor }) => {
           </Box>
         </Box>
       </Box>
-    </Box>
+    </BlackBox>
   );
 };
 

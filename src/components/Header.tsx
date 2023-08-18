@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MenuButton, Box, Flex, Close, NavLink, Button } from 'theme-ui';
 import Link from 'next/link';
+import BlackBox from './BlackBox';
 
 const Header = ({ user, signOut }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -8,18 +9,7 @@ const Header = ({ user, signOut }) => {
   return (
     <>
       {menuOpen && (
-        <Box
-          sx={{
-            position: 'fixed',
-            top: '0',
-            height: '100%',
-            width: '100%',
-            left: '0',
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            zIndex: 10000,
-            display: 'flex',
-          }}
-        >
+        <BlackBox>
           <Box sx={{ width: '400px', backgroundColor: 'white' }}>
             <Flex sx={{ padding: '20px' }}>
               <div>
@@ -35,7 +25,7 @@ const Header = ({ user, signOut }) => {
               </NavLink>
             </Flex>
           </Box>
-        </Box>
+        </BlackBox>
       )}
       <header style={{ marginBottom: '20px' }}>
         <div

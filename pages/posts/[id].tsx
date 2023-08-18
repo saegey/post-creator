@@ -22,6 +22,7 @@ import UploadGpxModal from '../../src/components/UploadGpxModal';
 import { MyContext } from '../../src/MyContext';
 import AddImage from '../../src/components/AddImage';
 import awsExports from '../../src/aws-exports';
+import BlackBox from '../../src/components/BlackBox';
 
 export async function getServerSideProps({ req, params }) {
   const SSR = withSSRContext({ req });
@@ -194,27 +195,34 @@ const Post = ({
     //   complete: () => console.log('Done'),
     // });
 
+    if (processingGpxStatus === 'update-data') {
+      setTimeout(() => {
+        setProcessingGpxStatus('');
+        console.log('Delayed for 5 second.');
+      }, 5000);
+    }
+
     getEndpoint().catch(console.error);
     configurePubSub().catch(console.error);
 
-    if (!isSubscribed) {
-      console.log('subscribed to newpost');
-      PubSub.subscribe('newpost').subscribe({
-        next: (data) => {
-          console.log(data.value.phase);
-          setProcessingGpxStatus(data.value.phase);
-          if (processingGpxStatus === 'update-data') {
-            setTimeout(() => {
-              setProcessingGpxStatus('');
-              console.log('Delayed for 5 second.');
-            }, 5000);
-          }
-        },
-        error: (error) => console.error(error),
-        close: () => console.log('Done'),
-      });
-      setIsSubscribed(true);
-    }
+    // if (!isSubscribed) {
+    // console.log('subscribed to newpost');
+    const sub1 = PubSub.subscribe('newpost').subscribe({
+      next: (data) => {
+        console.log(data.value.phase);
+        setProcessingGpxStatus(data.value.phase);
+      },
+      error: (error) => console.error(error),
+      close: () => console.log('Done'),
+    });
+
+    return () => {
+      sub1.unsubscribe();
+      console.log('cleaned up');
+    };
+    // setIsSubscribed(true);
+
+    // }
 
     // }
   });
@@ -290,18 +298,9 @@ const Post = ({
 
         <main>
           {isSaving && (
-            <Box
-              sx={{
-                position: 'fixed',
-                top: '0',
-                height: '100%',
-                width: '100%',
-                left: '0',
-                backgroundColor: 'rgba(0,0,0,0.8)',
-                zIndex: 10000,
-                display: 'flex',
-              }}
-            ></Box>
+            <BlackBox>
+              <p>saving</p>
+            </BlackBox>
           )}
           {uploadModal && (
             <UploadGpxModal

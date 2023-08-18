@@ -169,15 +169,8 @@ const message = (payload: object) => {
 };
 
 const publishMessage = async (payload: object) => {
-  await iotdata
-    .publish(message(payload), function (err, data) {
-      if (err) {
-        console.log('ERROR => ' + JSON.stringify(err));
-      } else {
-        console.log('Success', JSON.stringify(payload));
-      }
-    })
-    .promise();
+  const response = await iotdata.publish(message(payload)).promise();
+  console.log(response, JSON.stringify(payload));
 };
 
 exports.handler = async function (event: TriggerEvent) {
@@ -256,8 +249,8 @@ exports.handler = async function (event: TriggerEvent) {
       },
     })
     .promise();
-  await publishMessage({ phase: 'update-data' });
-  updateDynamoTimer.close();
-  console.log(JSON.stringify(res));
 
+  updateDynamoTimer.close();
+  await publishMessage({ phase: 'update-data' });
+  console.log(JSON.stringify(res));
 };

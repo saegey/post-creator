@@ -5,6 +5,7 @@ import { Box, Flex, Close, Label, Input, Button } from 'theme-ui';
 
 import { CreatePostMutation } from '../API';
 import { createPost } from '../graphql/mutations';
+import BlackBox from './BlackBox';
 
 async function handleCreatePost(event) {
   event.preventDefault();
@@ -34,18 +35,7 @@ async function handleCreatePost(event) {
 
 const CreatePostModal = ({ setMenuOpen }) => {
   return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: '0',
-        height: '100%',
-        width: '100%',
-        left: '0',
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        zIndex: 10000,
-        display: 'flex',
-      }}
-    >
+    <BlackBox>
       <Box
         sx={{
           width: '70%',
@@ -78,7 +68,7 @@ const CreatePostModal = ({ setMenuOpen }) => {
           </Authenticator>
         </Box>
       </Box>
-    </Box>
+    </BlackBox>
   );
 };
 
