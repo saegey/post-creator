@@ -1,13 +1,17 @@
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
 import { useState } from 'react';
-import { Storage, API } from 'aws-amplify';
+// import { Storage, API } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
+import { Storage, API, graphqlOperation } from 'aws-amplify';
+import { GraphQLSubscription } from '@aws-amplify/api';
+import * as subscriptions from '../graphql/subscriptions';
+import { OnUpdatePostSubscription } from '../API';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
 
-const UploadGpxModal = ({ openModal, post }) => {
+const UploadGpxModal = ({ openModal, post, setProcess }) => {
   const [fileData, setFileData] = useState<File>();
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState({ loaded: 0, total: 0 });
@@ -36,9 +40,20 @@ const UploadGpxModal = ({ openModal, post }) => {
           },
         },
       })) as GraphQLResult<UpdatePostMutation>;
-      console.log(response);
+
+      // Subscribe to creation of Todo
+      const sub = API.graphql<GraphQLSubscription<OnUpdatePostSubscription>>(
+        graphqlOperation(subscriptions.onUpdatePost)
+      ).subscribe({
+        next: ({ provider, value }) => console.log({ provider, value }),
+        error: (error) => console.warn(error),
+      });
+      console.log(response, sub);
       console.log(21, result);
+
       setIsUploading(false);
+      setProcess('processing');
+      openModal(false);
     } catch (error) {
       console.error(error);
       setIsUploading(false);
