@@ -11,6 +11,11 @@ const helpers_1 = require("@turf/helpers");
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const aws_xray_sdk_1 = __importDefault(require("aws-xray-sdk"));
 const zlib_1 = __importDefault(require("zlib"));
+// import { AWSIoTProvider } from '@aws-amplify/pubsub';
+// const AWS = require('aws-sdk');
+const iotdata = new aws_sdk_1.default.IotData({
+    endpoint: 'a29ieb9zd32ips-ats.iot.us-east-1.amazonaws.com',
+});
 // https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
 // https://medium.com/develop-and-deploy-a-complex-serverless-web-app/use-s3-trigger-to-create-a-dynamodb-entry-when-uploading-images-to-s3-part-9-4d7489a4584b
 const S3 = new aws_sdk_1.default.S3();
@@ -106,7 +111,28 @@ const shrinkify = async ({ field, name }) => {
     console.log(`${name}: total size (compressed): ~${Math.round(fieldCompressed.length / 1024)} KB`);
     return fieldCompressed;
 };
+const message = (payload) => {
+    return {
+        topic: 'newpost',
+        payload: JSON.stringify(payload),
+        qos: 0,
+    };
+};
+const publishMessage = async (payload) => {
+    await iotdata
+        .publish(message(payload), function (err, data) {
+        if (err) {
+            console.log('ERROR => ' + JSON.stringify(err));
+        }
+        else {
+            console.log('Success', JSON.stringify(payload));
+        }
+    })
+        .promise();
+};
 exports.handler = async function (event) {
+    console.log('Event => ' + JSON.stringify(event));
+    await publishMessage({ phase: 'start' });
     const segment = aws_xray_sdk_1.default.getSegment();
     const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
     console.log('Dynamo Table: ', postTable);
@@ -124,16 +150,20 @@ exports.handler = async function (event) {
         Key: key,
     }).promise();
     s3getTimer.close();
+    await publishMessage({ phase: 'file-downloaded' });
     const s3metaTimer = segment.addNewSubsegment('s3meta');
     const metaData = await S3.headObject(fileParams).promise();
     console.log('metadata', JSON.stringify(metaData));
     s3metaTimer.close();
+    await publishMessage({ phase: 'meta-downloaded' });
     const xmlParseTimer = segment.addNewSubsegment('xmlParse');
     const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString('utf-8'));
     xmlParseTimer.close();
+    await publishMessage({ phase: 'xml-parse' });
     const gpxParseTimer = segment.addNewSubsegment('gpxParse');
     const gpxData = (0, togeojson_1.gpx)(xmlDoc);
     gpxParseTimer.close();
+    await publishMessage({ phase: 'gpx-parse' });
     let coordinates = [];
     let powers, powerAnalysis, elevation;
     gpxData.features.map((feature) => {
@@ -148,6 +178,7 @@ exports.handler = async function (event) {
         elevation = (0, exports.downsampleElevation)(coordinates, 10);
         downsampleElevationTimer.close();
     });
+    await publishMessage({ phase: 'process-data' });
     const updateDynamoTimer = segment.addNewSubsegment('updateDynamo');
     const res = await docClient
         .update({
@@ -164,6 +195,7 @@ exports.handler = async function (event) {
         },
     })
         .promise();
+    await publishMessage({ phase: 'update-data' });
     updateDynamoTimer.close();
     console.log(JSON.stringify(res));
 };
