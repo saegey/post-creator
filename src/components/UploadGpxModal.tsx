@@ -1,20 +1,25 @@
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
-import { useState } from 'react';
+import React from 'react';
 // import { Storage, API } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
-import { Storage, API, graphqlOperation } from 'aws-amplify';
-import { GraphQLSubscription } from '@aws-amplify/api';
-import * as subscriptions from '../graphql/subscriptions';
-import { OnUpdatePostSubscription } from '../API';
+import { Storage, API, PubSub } from 'aws-amplify';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
+import { PostContext } from '../PostContext';
+import { getPostQuery } from '../actions/PostGet';
+import { configurePubSub, getEndpoint } from '../../src/actions/PubSub';
+import { uncompress } from '../utils/compress';
 
-const UploadGpxModal = ({ openModal, post, setProcess }) => {
-  const [fileData, setFileData] = useState<File>();
-  const [isUploading, setIsUploading] = useState(false);
-  const [progress, setProgress] = useState({ loaded: 0, total: 0 });
+const UploadGpxModal = ({ openModal }) => {
+  const [fileData, setFileData] = React.useState<File>();
+  const [isUploading, setIsUploading] = React.useState(false);
+  const [progress, setProgress] = React.useState({ loaded: 0, total: 0 });
+  const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
+  const [subPubConfigured, setSubPubConfigured] = React.useState(false);
+
+  const { post, setElevationAndCoordinates } = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -41,25 +46,73 @@ const UploadGpxModal = ({ openModal, post, setProcess }) => {
         },
       })) as GraphQLResult<UpdatePostMutation>;
 
-      // Subscribe to creation of Todo
-      const sub = API.graphql<GraphQLSubscription<OnUpdatePostSubscription>>(
-        graphqlOperation(subscriptions.onUpdatePost)
-      ).subscribe({
-        next: ({ provider, value }) => console.log({ provider, value }),
-        error: (error) => console.warn(error),
-      });
-      console.log(response, sub);
-      console.log(21, result);
-
       setIsUploading(false);
-      setProcess('processing');
-      openModal(false);
+      // setProcess('processing');
+      // openModal(false);
     } catch (error) {
       console.error(error);
       setIsUploading(false);
-      // throw new Error(errors[0].message);
     }
   };
+
+  const processUpdates = async (post) => {
+    const newElevation = await uncompress(post.elevation);
+    const newCoordinates = await uncompress(post.coordinates);
+    setElevationAndCoordinates(
+      JSON.parse(newElevation),
+      JSON.parse(newCoordinates)
+    );
+  };
+
+  React.useEffect(() => {
+    if (processingGpxStatus === 'update-data') {
+      // setTimeout(() => {
+      //   setProcessingGpxStatus('');
+      //   console.log('Delayed for 5 second.');
+      // }, 5000);
+
+      // console.log(data);
+      getPostQuery(post.id).then((d) => {
+        processUpdates(d.data.getPost).then(() => {
+          console.log('data is updated');
+        });
+        // setPowerAnalysis(JSON.parse(d.data.getPost.powerAnalysis));
+
+        // updateElevation(d.data.getPost.elevation);
+        // updateCoordinates(d.data.getPost.coordinates);
+      });
+      // setPowerAnalysis('');
+    }
+  }, [processingGpxStatus]);
+
+  const setUpSub = async () => {
+    if (!subPubConfigured) {
+      const endpoint = await getEndpoint();
+      await configurePubSub(endpoint);
+      setSubPubConfigured(true);
+    }
+
+    return PubSub.subscribe('newpost').subscribe({
+      next: (data) => {
+        console.log(data.value.phase);
+        setProcessingGpxStatus(data.value.phase);
+      },
+      error: (error) => console.error(error),
+      close: () => console.log('Done'),
+    });
+  };
+
+  React.useEffect(() => {
+    let subUpdates;
+    setUpSub().then((sub) => {
+      subUpdates = sub;
+    });
+
+    return () => {
+      console.log('destroy');
+      subUpdates.unsubscribe();
+    };
+  }, [subPubConfigured]);
 
   return (
     <BlackBox>
@@ -120,6 +173,7 @@ const UploadGpxModal = ({ openModal, post, setProcess }) => {
           {progress.total === progress.loaded && progress.loaded !== 0
             ? 'File uploaded successfully'
             : ''}
+          {processingGpxStatus && <p>{processingGpxStatus}</p>}
         </Box>
       </Box>
     </BlackBox>

@@ -1,0 +1,35 @@
+{
+  "id": "uw-file3",
+  "batchId": "uw-batch2",
+  "asset_id": "b179297fc6e7717e0e24247471ac20b6",
+  "public_id": "user_images/knjm4d8muemat62xmb2p",
+  "version": 1692555374,
+  "version_id": "b679542e93bed4483609178719be3471",
+  "signature": "b40845e019cd87d38e2b61702ff7649795553deb",
+  "width": 3024,
+  "height": 1701,
+  "format": "jpg",
+  "resource_type": "image",
+  "created_at": "2023-08-20T18:16:14Z",
+  "tags": [],
+  "bytes": 6343123,
+  "type": "upload",
+  "etag": "58c16b7dd0e715c7c558d4e06db67ac7",
+  "placeholder": false,
+  "url": "http://res.cloudinary.com/dprifih4o/image/upload/v1692555374/user_images/knjm4d8muemat62xmb2p.jpg",
+  "secure_url": "https://res.cloudinary.com/dprifih4o/image/upload/v1692555374/user_images/knjm4d8muemat62xmb2p.jpg",
+	"test": "https://res.cloudinary.com/dprifih4o/image/upload/t_resize-tst/cld-sample.jpg"
+  "folder": "user_images",
+  "access_mode": "public",
+  "context": {
+    "custom": {
+      "alt": "user_uploaded"
+    }
+  },
+  "original_filename": "Ancient Lakes - 2 of 8",
+  "original_extension": "jpeg",
+  "path": "v1692555374/user_images/knjm4d8muemat62xmb2p.jpg",
+  "thumbnail_url": "https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/v1692555374/user_images/knjm4d8muemat62xmb2p.jpg"
+}
+
+https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/v1/user_images/knjm4d8muemat62xmb2p

@@ -1,14 +1,25 @@
 import { Box, Close, Flex, Image, Button, Grid } from 'theme-ui';
+import { useContext, useState } from 'react';
+import { Descendant, Transforms } from 'slate';
+
 import CloudinaryUpload from './CloudinaryUpload';
-import { useState } from 'react';
-import { createEditor, Descendant, Transforms } from 'slate';
+import { PostContext } from '../PostContext';
 
 import BlackBox from './BlackBox';
 
-const AddImage = ({ isOpen, post, editor }) => {
-  const images = JSON.parse(post.images);
+const thumbnailUrl = (image) => {
+  return `https://res.cloudinary.com/dprifih4o/image/upload/t_resize-tst/${image.public_id}.${image.format}`;
+};
+
+const editorUrl = (image) => {
+  return `https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/${image.public_id}.${image.format}`;
+};
+
+const AddImage = ({ isOpen, editor }) => {
   const [selectedImage, setSelectedImage] = useState('');
-  const [uploadedImages, setUploadedImages] = useState(images ? images : []);
+  const { setImages, images, post } = useContext(PostContext);
+  console.log(images);
+  // const images = JSON.parse(post.images);
 
   const insertImage = () => {
     isOpen(false);
@@ -16,7 +27,9 @@ const AddImage = ({ isOpen, post, editor }) => {
     Transforms.insertNodes(editor, [
       {
         type: 'image',
-        src: selectedImage,
+        src: editorUrl(selectedImage),
+        asset_id: selectedImage.asset_id,
+        public_id: selectedImage.public_id,
         children: [{ text: '' }],
         void: true,
       } as Descendant,
@@ -34,7 +47,6 @@ const AddImage = ({ isOpen, post, editor }) => {
           background: 'white',
           borderRadius: '5px',
         }}
-        onClick={() => console.log('box clicked')}
       >
         <Box
           sx={{
@@ -49,31 +61,28 @@ const AddImage = ({ isOpen, post, editor }) => {
               <Close onClick={() => isOpen(false)} />
             </Box>
           </Flex>
-          <CloudinaryUpload post={post} setUploadedImages={setUploadedImages} />
-          {/* <Flex sx={{ marginTop: '50px', gap: '20px' }}> */}
+          <CloudinaryUpload
+            images={images}
+            postId={post.id}
+            setUploadedImages={setImages}
+          />
           <Grid
             gap={'20px'}
             columns={[2, 2, 2]}
             sx={{ marginTop: '50px', overflowY: 'auto' }}
           >
-            {uploadedImages.map((image) => (
+            {images.map((image, i) => (
               <Box
-                // onBlur={() => {
-                //   console.log('blur');
-                // }}
                 sx={{
                   height: '100%',
-                  // border:
-                  //   image.secureUrl === selectedImage
-                  //     ? '2px solid blue'
-                  //     : 'none',
                 }}
+                key={`image-${i}`}
               >
                 <Image
                   onClick={() => {
-                    setSelectedImage(image.secureUrl);
+                    setSelectedImage(image);
                   }}
-                  src={image.secureUrl}
+                  src={thumbnailUrl(image)}
                   sx={{
                     maxWidth: '300px',
                     maxHeight: '200px',
@@ -81,7 +90,7 @@ const AddImage = ({ isOpen, post, editor }) => {
                     height: 'auto',
                     // width: 'auto',
                     border:
-                      image.secureUrl === selectedImage
+                      image.secure_url === selectedImage.secure_url
                         ? '2px solid blue'
                         : 'none',
                   }}

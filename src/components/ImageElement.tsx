@@ -3,7 +3,6 @@ import { Transforms } from 'slate';
 import { Box, Button } from 'theme-ui';
 
 const ImageElement = ({ attributes, children, element }) => {
-  console.log(element.src);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
 
