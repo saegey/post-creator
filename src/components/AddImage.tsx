@@ -18,8 +18,6 @@ const editorUrl = (image) => {
 const AddImage = ({ isOpen, editor }) => {
   const [selectedImage, setSelectedImage] = useState('');
   const { setImages, images, post } = useContext(PostContext);
-  console.log(images);
-  // const images = JSON.parse(post.images);
 
   const insertImage = () => {
     isOpen(false);

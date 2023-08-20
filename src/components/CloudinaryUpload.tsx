@@ -10,7 +10,6 @@ const updateImages = async ({
   images,
 }) => {
   images.push(newImage);
-  console.log(images);
   setUploadedImages(images);
 
   PostSaveImages({ postId, images });

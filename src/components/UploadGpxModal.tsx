@@ -47,8 +47,6 @@ const UploadGpxModal = ({ openModal }) => {
       })) as GraphQLResult<UpdatePostMutation>;
 
       setIsUploading(false);
-      // setProcess('processing');
-      // openModal(false);
     } catch (error) {
       console.error(error);
       setIsUploading(false);
@@ -66,22 +64,13 @@ const UploadGpxModal = ({ openModal }) => {
 
   React.useEffect(() => {
     if (processingGpxStatus === 'update-data') {
-      // setTimeout(() => {
-      //   setProcessingGpxStatus('');
-      //   console.log('Delayed for 5 second.');
-      // }, 5000);
-
-      // console.log(data);
       getPostQuery(post.id).then((d) => {
         processUpdates(d.data.getPost).then(() => {
           console.log('data is updated');
+          openModal(false);
         });
         // setPowerAnalysis(JSON.parse(d.data.getPost.powerAnalysis));
-
-        // updateElevation(d.data.getPost.elevation);
-        // updateCoordinates(d.data.getPost.coordinates);
       });
-      // setPowerAnalysis('');
     }
   }, [processingGpxStatus]);
 

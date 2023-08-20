@@ -65,23 +65,6 @@ const Post = ({
     );
   }
 
-  // const updateElevation = async (rawElevation) => {
-  //   // setElevation(JSON.parse(await uncompress(d.data.getPost.elevation)));
-  //   const elevation = await uncompress(rawElevation);
-
-  //   const data = JSON.parse(elevation);
-  //   // console.log('elevation', data);
-  //   postContext.setElevation(data);
-  // };
-
-  // const updateCoordinates = async (rawCoordinates) => {
-  //   const coordinatees = await uncompress(rawCoordinates);
-
-  //   const data = JSON.parse(coordinatees);
-  //   // console.log('coordinatees', data);
-  //   postContext.setCoordinates(data);
-  // };
-
   return (
     <PostContextProvider
       value={{
