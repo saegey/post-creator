@@ -8,7 +8,8 @@ import { PostContext } from '../PostContext';
 
 const PostEditor = ({ initialState }) => {
   const [editor] = React.useState(() => withReact(createEditor()));
-  const { setTitle, title } = React.useContext(PostContext);
+  const { setTitle, title, location, setLocation } =
+    React.useContext(PostContext);
 
   return (
     <>
@@ -23,6 +24,16 @@ const PostEditor = ({ initialState }) => {
       >
         {title}
       </h1>
+      <h2
+        contentEditable='true'
+        suppressContentEditableWarning={true}
+        onBlur={(event) => {
+          console.log('tst');
+          setLocation(event.target.textContent);
+        }}
+      >
+        {location}
+      </h2>
       <PostMenu editor={editor} />
       <Slate editor={editor} initialValue={initialState}>
         <Editable

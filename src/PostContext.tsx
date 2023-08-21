@@ -10,11 +10,13 @@ export const PostContext = React.createContext({
   coordinates: '',
   gpxFile: '',
   images: [],
+  location: '',
   setImages: (images: any) => {},
   setCoordinates: (coordinates: any) => {},
   setElevation: (arg: string) => {},
   setTitle: (arg: string) => {},
   setElevationAndCoordinates: (arg: any, arg1: any) => {},
+  setLocation: (arg: string) => {},
 });
 
 export const PostContextProvider = (props) => {
@@ -42,6 +44,11 @@ export const PostContextProvider = (props) => {
     // console.log('state', state, title);
   };
 
+  const setLocation = (location) => {
+    setState({ ...state, location: location });
+    // console.log('state', state, title);
+  };
+
   const setGpxFile = (gpxFile) => {
     setState({ ...state, gpxFile: gpxFile });
   };
@@ -54,12 +61,14 @@ export const PostContextProvider = (props) => {
     title: props.value.post.title,
     gpxFile: props.value.post.gpxFile,
     images: JSON.parse(props.value.post.images),
+    location: props.value.post.location,
     setElevation: setElevation,
     setImages: setImages,
     setCoordinates: setCoordinates,
     setTitle: setTitle,
     setGpxFile: setGpxFile,
     setElevationAndCoordinates: setElevationAndCoordinates,
+    setLocation: setLocation,
   };
 
   const [state, setState] = React.useState(initState);
