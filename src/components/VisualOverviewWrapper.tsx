@@ -10,7 +10,6 @@ const VisualOverview = dynamic(import('@saegey/posts.visual-overview'), {
 const VisualOverviewWrapper = ({ attributes, children, element }) => {
   const { elevation, coordinates } = React.useContext(PostContext);
   const vizOverview = React.useMemo(() => {
-		console.log('elevation', elevation)
     return (
       <VisualOverview
         elevationData={{

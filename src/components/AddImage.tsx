@@ -75,32 +75,34 @@ const AddImage = ({ isOpen, editor }) => {
             columns={[2, 2, 2]}
             sx={{ marginTop: '50px', overflowY: 'auto' }}
           >
-            {images.map((image, i) => (
-              <Box
-                sx={{
-                  height: '100%',
-                }}
-                key={`image-${i}`}
-              >
-                <Image
-                  onClick={() => {
-                    setSelectedImage(image);
-                  }}
-                  src={thumbnailUrl(image)}
+            {images &&
+              images.map((image, i) => (
+                <Box
                   sx={{
-                    maxWidth: '300px',
-                    maxHeight: '200px',
-                    width: 'auto',
-                    height: 'auto',
-                    // width: 'auto',
-                    border:
-                      image.secure_url === selectedImage.secure_url
-                        ? '2px solid blue'
-                        : 'none',
+                    height: '100%',
                   }}
-                />
-              </Box>
-            ))}
+                  key={`image-${i}`}
+                >
+                  <Image
+                    onClick={() => {
+                      setSelectedImage(image);
+                    }}
+                    src={thumbnailUrl(image)}
+                    sx={{
+                      maxWidth: '300px',
+                      maxHeight: '200px',
+                      width: 'auto',
+                      height: 'auto',
+                      // width: 'auto',
+                      border:
+                        selectedImage &&
+                        image.secure_url === selectedImage.secure_url
+                          ? '2px solid blue'
+                          : 'none',
+                    }}
+                  />
+                </Box>
+              ))}
           </Grid>
           <Box sx={{ marginTop: '20px' }}>
             <Button
