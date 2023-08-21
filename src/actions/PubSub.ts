@@ -66,4 +66,4 @@ const attachIoTPolicyToUser = async () => {
   }
 };
 
-export { configurePubSub, getEndpoint };
+export { configurePubSub, getEndpoint,  attachIoTPolicyToUser };

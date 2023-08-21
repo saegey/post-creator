@@ -9,7 +9,11 @@ import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
 import { PostContext } from '../PostContext';
 import { getPostQuery } from '../actions/PostGet';
-import { configurePubSub, getEndpoint } from '../../src/actions/PubSub';
+import {
+  attachIoTPolicyToUser,
+  configurePubSub,
+  getEndpoint,
+} from '../../src/actions/PubSub';
 import { uncompress } from '../utils/compress';
 
 const UploadGpxModal = ({ openModal }) => {
@@ -78,6 +82,7 @@ const UploadGpxModal = ({ openModal }) => {
     if (!subPubConfigured) {
       const endpoint = await getEndpoint();
       await configurePubSub(endpoint);
+      await attachIoTPolicyToUser();
       setSubPubConfigured(true);
     }
 
