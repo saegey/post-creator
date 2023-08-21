@@ -15,8 +15,14 @@ const editorUrl = (image) => {
   return `https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/${image.public_id}.${image.format}`;
 };
 
+interface CloudinaryImage {
+  asset_id: string;
+  public_id: string;
+  secure_url: string;
+}
+
 const AddImage = ({ isOpen, editor }) => {
-  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedImage, setSelectedImage] = useState<CloudinaryImage>();
   const { setImages, images, post } = useContext(PostContext);
 
   const insertImage = () => {
@@ -26,8 +32,8 @@ const AddImage = ({ isOpen, editor }) => {
       {
         type: 'image',
         src: editorUrl(selectedImage),
-        asset_id: selectedImage.asset_id,
-        public_id: selectedImage.public_id,
+        asset_id: selectedImage?.asset_id,
+        public_id: selectedImage?.public_id,
         children: [{ text: '' }],
         void: true,
       } as Descendant,

@@ -54,8 +54,8 @@ const UploadGpxModal = ({ openModal }) => {
   };
 
   const processUpdates = async (post) => {
-    const newElevation = await uncompress(post.elevation);
-    const newCoordinates = await uncompress(post.coordinates);
+    const newElevation = (await uncompress(post.elevation)) as string;
+    const newCoordinates = (await uncompress(post.coordinates)) as string;
     setElevationAndCoordinates(
       JSON.parse(newElevation),
       JSON.parse(newCoordinates)
@@ -82,17 +82,17 @@ const UploadGpxModal = ({ openModal }) => {
     }
 
     return PubSub.subscribe('newpost').subscribe({
-      next: (data) => {
+      next: (data: any) => {
         console.log(data.value.phase);
         setProcessingGpxStatus(data.value.phase);
       },
       error: (error) => console.error(error),
-      close: () => console.log('Done'),
     });
   };
 
   React.useEffect(() => {
     let subUpdates;
+
     setUpSub().then((sub) => {
       subUpdates = sub;
     });

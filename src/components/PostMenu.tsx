@@ -46,9 +46,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   const [uploadModal, setUploadModal] = React.useState(false);
   const [addImageModal, setAddImageModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-
   const { post, title, gpxFile } = React.useContext(PostContext);
-  console.log('gpxFile', gpxFile);
 
   const save = async (e) => {
     e.preventDefault();
@@ -65,7 +63,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
 
   return (
     <>
-      {uploadModal && <UploadGpxModal openModal={setUploadModal} post={post} />}
+      {uploadModal && <UploadGpxModal openModal={setUploadModal} />}
       {addImageModal && <AddImage isOpen={setAddImageModal} editor={editor} />}
       {isSaving && (
         <BlackBox>

@@ -10,11 +10,11 @@ export const PostContext = React.createContext({
   coordinates: '',
   gpxFile: '',
   images: [],
-  setImages: () => {},
-  setCoordinates: () => {},
-  setElevation: () => {},
-  setTitle: () => {},
-  setElevationAndCoordinates: () => {},
+  setImages: (images: any) => {},
+  setCoordinates: (coordinates: any) => {},
+  setElevation: (arg: string) => {},
+  setTitle: (arg: string) => {},
+  setElevationAndCoordinates: (arg: any, arg1: any) => {},
 });
 
 export const PostContextProvider = (props) => {

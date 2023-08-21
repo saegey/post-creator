@@ -37,8 +37,9 @@ const attachIoTPolicyToUser = async () => {
   // federated identity already has the necessary IoT policy attached:
   const IOT_ATTRIBUTE_FLAG = 'custom:iotPolicyIsAttached';
 
-  var userInfo = await Auth.currentUserInfo({ bypassCache: true });
-  var iotPolicyIsAttached = userInfo.attributes[IOT_ATTRIBUTE_FLAG] === 'true';
+  // var userInfo = await Auth.currentUserInfo({ bypassCache: true });
+	const userInfo = await Auth.currentUserInfo()
+  const iotPolicyIsAttached = userInfo.attributes[IOT_ATTRIBUTE_FLAG] === 'true';
   console.log(userInfo);
 
   if (!iotPolicyIsAttached) {
