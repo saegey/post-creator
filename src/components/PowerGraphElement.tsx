@@ -4,10 +4,10 @@ import { Box, Button, Flex } from 'theme-ui';
 import { useContext } from 'react';
 
 import { PowerCurveGraph } from '@saegey/posts.ui.power-curve-graph';
-import { MyContext } from '../MyContext';
+import { PostContext } from '../PostContext';
 
 const PowerGraph = ({ attributes, children, element }) => {
-  const { powerAnalysis } = useContext(MyContext);
+  const { powerAnalysis } = useContext(PostContext);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
 

@@ -36,6 +36,11 @@ type Post
   # comments: [Comment] @hasMany
 }
 
+# type Subscription {
+#   onCoordinatesOnPost(postCommentsId: ID!): Post
+#     @aws_subscribe(mutations: ["createComment"])
+# }
+
 # type Comment @model {
 #   id: ID!
 #   post: Post @belongsTo

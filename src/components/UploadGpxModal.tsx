@@ -1,16 +1,29 @@
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
-import { useState } from 'react';
-import { Storage, API } from 'aws-amplify';
+import React from 'react';
+// import { Storage, API } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
+import { Storage, API, PubSub } from 'aws-amplify';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
+import { PostContext } from '../PostContext';
+import { getPostQuery } from '../actions/PostGet';
+import {
+  attachIoTPolicyToUser,
+  configurePubSub,
+  getEndpoint,
+} from '../../src/actions/PubSub';
+import { uncompress } from '../utils/compress';
 
-const UploadGpxModal = ({ openModal, post }) => {
-  const [fileData, setFileData] = useState<File>();
-  const [isUploading, setIsUploading] = useState(false);
-  const [progress, setProgress] = useState({ loaded: 0, total: 0 });
+const UploadGpxModal = ({ openModal }) => {
+  const [fileData, setFileData] = React.useState<File>();
+  const [isUploading, setIsUploading] = React.useState(false);
+  const [progress, setProgress] = React.useState({ loaded: 0, total: 0 });
+  const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
+  const [subPubConfigured, setSubPubConfigured] = React.useState(false);
+
+  const { post, setElevationAndCoordinates } = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -36,15 +49,64 @@ const UploadGpxModal = ({ openModal, post }) => {
           },
         },
       })) as GraphQLResult<UpdatePostMutation>;
-      console.log(response);
-      console.log(21, result);
+
       setIsUploading(false);
     } catch (error) {
       console.error(error);
       setIsUploading(false);
-      // throw new Error(errors[0].message);
     }
   };
+
+  const processUpdates = async (post) => {
+    const newElevation = (await uncompress(post.elevation)) as string;
+    const newCoordinates = (await uncompress(post.coordinates)) as string;
+    setElevationAndCoordinates(
+      JSON.parse(newElevation),
+      JSON.parse(newCoordinates)
+    );
+  };
+
+  React.useEffect(() => {
+    if (processingGpxStatus === 'update-data') {
+      getPostQuery(post.id).then((d) => {
+        processUpdates(d.data.getPost).then(() => {
+          console.log('data is updated');
+          openModal(false);
+        });
+        // setPowerAnalysis(JSON.parse(d.data.getPost.powerAnalysis));
+      });
+    }
+  }, [processingGpxStatus]);
+
+  const setUpSub = async () => {
+    if (!subPubConfigured) {
+      const endpoint = await getEndpoint();
+      await configurePubSub(endpoint);
+      await attachIoTPolicyToUser();
+      setSubPubConfigured(true);
+    }
+
+    return PubSub.subscribe('newpost').subscribe({
+      next: (data: any) => {
+        console.log(data.value.phase);
+        setProcessingGpxStatus(data.value.phase);
+      },
+      error: (error) => console.error(error),
+    });
+  };
+
+  React.useEffect(() => {
+    let subUpdates;
+
+    setUpSub().then((sub) => {
+      subUpdates = sub;
+    });
+
+    return () => {
+      console.log('destroy');
+      subUpdates.unsubscribe();
+    };
+  }, [subPubConfigured]);
 
   return (
     <BlackBox>
@@ -105,6 +167,7 @@ const UploadGpxModal = ({ openModal, post }) => {
           {progress.total === progress.loaded && progress.loaded !== 0
             ? 'File uploaded successfully'
             : ''}
+          {processingGpxStatus && <p>{processingGpxStatus}</p>}
         </Box>
       </Box>
     </BlackBox>

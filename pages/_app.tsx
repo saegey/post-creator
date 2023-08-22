@@ -3,13 +3,15 @@ import * as React from 'react';
 import NextApp from 'next/app';
 import { ThemeUIProvider } from 'theme-ui';
 import theme from '../src/utils/theme'; // theme object from step 2
-import '../styles/globals.css';
-import 'mapbox-gl/dist/mapbox-gl.css'
 import ViewportProvider from '@saegey/posts.viewport';
 import UnitProvider from '@saegey/posts.units';
-
 import { Amplify, Storage } from 'aws-amplify';
 import awsconfig from '../src/aws-exports';
+
+import '@aws-amplify/ui-react/styles.css';
+import '../styles/globals.css';
+import 'mapbox-gl/dist/mapbox-gl.css'
+
 Amplify.configure(awsconfig);
 
 export default class App extends NextApp {

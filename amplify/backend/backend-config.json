@@ -1,5 +1,19 @@
 {
   "api": {
+    "api12660653": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "nextjsblog24b60079"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "nextjsblog": {
       "dependsOn": [
         {
@@ -78,6 +92,11 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "nextjsblog24b60079": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -94,6 +113,22 @@
         {
           "category": "function",
           "resourceName": "S3Trigger71ba5706"
+        }
+      ]
+    },
+    "AMPLIFY_function_nextjsblog24b60079_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nextjsblog24b60079"
+        }
+      ]
+    },
+    "AMPLIFY_function_nextjsblog24b60079_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nextjsblog24b60079"
         }
       ]
     }

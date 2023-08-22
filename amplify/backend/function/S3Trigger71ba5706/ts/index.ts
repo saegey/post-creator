@@ -5,6 +5,12 @@ import { lineString } from '@turf/helpers';
 import AWS from 'aws-sdk';
 import AWSXRay from 'aws-xray-sdk';
 import zlib from 'zlib';
+// import { AWSIoTProvider } from '@aws-amplify/pubsub';
+
+// const AWS = require('aws-sdk');
+const iotdata = new AWS.IotData({
+  endpoint: 'a29ieb9zd32ips-ats.iot.us-east-1.amazonaws.com',
+});
 
 // https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
 // https://medium.com/develop-and-deploy-a-complex-serverless-web-app/use-s3-trigger-to-create-a-dynamodb-entry-when-uploading-images-to-s3-part-9-4d7489a4584b
@@ -154,7 +160,23 @@ const shrinkify = async ({ field, name }: { field: any; name: string }) => {
   return fieldCompressed;
 };
 
+const message = (payload: object) => {
+  return {
+    topic: 'newpost',
+    payload: JSON.stringify(payload),
+    qos: 0,
+  };
+};
+
+const publishMessage = async (payload: object) => {
+  const response = await iotdata.publish(message(payload)).promise();
+  console.log(response, JSON.stringify(payload));
+};
+
 exports.handler = async function (event: TriggerEvent) {
+  console.log('Event => ' + JSON.stringify(event));
+
+  await publishMessage({ phase: 'start' });
   const segment = AWSXRay.getSegment();
   const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
   console.log('Dynamo Table: ', postTable);
@@ -173,19 +195,23 @@ exports.handler = async function (event: TriggerEvent) {
     Key: key,
   }).promise();
   s3getTimer.close();
+  await publishMessage({ phase: 'file-downloaded' });
 
   const s3metaTimer = segment.addNewSubsegment('s3meta');
   const metaData = await S3.headObject(fileParams).promise();
   console.log('metadata', JSON.stringify(metaData));
   s3metaTimer.close();
+  await publishMessage({ phase: 'meta-downloaded' });
 
   const xmlParseTimer = segment.addNewSubsegment('xmlParse');
   const xmlDoc = new DOMParser().parseFromString(file.Body.toString('utf-8'));
   xmlParseTimer.close();
+  await publishMessage({ phase: 'xml-parse' });
 
   const gpxParseTimer = segment.addNewSubsegment('gpxParse');
   const gpxData = gpx(xmlDoc);
   gpxParseTimer.close();
+  await publishMessage({ phase: 'gpx-parse' });
 
   let coordinates: Array<any> = [];
   let powers, powerAnalysis, elevation;
@@ -204,6 +230,7 @@ exports.handler = async function (event: TriggerEvent) {
     elevation = downsampleElevation(coordinates, 10);
     downsampleElevationTimer.close();
   });
+  await publishMessage({ phase: 'process-data' });
 
   const updateDynamoTimer = segment.addNewSubsegment('updateDynamo');
   const res = await docClient
@@ -222,6 +249,8 @@ exports.handler = async function (event: TriggerEvent) {
       },
     })
     .promise();
+
   updateDynamoTimer.close();
+  await publishMessage({ phase: 'update-data' });
   console.log(JSON.stringify(res));
 };

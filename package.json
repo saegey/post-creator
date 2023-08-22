@@ -13,7 +13,7 @@
     "@saegey/posts.ui.power-curve-graph": "^0.0.0-71d949b3d68692bf48390a2950ce23b2e1076ae5",
     "@saegey/posts.units": "^0.0.1",
     "@saegey/posts.viewport": "^0.0.1",
-    "@saegey/posts.visual-overview": "^0.0.11",
+    "@saegey/posts.visual-overview": "^0.0.12",
     "@tmcw/togeojson": "^5.8.1",
     "@turf/helpers": "^6.5.0",
     "@turf/length": "^6.5.0",
