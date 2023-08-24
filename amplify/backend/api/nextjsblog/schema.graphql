@@ -22,6 +22,7 @@ type Post
   date: String
   publishedDate: String
   location: String
+  postLocation: String
   stravaUrl: String
   type: String
   subType: String
@@ -31,6 +32,8 @@ type Post
   coordinates: AWSJSON
   powers: AWSJSON
   elevation: AWSJSON
+  elevationGrades: AWSJSON
+  distances: AWSJSON
   blog: Blog @belongsTo
   related: [Post] @hasMany
   # comments: [Comment] @hasMany

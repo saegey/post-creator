@@ -28,23 +28,12 @@ const timeIntervals = (end: number) => [
   21600,
 ];
 type Coordinate = [number, number, number];
-type ProcessedCoordinate = {
-  x: number;
-  y: string;
-  distance: number;
-  grade: number;
-};
 
-export const downsampleElevation = (
-  coordinates: Coordinate[],
-  rate: number
-) => {
-  const downsampled: ProcessedCoordinate[] = [];
+export const calcDistances = (coordinates: Coordinate[]) => {
   let totalDistance = 0;
   let distances: Array<number> = [];
-  let grade = 0;
 
-  coordinates.forEach((item, index) => {
+  coordinates.forEach((_, index) => {
     if (index !== coordinates.length - 1) {
       totalDistance += length(
         lineString([
@@ -53,26 +42,34 @@ export const downsampleElevation = (
         ]),
         { units: 'meters' }
       );
-      distances.push(totalDistance);
+      distances.push(Number(totalDistance.toFixed(2)));
     }
+  });
+  return distances;
+};
+
+export const calcElevationGrades = (
+  coordinates: Coordinate[],
+  distances: Array<number>
+) => {
+  const grades = coordinates.map((item, index) => {
+    let grade = 0;
 
     if (index > 30) {
       grade =
         (item[2] - coordinates[index - 30][2]) /
-        (totalDistance - distances[index - 30]);
+        (distances[index] - distances[index - 30]);
     }
 
-    if (index % rate === 0 || index === 0) {
-      downsampled.push({
-        x: index,
-        y: Number(item[2]).toFixed(0),
-        distance: totalDistance,
-        grade: !Number.isNaN(grade) && isFinite(grade) ? grade : 0,
-      });
-    }
+    return !Number.isNaN(grade) && isFinite(grade)
+      ? Number(grade.toFixed(3))
+      : 0;
   });
+  return grades;
+};
 
-  return downsampled;
+export const calcElevation = (coordinates: Coordinate[]) => {
+  return coordinates.map((c) => c[2]);
 };
 
 const calcPowerSlices = (powers: number[], length: number) => {
@@ -214,7 +211,7 @@ exports.handler = async function (event: TriggerEvent) {
   await publishMessage({ phase: 'gpx-parse' });
 
   let coordinates: Array<any> = [];
-  let powers, powerAnalysis, elevation;
+  let powers, powerAnalysis, elevation, distances, elevationGrades;
 
   gpxData.features.map((feature: any) => {
     // const { powers, heart, times, atemps, cads } =
@@ -227,30 +224,42 @@ exports.handler = async function (event: TriggerEvent) {
     powerAnalysisTimer.close();
 
     const downsampleElevationTimer = segment.addNewSubsegment('powerAnalysis');
-    elevation = downsampleElevation(coordinates, 10);
+    elevation = calcElevation(coordinates);
+    distances = calcDistances(coordinates);
+    elevationGrades = calcElevationGrades(coordinates, distances);
     downsampleElevationTimer.close();
   });
+
   await publishMessage({ phase: 'process-data' });
 
   const updateDynamoTimer = segment.addNewSubsegment('updateDynamo');
-  const res = await docClient
-    .update({
-      TableName: postTable,
-      Key: {
-        id: metaData.Metadata.postid,
-      },
-      UpdateExpression:
-        'SET powerAnalysis = :s, coordinates = :c, elevation = :e, powers = :p',
-      ExpressionAttributeValues: {
-        ':s': powerAnalysis,
-        ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
-        ':e': await shrinkify({ field: elevation, name: 'elevation' }),
-        ':p': await shrinkify({ field: powers, name: 'powers' }),
-      },
-    })
-    .promise();
+  try {
+    const res = await docClient
+      .update({
+        TableName: postTable,
+        Key: {
+          id: metaData.Metadata.postid,
+        },
+        UpdateExpression:
+          'SET powerAnalysis = :s, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg',
+        ExpressionAttributeValues: {
+          ':s': powerAnalysis,
+          ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
+          ':e': await shrinkify({ field: elevation, name: 'elevation' }),
+          ':p': await shrinkify({ field: powers, name: 'powers' }),
+          ':d': await shrinkify({ field: distances, name: 'distances' }),
+          ':eg': await shrinkify({
+            field: elevationGrades,
+            name: 'elevationGrades',
+          }),
+        },
+      })
+      .promise();
+  } catch (e) {
+    console.error(JSON.stringify(e));
+  }
 
   updateDynamoTimer.close();
   await publishMessage({ phase: 'update-data' });
-  console.log(JSON.stringify(res));
+  // console.log(JSON.stringify(res));
 };

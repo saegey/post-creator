@@ -17,6 +17,7 @@ export const getBlog = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -26,6 +27,8 @@ export const getBlog = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -78,6 +81,7 @@ export const getPost = /* GraphQL */ `
       date
       publishedDate
       location
+      postLocation
       stravaUrl
       type
       subType
@@ -87,6 +91,8 @@ export const getPost = /* GraphQL */ `
       coordinates
       powers
       elevation
+      elevationGrades
+      distances
       blog {
         id
         name
@@ -109,6 +115,7 @@ export const getPost = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -118,6 +125,8 @@ export const getPost = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -153,6 +162,7 @@ export const listPosts = /* GraphQL */ `
         date
         publishedDate
         location
+        postLocation
         stravaUrl
         type
         subType
@@ -162,6 +172,8 @@ export const listPosts = /* GraphQL */ `
         coordinates
         powers
         elevation
+        elevationGrades
+        distances
         blog {
           id
           name

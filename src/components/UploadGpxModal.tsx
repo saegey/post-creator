@@ -23,7 +23,7 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { post, setElevationAndCoordinates } = React.useContext(PostContext);
+  const { id, setElevationAndCoordinates } = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -33,7 +33,7 @@ const UploadGpxModal = ({ openModal }) => {
       progressCallback(progress) {
         setProgress({ loaded: progress.loaded, total: progress.total });
       },
-      metadata: { postId: post.id, hello: 'world' },
+      metadata: { postId: id, hello: 'world' },
       contentType: fileData.type,
       level: 'public',
     });
@@ -44,7 +44,7 @@ const UploadGpxModal = ({ openModal }) => {
         query: updatePost,
         variables: {
           input: {
-            id: post.id,
+            id: id,
             gpxFile: result.key,
           },
         },
@@ -68,7 +68,7 @@ const UploadGpxModal = ({ openModal }) => {
 
   React.useEffect(() => {
     if (processingGpxStatus === 'update-data') {
-      getPostQuery(post.id).then((d) => {
+      getPostQuery(id).then((d) => {
         processUpdates(d.data.getPost).then(() => {
           console.log('data is updated');
           openModal(false);

@@ -10,8 +10,7 @@
       "StackName": "amplify-nextjsblog-dev-233823",
       "StackId": "arn:aws:cloudformation:us-east-1:373376418880:stack/amplify-nextjsblog-dev-233823/8208c590-3748-11ee-b919-12c387ec1a7d",
       "AmplifyAppId": "d15noiwtuwwref",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
-      "PermissionsBoundaryPolicyArn": "arn:aws:iam::373376418880:policy/NextJS"
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -24,7 +23,7 @@
         },
         "S3Trigger71ba5706": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/S3Trigger71ba5706-35737651583848635674-build.zip"
+          "s3Key": "amplify-builds/S3Trigger71ba5706-4262795a73566c614f68-build.zip"
         }
       },
       "api": {

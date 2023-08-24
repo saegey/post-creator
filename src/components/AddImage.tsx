@@ -23,7 +23,7 @@ interface CloudinaryImage {
 
 const AddImage = ({ isOpen, editor }) => {
   const [selectedImage, setSelectedImage] = useState<CloudinaryImage>();
-  const { setImages, images, post } = useContext(PostContext);
+  const { setImages, images, id } = useContext(PostContext);
 
   const insertImage = () => {
     isOpen(false);
@@ -67,7 +67,7 @@ const AddImage = ({ isOpen, editor }) => {
           </Flex>
           <CloudinaryUpload
             images={images}
-            postId={post.id}
+            postId={id}
             setUploadedImages={setImages}
           />
           <Grid

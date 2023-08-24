@@ -4,7 +4,19 @@ import { API } from 'aws-amplify';
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
 
-const PostSaveComponents = async ({ postId, title, components }) => {
+interface PostSaveProps {
+  postId: string;
+  title: string;
+  postLocation: string;
+  components: Array<any>;
+}
+
+const PostSaveComponents = async ({
+  postId,
+  title,
+  components,
+  postLocation,
+}: PostSaveProps) => {
   try {
     const response = (await API.graphql({
       authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -13,6 +25,7 @@ const PostSaveComponents = async ({ postId, title, components }) => {
         input: {
           id: postId,
           title: title,
+          postLocation: postLocation,
           // content: form.get('content'),
           components: JSON.stringify(components),
         },
