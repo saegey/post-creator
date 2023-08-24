@@ -8,13 +8,14 @@ const VisualOverview = dynamic(import('@saegey/posts.visual-overview'), {
 }); // Async API cannot be server-side rendered
 
 const VisualOverviewWrapper = ({ attributes, children, element }) => {
-  const { elevation, coordinates } = React.useContext(PostContext);
+  const { activity } = React.useContext(PostContext);
+  console.log(activity);
   const vizOverview = React.useMemo(() => {
     return (
       <VisualOverview
         elevationData={{
-          data: elevation,
-          downsampleRate: 2,
+          data: [],
+          downsampleRate: 1,
           axisXTickValues: {
             imperial: [[2, 4, 6]],
             metric: [[4, 8, 12]],
@@ -24,7 +25,7 @@ const VisualOverviewWrapper = ({ attributes, children, element }) => {
             metric: [[50, 100, 150]],
           },
         }}
-        coordinates={coordinates}
+        coordinates={[]}
         elevationToAdd={500}
         yMin={0}
         token={

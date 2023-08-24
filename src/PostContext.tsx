@@ -1,22 +1,21 @@
 import React from 'react';
 
 export const PostContext = React.createContext({
-  post: {
-    id: null,
-  },
+  id: '',
   title: '',
   powerAnalysis: '',
   elevation: '',
   coordinates: '',
   gpxFile: '',
   images: [],
-  location: '',
+  postLocation: '',
+  images: [],
   setImages: (images: any) => {},
-  setCoordinates: (coordinates: any) => {},
-  setElevation: (arg: string) => {},
+  // setCoordinates: (coordinates: any) => {},
+  // setElevation: (arg: string) => {},
   setTitle: (arg: string) => {},
-  setElevationAndCoordinates: (arg: any, arg1: any) => {},
-  setLocation: (arg: string) => {},
+  // setElevationAndCoordinates: (arg: any, arg1: any) => {},
+  setPostLocation: (arg: string) => {},
 });
 
 export const PostContextProvider = (props) => {
@@ -25,27 +24,27 @@ export const PostContextProvider = (props) => {
     setState({ ...state, images: images });
   };
 
-  const setCoordinates = (coordinates) => {
-    // console.log('new coords', coordinates);
-    setState({ ...state, coordinates: coordinates });
-  };
+  // const setCoordinates = (coordinates) => {
+  //   // console.log('new coords', coordinates);
+  //   setState({ ...state, coordinates: coordinates });
+  // };
 
-  const setElevation = (elevation) => {
-    console.log(state.elevation, elevation);
-    setState({ ...state, elevation: elevation });
-  };
+  // const setElevation = (elevation) => {
+  //   console.log(state.elevation, elevation);
+  //   setState({ ...state, elevation: elevation });
+  // };
 
-  const setElevationAndCoordinates = (elevation, coordinates) => {
-    setState({ ...state, elevation: elevation, coordinates: coordinates });
-  };
+  // const setElevationAndCoordinates = (elevation, coordinates) => {
+  //   setState({ ...state, elevation: elevation, coordinates: coordinates });
+  // };
 
   const setTitle = (title) => {
     setState({ ...state, title: title });
     // console.log('state', state, title);
   };
 
-  const setLocation = (location) => {
-    setState({ ...state, location: location });
+  const setPostLocation = (postLocation) => {
+    setState({ ...state, postLocation: postLocation });
     // console.log('state', state, title);
   };
 
@@ -54,21 +53,22 @@ export const PostContextProvider = (props) => {
   };
 
   const initState = {
+    id: props.value.id,
     powerAnalysis: props.value.powerAnalysis,
-    elevation: props.value.elevation,
-    coordinates: props.value.coordinates,
-    post: props.value.post,
-    title: props.value.post.title,
-    gpxFile: props.value.post.gpxFile,
-    images: JSON.parse(props.value.post.images),
-    location: props.value.post.location,
-    setElevation: setElevation,
+    // elevation: props.value.elevation,
+    // coordinates: props.value.coordinates,
+    // post: props.value.post,
+    title: props.value.title,
+    gpxFile: props.value.gpxFile,
+    images: props.value.images,
+    postLocation: props.value.postLocation,
+    // setElevation: setElevation,
     setImages: setImages,
-    setCoordinates: setCoordinates,
+    // setCoordinates: setCoordinates,
     setTitle: setTitle,
     setGpxFile: setGpxFile,
-    setElevationAndCoordinates: setElevationAndCoordinates,
-    setLocation: setLocation,
+    // setElevationAndCoordinates: setElevationAndCoordinates,
+    setPostLocation: setPostLocation,
   };
 
   const [state, setState] = React.useState(initState);

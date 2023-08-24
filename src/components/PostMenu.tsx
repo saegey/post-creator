@@ -46,15 +46,16 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   const [uploadModal, setUploadModal] = React.useState(false);
   const [addImageModal, setAddImageModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-  const { post, title, gpxFile } = React.useContext(PostContext);
+  const { id, title, gpxFile, postLocation } = React.useContext(PostContext);
 
   const save = async (e) => {
     e.preventDefault();
     setIsSaving(true);
 
     await PostSaveComponents({
-      postId: post.id,
+      postId: id,
       title: title,
+      postLocation: postLocation,
       components: editor.children,
     });
 

@@ -20,6 +20,7 @@ export const createBlog = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -29,6 +30,8 @@ export const createBlog = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -64,6 +67,7 @@ export const updateBlog = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -73,6 +77,8 @@ export const updateBlog = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -108,6 +114,7 @@ export const deleteBlog = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -117,6 +124,8 @@ export const deleteBlog = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -148,6 +157,7 @@ export const createPost = /* GraphQL */ `
       date
       publishedDate
       location
+      postLocation
       stravaUrl
       type
       subType
@@ -157,6 +167,8 @@ export const createPost = /* GraphQL */ `
       coordinates
       powers
       elevation
+      elevationGrades
+      distances
       blog {
         id
         name
@@ -179,6 +191,7 @@ export const createPost = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -188,6 +201,8 @@ export const createPost = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -221,6 +236,7 @@ export const updatePost = /* GraphQL */ `
       date
       publishedDate
       location
+      postLocation
       stravaUrl
       type
       subType
@@ -230,6 +246,8 @@ export const updatePost = /* GraphQL */ `
       coordinates
       powers
       elevation
+      elevationGrades
+      distances
       blog {
         id
         name
@@ -252,6 +270,7 @@ export const updatePost = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -261,6 +280,8 @@ export const updatePost = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -294,6 +315,7 @@ export const deletePost = /* GraphQL */ `
       date
       publishedDate
       location
+      postLocation
       stravaUrl
       type
       subType
@@ -303,6 +325,8 @@ export const deletePost = /* GraphQL */ `
       coordinates
       powers
       elevation
+      elevationGrades
+      distances
       blog {
         id
         name
@@ -325,6 +349,7 @@ export const deletePost = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
           type
           subType
@@ -334,6 +359,8 @@ export const deletePost = /* GraphQL */ `
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
