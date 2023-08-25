@@ -1,8 +1,11 @@
+'use client'; // This is a client component 👈🏽
+
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
 import React from 'react';
+// import { headers } from 'next/headers';
 // import { Storage, API } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
-import { Storage, API, PubSub } from 'aws-amplify';
+import { Storage, API, PubSub, Amplify, withSSRContext } from 'aws-amplify';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
@@ -15,6 +18,10 @@ import {
   getEndpoint,
 } from '../../src/actions/PubSub';
 import { uncompress } from '../utils/compress';
+import awsExports from '../../src/aws-exports';
+
+Amplify.configure({ ...awsExports, ssr: true });
+const SSR = withSSRContext();
 
 const UploadGpxModal = ({ openModal }) => {
   const [fileData, setFileData] = React.useState<File>();
@@ -23,23 +30,41 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { id, setElevationAndCoordinates } = React.useContext(PostContext);
+  // const req = {
+  // 	headers: {
+  // 		cookie: headers().get('cookie'),
+  // 	},
+  // };
+
+  const { id } = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
 
     if (!fileData || !fileData.name) return;
-    const result = await Storage.put(fileData.name, fileData, {
+
+    // const credentials = await SSR.Auth.currentCredentials();
+    // console.log(SSR.Auth.essentialCredentials(credentials));
+    // Storage.configure({
+    //   credentials: SSR.Auth.essentialCredentials(credentials),
+    //   customPrefix: { public: 'uploads/' },
+    //   level: 'public',
+    //   provider: 'AWSS3UploadTask',
+    // });
+    const result = await Storage.put(`${fileData.name}`, fileData, {
       progressCallback(progress) {
         setProgress({ loaded: progress.loaded, total: progress.total });
       },
+      errorCallback: (err) => {
+        console.error('Unexpected error while uploading', err);
+      },
       metadata: { postId: id, hello: 'world' },
       contentType: fileData.type,
-      level: 'public',
+      // level: 'public',
     });
 
     try {
-      const response = (await API.graphql({
+      (await SSR.API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
         query: updatePost,
         variables: {
@@ -58,12 +83,12 @@ const UploadGpxModal = ({ openModal }) => {
   };
 
   const processUpdates = async (post) => {
-    const newElevation = (await uncompress(post.elevation)) as string;
-    const newCoordinates = (await uncompress(post.coordinates)) as string;
-    setElevationAndCoordinates(
-      JSON.parse(newElevation),
-      JSON.parse(newCoordinates)
-    );
+    // const newElevation = (await uncompress(post.elevation)) as string;
+    // const newCoordinates = (await uncompress(post.coordinates)) as string;
+    // setElevationAndCoordinates(
+    //   JSON.parse(newElevation),
+    //   JSON.parse(newCoordinates)
+    // );
   };
 
   React.useEffect(() => {
@@ -88,7 +113,7 @@ const UploadGpxModal = ({ openModal }) => {
 
     return PubSub.subscribe('newpost').subscribe({
       next: (data: any) => {
-        console.log(data.value.phase);
+        // console.log(data.value.phase);
         setProcessingGpxStatus(data.value.phase);
       },
       error: (error) => console.error(error),
@@ -103,8 +128,9 @@ const UploadGpxModal = ({ openModal }) => {
     });
 
     return () => {
-      console.log('destroy');
-      subUpdates.unsubscribe();
+      if (subUpdates) {
+        subUpdates.unsubscribe();
+      }
     };
   }, [subPubConfigured]);
 

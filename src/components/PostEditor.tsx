@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import { Slate, Editable, withReact } from 'slate-react';
 import React from 'react';
 import { createEditor } from 'slate';

@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import React from 'react';
 
 export const PostContext = React.createContext({
@@ -10,6 +12,7 @@ export const PostContext = React.createContext({
   images: [],
   postLocation: '',
   images: [],
+  activity: '',
   setImages: (images: any) => {},
   // setCoordinates: (coordinates: any) => {},
   // setElevation: (arg: string) => {},
@@ -52,12 +55,17 @@ export const PostContextProvider = (props) => {
     setState({ ...state, gpxFile: gpxFile });
   };
 
+  const setActivity = (activity) => {
+    setState({ ...state, activity: activity });
+  };
+
   const initState = {
     id: props.value.id,
     powerAnalysis: props.value.powerAnalysis,
     // elevation: props.value.elevation,
     // coordinates: props.value.coordinates,
     // post: props.value.post,
+    activity: props.value.activity,
     title: props.value.title,
     gpxFile: props.value.gpxFile,
     images: props.value.images,
@@ -67,6 +75,7 @@ export const PostContextProvider = (props) => {
     // setCoordinates: setCoordinates,
     setTitle: setTitle,
     setGpxFile: setGpxFile,
+    setActivity: setActivity,
     // setElevationAndCoordinates: setElevationAndCoordinates,
     setPostLocation: setPostLocation,
   };

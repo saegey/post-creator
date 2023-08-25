@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import { useState } from 'react';
 import { MenuButton, Box, Flex, Close, NavLink, Button } from 'theme-ui';
 import Link from 'next/link';
@@ -45,7 +47,7 @@ const Header = ({ user, signOut }) => {
             }}
           />
           <div style={{ marginLeft: 'auto' }}>
-            {/* <p>Logged in as {user.username}.</p> */}
+            <p>Logged in as {user.username}.</p>
             <Button onClick={signOut}>Sign out</Button>
           </div>
         </div>

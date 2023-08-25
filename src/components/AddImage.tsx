@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import { Box, Close, Flex, Image, Button, Grid } from 'theme-ui';
 import { useContext, useState } from 'react';
 import { Descendant, Transforms } from 'slate';

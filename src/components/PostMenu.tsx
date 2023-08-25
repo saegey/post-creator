@@ -1,3 +1,5 @@
+"use client"; // This is a client component 👈🏽
+
 import { Button, Flex } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
