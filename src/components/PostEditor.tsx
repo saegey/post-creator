@@ -18,7 +18,7 @@ const PostEditor = ({ initialState }) => {
         contentEditable='true'
         suppressContentEditableWarning={true}
         onBlur={(event) => {
-          console.log('tst');
+          // console.log('tst');
           setTitle(event.target.textContent);
         }}
       >
@@ -28,7 +28,7 @@ const PostEditor = ({ initialState }) => {
         contentEditable='true'
         suppressContentEditableWarning={true}
         onBlur={(event) => {
-          console.log('tst');
+          // console.log('tst');
           setPostLocation(event.target.textContent);
         }}
       >

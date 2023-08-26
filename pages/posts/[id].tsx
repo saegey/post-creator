@@ -9,6 +9,7 @@ import { uncompress } from '../../src/utils/compress';
 import Header from '../../src/components/Header';
 import { PostContextProvider } from '../../src/PostContext';
 import PostEditor from '../../src/components/PostEditor';
+import { getActivity } from '../../src/actions/PostGet';
 
 // [
 //   {
@@ -34,45 +35,6 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
-  // const powersRaw = post.power
-  //   ? ((await uncompress(post.powers)) as string)
-  //   : '{}';
-  const coordinates = JSON.parse(
-    post.coordinates ? ((await uncompress(post.coordinates)) as string) : '{}'
-  ) as Array<Array<number>>;
-
-  const elevation = JSON.parse(
-    post.elevation ? ((await uncompress(post.elevation)) as string) : '{}'
-  ) as Array<number>;
-
-  const distances = JSON.parse(
-    post.distances ? ((await uncompress(post.distances)) as string) : '{}'
-  ) as Array<number>;
-
-  const grades = JSON.parse(
-    post.elevationGrades
-      ? ((await uncompress(post.elevationGrades)) as string)
-      : '{}'
-  );
-
-  // console.log(grades);
-
-  const activity =
-    coordinates && coordinates.length > 0
-      ? coordinates
-          .map((_, i) => {
-            if (i % 10 === 0) {
-              return {
-                t: i,
-                e: elevation[i] ? Number(elevation[i]) : null,
-                g: grades[i] ? Number(grades[i]) : null,
-                d: distances[i] ? distances[i] : null,
-                c: [coordinates[i][0], coordinates[i][1]],
-              };
-            }
-          })
-          .filter((notUndefined) => notUndefined !== undefined)
-      : [];
 
   return {
     props: {
@@ -80,10 +42,10 @@ export async function getServerSideProps({ req, params }) {
       components: JSON.parse(post.components),
       title: post.title,
       images: JSON.parse(post.images),
-      postLocation: post.location,
+      postLocation: post.postLocation,
       gpxFile: post.gpxFile,
       powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
-      activity,
+      activity: await getActivity(post),
     },
   };
 }

@@ -26,12 +26,12 @@ const PostSaveComponents = async ({
           id: postId,
           title: title,
           postLocation: postLocation,
-          // content: form.get('content'),
+
           components: JSON.stringify(components),
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
-    console.log(response, postId, title, components);
+    console.log(response, postId, title, postLocation, components);
   } catch (errors) {
     console.error(errors);
     // throw new Error(errors[0].message);
@@ -52,7 +52,7 @@ const PostSaveImages = async ({ postId, images }) => {
         },
       },
     });
-    console.log(results);
+    // console.log(results);
   } catch (error) {
     console.error(error);
   }

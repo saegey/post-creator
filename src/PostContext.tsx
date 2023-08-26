@@ -1,4 +1,4 @@
-"use client"; // This is a client component 👈🏽
+'use client'; // This is a client component 👈🏽
 
 import React from 'react';
 
@@ -14,11 +14,10 @@ export const PostContext = React.createContext({
   images: [],
   activity: '',
   setImages: (images: any) => {},
-  // setCoordinates: (coordinates: any) => {},
-  // setElevation: (arg: string) => {},
   setTitle: (arg: string) => {},
-  // setElevationAndCoordinates: (arg: any, arg1: any) => {},
+  setActivity: (arg: object) => {},
   setPostLocation: (arg: string) => {},
+  setActivityAndGpx: (arg: string, arg1: string) => {},
 });
 
 export const PostContextProvider = (props) => {
@@ -27,20 +26,6 @@ export const PostContextProvider = (props) => {
     setState({ ...state, images: images });
   };
 
-  // const setCoordinates = (coordinates) => {
-  //   // console.log('new coords', coordinates);
-  //   setState({ ...state, coordinates: coordinates });
-  // };
-
-  // const setElevation = (elevation) => {
-  //   console.log(state.elevation, elevation);
-  //   setState({ ...state, elevation: elevation });
-  // };
-
-  // const setElevationAndCoordinates = (elevation, coordinates) => {
-  //   setState({ ...state, elevation: elevation, coordinates: coordinates });
-  // };
-
   const setTitle = (title) => {
     setState({ ...state, title: title });
     // console.log('state', state, title);
@@ -48,35 +33,30 @@ export const PostContextProvider = (props) => {
 
   const setPostLocation = (postLocation) => {
     setState({ ...state, postLocation: postLocation });
-    // console.log('state', state, title);
+    // console.log('postLocation', postLocation);
   };
 
-  const setGpxFile = (gpxFile) => {
+  const setActivity = (gpxFile) => {
     setState({ ...state, gpxFile: gpxFile });
   };
 
-  const setActivity = (activity) => {
-    setState({ ...state, activity: activity });
+  const setActivityAndGpx = (activity, gpxFile) => {
+    setState({ ...state, activity: activity, gpxFile: gpxFile });
+    // console.log('state', state);
   };
 
   const initState = {
     id: props.value.id,
     powerAnalysis: props.value.powerAnalysis,
-    // elevation: props.value.elevation,
-    // coordinates: props.value.coordinates,
-    // post: props.value.post,
     activity: props.value.activity,
     title: props.value.title,
     gpxFile: props.value.gpxFile,
     images: props.value.images,
     postLocation: props.value.postLocation,
-    // setElevation: setElevation,
     setImages: setImages,
-    // setCoordinates: setCoordinates,
     setTitle: setTitle,
-    setGpxFile: setGpxFile,
+    setActivityAndGpx: setActivityAndGpx,
     setActivity: setActivity,
-    // setElevationAndCoordinates: setElevationAndCoordinates,
     setPostLocation: setPostLocation,
   };
 

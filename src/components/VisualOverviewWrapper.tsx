@@ -1,8 +1,5 @@
-"use client"; // This is a client component 👈🏽
-
 import React from 'react';
 import dynamic from 'next/dynamic';
-
 
 import { PostContext } from '../PostContext';
 
@@ -15,6 +12,7 @@ const VisualOverviewWrapper = ({ attributes, children, element }) => {
   const fixedData = activity.map((a) => {
     return { ...a, g: a.g !== null ? a.g : 0 };
   });
+	console.log(fixedData)
 
   const vizOverview = React.useMemo(() => {
     return (

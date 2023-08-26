@@ -8,13 +8,12 @@ import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
 import { PostContext } from '../PostContext';
-import { getPostQuery } from '../actions/PostGet';
+import { getActivity, getPostQuery } from '../actions/PostGet';
 import {
   attachIoTPolicyToUser,
   configurePubSub,
   getEndpoint,
 } from '../../src/actions/PubSub';
-import { uncompress } from '../utils/compress';
 
 const UploadGpxModal = ({ openModal }) => {
   const [fileData, setFileData] = React.useState<File>();
@@ -23,7 +22,7 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { id, setElevationAndCoordinates } = React.useContext(PostContext);
+  const { id, setActivityAndGpx } = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -58,19 +57,15 @@ const UploadGpxModal = ({ openModal }) => {
   };
 
   const processUpdates = async (post) => {
-    const newElevation = (await uncompress(post.elevation)) as string;
-    const newCoordinates = (await uncompress(post.coordinates)) as string;
-    setElevationAndCoordinates(
-      JSON.parse(newElevation),
-      JSON.parse(newCoordinates)
-    );
+    const activity = await getActivity(post);
+    setActivityAndGpx(activity, post.gpxFile);
   };
 
   React.useEffect(() => {
     if (processingGpxStatus === 'update-data') {
       getPostQuery(id).then((d) => {
         processUpdates(d.data.getPost).then(() => {
-          console.log('data is updated');
+          // console.log('data is updated');
           openModal(false);
         });
         // setPowerAnalysis(JSON.parse(d.data.getPost.powerAnalysis));
