@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import React from 'react';
+import type { InferGetStaticPropsType, GetServerSideProps } from 'next'
 
 import { getPost } from '../../src/graphql/queries';
 // import { uncompress } from '../../src/utils/compress';
@@ -11,7 +12,7 @@ import { PostContextProvider } from '../../src/PostContext';
 import PostEditor from '../../src/components/PostEditor';
 import { getActivity } from '../../src/actions/PostGet';
 
-export async function getServerSideProps({ req, params }) {
+export const getServerSideProps = async ({ req, params }: GetServerSideProps) => {
   const SSR = withSSRContext({ req });
 
   const { data } = await SSR.API.graphql({

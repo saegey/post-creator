@@ -1,5 +1,6 @@
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms, Descendant } from 'slate';
+import Image from 'next/image';
 
 import { Box, Button, Text, Label, Textarea, Close, Flex } from 'theme-ui';
 import React from 'react';
@@ -44,9 +45,20 @@ const ImageElement = ({ attributes, children, element }) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      <Box sx={{ position: 'relative' }}>
-        <img
+      <Box
+        sx={{
+          position: 'relative',
+          // backgroundColor: 'red',
+          width: '100%',
+          height: 'auto',
+          marginBottom: '20px',
+        }}
+      >
+        <Image
           src={element.src}
+          alt='race pic'
+          width={500}
+          height={500}
           style={{ width: '100%', height: 'auto', borderRadius: '5px' }}
         />
         {element.caption && <p>{element.caption}</p>}
@@ -63,12 +75,6 @@ const ImageElement = ({ attributes, children, element }) => {
               borderRadius: '5px',
             }}
           >
-            {/* width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  height: 100%;
-  margin-top: auto;
-  margin-bottom: auto; */}
             <Flex>
               <Box
                 sx={{
