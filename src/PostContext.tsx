@@ -12,12 +12,15 @@ export const PostContext = React.createContext({
   images: [],
   postLocation: '',
   images: [],
-  activity: '',
+  activity: null,
+  stravaUrl: '',
+  resultsUrl: '',
   setImages: (images: any) => {},
   setTitle: (arg: string) => {},
   setActivity: (arg: object) => {},
   setPostLocation: (arg: string) => {},
   setActivityAndGpx: (arg: string, arg1: string) => {},
+  setStravaUrlAndResultsUrl: (arg: string, arg1: string) => {},
 });
 
 export const PostContextProvider = (props) => {
@@ -45,6 +48,21 @@ export const PostContextProvider = (props) => {
     // console.log('state', state);
   };
 
+  const setStravaUrl = (stravaUrl) => {
+    // console.log(stravaUrl);
+    setState({ ...state, stravaUrl: stravaUrl });
+  };
+
+  const setStravaUrlAndResultsUrl = (stravaUrl, resultsUrl) => {
+    setState({ ...state, stravaUrl: stravaUrl, resultsUrl: resultsUrl });
+    console.log(stravaUrl, resultsUrl);
+  };
+
+  const setResultsUrl = (resultsUrl) => {
+    // console.log(stravaUrl);
+    setState({ ...state, resultsUrl: resultsUrl });
+  };
+
   const initState = {
     id: props.value.id,
     powerAnalysis: props.value.powerAnalysis,
@@ -53,11 +71,16 @@ export const PostContextProvider = (props) => {
     gpxFile: props.value.gpxFile,
     images: props.value.images,
     postLocation: props.value.postLocation,
+    stravaUrl: props.value.stravaUrl,
+    resultsUrl: props.value.resultsUrl,
     setImages: setImages,
     setTitle: setTitle,
     setActivityAndGpx: setActivityAndGpx,
     setActivity: setActivity,
     setPostLocation: setPostLocation,
+    setStravaUrl: setStravaUrl,
+    setResultsUrl: setResultsUrl,
+    setStravaUrlAndResultsUrl: setStravaUrlAndResultsUrl,
   };
 
   const [state, setState] = React.useState(initState);

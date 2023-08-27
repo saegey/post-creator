@@ -24,6 +24,7 @@ type Post
   location: String
   postLocation: String
   stravaUrl: String
+  resultsUrl: String
   type: String
   subType: String
   teaser: String

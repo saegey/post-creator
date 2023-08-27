@@ -5,24 +5,12 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import React from 'react';
 
 import { getPost } from '../../src/graphql/queries';
-import { uncompress } from '../../src/utils/compress';
+// import { uncompress } from '../../src/utils/compress';
 import Header from '../../src/components/Header';
 import { PostContextProvider } from '../../src/PostContext';
 import PostEditor from '../../src/components/PostEditor';
 import { getActivity } from '../../src/actions/PostGet';
 
-// [
-//   {
-//     "time": 4850,
-//     "elevation": 2126,
-//     "distance": 39130.042,
-//     "coordinates": [
-//       -114.327928,
-//       43.721769
-//     ],
-//     "grade": 0.0743
-//   }
-// ]
 export async function getServerSideProps({ req, params }) {
   const SSR = withSSRContext({ req });
 
@@ -46,6 +34,8 @@ export async function getServerSideProps({ req, params }) {
       gpxFile: post.gpxFile,
       powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
       activity: await getActivity(post),
+      stravaUrl: post.stravaUrl,
+      resultsUrl: post.resultsUrl,
     },
   };
 }
@@ -62,6 +52,8 @@ const Post = ({
   gpxFile,
   id,
   images,
+  resultsUrl,
+  stravaUrl,
 }) => {
   const router = useRouter();
 
@@ -73,8 +65,6 @@ const Post = ({
     );
   }
 
-  console.log(activity);
-
   return (
     <PostContextProvider
       value={{
@@ -85,6 +75,8 @@ const Post = ({
         gpxFile,
         activity,
         images,
+        stravaUrl,
+        resultsUrl,
       }}
     >
       <div>
@@ -95,16 +87,7 @@ const Post = ({
 
         <main>
           <Header user={user} signOut={signOut} />
-          <div
-            style={{
-              marginTop: '60px',
-              maxWidth: '900px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
-          >
-            <PostEditor initialState={components} />
-          </div>
+          <PostEditor initialState={components} />
         </main>
       </div>
     </PostContextProvider>

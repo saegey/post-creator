@@ -38,7 +38,7 @@ const UploadGpxModal = ({ openModal }) => {
     });
 
     try {
-      const response = (await API.graphql({
+      (await API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
         query: updatePost,
         variables: {
@@ -49,7 +49,7 @@ const UploadGpxModal = ({ openModal }) => {
         },
       })) as GraphQLResult<UpdatePostMutation>;
 
-      setIsUploading(false);
+      // setIsUploading(false);
     } catch (error) {
       console.error(error);
       setIsUploading(false);
@@ -98,74 +98,90 @@ const UploadGpxModal = ({ openModal }) => {
     });
 
     return () => {
-      console.log('destroy');
-      subUpdates.unsubscribe();
+      // console.log('destroy');
+      if (subUpdates) {
+        subUpdates.unsubscribe();
+      }
     };
   }, [subPubConfigured]);
 
   return (
-    <BlackBox>
-      <Box
-        sx={{
-          width: '80%',
-          height: '70%',
-          margin: 'auto',
-          background: 'white',
-          borderRadius: '5px',
-          padding: '20px',
-        }}
-      >
-        <Flex>
-          <Box>
-            <Text as='h2'>Upload GPX file</Text>
-          </Box>
+    <>
+      {processingGpxStatus && (
+        <BlackBox>
+          <Flex sx={{ width: '100%', height: '100%' }}>
+            <Box sx={{ margin: 'auto' }}>
+              <Text as='p' sx={{ color: 'white', fontSize: '30px' }}>
+                {processingGpxStatus}
+              </Text>
+            </Box>
+          </Flex>
+        </BlackBox>
+      )}
+      {!processingGpxStatus && (
+        <BlackBox>
           <Box
             sx={{
-              marginLeft: 'auto',
+              width: '80%',
+              margin: 'auto',
+              background: 'white',
+              borderRadius: '5px',
+              padding: '20px',
+              zIndex: 5000,
             }}
           >
-            <Close
-              onClick={() => {
-                openModal(false);
-              }}
-            />
-          </Box>
-        </Flex>
+            <Flex>
+              <Box>
+                <Text as='h2'>Upload GPX file</Text>
+              </Box>
+              <Box
+                sx={{
+                  marginLeft: 'auto',
+                }}
+              >
+                <Close
+                  onClick={() => {
+                    openModal(false);
+                  }}
+                />
+              </Box>
+            </Flex>
 
-        <Box>
-          <Box>
-            <Input
-              type='file'
-              disabled={isUploading}
-              sx={{ marginY: '20px' }}
-              onChange={(e) => setFileData(e.target.files[0])}
-            />
+            <Box>
+              <Box>
+                <Input
+                  type='file'
+                  disabled={isUploading}
+                  sx={{ marginY: '20px' }}
+                  onChange={(e) => setFileData(e.target.files[0])}
+                />
+              </Box>
+              <Box>
+                <Button onClick={uploadFile} disabled={isUploading}>
+                  Upload file
+                </Button>
+              </Box>
+              <Box sx={{ marginTop: '20px' }}>
+                {progress.loaded > 0 && (
+                  <>
+                    <Progress
+                      max={progress.total}
+                      value={progress.loaded}
+                    ></Progress>
+                    <p>{`${((progress.loaded / progress.total) * 100).toFixed(
+                      0
+                    )}%`}</p>
+                  </>
+                )}
+              </Box>
+              {progress.total === progress.loaded && progress.loaded !== 0
+                ? 'File uploaded successfully'
+                : ''}
+            </Box>
           </Box>
-          <Box>
-            <Button onClick={uploadFile} disabled={isUploading}>
-              Upload file
-            </Button>
-          </Box>
-          <Box sx={{ marginTop: '20px' }}>
-            {progress.loaded > 0 && (
-              <>
-                <Progress
-                  max={progress.total}
-                  value={progress.loaded}
-                ></Progress>
-                <p>{`${((progress.loaded / progress.total) * 100).toFixed(
-                  0
-                )}%`}</p>
-              </>
-            )}
-          </Box>
-          {progress.total === progress.loaded && progress.loaded !== 0
-            ? 'File uploaded successfully'
-            : ''}
-          {processingGpxStatus && <p>{processingGpxStatus}</p>}
-        </Box>
-      </Box>
-    </BlackBox>
+        </BlackBox>
+      )}
+    </>
   );
 };
 

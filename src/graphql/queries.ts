@@ -19,6 +19,7 @@ export const getBlog = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
@@ -83,6 +84,7 @@ export const getPost = /* GraphQL */ `
       location
       postLocation
       stravaUrl
+      resultsUrl
       type
       subType
       teaser
@@ -117,6 +119,7 @@ export const getPost = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
@@ -164,6 +167,7 @@ export const listPosts = /* GraphQL */ `
         location
         postLocation
         stravaUrl
+        resultsUrl
         type
         subType
         teaser

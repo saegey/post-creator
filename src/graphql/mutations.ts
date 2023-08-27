@@ -22,6 +22,7 @@ export const createBlog = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
@@ -69,6 +70,7 @@ export const updateBlog = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
@@ -116,6 +118,7 @@ export const deleteBlog = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
@@ -159,6 +162,7 @@ export const createPost = /* GraphQL */ `
       location
       postLocation
       stravaUrl
+      resultsUrl
       type
       subType
       teaser
@@ -193,6 +197,7 @@ export const createPost = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
@@ -238,6 +243,7 @@ export const updatePost = /* GraphQL */ `
       location
       postLocation
       stravaUrl
+      resultsUrl
       type
       subType
       teaser
@@ -272,6 +278,7 @@ export const updatePost = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
@@ -317,6 +324,7 @@ export const deletePost = /* GraphQL */ `
       location
       postLocation
       stravaUrl
+      resultsUrl
       type
       subType
       teaser
@@ -351,6 +359,7 @@ export const deletePost = /* GraphQL */ `
           location
           postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser

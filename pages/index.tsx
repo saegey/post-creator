@@ -34,9 +34,7 @@ export async function getServerSideProps({ req }) {
 
 function Home({ signOut, user, posts = [] }) {
   const [newPost, setNewPost] = useState(false);
-  const [iotProviderConfigured, setIotProviderConfigured] = useState(false);
-  const [iotEndpoint, setIotEndpoint] = useState();
-  const { width } = useViewport();
+  // const { width } = useViewport();
 
   return (
     <>
@@ -56,7 +54,6 @@ function Home({ signOut, user, posts = [] }) {
               marginRight: 'auto',
             }}
           >
-            <p>Width: {width}</p>
             <div>
               <Button onClick={() => setNewPost(true)}>New Post</Button>
             </div>

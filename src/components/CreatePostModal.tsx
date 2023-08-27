@@ -54,7 +54,8 @@ const CreatePostModal = ({ setMenuOpen }) => {
             <Box>
               <h2>New Post</h2>
             </Box>
-            <Box sx={{ marginLeft: 'auto' }}>
+            <Box
+						 sx={{ marginLeft: 'auto' }}>
               <Close onClick={() => setMenuOpen(false)} />
             </Box>
           </Flex>

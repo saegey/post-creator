@@ -9,6 +9,8 @@ interface PostSaveProps {
   title: string;
   postLocation: string;
   components: Array<any>;
+  stravaUrl: string;
+  resultsUrl: string;
 }
 
 const PostSaveComponents = async ({
@@ -16,6 +18,8 @@ const PostSaveComponents = async ({
   title,
   components,
   postLocation,
+  stravaUrl,
+  resultsUrl,
 }: PostSaveProps) => {
   try {
     const response = (await API.graphql({
@@ -26,7 +30,8 @@ const PostSaveComponents = async ({
           id: postId,
           title: title,
           postLocation: postLocation,
-
+          stravaUrl: stravaUrl,
+          resultsUrl: resultsUrl,
           components: JSON.stringify(components),
         },
       },

@@ -13,7 +13,7 @@ const Header = ({ user, signOut }) => {
           <Box sx={{ width: '400px', backgroundColor: 'white' }}>
             <Flex sx={{ padding: '20px' }}>
               <div>
-                <h2>SÆGE</h2>
+                <h2>monopad</h2>
               </div>
               <div style={{ marginLeft: 'auto' }}>
                 <Close onClick={() => setMenuOpen(false)} />
@@ -27,23 +27,27 @@ const Header = ({ user, signOut }) => {
           </Box>
         </BlackBox>
       )}
-      <header style={{ marginBottom: '20px' }}>
+      <header>
         <div
           style={{
             display: 'flex',
             flexDirection: 'row',
-            padding: '20px',
-            borderBottomWidth: '1px',
-            borderBottomColor: 'black',
-            borderBottomStyle: 'solid',
+            padding: '10px',
+            // borderBottomWidth: '2px',
+            // borderBottomColor: 'black',
+            // borderBottomStyle: 'solid',
+            background: '#0000001a',
           }}
         >
-          <MenuButton
-            aria-label='Toggle Menu'
-            onClick={() => {
-              setMenuOpen(true);
-            }}
-          />
+          <Flex>
+            <MenuButton
+              sx={{ marginY: 'auto' }}
+              aria-label='Toggle Menu'
+              onClick={() => {
+                setMenuOpen(true);
+              }}
+            />
+          </Flex>
           <div style={{ marginLeft: 'auto' }}>
             {/* <p>Logged in as {user.username}.</p> */}
             <Button onClick={signOut}>Sign out</Button>
