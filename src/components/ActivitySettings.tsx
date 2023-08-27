@@ -124,6 +124,15 @@ const ActivitySettings = ({ isOpen }) => {
                     defaultValue={currentFtp ? currentFtp : ''}
                   />
                 </Box>
+								<Box>
+                  <Label htmlFor='eventDate'>Event Date</Label>
+                  <Input
+                    id='eventDate'
+                    name='eventDate'
+                    // placeholder='http://results.url'
+                    defaultValue={currentFtp ? currentFtp : ''}
+                  />
+                </Box>
                 <Flex>
                   <Box sx={{ marginLeft: 'auto' }}>
                     <Flex sx={{ gap: '10px', marginTop: '10px' }}>

@@ -1,7 +1,7 @@
 import { Slate, Editable, withReact } from 'slate-react';
 import React from 'react';
 import { createEditor } from 'slate';
-import { Box, Flex } from 'theme-ui';
+import { Box, Flex, Text } from 'theme-ui';
 
 import renderElement from '../../src/utils/RenderElement';
 import PostMenu from './PostMenu';
@@ -23,20 +23,22 @@ const PostEditor = ({ initialState }) => {
           marginRight: 'auto',
           backgroundColor: 'white',
           borderRadius: '10px',
-					border: '1px dotted #bcbcbc',
+          border: '1px dotted #bcbcbc',
           padding: '10px',
         }}
       >
         <Flex>
-          <h1
+          <Text
+            as='h1'
             contentEditable='true'
             suppressContentEditableWarning={true}
             onBlur={(event) => {
               setTitle(event.target.textContent);
             }}
+            sx={{ width: '100%' }}
           >
             {title}
-          </h1>
+          </Text>
         </Flex>
         <h2
           contentEditable='true'
