@@ -6,7 +6,7 @@ import React from 'react';
 import UploadGpxModal from './UploadGpxModal';
 
 const ActivitySettings = ({ isOpen }) => {
-  const { resultsUrl, stravaUrl, gpxFile, setStravaUrlAndResultsUrl } =
+  const { resultsUrl, stravaUrl, gpxFile, setSettings, currentFtp } =
     React.useContext(PostContext);
   const [uploadModal1, setUploadModal] = React.useState(false);
   console.log('rerender');
@@ -61,11 +61,12 @@ const ActivitySettings = ({ isOpen }) => {
                 isOpen(false);
                 const form = new FormData(event.target);
 
-                console.log(form.get('resultsUrl'));
-                setStravaUrlAndResultsUrl(
-                  form.get('stravaLink'),
-                  form.get('resultsUrl')
-                );
+                // console.log(form.get('resultsUrl'));
+                setSettings({
+                  stravaUrl: form.get('stravaLink'),
+                  resultsUrl: form.get('resultsUrl'),
+                  currentFtp: form.get('currentFtp'),
+                });
               }}
               style={{ width: '100%' }}
             >
@@ -90,24 +91,38 @@ const ActivitySettings = ({ isOpen }) => {
                 </Box>
                 <Box>
                   <Label htmlFor='gpxFile'>GPX File</Label>
-                  <Input
-                    id='gpxFile'
-                    name='gpxFile'
-                    // placeholder='http://results.url'
-                    defaultValue={gpxFile ? gpxFile : ''}
-                  />
+                  <Flex sx={{ gap: '10px' }}>
+                    <Box sx={{ width: '100%' }}>
+                      <Input
+                        id='gpxFile'
+                        name='gpxFile'
+                        // placeholder='http://results.url'
+                        defaultValue={gpxFile ? gpxFile : ''}
+                      />
+                    </Box>
+                    <Box sx={{ width: '25%' }}>
+                      <Button
+                        type='button'
+                        onClick={() => {
+                          // isOpen(false);
+                          setUploadModal(true);
+                          console.log('setupload');
+                        }}
+                        sx={{ width: '100%' }}
+                      >
+                        Upload GPX
+                      </Button>
+                    </Box>
+                  </Flex>
                 </Box>
                 <Box>
-                  <Button
-                    type='button'
-                    onClick={() => {
-                      // isOpen(false);
-                      setUploadModal(true);
-                      console.log('setupload');
-                    }}
-                  >
-                    Upload GPX
-                  </Button>
+                  <Label htmlFor='currentFtp'>Current FTP</Label>
+                  <Input
+                    id='currentFtp'
+                    name='currentFtp'
+                    // placeholder='http://results.url'
+                    defaultValue={currentFtp ? currentFtp : ''}
+                  />
                 </Box>
                 <Flex>
                   <Box sx={{ marginLeft: 'auto' }}>

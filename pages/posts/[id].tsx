@@ -36,6 +36,7 @@ export async function getServerSideProps({ req, params }) {
       activity: await getActivity(post),
       stravaUrl: post.stravaUrl,
       resultsUrl: post.resultsUrl,
+      currentFtp: post.currentFtp,
     },
   };
 }
@@ -54,6 +55,7 @@ const Post = ({
   images,
   resultsUrl,
   stravaUrl,
+  currentFtp,
 }) => {
   const router = useRouter();
 
@@ -77,6 +79,7 @@ const Post = ({
         images,
         stravaUrl,
         resultsUrl,
+        currentFtp,
       }}
     >
       <div>

@@ -11,6 +11,7 @@ interface PostSaveProps {
   components: Array<any>;
   stravaUrl: string;
   resultsUrl: string;
+  currentFtp: number;
 }
 
 const PostSaveComponents = async ({
@@ -20,6 +21,7 @@ const PostSaveComponents = async ({
   postLocation,
   stravaUrl,
   resultsUrl,
+  currentFtp,
 }: PostSaveProps) => {
   try {
     const response = (await API.graphql({
@@ -33,6 +35,7 @@ const PostSaveComponents = async ({
           stravaUrl: stravaUrl,
           resultsUrl: resultsUrl,
           components: JSON.stringify(components),
+          currentFtp: currentFtp,
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;

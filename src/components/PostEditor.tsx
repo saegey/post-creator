@@ -7,9 +7,8 @@ import renderElement from '../../src/utils/RenderElement';
 import PostMenu from './PostMenu';
 import { PostContext } from '../PostContext';
 
-
 const PostEditor = ({ initialState }) => {
-  const [editor] = React.useState(() => withReact(createEditor()))
+  const [editor] = React.useState(() => withReact(createEditor()));
   const { setTitle, title, postLocation, setPostLocation } =
     React.useContext(PostContext);
 
@@ -22,6 +21,10 @@ const PostEditor = ({ initialState }) => {
           maxWidth: '900px',
           marginLeft: 'auto',
           marginRight: 'auto',
+          backgroundColor: 'white',
+          borderRadius: '10px',
+					border: '1px dotted #bcbcbc',
+          padding: '10px',
         }}
       >
         <Flex>

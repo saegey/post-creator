@@ -23,6 +23,7 @@ export const getBlog = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
@@ -88,6 +89,7 @@ export const getPost = /* GraphQL */ `
       type
       subType
       teaser
+      currentFtp
       components
       powerAnalysis
       coordinates
@@ -123,6 +125,7 @@ export const getPost = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
@@ -171,6 +174,7 @@ export const listPosts = /* GraphQL */ `
         type
         subType
         teaser
+        currentFtp
         components
         powerAnalysis
         coordinates

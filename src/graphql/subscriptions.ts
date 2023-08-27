@@ -26,6 +26,7 @@ export const onCreateBlog = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
@@ -74,6 +75,7 @@ export const onUpdateBlog = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
@@ -122,6 +124,7 @@ export const onDeleteBlog = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
@@ -166,6 +169,7 @@ export const onCreatePost = /* GraphQL */ `
       type
       subType
       teaser
+      currentFtp
       components
       powerAnalysis
       coordinates
@@ -201,6 +205,7 @@ export const onCreatePost = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
@@ -247,6 +252,7 @@ export const onUpdatePost = /* GraphQL */ `
       type
       subType
       teaser
+      currentFtp
       components
       powerAnalysis
       coordinates
@@ -282,6 +288,7 @@ export const onUpdatePost = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
@@ -328,6 +335,7 @@ export const onDeletePost = /* GraphQL */ `
       type
       subType
       teaser
+      currentFtp
       components
       powerAnalysis
       coordinates
@@ -363,6 +371,7 @@ export const onDeletePost = /* GraphQL */ `
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates

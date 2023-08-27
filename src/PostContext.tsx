@@ -2,6 +2,12 @@
 
 import React from 'react';
 
+type ActivitiesProps = {
+  stravaUrl: string;
+  resultsUrl: string;
+  currentFtp: number;
+};
+
 export const PostContext = React.createContext({
   id: '',
   title: '',
@@ -13,6 +19,7 @@ export const PostContext = React.createContext({
   postLocation: '',
   images: [],
   activity: null,
+  currentFtp: null,
   stravaUrl: '',
   resultsUrl: '',
   setImages: (images: any) => {},
@@ -20,7 +27,9 @@ export const PostContext = React.createContext({
   setActivity: (arg: object) => {},
   setPostLocation: (arg: string) => {},
   setActivityAndGpx: (arg: string, arg1: string) => {},
-  setStravaUrlAndResultsUrl: (arg: string, arg1: string) => {},
+  // setStravaUrlAndResultsUrl: (arg: string, arg1: string) => {},
+  setCurrentFtp: (arg: number) => {},
+  setSettings: (arg: ActivitiesProps) => {},
 });
 
 export const PostContextProvider = (props) => {
@@ -53,10 +62,23 @@ export const PostContextProvider = (props) => {
     setState({ ...state, stravaUrl: stravaUrl });
   };
 
-  const setStravaUrlAndResultsUrl = (stravaUrl, resultsUrl) => {
-    setState({ ...state, stravaUrl: stravaUrl, resultsUrl: resultsUrl });
-    console.log(stravaUrl, resultsUrl);
+  const setCurrentFtp = (currentFtp) => {
+    // console.log(stravaUrl);
+    setState({ ...state, currentFtp: currentFtp });
   };
+
+  const setSettings = (settings: ActivitiesProps) => {
+    setState({
+      ...state,
+      currentFtp: settings.currentFtp,
+      stravaUrl: settings.stravaUrl,
+      resultsUrl: settings.resultsUrl,
+    });
+  };
+  // const setStravaUrlAndResultsUrl = (stravaUrl, resultsUrl) => {
+  //   setState({ ...state, stravaUrl: stravaUrl, resultsUrl: resultsUrl });
+  //   console.log(stravaUrl, resultsUrl);
+  // };
 
   const setResultsUrl = (resultsUrl) => {
     // console.log(stravaUrl);
@@ -73,6 +95,7 @@ export const PostContextProvider = (props) => {
     postLocation: props.value.postLocation,
     stravaUrl: props.value.stravaUrl,
     resultsUrl: props.value.resultsUrl,
+    currentFtp: props.value.currentFtp,
     setImages: setImages,
     setTitle: setTitle,
     setActivityAndGpx: setActivityAndGpx,
@@ -80,7 +103,9 @@ export const PostContextProvider = (props) => {
     setPostLocation: setPostLocation,
     setStravaUrl: setStravaUrl,
     setResultsUrl: setResultsUrl,
-    setStravaUrlAndResultsUrl: setStravaUrlAndResultsUrl,
+		setSettings: setSettings,
+    // setStravaUrlAndResultsUrl: setStravaUrlAndResultsUrl,
+    setCurrentFtp: setCurrentFtp,
   };
 
   const [state, setState] = React.useState(initState);

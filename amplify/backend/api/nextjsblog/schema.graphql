@@ -28,6 +28,7 @@ type Post
   type: String
   subType: String
   teaser: String
+  currentFtp: String
   components: AWSJSON
   powerAnalysis: AWSJSON
   coordinates: AWSJSON

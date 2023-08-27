@@ -36,7 +36,7 @@ const Header = ({ user, signOut }) => {
             // borderBottomWidth: '2px',
             // borderBottomColor: 'black',
             // borderBottomStyle: 'solid',
-            background: '#0000001a',
+            background: '#eaeaea',
           }}
         >
           <Flex>

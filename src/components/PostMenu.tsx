@@ -48,8 +48,15 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   // const [uploadModal, setUploadModal] = React.useState(false);
   const [addImageModal, setAddImageModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-  const { id, title, gpxFile, postLocation, stravaUrl, resultsUrl } =
-    React.useContext(PostContext);
+  const {
+    id,
+    title,
+    gpxFile,
+    postLocation,
+    stravaUrl,
+    resultsUrl,
+    currentFtp,
+  } = React.useContext(PostContext);
   const [isHoverSettings, setIsHoverSettings] = React.useState(false);
 
   const save = async (e) => {
@@ -63,6 +70,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
       components: editor.children,
       stravaUrl: stravaUrl,
       resultsUrl: resultsUrl,
+      currentFtp: currentFtp,
     });
 
     setIsSaving(false);
