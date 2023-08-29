@@ -6,14 +6,18 @@ import React from 'react';
 import UploadGpxModal from './UploadGpxModal';
 
 const ActivitySettings = ({ isOpen }) => {
-  const { resultsUrl, stravaUrl, gpxFile, setSettings, currentFtp } =
-    React.useContext(PostContext);
+  const {
+    resultsUrl,
+    stravaUrl,
+    gpxFile,
+    setCurrentFtp,
+    currentFtp,
+    activity,
+    setStravaUrl,
+    setResultsUrl,
+  } = React.useContext(PostContext);
   const [uploadModal1, setUploadModal] = React.useState(false);
-  console.log('rerender');
-
-  React.useEffect(() => {
-    console.log('upload modal changed');
-  }, [uploadModal1]);
+  console.log('render activiity settinigs');
 
   return (
     <>
@@ -60,13 +64,9 @@ const ActivitySettings = ({ isOpen }) => {
 
                 isOpen(false);
                 const form = new FormData(event.target);
-
-                // console.log(form.get('resultsUrl'));
-                setSettings({
-                  stravaUrl: form.get('stravaLink'),
-                  resultsUrl: form.get('resultsUrl'),
-                  currentFtp: form.get('currentFtp'),
-                });
+                setCurrentFtp(form.get('currentFtp'));
+                setStravaUrl(form.get('stravaLink'));
+                setResultsUrl(form.get('resultsUrl'));
               }}
               style={{ width: '100%' }}
             >
@@ -124,7 +124,7 @@ const ActivitySettings = ({ isOpen }) => {
                     defaultValue={currentFtp ? currentFtp : ''}
                   />
                 </Box>
-								<Box>
+                <Box>
                   <Label htmlFor='eventDate'>Event Date</Label>
                   <Input
                     id='eventDate'

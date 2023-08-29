@@ -13,7 +13,7 @@
     "@saegey/posts.ui.power-curve-graph": "^0.0.0-71d949b3d68692bf48390a2950ce23b2e1076ae5",
     "@saegey/posts.units": "^0.0.1",
     "@saegey/posts.viewport": "^0.0.1",
-    "@saegey/posts.visual-overview": "^0.0.13",
+    "@saegey/posts.visual-overview": "^0.0.15",
     "@tmcw/togeojson": "^5.8.1",
     "@turf/helpers": "^6.5.0",
     "@turf/length": "^6.5.0",
@@ -27,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "slate": "^0.94.1",
+    "slate-history": "^0.93.0",
     "slate-react": "^0.98.1"
   },
   "devDependencies": {

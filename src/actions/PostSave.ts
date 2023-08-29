@@ -3,6 +3,7 @@ import { API } from 'aws-amplify';
 
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
+import { updatePostMinimal } from '../graphql/customMutations';
 
 interface PostSaveProps {
   postId: string;
@@ -26,7 +27,7 @@ const PostSaveComponents = async ({
   try {
     const response = (await API.graphql({
       authMode: 'AMAZON_COGNITO_USER_POOLS',
-      query: updatePost,
+      query: updatePostMinimal,
       variables: {
         input: {
           id: postId,

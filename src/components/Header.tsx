@@ -1,30 +1,196 @@
-import { useState } from 'react';
-import { MenuButton, Box, Flex, Close, NavLink, Button } from 'theme-ui';
+import React from 'react';
+import {
+  MenuButton,
+  Box,
+  Flex,
+  Close,
+  NavLink,
+  Button,
+  Text,
+  Link as ThemeLink,
+} from 'theme-ui';
 import Link from 'next/link';
+import { API } from 'aws-amplify';
+// import Link from 'next/link';
+
 import BlackBox from './BlackBox';
+import { listPosts } from '../graphql/customQueries';
+// import { listPosts } from '../graphql/queries';
 
 const Header = ({ user, signOut }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  const [recentPosts, setRecentPosts] = React.useState();
+
+  const listRecentPosts = async () => {
+    const { data } = await API.graphql({
+      query: listPosts,
+      authMode: 'API_KEY',
+    });
+    // console.log('listRecentPosts', listRecentPosts);
+    return data;
+  };
+
+  React.useEffect(() => {
+    listRecentPosts().then((d) => {
+      setRecentPosts(d.listPosts.items);
+    });
+  }, []);
 
   return (
     <>
       {menuOpen && (
         <BlackBox>
-          <Box sx={{ width: '400px', backgroundColor: 'white' }}>
-            <Flex sx={{ padding: '20px' }}>
+          <Flex
+            sx={{
+              flexDirection: 'column',
+              width: '400px',
+              height: '100%',
+              backgroundColor: 'white',
+              animation: 'fadeIn .2s;',
+              borderTopRightRadius: '10px',
+              borderBottomRightRadius: '10px',
+            }}
+          >
+            <Flex
+              sx={{
+                paddingX: '20px',
+                paddingTop: '20px',
+                paddingBottom: '0px',
+              }}
+            >
               <div>
-                <h2>monopad</h2>
+                <Flex sx={{ gap: '10px' }}>
+                  <Box sx={{ width: '40px', height: 'auto' }}>
+                    <svg
+                      width='100%'
+                      height='100%'
+                      viewBox='0 0 204 204'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <circle
+                        cx='102'
+                        cy='102'
+                        r='96'
+                        stroke='black'
+                        strokeWidth='12'
+                      />
+                      <path
+                        fillRule='evenodd'
+                        clipRule='evenodd'
+                        d='M101.5 178C143.198 178 177 144.197 177 102.5C177 60.8025 143.198 27 101.5 27C59.8025 27 26 60.8025 26 102.5C26 144.197 59.8025 178 101.5 178ZM89 74H74V128H89V74ZM115 74H130V128H115V74ZM112.392 74.25L102 93L91.6077 74.25H112.392Z'
+                        fill='black'
+                      />
+                    </svg>
+                  </Box>
+                  <Text as='h2' sx={{ marginY: 'auto' }}>
+                    monopad
+                  </Text>
+                </Flex>
               </div>
               <div style={{ marginLeft: 'auto' }}>
-                <Close onClick={() => setMenuOpen(false)} />
+                <Close
+                  onClick={() => setMenuOpen(false)}
+                  sx={{ backgroundColor: '#eeeeee' }}
+                />
               </div>
             </Flex>
-            <Flex as='nav' sx={{ flexDirection: 'column', padding: '20px' }}>
-              <NavLink as={Link} href='/' p={2}>
-                Home
-              </NavLink>
+            <Box
+              sx={{
+                borderBottom: '1px solid #e3e3e3',
+                margin: '5px',
+                paddingY: '10px',
+              }}
+            >
+              <Flex as='nav' sx={{ flexDirection: 'column', paddingX: '10px' }}>
+                <NavLink
+                  as={Link}
+                  href='/'
+                  p={0}
+                  sx={{
+                    fontWeight: 600,
+                    padding: '5px',
+                    '&:hover': {
+                      backgroundColor: '#ececec',
+                      borderRadius: '5px',
+                    },
+                  }}
+                >
+                  Home
+                </NavLink>
+                <NavLink
+                  as={Link}
+                  href='/'
+                  p={0}
+                  sx={{
+                    fontWeight: 600,
+                    padding: '5px',
+                    '&:hover': {
+                      backgroundColor: '#ececec',
+                      borderRadius: '5px',
+                    },
+                  }}
+                >
+                  Posts
+                </NavLink>
+              </Flex>
+            </Box>
+            <Box sx={{ margin: '15px' }}>
+              <Text
+                as='span'
+                sx={{
+                  fontSize: '15px',
+                  fontWeight: 700,
+                  color: '#5a5a5a',
+                  marginLeft: '5px',
+                }}
+              >
+                Recent Posts
+              </Text>
+              {recentPosts && (
+                <Box as='ul' sx={{ listStyleType: 'none' }}>
+                  {recentPosts.map((post, i) => {
+                    return (
+                      <Box
+                        as='li'
+                        key={`post-${i}`}
+                        sx={{
+                          padding: '5px',
+                          '&:hover': {
+                            backgroundColor: '#ececec',
+                            borderRadius: '5px',
+                          },
+                        }}
+                      >
+                        <ThemeLink
+                          as={Link}
+                          sx={{ color: 'black', textDecoration: 'none' }}
+                          href={`/posts/${post.id}`}
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          {post.title}
+                        </ThemeLink>
+                      </Box>
+                    );
+                  })}
+                </Box>
+              )}
+            </Box>
+            <Flex sx={{ flexGrow: 1, marginX: '20px' }}>
+              <Box sx={{ marginTop: 'auto', marginBottom: '20px' }}>
+                <Text as='span' sx={{ color: 'gray', fontSize: '14px' }}>
+                  © 2023 Monopad, LLC.
+                </Text>
+                <Flex sx={{ gap: '10px', fontSize: '14px' }}>
+                  <span>About</span>
+                  <span>Blog</span>
+                  <span>Terms</span>
+                  <span>Status</span>
+                  <span>Privacy</span>
+                </Flex>
+              </Box>
             </Flex>
-          </Box>
+          </Flex>
         </BlackBox>
       )}
       <header>
@@ -33,15 +199,15 @@ const Header = ({ user, signOut }) => {
             display: 'flex',
             flexDirection: 'row',
             padding: '10px',
-            // borderBottomWidth: '2px',
-            // borderBottomColor: 'black',
-            // borderBottomStyle: 'solid',
-            background: '#eaeaea',
+            borderBottomWidth: '2px',
+            borderBottomColor: '#f0f0f0',
+            borderBottomStyle: 'solid',
+            background: 'white',
           }}
         >
           <Flex>
             <MenuButton
-              sx={{ marginY: 'auto' }}
+              sx={{ marginY: 'auto', border: '1px solid #d4d4d4' }}
               aria-label='Toggle Menu'
               onClick={() => {
                 setMenuOpen(true);

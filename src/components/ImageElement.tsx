@@ -1,4 +1,9 @@
-import { useSlateStatic, ReactEditor } from 'slate-react';
+import {
+  useSlateStatic,
+  ReactEditor,
+  useSelected,
+  useFocused,
+} from 'slate-react';
 import { Transforms, Descendant } from 'slate';
 import Image from 'next/image';
 
@@ -10,14 +15,17 @@ import { PostContext } from '../PostContext';
 const ImageElement = ({ attributes, children, element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
-  // console.log('path', path);
   const [isHover, setIsHover] = React.useState(false);
   const [addCaption, setAddCaption] = React.useState(false);
   const { id, title, gpxFile, postLocation } = React.useContext(PostContext);
-  // console.log('elemeent', element);
+
+  const selected = useSelected();
+  const focused = useFocused();
+  // console.log('selected', selected);
+	// console.log('focused', focused);
 
   const saveCaption = async (event) => {
-    console.log('save caption here');
+    // console.log('save caption here');
     event.preventDefault();
     const form = new FormData(event.target);
     setAddCaption(false);
@@ -57,9 +65,15 @@ const ImageElement = ({ attributes, children, element }) => {
         <Image
           src={element.src}
           alt='race pic'
+          priority={true}
           width={500}
           height={500}
-          style={{ width: '100%', height: 'auto', borderRadius: '5px' }}
+          style={{
+            width: '100%',
+            height: 'auto',
+            borderRadius: '5px',
+            boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}`,
+          }}
         />
         {element.caption && <p>{element.caption}</p>}
 

@@ -1,28 +1,68 @@
 import { Slate, Editable, withReact } from 'slate-react';
+import { API } from 'aws-amplify';
 import React from 'react';
-import { createEditor } from 'slate';
+import { createEditor, Editor, Transforms } from 'slate';
 import { Box, Flex, Text } from 'theme-ui';
+import { withHistory } from 'slate-history';
 
-import renderElement from '../../src/utils/RenderElement';
+import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
 import PostMenu from './PostMenu';
 import { PostContext } from '../PostContext';
 import SkeletonPost from './SkeletonPost';
+import { getActivity } from '../../src/actions/PostGet';
+import { getActivityQuery } from '../../src/graphql/customQueries';
 
-const PostEditor = ({ initialState }) => {
-  const [editor] = React.useState(() => withReact(createEditor()));
+const PostEditor = ({ postId, initialState }) => {
+  const [editor] = React.useState(() => withHistory(withReact(createEditor())));
   const [loading, setLoading] = React.useState(true);
+  // console.log(initialState);
 
-  const { setTitle, title, postLocation, setPostLocation } =
-    React.useContext(PostContext);
+  const {
+    setTitle,
+    title,
+    postLocation,
+    setPostLocation,
+    id,
+    setActivity,
+    activity,
+    setPowerAnalysis,
+    components,
+  } = React.useContext(PostContext);
+  console.log('post editor render', activity);
 
   React.useEffect(() => {
-    console.log('use eeff', initialState);
     if (initialState) {
       setTimeout(() => {
         setLoading(false);
       }, 1000);
     }
   }, [initialState]);
+
+  React.useEffect(() => {
+    editor.children = components;
+    editor.onChange();
+  }, [components]);
+
+  const getData = async () => {
+    const { data } = await API.graphql({
+      query: getActivityQuery,
+      authMode: 'API_KEY',
+      variables: {
+        id: id,
+      },
+    });
+    console.log('post editor - get Activity');
+    const activity = await getActivity(data.getPost);
+    setPowerAnalysis(JSON.parse(data.getPost.powerAnalysis));
+
+    return activity;
+  };
+
+  React.useEffect(() => {
+    getData().then((d) => {
+      setActivity(d);
+    });
+  }, [id]);
 
   return (
     <>
@@ -49,7 +89,10 @@ const PostEditor = ({ initialState }) => {
                 contentEditable='true'
                 suppressContentEditableWarning={true}
                 onBlur={(event) => {
-                  setTitle(event.target.textContent);
+                  console.log('blur h1');
+                  if (event.target.textContent !== title) {
+                    setTitle(event.target.textContent);
+                  }
                 }}
                 sx={{ width: '100%' }}
               >
@@ -65,12 +108,33 @@ const PostEditor = ({ initialState }) => {
             >
               {postLocation}
             </h2>
-            <Slate editor={editor} initialValue={initialState}>
+            <Slate
+              editor={editor}
+              initialValue={initialState}
+              // onChange={(val) => {
+              //   console.log(val);
+              // }}
+            >
               <Editable
                 spellCheck
                 autoFocus
                 renderElement={renderElement}
                 style={{ padding: '2px' }}
+                onKeyDown={(event) => {
+                  if (event.key === 'b' && event.metaKey) {
+                    event.preventDefault();
+
+                    const marks = Editor.marks(editor);
+                    const isActive = marks ? marks['bold'] === true : false;
+
+                    if (isActive) {
+                      Editor.removeMark(editor, 'bold');
+                    } else {
+                      Editor.addMark(editor, 'bold', true);
+                    }
+                  }
+                }}
+                renderLeaf={renderLeaf}
               />
             </Slate>
           </div>

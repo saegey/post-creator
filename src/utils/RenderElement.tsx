@@ -1,6 +1,24 @@
+import React from 'react';
+
 import PowerGraphElement from '../components/PowerGraphElement';
 import ImageElement from '../components/ImageElement';
-import VisualOverviewWrapper from '../components/VisualOverviewWrapper'
+import VisualOverviewWrapper from '../components/VisualOverviewWrapper';
+
+const Leaf = (props) => {
+  return (
+    <span
+      {...props.attributes}
+      style={{ fontWeight: props.leaf.bold ? 'bold' : '' }}
+    >
+      {props.children}
+    </span>
+  );
+};
+
+// Define a leaf rendering function that is memoized with `useCallback`.
+const renderLeaf = (props) => {
+  return <Leaf {...props} />;
+};
 
 const renderElement = ({ attributes, children, element }) => {
   const style = { textAlign: element.align };
@@ -31,7 +49,15 @@ const renderElement = ({ attributes, children, element }) => {
       );
     case 'heading-two':
       return (
-        <h2 style={style} {...attributes}>
+        <h2
+          style={{
+            fontWeight: 700,
+            maxWidth: '690px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+          {...attributes}
+        >
           {children}
         </h2>
       );
@@ -43,7 +69,7 @@ const renderElement = ({ attributes, children, element }) => {
             marginRight: 'auto',
             maxWidth: '690px',
             fontSize: '20px',
-            fontWeight: 400,
+            // fontWeight: 400,
           }}
           {...attributes}
         >
@@ -54,3 +80,4 @@ const renderElement = ({ attributes, children, element }) => {
 };
 
 export default renderElement;
+export { renderLeaf };

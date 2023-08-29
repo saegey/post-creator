@@ -10,6 +10,9 @@ const PowerGraph = ({ attributes, children, element }) => {
   const { powerAnalysis, currentFtp } = useContext(PostContext);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
+  if (!powerAnalysis) {
+    return <></>;
+  }
 
   const graphData = Object.keys(powerAnalysis)
     .map((k, i) => {
@@ -22,7 +25,7 @@ const PowerGraph = ({ attributes, children, element }) => {
   return (
     <Box
       sx={{
-        backgroundColor: 'lightgray',
+        backgroundColor: '#f5f5f5',
         borderRadius: '5px',
         padding: '20px',
         margin: '10px',
