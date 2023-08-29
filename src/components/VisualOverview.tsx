@@ -64,7 +64,10 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
   );
 
   const xMax = Number(activity[activity.length - 1].d);
-  const coordinates = React.useMemo(() => activity.map((a) => a.c), [downSampledData]);
+  const coordinates = React.useMemo(
+    () => downSampledData.map((a) => a.c),
+    [downSampledData]
+  );
 
   return (
     <Box>

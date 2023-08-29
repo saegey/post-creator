@@ -22,7 +22,7 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { id, setActivityAndGpx } = React.useContext(PostContext);
+  const { id, setActivity, setGpxFile } = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -58,7 +58,8 @@ const UploadGpxModal = ({ openModal }) => {
 
   const processUpdates = async (post) => {
     const activity = await getActivity(post);
-    setActivityAndGpx(activity, post.gpxFile);
+    setActivity(activity);
+    setGpxFile(post.gpxFile);
   };
 
   React.useEffect(() => {

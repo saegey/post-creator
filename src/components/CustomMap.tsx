@@ -146,9 +146,6 @@ const Map = ({
       padding: 50,
     });
     map.current.resize();
-
-    // map.current.triggerRepaint();
-    // map.current?.addLayer(currenPositionLayerSettings as SkyLayer);
   }, [coordinates, isMapLoaded]);
 
   React.useEffect(() => {

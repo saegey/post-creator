@@ -11,7 +11,7 @@ const thumbnailUrl = (image) => {
   return `https://res.cloudinary.com/dprifih4o/image/upload/t_resize-tst/${image.public_id}.${image.format}`;
 };
 
-const editorUrl = (image) => {
+export const editorUrl = (image) => {
   return `https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/${image.public_id}.${image.format}`;
 };
 

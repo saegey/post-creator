@@ -77,6 +77,8 @@ const Post = ({
       setPostLocation(postLocationOrig);
       setGpxFile(postGpxFile);
       setStravaUrl(postStravaUrl);
+      setImages(postImages);
+      setCurrentFtp(postCurrentFtp);
       // setPowerAnalysis(post)
       console.log('use effect in [id]');
       console.log('use effect - initial load');

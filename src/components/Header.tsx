@@ -15,10 +15,12 @@ import { API } from 'aws-amplify';
 
 import BlackBox from './BlackBox';
 import { listPosts } from '../graphql/customQueries';
+import AvatarButton from './AvatarButton';
 // import { listPosts } from '../graphql/queries';
 
 const Header = ({ user, signOut }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [profileOpen, setProfileOpen] = React.useState(false);
   const [recentPosts, setRecentPosts] = React.useState();
 
   const listRecentPosts = async () => {
@@ -38,6 +40,37 @@ const Header = ({ user, signOut }) => {
 
   return (
     <>
+      {profileOpen && (
+        <BlackBox>
+          <Flex sx={{ marginLeft: 'auto' }}>
+            <Box
+              sx={{
+                flexDirection: 'column',
+                width: '400px',
+                height: '100%',
+                backgroundColor: 'white',
+                animation: 'fadeIn .2s;',
+                borderTopLeftRadius: '10px',
+                borderBottomLeftRadius: '10px',
+              }}
+            >
+              <Box sx={{ marginLeft: 'auto' }}>
+                <Flex sx={{ width: '100%', padding: '10px' }}>
+                  <span>saegey</span>
+                  <Close
+                    onClick={() => setProfileOpen(false)}
+                    sx={{ backgroundColor: '#eeeeee', marginLeft: 'auto' }}
+                  />
+                </Flex>
+                <Box sx={{ padding: '10px' }}>
+                  <p>Logged in as {user.username}.</p>
+                  <Button onClick={signOut}>Sign out</Button>
+                </Box>
+              </Box>
+            </Box>
+          </Flex>
+        </BlackBox>
+      )}
       {menuOpen && (
         <BlackBox>
           <Flex
@@ -216,7 +249,9 @@ const Header = ({ user, signOut }) => {
           </Flex>
           <div style={{ marginLeft: 'auto' }}>
             {/* <p>Logged in as {user.username}.</p> */}
-            <Button onClick={signOut}>Sign out</Button>
+            {/* <Button onClick={signOut}>Sign out</Button> */}
+            {/* <<p onClick={() => setProfileOpen(true)}></p>> */}
+            <AvatarButton onClick={() => setProfileOpen(true)} />
           </div>
         </div>
       </header>
