@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { listPosts } from '../src/graphql/queries';
 import Header from '../src/components/Header';
 import CreatePostModal from '../src/components/CreatePostModal';
-import { editorUrl } from '../src/components/AddImage';
+import { CloudinaryImage, editorUrl } from '../src/components/AddImage';
 
 type ListPosts = {
   data: {
@@ -53,7 +53,7 @@ type HomeProps = {
     id: string;
     title: string;
     images: string;
-    imagesObj: Array<object>;
+    imagesObj: Array<CloudinaryImage>;
   }>;
 };
 

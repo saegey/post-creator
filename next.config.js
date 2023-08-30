@@ -9,4 +9,5 @@ module.exports = {
       },
     ],
   },
+  // exclude: ['amplify'],
 };
