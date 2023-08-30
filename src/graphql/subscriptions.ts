@@ -20,15 +20,20 @@ export const onCreateBlog = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -64,15 +69,20 @@ export const onUpdateBlog = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -108,15 +118,20 @@ export const onDeleteBlog = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -148,15 +163,20 @@ export const onCreatePost = /* GraphQL */ `
       date
       publishedDate
       location
+      postLocation
       stravaUrl
+      resultsUrl
       type
       subType
       teaser
+      currentFtp
       components
       powerAnalysis
       coordinates
       powers
       elevation
+      elevationGrades
+      distances
       blog {
         id
         name
@@ -179,15 +199,20 @@ export const onCreatePost = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -221,15 +246,20 @@ export const onUpdatePost = /* GraphQL */ `
       date
       publishedDate
       location
+      postLocation
       stravaUrl
+      resultsUrl
       type
       subType
       teaser
+      currentFtp
       components
       powerAnalysis
       coordinates
       powers
       elevation
+      elevationGrades
+      distances
       blog {
         id
         name
@@ -252,15 +282,20 @@ export const onUpdatePost = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId
@@ -294,15 +329,20 @@ export const onDeletePost = /* GraphQL */ `
       date
       publishedDate
       location
+      postLocation
       stravaUrl
+      resultsUrl
       type
       subType
       teaser
+      currentFtp
       components
       powerAnalysis
       coordinates
       powers
       elevation
+      elevationGrades
+      distances
       blog {
         id
         name
@@ -325,15 +365,20 @@ export const onDeletePost = /* GraphQL */ `
           date
           publishedDate
           location
+          postLocation
           stravaUrl
+          resultsUrl
           type
           subType
           teaser
+          currentFtp
           components
           powerAnalysis
           coordinates
           powers
           elevation
+          elevationGrades
+          distances
           createdAt
           updatedAt
           blogPostsId

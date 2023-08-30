@@ -22,15 +22,20 @@ type Post
   date: String
   publishedDate: String
   location: String
+  postLocation: String
   stravaUrl: String
+  resultsUrl: String
   type: String
   subType: String
   teaser: String
+  currentFtp: String
   components: AWSJSON
   powerAnalysis: AWSJSON
   coordinates: AWSJSON
   powers: AWSJSON
   elevation: AWSJSON
+  elevationGrades: AWSJSON
+  distances: AWSJSON
   blog: Blog @belongsTo
   related: [Post] @hasMany
   # comments: [Comment] @hasMany

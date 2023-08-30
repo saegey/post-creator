@@ -7,9 +7,12 @@ import { PowerCurveGraph } from '@saegey/posts.ui.power-curve-graph';
 import { PostContext } from '../PostContext';
 
 const PowerGraph = ({ attributes, children, element }) => {
-  const { powerAnalysis } = useContext(PostContext);
+  const { powerAnalysis, currentFtp } = useContext(PostContext);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
+  if (!powerAnalysis) {
+    return <></>;
+  }
 
   const graphData = Object.keys(powerAnalysis)
     .map((k, i) => {
@@ -22,7 +25,7 @@ const PowerGraph = ({ attributes, children, element }) => {
   return (
     <Box
       sx={{
-        backgroundColor: 'lightgray',
+        backgroundColor: '#f5f5f5',
         borderRadius: '5px',
         padding: '20px',
         margin: '10px',
@@ -38,7 +41,10 @@ const PowerGraph = ({ attributes, children, element }) => {
       </Flex>
 
       <Box sx={{ width: '100%', height: '200px' }}>
-        <PowerCurveGraph ftp={280} data={graphData} />
+        <PowerCurveGraph
+          ftp={currentFtp ? Number(currentFtp) : 0}
+          data={graphData as any}
+        />
       </Box>
     </Box>
   );

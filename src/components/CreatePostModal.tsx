@@ -25,8 +25,10 @@ async function handleCreatePost(event) {
         },
       },
     })) as GraphQLResult<CreatePostMutation>;
-
-    window.location.href = `/posts/${response.data.createPost.id}`;
+    if (!response || !response.data || !response.data.createPost) {
+      console.error('failed to create post');
+    }
+    window.location.href = `/posts/${response?.data?.createPost?.id}`;
   } catch ({ errors }) {
     console.error(...errors);
     throw new Error(errors[0].message);

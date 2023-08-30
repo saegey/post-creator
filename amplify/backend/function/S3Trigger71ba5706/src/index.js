@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.calcBestPowers = exports.downsampleElevation = void 0;
+exports.calcBestPowers = exports.calcElevation = exports.calcElevationGrades = exports.calcDistances = void 0;
 const togeojson_1 = require("@tmcw/togeojson");
 const xmldom_1 = require("@xmldom/xmldom");
 const length_1 = __importDefault(require("@turf/length"));
@@ -29,36 +29,40 @@ const timeIntervals = (end) => [
     9600, 10200, 10800, 12000, 13200, 14400, 15600, 16800, 18000, 19200, 20400,
     21600,
 ];
-const downsampleElevation = (coordinates, rate) => {
-    const downsampled = [];
+const calcDistances = (coordinates) => {
     let totalDistance = 0;
     let distances = [];
-    let grade = 0;
-    coordinates.forEach((item, index) => {
+    coordinates.forEach((_, index) => {
         if (index !== coordinates.length - 1) {
             totalDistance += (0, length_1.default)((0, helpers_1.lineString)([
                 [coordinates[index][0], coordinates[index][1]],
                 [coordinates[index + 1][0], coordinates[index + 1][1]],
             ]), { units: 'meters' });
-            distances.push(totalDistance);
+            distances.push(Number(totalDistance.toFixed(2)));
         }
+    });
+    return distances;
+};
+exports.calcDistances = calcDistances;
+const calcElevationGrades = (coordinates, distances) => {
+    const grades = coordinates.map((item, index) => {
+        let grade = 0;
         if (index > 30) {
             grade =
                 (item[2] - coordinates[index - 30][2]) /
-                    (totalDistance - distances[index - 30]);
+                    (distances[index] - distances[index - 30]);
         }
-        if (index % rate === 0 || index === 0) {
-            downsampled.push({
-                x: index,
-                y: Number(item[2]).toFixed(0),
-                distance: totalDistance,
-                grade: !Number.isNaN(grade) && isFinite(grade) ? grade : 0,
-            });
-        }
+        return !Number.isNaN(grade) && isFinite(grade)
+            ? Number(grade.toFixed(3))
+            : 0;
     });
-    return downsampled;
+    return grades;
 };
-exports.downsampleElevation = downsampleElevation;
+exports.calcElevationGrades = calcElevationGrades;
+const calcElevation = (coordinates) => {
+    return coordinates.map((c) => c[2]);
+};
+exports.calcElevation = calcElevation;
 const calcPowerSlices = (powers, length) => {
     const powerSums = [];
     for (var i = 0; i < powers.length; i++) {
@@ -128,15 +132,13 @@ exports.handler = async function (event) {
     const segment = aws_xray_sdk_1.default.getSegment();
     const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
     console.log('Dynamo Table: ', postTable);
-    // console.log('Received S3 event:', JSON.stringify(event, null, 2));
-    // const eventName = event.Records[0].eventName;
     const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
     let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
     // const imgSize = event.Records[0].s3.object.size;
     // const maxSize = 5000000; // More that 5Mb images would be rejected
     // const filename = key.split('.').slice(0, -1).join('.');
     const fileParams = { Bucket: bucket, Key: key };
-    const s3getTimer = segment.addNewSubsegment('s3get');
+    const s3getTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('s3get');
     const file = await S3.getObject({
         Bucket: bucket,
         Key: key,
@@ -148,46 +150,58 @@ exports.handler = async function (event) {
     console.log('metadata', JSON.stringify(metaData));
     s3metaTimer.close();
     await publishMessage({ phase: 'meta-downloaded' });
-    const xmlParseTimer = segment.addNewSubsegment('xmlParse');
+    const xmlParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('xmlParse');
     const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString('utf-8'));
     xmlParseTimer.close();
     await publishMessage({ phase: 'xml-parse' });
-    const gpxParseTimer = segment.addNewSubsegment('gpxParse');
+    const gpxParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('gpxParse');
     const gpxData = (0, togeojson_1.gpx)(xmlDoc);
     gpxParseTimer.close();
     await publishMessage({ phase: 'gpx-parse' });
     let coordinates = [];
-    let powers, powerAnalysis, elevation;
+    let powers, powerAnalysis, elevation, distances, elevationGrades;
     gpxData.features.map((feature) => {
         // const { powers, heart, times, atemps, cads } =
         //   feature.properties.coordinateProperties;
         coordinates = feature.geometry.coordinates;
         powers = feature.properties.coordinateProperties.powers;
-        const powerAnalysisTimer = segment.addNewSubsegment('powerAnalysis');
+        const powerAnalysisTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
         powerAnalysis = (0, exports.calcBestPowers)(timeIntervals(powers.length), powers);
         powerAnalysisTimer.close();
-        const downsampleElevationTimer = segment.addNewSubsegment('powerAnalysis');
-        elevation = (0, exports.downsampleElevation)(coordinates, 10);
+        const downsampleElevationTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
+        elevation = (0, exports.calcElevation)(coordinates);
+        distances = (0, exports.calcDistances)(coordinates);
+        elevationGrades = (0, exports.calcElevationGrades)(coordinates, distances);
         downsampleElevationTimer.close();
     });
     await publishMessage({ phase: 'process-data' });
-    const updateDynamoTimer = segment.addNewSubsegment('updateDynamo');
-    const res = await docClient
-        .update({
-        TableName: postTable,
-        Key: {
-            id: metaData.Metadata.postid,
-        },
-        UpdateExpression: 'SET powerAnalysis = :s, coordinates = :c, elevation = :e, powers = :p',
-        ExpressionAttributeValues: {
-            ':s': powerAnalysis,
-            ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
-            ':e': await shrinkify({ field: elevation, name: 'elevation' }),
-            ':p': await shrinkify({ field: powers, name: 'powers' }),
-        },
-    })
-        .promise();
+    const updateDynamoTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('updateDynamo');
+    try {
+        const res = await docClient
+            .update({
+            TableName: postTable,
+            Key: {
+                id: metaData.Metadata.postid,
+            },
+            UpdateExpression: 'SET powerAnalysis = :s, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg',
+            ExpressionAttributeValues: {
+                ':s': powerAnalysis,
+                ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
+                ':e': await shrinkify({ field: elevation, name: 'elevation' }),
+                ':p': await shrinkify({ field: powers, name: 'powers' }),
+                ':d': await shrinkify({ field: distances, name: 'distances' }),
+                ':eg': await shrinkify({
+                    field: elevationGrades,
+                    name: 'elevationGrades',
+                }),
+            },
+        })
+            .promise();
+    }
+    catch (e) {
+        console.error(JSON.stringify(e));
+    }
     updateDynamoTimer.close();
     await publishMessage({ phase: 'update-data' });
-    console.log(JSON.stringify(res));
+    // console.log(JSON.stringify(res));
 };

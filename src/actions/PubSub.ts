@@ -1,4 +1,4 @@
-import { API, withSSRContext, PubSub, Amplify, Auth } from 'aws-amplify';
+import { API, Amplify, Auth } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub';
 import AWS from 'aws-sdk';
 

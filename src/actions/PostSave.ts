@@ -3,25 +3,46 @@ import { API } from 'aws-amplify';
 
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
+import { updatePostMinimal } from '../graphql/customMutations';
 
-const PostSaveComponents = async ({ postId, title, components }) => {
+interface PostSaveProps {
+  postId: string;
+  title: string | null;
+  postLocation: string | null;
+  components: Array<any>;
+  stravaUrl?: string;
+  resultsUrl?: string;
+  currentFtp?: string;
+}
+
+const PostSaveComponents = async ({
+  postId,
+  title,
+  components,
+  postLocation,
+  stravaUrl,
+  resultsUrl,
+  currentFtp,
+}: PostSaveProps) => {
   try {
     const response = (await API.graphql({
       authMode: 'AMAZON_COGNITO_USER_POOLS',
-      query: updatePost,
+      query: updatePostMinimal,
       variables: {
         input: {
           id: postId,
           title: title,
-          // content: form.get('content'),
+          postLocation: postLocation,
+          stravaUrl: stravaUrl,
+          resultsUrl: resultsUrl,
           components: JSON.stringify(components),
+          currentFtp: currentFtp,
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
-    console.log(response, postId, title, components);
+    console.log(response, postId, title, postLocation, components);
   } catch (errors) {
     console.error(errors);
-    // throw new Error(errors[0].message);
   }
 };
 
@@ -34,12 +55,9 @@ const PostSaveImages = async ({ postId, images }) => {
         input: {
           id: postId,
           images: JSON.stringify(images),
-          // content: form.get('content'),
-          // components: JSON.stringify(editor.children),
         },
       },
     });
-    console.log(results);
   } catch (error) {
     console.error(error);
   }

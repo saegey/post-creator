@@ -4,17 +4,23 @@ import { useRouter } from 'next/router';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import React from 'react';
 
-import { getPost } from '../../src/graphql/queries';
-import { uncompress } from '../../src/utils/compress';
 import Header from '../../src/components/Header';
-import { PostContextProvider } from '../../src/PostContext';
+import { PostContext } from '../../src/PostContext';
 import PostEditor from '../../src/components/PostEditor';
+import { getPostInitial } from '../../src/graphql/customQueries';
 
-export async function getServerSideProps({ req, params }) {
+type ServerSideProps = {
+  req: object;
+  params: {
+    id: string;
+  };
+};
+
+export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const SSR = withSSRContext({ req });
 
   const { data } = await SSR.API.graphql({
-    query: getPost,
+    query: getPostInitial,
     authMode: 'API_KEY',
     variables: {
       id: params.id,
@@ -22,79 +28,108 @@ export async function getServerSideProps({ req, params }) {
   });
 
   const post = data.getPost;
-  // const powersRaw = post.power
-  //   ? ((await uncompress(post.powers)) as string)
-  //   : '{}';
-  const coordinatesRaw = post.coordinates
-    ? ((await uncompress(post.coordinates)) as string)
-    : '{}';
-  const elevationRaw = post.elevation
-    ? ((await uncompress(post.elevation)) as string)
-    : '{}';
-
-  // const powers = JSON.parse(powersRaw);
-  const coordinates = JSON.parse(coordinatesRaw);
-  const elevation = JSON.parse(elevationRaw);
 
   return {
     props: {
-      post,
-      powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
-      elevation: elevation ? elevation : [],
-      coordinates: coordinates,
+      postId: post.id,
+      postComponents: JSON.parse(post.components),
+      postTitle: post.title,
+      postImages: JSON.parse(post.images),
+      postLocationOrig: post.postLocation,
+      postGpxFile: post.gpxFile,
+      postStravaUrl: post.stravaUrl,
+      postResultsUrl: post.resultsUrl,
+      postCurrentFtp: post.currentFtp,
     },
   };
-}
+};
 
 const Post = ({
   signOut,
   user,
-  renderedAt,
-  post,
-  powerAnalysis,
-  elevation,
-  coordinates,
+  postComponents,
+  postTitle,
+  postLocationOrig,
+  postGpxFile,
+  postId,
+  postImages,
+  postResultsUrl,
+  postStravaUrl,
+  postCurrentFtp,
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
+  const [title, setTitle] = React.useState(postTitle);
+  const [postLocation, setPostLocation] = React.useState(postLocationOrig);
+  const [id, setId] = React.useState(postId);
+  const [activity, setActivity] = React.useState([]);
+  const [gpxFile, setGpxFile] = React.useState(postGpxFile);
+  const [stravaUrl, setStravaUrl] = React.useState(postStravaUrl);
+  const [components, setComponents] = React.useState(postComponents);
+  const [images, setImages] = React.useState(postImages);
+  const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
+  const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
+  const [powerAnalysis, setPowerAnalysis] = React.useState('');
+  const [initialLoad, setInitialLoad] = React.useState(true);
 
-  if (router.isFallback) {
-    return (
-      <div>
-        <h1>Loading&hellip;</h1>
-      </div>
-    );
-  }
+  React.useEffect(() => {
+    if (!initialLoad) {
+      setId(postId);
+      setTitle(postTitle);
+      setComponents(postComponents);
+      setPostLocation(postLocationOrig);
+      setGpxFile(postGpxFile);
+      setStravaUrl(postStravaUrl);
+      setImages(postImages);
+      setCurrentFtp(postCurrentFtp);
+      // setPowerAnalysis(post)
+      console.log('use effect in [id]');
+      console.log('use effect - initial load');
+    }
+  }, [postComponents]);
+
+  React.useEffect(() => {
+    setInitialLoad(false);
+  }, []);
 
   return (
-    <PostContextProvider
+    <PostContext.Provider
       value={{
+        title,
+        setTitle,
+        postLocation,
+        setPostLocation,
+        activity,
+        setActivity,
+        id,
+        setId,
+        gpxFile,
+        setGpxFile,
+        stravaUrl,
+        setStravaUrl,
+        components,
+        setComponents,
+        images,
+        setImages,
+        currentFtp,
+        setCurrentFtp,
+        resultsUrl,
+        setResultsUrl,
         powerAnalysis,
-        elevation,
-        coordinates,
-        post,
+        setPowerAnalysis,
       }}
     >
       <div>
         <Head>
-          <title>{post.title}</title>
+          <title>{title}</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
 
         <main>
           <Header user={user} signOut={signOut} />
-          <div
-            style={{
-              marginTop: '60px',
-              maxWidth: '900px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
-          >
-            <PostEditor initialState={JSON.parse(post.components)} />
-          </div>
+          <PostEditor postId={postId} initialState={postComponents} />
         </main>
       </div>
-    </PostContextProvider>
+    </PostContext.Provider>
   );
 };
 

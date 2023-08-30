@@ -1,40 +1,58 @@
 import React from 'react';
+import { useSlateStatic, ReactEditor } from 'slate-react';
 import dynamic from 'next/dynamic';
+import { Box, Close, Spinner, Flex } from 'theme-ui';
+import { Transforms } from 'slate';
 
 import { PostContext } from '../PostContext';
 
-const VisualOverview = dynamic(import('@saegey/posts.visual-overview'), {
+const VisualOverview = dynamic(import('./VisualOverview'), {
   ssr: false,
 }); // Async API cannot be server-side rendered
 
 const VisualOverviewWrapper = ({ attributes, children, element }) => {
-  const { elevation, coordinates } = React.useContext(PostContext);
-  const vizOverview = React.useMemo(() => {
+  const { activity } = React.useContext(PostContext);
+  const editor = useSlateStatic() as ReactEditor;
+  const path = ReactEditor.findPath(editor, element);
+
+  if (!activity || activity.length === 0) {
     return (
+      <Flex sx={{ height: '775px', width: '100%', backgroundColor: '#ddd' }}>
+        <Spinner sx={{ margin: 'auto' }} />
+      </Flex>
+    );
+  }
+  console.log('activity', activity);
+
+  const fixedData = activity.map((a) => {
+    return { ...a, g: a.g !== null ? a.g : 0 };
+  });
+
+  // const vizOverview = React.useMemo(() => {
+  //   console.log('vizoverview');
+  //   return (
+  //     <VisualOverview
+  //       activity={fixedData}
+  //       token={
+  //         'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
+  //       }
+  //     />
+  //   );
+  // }, [activity]);
+
+  return (
+    <Box sx={{ position: 'relative', height: '775px' }}>
       <VisualOverview
-        elevationData={{
-          data: elevation,
-          downsampleRate: 2,
-          axisXTickValues: {
-            imperial: [[2, 4, 6]],
-            metric: [[4, 8, 12]],
-          },
-          axisLeftTickValues: {
-            imperial: [[200, 300, 400]],
-            metric: [[50, 100, 150]],
-          },
-        }}
-        coordinates={coordinates}
-        elevationToAdd={500}
-        yMin={0}
+        activity={fixedData}
         token={
           'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
         }
       />
-    );
-  }, [elevation, coordinates]);
-
-  return vizOverview;
+      <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
+        <Close onClick={(e) => Transforms.removeNodes(editor, { at: path })} />
+      </Box>
+    </Box>
+  );
 };
 
 export default VisualOverviewWrapper;

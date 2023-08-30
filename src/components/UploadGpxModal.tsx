@@ -1,20 +1,18 @@
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
-import React from 'react';
-// import { Storage, API } from 'aws-amplify';
+import React from 'react'
 import { GraphQLResult } from '@aws-amplify/api';
 import { Storage, API, PubSub } from 'aws-amplify';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
-import { PostContext } from '../PostContext';
-import { getPostQuery } from '../actions/PostGet';
+import { PostContext, PostContextType } from '../PostContext';
+import { getActivity, getPostQuery } from '../actions/PostGet';
 import {
   attachIoTPolicyToUser,
   configurePubSub,
   getEndpoint,
 } from '../../src/actions/PubSub';
-import { uncompress } from '../utils/compress';
 
 const UploadGpxModal = ({ openModal }) => {
   const [fileData, setFileData] = React.useState<File>();
@@ -23,7 +21,7 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { post, setElevationAndCoordinates } = React.useContext(PostContext);
+  const { id, setActivity, setGpxFile }: PostContextType = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -33,24 +31,22 @@ const UploadGpxModal = ({ openModal }) => {
       progressCallback(progress) {
         setProgress({ loaded: progress.loaded, total: progress.total });
       },
-      metadata: { postId: post.id, hello: 'world' },
+      metadata: { postId: id, hello: 'world' },
       contentType: fileData.type,
       level: 'public',
     });
 
     try {
-      const response = (await API.graphql({
+      (await API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
         query: updatePost,
         variables: {
           input: {
-            id: post.id,
+            id: id,
             gpxFile: result.key,
           },
         },
       })) as GraphQLResult<UpdatePostMutation>;
-
-      setIsUploading(false);
     } catch (error) {
       console.error(error);
       setIsUploading(false);
@@ -58,22 +54,17 @@ const UploadGpxModal = ({ openModal }) => {
   };
 
   const processUpdates = async (post) => {
-    const newElevation = (await uncompress(post.elevation)) as string;
-    const newCoordinates = (await uncompress(post.coordinates)) as string;
-    setElevationAndCoordinates(
-      JSON.parse(newElevation),
-      JSON.parse(newCoordinates)
-    );
+    const activity = await getActivity(post);
+    setActivity(activity);
+    setGpxFile(post.gpxFile);
   };
 
   React.useEffect(() => {
     if (processingGpxStatus === 'update-data') {
-      getPostQuery(post.id).then((d) => {
-        processUpdates(d.data.getPost).then(() => {
-          console.log('data is updated');
+      getPostQuery(id).then((d) => {
+        processUpdates(d.data?.getPost).then(() => {
           openModal(false);
         });
-        // setPowerAnalysis(JSON.parse(d.data.getPost.powerAnalysis));
       });
     }
   }, [processingGpxStatus]);
@@ -103,74 +94,100 @@ const UploadGpxModal = ({ openModal }) => {
     });
 
     return () => {
-      console.log('destroy');
-      subUpdates.unsubscribe();
+      // console.log('destroy');
+      if (subUpdates) {
+        subUpdates.unsubscribe();
+      }
     };
   }, [subPubConfigured]);
 
   return (
-    <BlackBox>
-      <Box
-        sx={{
-          width: '80%',
-          height: '70%',
-          margin: 'auto',
-          background: 'white',
-          borderRadius: '5px',
-          padding: '20px',
-        }}
-      >
-        <Flex>
-          <Box>
-            <Text as='h2'>Upload GPX file</Text>
-          </Box>
+    <>
+      {processingGpxStatus && (
+        <BlackBox>
+          <Flex sx={{ width: '100%', height: '100%' }}>
+            <Box sx={{ margin: 'auto' }}>
+              <Text as='p' sx={{ color: 'white', fontSize: '30px' }}>
+                {processingGpxStatus}
+              </Text>
+            </Box>
+          </Flex>
+        </BlackBox>
+      )}
+      {!processingGpxStatus && (
+        <BlackBox>
           <Box
             sx={{
-              marginLeft: 'auto',
+              width: '80%',
+              margin: 'auto',
+              background: 'white',
+              borderRadius: '5px',
+              padding: '20px',
+              zIndex: 5000,
             }}
           >
-            <Close
-              onClick={() => {
-                openModal(false);
-              }}
-            />
-          </Box>
-        </Flex>
+            <Flex>
+              <Box>
+                <Text as='h2'>Upload GPX file</Text>
+              </Box>
+              <Box
+                sx={{
+                  marginLeft: 'auto',
+                }}
+              >
+                <Close
+                  onClick={() => {
+                    openModal(false);
+                  }}
+                />
+              </Box>
+            </Flex>
 
-        <Box>
-          <Box>
-            <Input
-              type='file'
-              disabled={isUploading}
-              sx={{ marginY: '20px' }}
-              onChange={(e) => setFileData(e.target.files[0])}
-            />
+            <Box>
+              <Box>
+                <Input
+                  type='file'
+                  disabled={isUploading}
+                  sx={{ marginY: '20px' }}
+                  onChange={(e) => {
+                    if (
+                      e.target &&
+                      e.target.files &&
+                      e.target.files.length > 0
+                    ) {
+                      setFileData(e.target?.files[0]);
+                    } else {
+                      console.log('no file attached');
+                    }
+                  }}
+                />
+              </Box>
+              <Box>
+                <Button onClick={uploadFile} disabled={isUploading}>
+                  Upload file
+                </Button>
+              </Box>
+              <Box sx={{ marginTop: '20px' }}>
+                {progress.loaded > 0 && (
+                  <>
+                    <Progress
+                      max={progress.total}
+                      value={progress.loaded}
+                    ></Progress>
+                    <p>{`${((progress.loaded / progress.total) * 100).toFixed(
+                      0
+                    )}%`}</p>
+                  </>
+                )}
+              </Box>
+              {progress.total === progress.loaded && progress.loaded !== 0
+                ? 'File uploaded successfully'
+                : ''}
+            </Box>
           </Box>
-          <Box>
-            <Button onClick={uploadFile} disabled={isUploading}>
-              Upload file
-            </Button>
-          </Box>
-          <Box sx={{ marginTop: '20px' }}>
-            {progress.loaded > 0 && (
-              <>
-                <Progress
-                  max={progress.total}
-                  value={progress.loaded}
-                ></Progress>
-                <p>{`${((progress.loaded / progress.total) * 100).toFixed(
-                  0
-                )}%`}</p>
-              </>
-            )}
-          </Box>
-          {progress.total === progress.loaded && progress.loaded !== 0
-            ? 'File uploaded successfully'
-            : ''}
-          {processingGpxStatus && <p>{processingGpxStatus}</p>}
-        </Box>
-      </Box>
-    </BlackBox>
+        </BlackBox>
+      )}
+    </>
   );
 };
 

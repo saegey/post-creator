@@ -1,5 +1,5 @@
 import { Box, Close, Flex, Image, Button, Grid } from 'theme-ui';
-import { useContext, useState } from 'react';
+import React from 'react';
 import { Descendant, Transforms } from 'slate';
 
 import CloudinaryUpload from './CloudinaryUpload';
@@ -7,25 +7,29 @@ import { PostContext } from '../PostContext';
 
 import BlackBox from './BlackBox';
 
-const thumbnailUrl = (image) => {
-  return `https://res.cloudinary.com/dprifih4o/image/upload/t_resize-tst/${image.public_id}.${image.format}`;
-};
-
-const editorUrl = (image) => {
-  return `https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/${image.public_id}.${image.format}`;
-};
-
-interface CloudinaryImage {
+export interface CloudinaryImage {
   asset_id: string;
   public_id: string;
   secure_url: string;
+  format: 'jpeg' | 'jpg' | 'png';
 }
 
+const thumbnailUrl = (image: CloudinaryImage) => {
+  return `https://res.cloudinary.com/dprifih4o/image/upload/t_resize-tst/${image.public_id}.${image.format}`;
+};
+
+export const editorUrl = (image: CloudinaryImage) => {
+  return `https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/${image.public_id}.${image.format}`;
+};
+
 const AddImage = ({ isOpen, editor }) => {
-  const [selectedImage, setSelectedImage] = useState<CloudinaryImage>();
-  const { setImages, images, post } = useContext(PostContext);
+  const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
+  const { setImages, images, id } = React.useContext(PostContext);
 
   const insertImage = () => {
+    if (!selectedImage) {
+      return;
+    }
     isOpen(false);
 
     Transforms.insertNodes(editor, [
@@ -67,7 +71,7 @@ const AddImage = ({ isOpen, editor }) => {
           </Flex>
           <CloudinaryUpload
             images={images}
-            postId={post.id}
+            postId={id}
             setUploadedImages={setImages}
           />
           <Grid
