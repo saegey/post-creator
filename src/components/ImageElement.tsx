@@ -5,10 +5,9 @@ import {
   useFocused,
 } from 'slate-react';
 import { Transforms } from 'slate';
-import Image from 'next/image';
 
 import { Box, Button, Label, Textarea, Close, Flex } from 'theme-ui';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { PostSaveComponents } from '../actions/PostSave';
 import { PostContext } from '../PostContext';
 
@@ -22,13 +21,14 @@ type SlateImageType = {
   caption?: string;
 };
 
+import { CldImage } from 'next-cloudinary';
+
 const ImageElement = ({ children, element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
   const [isHover, setIsHover] = React.useState(false);
   const [addCaption, setAddCaption] = React.useState(false);
   const { id, title, postLocation } = React.useContext(PostContext);
-
   const selected = useSelected();
   const focused = useFocused();
 
@@ -67,12 +67,13 @@ const ImageElement = ({ children, element }) => {
           marginBottom: '20px',
         }}
       >
-        <Image
-          src={element.src}
+        <CldImage
+          width='800'
+          height='800'
+          src={element.public_id}
+          sizes='100vw'
           alt='race pic'
-          priority={true}
-          width={500}
-          height={500}
+          quality={90}
           style={{
             width: '100%',
             height: 'auto',

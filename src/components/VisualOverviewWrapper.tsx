@@ -10,7 +10,7 @@ const VisualOverview = dynamic(import('./VisualOverview'), {
   ssr: false,
 }); // Async API cannot be server-side rendered
 
-const VisualOverviewWrapper = ({ attributes, children, element }) => {
+const VisualOverviewWrapper = ({ element }) => {
   const { activity } = React.useContext(PostContext);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
@@ -28,18 +28,6 @@ const VisualOverviewWrapper = ({ attributes, children, element }) => {
     return { ...a, g: a.g !== null ? a.g : 0 };
   });
 
-  // const vizOverview = React.useMemo(() => {
-  //   console.log('vizoverview');
-  //   return (
-  //     <VisualOverview
-  //       activity={fixedData}
-  //       token={
-  //         'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
-  //       }
-  //     />
-  //   );
-  // }, [activity]);
-
   return (
     <Box sx={{ position: 'relative', height: '775px' }}>
       <VisualOverview
@@ -49,7 +37,7 @@ const VisualOverviewWrapper = ({ attributes, children, element }) => {
         }
       />
       <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
-        <Close onClick={(e) => Transforms.removeNodes(editor, { at: path })} />
+        <Close onClick={() => Transforms.removeNodes(editor, { at: path })} />
       </Box>
     </Box>
   );

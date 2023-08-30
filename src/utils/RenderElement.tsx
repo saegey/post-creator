@@ -21,7 +21,6 @@ const renderLeaf = (props) => {
 };
 
 const renderElement = ({ attributes, children, element }) => {
-  const style = { textAlign: element.align };
   switch (element.type) {
     case 'powergraph':
       return (
@@ -32,20 +31,9 @@ const renderElement = ({ attributes, children, element }) => {
         />
       );
     case 'visualOverview':
-      return (
-        <VisualOverviewWrapper
-          attributes={attributes}
-          children={children}
-          element={element}
-        />
-      );
+      return <VisualOverviewWrapper element={element} />;
     case 'image':
-      return (
-        <ImageElement
-          children={children}
-          element={element}
-        />
-      );
+      return <ImageElement children={children} element={element} />;
     case 'heading-two':
       return (
         <h2
