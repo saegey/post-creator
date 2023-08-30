@@ -22,6 +22,8 @@ type SlateImageType = {
   caption?: string;
 };
 
+import { CldImage } from 'next-cloudinary';
+
 const ImageElement = ({ children, element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
@@ -31,6 +33,7 @@ const ImageElement = ({ children, element }) => {
 
   const selected = useSelected();
   const focused = useFocused();
+  console.log(process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME']);
 
   const saveCaption = async (event: any) => {
     event.preventDefault();
@@ -67,12 +70,26 @@ const ImageElement = ({ children, element }) => {
           marginBottom: '20px',
         }}
       >
-        <Image
+        {/* <Image
           src={element.src}
           alt='race pic'
           priority={true}
           width={500}
           height={500}
+          style={{
+            width: '100%',
+            height: 'auto',
+            borderRadius: '5px',
+            boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}`,
+          }}
+        /> */}
+        <CldImage
+          width='800'
+          height='800'
+          src={element.public_id}
+          sizes='100vw'
+          alt='race pic'
+          quality={90}
           style={{
             width: '100%',
             height: 'auto',

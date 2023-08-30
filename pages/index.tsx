@@ -5,11 +5,12 @@ import { Button, Box, Grid, Link as ThemeLink, Flex, Text } from 'theme-ui';
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { CldImage } from 'next-cloudinary';
 
 import { listPosts } from '../src/graphql/queries';
 import Header from '../src/components/Header';
 import CreatePostModal from '../src/components/CreatePostModal';
-import { CloudinaryImage, editorUrl } from '../src/components/AddImage';
+import { CloudinaryImage } from '../src/components/AddImage';
 
 type ListPosts = {
   data: {
@@ -101,17 +102,24 @@ const Home = ({ signOut, user, posts = [] }: HomeProps) => {
                       }}
                     >
                       {post.imagesObj && post.imagesObj.length > 0 && (
-                        <Image
-                          src={editorUrl(post.imagesObj[0])}
-                          width={280}
+                        <CldImage
+                          width='400'
+                          height='300'
+                          src={post.imagesObj[0].public_id}
                           style={{
+                            objectFit: 'cover',
                             width: '100%',
-                            height: 'auto',
+                            height: '100%',
                             marginTop: 'auto',
                             marginBottom: 'auto',
+                            borderTopLeftRadius: '5px',
+                            borderTopRightRadius: '5px',
                           }}
-                          height={220}
-                          alt='fuck eyah'
+                          preserveTransformations
+                          underlay={post.imagesObj[0].public_id}
+                          quality={90}
+                          sizes='100vw'
+                          alt='Description of my image'
                         />
                       )}
                       {!post.imagesObj && (

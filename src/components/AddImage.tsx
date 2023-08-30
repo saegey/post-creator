@@ -1,6 +1,7 @@
-import { Box, Close, Flex, Image, Button, Grid } from 'theme-ui';
+import { Box, Close, Flex, Button, Grid } from 'theme-ui';
 import React from 'react';
 import { Descendant, Transforms } from 'slate';
+import { CldImage } from 'next-cloudinary';
 
 import CloudinaryUpload from './CloudinaryUpload';
 import { PostContext } from '../PostContext';
@@ -13,14 +14,6 @@ export interface CloudinaryImage {
   secure_url: string;
   format: 'jpeg' | 'jpg' | 'png';
 }
-
-const thumbnailUrl = (image: CloudinaryImage) => {
-  return `https://res.cloudinary.com/dprifih4o/image/upload/t_resize-tst/${image.public_id}.${image.format}`;
-};
-
-export const editorUrl = (image: CloudinaryImage) => {
-  return `https://res.cloudinary.com/dprifih4o/image/upload/f_auto,q_auto/${image.public_id}.${image.format}`;
-};
 
 const AddImage = ({ isOpen, editor }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
@@ -35,7 +28,6 @@ const AddImage = ({ isOpen, editor }) => {
     Transforms.insertNodes(editor, [
       {
         type: 'image',
-        src: editorUrl(selectedImage),
         asset_id: selectedImage?.asset_id,
         public_id: selectedImage?.public_id,
         children: [{ text: '' }],
@@ -87,23 +79,15 @@ const AddImage = ({ isOpen, editor }) => {
                   }}
                   key={`image-${i}`}
                 >
-                  <Image
-                    onClick={() => {
-                      setSelectedImage(image);
-                    }}
-                    src={thumbnailUrl(image)}
-                    sx={{
-                      maxWidth: '300px',
-                      maxHeight: '200px',
-                      width: 'auto',
-                      height: 'auto',
-                      // width: 'auto',
-                      border:
-                        selectedImage &&
-                        image.secure_url === selectedImage.secure_url
-                          ? '2px solid blue'
-                          : 'none',
-                    }}
+                  <CldImage
+                    width='300'
+                    height='200'
+                    src={image.public_id}
+                    preserveTransformations
+                    underlay={image.public_id}
+                    quality={90}
+                    sizes='100vw'
+                    alt='Description of my image'
                   />
                 </Box>
               ))}
