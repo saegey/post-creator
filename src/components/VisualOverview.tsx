@@ -6,20 +6,6 @@ import ElevationGraph from '@saegey/posts.elevation-graph';
 import ElevationSlice, { gradeToColor } from '@saegey/posts.elevation_slice';
 import { useUnits } from '@saegey/posts.units';
 
-// ❯ echo '[{"time":4850,"elevation":2126,"distance":39130.042,"coordinates":[-114.327928,43.721769],"grade":0.0743}]' | jq .
-// [
-//   {
-//     "time": 4850,
-//     "elevation": 2126,
-//     "distance": 39130.042,
-//     "coordinates": [
-//       -114.327928,
-//       43.721769
-//     ],
-//     "grade": 0.0743
-//   }
-// ]
-
 interface ActivityEvent {
   c: Array<number> | Array<null>;
   g: number | null;
@@ -42,7 +28,6 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     d: null,
   });
   const units = useUnits();
-  // console.log(marker);
 
   const downSampledData = React.useMemo(
     () =>
@@ -54,10 +39,12 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
           g: activityRow.g,
           d: activityRow.d,
           distance:
-            units.unitOfMeasure === 'imperial'
+            units.unitOfMeasure === 'imperial' && activityRow.d
               ? (activityRow.d * 0.00062137121212121).toFixed(1)
-              : (activityRow.d / 1000).toFixed(1),
-          color: gradeToColor(activityRow.g * 100),
+              : activityRow.d
+              ? (activityRow.d / 1000).toFixed(1)
+              : 0,
+          color: gradeToColor(activityRow.g ? activityRow.g * 100 : 0),
         };
       }),
     [activity, units.unitOfMeasure]
@@ -71,12 +58,16 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
 
   return (
     <Box>
-      <Map coordinates={coordinates} markerCoordinates={marker} token={token} />
+      <Map
+        coordinates={coordinates}
+        markerCoordinates={marker as any}
+        token={token}
+      />
       <ElevationSlice marker={marker} />
       <ElevationGraph
         downSampledData={downSampledData}
         xMax={xMax}
-        setMarker={setMarker}
+        setMarker={setMarker as any}
         // elevationToAdd={100}
         // axisLeftTickValues={elevationData.axisLeftTickValues}
         // axisXTickValues={elevationData.axisXTickValues}

@@ -4,37 +4,45 @@ import {
   useSelected,
   useFocused,
 } from 'slate-react';
-import { Transforms, Descendant } from 'slate';
+import { Transforms } from 'slate';
 import Image from 'next/image';
 
-import { Box, Button, Text, Label, Textarea, Close, Flex } from 'theme-ui';
-import React from 'react';
+import { Box, Button, Label, Textarea, Close, Flex } from 'theme-ui';
+import React, { MouseEventHandler } from 'react';
 import { PostSaveComponents } from '../actions/PostSave';
 import { PostContext } from '../PostContext';
 
-const ImageElement = ({ attributes, children, element }) => {
+type SlateImageType = {
+  type: 'image';
+  src: string;
+  asset_id: string;
+  public_id: string;
+  children: Array<{ text: string }>;
+  void: true;
+  caption?: string;
+};
+
+const ImageElement = ({ children, element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
   const [isHover, setIsHover] = React.useState(false);
   const [addCaption, setAddCaption] = React.useState(false);
-  const { id, title, gpxFile, postLocation } = React.useContext(PostContext);
+  const { id, title, postLocation } = React.useContext(PostContext);
 
   const selected = useSelected();
   const focused = useFocused();
-  // console.log('selected', selected);
-	// console.log('focused', focused);
 
-  const saveCaption = async (event) => {
-    // console.log('save caption here');
+  const saveCaption = async (event: any) => {
     event.preventDefault();
     const form = new FormData(event.target);
+
     setAddCaption(false);
     Transforms.setNodes(
       editor,
       {
         caption: form.get('caption'),
-      },
-      { at: [path] }
+      } as SlateImageType,
+      { at: [path as any] }
     );
 
     await PostSaveComponents({
@@ -43,8 +51,6 @@ const ImageElement = ({ attributes, children, element }) => {
       postLocation: postLocation,
       components: editor.children,
     });
-
-    console.log(form.get('caption'));
   };
 
   return (
@@ -56,7 +62,6 @@ const ImageElement = ({ attributes, children, element }) => {
       <Box
         sx={{
           position: 'relative',
-          // backgroundColor: 'red',
           width: '100%',
           height: 'auto',
           marginBottom: '20px',

@@ -3,17 +3,20 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import React from 'react';
-import type { GetServerSideProps } from 'next';
 
 import Header from '../../src/components/Header';
 import { PostContext } from '../../src/PostContext';
 import PostEditor from '../../src/components/PostEditor';
 import { getPostInitial } from '../../src/graphql/customQueries';
 
-export const getServerSideProps = async ({
-  req,
-  params,
-}: GetServerSideProps) => {
+type ServerSideProps = {
+  req: object;
+  params: {
+    id: string;
+  };
+};
+
+export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const SSR = withSSRContext({ req });
 
   const { data } = await SSR.API.graphql({
@@ -44,7 +47,6 @@ export const getServerSideProps = async ({
 const Post = ({
   signOut,
   user,
-  renderedAt,
   postComponents,
   postTitle,
   postLocationOrig,
@@ -59,14 +61,14 @@ const Post = ({
   const [title, setTitle] = React.useState(postTitle);
   const [postLocation, setPostLocation] = React.useState(postLocationOrig);
   const [id, setId] = React.useState(postId);
-  const [activity, setActivity] = React.useState();
+  const [activity, setActivity] = React.useState({});
   const [gpxFile, setGpxFile] = React.useState(postGpxFile);
   const [stravaUrl, setStravaUrl] = React.useState(postStravaUrl);
   const [components, setComponents] = React.useState(postComponents);
   const [images, setImages] = React.useState(postImages);
   const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
-  const [powerAnalysis, setPowerAnalysis] = React.useState();
+  const [powerAnalysis, setPowerAnalysis] = React.useState('');
   const [initialLoad, setInitialLoad] = React.useState(true);
 
   React.useEffect(() => {

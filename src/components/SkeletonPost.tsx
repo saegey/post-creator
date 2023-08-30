@@ -18,10 +18,6 @@ const SkeletonPost = () => {
           borderBottomColor: '#6c6c6c40',
         }}
       >
-        {/* height: 33px;
-  width: 163px;
-  background: gray;
-  border-radius: 5px; */}
         <Box
           sx={{
             height: '33px',

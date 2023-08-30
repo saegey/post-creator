@@ -2,7 +2,7 @@ import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import dynamic from 'next/dynamic';
 import { Box, Close, Spinner, Flex } from 'theme-ui';
-import { Transforms, Descendant } from 'slate';
+import { Transforms } from 'slate';
 
 import { PostContext } from '../PostContext';
 
@@ -12,11 +12,8 @@ const VisualOverview = dynamic(import('./VisualOverview'), {
 
 const VisualOverviewWrapper = ({ attributes, children, element }) => {
   const { activity } = React.useContext(PostContext);
-  // console.log('activity', activity);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
-
-  // console.log(activity)
 
   if (!activity || activity.length === 0) {
     return (

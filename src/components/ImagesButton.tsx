@@ -1,12 +1,14 @@
 import { IconButton } from 'theme-ui';
-import { ReactEditor } from 'slate-react';
-import { Transforms, Editor, Descendant, Element as SlateElement } from 'slate';
+import { MouseEventHandler } from 'react';
 
-const ImagesButton = ({ onClick }) => {
+const ImagesButton = ({
+  onClick,
+}: {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}) => {
   return (
     <IconButton
       aria-label='Toggle dark mode'
-      // sx={{ backgroundColor: 'black' }}
       onClick={onClick}
       sx={{ border: '1px solid #d4d4d4' }}
     >

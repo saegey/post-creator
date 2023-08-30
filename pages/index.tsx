@@ -1,23 +1,33 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import { API, withSSRContext, PubSub, Amplify, Auth } from 'aws-amplify';
+import { withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
 import { Button, Box, Grid, Link as ThemeLink, Flex, Text } from 'theme-ui';
-import { useEffect, useState } from 'react';
-// import { useViewport } from '@saegey/posts.viewport';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { listPosts } from '../src/graphql/queries';
 import Header from '../src/components/Header';
 import CreatePostModal from '../src/components/CreatePostModal';
-import awsExports from '../src/aws-exports';
 import { editorUrl } from '../src/components/AddImage';
 
-export async function getServerSideProps({ req }) {
+type ListPosts = {
+  data: {
+    listPosts: {
+      items: Array<{
+        id: string;
+        title: string;
+        images: string;
+      }>;
+    };
+  };
+};
+
+export const getServerSideProps = async ({ req }) => {
   const SSR = withSSRContext({ req });
 
   try {
-    const response = await SSR.API.graphql({
+    const response: ListPosts = await SSR.API.graphql({
       query: listPosts,
       authMode: 'API_KEY',
     });
@@ -34,12 +44,21 @@ export async function getServerSideProps({ req }) {
       props: {},
     };
   }
-}
+};
 
-function Home({ signOut, user, posts = [] }) {
+type HomeProps = {
+  signOut: () => {};
+  user: object;
+  posts: Array<{
+    id: string;
+    title: string;
+    images: string;
+    imagesObj: Array<object>;
+  }>;
+};
+
+const Home = ({ signOut, user, posts = [] }: HomeProps) => {
   const [newPost, setNewPost] = useState(false);
-  // const { width } = useViewport();
-  console.log(posts);
 
   return (
     <>
@@ -68,12 +87,10 @@ function Home({ signOut, user, posts = [] }) {
                   sx={{ paddingTop: '20px', listStyleType: 'none' }}
                   key={`post-${post.id}`}
                 >
-                  {/* <Flex sx={{ height: '100%' }}> */}
                   <ThemeLink
                     as={Link}
                     sx={{ color: 'black', textDecoration: 'none' }}
                     href={`/posts/${post.id}`}
-                    // onClick={() => setMenuOpen(false)}
                   >
                     <Flex
                       sx={{
@@ -90,25 +107,18 @@ function Home({ signOut, user, posts = [] }) {
                           style={{
                             width: '100%',
                             height: 'auto',
-                            // borderRadius: '5px',
                             marginTop: 'auto',
                             marginBottom: 'auto',
-                            // boxShadow: `${
-                            //   selected && focused ? '0 0 0 3px #B4D5FF' : 'none'
-                            // }`,
                           }}
                           height={220}
                           alt='fuck eyah'
-                          // height='auto'
                         />
                       )}
                       {!post.imagesObj && (
                         <Box
                           sx={{
-                            // height: '200px',
                             width: '100%',
                             backgroundColor: '#9b9b9b',
-                            // borderRadius: '5px',
                           }}
                         />
                       )}
@@ -117,7 +127,6 @@ function Home({ signOut, user, posts = [] }) {
                       sx={{
                         backgroundColor: '#dadada',
                         padding: '10px',
-                        // color: 'white',
                         borderBottomLeftRadius: '5px',
                         borderBottomRightRadius: '5px',
                       }}
@@ -130,7 +139,6 @@ function Home({ signOut, user, posts = [] }) {
                       </Text>
                     </Box>
                   </ThemeLink>
-                  {/* </Flex> */}
                 </Box>
               ))}
             </Grid>
@@ -139,6 +147,6 @@ function Home({ signOut, user, posts = [] }) {
       </div>
     </>
   );
-}
+};
 
 export default withAuthenticator(Home);

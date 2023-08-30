@@ -132,15 +132,13 @@ exports.handler = async function (event) {
     const segment = aws_xray_sdk_1.default.getSegment();
     const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
     console.log('Dynamo Table: ', postTable);
-    // console.log('Received S3 event:', JSON.stringify(event, null, 2));
-    // const eventName = event.Records[0].eventName;
     const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
     let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
     // const imgSize = event.Records[0].s3.object.size;
     // const maxSize = 5000000; // More that 5Mb images would be rejected
     // const filename = key.split('.').slice(0, -1).join('.');
     const fileParams = { Bucket: bucket, Key: key };
-    const s3getTimer = segment.addNewSubsegment('s3get');
+    const s3getTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('s3get');
     const file = await S3.getObject({
         Bucket: bucket,
         Key: key,
@@ -152,11 +150,11 @@ exports.handler = async function (event) {
     console.log('metadata', JSON.stringify(metaData));
     s3metaTimer.close();
     await publishMessage({ phase: 'meta-downloaded' });
-    const xmlParseTimer = segment.addNewSubsegment('xmlParse');
+    const xmlParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('xmlParse');
     const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString('utf-8'));
     xmlParseTimer.close();
     await publishMessage({ phase: 'xml-parse' });
-    const gpxParseTimer = segment.addNewSubsegment('gpxParse');
+    const gpxParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('gpxParse');
     const gpxData = (0, togeojson_1.gpx)(xmlDoc);
     gpxParseTimer.close();
     await publishMessage({ phase: 'gpx-parse' });
@@ -167,17 +165,17 @@ exports.handler = async function (event) {
         //   feature.properties.coordinateProperties;
         coordinates = feature.geometry.coordinates;
         powers = feature.properties.coordinateProperties.powers;
-        const powerAnalysisTimer = segment.addNewSubsegment('powerAnalysis');
+        const powerAnalysisTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
         powerAnalysis = (0, exports.calcBestPowers)(timeIntervals(powers.length), powers);
         powerAnalysisTimer.close();
-        const downsampleElevationTimer = segment.addNewSubsegment('powerAnalysis');
+        const downsampleElevationTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
         elevation = (0, exports.calcElevation)(coordinates);
         distances = (0, exports.calcDistances)(coordinates);
         elevationGrades = (0, exports.calcElevationGrades)(coordinates, distances);
         downsampleElevationTimer.close();
     });
     await publishMessage({ phase: 'process-data' });
-    const updateDynamoTimer = segment.addNewSubsegment('updateDynamo');
+    const updateDynamoTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('updateDynamo');
     try {
         const res = await docClient
             .update({

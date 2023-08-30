@@ -1,6 +1,6 @@
 import { IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
-import { Transforms, Editor, Element as SlateElement } from 'slate';
+import { Editor } from 'slate';
 
 const toggleBold = ({ editor }: { editor: ReactEditor }) => {
   const marks = Editor.marks(editor);
@@ -10,14 +10,12 @@ const toggleBold = ({ editor }: { editor: ReactEditor }) => {
   } else {
     Editor.addMark(editor, 'bold', true);
   }
-  // console.log(editor, marks);
 };
 
 const BoldButton = ({ editor }: { editor: ReactEditor }) => {
   return (
     <IconButton
       aria-label='Toggle dark mode'
-      // sx={{ backgroundColor: 'black' }}
       onClick={() => toggleBold({ editor })}
       sx={{ border: '1px solid #d4d4d4' }}
     >

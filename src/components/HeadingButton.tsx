@@ -4,10 +4,7 @@ import { Transforms, Editor, Element as SlateElement } from 'slate';
 
 const toggleHeading = ({ editor }: { editor: ReactEditor }) => {
   const { selection } = editor;
-  console.log(selection);
   if (!selection) return false;
-
-  console.log(Editor.unhangRange(editor, selection));
 
   const [match] = Array.from(
     Editor.nodes(editor, {
@@ -18,30 +15,29 @@ const toggleHeading = ({ editor }: { editor: ReactEditor }) => {
         n['type'] === 'heading-two',
     })
   );
+
   if (match) {
     let newProperties: Partial<SlateElement>;
-    newProperties = { type: 'paragraph' };
+    newProperties = { type: 'paragraph' } as any;
     Transforms.setNodes<SlateElement>(editor, newProperties);
   } else {
     let newProperties: Partial<SlateElement>;
-    newProperties = { type: 'heading-two' };
+    newProperties = { type: 'heading-two' } as any;
     Transforms.setNodes<SlateElement>(editor, newProperties);
   }
-  console.log(match);
 };
 
-const HeadingButton = (editor) => {
+const HeadingButton = ({ editor }: { editor: ReactEditor }) => {
   return (
     <IconButton
-      aria-label='Toggle dark mode'
-      // sx={{ backgroundColor: 'black' }}
-      onClick={() => toggleHeading(editor)}
+      aria-label='Toggle header'
+      onClick={() => toggleHeading({ editor })}
       sx={{ border: '1px solid #d4d4d4' }}
     >
       <svg
         fill='black'
-        width='24px'
-        height='24px'
+        width='100%'
+        height='100%'
         viewBox='0 0 24 24'
         xmlns='http://www.w3.org/2000/svg'
       >

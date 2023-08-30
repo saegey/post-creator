@@ -7,12 +7,12 @@ import { updatePostMinimal } from '../graphql/customMutations';
 
 interface PostSaveProps {
   postId: string;
-  title: string;
-  postLocation: string;
+  title: string | null;
+  postLocation: string | null;
   components: Array<any>;
-  stravaUrl: string;
-  resultsUrl: string;
-  currentFtp: number;
+  stravaUrl?: string;
+  resultsUrl?: string;
+  currentFtp?: string;
 }
 
 const PostSaveComponents = async ({
@@ -43,7 +43,6 @@ const PostSaveComponents = async ({
     console.log(response, postId, title, postLocation, components);
   } catch (errors) {
     console.error(errors);
-    // throw new Error(errors[0].message);
   }
 };
 
@@ -56,12 +55,9 @@ const PostSaveImages = async ({ postId, images }) => {
         input: {
           id: postId,
           images: JSON.stringify(images),
-          // content: form.get('content'),
-          // components: JSON.stringify(editor.children),
         },
       },
     });
-    // console.log(results);
   } catch (error) {
     console.error(error);
   }

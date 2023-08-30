@@ -12,12 +12,10 @@ const ActivitySettings = ({ isOpen }) => {
     gpxFile,
     setCurrentFtp,
     currentFtp,
-    activity,
     setStravaUrl,
     setResultsUrl,
   } = React.useContext(PostContext);
   const [uploadModal1, setUploadModal] = React.useState(false);
-  console.log('render activiity settinigs');
 
   return (
     <>
@@ -59,14 +57,14 @@ const ActivitySettings = ({ isOpen }) => {
           </Flex>
           <Flex sx={{ gap: '10px', flexDirection: 'row' }}>
             <form
-              onSubmit={(event) => {
+              onSubmit={(event: any) => {
                 event.preventDefault();
 
                 isOpen(false);
                 const form = new FormData(event.target);
-                setCurrentFtp(form.get('currentFtp'));
-                setStravaUrl(form.get('stravaLink'));
-                setResultsUrl(form.get('resultsUrl'));
+                setCurrentFtp(form.get('currentFtp') as string);
+                setStravaUrl(form.get('stravaLink') as string);
+                setResultsUrl(form.get('resultsUrl') as string);
               }}
               style={{ width: '100%' }}
             >

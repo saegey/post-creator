@@ -1,6 +1,6 @@
 import { IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
-import { Transforms, Editor, Descendant, Element as SlateElement } from 'slate';
+import { Transforms, Descendant } from 'slate';
 import { PostContext } from '../PostContext';
 import React from 'react';
 
@@ -10,7 +10,7 @@ const addMap = (editor: ReactEditor) => {
   ]);
 };
 
-const MapButton = ({ editor }) => {
+const MapButton = ({ editor }: { editor: ReactEditor }) => {
   const { gpxFile } = React.useContext(PostContext);
   return (
     <IconButton

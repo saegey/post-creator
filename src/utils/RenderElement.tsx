@@ -42,7 +42,6 @@ const renderElement = ({ attributes, children, element }) => {
     case 'image':
       return (
         <ImageElement
-          attributes={attributes}
           children={children}
           element={element}
         />
@@ -69,7 +68,6 @@ const renderElement = ({ attributes, children, element }) => {
             marginRight: 'auto',
             maxWidth: '690px',
             fontSize: '20px',
-            // fontWeight: 400,
           }}
           {...attributes}
         >

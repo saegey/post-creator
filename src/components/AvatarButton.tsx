@@ -1,12 +1,15 @@
 import { IconButton } from 'theme-ui';
+import { MouseEventHandler } from 'react';
 
-const AvatarButton = ({ onClick }) => {
+const AvatarButton = ({
+  onClick,
+}: {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}) => {
   return (
     <IconButton
-      aria-label='Toggle dark mode'
-      // sx={{ backgroundColor: 'black' }}
+      aria-label='Avatar button'
       onClick={onClick}
-      // onClick={() => toggleBold({ editor })}
       sx={{ border: '1px solid #d4d4d4' }}
     >
       <svg

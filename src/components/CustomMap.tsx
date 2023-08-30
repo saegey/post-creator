@@ -1,15 +1,14 @@
 import React from 'react';
 import { Box } from 'theme-ui';
 import mapboxgl, { GeoJSONSource, SkyLayer } from 'mapbox-gl';
-// import 'mapbox-gl/dist/mapbox-gl.css'
 
 type ActivityEvent = {
-  c: Array<number> | Array<null>;
+  c: Array<number>;
   t: number | null;
   g: number | null;
   d: number | null;
   e: number | null;
-} | null;
+};
 
 interface MapProps {
   coordinates: Array<any>;
@@ -98,7 +97,7 @@ const Map = ({
               },
             },
           ],
-        };
+        } as any;
 
         console.log(data);
         geojsonSource.setData(data);
@@ -168,7 +167,7 @@ const Map = ({
             properties: { name: 'Null Island' },
             geometry: {
               type: 'Point',
-              coordinates: markerCoordinates.c || [0, 0],
+              coordinates: markerCoordinates?.c,
             },
           },
         ],

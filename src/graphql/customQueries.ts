@@ -13,6 +13,19 @@ export const getActivityQuery = /* GraphQL */ `
   }
 `;
 
+export type getActivityQueryProps = {
+  getPost?: {
+    powerAnalysis?: string | null;
+    coordinates?: string | null;
+    powers?: string | null;
+    elevation?: string | null;
+    elevationGrades?: string | null;
+    distances?: string | null;
+    owner?: string | null;
+    __typename: 'Post';
+  } | null;
+};
+
 export const getPostInitial = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
@@ -59,7 +72,6 @@ export const getPostInitial = /* GraphQL */ `
     }
   }
 `;
-
 
 export const listPosts = /* GraphQL */ `
   query ListPosts(

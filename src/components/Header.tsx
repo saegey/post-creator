@@ -11,30 +11,36 @@ import {
 } from 'theme-ui';
 import Link from 'next/link';
 import { API } from 'aws-amplify';
-// import Link from 'next/link';
 
 import BlackBox from './BlackBox';
 import { listPosts } from '../graphql/customQueries';
 import AvatarButton from './AvatarButton';
-// import { listPosts } from '../graphql/queries';
+import { GraphQLResult } from '@aws-amplify/api';
+import { ListPostsQuery } from '../API';
 
 const Header = ({ user, signOut }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
-  const [recentPosts, setRecentPosts] = React.useState();
+  const [recentPosts, setRecentPosts] = React.useState<
+    Array<{ id: string; title: string }>
+  >([]);
 
   const listRecentPosts = async () => {
-    const { data } = await API.graphql({
+    const { data } = (await API.graphql({
       query: listPosts,
       authMode: 'API_KEY',
-    });
-    // console.log('listRecentPosts', listRecentPosts);
+    })) as GraphQLResult<ListPostsQuery>;
+
     return data;
   };
 
   React.useEffect(() => {
     listRecentPosts().then((d) => {
-      setRecentPosts(d.listPosts.items);
+      if (!d || !d.listPosts || !d.listPosts.items) {
+        console.error('failed to get listPosts');
+      } else {
+        setRecentPosts(d?.listPosts?.items as any);
+      }
     });
   }, []);
 
@@ -248,9 +254,6 @@ const Header = ({ user, signOut }) => {
             />
           </Flex>
           <div style={{ marginLeft: 'auto' }}>
-            {/* <p>Logged in as {user.username}.</p> */}
-            {/* <Button onClick={signOut}>Sign out</Button> */}
-            {/* <<p onClick={() => setProfileOpen(true)}></p>> */}
             <AvatarButton onClick={() => setProfileOpen(true)} />
           </div>
         </div>

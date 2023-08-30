@@ -1,13 +1,12 @@
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
-import React from 'react';
-// import { Storage, API } from 'aws-amplify';
+import React from 'react'
 import { GraphQLResult } from '@aws-amplify/api';
 import { Storage, API, PubSub } from 'aws-amplify';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
-import { PostContext } from '../PostContext';
+import { PostContext, PostContextType } from '../PostContext';
 import { getActivity, getPostQuery } from '../actions/PostGet';
 import {
   attachIoTPolicyToUser,
@@ -22,7 +21,7 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { id, setActivity, setGpxFile } = React.useContext(PostContext);
+  const { id, setActivity, setGpxFile }: PostContextType = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -48,8 +47,6 @@ const UploadGpxModal = ({ openModal }) => {
           },
         },
       })) as GraphQLResult<UpdatePostMutation>;
-
-      // setIsUploading(false);
     } catch (error) {
       console.error(error);
       setIsUploading(false);
@@ -65,11 +62,9 @@ const UploadGpxModal = ({ openModal }) => {
   React.useEffect(() => {
     if (processingGpxStatus === 'update-data') {
       getPostQuery(id).then((d) => {
-        processUpdates(d.data.getPost).then(() => {
-          // console.log('data is updated');
+        processUpdates(d.data?.getPost).then(() => {
           openModal(false);
         });
-        // setPowerAnalysis(JSON.parse(d.data.getPost.powerAnalysis));
       });
     }
   }, [processingGpxStatus]);
@@ -154,7 +149,17 @@ const UploadGpxModal = ({ openModal }) => {
                   type='file'
                   disabled={isUploading}
                   sx={{ marginY: '20px' }}
-                  onChange={(e) => setFileData(e.target.files[0])}
+                  onChange={(e) => {
+                    if (
+                      e.target &&
+                      e.target.files &&
+                      e.target.files.length > 0
+                    ) {
+                      setFileData(e.target?.files[0]);
+                    } else {
+                      console.log('no file attached');
+                    }
+                  }}
                 />
               </Box>
               <Box>

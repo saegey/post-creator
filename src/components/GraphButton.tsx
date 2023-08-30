@@ -1,6 +1,6 @@
 import { IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
-import { Transforms, Editor, Descendant, Element as SlateElement } from 'slate';
+import { Transforms, Descendant } from 'slate';
 import React from 'react';
 import { PostContext } from '../PostContext';
 
@@ -20,8 +20,7 @@ const GraphButton = ({ editor }) => {
 
   return (
     <IconButton
-      aria-label='Toggle dark mode'
-      // sx={{ backgroundColor: 'black' }}
+      aria-label='Graph Button'
       disabled={gpxFile ? false : true}
       onClick={() => addGraph(editor)}
       sx={{ border: '1px solid #d4d4d4' }}

@@ -41,7 +41,10 @@ const PowerGraph = ({ attributes, children, element }) => {
       </Flex>
 
       <Box sx={{ width: '100%', height: '200px' }}>
-        <PowerCurveGraph ftp={currentFtp} data={graphData} />
+        <PowerCurveGraph
+          ftp={currentFtp ? Number(currentFtp) : 0}
+          data={graphData as any}
+        />
       </Box>
     </Box>
   );

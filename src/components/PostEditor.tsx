@@ -1,8 +1,9 @@
 import { Slate, Editable, withReact } from 'slate-react';
 import { API } from 'aws-amplify';
+import { GraphQLResult } from '@aws-amplify/api';
 import React from 'react';
 import { createEditor, Editor, Transforms } from 'slate';
-import { Box, Flex, Text } from 'theme-ui';
+import { Flex, Text } from 'theme-ui';
 import { withHistory } from 'slate-history';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
@@ -10,12 +11,14 @@ import PostMenu from './PostMenu';
 import { PostContext } from '../PostContext';
 import SkeletonPost from './SkeletonPost';
 import { getActivity } from '../../src/actions/PostGet';
-import { getActivityQuery } from '../../src/graphql/customQueries';
+import {
+  getActivityQuery,
+  getActivityQueryProps,
+} from '../../src/graphql/customQueries';
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
   const [loading, setLoading] = React.useState(true);
-  // console.log(initialState);
 
   const {
     setTitle,
@@ -24,11 +27,9 @@ const PostEditor = ({ postId, initialState }) => {
     setPostLocation,
     id,
     setActivity,
-    activity,
     setPowerAnalysis,
     components,
   } = React.useContext(PostContext);
-  console.log('post editor render', activity);
 
   React.useEffect(() => {
     if (initialState) {
@@ -39,28 +40,34 @@ const PostEditor = ({ postId, initialState }) => {
   }, [initialState]);
 
   React.useEffect(() => {
-    editor.children = components;
+    editor.children = components as any;
     editor.onChange();
   }, [components]);
 
   const getData = async () => {
-    const { data } = await API.graphql({
+    const { data } = (await API.graphql({
       query: getActivityQuery,
       authMode: 'API_KEY',
       variables: {
         id: id,
       },
-    });
-    console.log('post editor - get Activity');
+    })) as GraphQLResult<getActivityQueryProps>;
+    if (!data || !data.getPost) {
+      console.error('faileed too get activity data');
+      return;
+    }
+    // console.log('post editor - get Activity');
     const activity = await getActivity(data.getPost);
-    setPowerAnalysis(JSON.parse(data.getPost.powerAnalysis));
+    if (data.getPost.powerAnalysis) {
+      setPowerAnalysis(JSON.parse(data.getPost.powerAnalysis));
+    }
 
     return activity;
   };
 
   React.useEffect(() => {
     getData().then((d) => {
-      setActivity(d);
+      setActivity(d as any);
     });
   }, [id]);
 
