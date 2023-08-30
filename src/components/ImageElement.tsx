@@ -5,10 +5,9 @@ import {
   useFocused,
 } from 'slate-react';
 import { Transforms } from 'slate';
-import Image from 'next/image';
 
 import { Box, Button, Label, Textarea, Close, Flex } from 'theme-ui';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { PostSaveComponents } from '../actions/PostSave';
 import { PostContext } from '../PostContext';
 
@@ -30,10 +29,8 @@ const ImageElement = ({ children, element }) => {
   const [isHover, setIsHover] = React.useState(false);
   const [addCaption, setAddCaption] = React.useState(false);
   const { id, title, postLocation } = React.useContext(PostContext);
-
   const selected = useSelected();
   const focused = useFocused();
-  console.log(process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME']);
 
   const saveCaption = async (event: any) => {
     event.preventDefault();
@@ -70,19 +67,6 @@ const ImageElement = ({ children, element }) => {
           marginBottom: '20px',
         }}
       >
-        {/* <Image
-          src={element.src}
-          alt='race pic'
-          priority={true}
-          width={500}
-          height={500}
-          style={{
-            width: '100%',
-            height: 'auto',
-            borderRadius: '5px',
-            boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}`,
-          }}
-        /> */}
         <CldImage
           width='800'
           height='800'
