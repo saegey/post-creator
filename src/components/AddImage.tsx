@@ -91,6 +91,13 @@ const AddImage = ({ isOpen, editor }) => {
                     quality={90}
                     sizes='100vw'
                     alt='Description of my image'
+                    style={{
+                      border:
+                        selectedImage &&
+                        image.secure_url === selectedImage.secure_url
+                          ? '2px solid blue'
+                          : 'none',
+                    }}
                   />
                 </Box>
               ))}
