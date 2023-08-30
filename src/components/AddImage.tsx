@@ -80,6 +80,9 @@ const AddImage = ({ isOpen, editor }) => {
                   key={`image-${i}`}
                 >
                   <CldImage
+                    onClick={() => {
+                      setSelectedImage(image);
+                    }}
                     width='300'
                     height='200'
                     src={image.public_id}
