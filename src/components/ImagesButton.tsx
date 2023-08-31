@@ -10,7 +10,10 @@ const ImagesButton = ({
     <IconButton
       aria-label='Toggle dark mode'
       onClick={onClick}
-      sx={{ border: '1px solid #d4d4d4' }}
+      sx={{
+        border: '1px solid #d4d4d4',
+        '&:hover': { backgroundColor: '#e8e8e8' },
+      }}
     >
       <svg
         width='24px'

@@ -86,7 +86,7 @@ const AddImage = ({ isOpen, editor }) => {
                     width='300'
                     height='200'
                     src={image.public_id}
-                    preserveTransformations
+                    // preserveTransformations
                     underlay={image.public_id}
                     quality={90}
                     sizes='100vw'

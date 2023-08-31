@@ -18,7 +18,7 @@ const SaveButton = ({ editor, setIsSaving }) => {
       components: editor.children,
       stravaUrl: stravaUrl ? stravaUrl : '',
       resultsUrl: resultsUrl ? resultsUrl : '',
-      currentFtp: currentFtp ? currentFtp : ''
+      currentFtp: currentFtp ? currentFtp : '',
     });
 
     setIsSaving(false);
@@ -28,7 +28,10 @@ const SaveButton = ({ editor, setIsSaving }) => {
     <IconButton
       aria-aria-label='Save Post'
       onClick={save}
-      sx={{ border: '1px solid #d4d4d4' }}
+      sx={{
+        border: '1px solid #d4d4d4',
+        '&:hover': { backgroundColor: '#e8e8e8' },
+      }}
     >
       <svg
         fill='#000000'

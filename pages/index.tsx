@@ -1,13 +1,13 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import { withSSRContext } from 'aws-amplify';
+import { withSSRContext, API } from 'aws-amplify';
 import Head from 'next/head';
 import { Button, Box, Grid, Link as ThemeLink, Flex, Text } from 'theme-ui';
-import { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { CldImage } from 'next-cloudinary';
 
-import { listPosts } from '../src/graphql/queries';
+// import { listPosts } from '../src/graphql/queries';
+import { listPostsCustom } from '../src/graphql/customQueries';
 import Header from '../src/components/Header';
 import CreatePostModal from '../src/components/CreatePostModal';
 import { CloudinaryImage } from '../src/components/AddImage';
@@ -29,9 +29,10 @@ export const getServerSideProps = async ({ req }) => {
 
   try {
     const response: ListPosts = await SSR.API.graphql({
-      query: listPosts,
+      query: listPostsCustom,
       authMode: 'API_KEY',
     });
+
     return {
       props: {
         posts: response.data.listPosts.items.map((d) => {
@@ -59,8 +60,19 @@ type HomeProps = {
 };
 
 const Home = ({ signOut, user, posts = [] }: HomeProps) => {
-  const [newPost, setNewPost] = useState(false);
+  const [newPost, setNewPost] = React.useState(false);
 
+  // const listPosts = async () => {
+  //   const response: ListPosts = await API.graphql({
+  //     query: listPostsCustom,
+  //     authMode: 'AMAZON_COGNITO_USER_POOLS',
+  //   });
+  //   return response;
+  // };
+  // React.useEffect(() => {
+  //   listPosts().then((d) => console.log(d));
+  // }, []);
+  console.log(posts);
   return (
     <>
       {newPost && <CreatePostModal setMenuOpen={setNewPost} />}
@@ -115,7 +127,7 @@ const Home = ({ signOut, user, posts = [] }: HomeProps) => {
                             borderTopLeftRadius: '5px',
                             borderTopRightRadius: '5px',
                           }}
-                          preserveTransformations
+                          // preserveTransformations/
                           underlay={post.imagesObj[0].public_id}
                           quality={90}
                           sizes='100vw'
@@ -139,11 +151,18 @@ const Home = ({ signOut, user, posts = [] }: HomeProps) => {
                         borderBottomRightRadius: '5px',
                       }}
                     >
-                      <Text
-                        as='span'
-                        sx={{ fontWeight: 600, color: '#424242' }}
-                      >
+                      <Text as='div' sx={{ fontWeight: 600, color: '#424242' }}>
                         {post.title}
+                      </Text>
+                      <Text
+                        as='div'
+                        sx={{
+                          fontWeight: 400,
+                          fontSize: '14px',
+                          color: '#424242',
+                        }}
+                      >
+                        {post.author && post.author.fullName}
                       </Text>
                     </Box>
                   </ThemeLink>

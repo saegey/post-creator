@@ -23,7 +23,6 @@ const ActivitySettings = ({ isOpen }) => {
         <Box
           sx={{
             width: '80%',
-            // height: '70%',
             margin: 'auto',
             background: 'white',
             borderRadius: '5px',
@@ -40,7 +39,6 @@ const ActivitySettings = ({ isOpen }) => {
             <Text
               as='h2'
               sx={{
-                // borderBottom: '1px solid black',
                 marginBottom: '20px',
               }}
             >

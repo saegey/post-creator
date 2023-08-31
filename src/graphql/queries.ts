@@ -2,6 +2,42 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      fullName
+      email
+      image
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
 export const getBlog = /* GraphQL */ `
   query GetBlog($id: ID!) {
     getBlog(id: $id) {
@@ -35,7 +71,7 @@ export const getBlog = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
@@ -137,17 +173,27 @@ export const getPost = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
+        __typename
+      }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      postAuthorId
       __typename
     }
   }
@@ -194,11 +240,21 @@ export const listPosts = /* GraphQL */ `
           nextToken
           __typename
         }
+        author {
+          id
+          fullName
+          email
+          image
+          createdAt
+          updatedAt
+          owner
+          __typename
+        }
         createdAt
         updatedAt
         blogPostsId
         postRelatedId
-        owner
+        postAuthorId
         __typename
       }
       nextToken

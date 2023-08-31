@@ -23,7 +23,10 @@ const GraphButton = ({ editor }) => {
       aria-label='Graph Button'
       disabled={gpxFile ? false : true}
       onClick={() => addGraph(editor)}
-      sx={{ border: '1px solid #d4d4d4' }}
+      sx={{
+        border: '1px solid #d4d4d4',
+        '&:hover': { backgroundColor: '#e8e8e8' },
+      }}
     >
       <svg
         width='24px'

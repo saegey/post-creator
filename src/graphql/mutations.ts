@@ -2,6 +2,57 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      fullName
+      email
+      image
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      fullName
+      email
+      image
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      fullName
+      email
+      image
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
 export const createBlog = /* GraphQL */ `
   mutation CreateBlog(
     $input: CreateBlogInput!
@@ -38,7 +89,7 @@ export const createBlog = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
@@ -87,7 +138,7 @@ export const updateBlog = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
@@ -136,7 +187,7 @@ export const deleteBlog = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
@@ -217,17 +268,27 @@ export const createPost = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
+        __typename
+      }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      postAuthorId
       __typename
     }
   }
@@ -300,17 +361,27 @@ export const updatePost = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
+        __typename
+      }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      postAuthorId
       __typename
     }
   }
@@ -383,17 +454,27 @@ export const deletePost = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
+        __typename
+      }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      postAuthorId
       __typename
     }
   }

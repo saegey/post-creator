@@ -1,6 +1,6 @@
 import { Authenticator } from '@aws-amplify/ui-react';
 import { GraphQLResult } from '@aws-amplify/api';
-import { API } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import { Box, Flex, Close, Label, Input, Button } from 'theme-ui';
 
 import { CreatePostMutation } from '../API';
@@ -11,6 +11,8 @@ async function handleCreatePost(event) {
   event.preventDefault();
 
   const form = new FormData(event.target);
+  const user = await Auth.currentAuthenticatedUser();
+  console.log(user);
 
   try {
     const response = (await API.graphql({
@@ -22,6 +24,14 @@ async function handleCreatePost(event) {
           components: JSON.stringify([
             { type: 'text', children: [{ text: '' }] },
           ]),
+          // author: {
+          //   id: user.attributes.sub,
+          // },
+          postAuthorId: user.attributes.sub,
+          // user: {
+          //   id: user.attributes.id,
+          //   // fullName: user.attributes.name,
+          // },
         },
       },
     })) as GraphQLResult<CreatePostMutation>;

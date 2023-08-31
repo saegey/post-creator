@@ -2,6 +2,57 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
+      id
+      fullName
+      email
+      image
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
+      id
+      fullName
+      email
+      image
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
+      id
+      fullName
+      email
+      image
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+  }
+`;
 export const onCreateBlog = /* GraphQL */ `
   subscription OnCreateBlog(
     $filter: ModelSubscriptionBlogFilterInput
@@ -38,7 +89,7 @@ export const onCreateBlog = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
@@ -87,7 +138,7 @@ export const onUpdateBlog = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
@@ -136,7 +187,7 @@ export const onDeleteBlog = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
@@ -152,9 +203,9 @@ export const onDeleteBlog = /* GraphQL */ `
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost(
     $filter: ModelSubscriptionPostFilterInput
-    $owner: String
+    $postAuthorId: String
   ) {
-    onCreatePost(filter: $filter, owner: $owner) {
+    onCreatePost(filter: $filter, postAuthorId: $postAuthorId) {
       id
       title
       gpxFile
@@ -217,17 +268,27 @@ export const onCreatePost = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
+        __typename
+      }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      postAuthorId
       __typename
     }
   }
@@ -235,9 +296,9 @@ export const onCreatePost = /* GraphQL */ `
 export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost(
     $filter: ModelSubscriptionPostFilterInput
-    $owner: String
+    $postAuthorId: String
   ) {
-    onUpdatePost(filter: $filter, owner: $owner) {
+    onUpdatePost(filter: $filter, postAuthorId: $postAuthorId) {
       id
       title
       gpxFile
@@ -300,17 +361,27 @@ export const onUpdatePost = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
+        __typename
+      }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      postAuthorId
       __typename
     }
   }
@@ -318,9 +389,9 @@ export const onUpdatePost = /* GraphQL */ `
 export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost(
     $filter: ModelSubscriptionPostFilterInput
-    $owner: String
+    $postAuthorId: String
   ) {
-    onDeletePost(filter: $filter, owner: $owner) {
+    onDeletePost(filter: $filter, postAuthorId: $postAuthorId) {
       id
       title
       gpxFile
@@ -383,17 +454,27 @@ export const onDeletePost = /* GraphQL */ `
           updatedAt
           blogPostsId
           postRelatedId
-          owner
+          postAuthorId
           __typename
         }
         nextToken
+        __typename
+      }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        owner
         __typename
       }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      postAuthorId
       __typename
     }
   }
