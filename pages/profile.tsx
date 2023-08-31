@@ -1,8 +1,9 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import { Auth } from 'aws-amplify';
+import { Auth, API } from 'aws-amplify';
 import Head from 'next/head';
 import { Label, Input, Box, Flex, Button } from 'theme-ui';
 import { CldImage } from 'next-cloudinary';
+import { updateUser } from '../src/graphql/mutations';
 
 import Header from '../src/components/Header';
 
@@ -22,13 +23,27 @@ const uploadSettings = {
   // theme: "purple", //change to a purple theme
 };
 
-async function updateUser({ username, fullName, profile }) {
+async function updateUserData({ username, fullName, profile }) {
   const user = await Auth.currentAuthenticatedUser();
   await Auth.updateUserAttributes(user, {
     profile: profile,
     name: fullName,
     preferred_username: username,
   });
+
+  const response = await API.graphql({
+    authMode: 'AMAZON_COGNITO_USER_POOLS',
+    query: updateUser,
+    variables: {
+      input: {
+        //  profile: profile,
+        id: user.attributes.sub,
+        fullName: fullName,
+        //  preferred_username: username,
+      },
+    },
+  });
+  console.log(fullName, response);
 }
 
 async function updateAvatar({ picture }) {
@@ -95,7 +110,7 @@ const Profile = ({ signOut, user }) => {
                   onSubmit={(event: any) => {
                     event.preventDefault();
                     const form = new FormData(event.target);
-                    updateUser({
+                    updateUserData({
                       username: form.get('username'),
                       profile: form.get('location'),
                       fullName: form.get('fullName'),

@@ -7,7 +7,7 @@ export const getActivityQuery = /* GraphQL */ `
       elevation
       elevationGrades
       distances
-      owner
+      # owner
       __typename
     }
   }
