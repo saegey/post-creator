@@ -47,17 +47,20 @@ const PostCard = ({ post, showAuthor = true }) => {
             <Box
               sx={{
                 width: '100%',
-                backgroundColor: '#9b9b9b',
+                backgroundColor: '#e6e6e6',
               }}
             />
           )}
         </Flex>
         <Box
           sx={{
-            backgroundColor: '#dadada',
+            // backgroundColor: '#dadada',
             padding: '10px',
             borderBottomLeftRadius: '5px',
             borderBottomRightRadius: '5px',
+            borderBottom: '1px solid #dadada',
+            borderRight: '1px solid #dadada',
+            borderLeft: '1px solid #dadada',
           }}
         >
           <Text as='div' sx={{ fontWeight: 600, color: '#424242' }}>

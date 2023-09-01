@@ -139,6 +139,7 @@ const Profile = ({ signOut, user }) => {
                         name='fullName'
                         placeholder='Name'
                         defaultValue={user.attributes.name}
+                        sx={{ borderColor: '#898989' }}
                       />
                     </Box>
                     <Box>
@@ -148,6 +149,7 @@ const Profile = ({ signOut, user }) => {
                         name='username'
                         placeholder='Username'
                         defaultValue={user.attributes.preferred_username}
+                        sx={{ borderColor: '#898989' }}
                       />
                     </Box>
                     <Box>
@@ -157,6 +159,7 @@ const Profile = ({ signOut, user }) => {
                         name='location'
                         placeholder='Location'
                         defaultValue={user.attributes.profile}
+                        sx={{ borderColor: '#898989' }}
                       />
                     </Box>
                     <Box sx={{ marginTop: '10px' }}>

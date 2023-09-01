@@ -77,7 +77,7 @@ const PostEditor = ({ postId, initialState }) => {
         <SkeletonPost />
       ) : (
         <>
-          <PostMenu editor={editor} />
+          <PostMenu editor={editor} id={id} />
           <div
             style={{
               marginTop: '0px',

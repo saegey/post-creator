@@ -1,12 +1,26 @@
 import BlackBox from './BlackBox';
-import { Box, Flex, Text, Input, Button, Close, Label } from 'theme-ui';
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  Button,
+  Close,
+  Label,
+  Spinner,
+} from 'theme-ui';
 import { PostContext } from '../PostContext';
 import React from 'react';
+import { GraphQLResult } from '@aws-amplify/api';
+import { API } from 'aws-amplify';
 
+import { UpdatePostMutation } from '../../src/API';
+import { updatePostMinimal } from '../graphql/customMutations';
 import UploadGpxModal from './UploadGpxModal';
 
-const ActivitySettings = ({ isOpen }) => {
+const ActivitySettings = ({ isOpen, setSavedMessage }) => {
   const {
+    id,
     resultsUrl,
     stravaUrl,
     gpxFile,
@@ -16,33 +30,99 @@ const ActivitySettings = ({ isOpen }) => {
     setResultsUrl,
   } = React.useContext(PostContext);
   const [uploadModal1, setUploadModal] = React.useState(false);
+  const [isSaving, setIsSaving] = React.useState(false);
+  const ref = React.useRef();
+
+  const saveSettings = async (event) => {
+    // isOpen(false);
+    setIsSaving(true);
+    const form = new FormData(event.target);
+    setCurrentFtp(form.get('currentFtp') as string);
+    setStravaUrl(form.get('stravaLink') as string);
+    setResultsUrl(form.get('resultsUrl') as string);
+
+    try {
+      const response = (await API.graphql({
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        query: updatePostMinimal,
+        variables: {
+          input: {
+            stravaUrl: form.get('stravaLink'),
+            resultsUrl: form.get('resultsUrl'),
+            currentFtp: form.get('currentFtp'),
+            id: id,
+          },
+        },
+      })) as GraphQLResult<UpdatePostMutation>;
+      console.log('response', response);
+
+      setSavedMessage(true);
+      setIsSaving(false);
+      isOpen(false);
+    } catch (errors) {
+      console.error(errors);
+    }
+  };
+
+  React.useEffect(() => {
+    const checkIfClickedOutside1 = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        isOpen(false);
+      }
+    };
+    document.addEventListener('click', checkIfClickedOutside1);
+    return () => {
+      document.removeEventListener('click', checkIfClickedOutside1);
+    };
+  }, [isOpen]);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
 
   return (
     <>
-      <BlackBox>
+      <BlackBox opacity={'0.7'}>
         <Box
           sx={{
-            width: '80%',
+            maxWidth: '690px',
+            width: '100%',
             margin: 'auto',
             background: 'white',
             borderRadius: '5px',
             padding: '20px',
             position: 'relative',
           }}
+          ref={ref}
         >
           {uploadModal1 && (
             <>
               <UploadGpxModal openModal={setUploadModal} />
             </>
           )}
-          <Flex>
+          <Flex
+            sx={{
+              borderBottom: '1px solid #cdcdcd',
+              paddingY: '5px',
+              marginBottom: '20px',
+            }}
+          >
             <Text
-              as='h2'
+              as='div'
               sx={{
-                marginBottom: '20px',
+                fontSize: '20px',
+                fontWeight: 600,
+
+                // marginBottom: '20px',
               }}
             >
-              Edit Activity Details
+              Details
             </Text>
             <Close
               onClick={() => isOpen(false)}
@@ -57,12 +137,7 @@ const ActivitySettings = ({ isOpen }) => {
             <form
               onSubmit={(event: any) => {
                 event.preventDefault();
-
-                isOpen(false);
-                const form = new FormData(event.target);
-                setCurrentFtp(form.get('currentFtp') as string);
-                setStravaUrl(form.get('stravaLink') as string);
-                setResultsUrl(form.get('resultsUrl') as string);
+                saveSettings(event).then(() => console.log('save settings'));
               }}
               style={{ width: '100%' }}
             >
@@ -74,6 +149,7 @@ const ActivitySettings = ({ isOpen }) => {
                     name='stravaLink'
                     placeholder='http://strava.url'
                     defaultValue={stravaUrl ? stravaUrl : ''}
+                    sx={{ borderColor: '#898989' }}
                   />
                 </Box>
                 <Box>
@@ -83,6 +159,7 @@ const ActivitySettings = ({ isOpen }) => {
                     name='resultsUrl'
                     placeholder='http://results.url'
                     defaultValue={resultsUrl ? resultsUrl : ''}
+                    sx={{ borderColor: '#898989' }}
                   />
                 </Box>
                 <Box>
@@ -94,6 +171,7 @@ const ActivitySettings = ({ isOpen }) => {
                         name='gpxFile'
                         // placeholder='http://results.url'
                         defaultValue={gpxFile ? gpxFile : ''}
+                        sx={{ borderColor: '#898989' }}
                       />
                     </Box>
                     <Box sx={{ width: '25%' }}>
@@ -104,7 +182,7 @@ const ActivitySettings = ({ isOpen }) => {
                           setUploadModal(true);
                           console.log('setupload');
                         }}
-                        sx={{ width: '100%' }}
+                        sx={{ width: '100%', borderColor: '#898989' }}
                       >
                         Upload GPX
                       </Button>
@@ -118,6 +196,7 @@ const ActivitySettings = ({ isOpen }) => {
                     name='currentFtp'
                     // placeholder='http://results.url'
                     defaultValue={currentFtp ? currentFtp : ''}
+                    sx={{ borderColor: '#898989' }}
                   />
                 </Box>
                 <Box>
@@ -127,9 +206,16 @@ const ActivitySettings = ({ isOpen }) => {
                     name='eventDate'
                     // placeholder='http://results.url'
                     defaultValue={currentFtp ? currentFtp : ''}
+                    sx={{ borderColor: '#898989' }}
                   />
                 </Box>
-                <Flex>
+                <Flex
+                  sx={{
+                    borderTop: '1px solid #b4b4b4',
+                    marginTop: '10px',
+                    paddingTop: '10px',
+                  }}
+                >
                   <Box sx={{ marginLeft: 'auto' }}>
                     <Flex sx={{ gap: '10px', marginTop: '10px' }}>
                       <Button
@@ -139,7 +225,14 @@ const ActivitySettings = ({ isOpen }) => {
                       >
                         Cancel
                       </Button>
-                      <Button>Save</Button>
+                      <Button>
+                        <Flex sx={{ gap: '10px' }}>
+                          <Text as='span'>Save</Text>
+                          {isSaving && (
+                            <Spinner sx={{ size: '20px', color: 'white' }} />
+                          )}
+                        </Flex>
+                      </Button>
                     </Flex>
                   </Box>
                 </Flex>

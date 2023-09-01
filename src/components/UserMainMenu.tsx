@@ -26,6 +26,16 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
     };
   }, [menuOpen]);
 
+  React.useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [menuOpen]);
+
   if (!menuOpen) {
     return <></>;
   }
@@ -53,10 +63,13 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
         >
           <div>
             <Flex sx={{ gap: '10px' }}>
-              <Box sx={{ width: '40px', height: 'auto' }}>
+              <Box sx={{ width: '30px', height: 'auto' }}>
                 <Logo />
               </Box>
-              <Text as='h2' sx={{ marginY: 'auto' }}>
+              <Text
+                as='div'
+                sx={{ marginY: 'auto', fontSize: '22px', fontWeight: 700 }}
+              >
                 monopad
               </Text>
             </Flex>

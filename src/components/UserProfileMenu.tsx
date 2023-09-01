@@ -27,6 +27,16 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
     };
   }, [profileOpen]);
 
+  React.useEffect(() => {
+    if (profileOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [profileOpen]);
+
   if (!profileOpen) {
     return <></>;
   }
@@ -80,11 +90,11 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   {!user.attributes.picture && <AvatarButton />}
                 </Box>
                 <Box>
-                  <Text as='div' sx={{ lineHeight: '12px', fontWeight: 700 }}>
-                    {user.attributes.preferred_username}
-                  </Text>
-                  <Text as='div' sx={{ marginTop: '5px' }}>
+                  <Text as='div'>
                     {user.attributes.name}
+                  </Text>
+                  <Text as='div' sx={{ lineHeight: '12px', fontWeight: 700, marginTop: '5px' }}>
+                    {user.attributes.preferred_username}
                   </Text>
                 </Box>
               </Flex>

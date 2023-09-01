@@ -1,19 +1,8 @@
 import React from 'react';
-import {
-  MenuButton,
-  Box,
-  Flex,
-  Close,
-  NavLink,
-  Button,
-  Text,
-  Link as ThemeLink,
-} from 'theme-ui';
-import Link from 'next/link';
+import { MenuButton, Box, Flex } from 'theme-ui';
 import { API } from 'aws-amplify';
 import { CldImage } from 'next-cloudinary';
 
-import BlackBox from './BlackBox';
 import { listPostsCustom } from '../graphql/customQueries';
 import AvatarButton from './AvatarButton';
 import { GraphQLResult } from '@aws-amplify/api';
@@ -48,13 +37,6 @@ const Header = ({ user, signOut, title }) => {
     });
   }, []);
 
-  // React.useEffect(() => {
-  //   document.body.style.overflow = 'hidden';
-  //   return () => {
-  //     document.body.style.overflow = 'auto';
-  //   };
-  // }, []);
-
   return (
     <>
       <UserProfileMenu
@@ -74,13 +56,13 @@ const Header = ({ user, signOut, title }) => {
             display: 'flex',
             flexDirection: 'row',
             padding: '10px',
-            borderBottomWidth: '2px',
-            borderBottomColor: '#f0f0f0',
+            borderBottomWidth: '1px',
+            borderBottomColor: 'rgb(217 217 217)',
             borderBottomStyle: 'solid',
             background: 'white',
           }}
         >
-          <Flex sx={{ gap: '10px' }}>
+          <Flex sx={{ gap: '15px' }}>
             <MenuButton
               sx={{ marginY: 'auto', border: '1px solid #d4d4d4' }}
               aria-label='Toggle Menu'
@@ -92,8 +74,13 @@ const Header = ({ user, signOut, title }) => {
                 // setMenuOpen(true);
               }}
             />
+            <Flex sx={{ height: '100%' }}>
+              <Box sx={{ height: '32px', marginY: 'auto' }}>
+                <Logo />
+              </Box>
+            </Flex>
             {title && (
-              <Flex as='div' sx={{ fontSize: '17px', fontWeight: 600 }}>
+              <Flex as='div' sx={{ fontSize: '16px', fontWeight: 500 }}>
                 <Box as='span' sx={{ marginY: 'auto' }}>
                   {title}
                 </Box>
