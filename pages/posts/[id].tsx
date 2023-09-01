@@ -125,7 +125,7 @@ const Post = ({
         </Head>
 
         <main>
-          <Header user={user} signOut={signOut} />
+          <Header user={user} signOut={signOut} title={'Edit Post'} />
           <PostEditor postId={postId} initialState={postComponents} />
         </main>
       </div>

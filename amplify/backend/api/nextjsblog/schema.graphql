@@ -16,6 +16,7 @@ type User
   fullName: String!
   email: String!
   image: String
+  username: String
 }
 
 type Blog

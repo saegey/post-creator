@@ -1,14 +1,65 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import Head from 'next/head';
+import { Amplify, withSSRContext, API, Auth } from 'aws-amplify';
+import { Grid } from 'theme-ui';
 
 import Header from '../../src/components/Header';
+import { listPostsCustom } from '../../src/graphql/customQueries';
+import { GetServerSidePropsContext } from 'next';
+import awsconfig from '../../src/aws-exports';
+import PostCard from '../../src/components/PostCard';
+Amplify.configure({ ...awsconfig, ssr: true });
 
-const Profile = ({ signOut, user }) => {
+type ListPosts = {
+  data: {
+    listPosts: {
+      items: Array<{
+        id: string;
+        title: string;
+        images: string;
+      }>;
+    };
+  };
+};
+
+export const getServerSideProps = async ({ req }) => {
+  const { Auth, API } = withSSRContext({ req });
+  const user = await Auth.currentAuthenticatedUser();
+
+  try {
+    const response: ListPosts = await API.graphql({
+      query: listPostsCustom,
+      authMode: 'API_KEY',
+      variables: {
+        filter: {
+          postAuthorId: {
+            eq: user.attributes.sub,
+          },
+        },
+      },
+    });
+
+    return {
+      props: {
+        posts: response.data.listPosts.items.map((d) => {
+          return { ...d, imagesObj: JSON.parse(d.images) };
+        }),
+      },
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {},
+    };
+  }
+};
+
+const MyPosts = ({ signOut, user, posts }) => {
   return (
     <>
       <div>
         <Head>
-          <title>Profile</title>
+          <title>My Posts</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <main>
@@ -21,7 +72,12 @@ const Profile = ({ signOut, user }) => {
               marginRight: 'auto',
             }}
           >
-            Posts
+            My Posts
+            <Grid gap={2} columns={[2, 3, 3]}>
+              {posts.map((post) => (
+                <PostCard post={post} showAuthor={false} />
+              ))}
+            </Grid>
           </div>
         </main>
       </div>
@@ -29,4 +85,4 @@ const Profile = ({ signOut, user }) => {
   );
 };
 
-export default withAuthenticator(Profile);
+export default withAuthenticator(MyPosts);

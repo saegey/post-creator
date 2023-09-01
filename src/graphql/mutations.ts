@@ -12,6 +12,7 @@ export const createUser = /* GraphQL */ `
       fullName
       email
       image
+      username
       createdAt
       updatedAt
       owner
@@ -29,6 +30,7 @@ export const updateUser = /* GraphQL */ `
       fullName
       email
       image
+      username
       createdAt
       updatedAt
       owner
@@ -46,6 +48,7 @@ export const deleteUser = /* GraphQL */ `
       fullName
       email
       image
+      username
       createdAt
       updatedAt
       owner
@@ -90,6 +93,7 @@ export const createBlog = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -139,6 +143,7 @@ export const updateBlog = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -188,6 +193,7 @@ export const deleteBlog = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -269,6 +275,7 @@ export const createPost = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -279,6 +286,7 @@ export const createPost = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -289,6 +297,7 @@ export const createPost = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
   }
@@ -362,6 +371,7 @@ export const updatePost = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -372,6 +382,7 @@ export const updatePost = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -382,6 +393,7 @@ export const updatePost = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
   }
@@ -455,6 +467,7 @@ export const deletePost = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -465,6 +478,7 @@ export const deletePost = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -475,6 +489,7 @@ export const deletePost = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
   }

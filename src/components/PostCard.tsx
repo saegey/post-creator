@@ -1,0 +1,120 @@
+import { Button, Box, Grid, Link as ThemeLink, Flex, Text } from 'theme-ui';
+import React from 'react';
+import Link from 'next/link';
+import { CldImage } from 'next-cloudinary';
+
+const PostCard = ({ post, showAuthor = true }) => {
+  return (
+    <Box
+      sx={{ paddingTop: '20px', listStyleType: 'none' }}
+      key={`post-${post.id}`}
+    >
+      <ThemeLink
+        as={Link}
+        sx={{ color: 'black', textDecoration: 'none' }}
+        href={`/posts/${post.id}`}
+      >
+        <Flex
+          sx={{
+            height: '240px',
+            border: '1px solid #dadada',
+            borderTopLeftRadius: '5px',
+            borderTopRightRadius: '5px',
+          }}
+        >
+          {post.imagesObj && post.imagesObj.length > 0 && (
+            <CldImage
+              width='400'
+              height='300'
+              src={post.imagesObj[0].public_id}
+              style={{
+                objectFit: 'cover',
+                width: '100%',
+                height: '100%',
+                marginTop: 'auto',
+                marginBottom: 'auto',
+                borderTopLeftRadius: '5px',
+                borderTopRightRadius: '5px',
+              }}
+              // preserveTransformations/
+              underlay={post.imagesObj[0].public_id}
+              quality={90}
+              sizes='100vw'
+              alt='Description of my image'
+            />
+          )}
+          {!post.imagesObj && (
+            <Box
+              sx={{
+                width: '100%',
+                backgroundColor: '#9b9b9b',
+              }}
+            />
+          )}
+        </Flex>
+        <Box
+          sx={{
+            backgroundColor: '#dadada',
+            padding: '10px',
+            borderBottomLeftRadius: '5px',
+            borderBottomRightRadius: '5px',
+          }}
+        >
+          <Text as='div' sx={{ fontWeight: 600, color: '#424242' }}>
+            {post.title}
+          </Text>
+          {showAuthor && (
+            <Flex sx={{ gap: '10px', marginTop: '5px' }}>
+              <Box sx={{ height: '40px' }}>
+                {post.author?.image !== '' && (
+                  <CldImage
+                    width='400'
+                    height='300'
+                    src={post.author?.image}
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      marginTop: 'auto',
+                      marginBottom: 'auto',
+                      borderRadius: '100%',
+                    }}
+                    // preserveTransformations
+                    underlay={post.author?.image}
+                    quality={90}
+                    sizes='100vw'
+                    alt='Description of my image'
+                  />
+                )}
+              </Box>
+              <Flex sx={{ flexDirection: 'column' }}>
+                <Text
+                  as='div'
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    color: '#424242',
+                  }}
+                >
+                  {post.author?.username}
+                </Text>
+                <Text
+                  as='div'
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '14px',
+                    color: '#424242',
+                  }}
+                >
+                  {post.author?.fullName}
+                </Text>
+              </Flex>
+            </Flex>
+          )}
+        </Box>
+      </ThemeLink>
+    </Box>
+  );
+};
+
+export default PostCard;

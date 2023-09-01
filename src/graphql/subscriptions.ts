@@ -12,6 +12,7 @@ export const onCreateUser = /* GraphQL */ `
       fullName
       email
       image
+      username
       createdAt
       updatedAt
       owner
@@ -29,6 +30,7 @@ export const onUpdateUser = /* GraphQL */ `
       fullName
       email
       image
+      username
       createdAt
       updatedAt
       owner
@@ -46,6 +48,7 @@ export const onDeleteUser = /* GraphQL */ `
       fullName
       email
       image
+      username
       createdAt
       updatedAt
       owner
@@ -90,6 +93,7 @@ export const onCreateBlog = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -139,6 +143,7 @@ export const onUpdateBlog = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -188,6 +193,7 @@ export const onDeleteBlog = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -203,9 +209,9 @@ export const onDeleteBlog = /* GraphQL */ `
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost(
     $filter: ModelSubscriptionPostFilterInput
-    $postAuthorId: String
+    $owner: String
   ) {
-    onCreatePost(filter: $filter, postAuthorId: $postAuthorId) {
+    onCreatePost(filter: $filter, owner: $owner) {
       id
       title
       gpxFile
@@ -269,6 +275,7 @@ export const onCreatePost = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -279,6 +286,7 @@ export const onCreatePost = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -289,6 +297,7 @@ export const onCreatePost = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
   }
@@ -296,9 +305,9 @@ export const onCreatePost = /* GraphQL */ `
 export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost(
     $filter: ModelSubscriptionPostFilterInput
-    $postAuthorId: String
+    $owner: String
   ) {
-    onUpdatePost(filter: $filter, postAuthorId: $postAuthorId) {
+    onUpdatePost(filter: $filter, owner: $owner) {
       id
       title
       gpxFile
@@ -362,6 +371,7 @@ export const onUpdatePost = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -372,6 +382,7 @@ export const onUpdatePost = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -382,6 +393,7 @@ export const onUpdatePost = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
   }
@@ -389,9 +401,9 @@ export const onUpdatePost = /* GraphQL */ `
 export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost(
     $filter: ModelSubscriptionPostFilterInput
-    $postAuthorId: String
+    $owner: String
   ) {
-    onDeletePost(filter: $filter, postAuthorId: $postAuthorId) {
+    onDeletePost(filter: $filter, owner: $owner) {
       id
       title
       gpxFile
@@ -455,6 +467,7 @@ export const onDeletePost = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -465,6 +478,7 @@ export const onDeletePost = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -475,6 +489,7 @@ export const onDeletePost = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
   }

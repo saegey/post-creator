@@ -1,9 +1,10 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Auth, API } from 'aws-amplify';
 import Head from 'next/head';
-import { Label, Input, Box, Flex, Button } from 'theme-ui';
+import { Label, Input, Box, Flex, Button, Spinner, Text } from 'theme-ui';
 import { CldImage } from 'next-cloudinary';
 import { updateUser } from '../src/graphql/mutations';
+import React from 'react';
 
 import Header from '../src/components/Header';
 
@@ -23,33 +24,21 @@ const uploadSettings = {
   // theme: "purple", //change to a purple theme
 };
 
-async function updateUserData({ username, fullName, profile }) {
-  const user = await Auth.currentAuthenticatedUser();
-  await Auth.updateUserAttributes(user, {
-    profile: profile,
-    name: fullName,
-    preferred_username: username,
-  });
-
-  const response = await API.graphql({
-    authMode: 'AMAZON_COGNITO_USER_POOLS',
-    query: updateUser,
-    variables: {
-      input: {
-        //  profile: profile,
-        id: user.attributes.sub,
-        fullName: fullName,
-        //  preferred_username: username,
-      },
-    },
-  });
-  console.log(fullName, response);
-}
-
 async function updateAvatar({ picture }) {
   const user = await Auth.currentAuthenticatedUser();
   await Auth.updateUserAttributes(user, {
     picture,
+  });
+
+  await API.graphql({
+    authMode: 'AMAZON_COGNITO_USER_POOLS',
+    query: updateUser,
+    variables: {
+      input: {
+        id: user.attributes.sub,
+        image: picture,
+      },
+    },
   });
 }
 
@@ -83,29 +72,52 @@ const EditAvatar = () => {
 };
 
 const Profile = ({ signOut, user }) => {
-  console.log(user);
+  const [isSaving, setIsSaving] = React.useState(false);
+
+  async function updateUserData({ username, fullName, profile }) {
+    setIsSaving(true);
+    const user = await Auth.currentAuthenticatedUser();
+    await Auth.updateUserAttributes(user, {
+      profile: profile,
+      name: fullName,
+      preferred_username: username,
+    });
+
+    const response = await API.graphql({
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      query: updateUser,
+      variables: {
+        input: {
+          id: user.attributes.sub,
+          fullName: fullName,
+          username: username,
+        },
+      },
+    });
+    setIsSaving(false);
+    // console.log(fullName, response);
+  }
+  // console.log(user);
   return (
     <>
-      <div>
+      <Box sx={{ width: '100%', height: '100vw', backgroundColor: 'white' }}>
         <Head>
           <title>Profile</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <main>
-          <Header user={user} signOut={signOut} />
+          <Header user={user} signOut={signOut} title={'Profile'} />
           <div
             style={{
               // marginTop: '60px',
-              paddingTop: '60px',
+              paddingTop: '40px',
               maxWidth: '900px',
               marginLeft: 'auto',
               marginRight: 'auto',
-              backgroundColor: 'white',
             }}
           >
             <Flex sx={{ margin: '20px' }}>
               <Box sx={{ gap: '20px', flexDirection: 'column', width: '50%' }}>
-                <h2>Profile</h2>
                 <form
                   onSubmit={(event: any) => {
                     event.preventDefault();
@@ -147,8 +159,17 @@ const Profile = ({ signOut, user }) => {
                         defaultValue={user.attributes.profile}
                       />
                     </Box>
-                    <Box>
-                      <Button>Update Profile</Button>
+                    <Box sx={{ marginTop: '10px' }}>
+                      <Button
+                        sx={{ '&:hover': { backgroundColor: '#515151' } }}
+                      >
+                        <Flex sx={{ gap: '10px' }}>
+                          <Text as='span'>Save</Text>
+                          {isSaving && (
+                            <Spinner sx={{ size: '20px', color: 'white' }} />
+                          )}
+                        </Flex>
+                      </Button>
                     </Box>
                   </Flex>
                 </form>
@@ -203,7 +224,7 @@ const Profile = ({ signOut, user }) => {
             </Flex>
           </div>
         </main>
-      </div>
+      </Box>
     </>
   );
 };

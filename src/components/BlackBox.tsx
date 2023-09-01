@@ -1,4 +1,4 @@
-import { Box } from 'theme-ui'
+import { Box } from 'theme-ui';
 
 const BlackBox = ({ children }) => (
   <Box
@@ -12,9 +12,10 @@ const BlackBox = ({ children }) => (
       zIndex: 10000,
       display: 'flex',
     }}
+    // onClick={() => console.log('fuck')}
   >
     {children}
   </Box>
 );
 
-export default BlackBox
+export default BlackBox;

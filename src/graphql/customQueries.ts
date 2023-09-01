@@ -105,27 +105,13 @@ export const listPostsCustom = /* GraphQL */ `
         subType
         teaser
         currentFtp
-        # components
-        # powerAnalysis
-        # coordinates
-        # powers
-        # elevation
-        # elevationGrades
-        # distances
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-          # owner
-          __typename
-        }
         postAuthorId
         author {
           id
           fullName
           email
           image
+          username
         }
         # userId
         related {

@@ -9,6 +9,7 @@ export const getUser = /* GraphQL */ `
       fullName
       email
       image
+      username
       createdAt
       updatedAt
       owner
@@ -28,6 +29,7 @@ export const listUsers = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -72,6 +74,7 @@ export const getBlog = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -174,6 +177,7 @@ export const getPost = /* GraphQL */ `
           blogPostsId
           postRelatedId
           postAuthorId
+          owner
           __typename
         }
         nextToken
@@ -184,6 +188,7 @@ export const getPost = /* GraphQL */ `
         fullName
         email
         image
+        username
         createdAt
         updatedAt
         owner
@@ -194,6 +199,7 @@ export const getPost = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
   }
@@ -245,6 +251,7 @@ export const listPosts = /* GraphQL */ `
           fullName
           email
           image
+          username
           createdAt
           updatedAt
           owner
@@ -255,6 +262,7 @@ export const listPosts = /* GraphQL */ `
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
