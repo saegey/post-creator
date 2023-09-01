@@ -9,15 +9,9 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
   const menuRef = React.useRef();
 
   React.useEffect(() => {
-    console.log('menu open');
     const checkIfClickedOutside1 = (e) => {
-      // console.log(e);
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setMenuOpen(false);
-        console.log(e, menuOpen);
-        // if (profileOpen === true) {
-        //   // setProfileOpen(false);
-        // }
       }
     };
     document.addEventListener('click', checkIfClickedOutside1);
@@ -47,7 +41,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
           flexDirection: 'column',
           width: '400px',
           height: '100%',
-          backgroundColor: 'white',
+          backgroundColor: 'background',
           animation: 'fadeIn .2s;',
           borderTopRightRadius: '10px',
           borderBottomRightRadius: '10px',
@@ -77,7 +71,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
           <div style={{ marginLeft: 'auto' }}>
             <Close
               onClick={() => setMenuOpen(false)}
-              sx={{ backgroundColor: '#eeeeee' }}
+              sx={{ backgroundColor: 'background' }}
             />
           </div>
         </Flex>
@@ -89,34 +83,10 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
           }}
         >
           <Flex as='nav' sx={{ flexDirection: 'column', paddingX: '10px' }}>
-            <NavLink
-              as={Link}
-              href='/'
-              p={0}
-              sx={{
-                fontWeight: 600,
-                padding: '5px',
-                '&:hover': {
-                  backgroundColor: '#ececec',
-                  borderRadius: '5px',
-                },
-              }}
-            >
+            <NavLink as={Link} href='/' variant='mainMenuItem'>
               Home
             </NavLink>
-            <NavLink
-              as={Link}
-              href='/'
-              p={0}
-              sx={{
-                fontWeight: 600,
-                padding: '5px',
-                '&:hover': {
-                  backgroundColor: '#ececec',
-                  borderRadius: '5px',
-                },
-              }}
-            >
+            <NavLink as={Link} href='/' variant='mainMenuItem'>
               Posts
             </NavLink>
           </Flex>
@@ -137,20 +107,10 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
             <Box as='ul' sx={{ listStyleType: 'none' }}>
               {recentPosts.map((post, i) => {
                 return (
-                  <Box
-                    as='li'
-                    key={`post-${i}`}
-                    sx={{
-                      padding: '5px',
-                      '&:hover': {
-                        backgroundColor: '#ececec',
-                        borderRadius: '5px',
-                      },
-                    }}
-                  >
+                  <Box as='li' key={`post-${i}`} variant='links.mainMenuItem'>
                     <ThemeLink
                       as={Link}
-                      sx={{ color: 'black', textDecoration: 'none' }}
+                      sx={{ color: 'text', textDecoration: 'none' }}
                       href={`/posts/${post.id}`}
                       onClick={() => setMenuOpen(false)}
                     >

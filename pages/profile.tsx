@@ -100,7 +100,7 @@ const Profile = ({ signOut, user }) => {
   // console.log(user);
   return (
     <>
-      <Box sx={{ width: '100%', height: '100vw', backgroundColor: 'white' }}>
+      <Box sx={{ width: '100%', height: '100vw', backgroundColor: 'background' }}>
         <Head>
           <title>Profile</title>
           <link rel='icon' href='/favicon.ico' />
@@ -139,7 +139,7 @@ const Profile = ({ signOut, user }) => {
                         name='fullName'
                         placeholder='Name'
                         defaultValue={user.attributes.name}
-                        sx={{ borderColor: '#898989' }}
+                        variant={'defaultInput'}
                       />
                     </Box>
                     <Box>
@@ -149,7 +149,7 @@ const Profile = ({ signOut, user }) => {
                         name='username'
                         placeholder='Username'
                         defaultValue={user.attributes.preferred_username}
-                        sx={{ borderColor: '#898989' }}
+                        variant={'defaultInput'}
                       />
                     </Box>
                     <Box>
@@ -159,7 +159,7 @@ const Profile = ({ signOut, user }) => {
                         name='location'
                         placeholder='Location'
                         defaultValue={user.attributes.profile}
-                        sx={{ borderColor: '#898989' }}
+                        variant={'defaultInput'}
                       />
                     </Box>
                     <Box sx={{ marginTop: '10px' }}>

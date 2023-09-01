@@ -24,14 +24,7 @@ async function handleCreatePost(event) {
           components: JSON.stringify([
             { type: 'text', children: [{ text: '' }] },
           ]),
-          // author: {
-          //   id: user.attributes.sub,
-          // },
           postAuthorId: user.attributes.sub,
-          // user: {
-          //   id: user.attributes.id,
-          //   // fullName: user.attributes.name,
-          // },
         },
       },
     })) as GraphQLResult<CreatePostMutation>;
@@ -51,9 +44,10 @@ const CreatePostModal = ({ setMenuOpen }) => {
       <Box
         sx={{
           width: '70%',
+          maxWidth: '690px',
           height: '400px',
           margin: 'auto',
-          background: 'white',
+          background: 'background',
           borderRadius: '5px',
         }}
       >

@@ -53,7 +53,6 @@ const Map = ({
   const mapContainerRef = React.useRef();
   const map = React.useRef<mapboxgl.Map>();
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
-  // console.log(coordinates);
 
   React.useEffect(() => {
     if (!map || !map.current) {
@@ -99,7 +98,7 @@ const Map = ({
           ],
         } as any;
 
-        console.log(data);
+        // console.log(data);
         geojsonSource.setData(data);
       } catch (e) {
         console.error(e);
@@ -116,14 +115,14 @@ const Map = ({
         },
       });
     }
-    console.log(
-      map.current?.getLayer('routelayer'),
-      map.current?.getLayer('currentPosition')
-    );
+    // console.log(
+    //   map.current?.getLayer('routelayer'),
+    //   map.current?.getLayer('currentPosition')
+    // );
     if (!map.current?.getLayer('routelayer')) {
       try {
         map.current?.addLayer(routeLayerSettings as SkyLayer);
-        console.log('routeLayerSettings - add');
+        // console.log('routeLayerSettings - add');
       } catch (e) {
         console.error(e);
       }
@@ -131,7 +130,7 @@ const Map = ({
     if (!map.current?.getLayer('currentPosition')) {
       try {
         map.current?.addLayer(currenPositionLayerSettings as SkyLayer);
-        console.log('currenPositionLayerSettings - add');
+        // console.log('currenPositionLayerSettings - add');
       } catch (e) {
         console.error(e);
       }

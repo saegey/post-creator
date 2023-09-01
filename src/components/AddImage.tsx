@@ -44,7 +44,7 @@ const AddImage = ({ isOpen, editor }) => {
           width: '70%',
           height: '90%',
           margin: 'auto',
-          background: 'white',
+          background: 'background',
           borderRadius: '5px',
         }}
       >

@@ -62,16 +62,6 @@ type HomeProps = {
 const Home = ({ signOut, user, posts = [] }: HomeProps) => {
   const [newPost, setNewPost] = React.useState(false);
 
-  // const listPosts = async () => {
-  //   const response: ListPosts = await API.graphql({
-  //     query: listPostsCustom,
-  //     authMode: 'AMAZON_COGNITO_USER_POOLS',
-  //   });
-  //   return response;
-  // };
-  // React.useEffect(() => {
-  //   listPosts().then((d) => console.log(d));
-  // }, []);
   console.log(posts);
   return (
     <>
@@ -81,7 +71,7 @@ const Home = ({ signOut, user, posts = [] }: HomeProps) => {
           <title>Home</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <main>
+        <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
           <Header user={user} signOut={signOut} title={'Posts'} />
           <div
             style={{
@@ -100,7 +90,7 @@ const Home = ({ signOut, user, posts = [] }: HomeProps) => {
               ))}
             </Grid>
           </div>
-        </main>
+        </Box>
       </div>
     </>
   );

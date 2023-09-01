@@ -94,7 +94,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
             maxWidth: '690px',
             width: '100%',
             margin: 'auto',
-            background: 'white',
+            background: 'background',
             borderRadius: '5px',
             padding: '20px',
             position: 'relative',
@@ -149,7 +149,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                     name='stravaLink'
                     placeholder='http://strava.url'
                     defaultValue={stravaUrl ? stravaUrl : ''}
-                    sx={{ borderColor: '#898989' }}
+                    variant={'defaultInput'}
                   />
                 </Box>
                 <Box>
@@ -159,7 +159,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                     name='resultsUrl'
                     placeholder='http://results.url'
                     defaultValue={resultsUrl ? resultsUrl : ''}
-                    sx={{ borderColor: '#898989' }}
+                    variant={'defaultInput'}
                   />
                 </Box>
                 <Box>
@@ -171,7 +171,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                         name='gpxFile'
                         // placeholder='http://results.url'
                         defaultValue={gpxFile ? gpxFile : ''}
-                        sx={{ borderColor: '#898989' }}
+                        variant={'defaultInput'}
                       />
                     </Box>
                     <Box sx={{ width: '25%' }}>
@@ -196,7 +196,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                     name='currentFtp'
                     // placeholder='http://results.url'
                     defaultValue={currentFtp ? currentFtp : ''}
-                    sx={{ borderColor: '#898989' }}
+                    variant={'defaultInput'}
                   />
                 </Box>
                 <Box>
@@ -205,8 +205,8 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                     id='eventDate'
                     name='eventDate'
                     // placeholder='http://results.url'
-                    defaultValue={currentFtp ? currentFtp : ''}
-                    sx={{ borderColor: '#898989' }}
+                    // defaultValue={currentFtp ? currentFtp : ''}
+                    variant={'defaultInput'}
                   />
                 </Box>
                 <Flex
@@ -220,7 +220,9 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                     <Flex sx={{ gap: '10px', marginTop: '10px' }}>
                       <Button
                         type='button'
-                        sx={{ backgroundColor: 'gray' }}
+                        sx={{
+                          backgroundColor: 'cancelButtonColor',
+                        }}
                         onClick={() => isOpen(false)}
                       >
                         Cancel

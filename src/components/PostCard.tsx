@@ -11,13 +11,16 @@ const PostCard = ({ post, showAuthor = true }) => {
     >
       <ThemeLink
         as={Link}
-        sx={{ color: 'black', textDecoration: 'none' }}
+        sx={{ textDecoration: 'none' }}
         href={`/posts/${post.id}`}
       >
         <Flex
           sx={{
             height: '240px',
-            border: '1px solid #dadada',
+            // border: '1px solid #dadada',
+            borderType: 'solid',
+            borderWidth: '1px',
+            borderColor: 'postCardBorder',
             borderTopLeftRadius: '5px',
             borderTopRightRadius: '5px',
           }}
@@ -54,16 +57,23 @@ const PostCard = ({ post, showAuthor = true }) => {
         </Flex>
         <Box
           sx={{
-            // backgroundColor: '#dadada',
+            backgroundColor: 'postCardTextBackground',
+            // color: 'text',
             padding: '10px',
             borderBottomLeftRadius: '5px',
             borderBottomRightRadius: '5px',
-            borderBottom: '1px solid #dadada',
-            borderRight: '1px solid #dadada',
-            borderLeft: '1px solid #dadada',
+            borderBottomStyle: 'solid',
+            borderBottomWidth: '1px',
+            borderBottomColor: 'postCardBorder',
+            borderLeftStyle: 'solid',
+            borderLeftWidth: '1px',
+            borderLeftColor: 'postCardBorder',
+            borderRightStyle: 'solid',
+            borderRightWidth: '1px',
+            borderRightColor: 'postCardBorder',
           }}
         >
-          <Text as='div' sx={{ fontWeight: 600, color: '#424242' }}>
+          <Text as='div' sx={{ fontWeight: 600, color: 'text' }}>
             {post.title}
           </Text>
           {showAuthor && (
@@ -96,7 +106,7 @@ const PostCard = ({ post, showAuthor = true }) => {
                   sx={{
                     fontWeight: 600,
                     fontSize: '14px',
-                    color: '#424242',
+                    color: 'text',
                   }}
                 >
                   {post.author?.username}
@@ -106,7 +116,7 @@ const PostCard = ({ post, showAuthor = true }) => {
                   sx={{
                     fontWeight: 400,
                     fontSize: '14px',
-                    color: '#424242',
+                    color: 'text',
                   }}
                 >
                   {post.author?.fullName}

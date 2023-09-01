@@ -3,7 +3,7 @@ import { API } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
 import React from 'react';
 import { createEditor, Editor, Transforms } from 'slate';
-import { Flex, Text } from 'theme-ui';
+import { Flex, Text, Box } from 'theme-ui';
 import { withHistory } from 'slate-history';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
@@ -78,13 +78,13 @@ const PostEditor = ({ postId, initialState }) => {
       ) : (
         <>
           <PostMenu editor={editor} id={id} />
-          <div
-            style={{
+          <Box
+            sx={{
               marginTop: '0px',
               maxWidth: '900px',
               marginLeft: 'auto',
               marginRight: 'auto',
-              backgroundColor: 'white',
+              backgroundColor: 'background',
               borderRadius: '10px',
               border: '1px dotted #bcbcbc',
               padding: '10px',
@@ -144,7 +144,7 @@ const PostEditor = ({ postId, initialState }) => {
                 renderLeaf={renderLeaf}
               />
             </Slate>
-          </div>
+          </Box>
         </>
       )}
     </>

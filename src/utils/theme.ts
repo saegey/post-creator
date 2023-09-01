@@ -1,7 +1,14 @@
 // src/utils/theme.ts
 export default {
   colors: {
-    text: '#111',
+    text: '#202020',
+    buttonBorderColor: '#d4d4d4',
+    menuItemBackgroundHoverColor: '#ececec',
+    buttonBackgroundHoverColor: '#e8e8e8',
+    postCardTextBackground: 'white',
+    cancelButtonColor: '#a1a1a1',
+    postCardBorder: '#dadada',
+    inputFocusBackground: '#eeeeee',
     background: '#fff',
     primary: 'black',
     secondary: '#3f3f3f',
@@ -9,6 +16,58 @@ export default {
     highlight: '#9f9f9f',
     gray: '#6c6c6c',
     accent: '#3f3f3f',
+    modes: {
+      dark: {
+        text: '#fff',
+        background: '#262626',
+        postCardTextBackground: '#4b4b4b',
+        inputFocusBackground: '#858585',
+        buttonBackgroundHoverColor: '#7c7c7c',
+        postCardBorder: '#6f6f6f',
+        menuItemBackgroundHoverColor: '#404040',
+        buttonBorderColor: '#7c7c7c',
+        primary: '#909090',
+        secondary: '#09c',
+        muted: '#111',
+        cancelButtonColor: '#4f4f4f',
+      },
+    },
+  },
+  text: {
+    menuItem: {
+      // textTransform: 'uppercase',
+      // letterSpacing: '.2em',
+      '&:hover': {
+        backgroundColor: 'menuItemBackgroundHoverColor',
+        borderRadius: '5px',
+      },
+      cursor: 'pointer',
+      color: 'text',
+      // textDecoration: 'none',
+      padding: '5px',
+      width: '100%',
+      textDecoration: 'none',
+    },
+  },
+  links: {
+    mainMenuItem: {
+      fontWeight: 600,
+      padding: '5px',
+      color: 'text',
+      '&:hover': {
+        backgroundColor: 'menuItemBackgroundHoverColor',
+        borderRadius: '5px',
+        color: 'text',
+      },
+    },
+  },
+  forms: {
+    defaultInput: {
+      borderColor: '#898989',
+      '&:focus': {
+        backgroundColor: 'inputFocusBackground',
+      },
+    },
   },
   fonts: {
     body: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',

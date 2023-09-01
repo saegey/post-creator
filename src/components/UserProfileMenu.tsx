@@ -1,5 +1,14 @@
 import BlackBox from './BlackBox';
-import { Box, Flex, Close, Text, Link as ThemeLink } from 'theme-ui';
+import {
+  Box,
+  Flex,
+  Close,
+  Text,
+  Link as ThemeLink,
+  Button,
+  useColorMode,
+	mode
+} from 'theme-ui';
 import Link from 'next/link';
 import React from 'react';
 import { CldImage } from 'next-cloudinary';
@@ -8,6 +17,7 @@ import AvatarButton from './AvatarButton';
 
 const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
   const ref = React.useRef();
+  const [mode, setMode] = useColorMode();
 
   React.useEffect(() => {
     console.log('profilleopen');
@@ -50,7 +60,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
             flexDirection: 'column',
             width: '400px',
             height: '100%',
-            backgroundColor: 'white',
+            backgroundColor: 'background',
             animation: 'fadeIn .2s;',
             borderTopLeftRadius: '10px',
             borderBottomLeftRadius: '10px',
@@ -62,7 +72,10 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                 width: '100%',
                 marginTop: '10px',
                 padding: '10px',
-                borderBottom: '1px solid #d6d6d6',
+                borderBottomStyle: 'solid',
+                borderBottomWidth: '1px',
+                borderBottomColor: 'buttonBorderColor',
+                // borderBottom: '1px solid #d6d6d6',
               }}
             >
               <Flex sx={{ gap: '10px', width: '100%' }}>
@@ -80,7 +93,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                         marginBottom: 'auto',
                         borderRadius: '100%',
                       }}
-                      preserveTransformations
+                      // preserveTransformations
                       underlay={user.attributes.picture}
                       quality={90}
                       sizes='100vw'
@@ -90,17 +103,25 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   {!user.attributes.picture && <AvatarButton />}
                 </Box>
                 <Box>
-                  <Text as='div'>
+                  <Text as='div' sx={{ color: 'text' }}>
                     {user.attributes.name}
                   </Text>
-                  <Text as='div' sx={{ lineHeight: '12px', fontWeight: 700, marginTop: '5px' }}>
+                  <Text
+                    as='div'
+                    sx={{
+                      lineHeight: '12px',
+                      fontWeight: 700,
+                      marginTop: '5px',
+                      color: 'text',
+                    }}
+                  >
                     {user.attributes.preferred_username}
                   </Text>
                 </Box>
               </Flex>
               <Close
                 onClick={() => setProfileOpen(false)}
-                sx={{ backgroundColor: '#eeeeee', marginLeft: 'auto' }}
+                sx={{ backgroundColor: 'background', marginLeft: 'auto' }}
               />
             </Flex>
             <Box sx={{ padding: '10px' }}>
@@ -121,11 +142,11 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     as={Link}
                     sx={{
                       '&:hover': {
-                        backgroundColor: '#ececec',
+                        backgroundColor: 'menuItemBackgroundHoverColor',
                         borderRadius: '5px',
                       },
                       textDecoration: 'none',
-                      color: 'black',
+                      color: 'text',
                       padding: '5px',
                       width: '100%',
                     }}
@@ -140,11 +161,11 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     as={Link}
                     sx={{
                       '&:hover': {
-                        backgroundColor: '#ececec',
+                        backgroundColor: 'menuItemBackgroundHoverColor',
                         borderRadius: '5px',
                       },
                       textDecoration: 'none',
-                      color: 'black',
+                      color: 'text',
                       padding: '5px',
                       width: '100%',
                     }}
@@ -154,66 +175,47 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   </ThemeLink>
                 </Flex>
                 <Flex as='li'>
-                  <Text
-                    as='span'
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: '#ececec',
-                        borderRadius: '5px',
-                      },
-                      padding: '5px',
-                      width: '100%',
-                    }}
-                  >
+                  <Text as='span' variant={'menuItem'}>
                     Settings
                   </Text>
                 </Flex>
-                <Flex as='li' sx={{ borderTop: '1px solid #ececec' }}>
-                  <Text
-                    as='span'
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: '#ececec',
-                        borderRadius: '5px',
-                      },
-                      padding: '5px',
-                      width: '100%',
-                    }}
-                  >
-                    Docs
-                  </Text>
+                <Flex
+                  as='li'
+                  sx={{
+                    borderTopColor: 'buttonBorderColor',
+                    borderTopStyle: 'solid',
+                    borderTopWidth: '1px',
+                  }}
+                >
+                  <Text variant={'menuItem'}>Docs</Text>
                 </Flex>
                 <Flex as='li'>
-                  <Text
-                    as='span'
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: '#ececec',
-                        borderRadius: '5px',
-                      },
-                      padding: '5px',
-                      width: '100%',
-                    }}
-                  >
+                  <Text as='span' variant={'menuItem'}>
                     Support
                   </Text>
                 </Flex>
-                <Flex as='li' sx={{ borderTop: '1px solid #ececec' }}>
-                  <Text
-                    as='span'
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: '#ececec',
-                        borderRadius: '5px',
-                      },
-                      padding: '5px',
-                      width: '100%',
-                      cursor: 'pointer',
-                    }}
-                    onClick={signOut}
-                  >
+                <Flex
+                  as='li'
+                  sx={{
+                    borderTopColor: 'buttonBorderColor',
+                    borderTopStyle: 'solid',
+                    borderTopWidth: '1px',
+                  }}
+                >
+                  <Text as='span' variant={'menuItem'} onClick={signOut}>
                     Sign out
                   </Text>
+                </Flex>
+                <Flex>
+                  <Button
+                    onClick={(e) => {
+                      const next = mode === 'dark' ? 'light' : 'dark';
+                      setMode(next);
+                      console.log(next);
+                    }}
+                  >
+                    Toggle {mode}
+                  </Button>
                 </Flex>
               </Box>
             </Box>

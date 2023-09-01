@@ -51,20 +51,20 @@ const Header = ({ user, signOut, title }) => {
         recentPosts={recentPosts}
       />
       <header>
-        <div
-          style={{
+        <Box
+          sx={{
             display: 'flex',
             flexDirection: 'row',
             padding: '10px',
             borderBottomWidth: '1px',
-            borderBottomColor: 'rgb(217 217 217)',
+            borderBottomColor: 'buttonBorderColor',
             borderBottomStyle: 'solid',
-            background: 'white',
+            backgroundColor: 'background',
           }}
         >
           <Flex sx={{ gap: '15px' }}>
             <MenuButton
-              sx={{ marginY: 'auto', border: '1px solid #d4d4d4' }}
+              sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
               aria-label='Toggle Menu'
               onClick={() => {
                 setTimeout(() => {
@@ -119,7 +119,7 @@ const Header = ({ user, signOut, title }) => {
               <AvatarButton onClick={() => setProfileOpen(true)} />
             )}
           </div>
-        </div>
+        </Box>
       </header>
     </>
   );

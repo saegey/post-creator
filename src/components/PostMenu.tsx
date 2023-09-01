@@ -32,13 +32,13 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
           gap: '5px',
           position: 'sticky',
           top: '0px',
-          backgroundColor: 'white',
+          backgroundColor: 'background',
           paddingY: '10px',
           paddingX: '10px',
           zIndex: 1000,
           borderBottomStyle: 'solid',
-          borderBottomWidth: '2px',
-          borderBottomColor: '#6c6c6c40',
+          borderBottomWidth: '1px',
+          borderBottomColor: 'buttonBorderColor',
         }}
       >
         <BoldButton editor={editor} />
