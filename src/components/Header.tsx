@@ -75,7 +75,7 @@ const Header = ({ user, signOut, title }) => {
               }}
             />
             <Flex sx={{ height: '100%' }}>
-              <Box sx={{ height: '32px', marginY: 'auto' }}>
+              <Box sx={{ height: '32px', width: '32px', marginY: 'auto' }}>
                 <Logo />
               </Box>
             </Flex>
@@ -89,7 +89,7 @@ const Header = ({ user, signOut, title }) => {
           </Flex>
           <div style={{ marginLeft: 'auto' }}>
             {user.attributes.picture && (
-              <Box sx={{ height: '40px', cursor: 'pointer' }}>
+              <Box sx={{ height: '40px', width: '40px', cursor: 'pointer' }}>
                 <CldImage
                   width='400'
                   height='300'
@@ -116,7 +116,13 @@ const Header = ({ user, signOut, title }) => {
               </Box>
             )}
             {!user.attributes.picture && (
-              <AvatarButton onClick={() => setProfileOpen(true)} />
+              <AvatarButton
+                onClick={() =>
+                  setTimeout(() => {
+                    setProfileOpen(true);
+                  }, 10)
+                }
+              />
             )}
           </div>
         </Box>

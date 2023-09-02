@@ -74,7 +74,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
               }}
             >
               <Flex sx={{ gap: '10px', width: '100%' }}>
-                <Box sx={{ height: '40px' }}>
+                <Box sx={{ height: '40px', width: '40px' }}>
                   {user.attributes.picture && (
                     <CldImage
                       width='400'
@@ -170,8 +170,24 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   </ThemeLink>
                 </Flex>
                 <Flex as='li'>
-                  <Text as='span' variant={'menuItem'}>
-                    Settings
+                  <Text
+                    as='span'
+                    onClick={(e) => {
+                      const next = mode === 'dark' ? 'light' : 'dark';
+                      setMode(next);
+                      console.log(next);
+                    }}
+                    sx={{
+                      width: '100%',
+                      padding: '5px',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        backgroundColor: 'menuItemBackgroundHoverColor',
+                        borderRadius: '5px',
+                      },
+                    }}
+                  >
+                    Toggle Theme {mode}
                   </Text>
                 </Flex>
                 <Flex
@@ -200,17 +216,6 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   <Text as='span' variant={'menuItem'} onClick={signOut}>
                     Sign out
                   </Text>
-                </Flex>
-                <Flex>
-                  <Button
-                    onClick={(e) => {
-                      const next = mode === 'dark' ? 'light' : 'dark';
-                      setMode(next);
-                      console.log(next);
-                    }}
-                  >
-                    Toggle {mode}
-                  </Button>
                 </Flex>
               </Box>
             </Box>

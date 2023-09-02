@@ -78,7 +78,7 @@ const PostCard = ({ post, showAuthor = true }) => {
           </Text>
           {showAuthor && (
             <Flex sx={{ gap: '10px', marginTop: '5px' }}>
-              <Box sx={{ height: '40px' }}>
+              <Box sx={{ height: '40px', width: '40px' }}>
                 {post.author?.image !== '' && (
                   <CldImage
                     width='400'
