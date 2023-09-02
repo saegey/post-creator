@@ -31,7 +31,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
   } = React.useContext(PostContext);
   const [uploadModal1, setUploadModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-  const ref = React.useRef();
+  const ref = React.useRef<any>();
 
   const saveSettings = async (event) => {
     // isOpen(false);
@@ -65,7 +65,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
   };
 
   React.useEffect(() => {
-    const checkIfClickedOutside1 = (e) => {
+    const checkIfClickedOutside1 = (e: any) => {
       if (ref.current && !ref.current.contains(e.target)) {
         isOpen(false);
       }

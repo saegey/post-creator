@@ -7,7 +7,6 @@ import {
   Link as ThemeLink,
   Button,
   useColorMode,
-	mode
 } from 'theme-ui';
 import Link from 'next/link';
 import React from 'react';
@@ -16,7 +15,7 @@ import { CldImage } from 'next-cloudinary';
 import AvatarButton from './AvatarButton';
 
 const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
-  const ref = React.useRef();
+  const ref = React.useRef<any>();
   const [mode, setMode] = useColorMode();
 
   React.useEffect(() => {
@@ -25,10 +24,6 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
       // console.log(e);
       if (ref.current && !ref.current.contains(e.target)) {
         setProfileOpen(false);
-        console.log(e, profileOpen);
-        // if (profileOpen === true) {
-        //   // setProfileOpen(false);
-        // }
       }
     };
     document.addEventListener('click', checkIfClickedOutside);

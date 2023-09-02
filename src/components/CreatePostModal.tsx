@@ -67,7 +67,7 @@ const CreatePostModal = ({ setMenuOpen }) => {
           <Authenticator>
             <form onSubmit={handleCreatePost}>
               <Label htmlFor='title'>Title</Label>
-              <Input name='title' id='title' mb={3} />
+              <Input name='title' id='title' mb={3} variant={'defaultInput'} />
 
               <Button>Create</Button>
             </form>

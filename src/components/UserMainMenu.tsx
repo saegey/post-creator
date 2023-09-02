@@ -6,7 +6,7 @@ import BlackBox from './BlackBox';
 import Logo from './Logo';
 
 const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
-  const menuRef = React.useRef();
+  const menuRef = React.useRef<any>();
 
   React.useEffect(() => {
     const checkIfClickedOutside1 = (e) => {

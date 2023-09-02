@@ -5,6 +5,7 @@ export default {
     buttonBorderColor: '#d4d4d4',
     menuItemBackgroundHoverColor: '#ececec',
     buttonBackgroundHoverColor: '#e8e8e8',
+		skeletonGradient1: '#7c7c7c',
     postCardTextBackground: 'white',
     cancelButtonColor: '#a1a1a1',
     postCardBorder: '#dadada',
@@ -23,6 +24,7 @@ export default {
         postCardTextBackground: '#4b4b4b',
         inputFocusBackground: '#858585',
         buttonBackgroundHoverColor: '#7c7c7c',
+				skeletonGradient1: '#7c7c7c',
         postCardBorder: '#6f6f6f',
         menuItemBackgroundHoverColor: '#404040',
         buttonBorderColor: '#7c7c7c',
@@ -47,6 +49,17 @@ export default {
       padding: '5px',
       width: '100%',
       textDecoration: 'none',
+    },
+  },
+  boxes: {
+    skeletonButton: {
+      height: '33px',
+      width: '163px',
+      borderRadius: '5px',
+      backgroundImage:
+        'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
+      backgroundSize: '600px',
+      animation: 'shine-lines 1.6s infinite linear',
     },
   },
   links: {

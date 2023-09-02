@@ -4,18 +4,16 @@ import { MouseEventHandler } from 'react';
 const AvatarButton = ({
   onClick,
 }: {
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }) => {
   return (
     <Box
       aria-label='Avatar button'
       onClick={onClick}
       sx={{
-        // border: '1px solid #d4d4d4',
         width: '32px',
         height: 'auto',
         cursor: 'pointer',
-        // '&:hover': { backgroundColor: '#e8e8e8' },
       }}
     >
       <svg

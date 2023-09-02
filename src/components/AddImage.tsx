@@ -37,8 +37,18 @@ const AddImage = ({ isOpen, editor }) => {
     ]);
   };
 
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   return (
-    <BlackBox>
+    <BlackBox opacity='0.8'>
       <Box
         sx={{
           width: '70%',

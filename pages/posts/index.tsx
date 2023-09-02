@@ -11,23 +11,22 @@ import awsconfig from '../../src/aws-exports';
 import PostCard from '../../src/components/PostCard';
 Amplify.configure({ ...awsconfig, ssr: true });
 
-type ListPosts = {
-  data: {
-    listPosts: {
-      items: Array<{
-        id: string;
-        title: string;
-        images: string;
-      }>;
-    };
+type PostType = Array<{
+  id: string;
+  title: string;
+  author: {
+    fullName: string;
+    username: string;
+    image: string;
   };
-};
+}>;
 
 const MyPosts = ({ signOut, user }) => {
-  const [posts, setPosts] = React.useState();
+  const [posts, setPosts] = React.useState<PostType>();
+
   const getData = async () => {
     const user = await Auth.currentAuthenticatedUser();
-    const response: ListPosts = await API.graphql({
+    const response: any = await API.graphql({
       query: listPostsCustom,
       authMode: 'API_KEY',
       variables: {
@@ -42,6 +41,7 @@ const MyPosts = ({ signOut, user }) => {
       return { ...d, imagesObj: JSON.parse(d.images) };
     });
   };
+
   React.useEffect(() => {
     getData().then((d) => setPosts(d));
   }, []);
