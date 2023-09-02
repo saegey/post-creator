@@ -1,6 +1,6 @@
-import { Box } from 'theme-ui'
+import { Box } from 'theme-ui';
 
-const BlackBox = ({ children }) => (
+const BlackBox = ({ children, opacity = '0.2' }) => (
   <Box
     sx={{
       position: 'fixed',
@@ -8,13 +8,14 @@ const BlackBox = ({ children }) => (
       height: '100%',
       width: '100%',
       left: '0',
-      backgroundColor: 'rgba(0,0,0,0.8)',
+      backgroundColor: `rgba(0,0,0, ${opacity})`,
       zIndex: 10000,
       display: 'flex',
     }}
+    // onClick={() => console.log('fuck')}
   >
     {children}
   </Box>
 );
 
-export default BlackBox
+export default BlackBox;

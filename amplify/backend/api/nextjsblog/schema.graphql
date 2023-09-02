@@ -3,6 +3,22 @@
 # input AMPLIFY {
 #   globalAuthRule: AuthRule = { allow: public }
 # } # FOR TESTING ONLY!
+
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, update, delete, read] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  fullName: String!
+  email: String!
+  image: String
+  username: String
+}
+
 type Blog
   @model
   @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
@@ -13,7 +29,12 @@ type Blog
 
 type Post
   @model
-  @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, delete, read, update] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
   id: ID!
   title: String!
   gpxFile: String
@@ -38,13 +59,10 @@ type Post
   distances: AWSJSON
   blog: Blog @belongsTo
   related: [Post] @hasMany
+  author: User @hasOne
+  # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 }
-
-# type Subscription {
-#   onCoordinatesOnPost(postCommentsId: ID!): Post
-#     @aws_subscribe(mutations: ["createComment"])
-# }
 
 # type Comment @model {
 #   id: ID!

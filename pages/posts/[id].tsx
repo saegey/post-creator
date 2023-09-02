@@ -1,8 +1,9 @@
 import { withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator, Authenticator } from '@aws-amplify/ui-react';
 import React from 'react';
+import { Box } from 'theme-ui';
 
 import Header from '../../src/components/Header';
 import { PostContext } from '../../src/PostContext';
@@ -124,10 +125,10 @@ const Post = ({
           <link rel='icon' href='/favicon.ico' />
         </Head>
 
-        <main>
-          <Header user={user} signOut={signOut} />
-          <PostEditor postId={postId} initialState={postComponents} />
-        </main>
+        <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
+            <Header user={user} signOut={signOut} title={'Edit Post'} />
+            <PostEditor postId={postId} initialState={postComponents} />
+        </Box>
       </div>
     </PostContext.Provider>
   );

@@ -1,5 +1,5 @@
 export const getActivityQuery = /* GraphQL */ `
-  query GetPost($id: ID!) {
+  query GetActivityQuery($id: ID!) {
     getPost(id: $id) {
       powerAnalysis
       coordinates
@@ -7,7 +7,7 @@ export const getActivityQuery = /* GraphQL */ `
       elevation
       elevationGrades
       distances
-      owner
+      # owner
       __typename
     }
   }
@@ -27,7 +27,7 @@ export type getActivityQueryProps = {
 };
 
 export const getPostInitial = /* GraphQL */ `
-  query GetPost($id: ID!) {
+  query GetPostInitial($id: ID!) {
     getPost(id: $id) {
       id
       title
@@ -63,18 +63,27 @@ export const getPostInitial = /* GraphQL */ `
         owner
         __typename
       }
+      author {
+        id
+        fullName
+        email
+        image
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       blogPostsId
       postRelatedId
-      owner
+      # owner
       __typename
     }
   }
 `;
 
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
+export const listPostsCustom = /* GraphQL */ `
+  query listPostsCustom(
     $filter: ModelPostFilterInput
     $limit: Int
     $nextToken: String
@@ -96,21 +105,15 @@ export const listPosts = /* GraphQL */ `
         subType
         teaser
         currentFtp
-        # components
-        # powerAnalysis
-        # coordinates
-        # powers
-        # elevation
-        # elevationGrades
-        # distances
-        blog {
+        postAuthorId
+        author {
           id
-          name
-          createdAt
-          updatedAt
-          owner
-          __typename
+          fullName
+          email
+          image
+          username
         }
+        # userId
         related {
           nextToken
           __typename
@@ -119,7 +122,7 @@ export const listPosts = /* GraphQL */ `
         updatedAt
         blogPostsId
         postRelatedId
-        owner
+        # owner
         __typename
       }
       nextToken

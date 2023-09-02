@@ -9,62 +9,26 @@ const SkeletonPost = () => {
           gap: '10px',
           position: 'sticky',
           top: '0px',
-          backgroundColor: 'white',
+          backgroundColor: 'background',
           paddingY: '10px',
           paddingX: '10px',
           zIndex: 1000,
           borderBottomStyle: 'solid',
-          borderBottomWidth: '2px',
-          borderBottomColor: '#6c6c6c40',
+          borderBottomWidth: '1px',
+          borderBottomColor: 'buttonBorderColor',
         }}
       >
-        <Box
-          sx={{
-            height: '33px',
-            width: '163px',
-            borderRadius: '5px',
-            // background: 'grey',
-            backgroundImage:
-              'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-            backgroundSize: '600px',
-            animation: 'shine-lines 1.6s infinite linear',
-            // animation: 'pulse-animation 2s infinite',
-          }}
-        />
-        <Box
-          sx={{
-            height: '33px',
-            width: '163px',
-            borderRadius: '5px',
-            // background: 'grey',
-            backgroundImage:
-              'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-            backgroundSize: '600px',
-            animation: 'shine-lines 1.6s infinite linear',
-            // animation: 'pulse-animation 2s infinite',
-          }}
-        />
-        <Box
-          sx={{
-            height: '33px',
-            width: '163px',
-            borderRadius: '5px',
-            // background: 'grey',
-            backgroundImage:
-              'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-            backgroundSize: '600px',
-            animation: 'shine-lines 1.6s infinite linear',
-            // animation: 'pulse-animation 2s infinite',
-          }}
-        />
+        <Box variant='boxes.skeletonButton' />
+        <Box variant='boxes.skeletonButton' />
+        <Box variant='boxes.skeletonButton' />
       </Flex>
-      <div
-        style={{
+      <Box
+        sx={{
           marginTop: '0px',
           maxWidth: '900px',
           marginLeft: 'auto',
           marginRight: 'auto',
-          backgroundColor: 'white',
+          backgroundColor: 'background',
           borderRadius: '10px',
           border: '1px dotted #bcbcbc',
           padding: '10px',
@@ -201,7 +165,7 @@ const SkeletonPost = () => {
             </Flex>
           </Box>
         </Flex>
-      </div>
+      </Box>
     </>
   );
 };

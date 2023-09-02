@@ -17,10 +17,15 @@ const BoldButton = ({ editor }: { editor: ReactEditor }) => {
     <IconButton
       aria-label='Toggle dark mode'
       onClick={() => toggleBold({ editor })}
-      sx={{ border: '1px solid #d4d4d4' }}
+      sx={{
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: 'buttonBorderColor',
+        '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
+      }}
     >
       <svg
-        fill='#000000'
+        fill='var(--theme-ui-colors-text)'
         width='18px'
         height='16px'
         viewBox='0 0 1920 1920'

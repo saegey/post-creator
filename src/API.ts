@@ -2,16 +2,62 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateBlogInput = {
-  id?: string | null,
-  name: string,
+export type UpdatePostInput = {
+  id: string,
+  title?: string | null,
+  gpxFile?: string | null,
+  images?: string | null,
+  headerImage?: string | null,
+  date?: string | null,
+  publishedDate?: string | null,
+  location?: string | null,
+  postLocation?: string | null,
+  stravaUrl?: string | null,
+  resultsUrl?: string | null,
+  type?: string | null,
+  subType?: string | null,
+  teaser?: string | null,
+  currentFtp?: string | null,
+  components?: string | null,
+  powerAnalysis?: string | null,
+  coordinates?: string | null,
+  powers?: string | null,
+  elevation?: string | null,
+  elevationGrades?: string | null,
+  distances?: string | null,
+  blogPostsId?: string | null,
+  postRelatedId?: string | null,
+  postAuthorId?: string | null,
 };
 
-export type ModelBlogConditionInput = {
-  name?: ModelStringInput | null,
-  and?: Array< ModelBlogConditionInput | null > | null,
-  or?: Array< ModelBlogConditionInput | null > | null,
-  not?: ModelBlogConditionInput | null,
+export type ModelPostConditionInput = {
+  title?: ModelStringInput | null,
+  gpxFile?: ModelStringInput | null,
+  images?: ModelStringInput | null,
+  headerImage?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  publishedDate?: ModelStringInput | null,
+  location?: ModelStringInput | null,
+  postLocation?: ModelStringInput | null,
+  stravaUrl?: ModelStringInput | null,
+  resultsUrl?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  subType?: ModelStringInput | null,
+  teaser?: ModelStringInput | null,
+  currentFtp?: ModelStringInput | null,
+  components?: ModelStringInput | null,
+  powerAnalysis?: ModelStringInput | null,
+  coordinates?: ModelStringInput | null,
+  powers?: ModelStringInput | null,
+  elevation?: ModelStringInput | null,
+  elevationGrades?: ModelStringInput | null,
+  distances?: ModelStringInput | null,
+  and?: Array< ModelPostConditionInput | null > | null,
+  or?: Array< ModelPostConditionInput | null > | null,
+  not?: ModelPostConditionInput | null,
+  blogPostsId?: ModelIDInput | null,
+  postRelatedId?: ModelIDInput | null,
+  postAuthorId?: ModelIDInput | null,
 };
 
 export type ModelStringInput = {
@@ -54,20 +100,20 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Blog = {
-  __typename: "Blog",
-  id: string,
-  name: string,
-  posts?: ModelPostConnection | null,
-  createdAt: string,
-  updatedAt: string,
-  owner?: string | null,
-};
-
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection",
-  items:  Array<Post | null >,
-  nextToken?: string | null,
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
 };
 
 export type Post = {
@@ -96,11 +142,114 @@ export type Post = {
   distances?: string | null,
   blog?: Blog | null,
   related?: ModelPostConnection | null,
+  author?: User | null,
   createdAt: string,
   updatedAt: string,
   blogPostsId?: string | null,
   postRelatedId?: string | null,
+  postAuthorId?: string | null,
   owner?: string | null,
+};
+
+export type Blog = {
+  __typename: "Blog",
+  id: string,
+  name: string,
+  posts?: ModelPostConnection | null,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type ModelPostConnection = {
+  __typename: "ModelPostConnection",
+  items:  Array<Post | null >,
+  nextToken?: string | null,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  fullName: string,
+  email: string,
+  image?: string | null,
+  username?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type ModelPostFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  gpxFile?: ModelStringInput | null,
+  images?: ModelStringInput | null,
+  headerImage?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  publishedDate?: ModelStringInput | null,
+  location?: ModelStringInput | null,
+  postLocation?: ModelStringInput | null,
+  stravaUrl?: ModelStringInput | null,
+  resultsUrl?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  subType?: ModelStringInput | null,
+  teaser?: ModelStringInput | null,
+  currentFtp?: ModelStringInput | null,
+  components?: ModelStringInput | null,
+  powerAnalysis?: ModelStringInput | null,
+  coordinates?: ModelStringInput | null,
+  powers?: ModelStringInput | null,
+  elevation?: ModelStringInput | null,
+  elevationGrades?: ModelStringInput | null,
+  distances?: ModelStringInput | null,
+  and?: Array< ModelPostFilterInput | null > | null,
+  or?: Array< ModelPostFilterInput | null > | null,
+  not?: ModelPostFilterInput | null,
+  blogPostsId?: ModelIDInput | null,
+  postRelatedId?: ModelIDInput | null,
+  postAuthorId?: ModelIDInput | null,
+};
+
+export type CreateUserInput = {
+  id?: string | null,
+  fullName: string,
+  email: string,
+  image?: string | null,
+  username?: string | null,
+};
+
+export type ModelUserConditionInput = {
+  fullName?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  username?: ModelStringInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
+};
+
+export type UpdateUserInput = {
+  id: string,
+  fullName?: string | null,
+  email?: string | null,
+  image?: string | null,
+  username?: string | null,
+};
+
+export type DeleteUserInput = {
+  id: string,
+};
+
+export type CreateBlogInput = {
+  id?: string | null,
+  name: string,
+};
+
+export type ModelBlogConditionInput = {
+  name?: ModelStringInput | null,
+  and?: Array< ModelBlogConditionInput | null > | null,
+  or?: Array< ModelBlogConditionInput | null > | null,
+  not?: ModelBlogConditionInput | null,
 };
 
 export type UpdateBlogInput = {
@@ -137,82 +286,28 @@ export type CreatePostInput = {
   distances?: string | null,
   blogPostsId?: string | null,
   postRelatedId?: string | null,
-};
-
-export type ModelPostConditionInput = {
-  title?: ModelStringInput | null,
-  gpxFile?: ModelStringInput | null,
-  images?: ModelStringInput | null,
-  headerImage?: ModelStringInput | null,
-  date?: ModelStringInput | null,
-  publishedDate?: ModelStringInput | null,
-  location?: ModelStringInput | null,
-  postLocation?: ModelStringInput | null,
-  stravaUrl?: ModelStringInput | null,
-  resultsUrl?: ModelStringInput | null,
-  type?: ModelStringInput | null,
-  subType?: ModelStringInput | null,
-  teaser?: ModelStringInput | null,
-  currentFtp?: ModelStringInput | null,
-  components?: ModelStringInput | null,
-  powerAnalysis?: ModelStringInput | null,
-  coordinates?: ModelStringInput | null,
-  powers?: ModelStringInput | null,
-  elevation?: ModelStringInput | null,
-  elevationGrades?: ModelStringInput | null,
-  distances?: ModelStringInput | null,
-  and?: Array< ModelPostConditionInput | null > | null,
-  or?: Array< ModelPostConditionInput | null > | null,
-  not?: ModelPostConditionInput | null,
-  blogPostsId?: ModelIDInput | null,
-  postRelatedId?: ModelIDInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
-export type UpdatePostInput = {
-  id: string,
-  title?: string | null,
-  gpxFile?: string | null,
-  images?: string | null,
-  headerImage?: string | null,
-  date?: string | null,
-  publishedDate?: string | null,
-  location?: string | null,
-  postLocation?: string | null,
-  stravaUrl?: string | null,
-  resultsUrl?: string | null,
-  type?: string | null,
-  subType?: string | null,
-  teaser?: string | null,
-  currentFtp?: string | null,
-  components?: string | null,
-  powerAnalysis?: string | null,
-  coordinates?: string | null,
-  powers?: string | null,
-  elevation?: string | null,
-  elevationGrades?: string | null,
-  distances?: string | null,
-  blogPostsId?: string | null,
-  postRelatedId?: string | null,
+  postAuthorId?: string | null,
 };
 
 export type DeletePostInput = {
   id: string,
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  fullName?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  image?: ModelStringInput | null,
+  username?: ModelStringInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+};
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
+  nextToken?: string | null,
 };
 
 export type ModelBlogFilterInput = {
@@ -229,41 +324,14 @@ export type ModelBlogConnection = {
   nextToken?: string | null,
 };
 
-export type ModelPostFilterInput = {
-  id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  gpxFile?: ModelStringInput | null,
-  images?: ModelStringInput | null,
-  headerImage?: ModelStringInput | null,
-  date?: ModelStringInput | null,
-  publishedDate?: ModelStringInput | null,
-  location?: ModelStringInput | null,
-  postLocation?: ModelStringInput | null,
-  stravaUrl?: ModelStringInput | null,
-  resultsUrl?: ModelStringInput | null,
-  type?: ModelStringInput | null,
-  subType?: ModelStringInput | null,
-  teaser?: ModelStringInput | null,
-  currentFtp?: ModelStringInput | null,
-  components?: ModelStringInput | null,
-  powerAnalysis?: ModelStringInput | null,
-  coordinates?: ModelStringInput | null,
-  powers?: ModelStringInput | null,
-  elevation?: ModelStringInput | null,
-  elevationGrades?: ModelStringInput | null,
-  distances?: ModelStringInput | null,
-  and?: Array< ModelPostFilterInput | null > | null,
-  or?: Array< ModelPostFilterInput | null > | null,
-  not?: ModelPostFilterInput | null,
-  blogPostsId?: ModelIDInput | null,
-  postRelatedId?: ModelIDInput | null,
-};
-
-export type ModelSubscriptionBlogFilterInput = {
+export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionBlogFilterInput | null > | null,
-  or?: Array< ModelSubscriptionBlogFilterInput | null > | null,
+  fullName?: ModelSubscriptionStringInput | null,
+  email?: ModelSubscriptionStringInput | null,
+  image?: ModelSubscriptionStringInput | null,
+  username?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -296,6 +364,13 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionBlogFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionBlogFilterInput | null > | null,
+  or?: Array< ModelSubscriptionBlogFilterInput | null > | null,
+};
+
 export type ModelSubscriptionPostFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
@@ -321,6 +396,222 @@ export type ModelSubscriptionPostFilterInput = {
   distances?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
+};
+
+export type UpdatePostMinimalMutationVariables = {
+  input: UpdatePostInput,
+  condition?: ModelPostConditionInput | null,
+};
+
+export type UpdatePostMinimalMutation = {
+  updatePost?:  {
+    __typename: "Post",
+    id: string,
+    title: string,
+    gpxFile?: string | null,
+    images?: string | null,
+    headerImage?: string | null,
+    date?: string | null,
+    publishedDate?: string | null,
+    location?: string | null,
+    postLocation?: string | null,
+    stravaUrl?: string | null,
+    resultsUrl?: string | null,
+    type?: string | null,
+    subType?: string | null,
+    teaser?: string | null,
+    currentFtp?: string | null,
+    components?: string | null,
+    blog?:  {
+      __typename: "Blog",
+      id: string,
+      name: string,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    blogPostsId?: string | null,
+    postRelatedId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type GetActivityQueryQueryVariables = {
+  id: string,
+};
+
+export type GetActivityQueryQuery = {
+  getPost?:  {
+    __typename: "Post",
+    powerAnalysis?: string | null,
+    coordinates?: string | null,
+    powers?: string | null,
+    elevation?: string | null,
+    elevationGrades?: string | null,
+    distances?: string | null,
+  } | null,
+};
+
+export type GetPostInitialQueryVariables = {
+  id: string,
+};
+
+export type GetPostInitialQuery = {
+  getPost?:  {
+    __typename: "Post",
+    id: string,
+    title: string,
+    gpxFile?: string | null,
+    images?: string | null,
+    headerImage?: string | null,
+    date?: string | null,
+    publishedDate?: string | null,
+    location?: string | null,
+    postLocation?: string | null,
+    stravaUrl?: string | null,
+    resultsUrl?: string | null,
+    type?: string | null,
+    subType?: string | null,
+    teaser?: string | null,
+    currentFtp?: string | null,
+    components?: string | null,
+    blog?:  {
+      __typename: "Blog",
+      id: string,
+      name: string,
+      posts?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    blogPostsId?: string | null,
+    postRelatedId?: string | null,
+  } | null,
+};
+
+export type listPostsCustomQueryVariables = {
+  filter?: ModelPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type listPostsCustomQuery = {
+  listPosts?:  {
+    __typename: "ModelPostConnection",
+    items:  Array< {
+      __typename: "Post",
+      id: string,
+      title: string,
+      gpxFile?: string | null,
+      images?: string | null,
+      headerImage?: string | null,
+      date?: string | null,
+      publishedDate?: string | null,
+      location?: string | null,
+      postLocation?: string | null,
+      stravaUrl?: string | null,
+      resultsUrl?: string | null,
+      type?: string | null,
+      subType?: string | null,
+      teaser?: string | null,
+      currentFtp?: string | null,
+      postAuthorId?: string | null,
+      author?:  {
+        __typename: "User",
+        id: string,
+        fullName: string,
+        email: string,
+        image?: string | null,
+        username?: string | null,
+      } | null,
+      related?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      blogPostsId?: string | null,
+      postRelatedId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
+    id: string,
+    fullName: string,
+    email: string,
+    image?: string | null,
+    username?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
+    id: string,
+    fullName: string,
+    email: string,
+    image?: string | null,
+    username?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
+    id: string,
+    fullName: string,
+    email: string,
+    image?: string | null,
+    username?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
 };
 
 export type CreateBlogMutationVariables = {
@@ -363,6 +654,7 @@ export type CreateBlogMutation = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -413,6 +705,7 @@ export type UpdateBlogMutation = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -463,6 +756,7 @@ export type DeleteBlogMutation = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -545,14 +839,27 @@ export type CreatePostMutation = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
     postRelatedId?: string | null,
+    postAuthorId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -629,14 +936,27 @@ export type UpdatePostMutation = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
     postRelatedId?: string | null,
+    postAuthorId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -713,15 +1033,70 @@ export type DeletePostMutation = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
     postRelatedId?: string | null,
+    postAuthorId?: string | null,
     owner?: string | null,
+  } | null,
+};
+
+export type GetUserQueryVariables = {
+  id: string,
+};
+
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    fullName: string,
+    email: string,
+    image?: string | null,
+    username?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -764,6 +1139,7 @@ export type GetBlogQuery = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -870,14 +1246,27 @@ export type GetPostQuery = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
     postRelatedId?: string | null,
+    postAuthorId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -927,13 +1316,82 @@ export type ListPostsQuery = {
         __typename: "ModelPostConnection",
         nextToken?: string | null,
       } | null,
+      author?:  {
+        __typename: "User",
+        id: string,
+        fullName: string,
+        email: string,
+        image?: string | null,
+        username?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
       blogPostsId?: string | null,
       postRelatedId?: string | null,
+      postAuthorId?: string | null,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
+    id: string,
+    fullName: string,
+    email: string,
+    image?: string | null,
+    username?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
+    id: string,
+    fullName: string,
+    email: string,
+    image?: string | null,
+    username?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
+    id: string,
+    fullName: string,
+    email: string,
+    image?: string | null,
+    username?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -977,6 +1435,7 @@ export type OnCreateBlogSubscription = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1027,6 +1486,7 @@ export type OnUpdateBlogSubscription = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1077,6 +1537,7 @@ export type OnDeleteBlogSubscription = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1159,14 +1620,27 @@ export type OnCreatePostSubscription = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
     postRelatedId?: string | null,
+    postAuthorId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -1243,14 +1717,27 @@ export type OnUpdatePostSubscription = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
     postRelatedId?: string | null,
+    postAuthorId?: string | null,
     owner?: string | null,
   } | null,
 };
@@ -1327,14 +1814,27 @@ export type OnDeletePostSubscription = {
         updatedAt: string,
         blogPostsId?: string | null,
         postRelatedId?: string | null,
+        postAuthorId?: string | null,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
+    } | null,
+    author?:  {
+      __typename: "User",
+      id: string,
+      fullName: string,
+      email: string,
+      image?: string | null,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     blogPostsId?: string | null,
     postRelatedId?: string | null,
+    postAuthorId?: string | null,
     owner?: string | null,
   } | null,
 };

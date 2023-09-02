@@ -22,7 +22,7 @@ const VisualOverviewWrapper = ({ element }) => {
       </Flex>
     );
   }
-  console.log('activity', activity);
+  // console.log('activity', activity);
 
   const fixedData = activity.map((a) => {
     return { ...a, g: a.g !== null ? a.g : 0 };

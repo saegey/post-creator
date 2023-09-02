@@ -1,5 +1,5 @@
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
-import React from 'react'
+import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
 import { Storage, API, PubSub } from 'aws-amplify';
 
@@ -21,7 +21,8 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { id, setActivity, setGpxFile }: PostContextType = React.useContext(PostContext);
+  const { id, setActivity, setGpxFile }: PostContextType =
+    React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -107,7 +108,7 @@ const UploadGpxModal = ({ openModal }) => {
         <BlackBox>
           <Flex sx={{ width: '100%', height: '100%' }}>
             <Box sx={{ margin: 'auto' }}>
-              <Text as='p' sx={{ color: 'white', fontSize: '30px' }}>
+              <Text as='p' sx={{ color: 'text', fontSize: '30px' }}>
                 {processingGpxStatus}
               </Text>
             </Box>
@@ -119,8 +120,9 @@ const UploadGpxModal = ({ openModal }) => {
           <Box
             sx={{
               width: '80%',
+              maxWidth: '710px',
               margin: 'auto',
-              background: 'white',
+              background: 'background',
               borderRadius: '5px',
               padding: '20px',
               zIndex: 5000,

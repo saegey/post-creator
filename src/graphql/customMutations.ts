@@ -1,5 +1,5 @@
 export const updatePostMinimal = /* GraphQL */ `
-  mutation UpdatePost(
+  mutation UpdatePostMinimal(
     $input: UpdatePostInput!
     $condition: ModelPostConditionInput
   ) {

@@ -1,24 +1,17 @@
 import React from 'react';
-import {
-  MenuButton,
-  Box,
-  Flex,
-  Close,
-  NavLink,
-  Button,
-  Text,
-  Link as ThemeLink,
-} from 'theme-ui';
-import Link from 'next/link';
+import { MenuButton, Box, Flex } from 'theme-ui';
 import { API } from 'aws-amplify';
+import { CldImage } from 'next-cloudinary';
 
-import BlackBox from './BlackBox';
-import { listPosts } from '../graphql/customQueries';
+import { listPostsCustom } from '../graphql/customQueries';
 import AvatarButton from './AvatarButton';
 import { GraphQLResult } from '@aws-amplify/api';
 import { ListPostsQuery } from '../API';
+import Logo from './Logo';
+import UserProfileMenu from './UserProfileMenu';
+import UserMainMenu from './UserMainMenu';
 
-const Header = ({ user, signOut }) => {
+const Header = ({ user, signOut, title }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [recentPosts, setRecentPosts] = React.useState<
@@ -27,7 +20,7 @@ const Header = ({ user, signOut }) => {
 
   const listRecentPosts = async () => {
     const { data } = (await API.graphql({
-      query: listPosts,
+      query: listPostsCustom,
       authMode: 'API_KEY',
     })) as GraphQLResult<ListPostsQuery>;
 
@@ -46,217 +39,93 @@ const Header = ({ user, signOut }) => {
 
   return (
     <>
-      {profileOpen && (
-        <BlackBox>
-          <Flex sx={{ marginLeft: 'auto' }}>
-            <Box
-              sx={{
-                flexDirection: 'column',
-                width: '400px',
-                height: '100%',
-                backgroundColor: 'white',
-                animation: 'fadeIn .2s;',
-                borderTopLeftRadius: '10px',
-                borderBottomLeftRadius: '10px',
-              }}
-            >
-              <Box sx={{ marginLeft: 'auto' }}>
-                <Flex sx={{ width: '100%', padding: '10px' }}>
-                  <span>saegey</span>
-                  <Close
-                    onClick={() => setProfileOpen(false)}
-                    sx={{ backgroundColor: '#eeeeee', marginLeft: 'auto' }}
-                  />
-                </Flex>
-                <Box sx={{ padding: '10px' }}>
-                  <p>Logged in as {user.username}.</p>
-                  <Button onClick={signOut}>Sign out</Button>
-                </Box>
-              </Box>
-            </Box>
-          </Flex>
-        </BlackBox>
-      )}
-      {menuOpen && (
-        <BlackBox>
-          <Flex
-            sx={{
-              flexDirection: 'column',
-              width: '400px',
-              height: '100%',
-              backgroundColor: 'white',
-              animation: 'fadeIn .2s;',
-              borderTopRightRadius: '10px',
-              borderBottomRightRadius: '10px',
-            }}
-          >
-            <Flex
-              sx={{
-                paddingX: '20px',
-                paddingTop: '20px',
-                paddingBottom: '0px',
-              }}
-            >
-              <div>
-                <Flex sx={{ gap: '10px' }}>
-                  <Box sx={{ width: '40px', height: 'auto' }}>
-                    <svg
-                      width='100%'
-                      height='100%'
-                      viewBox='0 0 204 204'
-                      fill='none'
-                      xmlns='http://www.w3.org/2000/svg'
-                    >
-                      <circle
-                        cx='102'
-                        cy='102'
-                        r='96'
-                        stroke='black'
-                        strokeWidth='12'
-                      />
-                      <path
-                        fillRule='evenodd'
-                        clipRule='evenodd'
-                        d='M101.5 178C143.198 178 177 144.197 177 102.5C177 60.8025 143.198 27 101.5 27C59.8025 27 26 60.8025 26 102.5C26 144.197 59.8025 178 101.5 178ZM89 74H74V128H89V74ZM115 74H130V128H115V74ZM112.392 74.25L102 93L91.6077 74.25H112.392Z'
-                        fill='black'
-                      />
-                    </svg>
-                  </Box>
-                  <Text as='h2' sx={{ marginY: 'auto' }}>
-                    monopad
-                  </Text>
-                </Flex>
-              </div>
-              <div style={{ marginLeft: 'auto' }}>
-                <Close
-                  onClick={() => setMenuOpen(false)}
-                  sx={{ backgroundColor: '#eeeeee' }}
-                />
-              </div>
-            </Flex>
-            <Box
-              sx={{
-                borderBottom: '1px solid #e3e3e3',
-                margin: '5px',
-                paddingY: '10px',
-              }}
-            >
-              <Flex as='nav' sx={{ flexDirection: 'column', paddingX: '10px' }}>
-                <NavLink
-                  as={Link}
-                  href='/'
-                  p={0}
-                  sx={{
-                    fontWeight: 600,
-                    padding: '5px',
-                    '&:hover': {
-                      backgroundColor: '#ececec',
-                      borderRadius: '5px',
-                    },
-                  }}
-                >
-                  Home
-                </NavLink>
-                <NavLink
-                  as={Link}
-                  href='/'
-                  p={0}
-                  sx={{
-                    fontWeight: 600,
-                    padding: '5px',
-                    '&:hover': {
-                      backgroundColor: '#ececec',
-                      borderRadius: '5px',
-                    },
-                  }}
-                >
-                  Posts
-                </NavLink>
-              </Flex>
-            </Box>
-            <Box sx={{ margin: '15px' }}>
-              <Text
-                as='span'
-                sx={{
-                  fontSize: '15px',
-                  fontWeight: 700,
-                  color: '#5a5a5a',
-                  marginLeft: '5px',
-                }}
-              >
-                Recent Posts
-              </Text>
-              {recentPosts && (
-                <Box as='ul' sx={{ listStyleType: 'none' }}>
-                  {recentPosts.map((post, i) => {
-                    return (
-                      <Box
-                        as='li'
-                        key={`post-${i}`}
-                        sx={{
-                          padding: '5px',
-                          '&:hover': {
-                            backgroundColor: '#ececec',
-                            borderRadius: '5px',
-                          },
-                        }}
-                      >
-                        <ThemeLink
-                          as={Link}
-                          sx={{ color: 'black', textDecoration: 'none' }}
-                          href={`/posts/${post.id}`}
-                          onClick={() => setMenuOpen(false)}
-                        >
-                          {post.title}
-                        </ThemeLink>
-                      </Box>
-                    );
-                  })}
-                </Box>
-              )}
-            </Box>
-            <Flex sx={{ flexGrow: 1, marginX: '20px' }}>
-              <Box sx={{ marginTop: 'auto', marginBottom: '20px' }}>
-                <Text as='span' sx={{ color: 'gray', fontSize: '14px' }}>
-                  © 2023 Monopad, LLC.
-                </Text>
-                <Flex sx={{ gap: '10px', fontSize: '14px' }}>
-                  <span>About</span>
-                  <span>Blog</span>
-                  <span>Terms</span>
-                  <span>Status</span>
-                  <span>Privacy</span>
-                </Flex>
-              </Box>
-            </Flex>
-          </Flex>
-        </BlackBox>
-      )}
+      <UserProfileMenu
+        setProfileOpen={setProfileOpen}
+        profileOpen={profileOpen}
+        signOut={signOut}
+        user={user}
+      />
+      <UserMainMenu
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        recentPosts={recentPosts}
+      />
       <header>
-        <div
-          style={{
+        <Box
+          sx={{
             display: 'flex',
             flexDirection: 'row',
             padding: '10px',
-            borderBottomWidth: '2px',
-            borderBottomColor: '#f0f0f0',
+            borderBottomWidth: '1px',
+            borderBottomColor: 'buttonBorderColor',
             borderBottomStyle: 'solid',
-            background: 'white',
+            backgroundColor: 'background',
           }}
         >
-          <Flex>
+          <Flex sx={{ gap: '15px' }}>
             <MenuButton
-              sx={{ marginY: 'auto', border: '1px solid #d4d4d4' }}
+              sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
               aria-label='Toggle Menu'
               onClick={() => {
-                setMenuOpen(true);
+                setTimeout(() => {
+                  setMenuOpen(true);
+                  console.log('setmenu open');
+                }, 10);
+                // setMenuOpen(true);
               }}
             />
+            <Flex sx={{ height: '100%' }}>
+              <Box sx={{ height: '32px', width: '32px', marginY: 'auto' }}>
+                <Logo />
+              </Box>
+            </Flex>
+            {title && (
+              <Flex as='div' sx={{ fontSize: '16px', fontWeight: 500 }}>
+                <Box as='span' sx={{ marginY: 'auto' }}>
+                  {title}
+                </Box>
+              </Flex>
+            )}
           </Flex>
           <div style={{ marginLeft: 'auto' }}>
-            <AvatarButton onClick={() => setProfileOpen(true)} />
+            {user.attributes.picture && (
+              <Box sx={{ height: '40px', width: '40px', cursor: 'pointer' }}>
+                <CldImage
+                  width='400'
+                  height='300'
+                  src={user.attributes.picture}
+                  style={{
+                    // objectFit: 'cover',
+                    width: '100%',
+                    height: '100%',
+                    marginTop: 'auto',
+                    marginBottom: 'auto',
+                    borderRadius: '100%',
+                  }}
+                  // preserveTransformations
+                  underlay={user.attributes.picture}
+                  quality={90}
+                  sizes='100vw'
+                  alt='Description of my image'
+                  onClick={() =>
+                    setTimeout(() => {
+                      setProfileOpen(true);
+                    }, 10)
+                  }
+                />
+              </Box>
+            )}
+            {!user.attributes.picture && (
+              <AvatarButton
+                onClick={() =>
+                  setTimeout(() => {
+                    setProfileOpen(true);
+                  }, 10)
+                }
+              />
+            )}
           </div>
-        </div>
+        </Box>
       </header>
     </>
   );

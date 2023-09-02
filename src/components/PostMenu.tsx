@@ -1,4 +1,4 @@
-import { Button, Flex, Box } from 'theme-ui';
+import { Button, Flex, Box, Alert, Close } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
 
@@ -13,33 +13,32 @@ import MapButton from './MapButton';
 import SaveButton from './SaveButton';
 import BoldButton from './BoldButton';
 
-const PostMenu = ({ editor }: { editor: ReactEditor }) => {
+const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
   const [addImageModal, setAddImageModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
+  const [savedMessage, setSavedMessage] = React.useState(false);
   const [isHoverSettings, setIsHoverSettings] = React.useState(false);
+
+  React.useEffect(() => {
+    setSavedMessage(false);
+  }, [id]);
 
   return (
     <>
       {addImageModal && <AddImage isOpen={setAddImageModal} editor={editor} />}
-      {isSaving && (
-        <BlackBox>
-          <p>saving</p>
-        </BlackBox>
-      )}
 
       <Flex
         sx={{
-          marginBottom: '20px',
           gap: '5px',
           position: 'sticky',
           top: '0px',
-          backgroundColor: 'white',
+          backgroundColor: 'background',
           paddingY: '10px',
           paddingX: '10px',
           zIndex: 1000,
           borderBottomStyle: 'solid',
-          borderBottomWidth: '2px',
-          borderBottomColor: '#6c6c6c40',
+          borderBottomWidth: '1px',
+          borderBottomColor: 'buttonBorderColor',
         }}
       >
         <BoldButton editor={editor} />
@@ -47,7 +46,12 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
         <GraphButton editor={editor} />
         <ImagesButton onClick={() => setAddImageModal(true)} />
         <MapButton editor={editor} />
-        <SaveButton setIsSaving={setIsSaving} editor={editor} />
+        <SaveButton
+          setIsSaving={setIsSaving}
+          isSaving={isSaving}
+          editor={editor}
+          setSavedMessage={setSavedMessage}
+        />
         <Box sx={{ marginLeft: 'auto' }}>
           <Flex sx={{ height: '100%' }}>
             <Box
@@ -55,14 +59,32 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
                 marginY: 'auto',
                 justifyContent: 'center',
               }}
-              onClick={() => setIsHoverSettings(true)}
+              onClick={() =>
+                setTimeout(() => {
+                  setIsHoverSettings(true);
+                }, 1)
+              }
             >
               <OptionsButton />
             </Box>
           </Flex>
-          {isHoverSettings && <ActivitySettings isOpen={setIsHoverSettings} />}
+          {isHoverSettings && (
+            <ActivitySettings
+              isOpen={setIsHoverSettings}
+              setSavedMessage={setSavedMessage}
+            />
+          )}
         </Box>
       </Flex>
+      {savedMessage && (
+        <Alert
+          sx={{ borderRadius: 0, backgroundColor: '#dadada', color: 'black' }}
+        >
+          Post saved successfully.
+          <Close ml='auto' mr={-2} onClick={() => setSavedMessage(false)} />
+        </Alert>
+      )}
+      <Box sx={{ marginBottom: '20px' }} />
     </>
   );
 };

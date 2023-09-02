@@ -23,7 +23,12 @@ const GraphButton = ({ editor }) => {
       aria-label='Graph Button'
       disabled={gpxFile ? false : true}
       onClick={() => addGraph(editor)}
-      sx={{ border: '1px solid #d4d4d4' }}
+      sx={{
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: 'buttonBorderColor',
+        '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
+      }}
     >
       <svg
         width='24px'
@@ -34,14 +39,14 @@ const GraphButton = ({ editor }) => {
       >
         <path
           d='M4 5V19C4 19.5523 4.44772 20 5 20H19'
-          stroke='#000000'
+          stroke='var(--theme-ui-colors-text)'
           strokeWidth='2'
           strokeLinecap='round'
           strokeLinejoin='round'
         />
         <path
           d='M18 9L13 13.9999L10.5 11.4998L7 14.9998'
-          stroke='#000000'
+          stroke='var(--theme-ui-colors-text)'
           strokeWidth='2'
           strokeLinecap='round'
           strokeLinejoin='round'

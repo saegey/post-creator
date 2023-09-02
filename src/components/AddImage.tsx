@@ -37,14 +37,24 @@ const AddImage = ({ isOpen, editor }) => {
     ]);
   };
 
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+
   return (
-    <BlackBox>
+    <BlackBox opacity='0.8'>
       <Box
         sx={{
           width: '70%',
           height: '90%',
           margin: 'auto',
-          background: 'white',
+          background: 'background',
           borderRadius: '5px',
         }}
       >
@@ -86,7 +96,7 @@ const AddImage = ({ isOpen, editor }) => {
                     width='300'
                     height='200'
                     src={image.public_id}
-                    preserveTransformations
+                    // preserveTransformations
                     underlay={image.public_id}
                     quality={90}
                     sizes='100vw'
