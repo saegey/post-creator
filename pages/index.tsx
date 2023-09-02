@@ -62,7 +62,6 @@ type HomeProps = {
 const Home = ({ signOut, user, posts = [] }: HomeProps) => {
   const [newPost, setNewPost] = React.useState(false);
 
-  console.log(posts);
   return (
     <>
       {newPost && <CreatePostModal setMenuOpen={setNewPost} />}

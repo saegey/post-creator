@@ -1,4 +1,3 @@
-import { Authenticator } from '@aws-amplify/ui-react';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API, Auth } from 'aws-amplify';
 import { Box, Flex, Close, Label, Input, Button } from 'theme-ui';
@@ -64,14 +63,12 @@ const CreatePostModal = ({ setMenuOpen }) => {
               <Close onClick={() => setMenuOpen(false)} />
             </Box>
           </Flex>
-          <Authenticator>
             <form onSubmit={handleCreatePost}>
               <Label htmlFor='title'>Title</Label>
               <Input name='title' id='title' mb={3} variant={'defaultInput'} />
 
               <Button>Create</Button>
             </form>
-          </Authenticator>
         </Box>
       </Box>
     </BlackBox>

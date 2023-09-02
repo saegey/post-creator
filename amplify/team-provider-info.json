@@ -14,7 +14,8 @@
     },
     "categories": {
       "auth": {
-        "nextjsbloga585e058": {}
+        "nextjsbloga585e058": {},
+        "userPoolGroups": {}
       },
       "function": {
         "nextjsblog24b60079": {
@@ -24,6 +25,10 @@
         "S3Trigger71ba5706": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/S3Trigger71ba5706-454d4279376477574131-build.zip"
+        },
+        "UserPostConfirmation": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/UserPostConfirmation-5476556838327a2b4549-build.zip"
         }
       },
       "api": {

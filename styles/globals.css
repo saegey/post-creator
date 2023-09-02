@@ -112,7 +112,6 @@ input {
   border-radius: 5px;
 }
 
-
 /* ----------------------------------------- */
 
 .main {
@@ -192,4 +191,8 @@ button[disabled] {
   100% {
     opacity: 1;
   }
+}
+
+[data-amplify-authenticator] {
+  height: calc(100vw - 120px);
 }

@@ -76,7 +76,7 @@ const PostCard = ({ post, showAuthor = true }) => {
           <Text as='div' sx={{ fontWeight: 600, color: 'text' }}>
             {post.title}
           </Text>
-          {showAuthor && (
+          {showAuthor && post.author && (
             <Flex sx={{ gap: '10px', marginTop: '5px' }}>
               <Box sx={{ height: '40px', width: '40px' }}>
                 {post.author?.image !== '' && (

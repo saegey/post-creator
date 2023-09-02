@@ -31,11 +31,7 @@ type Post
   @model
   @auth(
     rules: [
-      {
-        allow: owner
-        # ownerField: "postAuthorId"
-        operations: [create, delete, read, update]
-      }
+      { allow: owner, operations: [create, delete, read, update] }
       { allow: public, operations: [read] }
     ]
   ) {

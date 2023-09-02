@@ -542,6 +542,7 @@ export type listPostsCustomQuery = {
         fullName: string,
         email: string,
         image?: string | null,
+        username?: string | null,
       } | null,
       related?:  {
         __typename: "ModelPostConnection",
