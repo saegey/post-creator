@@ -35,6 +35,7 @@ const HeadingButton = ({ editor }: { editor: ReactEditor }) => {
       variant='iconButton'
     >
       <svg
+        className='menu-button'
         fill='var(--theme-ui-colors-text)'
         width='100%'
         height='100%'

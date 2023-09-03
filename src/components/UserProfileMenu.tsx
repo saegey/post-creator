@@ -7,6 +7,7 @@ import {
   Link as ThemeLink,
   Button,
   useColorMode,
+  Switch,
 } from 'theme-ui';
 import Link from 'next/link';
 import React from 'react';
@@ -167,7 +168,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   </ThemeLink>
                 </Flex>
                 <Flex as='li'>
-                  <Text
+                  {/* <Text
                     as='span'
                     onClick={(e) => {
                       const next = mode === 'dark' ? 'light' : 'dark';
@@ -183,9 +184,21 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                         borderRadius: '5px',
                       },
                     }}
-                  >
-                    Toggle Theme {mode}
-                  </Text>
+                  > */}
+                  <Flex sx={{ width: '100%', padding: '5px' }}>
+                    <Text as='span'>Dark Mode</Text>
+                    <Box sx={{ marginLeft: 'auto' }}>
+                      <Switch
+                        checked={mode === 'dark' ? true : false}
+                        onClick={(e) => {
+                          const next = mode === 'dark' ? 'light' : 'dark';
+                          setMode(next);
+                          console.log(next);
+                        }}
+                      />
+                    </Box>
+                  </Flex>
+                  {/* </Text> */}
                 </Flex>
                 <Flex
                   as='li'

@@ -1,9 +1,8 @@
-import { Button, Flex, Box, Alert, Close } from 'theme-ui';
+import { Flex, Box, Alert, Close } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
 
 import AddImage from './AddImage';
-import BlackBox from './BlackBox';
 import OptionsButton from './OptionsButton';
 import ActivitySettings from './ActivitySettings';
 import HeadingButton from './HeadingButton';
@@ -44,8 +43,14 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
       >
         <BoldButton editor={editor} />
         <HeadingButton editor={editor} />
+        <ImagesButton
+          onClick={() =>
+            setTimeout(() => {
+              setAddImageModal(true);
+            }, 10)
+          }
+        />
         <GraphButton editor={editor} />
-        <ImagesButton onClick={() => setAddImageModal(true)} />
         <MapButton editor={editor} />
         <SaveButton
           setIsSaving={setIsSaving}

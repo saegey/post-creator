@@ -77,7 +77,7 @@ button {
   font-family: 'Public Sans';
   margin-bottom: 15px;
   border: none;
-  font-size: 20px;
+  /* font-size: 20px; */
   padding: 8px;
   padding-left: 20px;
   padding-right: 20px;
@@ -188,4 +188,11 @@ input {
 
 [data-amplify-authenticator] {
   height: calc(100vw);
+}
+
+svg.menu-button:hover {
+  /* fill: #0e1a25; */
+  /* background: #45abff; */
+  transform: scale(1.2);
+  transition: background 0.5s, transform 0.5s ease-out, fill 0.5s;
 }

@@ -17,6 +17,7 @@ import { API } from 'aws-amplify';
 import { UpdatePostMutation } from '../../src/API';
 import { updatePostMinimal } from '../graphql/customMutations';
 import UploadGpxModal from './UploadGpxModal';
+import StandardModal from './StandardModal';
 
 const ActivitySettings = ({ isOpen, setSavedMessage }) => {
   const {
@@ -64,188 +65,124 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
     }
   };
 
-  React.useEffect(() => {
-    const checkIfClickedOutside1 = (e: any) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        isOpen(false);
-      }
-    };
-    document.addEventListener('click', checkIfClickedOutside1);
-    return () => {
-      document.removeEventListener('click', checkIfClickedOutside1);
-    };
-  }, [isOpen]);
-
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
-
   return (
-    <>
-      <BlackBox opacity={'0.7'}>
-        <Box
-          sx={{
-            maxWidth: '690px',
-            width: '100%',
-            margin: 'auto',
-            background: 'background',
-            borderRadius: '5px',
-            padding: '20px',
-            position: 'relative',
+    <StandardModal isOpen={isOpen} title={'Details'}>
+      {uploadModal1 && (
+        <>
+          <UploadGpxModal openModal={setUploadModal} />
+        </>
+      )}
+      <Flex sx={{ gap: '10px', flexDirection: 'row' }}>
+        <form
+          onSubmit={(event: any) => {
+            event.preventDefault();
+            saveSettings(event).then(() => console.log('save settings'));
           }}
-          ref={ref}
+          style={{ width: '100%' }}
         >
-          {uploadModal1 && (
-            <>
-              <UploadGpxModal openModal={setUploadModal} />
-            </>
-          )}
-          <Flex
-            sx={{
-              borderBottomWidth: '1px',
-              borderBottomColor: 'divider',
-              borderBottomStyle: 'solid',
-              paddingY: '5px',
-              marginBottom: '20px',
-            }}
-          >
-            <Text
-              as='div'
-              sx={{
-                fontSize: '20px',
-                fontWeight: 600,
-              }}
-            >
-              Details
-            </Text>
-            <Close
-              onClick={() => isOpen(false)}
-              sx={{
-                alignItems: 'center',
-                height: '100%',
-                marginLeft: 'auto',
-              }}
-            />
-          </Flex>
-          <Flex sx={{ gap: '10px', flexDirection: 'row' }}>
-            <form
-              onSubmit={(event: any) => {
-                event.preventDefault();
-                saveSettings(event).then(() => console.log('save settings'));
-              }}
-              style={{ width: '100%' }}
-            >
-              <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
-                <Box>
-                  <Label htmlFor='stravaLink'>Strava Url</Label>
+          <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
+            <Box>
+              <Label htmlFor='stravaLink'>Strava Url</Label>
+              <Input
+                id='stravaLink'
+                name='stravaLink'
+                placeholder='http://strava.url'
+                defaultValue={stravaUrl ? stravaUrl : ''}
+                variant={'defaultInput'}
+              />
+            </Box>
+            <Box>
+              <Label htmlFor='resultsUrl'>Results Url</Label>
+              <Input
+                id='resultsUrl'
+                name='resultsUrl'
+                placeholder='http://results.url'
+                defaultValue={resultsUrl ? resultsUrl : ''}
+                variant={'defaultInput'}
+              />
+            </Box>
+            <Box>
+              <Label htmlFor='gpxFile'>GPX File</Label>
+              <Flex sx={{ gap: '10px' }}>
+                <Box sx={{ width: '100%' }}>
                   <Input
-                    id='stravaLink'
-                    name='stravaLink'
-                    placeholder='http://strava.url'
-                    defaultValue={stravaUrl ? stravaUrl : ''}
-                    variant={'defaultInput'}
-                  />
-                </Box>
-                <Box>
-                  <Label htmlFor='resultsUrl'>Results Url</Label>
-                  <Input
-                    id='resultsUrl'
-                    name='resultsUrl'
-                    placeholder='http://results.url'
-                    defaultValue={resultsUrl ? resultsUrl : ''}
-                    variant={'defaultInput'}
-                  />
-                </Box>
-                <Box>
-                  <Label htmlFor='gpxFile'>GPX File</Label>
-                  <Flex sx={{ gap: '10px' }}>
-                    <Box sx={{ width: '100%' }}>
-                      <Input
-                        id='gpxFile'
-                        name='gpxFile'
-                        // placeholder='http://results.url'
-                        defaultValue={gpxFile ? gpxFile : ''}
-                        variant={'defaultInput'}
-                      />
-                    </Box>
-                    <Box sx={{ width: '25%' }}>
-                      <Button
-                        type='button'
-                        onClick={() => {
-                          // isOpen(false);
-                          setUploadModal(true);
-                          console.log('setupload');
-                        }}
-                        sx={{ width: '100%', borderColor: '#898989' }}
-                      >
-                        Upload GPX
-                      </Button>
-                    </Box>
-                  </Flex>
-                </Box>
-                <Box>
-                  <Label htmlFor='currentFtp'>Current FTP</Label>
-                  <Input
-                    id='currentFtp'
-                    name='currentFtp'
+                    id='gpxFile'
+                    name='gpxFile'
                     // placeholder='http://results.url'
-                    defaultValue={currentFtp ? currentFtp : ''}
+                    defaultValue={gpxFile ? gpxFile : ''}
                     variant={'defaultInput'}
                   />
                 </Box>
-                <Box>
-                  <Label htmlFor='eventDate'>Event Date</Label>
-                  <Input
-                    id='eventDate'
-                    name='eventDate'
-                    // placeholder='http://results.url'
-                    // defaultValue={currentFtp ? currentFtp : ''}
-                    variant={'defaultInput'}
-                  />
+                <Box sx={{ width: '25%' }}>
+                  <Button
+                    type='button'
+                    onClick={() => {
+                      // isOpen(false);
+                      setUploadModal(true);
+                      console.log('setupload');
+                    }}
+                    sx={{ width: '100%', borderColor: '#898989' }}
+                  >
+                    Upload GPX
+                  </Button>
                 </Box>
-                <Flex
-                  sx={{
-                    borderTopWidth: '1px',
-                    borderTopColor: 'divider',
-                    borderTopStyle: 'solid',
-                    marginTop: '10px',
-                    paddingTop: '10px',
-                  }}
-                >
-                  <Box sx={{ marginLeft: 'auto' }}>
-                    <Flex sx={{ gap: '10px', marginTop: '10px' }}>
-                      <Button
-                        type='button'
-                        sx={{
-                          backgroundColor: 'cancelButtonColor',
-                        }}
-                        onClick={() => isOpen(false)}
-                      >
-                        Cancel
-                      </Button>
-                      <Button>
-                        <Flex sx={{ gap: '10px' }}>
-                          <Text as='span'>Save</Text>
-                          {isSaving && (
-                            <Spinner sx={{ size: '20px', color: 'white' }} />
-                          )}
-                        </Flex>
-                      </Button>
-                    </Flex>
-                  </Box>
-                </Flex>
               </Flex>
-            </form>
+            </Box>
+            <Box>
+              <Label htmlFor='currentFtp'>Current FTP</Label>
+              <Input
+                id='currentFtp'
+                name='currentFtp'
+                // placeholder='http://results.url'
+                defaultValue={currentFtp ? currentFtp : ''}
+                variant={'defaultInput'}
+              />
+            </Box>
+            <Box>
+              <Label htmlFor='eventDate'>Event Date</Label>
+              <Input
+                id='eventDate'
+                name='eventDate'
+                // placeholder='http://results.url'
+                // defaultValue={currentFtp ? currentFtp : ''}
+                variant={'defaultInput'}
+              />
+            </Box>
+            <Flex
+              sx={{
+                borderTopWidth: '1px',
+                borderTopColor: 'divider',
+                borderTopStyle: 'solid',
+                marginTop: '10px',
+                paddingTop: '10px',
+              }}
+            >
+              <Box sx={{ marginLeft: 'auto' }}>
+                <Flex sx={{ gap: '10px', marginTop: '10px' }}>
+                  <Button
+                    type='button'
+                    sx={{
+                      backgroundColor: 'cancelButtonColor',
+                    }}
+                    onClick={() => isOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button>
+                    <Flex sx={{ gap: '10px' }}>
+                      <Text as='span'>Save</Text>
+                      {isSaving && (
+                        <Spinner sx={{ size: '20px', color: 'white' }} />
+                      )}
+                    </Flex>
+                  </Button>
+                </Flex>
+              </Box>
+            </Flex>
           </Flex>
-        </Box>
-      </BlackBox>
-    </>
+        </form>
+      </Flex>
+    </StandardModal>
   );
 };
 

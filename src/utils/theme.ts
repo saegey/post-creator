@@ -4,6 +4,7 @@ export default {
     text: '#202020',
     editorBackground: '#f5f5f5',
     iconButtonBackground: '#fafafa',
+    iconButtonDisabled: '#888888',
     iconButtonBackgroundDisabled: '#e9e9e9',
     buttonBorderColor: '#d4d4d4',
     divider: '#e4e4e4',
@@ -98,9 +99,9 @@ export default {
   },
   buttons: {
     iconButton: {
-      borderWidth: '1px',
-      borderStyle: 'solid',
-      borderColor: 'buttonBorderColor',
+      borderWidth: '0px',
+      // borderStyle: 'solid',
+      // borderColor: 'buttonBorderColor',
       backgroundColor: 'iconButtonBackground',
       '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
     },

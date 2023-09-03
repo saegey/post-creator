@@ -27,7 +27,9 @@ export type PostContextType = {
   setId: React.Dispatch<React.SetStateAction<string>>;
   setStravaUrl: React.Dispatch<React.SetStateAction<string>>;
   setComponents: React.Dispatch<React.SetStateAction<Array<object>>>;
-  setImages: React.Dispatch<React.SetStateAction<Array<CloudinaryImage>>>;
+  setImages: React.Dispatch<
+    React.SetStateAction<Array<CloudinaryImage> | null>
+  >;
   setCurrentFtp: React.Dispatch<React.SetStateAction<string>>;
   setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
   setPowerAnalysis: React.Dispatch<React.SetStateAction<string>>;

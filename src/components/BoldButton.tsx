@@ -20,6 +20,7 @@ const BoldButton = ({ editor }: { editor: ReactEditor }) => {
       variant='iconButton'
     >
       <svg
+        className='menu-button'
         fill='var(--theme-ui-colors-text)'
         width='18px'
         height='16px'

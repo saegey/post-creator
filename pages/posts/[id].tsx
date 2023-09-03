@@ -66,7 +66,7 @@ const Post = ({
   const [gpxFile, setGpxFile] = React.useState(postGpxFile);
   const [stravaUrl, setStravaUrl] = React.useState(postStravaUrl);
   const [components, setComponents] = React.useState(postComponents);
-  const [images, setImages] = React.useState(postImages);
+  const [images, setImages] = React.useState(postImages ? postImages : []);
   const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
   const [powerAnalysis, setPowerAnalysis] = React.useState('');
@@ -127,7 +127,11 @@ const Post = ({
 
         <Box
           as='main'
-          sx={{ backgroundColor: 'editorBackground', paddingBottom: '50px' }}
+          sx={{
+            backgroundColor: 'editorBackground',
+            paddingBottom: '50px',
+            height: '100vw',
+          }}
         >
           <Header user={user} signOut={signOut} title={'Edit Post'} />
           <PostEditor postId={postId} initialState={postComponents} />
