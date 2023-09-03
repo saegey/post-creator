@@ -77,7 +77,10 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
         </Flex>
         <Box
           sx={{
-            borderBottom: '1px solid #e3e3e3',
+            borderBottomWidth: '1px',
+            borderBottomStyle: 'solid',
+            borderBottomColor: 'divider',
+            // borderBottom: '1px solid divider',
             margin: '5px',
             paddingY: '10px',
           }}
@@ -97,7 +100,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
             sx={{
               fontSize: '15px',
               fontWeight: 700,
-              color: '#5a5a5a',
+              color: 'textMuted',
               marginLeft: '5px',
             }}
           >
@@ -110,7 +113,11 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
                   <Box as='li' key={`post-${i}`} variant='links.mainMenuItem'>
                     <ThemeLink
                       as={Link}
-                      sx={{ color: 'text', textDecoration: 'none' }}
+                      sx={{
+                        color: 'text',
+                        textDecoration: 'none',
+                        fontWeight: 400,
+                      }}
                       href={`/posts/${post.id}`}
                       onClick={() => setMenuOpen(false)}
                     >
@@ -124,7 +131,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
         </Box>
         <Flex sx={{ flexGrow: 1, marginX: '20px' }}>
           <Box sx={{ marginTop: 'auto', marginBottom: '20px' }}>
-            <Text as='span' sx={{ color: 'gray', fontSize: '14px' }}>
+            <Text as='span' sx={{ color: 'textMuted', fontSize: '14px' }}>
               © 2023 Monopad, LLC.
             </Text>
             <Flex sx={{ gap: '10px', fontSize: '14px' }}>

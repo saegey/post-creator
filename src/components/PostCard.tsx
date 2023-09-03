@@ -17,12 +17,12 @@ const PostCard = ({ post, showAuthor = true }) => {
         <Flex
           sx={{
             height: '240px',
-            // border: '1px solid #dadada',
             borderType: 'solid',
             borderWidth: '1px',
             borderColor: 'postCardBorder',
             borderTopLeftRadius: '5px',
             borderTopRightRadius: '5px',
+            backgroundColor: 'postCardDefaultImage',
           }}
         >
           {post.imagesObj && post.imagesObj.length > 0 && (
@@ -50,7 +50,7 @@ const PostCard = ({ post, showAuthor = true }) => {
             <Box
               sx={{
                 width: '100%',
-                backgroundColor: '#e6e6e6',
+                // backgroundColor: '#e6e6e6',
               }}
             />
           )}
@@ -79,7 +79,7 @@ const PostCard = ({ post, showAuthor = true }) => {
           {showAuthor && post.author && (
             <Flex sx={{ gap: '10px', marginTop: '5px' }}>
               <Box sx={{ height: '40px', width: '40px' }}>
-                {post.author?.image !== '' && (
+                {post.author?.image && (
                   <CldImage
                     width='400'
                     height='300'
@@ -97,6 +97,16 @@ const PostCard = ({ post, showAuthor = true }) => {
                     quality={90}
                     sizes='100vw'
                     alt='Description of my image'
+                  />
+                )}
+                {!post.author?.image && (
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'defaultAvatarBackground',
+                      borderRadius: '100%',
+                    }}
                   />
                 )}
               </Box>

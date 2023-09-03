@@ -1,17 +1,10 @@
 import { IconButton } from 'theme-ui';
 
 const OptionsButton = () => (
-  <IconButton
-    aria-label='Toggle options'
-    sx={{
-      borderWidth: '1px',
-      borderStyle: 'solid',
-      borderColor: 'buttonBorderColor',
-      '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
-    }}
-  >
+  <IconButton aria-label='Toggle options' variant='iconButton'>
     <svg
       fill='var(--theme-ui-colors-text)'
+      className='menu-button'
       width='20px'
       height='20px'
       viewBox='0 0 32 32'

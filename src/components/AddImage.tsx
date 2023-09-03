@@ -1,18 +1,18 @@
-import { Box, Close, Flex, Button, Grid } from 'theme-ui';
+import { Box, Flex, Button, Grid } from 'theme-ui';
 import React from 'react';
 import { Descendant, Transforms } from 'slate';
-import { CldImage } from 'next-cloudinary';
+import { CldImage, CldUploadButton } from 'next-cloudinary';
 
-import CloudinaryUpload from './CloudinaryUpload';
 import { PostContext } from '../PostContext';
-
-import BlackBox from './BlackBox';
+import StandardModal from './StandardModal';
 
 export interface CloudinaryImage {
   asset_id: string;
   public_id: string;
   secure_url: string;
   format: 'jpeg' | 'jpg' | 'png';
+  width: number;
+  height: number;
 }
 
 const AddImage = ({ isOpen, editor }) => {
@@ -37,92 +37,102 @@ const AddImage = ({ isOpen, editor }) => {
     ]);
   };
 
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isOpen]);
-
   return (
-    <BlackBox opacity='0.8'>
-      <Box
-        sx={{
-          width: '70%',
-          height: '90%',
-          margin: 'auto',
-          background: 'background',
-          borderRadius: '5px',
-        }}
-      >
+    <StandardModal title={'Images'} isOpen={isOpen}>
+      <Box sx={{}}>
         <Box
           sx={{
-            padding: '20px',
+            '.cloudButton': {
+              backgroundColor: 'primary',
+              borderRadius: '5px',
+              color: 'background',
+              '&:hover': {
+                backgroundColor: '#616161',
+              },
+            },
           }}
         >
-          <Flex>
-            <Box>
-              <h2>Media</h2>
-            </Box>
-            <Box sx={{ marginLeft: 'auto' }}>
-              <Close onClick={() => isOpen(false)} />
-            </Box>
-          </Flex>
-          <CloudinaryUpload
-            images={images}
-            postId={id}
-            setUploadedImages={setImages}
+          <CldUploadButton
+            className='cloudButton'
+            uploadPreset='epcsmymp'
+            onSuccess={(d) => {
+              images?.push(d.info as CloudinaryImage);
+              // console.log(d);
+              if (images) {
+                setImages([...images]);
+              }
+            }}
           />
-          <Grid
-            gap={'20px'}
-            columns={[2, 2, 2]}
-            sx={{ marginTop: '50px', overflowY: 'auto' }}
-          >
-            {images &&
-              images.map((image, i) => (
-                <Box
+        </Box>
+        <Grid
+          gap={'20px'}
+          columns={[2, 2, 2]}
+          sx={{ marginTop: '20px', overflow: 'scroll', maxHeight: '450px' }}
+        >
+          {images &&
+            images.map((image, i) => {
+              console.log(image);
+              return (
+                <Flex
                   sx={{
+                    backgroundColor: '#f1f1f1',
                     height: '100%',
+                    borderRadius: '5px',
+                    border:
+                      selectedImage &&
+                      image.secure_url === selectedImage.secure_url
+                        ? '2px solid blue'
+                        : 'none',
                   }}
-                  key={`image-${i}`}
+                  key={`image-media-${i}`}
+                  onClick={() => {
+                    setSelectedImage(image);
+                  }}
                 >
-                  <CldImage
-                    onClick={() => {
-                      setSelectedImage(image);
+                  <Flex
+                    sx={{
+                      // width: 'auto',
+                      marginX: 'auto',
+                      // height: '250px',
+                      // width: '250px',
                     }}
-                    width='300'
-                    height='200'
-                    src={image.public_id}
-                    // preserveTransformations
-                    underlay={image.public_id}
-                    quality={90}
-                    sizes='100vw'
-                    alt='Description of my image'
-                    style={{
-                      border:
-                        selectedImage &&
-                        image.secure_url === selectedImage.secure_url
-                          ? '2px solid blue'
-                          : 'none',
-                    }}
-                  />
-                </Box>
-              ))}
-          </Grid>
-          <Box sx={{ marginTop: '20px' }}>
-            <Button
-              onClick={insertImage}
-              disabled={selectedImage ? false : true}
-            >
-              Choose
-            </Button>
-          </Box>
+                    key={`image-${i}`}
+                  >
+                    <Box sx={{ margin: 'auto' }}>
+                      <CldImage
+                        width={(image.width / image.height) * 250}
+                        height={250}
+                        src={image.public_id}
+                        underlay={image.public_id}
+                        quality={90}
+                        sizes='100vw'
+                        alt='Description of my image'
+                        style={{
+                          height: 'auto',
+                          maxWidth: '100%',
+                        }}
+                      />
+                    </Box>
+                  </Flex>
+                </Flex>
+              );
+            })}
+        </Grid>
+        <Box
+          sx={{
+            marginTop: '20px',
+            paddingTop: '20px',
+            borderTopWidth: '1px',
+            borderTopStyle: 'solid',
+            borderTopColor: 'divider',
+          }}
+        >
+          <Button onClick={insertImage} disabled={selectedImage ? false : true}>
+            Choose
+          </Button>
         </Box>
       </Box>
-    </BlackBox>
+    </StandardModal>
   );
 };
 

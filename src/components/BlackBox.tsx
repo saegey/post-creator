@@ -8,7 +8,8 @@ const BlackBox = ({ children, opacity = '0.2' }) => (
       height: '100%',
       width: '100%',
       left: '0',
-      backgroundColor: `rgba(0,0,0, ${opacity})`,
+      backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`,
+      // background-color: rgba(var(--color), 0.8);
       zIndex: 10000,
       display: 'flex',
     }}

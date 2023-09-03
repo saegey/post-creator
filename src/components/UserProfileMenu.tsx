@@ -7,6 +7,7 @@ import {
   Link as ThemeLink,
   Button,
   useColorMode,
+  Switch,
 } from 'theme-ui';
 import Link from 'next/link';
 import React from 'react';
@@ -19,9 +20,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
   const [mode, setMode] = useColorMode();
 
   React.useEffect(() => {
-    console.log('profilleopen');
     const checkIfClickedOutside = (e) => {
-      // console.log(e);
       if (ref.current && !ref.current.contains(e.target)) {
         setProfileOpen(false);
       }
@@ -69,8 +68,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                 padding: '10px',
                 borderBottomStyle: 'solid',
                 borderBottomWidth: '1px',
-                borderBottomColor: 'buttonBorderColor',
-                // borderBottom: '1px solid #d6d6d6',
+                borderBottomColor: 'divider',
               }}
             >
               <Flex sx={{ gap: '10px', width: '100%' }}>
@@ -170,7 +168,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   </ThemeLink>
                 </Flex>
                 <Flex as='li'>
-                  <Text
+                  {/* <Text
                     as='span'
                     onClick={(e) => {
                       const next = mode === 'dark' ? 'light' : 'dark';
@@ -186,14 +184,26 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                         borderRadius: '5px',
                       },
                     }}
-                  >
-                    Toggle Theme {mode}
-                  </Text>
+                  > */}
+                  <Flex sx={{ width: '100%', padding: '5px' }}>
+                    <Text as='span'>Dark Mode</Text>
+                    <Box sx={{ marginLeft: 'auto' }}>
+                      <Switch
+                        checked={mode === 'dark' ? true : false}
+                        onClick={(e) => {
+                          const next = mode === 'dark' ? 'light' : 'dark';
+                          setMode(next);
+                          console.log(next);
+                        }}
+                      />
+                    </Box>
+                  </Flex>
+                  {/* </Text> */}
                 </Flex>
                 <Flex
                   as='li'
                   sx={{
-                    borderTopColor: 'buttonBorderColor',
+                    borderTopColor: 'divider',
                     borderTopStyle: 'solid',
                     borderTopWidth: '1px',
                   }}
@@ -208,7 +218,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                 <Flex
                   as='li'
                   sx={{
-                    borderTopColor: 'buttonBorderColor',
+                    borderTopColor: 'divider',
                     borderTopStyle: 'solid',
                     borderTopWidth: '1px',
                   }}
