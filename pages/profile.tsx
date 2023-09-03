@@ -1,7 +1,17 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Auth, API } from 'aws-amplify';
 import Head from 'next/head';
-import { Label, Input, Box, Flex, Button, Spinner, Text } from 'theme-ui';
+import {
+  Label,
+  Input,
+  Box,
+  Flex,
+  Button,
+  Spinner,
+  Text,
+  Alert,
+  Close,
+} from 'theme-ui';
 import { CldImage } from 'next-cloudinary';
 import { updateUser } from '../src/graphql/mutations';
 import React from 'react';
@@ -73,6 +83,7 @@ const EditAvatar = () => {
 
 const Profile = ({ signOut, user }) => {
   const [isSaving, setIsSaving] = React.useState(false);
+  const [wasSaved, setWasSaved] = React.useState(false);
 
   async function updateUserData({ username, fullName, profile }) {
     setIsSaving(true);
@@ -100,13 +111,28 @@ const Profile = ({ signOut, user }) => {
   // console.log(user);
   return (
     <>
-      <Box sx={{ width: '100%', height: '100vw', backgroundColor: 'background' }}>
+      <Box
+        sx={{ width: '100%', height: '100vw', backgroundColor: 'background' }}
+      >
         <Head>
           <title>Profile</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <main>
           <Header user={user} signOut={signOut} title={'Profile'} />
+          {wasSaved && (
+            <Alert
+              sx={{
+                borderRadius: 0,
+                backgroundColor: 'alertBackground',
+                color: 'alertForeground',
+                fontWeight: '400',
+              }}
+            >
+              Profile saved successfully.
+              <Close ml='auto' mr={-2} onClick={() => setWasSaved(false)} />
+            </Alert>
+          )}
           <div
             style={{
               // marginTop: '60px',
@@ -127,6 +153,7 @@ const Profile = ({ signOut, user }) => {
                       profile: form.get('location'),
                       fullName: form.get('fullName'),
                     });
+                    setWasSaved(true);
 
                     console.log('submitform');
                   }}

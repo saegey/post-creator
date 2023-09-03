@@ -108,7 +108,9 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
           )}
           <Flex
             sx={{
-              borderBottom: '1px solid #cdcdcd',
+              borderBottomWidth: '1px',
+              borderBottomColor: 'divider',
+              borderBottomStyle: 'solid',
               paddingY: '5px',
               marginBottom: '20px',
             }}
@@ -118,8 +120,6 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
               sx={{
                 fontSize: '20px',
                 fontWeight: 600,
-
-                // marginBottom: '20px',
               }}
             >
               Details
@@ -211,7 +211,9 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                 </Box>
                 <Flex
                   sx={{
-                    borderTop: '1px solid #b4b4b4',
+                    borderTopWidth: '1px',
+                    borderTopColor: 'divider',
+                    borderTopStyle: 'solid',
                     marginTop: '10px',
                     paddingTop: '10px',
                   }}

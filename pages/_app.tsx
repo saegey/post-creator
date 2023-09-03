@@ -31,7 +31,7 @@ export default class App extends NextApp {
 
                     return (
                       <>
-                        <h2>heello</h2>
+                        <h2>monopad</h2>
                         {/* Re-use default `Authenticator.SignUp.FormFields` */}
                         <Authenticator.SignUp.FormFields />
 

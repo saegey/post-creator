@@ -38,7 +38,8 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
           zIndex: 1000,
           borderBottomStyle: 'solid',
           borderBottomWidth: '1px',
-          borderBottomColor: 'buttonBorderColor',
+          borderBottomColor: 'divider',
+          boxShadow: '1px 4px 5px var(--theme-ui-colors-menuBoxShadow)',
         }}
       >
         <BoldButton editor={editor} />
@@ -78,7 +79,12 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
       </Flex>
       {savedMessage && (
         <Alert
-          sx={{ borderRadius: 0, backgroundColor: '#dadada', color: 'black' }}
+          sx={{
+            borderRadius: 0,
+            backgroundColor: 'alertBackground',
+            color: 'alertForeground',
+            fontWeight: '400',
+          }}
         >
           Post saved successfully.
           <Close ml='auto' mr={-2} onClick={() => setSavedMessage(false)} />

@@ -125,9 +125,12 @@ const Post = ({
           <link rel='icon' href='/favicon.ico' />
         </Head>
 
-        <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
-            <Header user={user} signOut={signOut} title={'Edit Post'} />
-            <PostEditor postId={postId} initialState={postComponents} />
+        <Box
+          as='main'
+          sx={{ backgroundColor: 'editorBackground', paddingBottom: '50px' }}
+        >
+          <Header user={user} signOut={signOut} title={'Edit Post'} />
+          <PostEditor postId={postId} initialState={postComponents} />
         </Box>
       </div>
     </PostContext.Provider>

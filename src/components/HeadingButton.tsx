@@ -32,12 +32,7 @@ const HeadingButton = ({ editor }: { editor: ReactEditor }) => {
     <IconButton
       aria-label='Toggle header'
       onClick={() => toggleHeading({ editor })}
-      sx={{
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: 'buttonBorderColor',
-        '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
-      }}
+      variant='iconButton'
     >
       <svg
         fill='var(--theme-ui-colors-text)'

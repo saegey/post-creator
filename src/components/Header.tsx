@@ -57,7 +57,7 @@ const Header = ({ user, signOut, title }) => {
             flexDirection: 'row',
             padding: '10px',
             borderBottomWidth: '1px',
-            borderBottomColor: 'buttonBorderColor',
+            borderBottomColor: 'divider',
             borderBottomStyle: 'solid',
             backgroundColor: 'background',
           }}

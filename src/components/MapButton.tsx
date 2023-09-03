@@ -1,3 +1,4 @@
+
 import { IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import { Transforms, Descendant } from 'slate';
@@ -14,14 +15,19 @@ const MapButton = ({ editor }: { editor: ReactEditor }) => {
   const { gpxFile } = React.useContext(PostContext);
   return (
     <IconButton
-      aria-label='Toggle dark mode'
+      aria-label='Map button'
       disabled={gpxFile ? false : true}
       onClick={() => addMap(editor)}
       sx={{
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor: 'buttonBorderColor',
-        '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
+        backgroundColor: gpxFile
+          ? 'iconButtonBackground'
+          : 'iconButtonBackgroundDisabled',
+        '&:hover': {
+          backgroundColor: gpxFile ? 'buttonBackgroundHoverColor' : '',
+        },
       }}
     >
       <svg

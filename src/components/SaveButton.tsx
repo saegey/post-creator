@@ -27,14 +27,9 @@ const SaveButton = ({ editor, setIsSaving, isSaving, setSavedMessage }) => {
 
   return (
     <IconButton
-      // aria-aria-label='Save Post'
+      aria-label='Save Post'
       onClick={save}
-      sx={{
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: 'buttonBorderColor',
-        '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
-      }}
+      variant='iconButton'
     >
       {!isSaving && (
         <svg

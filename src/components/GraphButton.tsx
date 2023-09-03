@@ -27,7 +27,12 @@ const GraphButton = ({ editor }) => {
         borderWidth: '1px',
         borderStyle: 'solid',
         borderColor: 'buttonBorderColor',
-        '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
+        backgroundColor: gpxFile
+          ? 'iconButtonBackground'
+          : 'iconButtonBackgroundDisabled',
+        '&:hover': {
+          backgroundColor: gpxFile ? 'buttonBackgroundHoverColor' : '',
+        },
       }}
     >
       <svg
