@@ -103,7 +103,9 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
             </Box>
             <Box>
               <Label htmlFor='gpxFile'>GPX File</Label>
-              <Flex sx={{ gap: '10px' }}>
+              <Flex
+                sx={{ gap: '10px', flexDirection: ['column', 'row', 'row'] }}
+              >
                 <Box sx={{ width: '100%' }}>
                   <Input
                     id='gpxFile'
@@ -113,13 +115,11 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                     variant={'defaultInput'}
                   />
                 </Box>
-                <Box sx={{ width: '25%' }}>
+                <Box sx={{ width: ['', '25%', '25%'] }}>
                   <Button
                     type='button'
                     onClick={() => {
-                      // isOpen(false);
                       setUploadModal(true);
-                      console.log('setupload');
                     }}
                     sx={{ width: '100%', borderColor: '#898989' }}
                   >
