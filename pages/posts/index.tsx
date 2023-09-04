@@ -55,21 +55,23 @@ const MyPosts = ({ signOut, user }) => {
         </Head>
         <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
           <Header user={user} signOut={signOut} title={'My Posts'} />
-          <div
-            style={{
-              marginTop: '60px',
+          <Box
+            sx={{
+              // marginTop: '60px',
               maxWidth: '900px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
+              marginLeft: ['10px', 'auto', 'auto'],
+              marginRight: ['10px', 'auto', 'auto'],
+              padding: '20px',
+              width: '100vw',
             }}
           >
-            <Grid gap={2} columns={[2, 3, 3]}>
+            <Grid columns={[1, 2, 3]} width={'250px'} repeat={'fit'}>
               {posts &&
                 posts.map((post) => (
                   <PostCard post={post} showAuthor={false} />
                 ))}
             </Grid>
-          </div>
+          </Box>
         </Box>
       </div>
     </>

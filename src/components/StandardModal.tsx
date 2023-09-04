@@ -35,7 +35,7 @@ const StandardModal = ({ children, isOpen, title }) => {
           sx={{
             maxWidth: '690px',
             maxHeight: '800px',
-            width: '100%',
+            width: '100vw',
             margin: 'auto',
             background: 'background',
             borderRadius: '5px',

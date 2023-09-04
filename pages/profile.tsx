@@ -108,7 +108,7 @@ const Profile = ({ signOut, user }) => {
     setIsSaving(false);
     // console.log(fullName, response);
   }
-  // console.log(user);
+
   return (
     <>
       <Box
@@ -142,8 +142,14 @@ const Profile = ({ signOut, user }) => {
               marginRight: 'auto',
             }}
           >
-            <Flex sx={{ margin: '20px' }}>
-              <Box sx={{ gap: '20px', flexDirection: 'column', width: '50%' }}>
+            <Flex
+              sx={{
+                margin: '20px',
+                flexDirection: ['column-reverse', 'row', 'row'],
+                gap: '20px',
+              }}
+            >
+              <Box sx={{ width: ['100%', '50%', '50%'] }}>
                 <form
                   onSubmit={(event: any) => {
                     event.preventDefault();
@@ -204,10 +210,10 @@ const Profile = ({ signOut, user }) => {
                   </Flex>
                 </form>
               </Box>
-              <Box sx={{ width: '50%' }}>
+              <Box sx={{ width: ['100%', '50%', '50%'] }}>
                 <Box
                   sx={{
-                    marginLeft: 'auto',
+                    marginX: 'auto',
                     width: '200px',
                     height: 'auto',
                     position: 'relative',

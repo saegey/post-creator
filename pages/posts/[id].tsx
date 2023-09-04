@@ -130,7 +130,9 @@ const Post = ({
           sx={{
             backgroundColor: 'editorBackground',
             paddingBottom: '50px',
-            height: '100vw',
+            height: '100vh',
+            width: '100vw',
+            flexGrow: 1,
           }}
         >
           <Header user={user} signOut={signOut} title={'Edit Post'} />
