@@ -2,19 +2,21 @@ import { Slate, Editable, withReact } from 'slate-react';
 import { API } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
 import React from 'react';
-import { createEditor, Editor, Transforms } from 'slate';
-import { Flex, Text, Box } from 'theme-ui';
+import { createEditor, Editor, Transforms, Descendant } from 'slate';
+import { Flex, Text, Box, Close } from 'theme-ui';
 import { withHistory } from 'slate-history';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
 import PostMenu from './PostMenu';
 import { PostContext } from '../PostContext';
+import { EditorContext } from './EditorContext';
 import SkeletonPost from './SkeletonPost';
 import { getActivity } from '../../src/actions/PostGet';
 import {
   getActivityQuery,
   getActivityQueryProps,
 } from '../../src/graphql/customQueries';
+import GraphSelectorMenu from './GraphSelectorMenu';
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
@@ -30,6 +32,9 @@ const PostEditor = ({ postId, initialState }) => {
     setPowerAnalysis,
     components,
   } = React.useContext(PostContext);
+
+  const { isGraphMenuOpen, setIsGraphMenuOpen } =
+    React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -80,73 +85,83 @@ const PostEditor = ({ postId, initialState }) => {
       ) : (
         <>
           <PostMenu editor={editor} id={id} />
-          <Box
-            sx={{
-              marginTop: '0px',
-              maxWidth: '900px',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              backgroundColor: 'background',
-              borderRadius: '10px',
-              border: '1px dotted #bcbcbc',
-              padding: '10px',
-            }}
-          >
-            <Flex>
-              <Text
-                as='h1'
+          <Flex>
+            {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
+            <Box
+              sx={{
+                marginTop: '0px',
+                maxWidth: '900px',
+                minWidth: [null, null, '900px'],
+                marginLeft: isGraphMenuOpen
+                  ? ['20px', '20px', 'auto']
+                  : [0, 0, 'auto'],
+                marginRight: isGraphMenuOpen
+                  ? ['20px', '20px', 'auto']
+                  : [0, 0, 'auto'],
+                marginBottom: 'auto',
+                width: ['100%', null, null],
+                backgroundColor: 'background',
+                borderRadius: '10px',
+                border: '1px dotted #bcbcbc',
+                padding: '10px',
+              }}
+            >
+              <Flex>
+                <Text
+                  as='h1'
+                  contentEditable='true'
+                  suppressContentEditableWarning={true}
+                  onBlur={(event) => {
+                    console.log('blur h1');
+                    if (event.target.textContent !== title) {
+                      setTitle(event.target.textContent);
+                    }
+                  }}
+                  sx={{ width: '100%' }}
+                >
+                  {title}
+                </Text>
+              </Flex>
+              <h2
                 contentEditable='true'
                 suppressContentEditableWarning={true}
                 onBlur={(event) => {
-                  console.log('blur h1');
-                  if (event.target.textContent !== title) {
-                    setTitle(event.target.textContent);
-                  }
+                  setPostLocation(event.target.textContent);
                 }}
-                sx={{ width: '100%' }}
               >
-                {title}
-              </Text>
-            </Flex>
-            <h2
-              contentEditable='true'
-              suppressContentEditableWarning={true}
-              onBlur={(event) => {
-                setPostLocation(event.target.textContent);
-              }}
-            >
-              {postLocation}
-            </h2>
-            <Slate
-              editor={editor}
-              initialValue={initialState}
-              // onChange={(val) => {
-              //   console.log(val);
-              // }}
-            >
-              <Editable
-                spellCheck
-                autoFocus
-                renderElement={renderElement}
-                style={{ padding: '2px' }}
-                onKeyDown={(event) => {
-                  if (event.key === 'b' && event.metaKey) {
-                    event.preventDefault();
+                {postLocation}
+              </h2>
+              <Slate
+                editor={editor}
+                initialValue={initialState}
+                // onChange={(val) => {
+                //   console.log(val);
+                // }}
+              >
+                <Editable
+                  spellCheck
+                  autoFocus
+                  renderElement={renderElement}
+                  style={{ padding: '2px' }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'b' && event.metaKey) {
+                      event.preventDefault();
 
-                    const marks = Editor.marks(editor);
-                    const isActive = marks ? marks['bold'] === true : false;
+                      const marks = Editor.marks(editor);
+                      const isActive = marks ? marks['bold'] === true : false;
 
-                    if (isActive) {
-                      Editor.removeMark(editor, 'bold');
-                    } else {
-                      Editor.addMark(editor, 'bold', true);
+                      if (isActive) {
+                        Editor.removeMark(editor, 'bold');
+                      } else {
+                        Editor.addMark(editor, 'bold', true);
+                      }
                     }
-                  }
-                }}
-                renderLeaf={renderLeaf}
-              />
-            </Slate>
-          </Box>
+                  }}
+                  renderLeaf={renderLeaf}
+                />
+              </Slate>
+            </Box>
+          </Flex>
         </>
       )}
     </>

@@ -1,12 +1,12 @@
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
-import { Box, Button, Flex } from 'theme-ui';
+import { Box, Flex, Close } from 'theme-ui';
 import { useContext } from 'react';
 
 import { PowerCurveGraph } from '@saegey/posts.ui.power-curve-graph';
 import { PostContext } from '../PostContext';
 
-const PowerGraph = ({ attributes, children, element }) => {
+const PowerGraph = ({ element }) => {
   const { powerAnalysis, currentFtp } = useContext(PostContext);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
@@ -34,9 +34,9 @@ const PowerGraph = ({ attributes, children, element }) => {
     >
       <Flex sx={{ width: '100%' }}>
         <Box sx={{ marginLeft: 'auto' }}>
-          <Button onClick={(e) => Transforms.removeNodes(editor, { at: path })}>
-            x
-          </Button>
+          <Close
+            onClick={(e) => Transforms.removeNodes(editor, { at: path })}
+          />
         </Box>
       </Flex>
 

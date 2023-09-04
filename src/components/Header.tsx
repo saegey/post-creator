@@ -60,6 +60,7 @@ const Header = ({ user, signOut, title }) => {
             borderBottomColor: 'divider',
             borderBottomStyle: 'solid',
             backgroundColor: 'background',
+            zIndex: 99,
           }}
         >
           <Flex sx={{ gap: '15px' }}>

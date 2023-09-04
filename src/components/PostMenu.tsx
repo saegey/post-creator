@@ -17,6 +17,7 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
   const [isSaving, setIsSaving] = React.useState(false);
   const [savedMessage, setSavedMessage] = React.useState(false);
   const [isHoverSettings, setIsHoverSettings] = React.useState(false);
+  const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     setSavedMessage(false);
@@ -51,8 +52,12 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
             }, 10)
           }
         />
-        <GraphButton editor={editor} />
-        <MapButton editor={editor} />
+        <GraphButton
+          editor={editor}
+          // isMenuOpen={isGraphMenuOpen}
+          // setIsMenuOpen={setIsGraphMenuOpen}
+        />
+        {/* <MapButton editor={editor} /> */}
         <SaveButton
           setIsSaving={setIsSaving}
           isSaving={isSaving}
@@ -97,6 +102,7 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
         </Alert>
       )}
       <Box sx={{ marginBottom: '20px' }} />
+
     </>
   );
 };

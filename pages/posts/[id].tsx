@@ -7,6 +7,7 @@ import { Box } from 'theme-ui';
 
 import Header from '../../src/components/Header';
 import { PostContext } from '../../src/PostContext';
+import { EditorContext } from '../../src/components/EditorContext';
 import PostEditor from '../../src/components/PostEditor';
 import { getPostInitial } from '../../src/graphql/customQueries';
 
@@ -71,6 +72,7 @@ const Post = ({
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
   const [powerAnalysis, setPowerAnalysis] = React.useState('');
   const [initialLoad, setInitialLoad] = React.useState(true);
+  const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -136,7 +138,11 @@ const Post = ({
           }}
         >
           <Header user={user} signOut={signOut} title={'Edit Post'} />
-          <PostEditor postId={postId} initialState={postComponents} />
+          <EditorContext.Provider
+            value={{ setIsGraphMenuOpen, isGraphMenuOpen }}
+          >
+            <PostEditor postId={postId} initialState={postComponents} />
+          </EditorContext.Provider>
         </Box>
       </div>
     </PostContext.Provider>

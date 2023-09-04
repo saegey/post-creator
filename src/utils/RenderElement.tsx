@@ -3,6 +3,9 @@ import React from 'react';
 import PowerGraphElement from '../components/PowerGraphElement';
 import ImageElement from '../components/ImageElement';
 import VisualOverviewWrapper from '../components/VisualOverviewWrapper';
+import ActivityOverviewWrapper from '../components/ActivityOverviewWrapper';
+import TimePowerZonesWrapper from '../components/TimePowerZonesWrapper';
+import MatchesBurnedWrapper from '../components/MatchesBurnedWrapper';
 
 const Leaf = (props) => {
   return (
@@ -30,6 +33,12 @@ const renderElement = ({ attributes, children, element }) => {
           element={element}
         />
       );
+    case 'timeInZones':
+      return <TimePowerZonesWrapper element={element} />;
+    case 'matchesBurned':
+      return <MatchesBurnedWrapper element={element} />;
+    case 'activityOverview':
+      return <ActivityOverviewWrapper element={element} />;
     case 'visualOverview':
       return <VisualOverviewWrapper element={element} />;
     case 'image':
