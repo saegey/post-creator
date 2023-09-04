@@ -130,7 +130,7 @@ const Post = ({
           sx={{
             backgroundColor: 'editorBackground',
             paddingBottom: '50px',
-            height: '100vh',
+            // height: '100vh',
             width: '100vw',
             flexGrow: 1,
           }}

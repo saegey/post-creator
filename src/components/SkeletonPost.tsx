@@ -37,7 +37,7 @@ const SkeletonPost = () => {
         <Flex sx={{ flexDirection: 'column', gap: '20px' }}>
           <Box
             sx={{
-              width: '500px',
+              width: ['100%', '500px', '500px'],
               height: '40px',
               backgroundImage:
                 'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',

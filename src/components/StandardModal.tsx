@@ -35,10 +35,11 @@ const StandardModal = ({ children, isOpen, title }) => {
           sx={{
             maxWidth: '690px',
             maxHeight: '800px',
-            width: '100vw',
+            height: ['100vh', 'auto', 'auto'],
+            width: ['100vw', null, null],
             margin: 'auto',
             background: 'background',
-            borderRadius: '5px',
+            borderRadius: ['', '5px', '5px'],
             padding: '20px',
             position: 'relative',
           }}

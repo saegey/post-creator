@@ -17,7 +17,7 @@ const VisualOverviewWrapper = ({ element }) => {
 
   if (!activity || activity.length === 0) {
     return (
-      <Flex sx={{ height: '775px', width: '100%', backgroundColor: '#ddd' }}>
+      <Flex sx={{ width: '100vw', backgroundColor: '#ddd' }}>
         <Spinner sx={{ margin: 'auto' }} />
       </Flex>
     );
@@ -29,7 +29,7 @@ const VisualOverviewWrapper = ({ element }) => {
   });
 
   return (
-    <Box sx={{ position: 'relative', height: '775px' }}>
+    <Box sx={{ position: 'relative' }}>
       <VisualOverview
         activity={fixedData}
         token={

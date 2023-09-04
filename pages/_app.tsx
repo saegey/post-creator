@@ -1,7 +1,7 @@
 // src/pages/_app.js
 import * as React from 'react';
 import NextApp from 'next/app';
-import { ThemeUIProvider, Flex } from 'theme-ui';
+import { ThemeUIProvider, Text } from 'theme-ui';
 import theme from '../src/utils/theme'; // theme object from step 2
 import ViewportProvider from '@saegey/posts.viewport';
 import UnitProvider from '@saegey/posts.units';
@@ -31,7 +31,9 @@ export default class App extends NextApp {
 
                     return (
                       <>
-                        <h2>monopad</h2>
+                        <Text as='h2' sx={{ color: 'text' }}>
+                          monopad
+                        </Text>
                         {/* Re-use default `Authenticator.SignUp.FormFields` */}
                         <Authenticator.SignUp.FormFields />
 
