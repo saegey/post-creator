@@ -50,7 +50,7 @@ const Header = ({ user, signOut, title }) => {
         setMenuOpen={setMenuOpen}
         recentPosts={recentPosts}
       />
-      <header>
+      <Box as='header' sx={{ width: '100vw' }}>
         <Box
           sx={{
             display: 'flex',
@@ -126,7 +126,7 @@ const Header = ({ user, signOut, title }) => {
             )}
           </div>
         </Box>
-      </header>
+      </Box>
     </>
   );
 };

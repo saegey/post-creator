@@ -39,6 +39,7 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
           borderBottomWidth: '1px',
           borderBottomColor: 'divider',
           boxShadow: '1px 4px 5px var(--theme-ui-colors-menuBoxShadow)',
+          width: '100vw',
         }}
       >
         <BoldButton editor={editor} />
