@@ -1,15 +1,20 @@
 // src/utils/theme.ts
 export default {
   colors: {
+    activityOverviewBackgroundColor: '#f0f0f0',
     text: '#202020',
     editorBackground: '#f5f5f5',
     iconButtonBackground: '#fafafa',
+    tooltipBackground: '#555555',
     iconButtonDisabled: '#888888',
     iconButtonBackgroundDisabled: '#e9e9e9',
     buttonBorderColor: '#d4d4d4',
     divider: '#e4e4e4',
+    sideMenuBackground: '#ffffff',
+    sideMenuDivider: '#c1c1c1',
     menuItemBackgroundHoverColor: '#ececec',
     buttonBackgroundHoverColor: '#e8e8e8',
+    sideMenuHoverBackground: '#ebebeb',
     skeletonGradient1: '#7c7c7c',
     postCardTextBackground: 'white',
     cancelButtonColor: '#a1a1a1',
@@ -31,8 +36,11 @@ export default {
     blackBoxColor: '0, 0, 0',
     modes: {
       dark: {
+        activityOverviewBackgroundColor: '#3d3d3d',
+        sideMenuBackground: '#181818',
         blackBoxColor: '240, 240, 240',
         text: '#fff',
+        tooltipBackground: '#555555',
         textMuted: '#939393',
         background: '#262626',
         editorBackground: '#3a3a3a',
@@ -41,6 +49,7 @@ export default {
         iconButtonBackground: '#313131',
         inputFocusBackground: '#858585',
         buttonBackgroundHoverColor: '#7c7c7c',
+        sideMenuHoverBackground: '#272727',
         skeletonGradient1: '#7c7c7c',
         postCardBorder: '#6f6f6f',
         menuItemBackgroundHoverColor: '#404040',
@@ -115,7 +124,7 @@ export default {
     },
   },
   fonts: {
-    body: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+    body: '"Public Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading:
       'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     monospace: 'Menlo, monospace',

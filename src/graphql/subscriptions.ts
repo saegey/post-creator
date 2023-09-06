@@ -88,6 +88,17 @@ export const onCreateBlog = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -138,6 +149,17 @@ export const onUpdateBlog = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -188,6 +210,17 @@ export const onDeleteBlog = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -270,6 +303,17 @@ export const onCreatePost = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -292,6 +336,17 @@ export const onCreatePost = /* GraphQL */ `
         owner
         __typename
       }
+      elevationTotal
+      normalizedPower
+      distance
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      elapsedTime
+      stoppedTime
+      timeInRed
+      powerZones
+      powerZoneBuckets
       createdAt
       updatedAt
       blogPostsId
@@ -366,6 +421,17 @@ export const onUpdatePost = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -388,6 +454,17 @@ export const onUpdatePost = /* GraphQL */ `
         owner
         __typename
       }
+      elevationTotal
+      normalizedPower
+      distance
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      elapsedTime
+      stoppedTime
+      timeInRed
+      powerZones
+      powerZoneBuckets
       createdAt
       updatedAt
       blogPostsId
@@ -462,6 +539,17 @@ export const onDeletePost = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -484,6 +572,17 @@ export const onDeletePost = /* GraphQL */ `
         owner
         __typename
       }
+      elevationTotal
+      normalizedPower
+      distance
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      elapsedTime
+      stoppedTime
+      timeInRed
+      powerZones
+      powerZoneBuckets
       createdAt
       updatedAt
       blogPostsId

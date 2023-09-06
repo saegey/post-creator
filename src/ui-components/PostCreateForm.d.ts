@@ -34,6 +34,17 @@ export declare type PostCreateFormInputValues = {
     elevation?: string;
     elevationGrades?: string;
     distances?: string;
+    elevationTotal?: number;
+    normalizedPower?: number;
+    distance?: number;
+    heartAnalysis?: string;
+    cadenceAnalysis?: string;
+    tempAnalysis?: string;
+    elapsedTime?: number;
+    stoppedTime?: number;
+    timeInRed?: number;
+    powerZones?: string;
+    powerZoneBuckets?: string;
 };
 export declare type PostCreateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -57,6 +68,17 @@ export declare type PostCreateFormValidationValues = {
     elevation?: ValidationFunction<string>;
     elevationGrades?: ValidationFunction<string>;
     distances?: ValidationFunction<string>;
+    elevationTotal?: ValidationFunction<number>;
+    normalizedPower?: ValidationFunction<number>;
+    distance?: ValidationFunction<number>;
+    heartAnalysis?: ValidationFunction<string>;
+    cadenceAnalysis?: ValidationFunction<string>;
+    tempAnalysis?: ValidationFunction<string>;
+    elapsedTime?: ValidationFunction<number>;
+    stoppedTime?: ValidationFunction<number>;
+    timeInRed?: ValidationFunction<number>;
+    powerZones?: ValidationFunction<string>;
+    powerZoneBuckets?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostCreateFormOverridesProps = {
@@ -82,6 +104,17 @@ export declare type PostCreateFormOverridesProps = {
     elevation?: PrimitiveOverrideProps<TextAreaFieldProps>;
     elevationGrades?: PrimitiveOverrideProps<TextAreaFieldProps>;
     distances?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    elevationTotal?: PrimitiveOverrideProps<TextFieldProps>;
+    normalizedPower?: PrimitiveOverrideProps<TextFieldProps>;
+    distance?: PrimitiveOverrideProps<TextFieldProps>;
+    heartAnalysis?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    cadenceAnalysis?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    tempAnalysis?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    elapsedTime?: PrimitiveOverrideProps<TextFieldProps>;
+    stoppedTime?: PrimitiveOverrideProps<TextFieldProps>;
+    timeInRed?: PrimitiveOverrideProps<TextFieldProps>;
+    powerZones?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    powerZoneBuckets?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type PostCreateFormProps = React.PropsWithChildren<{
     overrides?: PostCreateFormOverridesProps | undefined | null;

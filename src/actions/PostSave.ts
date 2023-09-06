@@ -20,10 +20,10 @@ const PostSaveComponents = async ({
   title,
   components,
   postLocation,
-  stravaUrl,
-  resultsUrl,
-  currentFtp,
-}: PostSaveProps) => {
+}: // stravaUrl,
+// resultsUrl,
+// currentFtp,
+PostSaveProps) => {
   try {
     const response = (await API.graphql({
       authMode: 'AMAZON_COGNITO_USER_POOLS',
@@ -33,10 +33,10 @@ const PostSaveComponents = async ({
           id: postId,
           title: title,
           postLocation: postLocation,
-          stravaUrl: stravaUrl,
-          resultsUrl: resultsUrl,
+          // stravaUrl: stravaUrl,
+          // resultsUrl: resultsUrl,
           components: JSON.stringify(components),
-          currentFtp: currentFtp,
+          // currentFtp: currentFtp,
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;

@@ -16,6 +16,9 @@ export const getActivityQuery = /* GraphQL */ `
 export type getActivityQueryProps = {
   getPost?: {
     powerAnalysis?: string | null;
+    cadenceAnalysis?: string | null;
+    tempAnalysis?: string | null;
+    heartAnalysis?: string | null;
     coordinates?: string | null;
     powers?: string | null;
     elevation?: string | null;
@@ -45,7 +48,18 @@ export const getPostInitial = /* GraphQL */ `
       teaser
       currentFtp
       components
-      # powerAnalysis
+      elevationTotal
+      normalizedPower
+      distance
+      elapsedTime
+      stoppedTime
+      timeInRed
+      powerAnalysis
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      powerZones
+      powerZoneBuckets
       # coordinates
       # powers
       # elevation

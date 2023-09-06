@@ -1,37 +1,36 @@
 import { IconButton } from 'theme-ui';
-import { ReactEditor } from 'slate-react';
-import { Transforms, Descendant } from 'slate';
 import React from 'react';
-import { PostContext } from '../PostContext';
 
-const addGraph = (editor: ReactEditor) => {
-  Transforms.insertNodes(editor, [
-    {
-      type: 'powergraph',
-      children: [{ text: '' }],
-      void: true,
-    } as Descendant,
-    { type: 'text', children: [{ text: '' }] } as Descendant,
-  ]);
-};
+import { PostContext } from '../PostContext';
+import { EditorContext } from './EditorContext';
+import TooltipButton from './TooltipButton';
 
 const GraphButton = ({ editor }) => {
   const { gpxFile } = React.useContext(PostContext);
+
+  const { setIsGraphMenuOpen } = React.useContext(EditorContext);
+  // const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const color = gpxFile
     ? `var(--theme-ui-colors-text)`
     : `var(--theme-ui-colors-iconButtonDisabled)`;
 
   return (
-    <IconButton
-      aria-label='Graph Button'
+    <TooltipButton
+      onClick={() => setIsGraphMenuOpen(true)}
+      title='Add Widget'
+      tooltipText={'Add Component'}
       disabled={gpxFile ? false : true}
-      onClick={() => addGraph(editor)}
-      variant='iconButton'
     >
+      {/* <IconButton
+        aria-label='Graph Button'
+        disabled={gpxFile ? false : true}
+        onClick={() => setIsGraphMenuOpen(true)}
+        variant='iconButton'
+      > */}
       <svg
-        width='24px'
-        height='24px'
+        width='100%'
+        height='100%'
         className='menu-button'
         viewBox='0 0 24 24'
         fill='none'
@@ -52,7 +51,8 @@ const GraphButton = ({ editor }) => {
           strokeLinejoin='round'
         />
       </svg>
-    </IconButton>
+      {/* </IconButton> */}
+    </TooltipButton>
   );
 };
 

@@ -34,6 +34,9 @@
                 "description": "dev"
               },
               "authenticationType": "API_KEY"
+            },
+            {
+              "authenticationType": "AWS_IAM"
             }
           ],
           "defaultAuthentication": {
@@ -124,8 +127,52 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "blalblah": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "nextjsblog24b60079": {
       "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "postUpdateCalc": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "api12660653"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "S3Trigger71ba5706"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "nextjsblog24b60079"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
@@ -176,6 +223,22 @@
         {
           "category": "function",
           "resourceName": "nextjsblog24b60079"
+        }
+      ]
+    },
+    "AMPLIFY_function_postUpdateCalc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postUpdateCalc"
+        }
+      ]
+    },
+    "AMPLIFY_function_postUpdateCalc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postUpdateCalc"
         }
       ]
     }

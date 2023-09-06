@@ -50,6 +50,17 @@ export default function PostCreateForm(props) {
     elevation: "",
     elevationGrades: "",
     distances: "",
+    elevationTotal: "",
+    normalizedPower: "",
+    distance: "",
+    heartAnalysis: "",
+    cadenceAnalysis: "",
+    tempAnalysis: "",
+    elapsedTime: "",
+    stoppedTime: "",
+    timeInRed: "",
+    powerZones: "",
+    powerZoneBuckets: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [gpxFile, setGpxFile] = React.useState(initialValues.gpxFile);
@@ -84,6 +95,33 @@ export default function PostCreateForm(props) {
     initialValues.elevationGrades
   );
   const [distances, setDistances] = React.useState(initialValues.distances);
+  const [elevationTotal, setElevationTotal] = React.useState(
+    initialValues.elevationTotal
+  );
+  const [normalizedPower, setNormalizedPower] = React.useState(
+    initialValues.normalizedPower
+  );
+  const [distance, setDistance] = React.useState(initialValues.distance);
+  const [heartAnalysis, setHeartAnalysis] = React.useState(
+    initialValues.heartAnalysis
+  );
+  const [cadenceAnalysis, setCadenceAnalysis] = React.useState(
+    initialValues.cadenceAnalysis
+  );
+  const [tempAnalysis, setTempAnalysis] = React.useState(
+    initialValues.tempAnalysis
+  );
+  const [elapsedTime, setElapsedTime] = React.useState(
+    initialValues.elapsedTime
+  );
+  const [stoppedTime, setStoppedTime] = React.useState(
+    initialValues.stoppedTime
+  );
+  const [timeInRed, setTimeInRed] = React.useState(initialValues.timeInRed);
+  const [powerZones, setPowerZones] = React.useState(initialValues.powerZones);
+  const [powerZoneBuckets, setPowerZoneBuckets] = React.useState(
+    initialValues.powerZoneBuckets
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
@@ -107,6 +145,17 @@ export default function PostCreateForm(props) {
     setElevation(initialValues.elevation);
     setElevationGrades(initialValues.elevationGrades);
     setDistances(initialValues.distances);
+    setElevationTotal(initialValues.elevationTotal);
+    setNormalizedPower(initialValues.normalizedPower);
+    setDistance(initialValues.distance);
+    setHeartAnalysis(initialValues.heartAnalysis);
+    setCadenceAnalysis(initialValues.cadenceAnalysis);
+    setTempAnalysis(initialValues.tempAnalysis);
+    setElapsedTime(initialValues.elapsedTime);
+    setStoppedTime(initialValues.stoppedTime);
+    setTimeInRed(initialValues.timeInRed);
+    setPowerZones(initialValues.powerZones);
+    setPowerZoneBuckets(initialValues.powerZoneBuckets);
     setErrors({});
   };
   const validations = {
@@ -131,6 +180,17 @@ export default function PostCreateForm(props) {
     elevation: [{ type: "JSON" }],
     elevationGrades: [{ type: "JSON" }],
     distances: [{ type: "JSON" }],
+    elevationTotal: [],
+    normalizedPower: [],
+    distance: [],
+    heartAnalysis: [{ type: "JSON" }],
+    cadenceAnalysis: [{ type: "JSON" }],
+    tempAnalysis: [{ type: "JSON" }],
+    elapsedTime: [],
+    stoppedTime: [],
+    timeInRed: [],
+    powerZones: [{ type: "JSON" }],
+    powerZoneBuckets: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -179,6 +239,17 @@ export default function PostCreateForm(props) {
           elevation,
           elevationGrades,
           distances,
+          elevationTotal,
+          normalizedPower,
+          distance,
+          heartAnalysis,
+          cadenceAnalysis,
+          tempAnalysis,
+          elapsedTime,
+          stoppedTime,
+          timeInRed,
+          powerZones,
+          powerZoneBuckets,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -262,6 +333,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -306,6 +388,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.gpxFile ?? value;
@@ -349,6 +442,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -393,6 +497,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.headerImage ?? value;
@@ -437,6 +552,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -481,6 +607,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.publishedDate ?? value;
@@ -525,6 +662,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -569,6 +717,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.postLocation ?? value;
@@ -613,6 +772,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.stravaUrl ?? value;
@@ -657,6 +827,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.resultsUrl ?? value;
@@ -701,6 +882,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -745,6 +937,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.subType ?? value;
@@ -789,6 +992,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.teaser ?? value;
@@ -833,6 +1047,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.currentFtp ?? value;
@@ -876,6 +1101,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.components ?? value;
@@ -919,6 +1155,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.powerAnalysis ?? value;
@@ -962,6 +1209,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.coordinates ?? value;
@@ -1005,6 +1263,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.powers ?? value;
@@ -1048,6 +1317,17 @@ export default function PostCreateForm(props) {
               elevation: value,
               elevationGrades,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.elevation ?? value;
@@ -1091,6 +1371,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades: value,
               distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.elevationGrades ?? value;
@@ -1134,6 +1425,17 @@ export default function PostCreateForm(props) {
               elevation,
               elevationGrades,
               distances: value,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.distances ?? value;
@@ -1147,6 +1449,630 @@ export default function PostCreateForm(props) {
         errorMessage={errors.distances?.errorMessage}
         hasError={errors.distances?.hasError}
         {...getOverrideProps(overrides, "distances")}
+      ></TextAreaField>
+      <TextField
+        label="Elevation total"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={elevationTotal}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal: value,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.elevationTotal ?? value;
+          }
+          if (errors.elevationTotal?.hasError) {
+            runValidationTasks("elevationTotal", value);
+          }
+          setElevationTotal(value);
+        }}
+        onBlur={() => runValidationTasks("elevationTotal", elevationTotal)}
+        errorMessage={errors.elevationTotal?.errorMessage}
+        hasError={errors.elevationTotal?.hasError}
+        {...getOverrideProps(overrides, "elevationTotal")}
+      ></TextField>
+      <TextField
+        label="Normalized power"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={normalizedPower}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower: value,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.normalizedPower ?? value;
+          }
+          if (errors.normalizedPower?.hasError) {
+            runValidationTasks("normalizedPower", value);
+          }
+          setNormalizedPower(value);
+        }}
+        onBlur={() => runValidationTasks("normalizedPower", normalizedPower)}
+        errorMessage={errors.normalizedPower?.errorMessage}
+        hasError={errors.normalizedPower?.hasError}
+        {...getOverrideProps(overrides, "normalizedPower")}
+      ></TextField>
+      <TextField
+        label="Distance"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={distance}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance: value,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.distance ?? value;
+          }
+          if (errors.distance?.hasError) {
+            runValidationTasks("distance", value);
+          }
+          setDistance(value);
+        }}
+        onBlur={() => runValidationTasks("distance", distance)}
+        errorMessage={errors.distance?.errorMessage}
+        hasError={errors.distance?.hasError}
+        {...getOverrideProps(overrides, "distance")}
+      ></TextField>
+      <TextAreaField
+        label="Heart analysis"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis: value,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.heartAnalysis ?? value;
+          }
+          if (errors.heartAnalysis?.hasError) {
+            runValidationTasks("heartAnalysis", value);
+          }
+          setHeartAnalysis(value);
+        }}
+        onBlur={() => runValidationTasks("heartAnalysis", heartAnalysis)}
+        errorMessage={errors.heartAnalysis?.errorMessage}
+        hasError={errors.heartAnalysis?.hasError}
+        {...getOverrideProps(overrides, "heartAnalysis")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Cadence analysis"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis: value,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.cadenceAnalysis ?? value;
+          }
+          if (errors.cadenceAnalysis?.hasError) {
+            runValidationTasks("cadenceAnalysis", value);
+          }
+          setCadenceAnalysis(value);
+        }}
+        onBlur={() => runValidationTasks("cadenceAnalysis", cadenceAnalysis)}
+        errorMessage={errors.cadenceAnalysis?.errorMessage}
+        hasError={errors.cadenceAnalysis?.hasError}
+        {...getOverrideProps(overrides, "cadenceAnalysis")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Temp analysis"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis: value,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.tempAnalysis ?? value;
+          }
+          if (errors.tempAnalysis?.hasError) {
+            runValidationTasks("tempAnalysis", value);
+          }
+          setTempAnalysis(value);
+        }}
+        onBlur={() => runValidationTasks("tempAnalysis", tempAnalysis)}
+        errorMessage={errors.tempAnalysis?.errorMessage}
+        hasError={errors.tempAnalysis?.hasError}
+        {...getOverrideProps(overrides, "tempAnalysis")}
+      ></TextAreaField>
+      <TextField
+        label="Elapsed time"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={elapsedTime}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime: value,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.elapsedTime ?? value;
+          }
+          if (errors.elapsedTime?.hasError) {
+            runValidationTasks("elapsedTime", value);
+          }
+          setElapsedTime(value);
+        }}
+        onBlur={() => runValidationTasks("elapsedTime", elapsedTime)}
+        errorMessage={errors.elapsedTime?.errorMessage}
+        hasError={errors.elapsedTime?.hasError}
+        {...getOverrideProps(overrides, "elapsedTime")}
+      ></TextField>
+      <TextField
+        label="Stopped time"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={stoppedTime}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime: value,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.stoppedTime ?? value;
+          }
+          if (errors.stoppedTime?.hasError) {
+            runValidationTasks("stoppedTime", value);
+          }
+          setStoppedTime(value);
+        }}
+        onBlur={() => runValidationTasks("stoppedTime", stoppedTime)}
+        errorMessage={errors.stoppedTime?.errorMessage}
+        hasError={errors.stoppedTime?.hasError}
+        {...getOverrideProps(overrides, "stoppedTime")}
+      ></TextField>
+      <TextField
+        label="Time in red"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={timeInRed}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed: value,
+              powerZones,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.timeInRed ?? value;
+          }
+          if (errors.timeInRed?.hasError) {
+            runValidationTasks("timeInRed", value);
+          }
+          setTimeInRed(value);
+        }}
+        onBlur={() => runValidationTasks("timeInRed", timeInRed)}
+        errorMessage={errors.timeInRed?.errorMessage}
+        hasError={errors.timeInRed?.hasError}
+        {...getOverrideProps(overrides, "timeInRed")}
+      ></TextField>
+      <TextAreaField
+        label="Power zones"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones: value,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.powerZones ?? value;
+          }
+          if (errors.powerZones?.hasError) {
+            runValidationTasks("powerZones", value);
+          }
+          setPowerZones(value);
+        }}
+        onBlur={() => runValidationTasks("powerZones", powerZones)}
+        errorMessage={errors.powerZones?.errorMessage}
+        hasError={errors.powerZones?.hasError}
+        {...getOverrideProps(overrides, "powerZones")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Power zone buckets"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.powerZoneBuckets ?? value;
+          }
+          if (errors.powerZoneBuckets?.hasError) {
+            runValidationTasks("powerZoneBuckets", value);
+          }
+          setPowerZoneBuckets(value);
+        }}
+        onBlur={() => runValidationTasks("powerZoneBuckets", powerZoneBuckets)}
+        errorMessage={errors.powerZoneBuckets?.errorMessage}
+        hasError={errors.powerZoneBuckets?.hasError}
+        {...getOverrideProps(overrides, "powerZoneBuckets")}
       ></TextAreaField>
       <Flex
         justifyContent="space-between"

@@ -8,7 +8,6 @@ import ActivitySettings from './ActivitySettings';
 import HeadingButton from './HeadingButton';
 import GraphButton from './GraphButton';
 import ImagesButton from './ImagesButton';
-import MapButton from './MapButton';
 import SaveButton from './SaveButton';
 import BoldButton from './BoldButton';
 
@@ -51,8 +50,9 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
             }, 10)
           }
         />
-        <GraphButton editor={editor} />
-        <MapButton editor={editor} />
+        <GraphButton
+          editor={editor}
+        />
         <SaveButton
           setIsSaving={setIsSaving}
           isSaving={isSaving}
@@ -97,6 +97,7 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
         </Alert>
       )}
       <Box sx={{ marginBottom: '20px' }} />
+
     </>
   );
 };

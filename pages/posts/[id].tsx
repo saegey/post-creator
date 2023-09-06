@@ -1,12 +1,13 @@
 import { withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { withAuthenticator, Authenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import React from 'react';
 import { Box } from 'theme-ui';
 
 import Header from '../../src/components/Header';
 import { PostContext } from '../../src/PostContext';
+import { EditorContext } from '../../src/components/EditorContext';
 import PostEditor from '../../src/components/PostEditor';
 import { getPostInitial } from '../../src/graphql/customQueries';
 
@@ -41,6 +42,18 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postStravaUrl: post.stravaUrl,
       postResultsUrl: post.resultsUrl,
       postCurrentFtp: post.currentFtp,
+      postElevationTotal: post.elevationTotal,
+      postNormalizedPower: post.normalizedPower,
+      postDistance: post.distance,
+      postStoppedTime: post.stoppedTime,
+      postElapsedTime: post.elapsedTime,
+      postTimeInRed: post.timeInRed,
+      postHeartAnalysis: JSON.parse(post.heartAnalysis),
+      postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
+      postCadenceAnalysis: JSON.parse(post.cadenceAnalysis),
+      postTempAnalysis: JSON.parse(post.tempAnalysis),
+      postPowerZones: JSON.parse(post.powerZones),
+      postPowerZoneBuckets: JSON.parse(post.powerZoneBuckets),
     },
   };
 };
@@ -57,6 +70,18 @@ const Post = ({
   postResultsUrl,
   postStravaUrl,
   postCurrentFtp,
+  postElevationTotal,
+  postNormalizedPower,
+  postDistance,
+  postElapsedTime,
+  postStoppedTime,
+  postTimeInRed,
+  postHeartAnalysis,
+  postPowerAnalysis,
+  postCadenceAnalysis,
+  postTempAnalysis,
+  postPowerZones,
+  postPowerZoneBuckets,
 }) => {
   // const router = useRouter();
   const [title, setTitle] = React.useState(postTitle);
@@ -69,8 +94,32 @@ const Post = ({
   const [images, setImages] = React.useState(postImages ? postImages : []);
   const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
-  const [powerAnalysis, setPowerAnalysis] = React.useState('');
+
+  const [powerAnalysis, setPowerAnalysis] = React.useState<{
+    entire: number;
+  } | null>(null);
+  const [heartAnalysis, setHeartAnalysis] = React.useState(postHeartAnalysis);
+  const [cadenceAnalysis, setCadenceAnalysis] =
+    React.useState(postCadenceAnalysis);
+  const [tempAnalysis, setTempAnalysis] = React.useState(postTempAnalysis);
+
   const [initialLoad, setInitialLoad] = React.useState(true);
+
+  const [elevationTotal, setElevationTotal] =
+    React.useState(postElevationTotal);
+  const [normalizedPower, setNormalizedPower] =
+    React.useState(postNormalizedPower);
+  const [distance, setDistance] = React.useState(postDistance);
+  const [elapsedTime, setElapsedTime] = React.useState(postElapsedTime);
+  const [stoppedTime, setStoppedTime] = React.useState(postStoppedTime);
+  const [timeInRed, setTimeInRed] = React.useState(postTimeInRed);
+  const [powerZones, setPowerZones] = React.useState(postPowerZones);
+  const [powerZoneBuckets, setPowerZoneBuckets] =
+    React.useState(postPowerZoneBuckets);
+
+  // editor context
+  const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
+  const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -82,9 +131,20 @@ const Post = ({
       setStravaUrl(postStravaUrl);
       setImages(postImages);
       setCurrentFtp(postCurrentFtp);
-      // setPowerAnalysis(post)
-      console.log('use effect in [id]');
-      console.log('use effect - initial load');
+      setElevationTotal(postElevationTotal);
+      setNormalizedPower(postNormalizedPower);
+      setDistance(postDistance);
+      setElapsedTime(postElapsedTime);
+      setStoppedTime(postStoppedTime);
+      setTimeInRed(postTimeInRed);
+      setHeartAnalysis(postHeartAnalysis);
+      setPowerAnalysis(postPowerAnalysis);
+      setCadenceAnalysis(postCadenceAnalysis);
+      setTempAnalysis(postTempAnalysis);
+      setPowerZones(postPowerZones);
+      setPowerZoneBuckets(postPowerZoneBuckets);
+      // console.log('use effect in [id]');
+      // console.log('use effect - initial load');
     }
   }, [postComponents]);
 
@@ -117,6 +177,28 @@ const Post = ({
         setResultsUrl,
         powerAnalysis,
         setPowerAnalysis,
+        elevationTotal,
+        setElevationTotal,
+        normalizedPower,
+        setNormalizedPower,
+        distance,
+        setDistance,
+        elapsedTime,
+        setElapsedTime,
+        stoppedTime,
+        setStoppedTime,
+        timeInRed,
+        setTimeInRed,
+        heartAnalysis,
+        setHeartAnalysis,
+        cadenceAnalysis,
+        setCadenceAnalysis,
+        tempAnalysis,
+        setTempAnalysis,
+        powerZones,
+        setPowerZones,
+        powerZoneBuckets,
+        setPowerZoneBuckets,
       }}
     >
       <div>
@@ -136,7 +218,16 @@ const Post = ({
           }}
         >
           <Header user={user} signOut={signOut} title={'Edit Post'} />
-          <PostEditor postId={postId} initialState={postComponents} />
+          <EditorContext.Provider
+            value={{
+              setIsGraphMenuOpen,
+              isGraphMenuOpen,
+              setIsFtpUpdating,
+              isFtpUpdating,
+            }}
+          >
+            <PostEditor postId={postId} initialState={postComponents} />
+          </EditorContext.Provider>
         </Box>
       </div>
     </PostContext.Provider>

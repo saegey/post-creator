@@ -1,23 +1,14 @@
-import BlackBox from './BlackBox';
-import {
-  Box,
-  Flex,
-  Text,
-  Input,
-  Button,
-  Close,
-  Label,
-  Spinner,
-} from 'theme-ui';
-import { PostContext } from '../PostContext';
+import { Box, Flex, Text, Input, Button, Label, Spinner } from 'theme-ui';
 import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 
+import { PostContext } from '../PostContext';
+import { EditorContext } from './EditorContext';
 import { UpdatePostMutation } from '../../src/API';
-import { updatePostMinimal } from '../graphql/customMutations';
 import UploadGpxModal from './UploadGpxModal';
 import StandardModal from './StandardModal';
+import { updatePost } from '../../src/graphql/mutations';
 
 const ActivitySettings = ({ isOpen, setSavedMessage }) => {
   const {
@@ -30,22 +21,29 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
     setStravaUrl,
     setResultsUrl,
   } = React.useContext(PostContext);
+
+  const { setIsFtpUpdating } = React.useContext(EditorContext);
+
   const [uploadModal1, setUploadModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-  const ref = React.useRef<any>();
 
   const saveSettings = async (event) => {
     // isOpen(false);
     setIsSaving(true);
     const form = new FormData(event.target);
-    setCurrentFtp(form.get('currentFtp') as string);
+    const newFtp = form.get('currentFtp') as string;
+    if (newFtp !== currentFtp) {
+      setIsFtpUpdating(true);
+    }
+
+    setCurrentFtp(newFtp);
     setStravaUrl(form.get('stravaLink') as string);
     setResultsUrl(form.get('resultsUrl') as string);
 
     try {
       const response = (await API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
-        query: updatePostMinimal,
+        query: updatePost,
         variables: {
           input: {
             stravaUrl: form.get('stravaLink'),
