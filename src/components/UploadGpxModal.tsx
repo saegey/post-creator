@@ -23,6 +23,7 @@ const UploadGpxModal = ({ openModal }) => {
 
   const {
     id,
+    currentFtp,
     setActivity,
     setGpxFile,
     setDistance,
@@ -34,6 +35,9 @@ const UploadGpxModal = ({ openModal }) => {
     setTempAnalysis,
     setHeartAnalysis,
     setCadenceAnalysis,
+    setPowerAnalysis,
+    setPowerZoneBuckets,
+    setPowerZones,
   }: PostContextType = React.useContext(PostContext);
 
   const uploadFile = async () => {
@@ -44,7 +48,11 @@ const UploadGpxModal = ({ openModal }) => {
       progressCallback(progress) {
         setProgress({ loaded: progress.loaded, total: progress.total });
       },
-      metadata: { postId: id, hello: 'world' },
+      metadata: {
+        postId: id,
+        currentFtp: currentFtp ? currentFtp : '0',
+        hello: 'world',
+      },
       contentType: fileData.type,
       level: 'public',
     });
@@ -68,6 +76,7 @@ const UploadGpxModal = ({ openModal }) => {
 
   const processUpdates = async (post) => {
     const activity = await getActivity(post);
+    console.log(post);
     setActivity(activity);
     setGpxFile(post.gpxFile);
     setElevationTotal(post.elevationTotal);
@@ -78,6 +87,10 @@ const UploadGpxModal = ({ openModal }) => {
     setTempAnalysis(JSON.parse(post.tempAnalysis));
     setHeartAnalysis(JSON.parse(post.heartAnalysis));
     setCadenceAnalysis(JSON.parse(post.cadenceAnalysis));
+    setPowerAnalysis(JSON.parse(post.powerAnalysis));
+    setPowerZones(JSON.parse(post.powerZones));
+    setPowerZoneBuckets(JSON.parse(post.powerZoneBuckets));
+    setTimeInRed(post.timeInRed);
   };
 
   React.useEffect(() => {

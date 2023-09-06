@@ -159,10 +159,13 @@ exports.handler = async function (event) {
     const gpxData = (0, togeojson_1.gpx)(xmlDoc);
     gpxParseTimer.close();
     await publishMessage({ phase: 'gpx-parse' });
+    const postId = metaData.Metadata.postid;
+    const currentFtp = metaData.Metadata.currentftp;
     let coordinates = [];
     let powers, powerAnalysis, elevation, distances, elevationGrades;
     let elevationGain, stoppedTime, elapsedTime;
     let heartAnalysis, normalizedPower, cadenceAnalysis, tempAnalysis;
+    let zones, powerZoneBuckets, timeInRedSecs;
     const distance = (0, length_1.default)(gpxData);
     gpxData.features.map((feature) => {
         const { heart, times, atemps, cads } = feature.properties.coordinateProperties;
@@ -182,6 +185,17 @@ exports.handler = async function (event) {
         elevation = (0, exports.calcElevation)(coordinates);
         distances = (0, exports.calcDistances)(coordinates);
         elevationGrades = (0, exports.calcElevationGrades)(coordinates, distances);
+        if (Number(currentFtp) > 0) {
+            zones = (0, gpxHelper_1.calcPowerZones)(Number(currentFtp));
+            powerZoneBuckets = (0, gpxHelper_1.calcPowerZoneBuckets)({
+                zones,
+                powers: powers.map((p) => (p !== null ? Number(p) : 0)),
+            });
+            timeInRedSecs = (0, gpxHelper_1.timeInRed)({
+                powers: powers.map((p) => (p !== null ? Number(p) : 0)),
+                ftp: Number(currentFtp),
+            });
+        }
         downsampleElevationTimer.close();
     });
     await publishMessage({ phase: 'process-data' });
@@ -191,9 +205,9 @@ exports.handler = async function (event) {
             .update({
             TableName: postTable,
             Key: {
-                id: metaData.Metadata.postid,
+                id: postId,
             },
-            UpdateExpression: 'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta',
+            UpdateExpression: 'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red',
             ExpressionAttributeValues: {
                 ':ta': tempAnalysis,
                 ':ca': cadenceAnalysis,
@@ -212,6 +226,9 @@ exports.handler = async function (event) {
                     name: 'elevationGrades',
                 }),
                 ':np': normalizedPower,
+                ':pz': zones ? zones : [],
+                ':pzb': powerZoneBuckets ? powerZoneBuckets : [],
+                ':red': timeInRedSecs ? timeInRedSecs : 0,
             },
         })
             .promise();

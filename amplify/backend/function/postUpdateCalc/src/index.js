@@ -136,7 +136,7 @@ exports.handler = async (event) => {
     const postId = record.dynamodb['Keys']['id']['S'];
     console.log('postId', postId);
 
-    if (oldFtp !== newFtp) {
+    if (oldFtp !== newFtp && record.dynamodb['NewImage']['powers']) {
       const powComp = record.dynamodb['NewImage']['powers']['B'];
       const powers = JSON.parse(await uncompress(powComp));
       const powersClean = powers.map((p) => (p !== null ? Number(p) : 0));

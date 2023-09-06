@@ -11,6 +11,9 @@ import {
   calcStoppage,
   dateDiff,
   calcNormalizedPower,
+  calcPowerZones,
+  calcPowerZoneBuckets,
+  timeInRed,
 } from './gpxHelper';
 // import { AWSIoTProvider } from '@aws-amplify/pubsub';
 
@@ -216,10 +219,13 @@ exports.handler = async function (event: TriggerEvent) {
   gpxParseTimer.close();
   await publishMessage({ phase: 'gpx-parse' });
 
+  const postId = metaData.Metadata.postid;
+  const currentFtp = metaData.Metadata.currentftp;
   let coordinates: Array<any> = [];
   let powers, powerAnalysis, elevation, distances, elevationGrades;
   let elevationGain, stoppedTime, elapsedTime;
   let heartAnalysis, normalizedPower, cadenceAnalysis, tempAnalysis;
+  let zones, powerZoneBuckets, timeInRedSecs;
 
   const distance = length(gpxData);
 
@@ -247,6 +253,19 @@ exports.handler = async function (event: TriggerEvent) {
     elevation = calcElevation(coordinates);
     distances = calcDistances(coordinates);
     elevationGrades = calcElevationGrades(coordinates, distances);
+
+    if (Number(currentFtp) > 0) {
+      zones = calcPowerZones(Number(currentFtp));
+      powerZoneBuckets = calcPowerZoneBuckets({
+        zones,
+        powers: powers.map((p: any) => (p !== null ? Number(p) : 0)),
+      });
+      timeInRedSecs = timeInRed({
+        powers: powers.map((p: any) => (p !== null ? Number(p) : 0)),
+        ftp: Number(currentFtp),
+      });
+    }
+
     downsampleElevationTimer.close();
   });
 
@@ -258,10 +277,10 @@ exports.handler = async function (event: TriggerEvent) {
       .update({
         TableName: postTable,
         Key: {
-          id: metaData.Metadata.postid,
+          id: postId,
         },
         UpdateExpression:
-          'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta',
+          'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red',
         ExpressionAttributeValues: {
           ':ta': tempAnalysis,
           ':ca': cadenceAnalysis,
@@ -280,6 +299,9 @@ exports.handler = async function (event: TriggerEvent) {
             name: 'elevationGrades',
           }),
           ':np': normalizedPower,
+          ':pz': zones ? zones : [],
+          ':pzb': powerZoneBuckets ? powerZoneBuckets : [],
+          ':red': timeInRedSecs ? timeInRedSecs : 0,
         },
       })
       .promise();
