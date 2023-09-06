@@ -2,9 +2,13 @@ import { Box, Flex, Button, Grid } from 'theme-ui';
 import React from 'react';
 import { Descendant, Transforms } from 'slate';
 import { CldImage, CldUploadButton } from 'next-cloudinary';
+import { GraphQLResult } from '@aws-amplify/api';
+import { API } from 'aws-amplify';
 
 import { PostContext } from '../PostContext';
 import StandardModal from './StandardModal';
+import { updatePost } from '../../src/graphql/mutations';
+import { UpdatePostMutation } from '../../src/API';
 
 export interface CloudinaryImage {
   asset_id: string;
@@ -55,11 +59,26 @@ const AddImage = ({ isOpen, editor }) => {
           <CldUploadButton
             className='cloudButton'
             uploadPreset='epcsmymp'
-            onSuccess={(d) => {
+            onSuccess={async (d) => {
               images?.push(d.info as CloudinaryImage);
-              // console.log(d);
+              console.log(images);
               if (images) {
                 setImages([...images]);
+                try {
+                  const response = (await API.graphql({
+                    authMode: 'AMAZON_COGNITO_USER_POOLS',
+                    query: updatePost,
+                    variables: {
+                      input: {
+                        images: JSON.stringify(images),
+                        id: id,
+                      },
+                    },
+                  })) as GraphQLResult<UpdatePostMutation>;
+                  console.log('response', response);
+                } catch (errors) {
+                  console.error(errors);
+                }
               }
             }}
           />
