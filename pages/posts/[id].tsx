@@ -49,7 +49,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postElapsedTime: post.elapsedTime,
       postTimeInRed: post.timeInRed,
       postHeartAnalysis: JSON.parse(post.heartAnalysis),
-      postPowerAnalysis: JSON.parse(post.powerAnalysis),
+      postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
       postCadenceAnalysis: JSON.parse(post.cadenceAnalysis),
       postTempAnalysis: JSON.parse(post.tempAnalysis),
       postPowerZones: JSON.parse(post.powerZones),
@@ -95,7 +95,9 @@ const Post = ({
   const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
 
-  const [powerAnalysis, setPowerAnalysis] = React.useState('');
+  const [powerAnalysis, setPowerAnalysis] = React.useState<{
+    entire: number;
+  } | null>(null);
   const [heartAnalysis, setHeartAnalysis] = React.useState(postHeartAnalysis);
   const [cadenceAnalysis, setCadenceAnalysis] =
     React.useState(postCadenceAnalysis);

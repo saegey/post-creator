@@ -72,21 +72,21 @@ type Props = {
     normalizedPower: number;
     heartAnalysis: {
       entire: number;
-    };
+    } | null;
     tempAnalysis: {
       entire: number;
-    };
+    } | null;
     powerAnalysis: {
       entire: number;
-    };
+    } | null;
     cadenceAnalysis: {
       entire: number;
-    };
+    } | null;
     elapsedTime: {
       seconds: number;
     };
     stoppedTime: number;
-    timeInRed: number;
+    timeInRed: number | string | null;
   };
   selectedFields: string[];
 };
@@ -148,8 +148,10 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
       title: 'Avg Temperature',
       value:
         units.unitOfMeasure === 'metric'
-          ? `${tempAnalysis.entire.toFixed()} °C`
-          : `${(tempAnalysis.entire * (9 / 5) + 32).toFixed()} °F`,
+          ? `${tempAnalysis?.entire.toFixed()} °C`
+          : tempAnalysis && tempAnalysis.entire
+          ? `${(tempAnalysis?.entire * (9 / 5) + 32).toFixed()} °F`
+          : '',
     },
     {
       title: 'Avg Speed',

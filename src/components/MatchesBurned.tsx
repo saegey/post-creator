@@ -7,8 +7,8 @@ type ItemProps = {
     averagePower: number;
     totalJoules: number;
     totalTime: number;
-    vals: number[];
-    startTime: string;
+    // vals: number[];
+    // startTime: string;
   };
 };
 
@@ -61,8 +61,8 @@ type Props = {
     averagePower: number;
     totalJoules: number;
     totalTime: number;
-    vals?: number[];
-    startTime?: string;
+    // vals?: number[];
+    // startTime?: string;
   }>;
 };
 

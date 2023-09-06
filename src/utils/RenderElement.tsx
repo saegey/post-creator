@@ -26,13 +26,7 @@ const renderLeaf = (props) => {
 const renderElement = ({ attributes, children, element }) => {
   switch (element.type) {
     case 'powergraph':
-      return (
-        <PowerGraphElement
-          attributes={attributes}
-          children={children}
-          element={element}
-        />
-      );
+      return <PowerGraphElement element={element} />;
     case 'timeInZones':
       return <TimePowerZonesWrapper element={element} />;
     case 'matchesBurned':

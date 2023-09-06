@@ -19,12 +19,17 @@ export type PostContextType = {
   images: Array<CloudinaryImage> | null;
   currentFtp: string | null;
   resultsUrl: string | null;
-  powerAnalysis: string | null;
-  heartAnalysis: string | null;
-  cadenceAnalysis: string | null;
-  tempAnalysis: string | null;
-  powerZones: string | null;
-  powerZoneBuckets: string | null;
+  powerAnalysis: { entire: number } | null;
+  heartAnalysis: { entire: number } | null;
+  cadenceAnalysis: { entire: number } | null;
+  tempAnalysis: { entire: number } | null;
+  powerZones: Array<{
+    powerLow: number;
+    powerHigh: number;
+    zone: number;
+    title: string;
+  }>;
+  powerZoneBuckets: Array<number>;
   elevationTotal: number | null;
   normalizedPower: number | null;
   distance: number | null;
@@ -43,7 +48,11 @@ export type PostContextType = {
   >;
   setCurrentFtp: React.Dispatch<React.SetStateAction<string>>;
   setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
-  setPowerAnalysis: React.Dispatch<React.SetStateAction<string>>;
+  setPowerAnalysis: React.Dispatch<
+    React.SetStateAction<{
+      entire: number;
+    } | null>
+  >;
   setHeartAnalysis: React.Dispatch<React.SetStateAction<string>>;
   setCadenceAnalysis: React.Dispatch<React.SetStateAction<string>>;
   setTempAnalysis: React.Dispatch<React.SetStateAction<string>>;
@@ -53,8 +62,17 @@ export type PostContextType = {
   setElapsedTime: React.Dispatch<React.SetStateAction<number>>;
   setStoppedTime: React.Dispatch<React.SetStateAction<number>>;
   setTimeInRed: React.Dispatch<React.SetStateAction<number>>;
-  setPowerZones: React.Dispatch<React.SetStateAction<string>>;
-  setPowerZoneBuckets: React.Dispatch<React.SetStateAction<string>>;
+  setPowerZones: React.Dispatch<
+    React.SetStateAction<
+      Array<{
+        powerLow: number;
+        powerHigh: number;
+        zone: number;
+        title: string;
+      }>
+    >
+  >;
+  setPowerZoneBuckets: React.Dispatch<React.SetStateAction<Array<number>>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -68,18 +86,18 @@ const PostContext = React.createContext<PostContextType>({
   images: [],
   currentFtp: '',
   resultsUrl: '',
-  powerAnalysis: '',
-  heartAnalysis: '',
-  cadenceAnalysis: '',
-  tempAnalysis: '',
+  powerAnalysis: null,
+  heartAnalysis: null,
+  cadenceAnalysis: null,
+  tempAnalysis: null,
   elevationTotal: null,
   normalizedPower: null,
   distance: null,
   elapsedTime: null,
   stoppedTime: null,
   timeInRed: null,
-  powerZones: '',
-  powerZoneBuckets: '',
+  powerZones: [],
+  powerZoneBuckets: [],
   setActivity: () => {},
   setTitle: () => {},
   setGpxFile: () => {},
