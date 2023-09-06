@@ -1,13 +1,28 @@
 import { Box, Close } from 'theme-ui';
 import { Transforms } from 'slate';
+import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 
 import ActivityOverview from './ActivityOverview';
+import { PostContext } from '../PostContext';
 
 const ActivityOverviewWrapper = ({ element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
-
+  const {
+    elevationTotal,
+    normalizedPower,
+    heartAnalysis,
+    distance,
+    elapsedTime,
+    stoppedTime,
+    timeInRed,
+    powerAnalysis,
+    cadenceAnalysis,
+    tempAnalysis,
+    currentFtp,
+  } = React.useContext(PostContext);
+  // console.log('tempAnalysis', tempAnalysis);
   return (
     <Box
       sx={{
@@ -20,24 +35,33 @@ const ActivityOverviewWrapper = ({ element }) => {
     >
       <ActivityOverview
         data={{
-          elevationGain: 1000,
-          distance: 5000,
-          normalizedPower: 250,
-          heartAnalysis: { entire: 150 },
-          powerAnalysis: { entire: 150 },
-          cadenceAnalysis: { entire: 150 },
-          tempAnalysis: { entire: 150 },
-          stoppedTime: 5000,
-          elapsedTime: { seconds: 150 },
-          timeInRed: 420,
+          elevationGain: elevationTotal ? elevationTotal : 0,
+          distance: distance ? distance : 0,
+          normalizedPower: normalizedPower ? normalizedPower : 0,
+          heartAnalysis: heartAnalysis ? heartAnalysis : null,
+          powerAnalysis: powerAnalysis ? powerAnalysis : null,
+          cadenceAnalysis: cadenceAnalysis ? cadenceAnalysis : null,
+          tempAnalysis: tempAnalysis ? tempAnalysis : null,
+          stoppedTime: stoppedTime ? stoppedTime : 0,
+          elapsedTime: { seconds: elapsedTime ? elapsedTime : 0 },
+          timeInRed: timeInRed
+            ? timeInRed
+            : currentFtp !== undefined
+            ? timeInRed
+            : 0,
         }}
         selectedFields={[
           'Normalized Power',
           'Avg Heart Rate',
           'Distance',
-          'Elapsed Time',
+          'Elevation Gain',
           'Avg Temperature',
           'Avg Speed',
+          'Elapsed Time',
+          'Stopped Time',
+          'Time in Red',
+          'Avg Cadence',
+          'Avg Power',
         ]}
       />
       <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>

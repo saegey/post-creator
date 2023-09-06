@@ -21,8 +21,20 @@ const UploadGpxModal = ({ openModal }) => {
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState('');
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
-  const { id, setActivity, setGpxFile }: PostContextType =
-    React.useContext(PostContext);
+  const {
+    id,
+    setActivity,
+    setGpxFile,
+    setDistance,
+    setElevationTotal,
+    setElapsedTime,
+    setStoppedTime,
+    setTimeInRed,
+    setNormalizedPower,
+    setTempAnalysis,
+    setHeartAnalysis,
+    setCadenceAnalysis,
+  }: PostContextType = React.useContext(PostContext);
 
   const uploadFile = async () => {
     setIsUploading(true);
@@ -58,6 +70,14 @@ const UploadGpxModal = ({ openModal }) => {
     const activity = await getActivity(post);
     setActivity(activity);
     setGpxFile(post.gpxFile);
+    setElevationTotal(post.elevationTotal);
+    setDistance(post.distance);
+    setElapsedTime(post.elapsedTime);
+    setStoppedTime(post.stoppedTime);
+    setNormalizedPower(post.normalizedPower);
+    setTempAnalysis(JSON.parse(post.tempAnalysis));
+    setHeartAnalysis(JSON.parse(post.heartAnalysis));
+    setCadenceAnalysis(JSON.parse(post.cadenceAnalysis));
   };
 
   React.useEffect(() => {

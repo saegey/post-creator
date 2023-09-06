@@ -20,6 +20,15 @@ export type PostContextType = {
   currentFtp: string | null;
   resultsUrl: string | null;
   powerAnalysis: string | null;
+  heartAnalysis: string | null;
+  cadenceAnalysis: string | null;
+  tempAnalysis: string | null;
+  elevationTotal: number | null;
+  normalizedPower: number | null;
+  distance: number | null;
+  elapsedTime: number | null;
+  stoppedTime: number | null;
+  timeInRed: number | null;
   setActivity: React.Dispatch<React.SetStateAction<object>>;
   setTitle: React.Dispatch<React.SetStateAction<string | null>>;
   setGpxFile: React.Dispatch<React.SetStateAction<string>>;
@@ -33,6 +42,15 @@ export type PostContextType = {
   setCurrentFtp: React.Dispatch<React.SetStateAction<string>>;
   setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
   setPowerAnalysis: React.Dispatch<React.SetStateAction<string>>;
+  setHeartAnalysis: React.Dispatch<React.SetStateAction<string>>;
+  setCadenceAnalysis: React.Dispatch<React.SetStateAction<string>>;
+  setTempAnalysis: React.Dispatch<React.SetStateAction<string>>;
+  setElevationTotal: React.Dispatch<React.SetStateAction<number>>;
+  setNormalizedPower: React.Dispatch<React.SetStateAction<number>>;
+  setDistance: React.Dispatch<React.SetStateAction<number>>;
+  setElapsedTime: React.Dispatch<React.SetStateAction<number>>;
+  setStoppedTime: React.Dispatch<React.SetStateAction<number>>;
+  setTimeInRed: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -47,6 +65,15 @@ const PostContext = React.createContext<PostContextType>({
   currentFtp: '',
   resultsUrl: '',
   powerAnalysis: '',
+  heartAnalysis: '',
+  cadenceAnalysis: '',
+  tempAnalysis: '',
+  elevationTotal: null,
+  normalizedPower: null,
+  distance: null,
+  elapsedTime: null,
+  stoppedTime: null,
+  timeInRed: null,
   setActivity: () => {},
   setTitle: () => {},
   setGpxFile: () => {},
@@ -58,6 +85,15 @@ const PostContext = React.createContext<PostContextType>({
   setCurrentFtp: () => {},
   setResultsUrl: () => {},
   setPowerAnalysis: () => {},
+  setHeartAnalysis: () => {},
+  setElevationTotal: () => {},
+  setNormalizedPower: () => {},
+  setDistance: () => {},
+  setElapsedTime: () => {},
+  setStoppedTime: () => {},
+  setTimeInRed: () => {},
+  setCadenceAnalysis: () => {},
+  setTempAnalysis: () => {},
 });
 
 export { PostContext };

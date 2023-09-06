@@ -93,7 +93,7 @@ const GraphSelectorMenu = ({ editor }) => {
             as='span'
             sx={{ lineHeight: '30px', fontSize: '18px', fontWeight: '600' }}
           >
-            Graphs
+            Components
           </Text>
           <Close
             onClick={() => setIsGraphMenuOpen(false)}

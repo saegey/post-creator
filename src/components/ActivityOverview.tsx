@@ -1,5 +1,5 @@
 import { Box, Text, Grid } from 'theme-ui';
-
+import React from 'react';
 // import { useUnits } from '../../../context/UnitProvider'
 import { useUnits } from '@saegey/posts.units';
 
@@ -113,7 +113,7 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     },
     {
       title: 'Avg Heart Rate',
-      value: `${heartAnalysis.entire} bpm`,
+      value: heartAnalysis ? `${heartAnalysis.entire} bpm` : 'undfined',
     },
     {
       title: 'Distance',
@@ -168,7 +168,10 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     },
     {
       title: 'Time in Red',
-      value: `${new Date(timeInRed * 1000).toISOString().substr(11, 8)}`,
+      value:
+        timeInRed === 0 || timeInRed === null
+          ? 'no power data or ftp set'
+          : `${new Date(timeInRed * 1000).toISOString().substr(11, 8)}`,
     },
   ];
 

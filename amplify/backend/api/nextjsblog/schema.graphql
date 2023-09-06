@@ -33,6 +33,7 @@ type Post
     rules: [
       { allow: owner, operations: [create, delete, read, update] }
       { allow: public, operations: [read] }
+      { allow: private, provider: iam }
     ]
   ) {
   id: ID!
@@ -60,6 +61,15 @@ type Post
   blog: Blog @belongsTo
   related: [Post] @hasMany
   author: User @hasOne
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 }

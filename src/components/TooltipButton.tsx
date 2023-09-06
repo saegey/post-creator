@@ -1,11 +1,18 @@
 import { IconButton, Text } from 'theme-ui';
 
-const TooltipButton = ({ onClick, title, tooltipText, children }) => {
+const TooltipButton = ({
+  onClick,
+  title,
+  tooltipText,
+  children,
+  disabled = false,
+}) => {
   return (
     <IconButton
       aria-label={title}
       onClick={onClick}
       variant='iconButton'
+      disabled={disabled}
       sx={{
         position: 'relative',
         // display: 'inline-block',

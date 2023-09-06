@@ -1,0 +1,24 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "api": {
+      "api12660653": [
+        "read",
+        "update"
+      ],
+      "nextjsblog": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "function": {
+      "S3Trigger71ba5706": [
+        "create"
+      ],
+      "nextjsblog24b60079": [
+        "create"
+      ]
+    }
+  }
+}

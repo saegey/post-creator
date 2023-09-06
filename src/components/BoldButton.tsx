@@ -2,22 +2,24 @@ import { IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import { Editor } from 'slate';
 
-const toggleBold = ({ editor }: { editor: ReactEditor }) => {
-  const marks = Editor.marks(editor);
-  const isActive = marks ? marks['bold'] === true : false;
-  if (isActive) {
-    Editor.removeMark(editor, 'bold');
-  } else {
-    Editor.addMark(editor, 'bold', true);
-  }
-};
+import TooltipButton from './TooltipButton';
 
 const BoldButton = ({ editor }: { editor: ReactEditor }) => {
+  const toggleBold = () => {
+    const marks = Editor.marks(editor);
+    const isActive = marks ? marks['bold'] === true : false;
+    if (isActive) {
+      Editor.removeMark(editor, 'bold');
+    } else {
+      Editor.addMark(editor, 'bold', true);
+    }
+  };
+
   return (
-    <IconButton
-      aria-label='Toggle bold text'
-      onClick={() => toggleBold({ editor })}
-      variant='iconButton'
+    <TooltipButton
+      onClick={toggleBold}
+      title={'Toggle Bold Text'}
+      tooltipText={'Toggle Selected Text to Bold'}
     >
       <svg
         className='menu-button'
@@ -32,7 +34,7 @@ const BoldButton = ({ editor }: { editor: ReactEditor }) => {
           fillRule='evenodd'
         />
       </svg>
-    </IconButton>
+    </TooltipButton>
   );
 };
 

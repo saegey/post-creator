@@ -1,6 +1,6 @@
 import { Slate, Editable, withReact } from 'slate-react';
-import { API } from 'aws-amplify';
-import { GraphQLResult } from '@aws-amplify/api';
+import { API, Amplify, graphqlOperation } from 'aws-amplify';
+import { GraphQLResult, GraphQLSubscription } from '@aws-amplify/api';
 import React from 'react';
 import { createEditor, Editor, Transforms, Descendant } from 'slate';
 import { Flex, Text, Box, Close } from 'theme-ui';
@@ -17,10 +17,20 @@ import {
   getActivityQueryProps,
 } from '../../src/graphql/customQueries';
 import GraphSelectorMenu from './GraphSelectorMenu';
+import * as subscriptions from '../../src/graphql/subscriptions';
+
+// import { Amplify, API, graphqlOperation } from 'aws-amplify';
+// import { GraphQLSubscription } from '@aws-amplify/api';
+// import * as subscriptions from './graphql/subscriptions';
+import { OnUpdatePostSubscription } from '../API';
+
+// Stop receiving data updates from the subscription
+// sub.unsubscribe();
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
   const [loading, setLoading] = React.useState(true);
+  // const subscription = React.useRef();
 
   const {
     setTitle,
@@ -31,10 +41,10 @@ const PostEditor = ({ postId, initialState }) => {
     setActivity,
     setPowerAnalysis,
     components,
+    setTimeInRed,
   } = React.useContext(PostContext);
 
-  const { isGraphMenuOpen, setIsGraphMenuOpen } =
-    React.useContext(EditorContext);
+  const { isGraphMenuOpen } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -43,6 +53,32 @@ const PostEditor = ({ postId, initialState }) => {
       }, 1000);
     }
   }, [initialState]);
+
+  React.useEffect(() => {
+    const subscription = API.graphql<
+      GraphQLSubscription<OnUpdatePostSubscription>
+    >(graphqlOperation(subscriptions.onUpdatePost)).subscribe({
+      next: ({ provider, value }) => {
+        console.log({ provider, value });
+        console.log(value.data?.onUpdatePost?.timeInRed);
+        setTimeInRed(value.data?.onUpdatePost?.timeInRed);
+      },
+      error: (error) => console.warn(error),
+    });
+
+    return () => {
+      console.log('post subscription destroy', subscription.unsubscribe());
+    };
+  }, []);
+
+  // API.graphql(
+  //     graphqlOperation(subscriptions.itemUpdated, {
+  //        id: Id,
+  //     }),
+  //   ).subscribe({
+  //     next: handleSubscription,
+  //   });
+  // Subscribe to creation of Todo
 
   React.useEffect(() => {
     editor.children = components as any;
@@ -61,7 +97,7 @@ const PostEditor = ({ postId, initialState }) => {
       console.error('faileed too get activity data');
       return;
     }
-    // console.log('post editor - get Activity');
+
     const activity = await getActivity(data.getPost);
     if (data.getPost.powerAnalysis) {
       setPowerAnalysis(JSON.parse(data.getPost.powerAnalysis));
@@ -75,8 +111,6 @@ const PostEditor = ({ postId, initialState }) => {
       setActivity(d as any);
     });
   }, [id]);
-
-  // return <SkeletonPost />;
 
   return (
     <>

@@ -18,6 +18,7 @@ import { UpdatePostMutation } from '../../src/API';
 import { updatePostMinimal } from '../graphql/customMutations';
 import UploadGpxModal from './UploadGpxModal';
 import StandardModal from './StandardModal';
+import { updatePost } from '../../src/graphql/mutations';
 
 const ActivitySettings = ({ isOpen, setSavedMessage }) => {
   const {
@@ -45,7 +46,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
     try {
       const response = (await API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
-        query: updatePostMinimal,
+        query: updatePost,
         variables: {
           input: {
             stravaUrl: form.get('stravaLink'),

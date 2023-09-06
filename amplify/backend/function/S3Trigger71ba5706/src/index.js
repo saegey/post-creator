@@ -11,6 +11,7 @@ const helpers_1 = require("@turf/helpers");
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const aws_xray_sdk_1 = __importDefault(require("aws-xray-sdk"));
 const zlib_1 = __importDefault(require("zlib"));
+const gpxHelper_1 = require("./gpxHelper");
 // import { AWSIoTProvider } from '@aws-amplify/pubsub';
 // const AWS = require('aws-sdk');
 const iotdata = new aws_sdk_1.default.IotData({
@@ -160,14 +161,23 @@ exports.handler = async function (event) {
     await publishMessage({ phase: 'gpx-parse' });
     let coordinates = [];
     let powers, powerAnalysis, elevation, distances, elevationGrades;
+    let elevationGain, stoppedTime, elapsedTime;
+    let heartAnalysis, normalizedPower, cadenceAnalysis, tempAnalysis;
+    const distance = (0, length_1.default)(gpxData);
     gpxData.features.map((feature) => {
-        // const { powers, heart, times, atemps, cads } =
-        //   feature.properties.coordinateProperties;
+        const { heart, times, atemps, cads } = feature.properties.coordinateProperties;
         coordinates = feature.geometry.coordinates;
         powers = feature.properties.coordinateProperties.powers;
         const powerAnalysisTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
         powerAnalysis = (0, exports.calcBestPowers)(timeIntervals(powers.length), powers);
+        heartAnalysis = (0, exports.calcBestPowers)(timeIntervals(heart.length), heart);
+        cadenceAnalysis = (0, exports.calcBestPowers)(timeIntervals(cads.length), cads, true);
+        tempAnalysis = (0, exports.calcBestPowers)(timeIntervals(atemps.length), atemps, true);
         powerAnalysisTimer.close();
+        normalizedPower = (0, gpxHelper_1.calcNormalizedPower)(powers);
+        elevationGain = (0, gpxHelper_1.calcElevationGain)(coordinates);
+        stoppedTime = (0, gpxHelper_1.calcStoppage)(coordinates, times);
+        elapsedTime = (0, gpxHelper_1.dateDiff)(new Date(times[0]), new Date(times.at(-1))).seconds;
         const downsampleElevationTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
         elevation = (0, exports.calcElevation)(coordinates);
         distances = (0, exports.calcDistances)(coordinates);
@@ -183,9 +193,16 @@ exports.handler = async function (event) {
             Key: {
                 id: metaData.Metadata.postid,
             },
-            UpdateExpression: 'SET powerAnalysis = :s, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg',
+            UpdateExpression: 'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta',
             ExpressionAttributeValues: {
+                ':ta': tempAnalysis,
+                ':ca': cadenceAnalysis,
+                ':dis': distance,
                 ':s': powerAnalysis,
+                ':hr': heartAnalysis,
+                ':el': elevationGain,
+                ':st': stoppedTime,
+                ':et': elapsedTime,
                 ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
                 ':e': await shrinkify({ field: elevation, name: 'elevation' }),
                 ':p': await shrinkify({ field: powers, name: 'powers' }),
@@ -194,6 +211,7 @@ exports.handler = async function (event) {
                     field: elevationGrades,
                     name: 'elevationGrades',
                 }),
+                ':np': normalizedPower,
             },
         })
             .promise();

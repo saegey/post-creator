@@ -69,6 +69,15 @@ export const getBlog = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
           createdAt
           updatedAt
           blogPostsId
@@ -172,6 +181,15 @@ export const getPost = /* GraphQL */ `
           elevation
           elevationGrades
           distances
+          elevationTotal
+          normalizedPower
+          distance
+          heartAnalysis
+          cadenceAnalysis
+          tempAnalysis
+          elapsedTime
+          stoppedTime
+          timeInRed
           createdAt
           updatedAt
           blogPostsId
@@ -194,6 +212,15 @@ export const getPost = /* GraphQL */ `
         owner
         __typename
       }
+      elevationTotal
+      normalizedPower
+      distance
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      elapsedTime
+      stoppedTime
+      timeInRed
       createdAt
       updatedAt
       blogPostsId
@@ -257,6 +284,15 @@ export const listPosts = /* GraphQL */ `
           owner
           __typename
         }
+        elevationTotal
+        normalizedPower
+        distance
+        heartAnalysis
+        cadenceAnalysis
+        tempAnalysis
+        elapsedTime
+        stoppedTime
+        timeInRed
         createdAt
         updatedAt
         blogPostsId

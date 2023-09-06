@@ -5,6 +5,13 @@ import { lineString } from '@turf/helpers';
 import AWS from 'aws-sdk';
 import AWSXRay from 'aws-xray-sdk';
 import zlib from 'zlib';
+
+import {
+  calcElevationGain,
+  calcStoppage,
+  dateDiff,
+  calcNormalizedPower,
+} from './gpxHelper';
 // import { AWSIoTProvider } from '@aws-amplify/pubsub';
 
 // const AWS = require('aws-sdk');
@@ -211,16 +218,30 @@ exports.handler = async function (event: TriggerEvent) {
 
   let coordinates: Array<any> = [];
   let powers, powerAnalysis, elevation, distances, elevationGrades;
+  let elevationGain, stoppedTime, elapsedTime;
+  let heartAnalysis, normalizedPower, cadenceAnalysis, tempAnalysis;
+
+  const distance = length(gpxData);
 
   gpxData.features.map((feature: any) => {
-    // const { powers, heart, times, atemps, cads } =
-    //   feature.properties.coordinateProperties;
+    const { heart, times, atemps, cads } =
+      feature.properties.coordinateProperties;
     coordinates = feature.geometry.coordinates;
     powers = feature.properties.coordinateProperties.powers;
 
     const powerAnalysisTimer = segment?.addNewSubsegment('powerAnalysis');
+
     powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
+    heartAnalysis = calcBestPowers(timeIntervals(heart.length), heart);
+    cadenceAnalysis = calcBestPowers(timeIntervals(cads.length), cads, true);
+    tempAnalysis = calcBestPowers(timeIntervals(atemps.length), atemps, true);
+
     powerAnalysisTimer.close();
+
+    normalizedPower = calcNormalizedPower(powers);
+    elevationGain = calcElevationGain(coordinates);
+    stoppedTime = calcStoppage(coordinates, times);
+    elapsedTime = dateDiff(new Date(times[0]), new Date(times.at(-1))).seconds;
 
     const downsampleElevationTimer = segment?.addNewSubsegment('powerAnalysis');
     elevation = calcElevation(coordinates);
@@ -240,9 +261,16 @@ exports.handler = async function (event: TriggerEvent) {
           id: metaData.Metadata.postid,
         },
         UpdateExpression:
-          'SET powerAnalysis = :s, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg',
+          'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta',
         ExpressionAttributeValues: {
+          ':ta': tempAnalysis,
+          ':ca': cadenceAnalysis,
+          ':dis': distance,
           ':s': powerAnalysis,
+          ':hr': heartAnalysis,
+          ':el': elevationGain,
+          ':st': stoppedTime,
+          ':et': elapsedTime,
           ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
           ':e': await shrinkify({ field: elevation, name: 'elevation' }),
           ':p': await shrinkify({ field: powers, name: 'powers' }),
@@ -251,6 +279,7 @@ exports.handler = async function (event: TriggerEvent) {
             field: elevationGrades,
             name: 'elevationGrades',
           }),
+          ':np': normalizedPower,
         },
       })
       .promise();
