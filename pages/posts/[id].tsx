@@ -52,6 +52,8 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postPowerAnalysis: JSON.parse(post.powerAnalysis),
       postCadenceAnalysis: JSON.parse(post.cadenceAnalysis),
       postTempAnalysis: JSON.parse(post.tempAnalysis),
+      postPowerZones: JSON.parse(post.powerZones),
+      postPowerZoneBuckets: JSON.parse(post.powerZoneBuckets),
     },
   };
 };
@@ -78,6 +80,8 @@ const Post = ({
   postPowerAnalysis,
   postCadenceAnalysis,
   postTempAnalysis,
+  postPowerZones,
+  postPowerZoneBuckets,
 }) => {
   // const router = useRouter();
   const [title, setTitle] = React.useState(postTitle);
@@ -98,7 +102,7 @@ const Post = ({
   const [tempAnalysis, setTempAnalysis] = React.useState(postTempAnalysis);
 
   const [initialLoad, setInitialLoad] = React.useState(true);
-  const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
+
   const [elevationTotal, setElevationTotal] =
     React.useState(postElevationTotal);
   const [normalizedPower, setNormalizedPower] =
@@ -107,6 +111,13 @@ const Post = ({
   const [elapsedTime, setElapsedTime] = React.useState(postElapsedTime);
   const [stoppedTime, setStoppedTime] = React.useState(postStoppedTime);
   const [timeInRed, setTimeInRed] = React.useState(postTimeInRed);
+  const [powerZones, setPowerZones] = React.useState(postPowerZones);
+  const [powerZoneBuckets, setPowerZoneBuckets] =
+    React.useState(postPowerZoneBuckets);
+
+  // editor context
+  const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
+  const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -128,6 +139,8 @@ const Post = ({
       setPowerAnalysis(postPowerAnalysis);
       setCadenceAnalysis(postCadenceAnalysis);
       setTempAnalysis(postTempAnalysis);
+      setPowerZones(postPowerZones);
+      setPowerZoneBuckets(postPowerZoneBuckets);
       // console.log('use effect in [id]');
       // console.log('use effect - initial load');
     }
@@ -180,6 +193,10 @@ const Post = ({
         setCadenceAnalysis,
         tempAnalysis,
         setTempAnalysis,
+        powerZones,
+        setPowerZones,
+        powerZoneBuckets,
+        setPowerZoneBuckets,
       }}
     >
       <div>
@@ -200,7 +217,12 @@ const Post = ({
         >
           <Header user={user} signOut={signOut} title={'Edit Post'} />
           <EditorContext.Provider
-            value={{ setIsGraphMenuOpen, isGraphMenuOpen }}
+            value={{
+              setIsGraphMenuOpen,
+              isGraphMenuOpen,
+              setIsFtpUpdating,
+              isFtpUpdating,
+            }}
           >
             <PostEditor postId={postId} initialState={postComponents} />
           </EditorContext.Provider>

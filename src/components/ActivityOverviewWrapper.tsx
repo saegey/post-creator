@@ -5,6 +5,7 @@ import { useSlateStatic, ReactEditor } from 'slate-react';
 
 import ActivityOverview from './ActivityOverview';
 import { PostContext } from '../PostContext';
+import { EditorContext } from './EditorContext';
 
 const ActivityOverviewWrapper = ({ element }) => {
   const editor = useSlateStatic() as ReactEditor;
@@ -22,6 +23,8 @@ const ActivityOverviewWrapper = ({ element }) => {
     tempAnalysis,
     currentFtp,
   } = React.useContext(PostContext);
+
+  const { isFtpUpdating } = React.useContext(EditorContext);
   // console.log('tempAnalysis', tempAnalysis);
   return (
     <Box
@@ -44,7 +47,9 @@ const ActivityOverviewWrapper = ({ element }) => {
           tempAnalysis: tempAnalysis ? tempAnalysis : null,
           stoppedTime: stoppedTime ? stoppedTime : 0,
           elapsedTime: { seconds: elapsedTime ? elapsedTime : 0 },
-          timeInRed: timeInRed
+          timeInRed: isFtpUpdating
+            ? '....'
+            : timeInRed
             ? timeInRed
             : currentFtp !== undefined
             ? timeInRed

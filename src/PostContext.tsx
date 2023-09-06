@@ -23,6 +23,8 @@ export type PostContextType = {
   heartAnalysis: string | null;
   cadenceAnalysis: string | null;
   tempAnalysis: string | null;
+  powerZones: string | null;
+  powerZoneBuckets: string | null;
   elevationTotal: number | null;
   normalizedPower: number | null;
   distance: number | null;
@@ -51,6 +53,8 @@ export type PostContextType = {
   setElapsedTime: React.Dispatch<React.SetStateAction<number>>;
   setStoppedTime: React.Dispatch<React.SetStateAction<number>>;
   setTimeInRed: React.Dispatch<React.SetStateAction<number>>;
+  setPowerZones: React.Dispatch<React.SetStateAction<string>>;
+  setPowerZoneBuckets: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -74,6 +78,8 @@ const PostContext = React.createContext<PostContextType>({
   elapsedTime: null,
   stoppedTime: null,
   timeInRed: null,
+  powerZones: '',
+  powerZoneBuckets: '',
   setActivity: () => {},
   setTitle: () => {},
   setGpxFile: () => {},
@@ -94,6 +100,8 @@ const PostContext = React.createContext<PostContextType>({
   setTimeInRed: () => {},
   setCadenceAnalysis: () => {},
   setTempAnalysis: () => {},
+  setPowerZones: () => {},
+  setPowerZoneBuckets: () => {},
 });
 
 export { PostContext };

@@ -12,6 +12,16 @@ type RaceStatsProps = {
   items: Item[];
 };
 
+const getTimeInRed = (timeInRed) => {
+  if (timeInRed === 0 || timeInRed === null) {
+    return 'no power data';
+  }
+  if (timeInRed === '....') {
+    return '....';
+  }
+  return `${new Date(timeInRed * 1000).toISOString().substr(11, 8)}`;
+};
+
 const RaceStats = ({ items }: RaceStatsProps) => {
   return (
     <Grid
@@ -168,10 +178,7 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     },
     {
       title: 'Time in Red',
-      value:
-        timeInRed === 0 || timeInRed === null
-          ? 'no power data or ftp set'
-          : `${new Date(timeInRed * 1000).toISOString().substr(11, 8)}`,
+      value: getTimeInRed(timeInRed),
     },
   ];
 

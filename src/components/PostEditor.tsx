@@ -1,9 +1,9 @@
 import { Slate, Editable, withReact } from 'slate-react';
-import { API, Amplify, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult, GraphQLSubscription } from '@aws-amplify/api';
 import React from 'react';
-import { createEditor, Editor, Transforms, Descendant } from 'slate';
-import { Flex, Text, Box, Close } from 'theme-ui';
+import { createEditor, Editor } from 'slate';
+import { Flex, Text, Box } from 'theme-ui';
 import { withHistory } from 'slate-history';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
@@ -19,18 +19,11 @@ import {
 import GraphSelectorMenu from './GraphSelectorMenu';
 import * as subscriptions from '../../src/graphql/subscriptions';
 
-// import { Amplify, API, graphqlOperation } from 'aws-amplify';
-// import { GraphQLSubscription } from '@aws-amplify/api';
-// import * as subscriptions from './graphql/subscriptions';
 import { OnUpdatePostSubscription } from '../API';
-
-// Stop receiving data updates from the subscription
-// sub.unsubscribe();
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
   const [loading, setLoading] = React.useState(true);
-  // const subscription = React.useRef();
 
   const {
     setTitle,
@@ -42,7 +35,10 @@ const PostEditor = ({ postId, initialState }) => {
     setPowerAnalysis,
     components,
     setTimeInRed,
+    setPowerZones,
+    setPowerZoneBuckets,
   } = React.useContext(PostContext);
+  const { setIsFtpUpdating } = React.useContext(EditorContext);
 
   const { isGraphMenuOpen } = React.useContext(EditorContext);
 
@@ -59,26 +55,30 @@ const PostEditor = ({ postId, initialState }) => {
       GraphQLSubscription<OnUpdatePostSubscription>
     >(graphqlOperation(subscriptions.onUpdatePost)).subscribe({
       next: ({ provider, value }) => {
+        if (
+          !value.data?.onUpdatePost?.powerZoneBuckets ||
+          !value.data?.onUpdatePost?.timeInRed ||
+          !value.data?.onUpdatePost?.powerZones
+        ) {
+          return;
+        }
         console.log({ provider, value });
-        console.log(value.data?.onUpdatePost?.timeInRed);
+
         setTimeInRed(value.data?.onUpdatePost?.timeInRed);
+        setPowerZoneBuckets(
+          JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
+        );
+        setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
+        setIsFtpUpdating(false);
       },
       error: (error) => console.warn(error),
     });
 
     return () => {
-      console.log('post subscription destroy', subscription.unsubscribe());
+      console.log('post subscription destroy');
+      subscription.unsubscribe();
     };
   }, []);
-
-  // API.graphql(
-  //     graphqlOperation(subscriptions.itemUpdated, {
-  //        id: Id,
-  //     }),
-  //   ).subscribe({
-  //     next: handleSubscription,
-  //   });
-  // Subscribe to creation of Todo
 
   React.useEffect(() => {
     editor.children = components as any;
@@ -93,6 +93,7 @@ const PostEditor = ({ postId, initialState }) => {
         id: id,
       },
     })) as GraphQLResult<getActivityQueryProps>;
+
     if (!data || !data.getPost) {
       console.error('faileed too get activity data');
       return;

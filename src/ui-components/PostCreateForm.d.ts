@@ -43,6 +43,8 @@ export declare type PostCreateFormInputValues = {
     elapsedTime?: number;
     stoppedTime?: number;
     timeInRed?: number;
+    powerZones?: string;
+    powerZoneBuckets?: string;
 };
 export declare type PostCreateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -75,6 +77,8 @@ export declare type PostCreateFormValidationValues = {
     elapsedTime?: ValidationFunction<number>;
     stoppedTime?: ValidationFunction<number>;
     timeInRed?: ValidationFunction<number>;
+    powerZones?: ValidationFunction<string>;
+    powerZoneBuckets?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostCreateFormOverridesProps = {
@@ -109,6 +113,8 @@ export declare type PostCreateFormOverridesProps = {
     elapsedTime?: PrimitiveOverrideProps<TextFieldProps>;
     stoppedTime?: PrimitiveOverrideProps<TextFieldProps>;
     timeInRed?: PrimitiveOverrideProps<TextFieldProps>;
+    powerZones?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    powerZoneBuckets?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type PostCreateFormProps = React.PropsWithChildren<{
     overrides?: PostCreateFormOverridesProps | undefined | null;

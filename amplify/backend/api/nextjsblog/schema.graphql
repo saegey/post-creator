@@ -70,6 +70,8 @@ type Post
   elapsedTime: Int
   stoppedTime: Int
   timeInRed: Int
+  powerZones: AWSJSON
+  powerZoneBuckets: AWSJSON
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 }

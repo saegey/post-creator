@@ -97,6 +97,8 @@ export const createBlog = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -156,6 +158,8 @@ export const updateBlog = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -215,6 +219,8 @@ export const deleteBlog = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -306,6 +312,8 @@ export const createPost = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -337,6 +345,8 @@ export const createPost = /* GraphQL */ `
       elapsedTime
       stoppedTime
       timeInRed
+      powerZones
+      powerZoneBuckets
       createdAt
       updatedAt
       blogPostsId
@@ -420,6 +430,8 @@ export const updatePost = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -451,6 +463,8 @@ export const updatePost = /* GraphQL */ `
       elapsedTime
       stoppedTime
       timeInRed
+      powerZones
+      powerZoneBuckets
       createdAt
       updatedAt
       blogPostsId
@@ -534,6 +548,8 @@ export const deletePost = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -565,6 +581,8 @@ export const deletePost = /* GraphQL */ `
       elapsedTime
       stoppedTime
       timeInRed
+      powerZones
+      powerZoneBuckets
       createdAt
       updatedAt
       blogPostsId

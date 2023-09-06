@@ -17,9 +17,9 @@ const SaveButton = ({ editor, setIsSaving, isSaving, setSavedMessage }) => {
       title: title,
       postLocation: postLocation,
       components: editor.children,
-      stravaUrl: stravaUrl ? stravaUrl : '',
-      resultsUrl: resultsUrl ? resultsUrl : '',
-      currentFtp: currentFtp ? currentFtp : '',
+      // stravaUrl: stravaUrl ? stravaUrl : '',
+      // resultsUrl: resultsUrl ? resultsUrl : '',
+      // currentFtp: currentFtp ? currentFtp : '',
     });
     setSavedMessage(true);
 

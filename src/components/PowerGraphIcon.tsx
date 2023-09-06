@@ -17,16 +17,16 @@ const PowerGraphIcon = () => (
     <path
       d='M49 10C153.5 111 119.5 194.5 225.5 198'
       stroke='var(--theme-ui-colors-text)'
-      stroke-width='20'
-      stroke-miterlimit='11.4737'
-      stroke-linecap='round'
+      strokeWidth='20'
+      strokeMiterlimit='11.4737'
+      strokeLinecap='round'
     />
     <path
       d='M180 24L160 62.5H188.5L167 97'
       stroke='var(--theme-ui-colors-text)'
-      stroke-width='20'
-      stroke-miterlimit='11.4737'
-      stroke-linecap='round'
+      strokeWidth='20'
+      strokeMiterlimit='11.4737'
+      strokeLinecap='round'
     />
   </svg>
 );

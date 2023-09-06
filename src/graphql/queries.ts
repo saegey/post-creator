@@ -78,6 +78,8 @@ export const getBlog = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -190,6 +192,8 @@ export const getPost = /* GraphQL */ `
           elapsedTime
           stoppedTime
           timeInRed
+          powerZones
+          powerZoneBuckets
           createdAt
           updatedAt
           blogPostsId
@@ -221,6 +225,8 @@ export const getPost = /* GraphQL */ `
       elapsedTime
       stoppedTime
       timeInRed
+      powerZones
+      powerZoneBuckets
       createdAt
       updatedAt
       blogPostsId
@@ -293,6 +299,8 @@ export const listPosts = /* GraphQL */ `
         elapsedTime
         stoppedTime
         timeInRed
+        powerZones
+        powerZoneBuckets
         createdAt
         updatedAt
         blogPostsId

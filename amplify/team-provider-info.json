@@ -32,7 +32,7 @@
         },
         "postUpdateCalc": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/postUpdateCalc-3469624f626e71717a31-build.zip"
+          "s3Key": "amplify-builds/postUpdateCalc-3659526166743871726f-build.zip"
         },
         "blalblah": {}
       },

@@ -61,6 +61,8 @@ export default function PostUpdateForm(props) {
     elapsedTime: "",
     stoppedTime: "",
     timeInRed: "",
+    powerZones: "",
+    powerZoneBuckets: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [gpxFile, setGpxFile] = React.useState(initialValues.gpxFile);
@@ -118,6 +120,10 @@ export default function PostUpdateForm(props) {
     initialValues.stoppedTime
   );
   const [timeInRed, setTimeInRed] = React.useState(initialValues.timeInRed);
+  const [powerZones, setPowerZones] = React.useState(initialValues.powerZones);
+  const [powerZoneBuckets, setPowerZoneBuckets] = React.useState(
+    initialValues.powerZoneBuckets
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = postRecord
@@ -206,6 +212,18 @@ export default function PostUpdateForm(props) {
     setElapsedTime(cleanValues.elapsedTime);
     setStoppedTime(cleanValues.stoppedTime);
     setTimeInRed(cleanValues.timeInRed);
+    setPowerZones(
+      typeof cleanValues.powerZones === "string" ||
+        cleanValues.powerZones === null
+        ? cleanValues.powerZones
+        : JSON.stringify(cleanValues.powerZones)
+    );
+    setPowerZoneBuckets(
+      typeof cleanValues.powerZoneBuckets === "string" ||
+        cleanValues.powerZoneBuckets === null
+        ? cleanValues.powerZoneBuckets
+        : JSON.stringify(cleanValues.powerZoneBuckets)
+    );
     setErrors({});
   };
   const [postRecord, setPostRecord] = React.useState(postModelProp);
@@ -255,6 +273,8 @@ export default function PostUpdateForm(props) {
     elapsedTime: [],
     stoppedTime: [],
     timeInRed: [],
+    powerZones: [{ type: "JSON" }],
+    powerZoneBuckets: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -312,6 +332,8 @@ export default function PostUpdateForm(props) {
           elapsedTime: elapsedTime ?? null,
           stoppedTime: stoppedTime ?? null,
           timeInRed: timeInRed ?? null,
+          powerZones: powerZones ?? null,
+          powerZoneBuckets: powerZoneBuckets ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -402,6 +424,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -455,6 +479,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.gpxFile ?? value;
@@ -508,6 +534,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -561,6 +589,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.headerImage ?? value;
@@ -614,6 +644,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -667,6 +699,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.publishedDate ?? value;
@@ -720,6 +754,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -773,6 +809,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.postLocation ?? value;
@@ -826,6 +864,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.stravaUrl ?? value;
@@ -879,6 +919,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.resultsUrl ?? value;
@@ -932,6 +974,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -985,6 +1029,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.subType ?? value;
@@ -1038,6 +1084,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.teaser ?? value;
@@ -1091,6 +1139,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.currentFtp ?? value;
@@ -1144,6 +1194,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.components ?? value;
@@ -1197,6 +1249,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.powerAnalysis ?? value;
@@ -1250,6 +1304,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.coordinates ?? value;
@@ -1303,6 +1359,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.powers ?? value;
@@ -1356,6 +1414,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.elevation ?? value;
@@ -1409,6 +1469,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.elevationGrades ?? value;
@@ -1462,6 +1524,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.distances ?? value;
@@ -1519,6 +1583,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.elevationTotal ?? value;
@@ -1576,6 +1642,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.normalizedPower ?? value;
@@ -1633,6 +1701,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.distance ?? value;
@@ -1686,6 +1756,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.heartAnalysis ?? value;
@@ -1739,6 +1811,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.cadenceAnalysis ?? value;
@@ -1792,6 +1866,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.tempAnalysis ?? value;
@@ -1849,6 +1925,8 @@ export default function PostUpdateForm(props) {
               elapsedTime: value,
               stoppedTime,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.elapsedTime ?? value;
@@ -1906,6 +1984,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime: value,
               timeInRed,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.stoppedTime ?? value;
@@ -1963,6 +2043,8 @@ export default function PostUpdateForm(props) {
               elapsedTime,
               stoppedTime,
               timeInRed: value,
+              powerZones,
+              powerZoneBuckets,
             };
             const result = onChange(modelFields);
             value = result?.timeInRed ?? value;
@@ -1977,6 +2059,116 @@ export default function PostUpdateForm(props) {
         hasError={errors.timeInRed?.hasError}
         {...getOverrideProps(overrides, "timeInRed")}
       ></TextField>
+      <TextAreaField
+        label="Power zones"
+        isRequired={false}
+        isReadOnly={false}
+        value={powerZones}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones: value,
+              powerZoneBuckets,
+            };
+            const result = onChange(modelFields);
+            value = result?.powerZones ?? value;
+          }
+          if (errors.powerZones?.hasError) {
+            runValidationTasks("powerZones", value);
+          }
+          setPowerZones(value);
+        }}
+        onBlur={() => runValidationTasks("powerZones", powerZones)}
+        errorMessage={errors.powerZones?.errorMessage}
+        hasError={errors.powerZones?.hasError}
+        {...getOverrideProps(overrides, "powerZones")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Power zone buckets"
+        isRequired={false}
+        isReadOnly={false}
+        value={powerZoneBuckets}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              type,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.powerZoneBuckets ?? value;
+          }
+          if (errors.powerZoneBuckets?.hasError) {
+            runValidationTasks("powerZoneBuckets", value);
+          }
+          setPowerZoneBuckets(value);
+        }}
+        onBlur={() => runValidationTasks("powerZoneBuckets", powerZoneBuckets)}
+        errorMessage={errors.powerZoneBuckets?.errorMessage}
+        hasError={errors.powerZoneBuckets?.hasError}
+        {...getOverrideProps(overrides, "powerZoneBuckets")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

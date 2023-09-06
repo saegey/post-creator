@@ -8,7 +8,6 @@ import ActivitySettings from './ActivitySettings';
 import HeadingButton from './HeadingButton';
 import GraphButton from './GraphButton';
 import ImagesButton from './ImagesButton';
-import MapButton from './MapButton';
 import SaveButton from './SaveButton';
 import BoldButton from './BoldButton';
 
@@ -17,7 +16,6 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
   const [isSaving, setIsSaving] = React.useState(false);
   const [savedMessage, setSavedMessage] = React.useState(false);
   const [isHoverSettings, setIsHoverSettings] = React.useState(false);
-  const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     setSavedMessage(false);
@@ -54,10 +52,7 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
         />
         <GraphButton
           editor={editor}
-          // isMenuOpen={isGraphMenuOpen}
-          // setIsMenuOpen={setIsGraphMenuOpen}
         />
-        {/* <MapButton editor={editor} /> */}
         <SaveButton
           setIsSaving={setIsSaving}
           isSaving={isSaving}

@@ -39,6 +39,8 @@ const query = /* GraphQL */ `
       updatedAt
       timeInRed
       owner
+      powerZones
+      powerZoneBuckets
     }
   }
 `;
@@ -55,6 +57,43 @@ const timeInRed = ({ powers, ftp }) => {
     }
   });
   return secsInRed;
+};
+
+const calcPowerZones = (ftp) => {
+  const zonesPercent = [
+    { zone: 0, title: 'Not pedaling', powerLow: '0', powerHigh: '0' },
+    { zone: 1, title: 'Active Recovery', powerLow: '1', powerHigh: '56' },
+    { zone: 2, title: 'Endurance', powerLow: '56', powerHigh: '76' },
+    { zone: 3, title: 'Tempo', powerLow: '76', powerHigh: '91' },
+    { zone: 4, title: 'Threshold', powerLow: '91', powerHigh: '106' },
+    { zone: 5, title: 'VO2max', powerLow: '106', powerHigh: '121' },
+    {
+      zone: 6,
+      title: 'Anaerobic Capacity',
+      powerLow: '121',
+      powerHigh: null,
+    },
+  ];
+  return zonesPercent.map((z) => {
+    return {
+      ...z,
+      powerLow: Math.round((Number(z.powerLow) / 100) * ftp),
+      powerHigh: Math.round((Number(z.powerHigh) / 100) * ftp),
+    };
+  });
+};
+
+const calcPowerZoneBuckets = ({ zones, powers }) => {
+  const breakdownBuckets = new Array(zones.length).fill(0);
+  powers.forEach((d) => {
+    for (var i = zones.length - 1; i >= 0; i--) {
+      if (d >= zones[i].powerLow && d !== null) {
+        breakdownBuckets[i] += 1;
+        break;
+      }
+    }
+  });
+  return breakdownBuckets;
 };
 
 const uncompress = async (input) => {
@@ -108,7 +147,14 @@ exports.handler = async (event) => {
         ftp: Number(newFtp),
       });
 
+      const zones = calcPowerZones(Number(newFtp));
+      const powerZoneBuckets = calcPowerZoneBuckets({
+        zones,
+        powers: powersClean,
+      });
+
       console.log(timeInRedSecs, GRAPHQL_ENDPOINT);
+      console.log(zones, powerZoneBuckets);
 
       const endpoint = new URL(GRAPHQL_ENDPOINT);
 
@@ -123,6 +169,8 @@ exports.handler = async (event) => {
         input: {
           id: postId,
           timeInRed: timeInRedSecs,
+          powerZones: JSON.stringify(zones),
+          powerZoneBuckets: JSON.stringify(powerZoneBuckets),
         },
       };
 

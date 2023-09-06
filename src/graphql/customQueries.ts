@@ -58,6 +58,8 @@ export const getPostInitial = /* GraphQL */ `
       heartAnalysis
       cadenceAnalysis
       tempAnalysis
+      powerZones
+      powerZoneBuckets
       # coordinates
       # powers
       # elevation
