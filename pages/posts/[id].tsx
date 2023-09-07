@@ -120,6 +120,7 @@ const Post = ({
   // editor context
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
+  const [isGpxUploadOpen, setIsGpxUploadOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -141,7 +142,8 @@ const Post = ({
       setPowerAnalysis(postPowerAnalysis);
       setCadenceAnalysis(postCadenceAnalysis);
       setTempAnalysis(postTempAnalysis);
-      setPowerZones(postPowerZones);
+      console.log(postPowerZones);
+      setPowerZones(postPowerZones !== null ? postPowerZones : []);
       setPowerZoneBuckets(postPowerZoneBuckets);
       // console.log('use effect in [id]');
       // console.log('use effect - initial load');
@@ -211,7 +213,7 @@ const Post = ({
           as='main'
           sx={{
             backgroundColor: 'editorBackground',
-            paddingBottom: '50px',
+            // paddingBottom: '50px',
             // height: '100vh',
             width: '100vw',
             flexGrow: 1,
@@ -224,6 +226,8 @@ const Post = ({
               isGraphMenuOpen,
               setIsFtpUpdating,
               isFtpUpdating,
+              setIsGpxUploadOpen,
+              isGpxUploadOpen,
             }}
           >
             <PostEditor postId={postId} initialState={postComponents} />

@@ -1,10 +1,10 @@
 import { Box } from 'theme-ui';
 
-const MatchesBurnedIcon = () => {
+const MatchesBurnedIcon = ({ color }) => {
   return (
     <Box
       sx={{
-        '.iconStyle': { fill: 'text' },
+        '.iconStyle': { fill: color ? color : 'text' },
         '.iconStyleLine': {
           fill: 'none',
           stroke: 'text',

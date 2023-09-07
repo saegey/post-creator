@@ -18,6 +18,7 @@ import {
 } from '../../src/graphql/customQueries';
 import GraphSelectorMenu from './GraphSelectorMenu';
 import * as subscriptions from '../../src/graphql/subscriptions';
+import UploadGpxModal from './UploadGpxModal';
 
 import { OnUpdatePostSubscription } from '../API';
 
@@ -40,7 +41,7 @@ const PostEditor = ({ postId, initialState }) => {
   } = React.useContext(PostContext);
   const { setIsFtpUpdating } = React.useContext(EditorContext);
 
-  const { isGraphMenuOpen } = React.useContext(EditorContext);
+  const { isGraphMenuOpen, isGpxUploadOpen } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -122,9 +123,10 @@ const PostEditor = ({ postId, initialState }) => {
           <PostMenu editor={editor} id={id} />
           <Flex>
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
+            {isGpxUploadOpen && <UploadGpxModal />}
             <Box
               sx={{
-                marginTop: '0px',
+                marginTop: '20px',
                 maxWidth: '900px',
                 minWidth: [null, null, '900px'],
                 marginLeft: isGraphMenuOpen
@@ -133,8 +135,9 @@ const PostEditor = ({ postId, initialState }) => {
                 marginRight: isGraphMenuOpen
                   ? ['20px', '20px', 'auto']
                   : [0, 0, 'auto'],
-                marginBottom: 'auto',
+                marginBottom: '50px',
                 width: ['100%', null, null],
+                height: isGraphMenuOpen ? null : 'calc(100vh - 85px)',
                 backgroundColor: 'background',
                 borderRadius: '10px',
                 border: '1px dotted #bcbcbc',

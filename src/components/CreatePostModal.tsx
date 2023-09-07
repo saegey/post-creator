@@ -20,6 +20,7 @@ async function handleCreatePost(event) {
       variables: {
         input: {
           title: form.get('title'),
+          type: 'Post',
           components: JSON.stringify([
             { type: 'text', children: [{ text: '' }] },
           ]),
@@ -63,12 +64,12 @@ const CreatePostModal = ({ setMenuOpen }) => {
               <Close onClick={() => setMenuOpen(false)} />
             </Box>
           </Flex>
-            <form onSubmit={handleCreatePost}>
-              <Label htmlFor='title'>Title</Label>
-              <Input name='title' id='title' mb={3} variant={'defaultInput'} />
+          <form onSubmit={handleCreatePost}>
+            <Label htmlFor='title'>Title</Label>
+            <Input name='title' id='title' mb={3} variant={'defaultInput'} />
 
-              <Button>Create</Button>
-            </form>
+            <Button>Create</Button>
+          </form>
         </Box>
       </Box>
     </BlackBox>

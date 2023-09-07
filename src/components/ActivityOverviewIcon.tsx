@@ -1,12 +1,12 @@
 import { Box } from 'theme-ui';
 
-const ActivityOverviewIcon = () => {
+const ActivityOverviewIcon = ({ color }) => {
   return (
     <Box
       sx={{
         '.cls-1': {
           fill: 'none',
-          stroke: 'text',
+          stroke: color ? color : 'text',
           strokeMiterlimit: '10',
           strokeWidth: '1.92px',
         },

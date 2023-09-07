@@ -6,7 +6,7 @@ import { CldImage } from 'next-cloudinary';
 import { listPostsCustom } from '../graphql/customQueries';
 import AvatarButton from './AvatarButton';
 import { GraphQLResult } from '@aws-amplify/api';
-import { ListPostsQuery } from '../API';
+import { ListPostsByCreatedAtQuery } from '../API';
 import Logo from './Logo';
 import UserProfileMenu from './UserProfileMenu';
 import UserMainMenu from './UserMainMenu';
@@ -22,17 +22,17 @@ const Header = ({ user, signOut, title }) => {
     const { data } = (await API.graphql({
       query: listPostsCustom,
       authMode: 'API_KEY',
-    })) as GraphQLResult<ListPostsQuery>;
+    })) as GraphQLResult<ListPostsByCreatedAtQuery>;
 
     return data;
   };
 
   React.useEffect(() => {
     listRecentPosts().then((d) => {
-      if (!d || !d.listPosts || !d.listPosts.items) {
+      if (!d || !d.listPostsByCreatedAt || !d.listPostsByCreatedAt.items) {
         console.error('failed to get listPosts');
       } else {
-        setRecentPosts(d?.listPosts?.items as any);
+        setRecentPosts(d?.listPostsByCreatedAt?.items as any);
       }
     });
   }, []);

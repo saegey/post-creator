@@ -47,6 +47,7 @@ export const getBlog = /* GraphQL */ `
       name
       posts {
         items {
+          type
           id
           title
           gpxFile
@@ -58,7 +59,6 @@ export const getBlog = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp
@@ -125,6 +125,7 @@ export const listBlogs = /* GraphQL */ `
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
+      type
       id
       title
       gpxFile
@@ -136,7 +137,6 @@ export const getPost = /* GraphQL */ `
       postLocation
       stravaUrl
       resultsUrl
-      type
       subType
       teaser
       currentFtp
@@ -161,6 +161,7 @@ export const getPost = /* GraphQL */ `
       }
       related {
         items {
+          type
           id
           title
           gpxFile
@@ -172,7 +173,6 @@ export const getPost = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp
@@ -245,6 +245,7 @@ export const listPosts = /* GraphQL */ `
   ) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        type
         id
         title
         gpxFile
@@ -256,7 +257,93 @@ export const listPosts = /* GraphQL */ `
         postLocation
         stravaUrl
         resultsUrl
+        subType
+        teaser
+        currentFtp
+        components
+        powerAnalysis
+        coordinates
+        powers
+        elevation
+        elevationGrades
+        distances
+        blog {
+          id
+          name
+          createdAt
+          updatedAt
+          owner
+          __typename
+        }
+        related {
+          nextToken
+          __typename
+        }
+        author {
+          id
+          fullName
+          email
+          image
+          username
+          createdAt
+          updatedAt
+          owner
+          __typename
+        }
+        elevationTotal
+        normalizedPower
+        distance
+        heartAnalysis
+        cadenceAnalysis
+        tempAnalysis
+        elapsedTime
+        stoppedTime
+        timeInRed
+        powerZones
+        powerZoneBuckets
+        createdAt
+        updatedAt
+        blogPostsId
+        postRelatedId
+        postAuthorId
+        owner
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const listPostsByCreatedAt = /* GraphQL */ `
+  query ListPostsByCreatedAt(
+    $type: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostsByCreatedAt(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
         type
+        id
+        title
+        gpxFile
+        images
+        headerImage
+        date
+        publishedDate
+        location
+        postLocation
+        stravaUrl
+        resultsUrl
         subType
         teaser
         currentFtp

@@ -6,6 +6,7 @@ import VisualOverviewWrapper from '../components/VisualOverviewWrapper';
 import ActivityOverviewWrapper from '../components/ActivityOverviewWrapper';
 import TimePowerZonesWrapper from '../components/TimePowerZonesWrapper';
 import MatchesBurnedWrapper from '../components/MatchesBurnedWrapper';
+import StravaLink from '../components/StravaLink';
 
 const Leaf = (props) => {
   return (
@@ -25,6 +26,8 @@ const renderLeaf = (props) => {
 
 const renderElement = ({ attributes, children, element }) => {
   switch (element.type) {
+    case 'stravaLink':
+      return <StravaLink element={element} />;
     case 'powergraph':
       return <PowerGraphElement element={element} />;
     case 'timeInZones':

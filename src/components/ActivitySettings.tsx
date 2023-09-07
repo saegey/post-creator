@@ -22,7 +22,8 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
     setResultsUrl,
   } = React.useContext(PostContext);
 
-  const { setIsFtpUpdating } = React.useContext(EditorContext);
+  const { setIsFtpUpdating, isGpxUploadOpen, setIsGpxUploadOpen } =
+    React.useContext(EditorContext);
 
   const [uploadModal1, setUploadModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
@@ -65,11 +66,6 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
 
   return (
     <StandardModal isOpen={isOpen} title={'Details'}>
-      {uploadModal1 && (
-        <>
-          <UploadGpxModal openModal={setUploadModal} />
-        </>
-      )}
       <Flex sx={{ gap: '10px', flexDirection: 'row' }}>
         <form
           onSubmit={(event: any) => {
@@ -117,7 +113,7 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
                   <Button
                     type='button'
                     onClick={() => {
-                      setUploadModal(true);
+                      setIsGpxUploadOpen(true);
                     }}
                     sx={{ width: '100%', borderColor: '#898989' }}
                   >

@@ -3,6 +3,7 @@
 //  This file was automatically generated and should not be edited.
 
 export type UpdatePostInput = {
+  type?: string | null,
   id: string,
   title?: string | null,
   gpxFile?: string | null,
@@ -14,7 +15,6 @@ export type UpdatePostInput = {
   postLocation?: string | null,
   stravaUrl?: string | null,
   resultsUrl?: string | null,
-  type?: string | null,
   subType?: string | null,
   teaser?: string | null,
   currentFtp?: string | null,
@@ -36,12 +36,14 @@ export type UpdatePostInput = {
   timeInRed?: number | null,
   powerZones?: string | null,
   powerZoneBuckets?: string | null,
+  createdAt?: string | null,
   blogPostsId?: string | null,
   postRelatedId?: string | null,
   postAuthorId?: string | null,
 };
 
 export type ModelPostConditionInput = {
+  type?: ModelStringInput | null,
   title?: ModelStringInput | null,
   gpxFile?: ModelStringInput | null,
   images?: ModelStringInput | null,
@@ -52,7 +54,6 @@ export type ModelPostConditionInput = {
   postLocation?: ModelStringInput | null,
   stravaUrl?: ModelStringInput | null,
   resultsUrl?: ModelStringInput | null,
-  type?: ModelStringInput | null,
   subType?: ModelStringInput | null,
   teaser?: ModelStringInput | null,
   currentFtp?: ModelStringInput | null,
@@ -74,6 +75,7 @@ export type ModelPostConditionInput = {
   timeInRed?: ModelIntInput | null,
   powerZones?: ModelStringInput | null,
   powerZoneBuckets?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
@@ -164,6 +166,7 @@ export type ModelIDInput = {
 
 export type Post = {
   __typename: "Post",
+  type: string,
   id: string,
   title: string,
   gpxFile?: string | null,
@@ -175,7 +178,6 @@ export type Post = {
   postLocation?: string | null,
   stravaUrl?: string | null,
   resultsUrl?: string | null,
-  type?: string | null,
   subType?: string | null,
   teaser?: string | null,
   currentFtp?: string | null,
@@ -237,6 +239,7 @@ export type User = {
 };
 
 export type ModelPostFilterInput = {
+  type?: ModelStringInput | null,
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
   gpxFile?: ModelStringInput | null,
@@ -248,7 +251,6 @@ export type ModelPostFilterInput = {
   postLocation?: ModelStringInput | null,
   stravaUrl?: ModelStringInput | null,
   resultsUrl?: ModelStringInput | null,
-  type?: ModelStringInput | null,
   subType?: ModelStringInput | null,
   teaser?: ModelStringInput | null,
   currentFtp?: ModelStringInput | null,
@@ -270,6 +272,7 @@ export type ModelPostFilterInput = {
   timeInRed?: ModelIntInput | null,
   powerZones?: ModelStringInput | null,
   powerZoneBuckets?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
@@ -330,6 +333,7 @@ export type DeleteBlogInput = {
 };
 
 export type CreatePostInput = {
+  type: string,
   id?: string | null,
   title: string,
   gpxFile?: string | null,
@@ -341,7 +345,6 @@ export type CreatePostInput = {
   postLocation?: string | null,
   stravaUrl?: string | null,
   resultsUrl?: string | null,
-  type?: string | null,
   subType?: string | null,
   teaser?: string | null,
   currentFtp?: string | null,
@@ -363,6 +366,7 @@ export type CreatePostInput = {
   timeInRed?: number | null,
   powerZones?: string | null,
   powerZoneBuckets?: string | null,
+  createdAt?: string | null,
   blogPostsId?: string | null,
   postRelatedId?: string | null,
   postAuthorId?: string | null,
@@ -402,6 +406,22 @@ export type ModelBlogConnection = {
   items:  Array<Blog | null >,
   nextToken?: string | null,
 };
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
@@ -451,6 +471,7 @@ export type ModelSubscriptionBlogFilterInput = {
 };
 
 export type ModelSubscriptionPostFilterInput = {
+  type?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
   gpxFile?: ModelSubscriptionStringInput | null,
@@ -462,7 +483,6 @@ export type ModelSubscriptionPostFilterInput = {
   postLocation?: ModelSubscriptionStringInput | null,
   stravaUrl?: ModelSubscriptionStringInput | null,
   resultsUrl?: ModelSubscriptionStringInput | null,
-  type?: ModelSubscriptionStringInput | null,
   subType?: ModelSubscriptionStringInput | null,
   teaser?: ModelSubscriptionStringInput | null,
   currentFtp?: ModelSubscriptionStringInput | null,
@@ -484,6 +504,7 @@ export type ModelSubscriptionPostFilterInput = {
   timeInRed?: ModelSubscriptionIntInput | null,
   powerZones?: ModelSubscriptionStringInput | null,
   powerZoneBuckets?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
 };
@@ -531,7 +552,7 @@ export type UpdatePostMinimalMutation = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
+    type: string,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -590,7 +611,7 @@ export type GetPostInitialQuery = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
+    type: string,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -605,6 +626,8 @@ export type GetPostInitialQuery = {
     heartAnalysis?: string | null,
     cadenceAnalysis?: string | null,
     tempAnalysis?: string | null,
+    powerZones?: string | null,
+    powerZoneBuckets?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
@@ -655,7 +678,7 @@ export type listPostsCustomQuery = {
       postLocation?: string | null,
       stravaUrl?: string | null,
       resultsUrl?: string | null,
-      type?: string | null,
+      type: string,
       subType?: string | null,
       teaser?: string | null,
       currentFtp?: string | null,
@@ -752,6 +775,7 @@ export type CreateBlogMutation = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -763,7 +787,6 @@ export type CreateBlogMutation = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -814,6 +837,7 @@ export type UpdateBlogMutation = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -825,7 +849,6 @@ export type UpdateBlogMutation = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -876,6 +899,7 @@ export type DeleteBlogMutation = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -887,7 +911,6 @@ export type DeleteBlogMutation = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -932,6 +955,7 @@ export type CreatePostMutationVariables = {
 export type CreatePostMutation = {
   createPost?:  {
     __typename: "Post",
+    type: string,
     id: string,
     title: string,
     gpxFile?: string | null,
@@ -943,7 +967,6 @@ export type CreatePostMutation = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -970,6 +993,7 @@ export type CreatePostMutation = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -981,7 +1005,6 @@ export type CreatePostMutation = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1051,6 +1074,7 @@ export type UpdatePostMutationVariables = {
 export type UpdatePostMutation = {
   updatePost?:  {
     __typename: "Post",
+    type: string,
     id: string,
     title: string,
     gpxFile?: string | null,
@@ -1062,7 +1086,6 @@ export type UpdatePostMutation = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -1089,6 +1112,7 @@ export type UpdatePostMutation = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1100,7 +1124,6 @@ export type UpdatePostMutation = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1170,6 +1193,7 @@ export type DeletePostMutationVariables = {
 export type DeletePostMutation = {
   deletePost?:  {
     __typename: "Post",
+    type: string,
     id: string,
     title: string,
     gpxFile?: string | null,
@@ -1181,7 +1205,6 @@ export type DeletePostMutation = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -1208,6 +1231,7 @@ export type DeletePostMutation = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1219,7 +1243,6 @@ export type DeletePostMutation = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1336,6 +1359,7 @@ export type GetBlogQuery = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1347,7 +1371,6 @@ export type GetBlogQuery = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1416,6 +1439,7 @@ export type GetPostQueryVariables = {
 export type GetPostQuery = {
   getPost?:  {
     __typename: "Post",
+    type: string,
     id: string,
     title: string,
     gpxFile?: string | null,
@@ -1427,7 +1451,6 @@ export type GetPostQuery = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -1454,6 +1477,7 @@ export type GetPostQuery = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1465,7 +1489,6 @@ export type GetPostQuery = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1538,6 +1561,7 @@ export type ListPostsQuery = {
     __typename: "ModelPostConnection",
     items:  Array< {
       __typename: "Post",
+      type: string,
       id: string,
       title: string,
       gpxFile?: string | null,
@@ -1549,7 +1573,87 @@ export type ListPostsQuery = {
       postLocation?: string | null,
       stravaUrl?: string | null,
       resultsUrl?: string | null,
-      type?: string | null,
+      subType?: string | null,
+      teaser?: string | null,
+      currentFtp?: string | null,
+      components?: string | null,
+      powerAnalysis?: string | null,
+      coordinates?: string | null,
+      powers?: string | null,
+      elevation?: string | null,
+      elevationGrades?: string | null,
+      distances?: string | null,
+      blog?:  {
+        __typename: "Blog",
+        id: string,
+        name: string,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null,
+      related?:  {
+        __typename: "ModelPostConnection",
+        nextToken?: string | null,
+      } | null,
+      author?:  {
+        __typename: "User",
+        id: string,
+        fullName: string,
+        email: string,
+        image?: string | null,
+        username?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null,
+      elevationTotal?: number | null,
+      normalizedPower?: number | null,
+      distance?: number | null,
+      heartAnalysis?: string | null,
+      cadenceAnalysis?: string | null,
+      tempAnalysis?: string | null,
+      elapsedTime?: number | null,
+      stoppedTime?: number | null,
+      timeInRed?: number | null,
+      powerZones?: string | null,
+      powerZoneBuckets?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      blogPostsId?: string | null,
+      postRelatedId?: string | null,
+      postAuthorId?: string | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListPostsByCreatedAtQueryVariables = {
+  type: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPostsByCreatedAtQuery = {
+  listPostsByCreatedAt?:  {
+    __typename: "ModelPostConnection",
+    items:  Array< {
+      __typename: "Post",
+      type: string,
+      id: string,
+      title: string,
+      gpxFile?: string | null,
+      images?: string | null,
+      headerImage?: string | null,
+      date?: string | null,
+      publishedDate?: string | null,
+      location?: string | null,
+      postLocation?: string | null,
+      stravaUrl?: string | null,
+      resultsUrl?: string | null,
       subType?: string | null,
       teaser?: string | null,
       currentFtp?: string | null,
@@ -1676,6 +1780,7 @@ export type OnCreateBlogSubscription = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1687,7 +1792,6 @@ export type OnCreateBlogSubscription = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1738,6 +1842,7 @@ export type OnUpdateBlogSubscription = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1749,7 +1854,6 @@ export type OnUpdateBlogSubscription = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1800,6 +1904,7 @@ export type OnDeleteBlogSubscription = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1811,7 +1916,6 @@ export type OnDeleteBlogSubscription = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1856,6 +1960,7 @@ export type OnCreatePostSubscriptionVariables = {
 export type OnCreatePostSubscription = {
   onCreatePost?:  {
     __typename: "Post",
+    type: string,
     id: string,
     title: string,
     gpxFile?: string | null,
@@ -1867,7 +1972,6 @@ export type OnCreatePostSubscription = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -1894,6 +1998,7 @@ export type OnCreatePostSubscription = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -1905,7 +2010,6 @@ export type OnCreatePostSubscription = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -1975,6 +2079,7 @@ export type OnUpdatePostSubscriptionVariables = {
 export type OnUpdatePostSubscription = {
   onUpdatePost?:  {
     __typename: "Post",
+    type: string,
     id: string,
     title: string,
     gpxFile?: string | null,
@@ -1986,7 +2091,6 @@ export type OnUpdatePostSubscription = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -2013,6 +2117,7 @@ export type OnUpdatePostSubscription = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -2024,7 +2129,6 @@ export type OnUpdatePostSubscription = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,
@@ -2094,6 +2198,7 @@ export type OnDeletePostSubscriptionVariables = {
 export type OnDeletePostSubscription = {
   onDeletePost?:  {
     __typename: "Post",
+    type: string,
     id: string,
     title: string,
     gpxFile?: string | null,
@@ -2105,7 +2210,6 @@ export type OnDeletePostSubscription = {
     postLocation?: string | null,
     stravaUrl?: string | null,
     resultsUrl?: string | null,
-    type?: string | null,
     subType?: string | null,
     teaser?: string | null,
     currentFtp?: string | null,
@@ -2132,6 +2236,7 @@ export type OnDeletePostSubscription = {
       __typename: "ModelPostConnection",
       items:  Array< {
         __typename: "Post",
+        type: string,
         id: string,
         title: string,
         gpxFile?: string | null,
@@ -2143,7 +2248,6 @@ export type OnDeletePostSubscription = {
         postLocation?: string | null,
         stravaUrl?: string | null,
         resultsUrl?: string | null,
-        type?: string | null,
         subType?: string | null,
         teaser?: string | null,
         currentFtp?: string | null,

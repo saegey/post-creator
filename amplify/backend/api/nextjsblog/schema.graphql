@@ -36,6 +36,12 @@ type Post
       { allow: private, provider: iam }
     ]
   ) {
+  type: String!
+    @index(
+      name: "PostsByCreatedAt"
+      queryField: "listPostsByCreatedAt"
+      sortKeyFields: ["createdAt"]
+    )
   id: ID!
   title: String!
   gpxFile: String
@@ -47,7 +53,7 @@ type Post
   postLocation: String
   stravaUrl: String
   resultsUrl: String
-  type: String
+  # type: String
   subType: String
   teaser: String
   currentFtp: String
@@ -72,6 +78,7 @@ type Post
   timeInRed: Int
   powerZones: AWSJSON
   powerZoneBuckets: AWSJSON
+  createdAt: String!
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 }

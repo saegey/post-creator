@@ -14,7 +14,7 @@ import PostCard from '../src/components/PostCard';
 
 type ListPosts = {
   data: {
-    listPosts: {
+    listPostsByCreatedAt: {
       items: Array<{
         id: string;
         title: string;
@@ -35,7 +35,7 @@ export const getServerSideProps = async ({ req }) => {
 
     return {
       props: {
-        posts: response.data.listPosts.items.map((d) => {
+        posts: response.data.listPostsByCreatedAt.items.map((d) => {
           return { ...d, imagesObj: JSON.parse(d.images) };
         }),
       },

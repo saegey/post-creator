@@ -33,7 +33,7 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
           backgroundColor: 'background',
           paddingY: '10px',
           paddingX: '10px',
-          zIndex: 1000,
+          zIndex: 2,
           borderBottomStyle: 'solid',
           borderBottomWidth: '1px',
           borderBottomColor: 'divider',
@@ -50,9 +50,7 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
             }, 10)
           }
         />
-        <GraphButton
-          editor={editor}
-        />
+        <GraphButton />
         <SaveButton
           setIsSaving={setIsSaving}
           isSaving={isSaving}
@@ -96,8 +94,6 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
           <Close ml='auto' mr={-2} onClick={() => setSavedMessage(false)} />
         </Alert>
       )}
-      <Box sx={{ marginBottom: '20px' }} />
-
     </>
   );
 };

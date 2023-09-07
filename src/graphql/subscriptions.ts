@@ -66,6 +66,7 @@ export const onCreateBlog = /* GraphQL */ `
       name
       posts {
         items {
+          type
           id
           title
           gpxFile
@@ -77,7 +78,6 @@ export const onCreateBlog = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp
@@ -127,6 +127,7 @@ export const onUpdateBlog = /* GraphQL */ `
       name
       posts {
         items {
+          type
           id
           title
           gpxFile
@@ -138,7 +139,6 @@ export const onUpdateBlog = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp
@@ -188,6 +188,7 @@ export const onDeleteBlog = /* GraphQL */ `
       name
       posts {
         items {
+          type
           id
           title
           gpxFile
@@ -199,7 +200,6 @@ export const onDeleteBlog = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp
@@ -245,6 +245,7 @@ export const onCreatePost = /* GraphQL */ `
     $owner: String
   ) {
     onCreatePost(filter: $filter, owner: $owner) {
+      type
       id
       title
       gpxFile
@@ -256,7 +257,6 @@ export const onCreatePost = /* GraphQL */ `
       postLocation
       stravaUrl
       resultsUrl
-      type
       subType
       teaser
       currentFtp
@@ -281,6 +281,7 @@ export const onCreatePost = /* GraphQL */ `
       }
       related {
         items {
+          type
           id
           title
           gpxFile
@@ -292,7 +293,6 @@ export const onCreatePost = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp
@@ -363,6 +363,7 @@ export const onUpdatePost = /* GraphQL */ `
     $owner: String
   ) {
     onUpdatePost(filter: $filter, owner: $owner) {
+      type
       id
       title
       gpxFile
@@ -374,7 +375,6 @@ export const onUpdatePost = /* GraphQL */ `
       postLocation
       stravaUrl
       resultsUrl
-      type
       subType
       teaser
       currentFtp
@@ -399,6 +399,7 @@ export const onUpdatePost = /* GraphQL */ `
       }
       related {
         items {
+          type
           id
           title
           gpxFile
@@ -410,7 +411,6 @@ export const onUpdatePost = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp
@@ -481,6 +481,7 @@ export const onDeletePost = /* GraphQL */ `
     $owner: String
   ) {
     onDeletePost(filter: $filter, owner: $owner) {
+      type
       id
       title
       gpxFile
@@ -492,7 +493,6 @@ export const onDeletePost = /* GraphQL */ `
       postLocation
       stravaUrl
       resultsUrl
-      type
       subType
       teaser
       currentFtp
@@ -517,6 +517,7 @@ export const onDeletePost = /* GraphQL */ `
       }
       related {
         items {
+          type
           id
           title
           gpxFile
@@ -528,7 +529,6 @@ export const onDeletePost = /* GraphQL */ `
           postLocation
           stravaUrl
           resultsUrl
-          type
           subType
           teaser
           currentFtp

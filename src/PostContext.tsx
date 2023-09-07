@@ -14,7 +14,7 @@ export type PostContextType = {
     t: number;
   }> | null;
   gpxFile: string | null;
-  stravaUrl: string | null;
+  stravaUrl: string | undefined;
   components: Array<object> | null;
   images: Array<CloudinaryImage> | null;
   currentFtp: string | null;
