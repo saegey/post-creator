@@ -14,6 +14,7 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type PostUpdateFormInputValues = {
+    type?: string;
     title?: string;
     gpxFile?: string;
     images?: string;
@@ -24,7 +25,6 @@ export declare type PostUpdateFormInputValues = {
     postLocation?: string;
     stravaUrl?: string;
     resultsUrl?: string;
-    type?: string;
     subType?: string;
     teaser?: string;
     currentFtp?: string;
@@ -46,8 +46,10 @@ export declare type PostUpdateFormInputValues = {
     timeInRed?: number;
     powerZones?: string;
     powerZoneBuckets?: string;
+    createdAt?: string;
 };
 export declare type PostUpdateFormValidationValues = {
+    type?: ValidationFunction<string>;
     title?: ValidationFunction<string>;
     gpxFile?: ValidationFunction<string>;
     images?: ValidationFunction<string>;
@@ -58,7 +60,6 @@ export declare type PostUpdateFormValidationValues = {
     postLocation?: ValidationFunction<string>;
     stravaUrl?: ValidationFunction<string>;
     resultsUrl?: ValidationFunction<string>;
-    type?: ValidationFunction<string>;
     subType?: ValidationFunction<string>;
     teaser?: ValidationFunction<string>;
     currentFtp?: ValidationFunction<string>;
@@ -80,10 +81,12 @@ export declare type PostUpdateFormValidationValues = {
     timeInRed?: ValidationFunction<number>;
     powerZones?: ValidationFunction<string>;
     powerZoneBuckets?: ValidationFunction<string>;
+    createdAt?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostUpdateFormOverridesProps = {
     PostUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    type?: PrimitiveOverrideProps<TextFieldProps>;
     title?: PrimitiveOverrideProps<TextFieldProps>;
     gpxFile?: PrimitiveOverrideProps<TextFieldProps>;
     images?: PrimitiveOverrideProps<TextAreaFieldProps>;
@@ -94,7 +97,6 @@ export declare type PostUpdateFormOverridesProps = {
     postLocation?: PrimitiveOverrideProps<TextFieldProps>;
     stravaUrl?: PrimitiveOverrideProps<TextFieldProps>;
     resultsUrl?: PrimitiveOverrideProps<TextFieldProps>;
-    type?: PrimitiveOverrideProps<TextFieldProps>;
     subType?: PrimitiveOverrideProps<TextFieldProps>;
     teaser?: PrimitiveOverrideProps<TextFieldProps>;
     currentFtp?: PrimitiveOverrideProps<TextFieldProps>;
@@ -116,6 +118,7 @@ export declare type PostUpdateFormOverridesProps = {
     timeInRed?: PrimitiveOverrideProps<TextFieldProps>;
     powerZones?: PrimitiveOverrideProps<TextAreaFieldProps>;
     powerZoneBuckets?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    createdAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type PostUpdateFormProps = React.PropsWithChildren<{
     overrides?: PostUpdateFormOverridesProps | undefined | null;

@@ -31,7 +31,7 @@ export default {
     defaultAvatarBackground: '#cbcbcb',
     alertBackground: '#555555',
     alertForeground: 'white',
-    menuBoxShadow: '#31313121',
+    menuBoxShadow: '#3131310d',
     postCardDefaultImage: '#eaeaea',
     blackBoxColor: '0, 0, 0',
     modes: {

@@ -110,20 +110,20 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
             <Box as='ul' sx={{ listStyleType: 'none' }}>
               {recentPosts.map((post, i) => {
                 return (
-                  <Box as='li' key={`post-${i}`} variant='links.mainMenuItem'>
-                    <ThemeLink
-                      as={Link}
-                      sx={{
-                        color: 'text',
-                        textDecoration: 'none',
-                        fontWeight: 400,
-                      }}
-                      href={`/posts/${post.id}`}
-                      onClick={() => setMenuOpen(false)}
-                    >
+                  <ThemeLink
+                    as={Link}
+                    sx={{
+                      color: 'text',
+                      textDecoration: 'none',
+                      fontWeight: 400,
+                    }}
+                    href={`/posts/${post.id}`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <Box as='li' key={`post-${i}`} variant='links.mainMenuItem'>
                       {post.title}
-                    </ThemeLink>
-                  </Box>
+                    </Box>
+                  </ThemeLink>
                 );
               })}
             </Box>

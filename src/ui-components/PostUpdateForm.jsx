@@ -31,6 +31,7 @@ export default function PostUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    type: "",
     title: "",
     gpxFile: "",
     images: "",
@@ -41,7 +42,6 @@ export default function PostUpdateForm(props) {
     postLocation: "",
     stravaUrl: "",
     resultsUrl: "",
-    type: "",
     subType: "",
     teaser: "",
     currentFtp: "",
@@ -63,7 +63,9 @@ export default function PostUpdateForm(props) {
     timeInRed: "",
     powerZones: "",
     powerZoneBuckets: "",
+    createdAt: "",
   };
+  const [type, setType] = React.useState(initialValues.type);
   const [title, setTitle] = React.useState(initialValues.title);
   const [gpxFile, setGpxFile] = React.useState(initialValues.gpxFile);
   const [images, setImages] = React.useState(initialValues.images);
@@ -80,7 +82,6 @@ export default function PostUpdateForm(props) {
   );
   const [stravaUrl, setStravaUrl] = React.useState(initialValues.stravaUrl);
   const [resultsUrl, setResultsUrl] = React.useState(initialValues.resultsUrl);
-  const [type, setType] = React.useState(initialValues.type);
   const [subType, setSubType] = React.useState(initialValues.subType);
   const [teaser, setTeaser] = React.useState(initialValues.teaser);
   const [currentFtp, setCurrentFtp] = React.useState(initialValues.currentFtp);
@@ -124,11 +125,13 @@ export default function PostUpdateForm(props) {
   const [powerZoneBuckets, setPowerZoneBuckets] = React.useState(
     initialValues.powerZoneBuckets
   );
+  const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = postRecord
       ? { ...initialValues, ...postRecord }
       : initialValues;
+    setType(cleanValues.type);
     setTitle(cleanValues.title);
     setGpxFile(cleanValues.gpxFile);
     setImages(
@@ -143,7 +146,6 @@ export default function PostUpdateForm(props) {
     setPostLocation(cleanValues.postLocation);
     setStravaUrl(cleanValues.stravaUrl);
     setResultsUrl(cleanValues.resultsUrl);
-    setType(cleanValues.type);
     setSubType(cleanValues.subType);
     setTeaser(cleanValues.teaser);
     setCurrentFtp(cleanValues.currentFtp);
@@ -224,6 +226,7 @@ export default function PostUpdateForm(props) {
         ? cleanValues.powerZoneBuckets
         : JSON.stringify(cleanValues.powerZoneBuckets)
     );
+    setCreatedAt(cleanValues.createdAt);
     setErrors({});
   };
   const [postRecord, setPostRecord] = React.useState(postModelProp);
@@ -243,6 +246,7 @@ export default function PostUpdateForm(props) {
   }, [idProp, postModelProp]);
   React.useEffect(resetStateValues, [postRecord]);
   const validations = {
+    type: [{ type: "Required" }],
     title: [{ type: "Required" }],
     gpxFile: [],
     images: [{ type: "JSON" }],
@@ -253,7 +257,6 @@ export default function PostUpdateForm(props) {
     postLocation: [],
     stravaUrl: [],
     resultsUrl: [],
-    type: [],
     subType: [],
     teaser: [],
     currentFtp: [],
@@ -275,6 +278,7 @@ export default function PostUpdateForm(props) {
     timeInRed: [],
     powerZones: [{ type: "JSON" }],
     powerZoneBuckets: [{ type: "JSON" }],
+    createdAt: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -302,6 +306,7 @@ export default function PostUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          type,
           title,
           gpxFile: gpxFile ?? null,
           images: images ?? null,
@@ -312,7 +317,6 @@ export default function PostUpdateForm(props) {
           postLocation: postLocation ?? null,
           stravaUrl: stravaUrl ?? null,
           resultsUrl: resultsUrl ?? null,
-          type: type ?? null,
           subType: subType ?? null,
           teaser: teaser ?? null,
           currentFtp: currentFtp ?? null,
@@ -334,6 +338,7 @@ export default function PostUpdateForm(props) {
           timeInRed: timeInRed ?? null,
           powerZones: powerZones ?? null,
           powerZoneBuckets: powerZoneBuckets ?? null,
+          createdAt,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -386,15 +391,16 @@ export default function PostUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Title"
+        label="Type"
         isRequired={true}
         isReadOnly={false}
-        value={title}
+        value={type}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title: value,
+              type: value,
+              title,
               gpxFile,
               images,
               headerImage,
@@ -404,7 +410,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -426,6 +431,63 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
+            };
+            const result = onChange(modelFields);
+            value = result?.type ?? value;
+          }
+          if (errors.type?.hasError) {
+            runValidationTasks("type", value);
+          }
+          setType(value);
+        }}
+        onBlur={() => runValidationTasks("type", type)}
+        errorMessage={errors.type?.errorMessage}
+        hasError={errors.type?.hasError}
+        {...getOverrideProps(overrides, "type")}
+      ></TextField>
+      <TextField
+        label="Title"
+        isRequired={true}
+        isReadOnly={false}
+        value={title}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              type,
+              title: value,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -449,6 +511,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile: value,
               images,
@@ -459,7 +522,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -481,6 +543,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.gpxFile ?? value;
@@ -504,6 +567,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images: value,
@@ -514,7 +578,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -536,6 +599,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -559,6 +623,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -569,7 +634,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -591,6 +655,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.headerImage ?? value;
@@ -614,6 +679,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -624,7 +690,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -646,6 +711,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -669,6 +735,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -679,7 +746,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -701,6 +767,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.publishedDate ?? value;
@@ -724,6 +791,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -734,7 +802,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -756,6 +823,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -779,6 +847,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -789,7 +858,6 @@ export default function PostUpdateForm(props) {
               postLocation: value,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -811,6 +879,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.postLocation ?? value;
@@ -834,6 +903,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -844,7 +914,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl: value,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -866,6 +935,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.stravaUrl ?? value;
@@ -889,6 +959,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -899,7 +970,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl: value,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -921,6 +991,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.resultsUrl ?? value;
@@ -936,61 +1007,6 @@ export default function PostUpdateForm(props) {
         {...getOverrideProps(overrides, "resultsUrl")}
       ></TextField>
       <TextField
-        label="Type"
-        isRequired={false}
-        isReadOnly={false}
-        value={type}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              gpxFile,
-              images,
-              headerImage,
-              date,
-              publishedDate,
-              location,
-              postLocation,
-              stravaUrl,
-              resultsUrl,
-              type: value,
-              subType,
-              teaser,
-              currentFtp,
-              components,
-              powerAnalysis,
-              coordinates,
-              powers,
-              elevation,
-              elevationGrades,
-              distances,
-              elevationTotal,
-              normalizedPower,
-              distance,
-              heartAnalysis,
-              cadenceAnalysis,
-              tempAnalysis,
-              elapsedTime,
-              stoppedTime,
-              timeInRed,
-              powerZones,
-              powerZoneBuckets,
-            };
-            const result = onChange(modelFields);
-            value = result?.type ?? value;
-          }
-          if (errors.type?.hasError) {
-            runValidationTasks("type", value);
-          }
-          setType(value);
-        }}
-        onBlur={() => runValidationTasks("type", type)}
-        errorMessage={errors.type?.errorMessage}
-        hasError={errors.type?.hasError}
-        {...getOverrideProps(overrides, "type")}
-      ></TextField>
-      <TextField
         label="Sub type"
         isRequired={false}
         isReadOnly={false}
@@ -999,6 +1015,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1009,7 +1026,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType: value,
               teaser,
               currentFtp,
@@ -1031,6 +1047,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.subType ?? value;
@@ -1054,6 +1071,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1064,7 +1082,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser: value,
               currentFtp,
@@ -1086,6 +1103,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.teaser ?? value;
@@ -1109,6 +1127,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1119,7 +1138,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp: value,
@@ -1141,6 +1159,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.currentFtp ?? value;
@@ -1164,6 +1183,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1174,7 +1194,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1196,6 +1215,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.components ?? value;
@@ -1219,6 +1239,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1229,7 +1250,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1251,6 +1271,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.powerAnalysis ?? value;
@@ -1274,6 +1295,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1284,7 +1306,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1306,6 +1327,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.coordinates ?? value;
@@ -1329,6 +1351,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1339,7 +1362,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1361,6 +1383,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.powers ?? value;
@@ -1384,6 +1407,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1394,7 +1418,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1416,6 +1439,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.elevation ?? value;
@@ -1439,6 +1463,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1449,7 +1474,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1471,6 +1495,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.elevationGrades ?? value;
@@ -1494,6 +1519,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1504,7 +1530,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1526,6 +1551,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.distances ?? value;
@@ -1553,6 +1579,7 @@ export default function PostUpdateForm(props) {
             : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1563,7 +1590,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1585,6 +1611,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.elevationTotal ?? value;
@@ -1612,6 +1639,7 @@ export default function PostUpdateForm(props) {
             : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1622,7 +1650,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1644,6 +1671,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.normalizedPower ?? value;
@@ -1671,6 +1699,7 @@ export default function PostUpdateForm(props) {
             : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1681,7 +1710,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1703,6 +1731,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.distance ?? value;
@@ -1726,6 +1755,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1736,7 +1766,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1758,6 +1787,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.heartAnalysis ?? value;
@@ -1781,6 +1811,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1791,7 +1822,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1813,6 +1843,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.cadenceAnalysis ?? value;
@@ -1836,6 +1867,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1846,7 +1878,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1868,6 +1899,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.tempAnalysis ?? value;
@@ -1895,6 +1927,7 @@ export default function PostUpdateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1905,7 +1938,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1927,6 +1959,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.elapsedTime ?? value;
@@ -1954,6 +1987,7 @@ export default function PostUpdateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -1964,7 +1998,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -1986,6 +2019,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.stoppedTime ?? value;
@@ -2013,6 +2047,7 @@ export default function PostUpdateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -2023,7 +2058,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -2045,6 +2079,7 @@ export default function PostUpdateForm(props) {
               timeInRed: value,
               powerZones,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.timeInRed ?? value;
@@ -2068,6 +2103,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -2078,7 +2114,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -2100,6 +2135,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones: value,
               powerZoneBuckets,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.powerZones ?? value;
@@ -2123,6 +2159,7 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              type,
               title,
               gpxFile,
               images,
@@ -2133,7 +2170,6 @@ export default function PostUpdateForm(props) {
               postLocation,
               stravaUrl,
               resultsUrl,
-              type,
               subType,
               teaser,
               currentFtp,
@@ -2155,6 +2191,7 @@ export default function PostUpdateForm(props) {
               timeInRed,
               powerZones,
               powerZoneBuckets: value,
+              createdAt,
             };
             const result = onChange(modelFields);
             value = result?.powerZoneBuckets ?? value;
@@ -2169,6 +2206,62 @@ export default function PostUpdateForm(props) {
         hasError={errors.powerZoneBuckets?.hasError}
         {...getOverrideProps(overrides, "powerZoneBuckets")}
       ></TextAreaField>
+      <TextField
+        label="Created at"
+        isRequired={true}
+        isReadOnly={false}
+        value={createdAt}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              type,
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+              createdAt: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.createdAt ?? value;
+          }
+          if (errors.createdAt?.hasError) {
+            runValidationTasks("createdAt", value);
+          }
+          setCreatedAt(value);
+        }}
+        onBlur={() => runValidationTasks("createdAt", createdAt)}
+        errorMessage={errors.createdAt?.errorMessage}
+        hasError={errors.createdAt?.hasError}
+        {...getOverrideProps(overrides, "createdAt")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

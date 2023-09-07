@@ -5,6 +5,8 @@ export type EditorContextType = {
   setIsGraphMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isFtpUpdating: boolean;
   setIsFtpUpdating: React.Dispatch<React.SetStateAction<boolean>>;
+  isGpxUploadOpen: boolean;
+  setIsGpxUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -12,6 +14,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsGraphMenuOpen: () => {},
   isFtpUpdating: false,
   setIsFtpUpdating: () => {},
+  isGpxUploadOpen: false,
+  setIsGpxUploadOpen: () => {},
 });
 
 export { EditorContext };

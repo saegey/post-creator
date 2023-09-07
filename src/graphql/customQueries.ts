@@ -97,50 +97,14 @@ export const getPostInitial = /* GraphQL */ `
 `;
 
 export const listPostsCustom = /* GraphQL */ `
-  query listPostsCustom(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  query listPostsByCreatedAt {
+    listPostsByCreatedAt(type: "Post", sortDirection: DESC) {
       items {
         id
         title
-        gpxFile
-        images
-        headerImage
-        date
-        publishedDate
-        location
-        postLocation
-        stravaUrl
-        resultsUrl
-        type
-        subType
-        teaser
-        currentFtp
-        postAuthorId
-        author {
-          id
-          fullName
-          email
-          image
-          username
-        }
-        # userId
-        related {
-          nextToken
-          __typename
-        }
         createdAt
-        updatedAt
-        blogPostsId
-        postRelatedId
-        # owner
-        __typename
+        images
       }
-      nextToken
-      __typename
     }
   }
 `;
