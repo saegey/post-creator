@@ -9,6 +9,7 @@ import TimePowerZonesIcon from './TimePowerZonesIcon';
 import { PostContext } from '../PostContext';
 import MatchesBurnedIcon from './MatchesBurnedIcon';
 import StravaIcon from './StravaIcon';
+import HeroBannerIcon from './HeroBannerIcon';
 
 const GraphSelectorMenu = ({ editor }) => {
   const { setIsGraphMenuOpen, setIsGpxUploadOpen } =
@@ -22,6 +23,13 @@ const GraphSelectorMenu = ({ editor }) => {
       ]);
     }
     // setIsGraphMenuOpen(false);
+  };
+
+  const addHeroBanner = () => {
+    Transforms.insertNodes(editor, [
+      { type: 'heroBanner', children: [{ text: '' }] } as Descendant,
+      { type: 'text', children: [{ text: '' }] } as Descendant,
+    ]);
   };
 
   const addStravaLink = () => {
@@ -296,6 +304,33 @@ const GraphSelectorMenu = ({ editor }) => {
                 sx={{ color: stravaUrl ? null : 'iconButtonDisabled' }}
               >
                 Strava Link
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={addHeroBanner}
+            sx={{
+              cursor: stravaUrl ? 'pointer' : 'not-allowed',
+              padding: '15px',
+              width: '100%',
+              '&:hover': { background: 'sideMenuHoverBackground' },
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <HeroBannerIcon />
+              </Box>
+              <Text
+                as='span'
+                sx={{ color: stravaUrl ? null : 'iconButtonDisabled' }}
+              >
+                Hero Banner
               </Text>
             </Flex>
           </Box>

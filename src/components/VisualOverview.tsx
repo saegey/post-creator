@@ -2,9 +2,9 @@ import { Box } from 'theme-ui';
 import React from 'react';
 
 import Map from './CustomMap';
-import ElevationGraph from '@saegey/posts.elevation-graph';
-import ElevationSlice, { gradeToColor } from '@saegey/posts.elevation_slice';
-import { useUnits } from '@saegey/posts.units';
+import ElevationGraph from './ElevationGraph';
+import ElevationSlice, { gradeToColor } from './ElevationSlice';
+import { useUnits } from './UnitProvider';
 
 interface ActivityEvent {
   c: Array<number> | Array<null>;

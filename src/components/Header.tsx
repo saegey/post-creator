@@ -39,17 +39,22 @@ const Header = ({ user, signOut, title }) => {
 
   return (
     <>
-      <UserProfileMenu
-        setProfileOpen={setProfileOpen}
-        profileOpen={profileOpen}
-        signOut={signOut}
-        user={user}
-      />
-      <UserMainMenu
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-        recentPosts={recentPosts}
-      />
+      {user && (
+        <>
+          <UserProfileMenu
+            setProfileOpen={setProfileOpen}
+            profileOpen={profileOpen}
+            signOut={signOut}
+            user={user}
+          />
+          <UserMainMenu
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+            recentPosts={recentPosts}
+          />
+        </>
+      )}
+
       <Box as='header' sx={{ width: '100vw' }}>
         <Box
           sx={{
@@ -89,7 +94,7 @@ const Header = ({ user, signOut, title }) => {
             )}
           </Flex>
           <div style={{ marginLeft: 'auto' }}>
-            {user.attributes.picture && (
+            {user && user.attributes.picture && (
               <Box sx={{ height: '40px', width: '40px', cursor: 'pointer' }}>
                 <CldImage
                   width='400'
@@ -116,7 +121,7 @@ const Header = ({ user, signOut, title }) => {
                 />
               </Box>
             )}
-            {!user.attributes.picture && (
+            {!user || !user.attributes.picture && (
               <AvatarButton
                 onClick={() =>
                   setTimeout(() => {

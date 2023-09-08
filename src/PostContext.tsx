@@ -17,6 +17,7 @@ export type PostContextType = {
   stravaUrl: string | undefined;
   components: Array<object> | null;
   images: Array<CloudinaryImage> | null;
+  heroImage: CloudinaryImage | undefined;
   currentFtp: string | null;
   resultsUrl: string | null;
   powerAnalysis: { entire: number } | null;
@@ -46,6 +47,7 @@ export type PostContextType = {
   setImages: React.Dispatch<
     React.SetStateAction<Array<CloudinaryImage> | null>
   >;
+  setHeroImage: React.Dispatch<CloudinaryImage | undefined>;
   setCurrentFtp: React.Dispatch<React.SetStateAction<string>>;
   setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
   setPowerAnalysis: React.Dispatch<
@@ -98,6 +100,7 @@ const PostContext = React.createContext<PostContextType>({
   timeInRed: null,
   powerZones: [],
   powerZoneBuckets: [],
+  heroImage: undefined,
   setActivity: () => {},
   setTitle: () => {},
   setGpxFile: () => {},
@@ -120,6 +123,7 @@ const PostContext = React.createContext<PostContextType>({
   setTempAnalysis: () => {},
   setPowerZones: () => {},
   setPowerZoneBuckets: () => {},
+  setHeroImage: () => {},
 });
 
 export { PostContext };

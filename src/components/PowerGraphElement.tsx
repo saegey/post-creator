@@ -3,7 +3,7 @@ import { Transforms } from 'slate';
 import { Box, Flex, Close } from 'theme-ui';
 import { useContext } from 'react';
 
-import { PowerCurveGraph } from '@saegey/posts.ui.power-curve-graph';
+import { PowerCurveGraph } from './PowerCurveGraph';
 import { PostContext } from '../PostContext';
 
 const PowerGraph = ({ element }) => {

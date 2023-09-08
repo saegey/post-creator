@@ -37,7 +37,8 @@ const MyPosts = ({ signOut, user }) => {
         },
       },
     });
-    return response.data.listPosts.items.map((d) => {
+    console.log('getData', JSON.stringify(response));
+    return response.data.listPostsByCreatedAt.items.map((d) => {
       return { ...d, imagesObj: JSON.parse(d.images) };
     });
   };

@@ -1,4 +1,4 @@
-import { IconButton, Spinner, Text } from 'theme-ui';
+import { Spinner } from 'theme-ui';
 import React from 'react';
 
 import { PostContext } from '../PostContext';
@@ -6,8 +6,7 @@ import { PostSaveComponents } from '../actions/PostSave';
 import TooltipButton from './TooltipButton';
 
 const SaveButton = ({ editor, setIsSaving, isSaving, setSavedMessage }) => {
-  const { id, title, postLocation, stravaUrl, resultsUrl, currentFtp } =
-    React.useContext(PostContext);
+  const { id, title, postLocation, heroImage } = React.useContext(PostContext);
 
   const save = async () => {
     setIsSaving(true);
@@ -17,6 +16,7 @@ const SaveButton = ({ editor, setIsSaving, isSaving, setSavedMessage }) => {
       title: title,
       postLocation: postLocation,
       components: editor.children,
+      heroImage: heroImage ? JSON.stringify(heroImage) : '',
       // stravaUrl: stravaUrl ? stravaUrl : '',
       // resultsUrl: resultsUrl ? resultsUrl : '',
       // currentFtp: currentFtp ? currentFtp : '',

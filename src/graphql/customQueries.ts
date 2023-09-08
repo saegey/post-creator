@@ -60,11 +60,12 @@ export const getPostInitial = /* GraphQL */ `
       tempAnalysis
       powerZones
       powerZoneBuckets
-      # coordinates
-      # powers
-      # elevation
-      # elevationGrades
-      # distances
+      coordinates
+      powers
+      elevation
+      elevationGrades
+      distances
+      heroImage
       blog {
         id
         name
@@ -104,6 +105,13 @@ export const listPostsCustom = /* GraphQL */ `
         title
         createdAt
         images
+        author {
+          id
+          username
+          fullName
+          image
+        }
+        postAuthorId
       }
     }
   }

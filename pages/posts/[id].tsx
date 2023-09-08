@@ -10,6 +10,7 @@ import { PostContext } from '../../src/PostContext';
 import { EditorContext } from '../../src/components/EditorContext';
 import PostEditor from '../../src/components/PostEditor';
 import { getPostInitial } from '../../src/graphql/customQueries';
+import AuthCustom from '../../src/components/AuthCustom';
 
 type ServerSideProps = {
   req: object;
@@ -54,6 +55,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postTempAnalysis: JSON.parse(post.tempAnalysis),
       postPowerZones: JSON.parse(post.powerZones),
       postPowerZoneBuckets: JSON.parse(post.powerZoneBuckets),
+      postHeroImage: JSON.parse(post.heroImage),
     },
   };
 };
@@ -82,6 +84,7 @@ const Post = ({
   postTempAnalysis,
   postPowerZones,
   postPowerZoneBuckets,
+  postHeroImage,
 }) => {
   // const router = useRouter();
   const [title, setTitle] = React.useState(postTitle);
@@ -116,6 +119,7 @@ const Post = ({
   const [powerZones, setPowerZones] = React.useState(postPowerZones);
   const [powerZoneBuckets, setPowerZoneBuckets] =
     React.useState(postPowerZoneBuckets);
+  const [heroImage, setHeroImage] = React.useState(postHeroImage);
 
   // editor context
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
@@ -145,6 +149,7 @@ const Post = ({
       console.log(postPowerZones);
       setPowerZones(postPowerZones !== null ? postPowerZones : []);
       setPowerZoneBuckets(postPowerZoneBuckets);
+      setHeroImage(postHeroImage);
       // console.log('use effect in [id]');
       // console.log('use effect - initial load');
     }
@@ -201,6 +206,8 @@ const Post = ({
         setPowerZones,
         powerZoneBuckets,
         setPowerZoneBuckets,
+        heroImage,
+        setHeroImage,
       }}
     >
       <div>
@@ -208,31 +215,32 @@ const Post = ({
           <title>{title}</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
-
-        <Box
-          as='main'
-          sx={{
-            backgroundColor: 'editorBackground',
-            // paddingBottom: '50px',
-            // height: '100vh',
-            width: '100vw',
-            flexGrow: 1,
-          }}
-        >
-          <Header user={user} signOut={signOut} title={'Edit Post'} />
-          <EditorContext.Provider
-            value={{
-              setIsGraphMenuOpen,
-              isGraphMenuOpen,
-              setIsFtpUpdating,
-              isFtpUpdating,
-              setIsGpxUploadOpen,
-              isGpxUploadOpen,
+        <AuthCustom>
+          <Box
+            as='main'
+            sx={{
+              backgroundColor: 'editorBackground',
+              // paddingBottom: '50px',
+              // height: '100vh',
+              width: '100vw',
+              flexGrow: 1,
             }}
           >
-            <PostEditor postId={postId} initialState={postComponents} />
-          </EditorContext.Provider>
-        </Box>
+            <Header user={user} signOut={signOut} title={'Edit Post'} />
+            <EditorContext.Provider
+              value={{
+                setIsGraphMenuOpen,
+                isGraphMenuOpen,
+                setIsFtpUpdating,
+                isFtpUpdating,
+                setIsGpxUploadOpen,
+                isGpxUploadOpen,
+              }}
+            >
+              <PostEditor postId={postId} initialState={postComponents} />
+            </EditorContext.Provider>
+          </Box>
+        </AuthCustom>
       </div>
     </PostContext.Provider>
   );

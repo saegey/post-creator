@@ -6,7 +6,6 @@ import { API } from 'aws-amplify';
 import { PostContext } from '../PostContext';
 import { EditorContext } from './EditorContext';
 import { UpdatePostMutation } from '../../src/API';
-import UploadGpxModal from './UploadGpxModal';
 import StandardModal from './StandardModal';
 import { updatePost } from '../../src/graphql/mutations';
 
@@ -20,12 +19,15 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
     currentFtp,
     setStravaUrl,
     setResultsUrl,
+    title,
+    setTitle,
+    postLocation,
+    setPostLocation,
   } = React.useContext(PostContext);
 
-  const { setIsFtpUpdating, isGpxUploadOpen, setIsGpxUploadOpen } =
+  const { setIsFtpUpdating, setIsGpxUploadOpen } =
     React.useContext(EditorContext);
 
-  const [uploadModal1, setUploadModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
 
   const saveSettings = async (event) => {
@@ -40,6 +42,8 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
     setCurrentFtp(newFtp);
     setStravaUrl(form.get('stravaLink') as string);
     setResultsUrl(form.get('resultsUrl') as string);
+    setTitle(form.get('title') as string);
+    setPostLocation(form.get('postLocation') as string);
 
     try {
       const response = (await API.graphql({
@@ -50,6 +54,8 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
             stravaUrl: form.get('stravaLink'),
             resultsUrl: form.get('resultsUrl'),
             currentFtp: form.get('currentFtp'),
+            title: form.get('title'),
+            postLocation: form.get('postLocation'),
             id: id,
           },
         },
@@ -75,6 +81,26 @@ const ActivitySettings = ({ isOpen, setSavedMessage }) => {
           style={{ width: '100%' }}
         >
           <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
+            <Box>
+              <Label htmlFor='title'>Title</Label>
+              <Input
+                id='title'
+                name='title'
+                // placeholder='http://strava.url'
+                defaultValue={title ? title : ''}
+                variant={'defaultInput'}
+              />
+            </Box>
+            <Box>
+              <Label htmlFor='postLocation'>Location</Label>
+              <Input
+                id='postLocation'
+                name='postLocation'
+                // placeholder='http://strava.url'
+                defaultValue={postLocation ? postLocation : ''}
+                variant={'defaultInput'}
+              />
+            </Box>
             <Box>
               <Label htmlFor='stravaLink'>Strava Url</Label>
               <Input

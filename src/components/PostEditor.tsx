@@ -27,10 +27,6 @@ const PostEditor = ({ postId, initialState }) => {
   const [loading, setLoading] = React.useState(true);
 
   const {
-    setTitle,
-    title,
-    postLocation,
-    setPostLocation,
     id,
     setActivity,
     setPowerAnalysis,
@@ -144,31 +140,6 @@ const PostEditor = ({ postId, initialState }) => {
                 padding: '10px',
               }}
             >
-              <Flex>
-                <Text
-                  as='h1'
-                  contentEditable='true'
-                  suppressContentEditableWarning={true}
-                  onBlur={(event) => {
-                    console.log('blur h1');
-                    if (event.target.textContent !== title) {
-                      setTitle(event.target.textContent);
-                    }
-                  }}
-                  sx={{ width: '100%' }}
-                >
-                  {title}
-                </Text>
-              </Flex>
-              <h2
-                contentEditable='true'
-                suppressContentEditableWarning={true}
-                onBlur={(event) => {
-                  setPostLocation(event.target.textContent);
-                }}
-              >
-                {postLocation}
-              </h2>
               <Slate
                 editor={editor}
                 initialValue={initialState}

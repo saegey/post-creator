@@ -19,27 +19,9 @@ export interface CloudinaryImage {
   height: number;
 }
 
-const AddImage = ({ isOpen, editor }) => {
+const AddImage = ({ isOpen, editor, callback }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
   const { setImages, images, id } = React.useContext(PostContext);
-
-  const insertImage = () => {
-    if (!selectedImage) {
-      return;
-    }
-    isOpen(false);
-
-    Transforms.insertNodes(editor, [
-      {
-        type: 'image',
-        asset_id: selectedImage?.asset_id,
-        public_id: selectedImage?.public_id,
-        children: [{ text: '' }],
-        void: true,
-      } as Descendant,
-      { type: 'text', children: [{ text: '' }] } as Descendant,
-    ]);
-  };
 
   return (
     <StandardModal title={'Images'} isOpen={isOpen}>
@@ -61,7 +43,7 @@ const AddImage = ({ isOpen, editor }) => {
             uploadPreset='epcsmymp'
             onSuccess={async (d) => {
               images?.push(d.info as CloudinaryImage);
-              console.log(images);
+              console.log(d, images);
               if (images) {
                 setImages([...images]);
                 try {
@@ -146,7 +128,13 @@ const AddImage = ({ isOpen, editor }) => {
             borderTopColor: 'divider',
           }}
         >
-          <Button onClick={insertImage} disabled={selectedImage ? false : true}>
+          <Button
+            onClick={() => {
+              callback({ selectedImage });
+              isOpen(false);
+            }}
+            disabled={selectedImage ? false : true}
+          >
             Choose
           </Button>
         </Box>

@@ -100,6 +100,7 @@ export const onCreateBlog = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
           updatedAt
           blogPostsId
           postRelatedId
@@ -161,6 +162,7 @@ export const onUpdateBlog = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
           updatedAt
           blogPostsId
           postRelatedId
@@ -222,6 +224,7 @@ export const onDeleteBlog = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
           updatedAt
           blogPostsId
           postRelatedId
@@ -315,6 +318,7 @@ export const onCreatePost = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
           updatedAt
           blogPostsId
           postRelatedId
@@ -348,6 +352,7 @@ export const onCreatePost = /* GraphQL */ `
       powerZones
       powerZoneBuckets
       createdAt
+      heroImage
       updatedAt
       blogPostsId
       postRelatedId
@@ -433,6 +438,7 @@ export const onUpdatePost = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
           updatedAt
           blogPostsId
           postRelatedId
@@ -466,6 +472,7 @@ export const onUpdatePost = /* GraphQL */ `
       powerZones
       powerZoneBuckets
       createdAt
+      heroImage
       updatedAt
       blogPostsId
       postRelatedId
@@ -551,6 +558,7 @@ export const onDeletePost = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
           updatedAt
           blogPostsId
           postRelatedId
@@ -584,6 +592,7 @@ export const onDeletePost = /* GraphQL */ `
       powerZones
       powerZoneBuckets
       createdAt
+      heroImage
       updatedAt
       blogPostsId
       postRelatedId

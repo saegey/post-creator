@@ -1,7 +1,7 @@
 import { Box, Text, Grid } from 'theme-ui';
 import React from 'react';
 // import { useUnits } from '../../../context/UnitProvider'
-import { useUnits } from '@saegey/posts.units';
+import { useUnits } from './UnitProvider';
 
 interface Item {
   title: string;

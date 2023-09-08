@@ -7,6 +7,7 @@ import ActivityOverviewWrapper from '../components/ActivityOverviewWrapper';
 import TimePowerZonesWrapper from '../components/TimePowerZonesWrapper';
 import MatchesBurnedWrapper from '../components/MatchesBurnedWrapper';
 import StravaLink from '../components/StravaLink';
+import HeroBanner from '../components/HeroBanner';
 
 const Leaf = (props) => {
   return (
@@ -25,6 +26,7 @@ const renderLeaf = (props) => {
 };
 
 const renderElement = ({ attributes, children, element }) => {
+  console.log(element.type);
   switch (element.type) {
     case 'stravaLink':
       return <StravaLink element={element} />;
@@ -40,6 +42,9 @@ const renderElement = ({ attributes, children, element }) => {
       return <VisualOverviewWrapper element={element} />;
     case 'image':
       return <ImageElement children={children} element={element} />;
+    case 'heroBanner':
+      return <HeroBanner element={element} />;
+
     case 'heading-two':
       return (
         <h2

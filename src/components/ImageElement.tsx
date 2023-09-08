@@ -5,6 +5,7 @@ import {
   useFocused,
 } from 'slate-react';
 import { Transforms } from 'slate';
+import { CldImage } from 'next-cloudinary';
 
 import { Box, Button, Label, Textarea, Close, Flex } from 'theme-ui';
 import React from 'react';
@@ -20,8 +21,6 @@ type SlateImageType = {
   void: true;
   caption?: string;
 };
-
-import { CldImage } from 'next-cloudinary';
 
 const ImageElement = ({ children, element }) => {
   const editor = useSlateStatic() as ReactEditor;

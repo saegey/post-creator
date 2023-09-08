@@ -1,6 +1,7 @@
 import { Flex, Box, Alert, Close } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
+import { Descendant, Transforms } from 'slate';
 
 import AddImage from './AddImage';
 import OptionsButton from './OptionsButton';
@@ -21,9 +22,33 @@ const PostMenu = ({ editor, id }: { editor: ReactEditor; id: string }) => {
     setSavedMessage(false);
   }, [id]);
 
+  const insertImage = ({ selectedImage }) => {
+    if (!selectedImage) {
+      return;
+    }
+    // isOpen(false);
+
+    Transforms.insertNodes(editor, [
+      {
+        type: 'image',
+        asset_id: selectedImage?.asset_id,
+        public_id: selectedImage?.public_id,
+        children: [{ text: '' }],
+        void: true,
+      } as Descendant,
+      { type: 'text', children: [{ text: '' }] } as Descendant,
+    ]);
+  };
+
   return (
     <>
-      {addImageModal && <AddImage isOpen={setAddImageModal} editor={editor} />}
+      {addImageModal && (
+        <AddImage
+          isOpen={setAddImageModal}
+          editor={editor}
+          callback={insertImage}
+        />
+      )}
 
       <Flex
         sx={{

@@ -11,6 +11,7 @@ import Header from '../src/components/Header';
 import CreatePostModal from '../src/components/CreatePostModal';
 import { CloudinaryImage } from '../src/components/AddImage';
 import PostCard from '../src/components/PostCard';
+import AuthCustom from '../src/components/AuthCustom';
 
 type ListPosts = {
   data: {
@@ -70,28 +71,33 @@ const Home = ({ signOut, user, posts = [] }: HomeProps) => {
           <title>Home</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
-          <Header user={user} signOut={signOut} title={'Posts'} />
+        <AuthCustom>
           <Box
-            sx={{
-              // marginTop: '60px',
-              maxWidth: '900px',
-              marginLeft: ['10px', 'auto', 'auto'],
-              marginRight: ['10px', 'auto', 'auto'],
-              padding: '20px',
-              width: '100vw',
-            }}
+            as='main'
+            sx={{ backgroundColor: 'background', height: '100vw' }}
           >
-            <div>
-              <Button onClick={() => setNewPost(true)}>New Post</Button>
-            </div>
-            <Grid columns={[1, 2, 3]}>
-              {posts.map((post) => (
-                <PostCard post={post} />
-              ))}
-            </Grid>
+            <Header user={user} signOut={signOut} title={'Posts'} />
+            <Box
+              sx={{
+                // marginTop: '60px',
+                maxWidth: '900px',
+                marginLeft: ['10px', 'auto', 'auto'],
+                marginRight: ['10px', 'auto', 'auto'],
+                padding: '20px',
+                width: '100vw',
+              }}
+            >
+              <div>
+                <Button onClick={() => setNewPost(true)}>New Post</Button>
+              </div>
+              <Grid columns={[1, 2, 3]}>
+                {posts.map((post) => (
+                  <PostCard post={post} />
+                ))}
+              </Grid>
+            </Box>
           </Box>
-        </Box>
+        </AuthCustom>
       </div>
     </>
   );
