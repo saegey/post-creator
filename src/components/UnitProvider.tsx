@@ -45,22 +45,24 @@ class UnitProvider extends React.Component<MyProps, MyState> {
   };
 
   changeToMetric = () => {
+    // console.log('change to mmetric');
     this.setState(() => ({
-      unitOfMeasure: 'imperial',
-      distanceUnit: 'miles',
-      elevationUnit: 'feet',
+      unitOfMeasure: 'metric',
+      distanceUnit: 'km',
+      elevationUnit: 'meters',
     }));
   };
 
   toggleUnit = () => {
     const { unitOfMeasure } = this.state;
-
+    // console.log(unitOfMeasure);
     if (unitOfMeasure === 'imperial') {
       this.changeToMetric();
     } else {
       this.changeToImperial();
     }
     localStorage.setItem('unitOfMeasure', unitOfMeasure);
+    return unitOfMeasure;
     // this.setState({ unitOfMeasure, elevationUnit, distanceUnit });
   };
 

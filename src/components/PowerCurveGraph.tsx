@@ -1,4 +1,5 @@
 // import { Box, Text } from 'theme-ui'
+import { useThemeUI } from 'theme-ui';
 import * as React from 'react';
 import {
   ResponsiveContainer,
@@ -23,6 +24,9 @@ export interface Coordinate {
 }
 
 export const formatSeconds = (value: number) => {
+  if (value < 60) {
+    return `${value.toFixed(0)}s`;
+  }
   if (value >= 3600) {
     return `${(value / 60 / 60).toFixed(0)}h`;
   }
@@ -54,9 +58,11 @@ const PowerCurveGraph = ({
   ftp,
 }: // isMaximized = false,
 PowerCurveGraphProps) => {
-  const ticks = [1, 2, 3, 4, 5, 10, 60, 300, 600, 1200, 3600];
-  const accentColor = 'black';
-  const mutedAccent = 'gray';
+  const ticks = [1, 2, 3, 4, 5, 10, 60, 300, 600, 1200, 3600, 7200, 14400];
+  // const accentColor = 'black';
+  // const mutedAccent = 'gray';
+  const context = useThemeUI();
+  const { theme } = context;
 
   return (
     // <Box
@@ -68,19 +74,28 @@ PowerCurveGraphProps) => {
     //   }}
     // >
     <ResponsiveContainer width='100%' height='100%'>
-      <LineChart data={data}>
+      <LineChart
+        data={data}
+        margin={{ top: 25, right: 20, left: 20, bottom: 25 }}
+      >
         <Line dataKey='y' dot={false} strokeWidth={2} />
         <YAxis
           type='number'
           tick={{
-            fill: accentColor,
+            fill: theme?.colors?.text as string,
             fontSize: '14px',
           }}
           tickLine={{
-            stroke: accentColor,
+            stroke: theme?.colors?.text as string,
           }}
           axisLine={{
-            stroke: accentColor,
+            stroke: theme?.colors?.text as string,
+          }}
+          label={{
+            value: 'Watts',
+            angle: -90,
+            position: 'left',
+            fill: theme?.colors?.text as string,
           }}
         />
         <XAxis
@@ -89,11 +104,16 @@ PowerCurveGraphProps) => {
           domain={[1, 'dataMax']}
           ticks={ticks}
           tickFormatter={formatSeconds}
-          tick={{ fill: accentColor, fontSize: '14px' }}
-          tickLine={{ stroke: accentColor }}
-          axisLine={{ stroke: accentColor }}
+          tick={{ fill: theme?.colors?.text as string, fontSize: '14px' }}
+          tickLine={{ stroke: theme?.colors?.text as string }}
+          axisLine={{ stroke: theme?.colors?.text as string }}
         >
-          <Label value='Time' offset={0} position='insideBottom' />
+          <Label
+            value='Time'
+            offset={0}
+            position='bottom'
+            fill={theme?.colors?.text as string}
+          />
         </XAxis>
         <Tooltip
           content={({ payload }) => {
@@ -101,7 +121,8 @@ PowerCurveGraphProps) => {
             return (
               <div
                 style={{
-                  backgroundColor: mutedAccent,
+                  backgroundColor: theme?.colors
+                    ?.chartTooltipBackground as string,
                   padding: '5px',
                   borderRadius: '5px',
                 }}
@@ -114,8 +135,17 @@ PowerCurveGraphProps) => {
             );
           }}
         />
-        <ReferenceLine y={ftp} stroke='gray' strokeDasharray='3 3'>
-          <Label value='FTP' offset={10} position='insideBottomLeft' />
+        <ReferenceLine
+          y={ftp}
+          stroke={theme?.colors?.text as string}
+          strokeDasharray='3 3'
+        >
+          <Label
+            value='FTP'
+            offset={10}
+            position='insideBottomLeft'
+            fill={theme?.colors?.text as string}
+          />
         </ReferenceLine>
       </LineChart>
     </ResponsiveContainer>

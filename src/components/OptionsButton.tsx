@@ -1,7 +1,13 @@
 import { IconButton } from 'theme-ui';
 
-const OptionsButton = () => (
-  <IconButton aria-label='Toggle options' variant='iconButton'>
+const OptionsButton = ({ sx = {}, onClick = () => {} }) => (
+  <IconButton
+    aria-label='Toggle options'
+    variant='iconButton'
+    onClick={onClick}
+    type='button'
+    sx={sx}
+  >
     <svg
       fill='var(--theme-ui-colors-text)'
       className='menu-button'

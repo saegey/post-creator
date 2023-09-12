@@ -1,15 +1,16 @@
 import React from 'react';
 
 type ActivityEvent = {
-  c?: Array<number>;
-  g?: number;
-  t?: number;
-  d: number;
-  e?: number;
+  c: Array<number> | Array<null>;
+  g: number | null;
+  t: number | null;
+  d: number | null;
+  e: number | null;
 };
 
 interface GradeGradientActivty extends ActivityEvent {
   color: string;
+  // grade: number;
 }
 
 interface GradeGradientProps {
@@ -31,7 +32,7 @@ const GradeGradient = ({ data, xMax }: GradeGradientProps): JSX.Element => {
       // console.log(d, xMax);
       return (
         <stop
-          offset={Number((d.d / xMax).toFixed(10))}
+          offset={Number((d && d.d ? d.d : 1 / xMax).toFixed(10))}
           stopColor={d.color}
           stopOpacity={1}
           key={`elevationGrade-${i}`}

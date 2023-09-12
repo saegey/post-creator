@@ -1,6 +1,5 @@
 import { Box, Flex, Button, Grid } from 'theme-ui';
 import React from 'react';
-import { Descendant, Transforms } from 'slate';
 import { CldImage, CldUploadButton } from 'next-cloudinary';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
@@ -9,6 +8,7 @@ import { PostContext } from '../PostContext';
 import StandardModal from './StandardModal';
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
+import { EditorContext } from './EditorContext';
 
 export interface CloudinaryImage {
   asset_id: string;
@@ -19,12 +19,18 @@ export interface CloudinaryImage {
   height: number;
 }
 
-const AddImage = ({ isOpen, editor, callback }) => {
+const AddImage = ({ callback }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
   const { setImages, images, id } = React.useContext(PostContext);
+  const { setIsImageModalOpen, isImageModalOpen } =
+    React.useContext(EditorContext);
 
   return (
-    <StandardModal title={'Images'} isOpen={isOpen}>
+    <StandardModal
+      title={'Images'}
+      isOpen={isImageModalOpen}
+      setIsOpen={setIsImageModalOpen}
+    >
       <Box sx={{}}>
         <Box
           sx={{
@@ -43,7 +49,7 @@ const AddImage = ({ isOpen, editor, callback }) => {
             uploadPreset='epcsmymp'
             onSuccess={async (d) => {
               images?.push(d.info as CloudinaryImage);
-              console.log(d, images);
+              // console.log(d, images);
               if (images) {
                 setImages([...images]);
                 try {
@@ -76,7 +82,7 @@ const AddImage = ({ isOpen, editor, callback }) => {
               return (
                 <Flex
                   sx={{
-                    backgroundColor: '#f1f1f1',
+                    backgroundColor: 'activityOverviewBackgroundColor',
                     height: '100%',
                     borderRadius: '5px',
                     border:
@@ -87,6 +93,7 @@ const AddImage = ({ isOpen, editor, callback }) => {
                   }}
                   key={`image-media-${i}`}
                   onClick={() => {
+                    console.log('fdsf');
                     setSelectedImage(image);
                   }}
                 >
@@ -130,8 +137,10 @@ const AddImage = ({ isOpen, editor, callback }) => {
         >
           <Button
             onClick={() => {
-              callback({ selectedImage });
-              isOpen(false);
+              setTimeout(() => {
+                callback({ selectedImage });
+                setIsImageModalOpen(false);
+              }, 10);
             }}
             disabled={selectedImage ? false : true}
           >

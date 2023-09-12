@@ -8,6 +8,7 @@ import TimePowerZonesWrapper from '../components/TimePowerZonesWrapper';
 import MatchesBurnedWrapper from '../components/MatchesBurnedWrapper';
 import StravaLink from '../components/StravaLink';
 import HeroBanner from '../components/HeroBanner';
+import EmbedElemnt from '../components/EmbedElement';
 
 const Leaf = (props) => {
   return (
@@ -26,8 +27,9 @@ const renderLeaf = (props) => {
 };
 
 const renderElement = ({ attributes, children, element }) => {
-  console.log(element.type);
   switch (element.type) {
+    case 'embed':
+      return <EmbedElemnt element={element} />;
     case 'stravaLink':
       return <StravaLink element={element} />;
     case 'powergraph':
@@ -66,6 +68,10 @@ const renderElement = ({ attributes, children, element }) => {
           style={{
             marginLeft: 'auto',
             marginRight: 'auto',
+            width: '690px',
+            // borderLeftStyle: 'solid',
+            // borderLeftColor: 'gray',
+            // borderLeftWidth: '1px',
             // maxWidth: '690px',
             // width: '100vw',
             fontSize: '20px',

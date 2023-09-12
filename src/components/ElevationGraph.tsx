@@ -12,7 +12,7 @@ import React from 'react';
 
 import { useViewport } from './ViewportProvider';
 import GradeGradient from './GradeGradient';
-// import { useUnits } from '@saegey/posts.units';
+import { useUnits } from './UnitProvider';
 
 type ActivityEvent = {
   c: Array<number> | Array<null>;
@@ -22,12 +22,13 @@ type ActivityEvent = {
   e: number | null;
 };
 
-interface GradeGradientActivty extends ActivityEvent {
+export interface GradeGradientActivty extends ActivityEvent {
   color: string;
+  // grade: number;
 }
 
 interface NewLineGraphProps {
-  xMax: number;
+  // xMax: number;
   downSampledData: Array<GradeGradientActivty>;
   setMarker: React.Dispatch<
     React.SetStateAction<{
@@ -37,22 +38,29 @@ interface NewLineGraphProps {
 }
 
 const ElevationGraph = ({
-  xMax,
+  // xMax,
   downSampledData,
   setMarker,
 }: NewLineGraphProps) => {
   const themeContext = useThemeUI();
-  // const units = useUnits();
+  const units = useUnits();
+  const xMax = Number(downSampledData[downSampledData.length - 1].d);
+  const divisor = Number(xMax) <= 30 ? 5 : 10;
 
-  // const yTicks =
-  //   units.unitOfMeasure === 'imperial'
-  //     ? axisLeftTickValues.imperial[0]
-  //     : axisLeftTickValues.metric[0];
+  const calcTicks = (): Array<number> => {
+    const preTickLen = xMax / 5;
+    const calcVal = preTickLen / divisor;
+    const interval = Math.trunc(calcVal > 1 ? calcVal : 1) * divisor;
+    //  / 10);
+    let ticks = Array.from({ length: 6 }, (value, index) => {
+      if (index === 0 || index * interval > xMax) {
+        return;
+      }
+      return index * interval;
+    }).filter((f) => f !== undefined) as Array<number>;
 
-  // const xTicks =
-  //   units.unitOfMeasure === 'imperial'
-  //     ? axisXTickValues.imperial[0]
-  //     : axisXTickValues.metric[0];
+    return ticks;
+  };
 
   const { width } = useViewport();
   const hideAxes = width > 640;
@@ -61,12 +69,9 @@ const ElevationGraph = ({
     <Box
       sx={{
         width: '100%',
-        height: ['100px', '200px', '250px'],
-        borderColor: 'mutedAccent',
-        borderStyle: 'solid',
+        height: ['100px', '200px', '300px'],
         borderWidth: '1px',
         paddingY: [0, '20px', '20px'],
-        paddingRight: [0, '20px', '20px'],
       }}
     >
       <ResponsiveContainer width='100%' height='100%'>
@@ -80,7 +85,7 @@ const ElevationGraph = ({
 
             setMarker(e.activePayload[0].payload as { t: string });
           }}
-          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          margin={{ top: 10, right: 0, left: 20, bottom: 30 }}
         >
           {!hideAxes && (
             <CartesianGrid stroke={String(themeContext.theme.colors?.muted)} />
@@ -95,13 +100,40 @@ const ElevationGraph = ({
           <XAxis
             dataKey='d'
             type='number'
-            // ticks={xTicks}
-            // domain={[0, xMax]}
+            ticks={calcTicks()}
+            domain={[0, xMax]}
+            tickCount={5}
+            interval={0}
+            label={{
+              value: `Distance (${units.distanceUnit})`,
+              position: 'bottom',
+              fontSize: '14px',
+            }}
+            // padding="gap"
+            allowDecimals={true}
+            tickFormatter={(t) => {
+              return t;
+            }}
+            tick={{
+              fill: themeContext?.theme?.colors?.text as string,
+              fontSize: '14px',
+            }}
             hide={hideAxes}
+            stroke={themeContext?.theme?.colors?.chartAxes as string}
           />
           <YAxis
             type='number'
+            label={{
+              value: `Elevation (${units.elevationUnit})`,
+              angle: -90,
+              position: 'left',
+              fontSize: '14px',
+            }}
             dataKey='e'
+            tick={{
+              fill: themeContext?.theme?.colors?.text as string,
+              fontSize: '14px',
+            }}
             // domain={[
             //   units.unitOfMeasure === 'imperial' ? yMin : yMin * 0.3048,
             //   `dataMax + ${
@@ -111,6 +143,7 @@ const ElevationGraph = ({
             //   }`,
             // ]}
             // ticks={yTicks}
+            stroke={themeContext?.theme?.colors?.chartAxes as string}
             hide={hideAxes}
           />
           <Area

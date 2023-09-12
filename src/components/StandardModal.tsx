@@ -3,21 +3,7 @@ import React from 'react';
 
 import BlackBox from './BlackBox';
 
-const StandardModal = ({ children, isOpen, title }) => {
-  const ref = React.useRef<any>();
-
-  React.useEffect(() => {
-    const checkIfClickedOutside1 = (e: any) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        isOpen(false);
-      }
-    };
-    document.addEventListener('click', checkIfClickedOutside1);
-    return () => {
-      document.removeEventListener('click', checkIfClickedOutside1);
-    };
-  }, [isOpen]);
-
+const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
   React.useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -30,7 +16,7 @@ const StandardModal = ({ children, isOpen, title }) => {
 
   return (
     <>
-      <BlackBox opacity={'0.7'}>
+      <BlackBox opacity={'0.7'} onClick={() => setIsOpen(false)}>
         <Box
           sx={{
             maxWidth: '690px',
@@ -43,7 +29,7 @@ const StandardModal = ({ children, isOpen, title }) => {
             padding: '20px',
             position: 'relative',
           }}
-          ref={ref}
+          onClick={(e) => e.stopPropagation()}
         >
           <Flex
             sx={{
@@ -64,7 +50,7 @@ const StandardModal = ({ children, isOpen, title }) => {
               {title}
             </Text>
             <Close
-              onClick={() => isOpen(false)}
+              onClick={() => setIsOpen(false)}
               sx={{
                 alignItems: 'center',
                 height: '100%',

@@ -5,6 +5,8 @@ import { Box, Close, Spinner, Flex } from 'theme-ui';
 import { Transforms } from 'slate';
 
 import { PostContext } from '../PostContext';
+import OptionsButton from './OptionsButton';
+import Dropdown from './Dropdown';
 
 const VisualOverview = dynamic(import('./VisualOverview'), {
   ssr: false,
@@ -14,29 +16,60 @@ const VisualOverviewWrapper = ({ element }) => {
   const { activity } = React.useContext(PostContext);
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   if (!activity || activity.length === 0) {
     return (
-      <Flex sx={{ width: '100vw', backgroundColor: '#ddd' }}>
+      <Flex sx={{ width: '900px', backgroundColor: '#ddd' }}>
         <Spinner sx={{ margin: 'auto' }} />
       </Flex>
     );
   }
 
-  const fixedData = activity.map((a) => {
-    return { ...a, g: a.g !== null ? a.g : 0 };
+  const fixedData = activity.map((a, i) => {
+    return {
+      ...a,
+      g: a.g !== null ? a.g : 0,
+      d: a.d === 0 ? (a.d = activity[i - 1] ? activity[i - 1]?.d : 0) : a.d,
+    };
   });
 
   return (
-    <Box sx={{ position: 'relative' }} contentEditable={false}>
+    <Box
+      sx={{ position: 'relative', maxWidth: '900px', marginX: 'auto' }}
+      contentEditable={false}
+    >
       <VisualOverview
         activity={fixedData}
         token={
           'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
         }
       />
-      <Box sx={{ position: 'absolute', top: 0, left: 0 }}>
-        <Close onClick={() => Transforms.removeNodes(editor, { at: path })} />
+      <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
+        <OptionsButton
+          onClick={() =>
+            setTimeout(() => {
+              if (isMenuOpen) {
+                setIsMenuOpen(false);
+              } else {
+                setIsMenuOpen(true);
+              }
+            }, 10)
+          }
+        />
+        <Dropdown isOpen={isMenuOpen}>
+          <Box
+            onClick={() =>
+              setTimeout(() => {
+                Transforms.removeNodes(editor, { at: path });
+                setIsMenuOpen(false);
+              }, 10)
+            }
+            variant='boxes.dropdownMenuItem'
+          >
+            Remove
+          </Box>
+        </Dropdown>
       </Box>
     </Box>
   );

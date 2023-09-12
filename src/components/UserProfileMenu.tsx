@@ -14,10 +14,12 @@ import React from 'react';
 import { CldImage } from 'next-cloudinary';
 
 import AvatarButton from './AvatarButton';
+import { useUnits } from './UnitProvider';
 
 const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
   const ref = React.useRef<any>();
   const [mode, setMode] = useColorMode();
+  const { toggleUnit, unitOfMeasure } = useUnits();
 
   React.useEffect(() => {
     const checkIfClickedOutside = (e) => {
@@ -168,23 +170,6 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   </ThemeLink>
                 </Flex>
                 <Flex as='li'>
-                  {/* <Text
-                    as='span'
-                    onClick={(e) => {
-                      const next = mode === 'dark' ? 'light' : 'dark';
-                      setMode(next);
-                      console.log(next);
-                    }}
-                    sx={{
-                      width: '100%',
-                      padding: '5px',
-                      cursor: 'pointer',
-                      '&:hover': {
-                        backgroundColor: 'menuItemBackgroundHoverColor',
-                        borderRadius: '5px',
-                      },
-                    }}
-                  > */}
                   <Flex sx={{ width: '100%', padding: '5px' }}>
                     <Text as='span'>Dark Mode</Text>
                     <Box sx={{ marginLeft: 'auto' }}>
@@ -198,7 +183,24 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                       />
                     </Box>
                   </Flex>
-                  {/* </Text> */}
+                </Flex>
+                <Flex as='li'>
+                  <Flex sx={{ width: '100%', padding: '5px' }}>
+                    <Text as='span'>
+                      Units{' '}
+                      <Text as='span' sx={{ color: '#aeaeae' }}>
+                        imperial/metric
+                      </Text>
+                    </Text>
+                    <Box sx={{ marginLeft: 'auto' }}>
+                      <Switch
+                        checked={unitOfMeasure !== 'imperial' ? true : false}
+                        onClick={(e) => {
+                          toggleUnit();
+                        }}
+                      />
+                    </Box>
+                  </Flex>
                 </Flex>
                 <Flex
                   as='li'

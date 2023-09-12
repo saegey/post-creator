@@ -37,6 +37,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postId: post.id,
       postComponents: JSON.parse(post.components),
       postTitle: post.title,
+      postSubhead: post.subhead,
       postImages: JSON.parse(post.images),
       postLocationOrig: post.postLocation,
       postGpxFile: post.gpxFile,
@@ -56,6 +57,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postPowerZones: JSON.parse(post.powerZones),
       postPowerZoneBuckets: JSON.parse(post.powerZoneBuckets),
       postHeroImage: JSON.parse(post.heroImage),
+      postDate: post.date,
     },
   };
 };
@@ -65,6 +67,7 @@ const Post = ({
   user,
   postComponents,
   postTitle,
+  postSubhead,
   postLocationOrig,
   postGpxFile,
   postId,
@@ -85,9 +88,11 @@ const Post = ({
   postPowerZones,
   postPowerZoneBuckets,
   postHeroImage,
+  postDate,
 }) => {
   // const router = useRouter();
   const [title, setTitle] = React.useState(postTitle);
+  const [subhead, setSubhead] = React.useState(postSubhead);
   const [postLocation, setPostLocation] = React.useState(postLocationOrig);
   const [id, setId] = React.useState(postId);
   const [activity, setActivity] = React.useState([]);
@@ -120,16 +125,20 @@ const Post = ({
   const [powerZoneBuckets, setPowerZoneBuckets] =
     React.useState(postPowerZoneBuckets);
   const [heroImage, setHeroImage] = React.useState(postHeroImage);
+  const [date, setDate] = React.useState(postDate);
 
   // editor context
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
   const [isGpxUploadOpen, setIsGpxUploadOpen] = React.useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = React.useState(false);
+  const [isPhotoCaptionOpen, setIsPhotoCaptionOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (!initialLoad) {
       setId(postId);
       setTitle(postTitle);
+      setSubhead(postSubhead);
       setComponents(postComponents);
       setPostLocation(postLocationOrig);
       setGpxFile(postGpxFile);
@@ -146,12 +155,10 @@ const Post = ({
       setPowerAnalysis(postPowerAnalysis);
       setCadenceAnalysis(postCadenceAnalysis);
       setTempAnalysis(postTempAnalysis);
-      console.log(postPowerZones);
       setPowerZones(postPowerZones !== null ? postPowerZones : []);
       setPowerZoneBuckets(postPowerZoneBuckets);
       setHeroImage(postHeroImage);
-      // console.log('use effect in [id]');
-      // console.log('use effect - initial load');
+      setDate(postDate);
     }
   }, [postComponents]);
 
@@ -164,6 +171,8 @@ const Post = ({
       value={{
         title,
         setTitle,
+        subhead,
+        setSubhead,
         postLocation,
         setPostLocation,
         activity,
@@ -208,6 +217,8 @@ const Post = ({
         setPowerZoneBuckets,
         heroImage,
         setHeroImage,
+        date,
+        setDate,
       }}
     >
       <div>
@@ -219,7 +230,7 @@ const Post = ({
           <Box
             as='main'
             sx={{
-              backgroundColor: 'editorBackground',
+              // backgroundColor: 'editorBackground',
               // paddingBottom: '50px',
               // height: '100vh',
               width: '100vw',
@@ -227,18 +238,24 @@ const Post = ({
             }}
           >
             <Header user={user} signOut={signOut} title={'Edit Post'} />
-            <EditorContext.Provider
-              value={{
-                setIsGraphMenuOpen,
-                isGraphMenuOpen,
-                setIsFtpUpdating,
-                isFtpUpdating,
-                setIsGpxUploadOpen,
-                isGpxUploadOpen,
-              }}
-            >
-              <PostEditor postId={postId} initialState={postComponents} />
-            </EditorContext.Provider>
+            <Box>
+              <EditorContext.Provider
+                value={{
+                  setIsGraphMenuOpen,
+                  isGraphMenuOpen,
+                  setIsFtpUpdating,
+                  isFtpUpdating,
+                  setIsGpxUploadOpen,
+                  isGpxUploadOpen,
+                  isImageModalOpen,
+                  setIsImageModalOpen,
+                  isPhotoCaptionOpen,
+                  setIsPhotoCaptionOpen,
+                }}
+              >
+                <PostEditor postId={postId} initialState={postComponents} />
+              </EditorContext.Provider>
+            </Box>
           </Box>
         </AuthCustom>
       </div>

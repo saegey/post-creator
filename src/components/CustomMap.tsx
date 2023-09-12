@@ -222,7 +222,11 @@ const Map = ({
   return (
     <Box
       ref={mapContainerRef}
-      sx={{ width: '100%', height: ['300px', '450px', '450px'] }}
+      sx={{
+        width: '100%',
+        borderRadius: '5px',
+        height: ['300px', '450px', '450px'],
+      }}
     />
   );
 };

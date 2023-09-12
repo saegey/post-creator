@@ -15,7 +15,12 @@ const MatchesBurnedIcon = ({ color }) => {
         },
       }}
     >
-      <svg version='1.1' id='Capa_1' viewBox='0 0 25.953 25.953'>
+      <svg
+        version='1.1'
+        id='Capa_1'
+        viewBox='0 0 25.953 25.953'
+        className='childButton'
+      >
         <g>
           <path
             className='iconStyle'

@@ -161,7 +161,7 @@ const Profile = ({ signOut, user }) => {
                     });
                     setWasSaved(true);
 
-                    console.log('submitform');
+                    // console.log('submitform');
                   }}
                 >
                   <Flex sx={{ flexDirection: 'column', gap: '10px' }}>

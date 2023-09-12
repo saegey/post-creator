@@ -20,11 +20,11 @@ export default class App extends NextApp {
     const { Component, pageProps } = this.props;
     return (
       <UnitProvider>
-        <ViewportProvider>
+        {/* <ViewportProvider> */}
           <ThemeUIProvider theme={theme}>
             <Component {...pageProps} />
           </ThemeUIProvider>
-        </ViewportProvider>
+        {/* </ViewportProvider> */}
       </UnitProvider>
     );
   }

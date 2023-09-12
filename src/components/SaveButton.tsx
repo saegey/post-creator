@@ -33,7 +33,13 @@ const SaveButton = ({ editor, setIsSaving, isSaving, setSavedMessage }) => {
       tooltipText={'Save Changes to Post'}
     >
       {!isSaving && (
-        <svg width='100%' height='100%' viewBox='0 0 24 24' fill='none'>
+        <svg
+          width='100%'
+          height='100%'
+          viewBox='0 0 24 24'
+          fill='none'
+          className='menu-button'
+        >
           <path
             fillRule='evenodd'
             clipRule='evenodd'

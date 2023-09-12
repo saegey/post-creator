@@ -1,7 +1,8 @@
-const HeroBannerIcon = () => {
+const HeroBannerIcon = ({ color }) => {
   return (
     <svg
-      fill='var(--theme-ui-colors-text)'
+      fill={color}
+      className='childButton'
       width='100%'
       height='100%'
       viewBox='0 0 1920 1920'

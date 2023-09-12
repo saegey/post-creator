@@ -1,23 +1,26 @@
 import { withSSRContext } from 'aws-amplify';
 import React from 'react';
-import { Box, Flex, Text } from 'theme-ui';
+import { Box, Flex, Text, Container } from 'theme-ui';
+import Head from 'next/head';
 import {
   SlateToReact,
   slateToReactConfig,
   type SlateToReactConfig,
 } from '@slate-serializers/react';
 import { CldImage } from 'next-cloudinary';
+import PowerBreakdown from '../../../src/components/TimePowerZones';
 // import VisualOverview from '../../../src/components/VisualOverview';
 
 import dynamic from 'next/dynamic';
-import Header from '../../../src/components/Header';
+import HeaderPublic from '../../../src/components/HeaderPublic';
 import { getPostInitial } from '../../../src/graphql/customQueries';
 import ActivityOverview from '../../../src/components/ActivityOverview';
 import Link from 'next/link';
 import { PowerCurveGraph } from '../../../src/components/PowerCurveGraph';
 import { getActivity } from '../../../src/actions/PostGet';
-import HeroBanner from '../../../src/components/HeroBanner';
+// import HeroBanner from '../../../src/components/HeroBanner';
 import PostHeader from '../../../src/components/PostHeader';
+import EmbedElemnt from '../../../src/components/EmbedElement';
 
 const VisualOverview = dynamic(
   import('../../../src/components/VisualOverview'),
@@ -48,14 +51,18 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     return;
   }
   const post = data.getPost;
-  // console.log(post.coordinates);
-
   const activityString = await getActivity(post);
 
-  const activity = activityString.map((a) => {
+  const activity = activityString.map((a, i) => {
     return {
       ...a,
-      g: a.g !== null ? a.g : 0,
+      g: a?.g !== null ? a?.g : 0,
+      d:
+        a?.d === 0
+          ? activityString[i - 1]
+            ? activityString[i - 1]?.d
+            : 0
+          : a?.d,
     };
   });
 
@@ -82,21 +89,25 @@ const Publish = ({ post, activity }): JSX.Element => {
               }
             })
             .filter((p) => p !== undefined);
-          console.log(graphData);
+          // console.log(graphData);
           return (
             <Box
               sx={{
                 maxWidth: '690px',
                 width: '100%',
                 marginX: 'auto',
-                height: '350px',
-                marginY: '20px',
-                backgroundColor: '#f1f1f1',
-                padding: '30px',
+                height: ['300px', '450px', '450px'],
+                marginY: ['30px', '60px', '60px'],
+                backgroundColor: [
+                  null,
+                  'activityOverviewBackgroundColor',
+                  'activityOverviewBackgroundColor',
+                ],
+                paddingY: '10px',
                 borderRadius: '5px',
               }}
             >
-              <h2>Power Curve</h2>
+              {/* <h2>Power Curve</h2> */}
               <PowerCurveGraph
                 ftp={post.currentFtp ? Number(post.currentFtp) : 0}
                 data={graphData as any}
@@ -104,40 +115,67 @@ const Publish = ({ post, activity }): JSX.Element => {
             </Box>
           );
         },
+        embed: ({ node, children = [] }) => {
+          return <EmbedElemnt element={node} />;
+        },
         visualOverview: ({ node, children = [] }) => {
           return (
-            <Box>
-              <VisualOverview
-                activity={activity}
-                token={
-                  'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
-                }
-              />
-            </Box>
+            <Flex sx={{ marginX: [null, '120px', '120px'] }}>
+              <Box sx={{ width: '900px', maxWidth: '900px', marginX: 'auto' }}>
+                <VisualOverview
+                  activity={activity}
+                  token={
+                    'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
+                  }
+                />
+              </Box>
+            </Flex>
           );
         },
         timeInZones: ({ node, children = [] }) => {
-          return <h1>time in zonoes</h1>;
+          return (
+            <Box
+              sx={{
+                marginY: ['20px', '60px', '60px'],
+                marginX: 'auto',
+                maxWidth: '690px',
+                backgroundColor: [
+                  null,
+                  'activityOverviewBackgroundColor',
+                  'activityOverviewBackgroundColor',
+                ],
+                padding: ['10px', '30px', '30px'],
+                borderRadius: '5px',
+              }}
+            >
+              <PowerBreakdown
+                powerZoneBuckets={JSON.parse(post.powerZoneBuckets)}
+                powerZones={JSON.parse(post.powerZones)}
+              />
+            </Box>
+          );
         },
         heroBanner: ({ node, children = [] }) => {
           return (
             <Box sx={{ marginBottom: '120px' }}>
               <PostHeader
                 headerImage={
-                  <CldImage
-                    width='800'
-                    height='800'
-                    src={JSON.parse(post.heroImage).public_id}
-                    sizes='100vw'
-                    alt='race pic'
-                    quality={90}
-                    style={{
-                      objectFit: 'cover',
-                      // width: '100%',
-                      height: '100%',
-                      // borderRadius: '5px',
-                    }}
-                  />
+                  <Box sx={{ width: '100%', height: '100%' }}>
+                    <CldImage
+                      width='1800'
+                      height='800'
+                      src={JSON.parse(post.heroImage).public_id}
+                      sizes='100vw'
+                      alt='race pic'
+                      quality={90}
+                      style={{
+                        objectFit: 'fill',
+                        width: '100%',
+                        height: '100%',
+                        // borderRadius: '5px',
+                      }}
+                    />
+                  </Box>
                 }
                 type={'Race'}
                 teaser={'This is an epic race that you need to attend.'}
@@ -155,12 +193,16 @@ const Publish = ({ post, activity }): JSX.Element => {
           return (
             <Box
               sx={{
-                marginY: '20px',
+                marginY: ['20px', '60px', '60px'],
                 maxWidth: '690px',
                 marginX: 'auto',
-                backgroundColor: '#f1f1f1',
+                backgroundColor: [
+                  null,
+                  'activityOverviewBackgroundColor',
+                  'activityOverviewBackgroundColor',
+                ],
                 borderRadius: '5px',
-                padding: '30px',
+                padding: ['10px', '30px', '30px'],
               }}
             >
               <ActivityOverview
@@ -205,12 +247,13 @@ const Publish = ({ post, activity }): JSX.Element => {
                     as='p'
                     key={`paragraph-${i}`}
                     sx={{
-                      marginY: '15px',
+                      // marginY: '15px',
                       fontSize: '20px',
                       maxWidth: '690px',
                       // font-size: 20px;
                       borderLeftWidth: '1px',
                       paddingLeft: '8px',
+                      marginX: 'auto',
                     }}
                   >
                     {c.text}
@@ -224,18 +267,19 @@ const Publish = ({ post, activity }): JSX.Element => {
           return (
             <>
               {node.children.map((c, i) => {
-                if (!c.text) {
+                if (!c.text || c.text === '') {
                   return;
                 }
                 return (
                   <Text
                     as='p'
-                    key={`paragraph-${i}`}
+                    key={`text-paragraph-${i}`}
                     sx={{
-                      marginY: '15px',
+                      // marginY: '15px',
                       fontSize: '20px',
                       maxWidth: '690px',
                       marginX: 'auto',
+                      width: [null, '690px', '690px'],
                       // font-size: 20px;
                       borderLeftWidth: '1px',
                       borderLeftStyle: 'solid',
@@ -258,17 +302,21 @@ const Publish = ({ post, activity }): JSX.Element => {
                   return;
                 }
                 return (
-                  <Text
-                    as='h2'
-                    key={`paragraph-${i}`}
-                    sx={{
-                      marginY: '15px',
-                      // fontSize: '20px',
-                      maxWidth: '690px',
-                    }}
+                  <Flex
+                    sx={{ maxWidth: '690px', width: '690px', marginX: 'auto' }}
                   >
-                    {c.text}
-                  </Text>
+                    <Text
+                      as='h2'
+                      key={`paragraph-${i}`}
+                      sx={{
+                        marginY: '15px',
+                        // fontSize: '20px',
+                        maxWidth: '690px',
+                      }}
+                    >
+                      {c.text}
+                    </Text>
+                  </Flex>
                 );
               })}
             </>
@@ -276,55 +324,92 @@ const Publish = ({ post, activity }): JSX.Element => {
         },
         image: ({ node, children = [] }) => {
           return (
-            <Box sx={{ marginBottom: '15px' }}>
-              <CldImage
-                width='800'
-                height='800'
-                src={node.public_id}
-                sizes='100vw'
-                alt='race pic'
-                quality={90}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  borderRadius: '5px',
+            <Flex>
+              <Box
+                sx={{
+                  marginY: ['20px', '60px', '60px'],
+                  maxWidth: '900px',
+                  width: '900px',
+                  marginX: 'auto',
                 }}
-              />
-              <p>{node.caption}</p>
-              {/* <p>{JSON.stringify(node)}</p> */}
-            </Box>
+              >
+                <CldImage
+                  width='1200'
+                  height='1200'
+                  src={node.public_id}
+                  sizes='100vw'
+                  alt='race pic'
+                  quality={90}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '5px',
+                  }}
+                />
+                <p>{node.caption}</p>
+                {/* <p>{JSON.stringify(node)}</p> */}
+              </Box>
+            </Flex>
           );
         },
       },
     },
   };
 
-  // const serialize = (nodes) => {
-  //   return nodes.map((n) => Node.string(n)).join('\n');
-  // };
-
+  const components = JSON.parse(post.components);
   return (
-    <Box
-      as='main'
-      sx={{
-        // backgroundColor: 'editorBackground',
-        // paddingBottom: '50px',
-        // height: '100%',
-        width: '100vw',
-        flexGrow: 1,
-        marginBottom: 'auto',
-      }}
-    >
-      <Header user={null} signOut={() => {}} title={''} />
-      <Flex sx={{ flexDirection: 'column', width: '100vw' }}>
-        {/* <Box sx={{ marginX: 'auto', maxWidth: '900px' }}> */}
-        <Link href={`/posts/${post.id}/`}>Edit</Link>
-        {/* <h1>{post.title}</h1>
-        <h2>{post.postLocation}</h2> */}
-        <SlateToReact node={JSON.parse(post.components)} config={config} />
-        {/* </Box> */}
-      </Flex>
-    </Box>
+    <>
+      <Head>
+        <title>Home</title>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+      <Box
+        as='main'
+        sx={{
+          // backgroundColor: 'editorBackground',
+          // paddingBottom: '50px',
+          // height: '100%',
+          // width: '100vw',
+          // flexGrow: 1,
+          marginBottom: 'auto',
+        }}
+      >
+        <HeaderPublic />
+
+        {/* <Flex sx={{ flexDirection: 'column', width: '100vw' }}> */}
+        <Container
+          as='article'
+          className='article'
+          sx={{
+            '&.article>p+p': {
+              paddingTop: '30px',
+            },
+            '&.article>h2+ul': {
+              paddingTop: '30px',
+            },
+            '&.article>ul+h2': {
+              paddingTop: '30px',
+            },
+            '&.article>ol+h2': {
+              paddingTop: '30px',
+            },
+            '&.article>h2+ol': {
+              paddingTop: '0px',
+            },
+            '&.article>p+h2': {
+              paddingTop: '30px',
+            },
+            // maxWidth: '1045px',
+            // position: 'relative',
+            // width: 'calc(100% - 40px)',
+            // margin: ['20px auto', '120px auto', '120px auto'],
+          }}
+        >
+          <SlateToReact node={components} config={config} />
+        </Container>
+        {/* </Flex> */}
+      </Box>
+    </>
   );
 };
 

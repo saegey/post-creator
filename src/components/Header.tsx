@@ -80,11 +80,11 @@ const Header = ({ user, signOut, title }) => {
                 // setMenuOpen(true);
               }}
             />
-            <Flex sx={{ height: '100%' }}>
+            {/* <Flex sx={{ height: '100%' }}>
               <Box sx={{ height: '32px', width: '32px', marginY: 'auto' }}>
                 <Logo />
               </Box>
-            </Flex>
+            </Flex> */}
             {title && (
               <Flex as='div' sx={{ fontSize: '16px', fontWeight: 500 }}>
                 <Box as='span' sx={{ marginY: 'auto' }}>

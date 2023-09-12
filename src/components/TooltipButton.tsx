@@ -41,7 +41,7 @@ const TooltipButton = ({
           visibility: 'hidden',
           width: '180px',
           backgroundColor: 'tooltipBackground',
-          color: 'background',
+          color: 'text',
           textAlign: 'center',
           fontWeight: 400,
           fontSize: '14px',

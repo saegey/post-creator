@@ -24,7 +24,7 @@ const PostHeader = ({
   return (
     <Flex
       sx={{
-        marginTop: '10px',
+        // marginTop: '10px',
         flexDirection: ['column', 'row', 'row'],
         justifyContent: 'space-between',
       }}

@@ -5,6 +5,7 @@ import { CloudinaryImage } from './components/AddImage';
 export type PostContextType = {
   id: string;
   title: string | null;
+  subhead: string | null;
   postLocation: string | null;
   activity: Array<{
     c: Array<number>;
@@ -15,7 +16,7 @@ export type PostContextType = {
   }> | null;
   gpxFile: string | null;
   stravaUrl: string | undefined;
-  components: Array<object> | null;
+  components: Array<{ type: string; children: Array<{ text: string }> }> | null;
   images: Array<CloudinaryImage> | null;
   heroImage: CloudinaryImage | undefined;
   currentFtp: string | null;
@@ -37,8 +38,10 @@ export type PostContextType = {
   elapsedTime: number | null;
   stoppedTime: number | null;
   timeInRed: number | null;
+  date: string | null;
   setActivity: React.Dispatch<React.SetStateAction<object>>;
   setTitle: React.Dispatch<React.SetStateAction<string | null>>;
+  setSubhead: React.Dispatch<React.SetStateAction<string | null>>;
   setGpxFile: React.Dispatch<React.SetStateAction<string>>;
   setPostLocation: React.Dispatch<React.SetStateAction<string | null>>;
   setId: React.Dispatch<React.SetStateAction<string>>;
@@ -74,16 +77,19 @@ export type PostContextType = {
       }>
     >
   >;
+  setDate: React.Dispatch<React.SetStateAction<string>>;
   setPowerZoneBuckets: React.Dispatch<React.SetStateAction<Array<number>>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
   id: '',
   title: '',
+  subhead: '',
   postLocation: '',
   activity: [],
   gpxFile: '',
   stravaUrl: '',
+  date: '',
   components: [],
   images: [],
   currentFtp: '',
@@ -103,6 +109,7 @@ const PostContext = React.createContext<PostContextType>({
   heroImage: undefined,
   setActivity: () => {},
   setTitle: () => {},
+  setSubhead: () => {},
   setGpxFile: () => {},
   setPostLocation: () => {},
   setId: () => {},
@@ -124,6 +131,7 @@ const PostContext = React.createContext<PostContextType>({
   setPowerZones: () => {},
   setPowerZoneBuckets: () => {},
   setHeroImage: () => {},
+  setDate: () => {},
 });
 
 export { PostContext };

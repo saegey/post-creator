@@ -14,7 +14,7 @@ interface PostSaveProps {
   stravaUrl?: string;
   resultsUrl?: string;
   currentFtp?: string;
-  heroImage: string;
+  heroImage?: string;
 }
 
 const PostSaveComponents = async ({
@@ -36,7 +36,7 @@ PostSaveProps) => {
           id: postId,
           title: title,
           postLocation: postLocation,
-          heroImage: heroImage,
+          heroImage: heroImage ? heroImage : null,
           // stravaUrl: stravaUrl,
           // resultsUrl: resultsUrl,
           components: JSON.stringify(components),

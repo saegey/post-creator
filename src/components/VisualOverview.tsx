@@ -2,7 +2,7 @@ import { Box } from 'theme-ui';
 import React from 'react';
 
 import Map from './CustomMap';
-import ElevationGraph from './ElevationGraph';
+import ElevationGraph, { GradeGradientActivty } from './ElevationGraph';
 import ElevationSlice, { gradeToColor } from './ElevationSlice';
 import { useUnits } from './UnitProvider';
 
@@ -31,18 +31,24 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
 
   const downSampledData = React.useMemo(
     () =>
-      activity.map((activityRow) => {
+      activity.map((activityRow, i) => {
         return {
           t: activityRow.t,
           c: activityRow.c,
-          e: activityRow.e,
+          e:
+            units.unitOfMeasure === 'metric'
+              ? activityRow.e
+              : activityRow && activityRow.e
+              ? activityRow.e * 3.28084
+              : 0,
           g: activityRow.g,
-          d: activityRow.d,
-          distance:
-            units.unitOfMeasure === 'imperial' && activityRow.d
-              ? (activityRow.d * 0.00062137121212121).toFixed(1)
-              : activityRow.d
-              ? (activityRow.d / 1000).toFixed(1)
+          d:
+            units.unitOfMeasure === 'imperial'
+              ? activityRow && activityRow.d
+                ? Number((activityRow.d * 0.00062137121212121).toFixed(1))
+                : 0
+              : activityRow && activityRow.d
+              ? Number((activityRow?.d / 1000).toFixed(1))
               : 0,
           color: gradeToColor(activityRow.g ? activityRow.g * 100 : 0),
         };
@@ -50,14 +56,13 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     [activity, units.unitOfMeasure]
   );
 
-  const xMax = Number(activity[activity.length - 1].d);
   const coordinates = React.useMemo(
     () => downSampledData.map((a) => a.c),
     [downSampledData]
   );
 
   return (
-    <Box>
+    <Box sx={{ marginTop: '60px', borderRadius: '5px' }}>
       <Map
         coordinates={coordinates}
         markerCoordinates={marker as any}
@@ -66,12 +71,7 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
       <ElevationSlice marker={marker} />
       <ElevationGraph
         downSampledData={downSampledData}
-        xMax={xMax}
         setMarker={setMarker as any}
-        // elevationToAdd={100}
-        // axisLeftTickValues={elevationData.axisLeftTickValues}
-        // axisXTickValues={elevationData.axisXTickValues}
-        // yMin={yMin}
       />
     </Box>
   );

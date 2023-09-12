@@ -1,13 +1,17 @@
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
 import { Box, Flex, Close } from 'theme-ui';
-import { useContext } from 'react';
+import React from 'react';
 
 import { PowerCurveGraph } from './PowerCurveGraph';
 import { PostContext } from '../PostContext';
+import OptionsButton from './OptionsButton';
+import Dropdown from './Dropdown';
 
 const PowerGraph = ({ element }) => {
-  const { powerAnalysis, currentFtp } = useContext(PostContext);
+  const { powerAnalysis, currentFtp } = React.useContext(PostContext);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
   if (!powerAnalysis) {
@@ -25,26 +29,47 @@ const PowerGraph = ({ element }) => {
   return (
     <Box
       sx={{
-        backgroundColor: '#f5f5f5',
+        marginX: 'auto',
+        maxWidth: '690px',
+        backgroundColor: 'activityOverviewBackgroundColor',
         borderRadius: '5px',
         padding: '20px',
-        margin: '10px',
+        position: 'relative',
+        marginY: ['20px', '60px', '60px'],
       }}
       contentEditable={false}
     >
-      <Flex sx={{ width: '100%' }}>
-        <Box sx={{ marginLeft: 'auto' }}>
-          <Close
-            onClick={(e) => Transforms.removeNodes(editor, { at: path })}
-          />
-        </Box>
-      </Flex>
-
-      <Box sx={{ width: '100%', height: '200px' }}>
+      <Box sx={{ width: '100%', height: '450px' }}>
         <PowerCurveGraph
           ftp={currentFtp ? Number(currentFtp) : 0}
           data={graphData as any}
         />
+      </Box>
+      <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
+        <OptionsButton
+          onClick={() =>
+            setTimeout(() => {
+              if (isMenuOpen) {
+                setIsMenuOpen(false);
+              } else {
+                setIsMenuOpen(true);
+              }
+            }, 10)
+          }
+        />
+        <Dropdown isOpen={isMenuOpen}>
+          <Box
+            onClick={() =>
+              setTimeout(() => {
+                Transforms.removeNodes(editor, { at: path });
+                setIsMenuOpen(false);
+              }, 10)
+            }
+            variant='boxes.dropdownMenuItem'
+          >
+            Remove
+          </Box>
+        </Dropdown>
       </Box>
     </Box>
   );

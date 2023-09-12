@@ -45,6 +45,8 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
           animation: 'fadeIn .2s;',
           borderTopRightRadius: '10px',
           borderBottomRightRadius: '10px',
+          zIndex: 20,
+
         }}
         ref={menuRef}
       >

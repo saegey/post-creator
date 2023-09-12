@@ -1,5 +1,6 @@
 import { Box, Grid, Text } from 'theme-ui';
 import React from 'react';
+
 import { useUnits } from './UnitProvider';
 
 export const gradeToColor = (grade: number): string => {
@@ -29,12 +30,12 @@ const ElevationSlice = ({ marker }: any): JSX.Element => {
       columns={[2, 4, 4]}
       sx={{
         padding: '10px',
-        borderLeftColor: 'mutedAccent',
-        borderLeftStyle: 'solid',
-        borderLeftWidth: '1px',
-        borderRightColor: 'mutedAccent',
-        borderRightStyle: 'solid',
-        borderRightWidth: '1px',
+        // borderLeftColor: 'mutedAccent',
+        // borderLeftStyle: 'solid',
+        // borderLeftWidth: '1px',
+        // borderRightColor: 'mutedAccent',
+        // borderRightStyle: 'solid',
+        // borderRightWidth: '1px',
       }}
     >
       <Box>
@@ -52,7 +53,7 @@ const ElevationSlice = ({ marker }: any): JSX.Element => {
         <Text as='p'>Distance</Text>
         <Text sx={{ fontSize: '20px' }}>
           {marker && marker.d
-            ? `${marker.distance} ${units.distanceUnit}`
+            ? `${marker.d} ${units.distanceUnit}`
             : '-'}
         </Text>
       </Box>

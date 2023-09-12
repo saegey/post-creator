@@ -34,6 +34,7 @@ export const getPostInitial = /* GraphQL */ `
     getPost(id: $id) {
       id
       title
+      subhead
       gpxFile
       images
       headerImage

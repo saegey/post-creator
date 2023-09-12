@@ -11,6 +11,8 @@ import { Box, Button, Label, Textarea, Close, Flex } from 'theme-ui';
 import React from 'react';
 import { PostSaveComponents } from '../actions/PostSave';
 import { PostContext } from '../PostContext';
+import Dropdown from './Dropdown';
+import OptionsButton from './OptionsButton';
 
 type SlateImageType = {
   type: 'image';
@@ -25,7 +27,7 @@ type SlateImageType = {
 const ImageElement = ({ children, element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
-  const [isHover, setIsHover] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [addCaption, setAddCaption] = React.useState(false);
   const { id, title, postLocation } = React.useContext(PostContext);
   const selected = useSelected();
@@ -55,13 +57,16 @@ const ImageElement = ({ children, element }) => {
   return (
     <Box
       contentEditable={false}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+      // onMouseEnter={() => setIsHover(true)}
+      // onMouseLeave={() => setIsHover(false)}
     >
       <Box
         sx={{
           position: 'relative',
           width: '100%',
+          maxWidth: '900px',
+          marginX: 'auto',
+          marginY: ['20px', '60px', '60px'],
           height: 'auto',
           marginBottom: '20px',
         }}
@@ -83,80 +88,105 @@ const ImageElement = ({ children, element }) => {
         {element.caption && <p>{element.caption}</p>}
 
         {addCaption && (
-          <Box
-            sx={{
-              position: 'absolute',
-              right: '0px',
-              top: '0px',
-              height: 'calc(100% - 6px)',
-              background: '#000000c2',
-              width: '100%',
-              borderRadius: '5px',
-            }}
-          >
-            <Flex>
-              <Box
-                sx={{
-                  marginLeft: 'auto',
-                  marginRight: '10px',
-                  marginTop: '10px',
-                }}
-              >
-                <Close
-                  sx={{ color: 'white' }}
-                  onClick={() => setAddCaption(false)}
-                />
-              </Box>
-            </Flex>
+          <>
             <Box
               sx={{
-                width: '80%',
-                marginY: 'auto',
-                marginX: 'auto',
-                height: '80%',
+                position: 'absolute',
+                right: '0px',
+                top: '0px',
+                height: 'calc(100% - 6px)',
+                background: '#000000c2',
+                width: '100%',
+                borderRadius: '5px',
               }}
             >
-              <form onSubmit={saveCaption}>
-                <Label sx={{ color: 'white' }} htmlFor='caption'>
-                  Caption
-                </Label>
-                <Textarea
-                  sx={{ background: 'white' }}
-                  name='caption'
-                  id='caption'
-                  rows={6}
-                  mb={3}
+              <Flex>
+                <Box
+                  sx={{
+                    marginLeft: 'auto',
+                    marginRight: '10px',
+                    marginTop: '10px',
+                  }}
                 >
-                  {element.caption}
-                </Textarea>
+                  <Close
+                    sx={{ color: 'white' }}
+                    onClick={() => setAddCaption(false)}
+                  />
+                </Box>
+              </Flex>
+              <Box
+                sx={{
+                  width: '80%',
+                  marginY: 'auto',
+                  marginX: 'auto',
+                  height: '80%',
+                }}
+              >
+                <form onSubmit={saveCaption}>
+                  <Label sx={{ color: 'white' }} htmlFor='caption'>
+                    Caption
+                  </Label>
+                  <Textarea
+                    sx={{ background: 'white' }}
+                    name='caption'
+                    id='caption'
+                    rows={6}
+                    mb={3}
+                  >
+                    {element.caption}
+                  </Textarea>
 
-                <Button sx={{ backgroundColor: 'gray' }}>Save</Button>
-              </form>
+                  <Button sx={{ backgroundColor: 'gray' }}>Save</Button>
+                </form>
+              </Box>
             </Box>
-          </Box>
+          </>
         )}
-        {isHover && !addCaption && (
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '10px',
-              left: '10px',
-              width: '400px',
-              marginX: 'auto',
-            }}
-          >
-            <Flex sx={{ gap: '10px' }}>
-              <Button onClick={() => setAddCaption(true)}>
+        <Box
+          sx={{
+            position: 'absolute',
+            right: '10px',
+            top: '10px',
+            // height: 'calc(100% - 6px)',
+            // background: '#000000c2',
+            // width: '100%',
+            // borderRadius: '5px',
+          }}
+        >
+          <OptionsButton
+            onClick={() =>
+              setTimeout(() => {
+                if (isMenuOpen) {
+                  setIsMenuOpen(false);
+                } else {
+                  setIsMenuOpen(true);
+                }
+              }, 10)
+            }
+          />
+          <Dropdown isOpen={isMenuOpen}>
+            <Flex sx={{ gap: '10px', flexDirection: 'column' }}>
+              <Box
+                onClick={() => {
+                  setAddCaption(true);
+                  setIsMenuOpen(false);
+                }}
+                variant='boxes.dropdownMenuItem'
+              >
                 {element.caption ? 'Edit' : 'Add'} Caption
-              </Button>
-              <Button
-                onClick={(e) => Transforms.removeNodes(editor, { at: path })}
+              </Box>
+              <Box
+                onClick={(e) => {
+                  Transforms.removeNodes(editor, { at: path });
+                  setIsMenuOpen(false);
+                }}
+                variant='boxes.dropdownMenuItem'
               >
                 Delete
-              </Button>
+              </Box>
             </Flex>
-          </Box>
-        )}
+          </Dropdown>
+        </Box>
       </Box>
       {children}
     </Box>
