@@ -70,15 +70,13 @@ const HeroBanner = ({ element }) => {
             <Box sx={{ position: 'absolute', right: '10px', top: '20px' }}>
               <Box sx={{ position: 'relative' }}>
                 <OptionsButton
-                  onClick={() =>
-                    setTimeout(() => {
-                      if (isMenuOpen) {
-                        setIsMenuOpen(false);
-                      } else {
-                        setIsMenuOpen(true);
-                      }
-                    }, 10)
-                  }
+                  onClick={() => {
+                    if (isMenuOpen) {
+                      setIsMenuOpen(false);
+                    } else {
+                      setIsMenuOpen(true);
+                    }
+                  }}
                 />
                 <Dropdown isOpen={isMenuOpen}>
                   <Box

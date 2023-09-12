@@ -69,13 +69,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
       >
         <BoldButton editor={editor} />
         <HeadingButton editor={editor} />
-        <ImagesButton
-          onClick={() =>
-            setTimeout(() => {
-              setIsImageModalOpen(true);
-            }, 10)
-          }
-        />
+        <ImagesButton onClick={() => setIsImageModalOpen(true)} />
         <GraphButton />
         <SaveButton
           setIsSaving={setIsSaving}
@@ -98,11 +92,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
                 marginY: 'auto',
                 justifyContent: 'center',
               }}
-              onClick={() =>
-                setTimeout(() => {
-                  setIsHoverSettings(true);
-                }, 1)
-              }
+              onClick={() => setIsHoverSettings(true)}
             >
               <OptionsButton />
             </Box>

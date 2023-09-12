@@ -22,18 +22,6 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
   const { toggleUnit, unitOfMeasure } = useUnits();
 
   React.useEffect(() => {
-    const checkIfClickedOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setProfileOpen(false);
-      }
-    };
-    document.addEventListener('click', checkIfClickedOutside);
-    return () => {
-      document.removeEventListener('click', checkIfClickedOutside);
-    };
-  }, [profileOpen]);
-
-  React.useEffect(() => {
     if (profileOpen) {
       document.body.style.overflow = 'hidden';
     }
@@ -48,8 +36,17 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
   }
 
   return (
-    <BlackBox>
-      <Flex sx={{ marginLeft: 'auto' }}>
+    <BlackBox
+      onClick={() => {
+        setProfileOpen(false);
+      }}
+    >
+      <Flex
+        sx={{ marginLeft: 'auto' }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <Box
           ref={ref}
           sx={{

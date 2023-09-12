@@ -154,15 +154,13 @@ const ImageElement = ({ children, element }) => {
           }}
         >
           <OptionsButton
-            onClick={() =>
-              setTimeout(() => {
-                if (isMenuOpen) {
-                  setIsMenuOpen(false);
-                } else {
-                  setIsMenuOpen(true);
-                }
-              }, 10)
-            }
+            onClick={() => {
+              if (isMenuOpen) {
+                setIsMenuOpen(false);
+              } else {
+                setIsMenuOpen(true);
+              }
+            }}
           />
           <Dropdown isOpen={isMenuOpen}>
             <Flex sx={{ gap: '10px', flexDirection: 'column' }}>

@@ -60,24 +60,20 @@ const MatchesBurnedWrapper = ({ element }) => {
       </Box>
       <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
         <OptionsButton
-          onClick={() =>
-            setTimeout(() => {
-              if (isMenuOpen) {
-                setIsMenuOpen(false);
-              } else {
-                setIsMenuOpen(true);
-              }
-            }, 10)
-          }
+          onClick={() => {
+            if (isMenuOpen) {
+              setIsMenuOpen(false);
+            } else {
+              setIsMenuOpen(true);
+            }
+          }}
         />
         <Dropdown isOpen={isMenuOpen}>
           <Box
-            onClick={() =>
-              setTimeout(() => {
-                Transforms.removeNodes(editor, { at: path });
-                setIsMenuOpen(false);
-              }, 10)
-            }
+            onClick={() => {
+              Transforms.removeNodes(editor, { at: path });
+              setIsMenuOpen(false);
+            }}
             variant='boxes.dropdownMenuItem'
           >
             Remove

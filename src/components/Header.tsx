@@ -72,13 +72,7 @@ const Header = ({ user, signOut, title }) => {
             <MenuButton
               sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
               aria-label='Toggle Menu'
-              onClick={() => {
-                setTimeout(() => {
-                  setMenuOpen(true);
-                  console.log('setmenu open');
-                }, 10);
-                // setMenuOpen(true);
-              }}
+              onClick={() => setMenuOpen(true)}
             />
             {/* <Flex sx={{ height: '100%' }}>
               <Box sx={{ height: '32px', width: '32px', marginY: 'auto' }}>
@@ -113,23 +107,14 @@ const Header = ({ user, signOut, title }) => {
                   quality={90}
                   sizes='100vw'
                   alt='Description of my image'
-                  onClick={() =>
-                    setTimeout(() => {
-                      setProfileOpen(true);
-                    }, 10)
-                  }
+                  onClick={() => setProfileOpen(true)}
                 />
               </Box>
             )}
-            {!user || !user.attributes.picture && (
-              <AvatarButton
-                onClick={() =>
-                  setTimeout(() => {
-                    setProfileOpen(true);
-                  }, 10)
-                }
-              />
-            )}
+            {!user ||
+              (!user.attributes.picture && (
+                <AvatarButton onClick={() => setProfileOpen(true)} />
+              ))}
           </div>
         </Box>
       </Box>

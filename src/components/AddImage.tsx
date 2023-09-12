@@ -137,10 +137,8 @@ const AddImage = ({ callback }) => {
         >
           <Button
             onClick={() => {
-              setTimeout(() => {
-                callback({ selectedImage });
-                setIsImageModalOpen(false);
-              }, 10);
+              callback({ selectedImage });
+              setIsImageModalOpen(false);
             }}
             disabled={selectedImage ? false : true}
           >

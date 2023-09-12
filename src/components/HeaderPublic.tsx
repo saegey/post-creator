@@ -4,12 +4,10 @@ import {
   Box,
   Flex,
   Text,
-  Link as ThemeLink,
   Switch,
   useColorMode,
   Close,
 } from 'theme-ui';
-import Link from 'next/link';
 
 import Logo from './Logo';
 import BlackBox from './BlackBox';
@@ -126,13 +124,7 @@ const HeaderPublic = () => {
             <MenuButton
               sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
               aria-label='Toggle Menu'
-              onClick={() => {
-                setTimeout(() => {
-                  setMenuOpen(true);
-                  console.log('setmenu open');
-                }, 10);
-                // setMenuOpen(true);
-              }}
+              onClick={() => setMenuOpen(true)}
             />
             <Flex sx={{ height: '100%' }}>
               <Box sx={{ height: '32px', width: '32px', marginY: 'auto' }}>
@@ -140,44 +132,6 @@ const HeaderPublic = () => {
               </Box>
             </Flex>
           </Flex>
-          {/* <div style={{ marginLeft: 'auto' }}>
-            {user && user.attributes.picture && (
-              <Box sx={{ height: '40px', width: '40px', cursor: 'pointer' }}>
-                <CldImage
-                  width='400'
-                  height='300'
-                  src={user.attributes.picture}
-                  style={{
-                    // objectFit: 'cover',
-                    width: '100%',
-                    height: '100%',
-                    marginTop: 'auto',
-                    marginBottom: 'auto',
-                    borderRadius: '100%',
-                  }}
-                  // preserveTransformations
-                  underlay={user.attributes.picture}
-                  quality={90}
-                  sizes='100vw'
-                  alt='Description of my image'
-                  onClick={() =>
-                    setTimeout(() => {
-                      setProfileOpen(true);
-                    }, 10)
-                  }
-                />
-              </Box>
-            )}
-            {!user || !user.attributes.picture && (
-              <AvatarButton
-                onClick={() =>
-                  setTimeout(() => {
-                    setProfileOpen(true);
-                  }, 10)
-                }
-              />
-            )}
-          </div> */}
         </Box>
       </Box>
     </>

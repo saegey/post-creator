@@ -344,11 +344,7 @@ const GraphSelectorMenu = ({ editor }) => {
               </Flex>
             </Box>
             <Box
-              onClick={() =>
-                setTimeout(() => {
-                  addEmbed();
-                }, 10)
-              }
+              onClick={() => addEmbed()}
               variant='boxes.sidebarMenuItem'
               sx={{
                 cursor: 'pointer',
