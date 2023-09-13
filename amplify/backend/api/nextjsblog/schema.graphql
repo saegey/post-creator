@@ -79,6 +79,8 @@ type Post
   powerZones: AWSJSON
   powerZoneBuckets: AWSJSON
   createdAt: String!
+  heroImage: AWSJSON
+  subhead: String
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 }

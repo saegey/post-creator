@@ -12,7 +12,8 @@ const PostCard = ({ post, showAuthor = true }) => {
       <ThemeLink
         as={Link}
         sx={{ textDecoration: 'none' }}
-        href={`/posts/${post.id}`}
+        href={`/posts/${post.id}/publish`}
+        key={`link-post-${post.id}`}
       >
         <Flex
           sx={{

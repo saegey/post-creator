@@ -3,7 +3,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { GraphQLResult, GraphQLSubscription } from '@aws-amplify/api';
 import React from 'react';
 import { createEditor, Editor } from 'slate';
-import { Flex, Text, Box } from 'theme-ui';
+import { Flex, Box } from 'theme-ui';
 import { withHistory } from 'slate-history';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
@@ -19,7 +19,6 @@ import {
 import GraphSelectorMenu from './GraphSelectorMenu';
 import * as subscriptions from '../../src/graphql/subscriptions';
 import UploadGpxModal from './UploadGpxModal';
-
 import { OnUpdatePostSubscription } from '../API';
 
 const PostEditor = ({ postId, initialState }) => {
@@ -27,10 +26,6 @@ const PostEditor = ({ postId, initialState }) => {
   const [loading, setLoading] = React.useState(true);
 
   const {
-    setTitle,
-    title,
-    postLocation,
-    setPostLocation,
     id,
     setActivity,
     setPowerAnalysis,
@@ -39,7 +34,8 @@ const PostEditor = ({ postId, initialState }) => {
     setPowerZones,
     setPowerZoneBuckets,
   } = React.useContext(PostContext);
-  const { setIsFtpUpdating } = React.useContext(EditorContext);
+  const { setIsFtpUpdating, isPhotoCaptionOpen } =
+    React.useContext(EditorContext);
 
   const { isGraphMenuOpen, isGpxUploadOpen } = React.useContext(EditorContext);
 
@@ -63,7 +59,7 @@ const PostEditor = ({ postId, initialState }) => {
         ) {
           return;
         }
-        console.log({ provider, value });
+        // console.log({ provider, value });
 
         setTimeInRed(value.data?.onUpdatePost?.timeInRed);
         setPowerZoneBuckets(
@@ -120,14 +116,14 @@ const PostEditor = ({ postId, initialState }) => {
         <SkeletonPost />
       ) : (
         <>
-          <PostMenu editor={editor} id={id} />
+          <PostMenu editor={editor} />
           <Flex>
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isGpxUploadOpen && <UploadGpxModal />}
             <Box
               sx={{
                 marginTop: '20px',
-                maxWidth: '900px',
+                // maxWidth: '900px',
                 minWidth: [null, null, '900px'],
                 marginLeft: isGraphMenuOpen
                   ? ['20px', '20px', 'auto']
@@ -137,38 +133,11 @@ const PostEditor = ({ postId, initialState }) => {
                   : [0, 0, 'auto'],
                 marginBottom: '50px',
                 width: ['100%', null, null],
-                height: isGraphMenuOpen ? null : 'calc(100vh - 85px)',
                 backgroundColor: 'background',
                 borderRadius: '10px',
-                border: '1px dotted #bcbcbc',
                 padding: '10px',
               }}
             >
-              <Flex>
-                <Text
-                  as='h1'
-                  contentEditable='true'
-                  suppressContentEditableWarning={true}
-                  onBlur={(event) => {
-                    console.log('blur h1');
-                    if (event.target.textContent !== title) {
-                      setTitle(event.target.textContent);
-                    }
-                  }}
-                  sx={{ width: '100%' }}
-                >
-                  {title}
-                </Text>
-              </Flex>
-              <h2
-                contentEditable='true'
-                suppressContentEditableWarning={true}
-                onBlur={(event) => {
-                  setPostLocation(event.target.textContent);
-                }}
-              >
-                {postLocation}
-              </h2>
               <Slate
                 editor={editor}
                 initialValue={initialState}

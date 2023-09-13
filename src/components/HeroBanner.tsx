@@ -1,0 +1,132 @@
+import { Box, Text, Flex, Button } from 'theme-ui';
+import React from 'react';
+import { useSlateStatic, ReactEditor } from 'slate-react';
+import { Transforms } from 'slate';
+import { CldImage } from 'next-cloudinary';
+
+import { PostContext } from '../PostContext';
+import AddImage from './AddImage';
+import PostHeader from './PostHeader';
+import OptionsButton from './OptionsButton';
+import Dropdown from './Dropdown';
+import { EditorContext } from './EditorContext';
+import PhotoCaptionModal from './PhotoCaptionModal';
+
+const HeroBanner = ({ element }) => {
+  const { heroImage, setHeroImage, title, postLocation, date, subhead } =
+    React.useContext(PostContext);
+
+  const {
+    setIsImageModalOpen,
+    isImageModalOpen,
+    setIsPhotoCaptionOpen,
+    isPhotoCaptionOpen,
+  } = React.useContext(EditorContext);
+
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const editor = useSlateStatic() as ReactEditor;
+  const path = ReactEditor.findPath(editor, element);
+
+  const addImage = ({ selectedImage }) => {
+    setHeroImage(selectedImage);
+  };
+
+  return (
+    <>
+      <Box
+        sx={{
+          width: '100%',
+        }}
+        contentEditable={false}
+      >
+        {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
+        {isImageModalOpen && <AddImage callback={addImage} />}
+        {heroImage ? (
+          <Flex sx={{ position: 'relative', backgroundColor: 'muted' }}>
+            <PostHeader
+              headerImage={
+                <CldImage
+                  width='800'
+                  height='800'
+                  src={heroImage.public_id}
+                  sizes='100vw'
+                  alt='race pic'
+                  quality={90}
+                  style={{
+                    objectFit: 'cover',
+                    height: '100%',
+                  }}
+                />
+              }
+              type={'Race'}
+              teaser={subhead ? subhead : ''}
+              headerImageCaption={element.photoCaption}
+              title={title ? title : ''}
+              location={postLocation ? postLocation : ''}
+              date={date ? date : ''}
+            />
+
+            <Box sx={{ position: 'absolute', right: '10px', top: '20px' }}>
+              <Box sx={{ position: 'relative' }}>
+                <OptionsButton
+                  onClick={() => {
+                    if (isMenuOpen) {
+                      setIsMenuOpen(false);
+                    } else {
+                      setIsMenuOpen(true);
+                    }
+                  }}
+                />
+                <Dropdown isOpen={isMenuOpen}>
+                  <Box
+                    onClick={() => {
+                      console.log('phtoo caption');
+                      setIsPhotoCaptionOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    variant='boxes.dropdownMenuItem'
+                  >
+                    Photo Caption
+                  </Box>
+                  <Box
+                    onClick={() => {
+                      setIsImageModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    variant='boxes.dropdownMenuItem'
+                  >
+                    Change Image
+                  </Box>
+                  <Box
+                    onClick={() => Transforms.removeNodes(editor, { at: path })}
+                    variant='boxes.dropdownMenuItem'
+                  >
+                    Remove
+                  </Box>
+                </Dropdown>
+              </Box>
+            </Box>
+          </Flex>
+        ) : (
+          <Flex
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '500px',
+              backgroundColor: 'gray',
+            }}
+          >
+            {/* <Box sx={{ position: 'absolute' }}> */}
+            <Button type='button' onClick={() => setIsImageModalOpen(true)}>
+              Add Image
+            </Button>
+            {/* </Box> */}
+          </Flex>
+        )}
+      </Box>
+    </>
+  );
+};
+
+export default HeroBanner;

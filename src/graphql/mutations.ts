@@ -100,6 +100,8 @@ export const createBlog = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -161,6 +163,8 @@ export const updateBlog = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -222,6 +226,8 @@ export const deleteBlog = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -315,6 +321,8 @@ export const createPost = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -348,6 +356,8 @@ export const createPost = /* GraphQL */ `
       powerZones
       powerZoneBuckets
       createdAt
+      heroImage
+      subhead
       updatedAt
       blogPostsId
       postRelatedId
@@ -433,6 +443,8 @@ export const updatePost = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -466,6 +478,8 @@ export const updatePost = /* GraphQL */ `
       powerZones
       powerZoneBuckets
       createdAt
+      heroImage
+      subhead
       updatedAt
       blogPostsId
       postRelatedId
@@ -551,6 +565,8 @@ export const deletePost = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -584,6 +600,8 @@ export const deletePost = /* GraphQL */ `
       powerZones
       powerZoneBuckets
       createdAt
+      heroImage
+      subhead
       updatedAt
       blogPostsId
       postRelatedId

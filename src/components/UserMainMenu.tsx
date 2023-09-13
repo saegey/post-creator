@@ -6,20 +6,6 @@ import BlackBox from './BlackBox';
 import Logo from './Logo';
 
 const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
-  const menuRef = React.useRef<any>();
-
-  React.useEffect(() => {
-    const checkIfClickedOutside1 = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener('click', checkIfClickedOutside1);
-    return () => {
-      document.removeEventListener('click', checkIfClickedOutside1);
-    };
-  }, [menuOpen]);
-
   React.useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
@@ -35,7 +21,11 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
   }
 
   return (
-    <BlackBox>
+    <BlackBox
+      onClick={() => {
+        setMenuOpen(false);
+      }}
+    >
       <Flex
         sx={{
           flexDirection: 'column',
@@ -45,8 +35,11 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
           animation: 'fadeIn .2s;',
           borderTopRightRadius: '10px',
           borderBottomRightRadius: '10px',
+          zIndex: 20,
         }}
-        ref={menuRef}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
         <Flex
           sx={{

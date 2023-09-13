@@ -1,17 +1,20 @@
 // src/utils/theme.ts
 export default {
   colors: {
+    dropdownMenuBackground: '#f9f9f9',
+    dropdownMenuHoverBackground: '#dcdcdc',
     activityOverviewBackgroundColor: '#f0f0f0',
     text: '#202020',
     editorBackground: '#f5f5f5',
     iconButtonBackground: '#fafafa',
-    tooltipBackground: '#555555',
+    tooltipBackground: '#c2c2c2',
     iconButtonDisabled: '#888888',
     iconButtonBackgroundDisabled: '#e9e9e9',
     buttonBorderColor: '#d4d4d4',
     divider: '#e4e4e4',
     sideMenuBackground: '#ffffff',
     sideMenuDivider: '#c1c1c1',
+    sideMenuRightBorder: '#dfdfdf',
     menuItemBackgroundHoverColor: '#ececec',
     buttonBackgroundHoverColor: '#e8e8e8',
     sideMenuHoverBackground: '#ebebeb',
@@ -20,6 +23,7 @@ export default {
     cancelButtonColor: '#a1a1a1',
     postCardBorder: '#dadada',
     inputFocusBackground: '#eeeeee',
+    inputBorderColor: '#898989',
     background: '#fff',
     primary: 'black',
     secondary: '#3f3f3f',
@@ -34,9 +38,12 @@ export default {
     menuBoxShadow: '#3131310d',
     postCardDefaultImage: '#eaeaea',
     blackBoxColor: '0, 0, 0',
+    chartTooltipBackground: '#dadada',
+    chartAxes: 'black',
     modes: {
       dark: {
-        activityOverviewBackgroundColor: '#3d3d3d',
+        sideMenuRightBorder: '#494949',
+        activityOverviewBackgroundColor: '#3a3a3a',
         sideMenuBackground: '#181818',
         blackBoxColor: '240, 240, 240',
         text: '#fff',
@@ -56,7 +63,7 @@ export default {
         buttonBorderColor: '#7c7c7c',
         primary: '#909090',
         secondary: '#09c',
-        muted: '#111',
+        muted: '#333333',
         cancelButtonColor: '#4f4f4f',
         defaultAvatarBackground: '#616161',
         divider: '#3e3e3e',
@@ -64,6 +71,10 @@ export default {
         alertForeground: '#151515',
         menuBoxShadow: '#313131b0',
         postCardDefaultImage: '#606060',
+        chartTooltipBackground: '#696969',
+        chartAxes: 'white',
+        dropdownMenuBackground: '#5a5a5a',
+        dropdownMenuHoverBackground: '#757575',
       },
     },
   },
@@ -93,6 +104,27 @@ export default {
       backgroundSize: '600px',
       animation: 'shine-lines 1.6s infinite linear',
     },
+    sidebarMenuItem: {
+      padding: '15px',
+      borderRadius: '5px',
+      width: '100%',
+      '&:hover': {
+        background: 'sideMenuHoverBackground',
+        '.childButton': {
+          transform: 'scale(1.1)',
+          transition: 'background 0.5s, transform 0.5s ease-out, fill 0.5s',
+        },
+      },
+    },
+    dropdownMenuItem: {
+      padding: '10px',
+      cursor: 'pointer',
+      '&:hover': {
+        // backgroundColor: '#dcdcdc',
+        backgroundColor: 'dropdownMenuHoverBackground',
+        borderRadius: '5px',
+      },
+    },
   },
   links: {
     mainMenuItem: {
@@ -117,7 +149,7 @@ export default {
   },
   forms: {
     defaultInput: {
-      borderColor: '#898989',
+      borderColor: 'inputBorderColor',
       '&:focus': {
         backgroundColor: 'inputFocusBackground',
       },

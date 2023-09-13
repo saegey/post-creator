@@ -34,6 +34,7 @@ export const getPostInitial = /* GraphQL */ `
     getPost(id: $id) {
       id
       title
+      subhead
       gpxFile
       images
       headerImage
@@ -60,11 +61,12 @@ export const getPostInitial = /* GraphQL */ `
       tempAnalysis
       powerZones
       powerZoneBuckets
-      # coordinates
-      # powers
-      # elevation
-      # elevationGrades
-      # distances
+      coordinates
+      powers
+      elevation
+      elevationGrades
+      distances
+      heroImage
       blog {
         id
         name
@@ -104,6 +106,13 @@ export const listPostsCustom = /* GraphQL */ `
         title
         createdAt
         images
+        author {
+          id
+          username
+          fullName
+          image
+        }
+        postAuthorId
       }
     }
   }

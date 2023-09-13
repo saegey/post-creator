@@ -6,8 +6,12 @@ import { useSlateStatic, ReactEditor } from 'slate-react';
 import ActivityOverview from './ActivityOverview';
 import { PostContext } from '../PostContext';
 import { EditorContext } from './EditorContext';
+import OptionsButton from './OptionsButton';
+import Dropdown from './Dropdown';
 
 const ActivityOverviewWrapper = ({ element }) => {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
   const {
@@ -25,14 +29,17 @@ const ActivityOverviewWrapper = ({ element }) => {
   } = React.useContext(PostContext);
 
   const { isFtpUpdating } = React.useContext(EditorContext);
-  // console.log('tempAnalysis', tempAnalysis);
+
   return (
     <Box
       sx={{
         backgroundColor: 'activityOverviewBackgroundColor',
         borderRadius: '5px',
-        padding: '10px',
+        padding: ['10px', '30px', '30px'],
         position: 'relative',
+        maxWidth: '690px',
+        marginY: ['20px', '60px', '60px'],
+        marginX: 'auto',
       }}
       contentEditable={false}
     >
@@ -70,7 +77,26 @@ const ActivityOverviewWrapper = ({ element }) => {
         ]}
       />
       <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <Close onClick={() => Transforms.removeNodes(editor, { at: path })} />
+        <OptionsButton
+          onClick={() => {
+            if (isMenuOpen) {
+              setIsMenuOpen(false);
+            } else {
+              setIsMenuOpen(true);
+            }
+          }}
+        />
+        <Dropdown isOpen={isMenuOpen}>
+          <Box
+            onClick={() => {
+              Transforms.removeNodes(editor, { at: path });
+              setIsMenuOpen(false);
+            }}
+            variant='boxes.dropdownMenuItem'
+          >
+            Remove
+          </Box>
+        </Dropdown>
       </Box>
     </Box>
   );

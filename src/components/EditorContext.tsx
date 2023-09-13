@@ -7,6 +7,10 @@ export type EditorContextType = {
   setIsFtpUpdating: React.Dispatch<React.SetStateAction<boolean>>;
   isGpxUploadOpen: boolean;
   setIsGpxUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isImageModalOpen: boolean;
+  setIsImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isPhotoCaptionOpen: boolean;
+  setIsPhotoCaptionOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -16,6 +20,10 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsFtpUpdating: () => {},
   isGpxUploadOpen: false,
   setIsGpxUploadOpen: () => {},
+  isImageModalOpen: false,
+  setIsImageModalOpen: () => {},
+  isPhotoCaptionOpen: false,
+  setIsPhotoCaptionOpen: () => {},
 });
 
 export { EditorContext };

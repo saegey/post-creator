@@ -7,6 +7,8 @@ import ActivityOverviewWrapper from '../components/ActivityOverviewWrapper';
 import TimePowerZonesWrapper from '../components/TimePowerZonesWrapper';
 import MatchesBurnedWrapper from '../components/MatchesBurnedWrapper';
 import StravaLink from '../components/StravaLink';
+import HeroBanner from '../components/HeroBanner';
+import EmbedElemnt from '../components/EmbedElement';
 
 const Leaf = (props) => {
   return (
@@ -26,6 +28,8 @@ const renderLeaf = (props) => {
 
 const renderElement = ({ attributes, children, element }) => {
   switch (element.type) {
+    case 'embed':
+      return <EmbedElemnt element={element} />;
     case 'stravaLink':
       return <StravaLink element={element} />;
     case 'powergraph':
@@ -40,6 +44,9 @@ const renderElement = ({ attributes, children, element }) => {
       return <VisualOverviewWrapper element={element} />;
     case 'image':
       return <ImageElement children={children} element={element} />;
+    case 'heroBanner':
+      return <HeroBanner element={element} />;
+
     case 'heading-two':
       return (
         <h2
@@ -61,6 +68,10 @@ const renderElement = ({ attributes, children, element }) => {
           style={{
             marginLeft: 'auto',
             marginRight: 'auto',
+            width: '690px',
+            // borderLeftStyle: 'solid',
+            // borderLeftColor: 'gray',
+            // borderLeftWidth: '1px',
             // maxWidth: '690px',
             // width: '100vw',
             fontSize: '20px',

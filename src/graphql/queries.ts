@@ -81,6 +81,8 @@ export const getBlog = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -195,6 +197,8 @@ export const getPost = /* GraphQL */ `
           powerZones
           powerZoneBuckets
           createdAt
+          heroImage
+          subhead
           updatedAt
           blogPostsId
           postRelatedId
@@ -228,6 +232,8 @@ export const getPost = /* GraphQL */ `
       powerZones
       powerZoneBuckets
       createdAt
+      heroImage
+      subhead
       updatedAt
       blogPostsId
       postRelatedId
@@ -302,6 +308,8 @@ export const listPosts = /* GraphQL */ `
         powerZones
         powerZoneBuckets
         createdAt
+        heroImage
+        subhead
         updatedAt
         blogPostsId
         postRelatedId
@@ -389,6 +397,8 @@ export const listPostsByCreatedAt = /* GraphQL */ `
         powerZones
         powerZoneBuckets
         createdAt
+        heroImage
+        subhead
         updatedAt
         blogPostsId
         postRelatedId

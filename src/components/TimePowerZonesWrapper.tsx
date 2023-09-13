@@ -5,20 +5,25 @@ import React from 'react';
 
 import TimePowerZones from './TimePowerZones';
 import { PostContext } from '../PostContext';
+import Dropdown from './Dropdown';
+import OptionsButton from './OptionsButton';
 
 const TimePowerZonesWrapper = ({ element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
   const { powerZones, powerZoneBuckets } = React.useContext(PostContext);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   return (
     <Box
       sx={{
         backgroundColor: 'activityOverviewBackgroundColor',
         borderRadius: '5px',
-        padding: '10px',
+        padding: ['10px', '30px', '30px'],
         position: 'relative',
-        marginY: '20px',
+        marginY: ['20px', '60px', '60px'],
+        marginX: 'auto',
+        maxWidth: '690px',
       }}
       contentEditable={false}
     >
@@ -27,7 +32,26 @@ const TimePowerZonesWrapper = ({ element }) => {
         powerZones={powerZones}
       />
       <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <Close onClick={() => Transforms.removeNodes(editor, { at: path })} />
+        <OptionsButton
+          onClick={() => {
+            if (isMenuOpen) {
+              setIsMenuOpen(false);
+            } else {
+              setIsMenuOpen(true);
+            }
+          }}
+        />
+        <Dropdown isOpen={isMenuOpen}>
+          <Box
+            onClick={() => {
+              Transforms.removeNodes(editor, { at: path });
+              setIsMenuOpen(false);
+            }}
+            variant='boxes.dropdownMenuItem'
+          >
+            Remove
+          </Box>
+        </Dropdown>
       </Box>
     </Box>
   );

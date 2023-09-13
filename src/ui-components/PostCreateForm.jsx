@@ -62,6 +62,8 @@ export default function PostCreateForm(props) {
     powerZones: "",
     powerZoneBuckets: "",
     createdAt: "",
+    heroImage: "",
+    subhead: "",
   };
   const [type, setType] = React.useState(initialValues.type);
   const [title, setTitle] = React.useState(initialValues.title);
@@ -124,6 +126,8 @@ export default function PostCreateForm(props) {
     initialValues.powerZoneBuckets
   );
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
+  const [heroImage, setHeroImage] = React.useState(initialValues.heroImage);
+  const [subhead, setSubhead] = React.useState(initialValues.subhead);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setType(initialValues.type);
@@ -159,6 +163,8 @@ export default function PostCreateForm(props) {
     setPowerZones(initialValues.powerZones);
     setPowerZoneBuckets(initialValues.powerZoneBuckets);
     setCreatedAt(initialValues.createdAt);
+    setHeroImage(initialValues.heroImage);
+    setSubhead(initialValues.subhead);
     setErrors({});
   };
   const validations = {
@@ -195,6 +201,8 @@ export default function PostCreateForm(props) {
     powerZones: [{ type: "JSON" }],
     powerZoneBuckets: [{ type: "JSON" }],
     createdAt: [{ type: "Required" }],
+    heroImage: [{ type: "JSON" }],
+    subhead: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -255,6 +263,8 @@ export default function PostCreateForm(props) {
           powerZones,
           powerZoneBuckets,
           createdAt,
+          heroImage,
+          subhead,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -350,6 +360,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -406,6 +418,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -462,6 +476,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.gpxFile ?? value;
@@ -517,6 +533,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -573,6 +591,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.headerImage ?? value;
@@ -629,6 +649,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -685,6 +707,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.publishedDate ?? value;
@@ -741,6 +765,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -797,6 +823,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.postLocation ?? value;
@@ -853,6 +881,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.stravaUrl ?? value;
@@ -909,6 +939,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.resultsUrl ?? value;
@@ -965,6 +997,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.subType ?? value;
@@ -1021,6 +1055,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.teaser ?? value;
@@ -1077,6 +1113,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.currentFtp ?? value;
@@ -1132,6 +1170,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.components ?? value;
@@ -1187,6 +1227,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.powerAnalysis ?? value;
@@ -1242,6 +1284,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.coordinates ?? value;
@@ -1297,6 +1341,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.powers ?? value;
@@ -1352,6 +1398,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.elevation ?? value;
@@ -1407,6 +1455,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.elevationGrades ?? value;
@@ -1462,6 +1512,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.distances ?? value;
@@ -1522,6 +1574,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.elevationTotal ?? value;
@@ -1582,6 +1636,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.normalizedPower ?? value;
@@ -1642,6 +1698,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.distance ?? value;
@@ -1697,6 +1755,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.heartAnalysis ?? value;
@@ -1752,6 +1812,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.cadenceAnalysis ?? value;
@@ -1807,6 +1869,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.tempAnalysis ?? value;
@@ -1867,6 +1931,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.elapsedTime ?? value;
@@ -1927,6 +1993,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.stoppedTime ?? value;
@@ -1987,6 +2055,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.timeInRed ?? value;
@@ -2042,6 +2112,8 @@ export default function PostCreateForm(props) {
               powerZones: value,
               powerZoneBuckets,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.powerZones ?? value;
@@ -2097,6 +2169,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets: value,
               createdAt,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.powerZoneBuckets ?? value;
@@ -2153,6 +2227,8 @@ export default function PostCreateForm(props) {
               powerZones,
               powerZoneBuckets,
               createdAt: value,
+              heroImage,
+              subhead,
             };
             const result = onChange(modelFields);
             value = result?.createdAt ?? value;
@@ -2166,6 +2242,121 @@ export default function PostCreateForm(props) {
         errorMessage={errors.createdAt?.errorMessage}
         hasError={errors.createdAt?.hasError}
         {...getOverrideProps(overrides, "createdAt")}
+      ></TextField>
+      <TextAreaField
+        label="Hero image"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              type,
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+              createdAt,
+              heroImage: value,
+              subhead,
+            };
+            const result = onChange(modelFields);
+            value = result?.heroImage ?? value;
+          }
+          if (errors.heroImage?.hasError) {
+            runValidationTasks("heroImage", value);
+          }
+          setHeroImage(value);
+        }}
+        onBlur={() => runValidationTasks("heroImage", heroImage)}
+        errorMessage={errors.heroImage?.errorMessage}
+        hasError={errors.heroImage?.hasError}
+        {...getOverrideProps(overrides, "heroImage")}
+      ></TextAreaField>
+      <TextField
+        label="Subhead"
+        isRequired={false}
+        isReadOnly={false}
+        value={subhead}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              type,
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+              createdAt,
+              heroImage,
+              subhead: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.subhead ?? value;
+          }
+          if (errors.subhead?.hasError) {
+            runValidationTasks("subhead", value);
+          }
+          setSubhead(value);
+        }}
+        onBlur={() => runValidationTasks("subhead", subhead)}
+        errorMessage={errors.subhead?.errorMessage}
+        hasError={errors.subhead?.hasError}
+        {...getOverrideProps(overrides, "subhead")}
       ></TextField>
       <Flex
         justifyContent="space-between"

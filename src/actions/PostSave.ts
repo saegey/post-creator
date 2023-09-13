@@ -4,6 +4,7 @@ import { API } from 'aws-amplify';
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
 import { updatePostMinimal } from '../graphql/customMutations';
+// import { CloudinaryImage } from '../components/AddImage';
 
 interface PostSaveProps {
   postId: string;
@@ -13,6 +14,7 @@ interface PostSaveProps {
   stravaUrl?: string;
   resultsUrl?: string;
   currentFtp?: string;
+  heroImage?: string;
 }
 
 const PostSaveComponents = async ({
@@ -20,6 +22,7 @@ const PostSaveComponents = async ({
   title,
   components,
   postLocation,
+  heroImage,
 }: // stravaUrl,
 // resultsUrl,
 // currentFtp,
@@ -33,6 +36,7 @@ PostSaveProps) => {
           id: postId,
           title: title,
           postLocation: postLocation,
+          heroImage: heroImage ? heroImage : null,
           // stravaUrl: stravaUrl,
           // resultsUrl: resultsUrl,
           components: JSON.stringify(components),

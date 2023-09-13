@@ -19,7 +19,7 @@ const BoldButton = ({ editor }: { editor: ReactEditor }) => {
     <TooltipButton
       onClick={toggleBold}
       title={'Toggle Bold Text'}
-      tooltipText={'Toggle Selected Text to Bold'}
+      tooltipText={'Toggle selected to bold ⌘B'}
     >
       <svg
         className='menu-button'

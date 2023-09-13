@@ -12,27 +12,29 @@ import {
   Alert,
   Close,
 } from 'theme-ui';
-import { CldImage } from 'next-cloudinary';
+import { CldImage, CldUploadButton } from 'next-cloudinary';
 import { updateUser } from '../src/graphql/mutations';
 import React from 'react';
 
 import Header from '../src/components/Header';
+import { CloudinaryImage } from '../src/components/AddImage';
+import { crop } from '@cloudinary/url-gen/actions/resize';
 
-const uploadSettings = {
-  cloudName: 'dprifih4o',
-  uploadPreset: 'kippntej',
-  cropping: true, //add a cropping step
-  // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-  sources: ['local', 'url'], // restrict the upload sources to URL and local files
-  multiple: false, //restrict upload to a single file
-  folder: 'profile', //upload files to the specified folder
-  tags: ['users', 'profile'], //add the given tags to the uploaded files
-  context: { alt: 'user_uploaded' }, //add the given context data to the uploaded files
-  clientAllowedFormats: ['jpg', 'png', 'jpeg'], //restrict uploading to image files only
-  // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-  // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-  // theme: "purple", //change to a purple theme
-};
+// const uploadSettings = {
+//   cloudName: 'dprifih4o',
+//   uploadPreset: 'kippntej',
+//   cropping: true, //add a cropping step
+//   // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+//   sources: ['local', 'url'], // restrict the upload sources to URL and local files
+//   multiple: false, //restrict upload to a single file
+//   folder: 'profile', //upload files to the specified folder
+//   tags: ['users', 'profile'], //add the given tags to the uploaded files
+//   context: { alt: 'user_uploaded' }, //add the given context data to the uploaded files
+//   clientAllowedFormats: ['jpg', 'png', 'jpeg'], //restrict uploading to image files only
+//   // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+//   // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+//   // theme: "purple", //change to a purple theme
+// };
 
 async function updateAvatar({ picture }) {
   const user = await Auth.currentAuthenticatedUser();
@@ -53,31 +55,34 @@ async function updateAvatar({ picture }) {
 }
 
 const EditAvatar = () => {
-  const uploadWidget = window.cloudinary.createUploadWidget(
-    uploadSettings,
-    (error, result) => {
-      if (!error && result && result.event === 'success') {
-        console.log('Done! Here is the image info: ', result.info);
-        updateAvatar({ picture: result.info.public_id });
-      }
-    }
-  );
   return (
-    <Button
-      onClick={() => uploadWidget.open()}
+    <Box
       sx={{
-        backgroundColor: '#eaeaea',
-        border: '1px solid #9d9d9d',
-        fontSize: '13px',
-        color: 'black',
-        paddingY: '4px',
-        '&:hover': {
-          backgroundColor: '#d9d9d9',
+        '.cloudBtn': {
+          backgroundColor: '#eaeaea',
+          border: '1px solid #9d9d9d',
+          fontSize: '13px',
+          color: 'black',
+          paddingY: '4px',
+          '&:hover': {
+            backgroundColor: '#d9d9d9',
+          },
         },
       }}
     >
-      Edit
-    </Button>
+      <CldUploadButton
+        className='cloudBtn'
+        uploadPreset='kippntej'
+        options={{ cropping: true }}
+        onSuccess={async (d) => {
+          const image = d.info as CloudinaryImage;
+          console.log('Done! Here is the image info: ', d.info);
+          if (image && image.public_id) {
+            updateAvatar({ picture: image.public_id });
+          }
+        }}
+      />
+    </Box>
   );
 };
 
@@ -161,7 +166,7 @@ const Profile = ({ signOut, user }) => {
                     });
                     setWasSaved(true);
 
-                    console.log('submitform');
+                    // console.log('submitform');
                   }}
                 >
                   <Flex sx={{ flexDirection: 'column', gap: '10px' }}>

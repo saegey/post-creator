@@ -1,6 +1,6 @@
 import { Box } from 'theme-ui';
 
-const BlackBox = ({ children, opacity = '0.2' }) => (
+const BlackBox = ({ children, opacity = '0.2', onClick = () => {} }) => (
   <Box
     sx={{
       position: 'fixed',
@@ -13,7 +13,7 @@ const BlackBox = ({ children, opacity = '0.2' }) => (
       zIndex: 10,
       display: 'flex',
     }}
-    // onClick={() => console.log('fuck')}
+    onClick={onClick}
   >
     {children}
   </Box>

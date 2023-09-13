@@ -5,6 +5,7 @@ import { CloudinaryImage } from './components/AddImage';
 export type PostContextType = {
   id: string;
   title: string | null;
+  subhead: string | null;
   postLocation: string | null;
   activity: Array<{
     c: Array<number>;
@@ -15,8 +16,9 @@ export type PostContextType = {
   }> | null;
   gpxFile: string | null;
   stravaUrl: string | undefined;
-  components: Array<object> | null;
+  components: Array<{ type: string; children: Array<{ text: string }> }> | null;
   images: Array<CloudinaryImage> | null;
+  heroImage: CloudinaryImage | undefined;
   currentFtp: string | null;
   resultsUrl: string | null;
   powerAnalysis: { entire: number } | null;
@@ -36,8 +38,10 @@ export type PostContextType = {
   elapsedTime: number | null;
   stoppedTime: number | null;
   timeInRed: number | null;
+  date: string | null;
   setActivity: React.Dispatch<React.SetStateAction<object>>;
   setTitle: React.Dispatch<React.SetStateAction<string | null>>;
+  setSubhead: React.Dispatch<React.SetStateAction<string | null>>;
   setGpxFile: React.Dispatch<React.SetStateAction<string>>;
   setPostLocation: React.Dispatch<React.SetStateAction<string | null>>;
   setId: React.Dispatch<React.SetStateAction<string>>;
@@ -46,6 +50,7 @@ export type PostContextType = {
   setImages: React.Dispatch<
     React.SetStateAction<Array<CloudinaryImage> | null>
   >;
+  setHeroImage: React.Dispatch<CloudinaryImage | undefined>;
   setCurrentFtp: React.Dispatch<React.SetStateAction<string>>;
   setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
   setPowerAnalysis: React.Dispatch<
@@ -72,16 +77,19 @@ export type PostContextType = {
       }>
     >
   >;
+  setDate: React.Dispatch<React.SetStateAction<string>>;
   setPowerZoneBuckets: React.Dispatch<React.SetStateAction<Array<number>>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
   id: '',
   title: '',
+  subhead: '',
   postLocation: '',
   activity: [],
   gpxFile: '',
   stravaUrl: '',
+  date: '',
   components: [],
   images: [],
   currentFtp: '',
@@ -98,8 +106,10 @@ const PostContext = React.createContext<PostContextType>({
   timeInRed: null,
   powerZones: [],
   powerZoneBuckets: [],
+  heroImage: undefined,
   setActivity: () => {},
   setTitle: () => {},
+  setSubhead: () => {},
   setGpxFile: () => {},
   setPostLocation: () => {},
   setId: () => {},
@@ -120,6 +130,8 @@ const PostContext = React.createContext<PostContextType>({
   setTempAnalysis: () => {},
   setPowerZones: () => {},
   setPowerZoneBuckets: () => {},
+  setHeroImage: () => {},
+  setDate: () => {},
 });
 
 export { PostContext };

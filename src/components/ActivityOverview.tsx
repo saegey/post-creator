@@ -1,7 +1,7 @@
 import { Box, Text, Grid } from 'theme-ui';
 import React from 'react';
 // import { useUnits } from '../../../context/UnitProvider'
-import { useUnits } from '@saegey/posts.units';
+import { useUnits } from './UnitProvider';
 
 interface Item {
   title: string;
@@ -29,7 +29,7 @@ const RaceStats = ({ items }: RaceStatsProps) => {
       columns={[2, 2, 3]}
       sx={{
         borderRadius: '4px',
-        gap: ['30px', '5px 100px', '5px'],
+        gap: ['10px', '5px 100px', '5px'],
       }}
     >
       {items.map((item, index) => {

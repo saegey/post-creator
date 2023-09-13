@@ -39,17 +39,22 @@ const Header = ({ user, signOut, title }) => {
 
   return (
     <>
-      <UserProfileMenu
-        setProfileOpen={setProfileOpen}
-        profileOpen={profileOpen}
-        signOut={signOut}
-        user={user}
-      />
-      <UserMainMenu
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-        recentPosts={recentPosts}
-      />
+      {user && (
+        <>
+          <UserProfileMenu
+            setProfileOpen={setProfileOpen}
+            profileOpen={profileOpen}
+            signOut={signOut}
+            user={user}
+          />
+          <UserMainMenu
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+            recentPosts={recentPosts}
+          />
+        </>
+      )}
+
       <Box as='header' sx={{ width: '100vw' }}>
         <Box
           sx={{
@@ -67,19 +72,13 @@ const Header = ({ user, signOut, title }) => {
             <MenuButton
               sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
               aria-label='Toggle Menu'
-              onClick={() => {
-                setTimeout(() => {
-                  setMenuOpen(true);
-                  console.log('setmenu open');
-                }, 10);
-                // setMenuOpen(true);
-              }}
+              onClick={() => setMenuOpen(true)}
             />
-            <Flex sx={{ height: '100%' }}>
+            {/* <Flex sx={{ height: '100%' }}>
               <Box sx={{ height: '32px', width: '32px', marginY: 'auto' }}>
                 <Logo />
               </Box>
-            </Flex>
+            </Flex> */}
             {title && (
               <Flex as='div' sx={{ fontSize: '16px', fontWeight: 500 }}>
                 <Box as='span' sx={{ marginY: 'auto' }}>
@@ -89,7 +88,7 @@ const Header = ({ user, signOut, title }) => {
             )}
           </Flex>
           <div style={{ marginLeft: 'auto' }}>
-            {user.attributes.picture && (
+            {user && user.attributes.picture && (
               <Box sx={{ height: '40px', width: '40px', cursor: 'pointer' }}>
                 <CldImage
                   width='400'
@@ -108,23 +107,14 @@ const Header = ({ user, signOut, title }) => {
                   quality={90}
                   sizes='100vw'
                   alt='Description of my image'
-                  onClick={() =>
-                    setTimeout(() => {
-                      setProfileOpen(true);
-                    }, 10)
-                  }
+                  onClick={() => setProfileOpen(true)}
                 />
               </Box>
             )}
-            {!user.attributes.picture && (
-              <AvatarButton
-                onClick={() =>
-                  setTimeout(() => {
-                    setProfileOpen(true);
-                  }, 10)
-                }
-              />
-            )}
+            {!user ||
+              (!user.attributes.picture && (
+                <AvatarButton onClick={() => setProfileOpen(true)} />
+              ))}
           </div>
         </Box>
       </Box>
