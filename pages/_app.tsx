@@ -5,13 +5,13 @@ import { ThemeUIProvider, Text } from 'theme-ui';
 import theme from '../src/utils/theme'; // theme object from step 2
 import ViewportProvider from '../src/components/ViewportProvider';
 import UnitProvider from '../src/components/UnitProvider';
-import { Amplify, Storage } from 'aws-amplify';
-import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
+import { Amplify } from 'aws-amplify';
 import awsconfig from '../src/aws-exports';
 
 import '@aws-amplify/ui-react/styles.css';
 import '../styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import AuthCustom from '../src/components/AuthCustom';
 
 Amplify.configure(awsconfig);
 
@@ -19,13 +19,16 @@ export default class App extends NextApp {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <UnitProvider>
-        {/* <ViewportProvider> */}
+      // <AuthCustom>
+        <UnitProvider>
+          {/* <ViewportProvider> */}
           <ThemeUIProvider theme={theme}>
             <Component {...pageProps} />
           </ThemeUIProvider>
-        {/* </ViewportProvider> */}
-      </UnitProvider>
+
+          {/* </ViewportProvider> */}
+        </UnitProvider>
+      // </AuthCustom>
     );
   }
 }

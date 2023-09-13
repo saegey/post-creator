@@ -9,9 +9,11 @@ import { listPostsCustom } from '../../src/graphql/customQueries';
 import { GetServerSidePropsContext } from 'next';
 import awsconfig from '../../src/aws-exports';
 import PostCard from '../../src/components/PostCard';
+import AuthCustom from '../../src/components/AuthCustom';
+import PostsAll from '../../src/components/PostsAll';
 Amplify.configure({ ...awsconfig, ssr: true });
 
-type PostType = Array<{
+export type PostType = Array<{
   id: string;
   title: string;
   author: {
@@ -48,35 +50,16 @@ const MyPosts = ({ signOut, user }) => {
   }, []);
 
   return (
-    <>
+    <AuthCustom>
       <div>
         <Head>
           <title>My Posts</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
-          <Header user={user} signOut={signOut} title={'My Posts'} />
-          <Box
-            sx={{
-              // marginTop: '60px',
-              maxWidth: '900px',
-              marginLeft: ['10px', 'auto', 'auto'],
-              marginRight: ['10px', 'auto', 'auto'],
-              padding: '20px',
-              width: '100vw',
-            }}
-          >
-            <Grid columns={[1, 2, 3]} width={'250px'} repeat={'fit'}>
-              {posts &&
-                posts.map((post) => (
-                  <PostCard post={post} showAuthor={false} />
-                ))}
-            </Grid>
-          </Box>
-        </Box>
+        <PostsAll posts={posts} />
       </div>
-    </>
+    </AuthCustom>
   );
 };
 
-export default withAuthenticator(MyPosts);
+export default MyPosts;

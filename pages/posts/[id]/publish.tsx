@@ -9,16 +9,13 @@ import {
 } from '@slate-serializers/react';
 import { CldImage } from 'next-cloudinary';
 import PowerBreakdown from '../../../src/components/TimePowerZones';
-// import VisualOverview from '../../../src/components/VisualOverview';
 
 import dynamic from 'next/dynamic';
 import HeaderPublic from '../../../src/components/HeaderPublic';
 import { getPostInitial } from '../../../src/graphql/customQueries';
 import ActivityOverview from '../../../src/components/ActivityOverview';
-import Link from 'next/link';
 import { PowerCurveGraph } from '../../../src/components/PowerCurveGraph';
 import { getActivity } from '../../../src/actions/PostGet';
-// import HeroBanner from '../../../src/components/HeroBanner';
 import PostHeader from '../../../src/components/PostHeader';
 import EmbedElemnt from '../../../src/components/EmbedElement';
 
@@ -347,7 +344,6 @@ const Publish = ({ post, activity }): JSX.Element => {
                   }}
                 />
                 <p>{node.caption}</p>
-                {/* <p>{JSON.stringify(node)}</p> */}
               </Box>
             </Flex>
           );
@@ -366,11 +362,6 @@ const Publish = ({ post, activity }): JSX.Element => {
       <Box
         as='main'
         sx={{
-          // backgroundColor: 'editorBackground',
-          // paddingBottom: '50px',
-          // height: '100%',
-          // width: '100vw',
-          // flexGrow: 1,
           marginBottom: 'auto',
         }}
       >
@@ -399,15 +390,10 @@ const Publish = ({ post, activity }): JSX.Element => {
             '&.article>p+h2': {
               paddingTop: '30px',
             },
-            // maxWidth: '1045px',
-            // position: 'relative',
-            // width: 'calc(100% - 40px)',
-            // margin: ['20px auto', '120px auto', '120px auto'],
           }}
         >
           <SlateToReact node={components} config={config} />
         </Container>
-        {/* </Flex> */}
       </Box>
     </>
   );

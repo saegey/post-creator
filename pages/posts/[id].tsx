@@ -4,13 +4,17 @@ import { useRouter } from 'next/router';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import React from 'react';
 import { Box } from 'theme-ui';
+import { Amplify } from 'aws-amplify';
 
+import awsconfig from '../../src/aws-exports';
 import Header from '../../src/components/Header';
 import { PostContext } from '../../src/PostContext';
 import { EditorContext } from '../../src/components/EditorContext';
 import PostEditor from '../../src/components/PostEditor';
 import { getPostInitial } from '../../src/graphql/customQueries';
 import AuthCustom from '../../src/components/AuthCustom';
+import EditUserPost from '../../src/components/EditUserPost';
+Amplify.configure(awsconfig);
 
 type ServerSideProps = {
   req: object;
@@ -63,8 +67,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 };
 
 const Post = ({
-  signOut,
-  user,
   postComponents,
   postTitle,
   postSubhead,
@@ -127,13 +129,6 @@ const Post = ({
   const [heroImage, setHeroImage] = React.useState(postHeroImage);
   const [date, setDate] = React.useState(postDate);
 
-  // editor context
-  const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
-  const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
-  const [isGpxUploadOpen, setIsGpxUploadOpen] = React.useState(false);
-  const [isImageModalOpen, setIsImageModalOpen] = React.useState(false);
-  const [isPhotoCaptionOpen, setIsPhotoCaptionOpen] = React.useState(false);
-
   React.useEffect(() => {
     if (!initialLoad) {
       setId(postId);
@@ -167,100 +162,72 @@ const Post = ({
   }, []);
 
   return (
-    <PostContext.Provider
-      value={{
-        title,
-        setTitle,
-        subhead,
-        setSubhead,
-        postLocation,
-        setPostLocation,
-        activity,
-        setActivity,
-        id,
-        setId,
-        gpxFile,
-        setGpxFile,
-        stravaUrl,
-        setStravaUrl,
-        components,
-        setComponents,
-        images,
-        setImages,
-        currentFtp,
-        setCurrentFtp,
-        resultsUrl,
-        setResultsUrl,
-        powerAnalysis,
-        setPowerAnalysis,
-        elevationTotal,
-        setElevationTotal,
-        normalizedPower,
-        setNormalizedPower,
-        distance,
-        setDistance,
-        elapsedTime,
-        setElapsedTime,
-        stoppedTime,
-        setStoppedTime,
-        timeInRed,
-        setTimeInRed,
-        heartAnalysis,
-        setHeartAnalysis,
-        cadenceAnalysis,
-        setCadenceAnalysis,
-        tempAnalysis,
-        setTempAnalysis,
-        powerZones,
-        setPowerZones,
-        powerZoneBuckets,
-        setPowerZoneBuckets,
-        heroImage,
-        setHeroImage,
-        date,
-        setDate,
-      }}
-    >
-      <div>
-        <Head>
-          <title>{title}</title>
-          <link rel='icon' href='/favicon.ico' />
-        </Head>
-        <AuthCustom>
-          <Box
-            as='main'
-            sx={{
-              // backgroundColor: 'editorBackground',
-              // paddingBottom: '50px',
-              // height: '100vh',
-              width: '100vw',
-              flexGrow: 1,
-            }}
-          >
-            <Header user={user} signOut={signOut} title={'Edit Post'} />
-            <Box>
-              <EditorContext.Provider
-                value={{
-                  setIsGraphMenuOpen,
-                  isGraphMenuOpen,
-                  setIsFtpUpdating,
-                  isFtpUpdating,
-                  setIsGpxUploadOpen,
-                  isGpxUploadOpen,
-                  isImageModalOpen,
-                  setIsImageModalOpen,
-                  isPhotoCaptionOpen,
-                  setIsPhotoCaptionOpen,
-                }}
-              >
-                <PostEditor postId={postId} initialState={postComponents} />
-              </EditorContext.Provider>
-            </Box>
-          </Box>
-        </AuthCustom>
-      </div>
-    </PostContext.Provider>
+    <AuthCustom>
+      <PostContext.Provider
+        value={{
+          title,
+          setTitle,
+          subhead,
+          setSubhead,
+          postLocation,
+          setPostLocation,
+          activity,
+          setActivity,
+          id,
+          setId,
+          gpxFile,
+          setGpxFile,
+          stravaUrl,
+          setStravaUrl,
+          components,
+          setComponents,
+          images,
+          setImages,
+          currentFtp,
+          setCurrentFtp,
+          resultsUrl,
+          setResultsUrl,
+          powerAnalysis,
+          setPowerAnalysis,
+          elevationTotal,
+          setElevationTotal,
+          normalizedPower,
+          setNormalizedPower,
+          distance,
+          setDistance,
+          elapsedTime,
+          setElapsedTime,
+          stoppedTime,
+          setStoppedTime,
+          timeInRed,
+          setTimeInRed,
+          heartAnalysis,
+          setHeartAnalysis,
+          cadenceAnalysis,
+          setCadenceAnalysis,
+          tempAnalysis,
+          setTempAnalysis,
+          powerZones,
+          setPowerZones,
+          powerZoneBuckets,
+          setPowerZoneBuckets,
+          heroImage,
+          setHeroImage,
+          date,
+          setDate,
+        }}
+      >
+        <div>
+          <Head>
+            <title>{title}</title>
+            <link rel='icon' href='/favicon.ico' />
+          </Head>
+
+          <EditUserPost postComponents={components} postId={id} />
+        </div>
+      </PostContext.Provider>
+    </AuthCustom>
   );
 };
 
-export default withAuthenticator(Post);
+export default Post;

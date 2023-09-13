@@ -47,6 +47,7 @@ const AddImage = ({ callback }) => {
           <CldUploadButton
             className='cloudButton'
             uploadPreset='epcsmymp'
+            options={{ cropping: true }}
             onSuccess={async (d) => {
               images?.push(d.info as CloudinaryImage);
               // console.log(d, images);
