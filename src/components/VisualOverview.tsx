@@ -8,9 +8,9 @@ import { useUnits } from './UnitProvider';
 
 interface ActivityEvent {
   c: Array<number> | Array<null>;
-  g: number | null;
+  g: number;
   t: number | null;
-  d: number | null;
+  d: number;
   e: number | null;
 }
 
@@ -55,6 +55,7 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
       }),
     [activity, units.unitOfMeasure]
   );
+  console.log(downSampledData);
 
   const coordinates = React.useMemo(
     () => downSampledData.map((a) => a.c),

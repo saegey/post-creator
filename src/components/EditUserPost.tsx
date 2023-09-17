@@ -24,6 +24,7 @@ const EditUserPost = ({
   const [isGpxUploadOpen, setIsGpxUploadOpen] = React.useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = React.useState(false);
   const [isPhotoCaptionOpen, setIsPhotoCaptionOpen] = React.useState(false);
+  const [isHeroImageModalOpen, setIsHeroImageModalOpen] = React.useState(false);
 
   return (
     <Box
@@ -47,6 +48,8 @@ const EditUserPost = ({
             setIsImageModalOpen,
             isPhotoCaptionOpen,
             setIsPhotoCaptionOpen,
+            isHeroImageModalOpen,
+            setIsHeroImageModalOpen,
           }}
         >
           <PostEditor postId={postId} initialState={postComponents} />

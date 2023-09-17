@@ -11,6 +11,8 @@ export type EditorContextType = {
   setIsImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isPhotoCaptionOpen: boolean;
   setIsPhotoCaptionOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isHeroImageModalOpen: boolean;
+  setIsHeroImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -22,6 +24,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsGpxUploadOpen: () => {},
   isImageModalOpen: false,
   setIsImageModalOpen: () => {},
+  isHeroImageModalOpen: false,
+  setIsHeroImageModalOpen: () => {},
   isPhotoCaptionOpen: false,
   setIsPhotoCaptionOpen: () => {},
 });

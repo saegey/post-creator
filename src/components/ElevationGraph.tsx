@@ -16,8 +16,8 @@ import { useUnits } from './UnitProvider';
 
 type ActivityEvent = {
   c: Array<number> | Array<null>;
-  g: number | null;
-  d: number | null;
+  g: number;
+  d: number;
   t: number | null;
   e: number | null;
 };
@@ -28,7 +28,6 @@ export interface GradeGradientActivty extends ActivityEvent {
 }
 
 interface NewLineGraphProps {
-  // xMax: number;
   downSampledData: Array<GradeGradientActivty>;
   setMarker: React.Dispatch<
     React.SetStateAction<{
@@ -37,11 +36,7 @@ interface NewLineGraphProps {
   >;
 }
 
-const ElevationGraph = ({
-  // xMax,
-  downSampledData,
-  setMarker,
-}: NewLineGraphProps) => {
+const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
   const themeContext = useThemeUI();
   const units = useUnits();
   const xMax = Number(downSampledData[downSampledData.length - 1].d);
@@ -51,8 +46,8 @@ const ElevationGraph = ({
     const preTickLen = xMax / 5;
     const calcVal = preTickLen / divisor;
     const interval = Math.trunc(calcVal > 1 ? calcVal : 1) * divisor;
-    //  / 10);
-    let ticks = Array.from({ length: 6 }, (value, index) => {
+
+    let ticks = Array.from({ length: 6 }, (_value, index) => {
       if (index === 0 || index * interval > xMax) {
         return;
       }
@@ -109,7 +104,6 @@ const ElevationGraph = ({
               position: 'bottom',
               fontSize: '14px',
             }}
-            // padding="gap"
             allowDecimals={true}
             tickFormatter={(t) => {
               return t;

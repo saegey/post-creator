@@ -97,6 +97,7 @@ const PostEditor = ({ postId, initialState }) => {
     }
 
     const activity = await getActivity(data.getPost);
+
     if (data.getPost.powerAnalysis) {
       setPowerAnalysis(JSON.parse(data.getPost.powerAnalysis));
     }
