@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Button } from 'theme-ui';
+import { Box, Flex, Button } from 'theme-ui';
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
@@ -17,8 +17,8 @@ const HeroBanner = ({ element }) => {
     React.useContext(PostContext);
 
   const {
-    setIsImageModalOpen,
-    isImageModalOpen,
+    setIsHeroImageModalOpen,
+    isHeroImageModalOpen,
     setIsPhotoCaptionOpen,
     isPhotoCaptionOpen,
   } = React.useContext(EditorContext);
@@ -30,6 +30,7 @@ const HeroBanner = ({ element }) => {
 
   const addImage = ({ selectedImage }) => {
     setHeroImage(selectedImage);
+    setIsHeroImageModalOpen(false);
   };
 
   return (
@@ -41,7 +42,7 @@ const HeroBanner = ({ element }) => {
         contentEditable={false}
       >
         {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
-        {isImageModalOpen && <AddImage callback={addImage} />}
+        {isHeroImageModalOpen && <AddImage callback={addImage} />}
         {heroImage ? (
           <Flex sx={{ position: 'relative', backgroundColor: 'muted' }}>
             <PostHeader
@@ -91,7 +92,7 @@ const HeroBanner = ({ element }) => {
                   </Box>
                   <Box
                     onClick={() => {
-                      setIsImageModalOpen(true);
+                      setIsHeroImageModalOpen(true);
                       setIsMenuOpen(false);
                     }}
                     variant='boxes.dropdownMenuItem'
@@ -118,7 +119,7 @@ const HeroBanner = ({ element }) => {
             }}
           >
             {/* <Box sx={{ position: 'absolute' }}> */}
-            <Button type='button' onClick={() => setIsImageModalOpen(true)}>
+            <Button type='button' onClick={() => setIsHeroImageModalOpen(true)}>
               Add Image
             </Button>
             {/* </Box> */}

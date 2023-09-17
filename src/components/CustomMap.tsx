@@ -5,8 +5,8 @@ import mapboxgl, { GeoJSONSource, SkyLayer } from 'mapbox-gl';
 type ActivityEvent = {
   c: Array<number>;
   t: number | null;
-  g: number | null;
-  d: number | null;
+  g: number;
+  d: number;
   e: number | null;
 };
 

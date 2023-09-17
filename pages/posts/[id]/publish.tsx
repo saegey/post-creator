@@ -301,10 +301,10 @@ const Publish = ({ post, activity }): JSX.Element => {
                 return (
                   <Flex
                     sx={{ maxWidth: '690px', width: '690px', marginX: 'auto' }}
+                    key={`heading-two-${i}`}
                   >
                     <Text
                       as='h2'
-                      key={`paragraph-${i}`}
                       sx={{
                         marginY: '15px',
                         // fontSize: '20px',

@@ -17,7 +17,6 @@ import { PostContext } from '../PostContext';
 import { EditorContext } from './EditorContext';
 
 const PostMenu = ({ editor }: { editor: ReactEditor }) => {
-  // const [addImageModal, setAddImageModal] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
   const [savedMessage, setSavedMessage] = React.useState(false);
   const [isHoverSettings, setIsHoverSettings] = React.useState(false);
@@ -30,9 +29,10 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   }, [id]);
 
   const insertImage = ({ selectedImage }) => {
-    if (!selectedImage) {
-      return;
-    }
+    // if (!selectedImage) {
+    //   return;
+    // }
+    console.log(selectedImage);
     // isOpen(false);
 
     Transforms.insertNodes(editor, [

@@ -1,16 +1,10 @@
 import { withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import React from 'react';
-import { Box } from 'theme-ui';
 import { Amplify } from 'aws-amplify';
 
 import awsconfig from '../../src/aws-exports';
-import Header from '../../src/components/Header';
 import { PostContext } from '../../src/PostContext';
-import { EditorContext } from '../../src/components/EditorContext';
-import PostEditor from '../../src/components/PostEditor';
 import { getPostInitial } from '../../src/graphql/customQueries';
 import AuthCustom from '../../src/components/AuthCustom';
 import EditUserPost from '../../src/components/EditUserPost';

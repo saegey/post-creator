@@ -52,7 +52,7 @@ const renderElement = ({ attributes, children, element }) => {
         <h2
           style={{
             fontWeight: 700,
-            // maxWidth: '690px',
+            maxWidth: '690px',
             // width: '100vw',
             marginLeft: 'auto',
             marginRight: 'auto',
@@ -69,11 +69,6 @@ const renderElement = ({ attributes, children, element }) => {
             marginLeft: 'auto',
             marginRight: 'auto',
             width: '690px',
-            // borderLeftStyle: 'solid',
-            // borderLeftColor: 'gray',
-            // borderLeftWidth: '1px',
-            // maxWidth: '690px',
-            // width: '100vw',
             fontSize: '20px',
           }}
           {...attributes}

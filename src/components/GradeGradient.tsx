@@ -2,15 +2,14 @@ import React from 'react';
 
 type ActivityEvent = {
   c: Array<number> | Array<null>;
-  g: number | null;
+  g: number;
   t: number | null;
-  d: number | null;
+  d: number;
   e: number | null;
 };
 
 interface GradeGradientActivty extends ActivityEvent {
   color: string;
-  // grade: number;
 }
 
 interface GradeGradientProps {
@@ -19,6 +18,7 @@ interface GradeGradientProps {
 }
 
 const GradeGradient = ({ data, xMax }: GradeGradientProps): JSX.Element => {
+  console.log(xMax);
   const gradients = React.useMemo((): Array<JSX.Element | undefined> => {
     return data.map((d, i): JSX.Element | undefined => {
       if (
@@ -29,10 +29,10 @@ const GradeGradient = ({ data, xMax }: GradeGradientProps): JSX.Element => {
       ) {
         return undefined;
       }
-      // console.log(d, xMax);
+
       return (
         <stop
-          offset={Number((d && d.d ? d.d : 1 / xMax).toFixed(10))}
+          offset={Number((d.d / xMax).toFixed(10))}
           stopColor={d.color}
           stopOpacity={1}
           key={`elevationGrade-${i}`}

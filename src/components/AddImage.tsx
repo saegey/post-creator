@@ -79,7 +79,6 @@ const AddImage = ({ callback }) => {
         >
           {images &&
             images.map((image, i) => {
-              console.log(image);
               return (
                 <Flex
                   sx={{
@@ -94,7 +93,6 @@ const AddImage = ({ callback }) => {
                   }}
                   key={`image-media-${i}`}
                   onClick={() => {
-                    console.log('fdsf');
                     setSelectedImage(image);
                   }}
                 >
@@ -138,6 +136,7 @@ const AddImage = ({ callback }) => {
         >
           <Button
             onClick={() => {
+              console.log(callback);
               callback({ selectedImage });
               setIsImageModalOpen(false);
             }}
