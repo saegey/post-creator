@@ -15,6 +15,7 @@ import BoldButton from './BoldButton';
 import PreviewButton from './PreviewButton';
 import { PostContext } from '../PostContext';
 import { EditorContext } from './EditorContext';
+import BulletListIcon from './BulletListIcon';
 
 const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   const [isSaving, setIsSaving] = React.useState(false);
@@ -29,12 +30,6 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   }, [id]);
 
   const insertImage = ({ selectedImage }) => {
-    // if (!selectedImage) {
-    //   return;
-    // }
-    console.log(selectedImage);
-    // isOpen(false);
-
     Transforms.insertNodes(editor, [
       {
         type: 'image',
@@ -69,6 +64,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
       >
         <BoldButton editor={editor} />
         <HeadingButton editor={editor} />
+        <BulletListIcon editor={editor} />
         <ImagesButton onClick={() => setIsImageModalOpen(true)} />
         <GraphButton />
         <SaveButton
