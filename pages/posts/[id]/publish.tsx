@@ -232,6 +232,41 @@ const Publish = ({ post, activity }): JSX.Element => {
             </Box>
           );
         },
+        'bulleted-list': ({ node, children = [] }) => {
+          return (
+            <Box
+              as='ul'
+              sx={{
+                paddingY: '40px',
+                paddingLeft: ['20px', '20px', '20px'],
+                marginX: 'auto',
+                maxWidth: '690px',
+                fontSize: '20px',
+                li: {
+                  paddingX: '5px',
+                  paddingY: '5px',
+                },
+              }}
+            >
+              {node.children.map((c, i) => {
+                return (
+                  <Box as='li'>
+                    {c.children.map((child) => {
+                      if (child.bold) {
+                        return (
+                          <Box as='span' sx={{ fontWeight: '700' }}>
+                            {child.text}
+                          </Box>
+                        );
+                      }
+                      return `${child.text}`;
+                    })}
+                  </Box>
+                );
+              })}
+            </Box>
+          );
+        },
         paragraph: ({ node, children = [] }) => {
           return (
             <>

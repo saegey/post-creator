@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, Text } from 'theme-ui';
 
 import PowerGraphElement from '../components/PowerGraphElement';
 import ImageElement from '../components/ImageElement';
@@ -62,19 +63,43 @@ const renderElement = ({ attributes, children, element }) => {
           {children}
         </h2>
       );
-    default:
+    case 'bulleted-list':
       return (
-        <p
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            width: '690px',
+        <Box
+          as='ul'
+          sx={{
+            paddingY: '40px',
+            paddingLeft: ['20px', '20px', '20px'],
+            marginX: 'auto',
+            maxWidth: '690px',
             fontSize: '20px',
+            li: {
+              paddingX: '5px',
+              paddingY: '5px',
+            },
           }}
           {...attributes}
         >
           {children}
-        </p>
+        </Box>
+      );
+    case 'list-item':
+      return <li {...attributes}>{children}</li>;
+    default:
+      return (
+        <Text
+          as='p'
+          sx={{
+            marginX: 'auto',
+            // marginRight: 'auto',
+            width: '690px',
+            fontSize: '20px',
+            marginY: '20px',
+          }}
+          {...attributes}
+        >
+          {children}
+        </Text>
       );
   }
 };
