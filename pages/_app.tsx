@@ -11,6 +11,7 @@ import awsconfig from '../src/aws-exports';
 import '@aws-amplify/ui-react/styles.css';
 import '../styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import ErrorBoundary from '../src/components/ErrorBoundary';
 
 Amplify.configure(awsconfig);
 
@@ -18,14 +19,16 @@ export default class App extends NextApp {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <UnitProvider>
-        {/* <ViewportProvider> */}
-        <ThemeUIProvider theme={theme}>
-          <Component {...pageProps} />
-        </ThemeUIProvider>
+      <ErrorBoundary fallback={<h1>oh no</h1>}>
+        <UnitProvider>
+          {/* <ViewportProvider> */}
+          <ThemeUIProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeUIProvider>
 
-        {/* </ViewportProvider> */}
-      </UnitProvider>
+          {/* </ViewportProvider> */}
+        </UnitProvider>
+      </ErrorBoundary>
     );
   }
 }
