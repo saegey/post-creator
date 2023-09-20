@@ -8,7 +8,6 @@ import { PostContext } from '../PostContext';
 import StandardModal from './StandardModal';
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
-import { EditorContext } from './EditorContext';
 
 export interface CloudinaryImage {
   asset_id: string;
@@ -22,8 +21,6 @@ export interface CloudinaryImage {
 const AddImage = ({ callback, setIsOpen, isOpen }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
   const { setImages, images, id } = React.useContext(PostContext);
-  // const { setIsImageModalOpen, isImageModalOpen } =
-  //   React.useContext(EditorContext);
 
   return (
     <StandardModal title={'Images'} isOpen={isOpen} setIsOpen={setIsOpen}>
