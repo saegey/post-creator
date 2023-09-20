@@ -5,11 +5,18 @@ import React from 'react';
 import MatchesBurned from './MatchesBurned';
 import Dropdown from './Dropdown';
 import OptionsButton from './OptionsButton';
+import { useClickOutside } from '../utils/ux';
 
 const MatchesBurnedWrapper = ({ element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const wrapperRef = React.useRef('menu');
+  useClickOutside(wrapperRef, (e) => {
+    setIsMenuOpen(false);
+    e.stopPropagation();
+  });
 
   return (
     <Box
@@ -74,6 +81,7 @@ const MatchesBurnedWrapper = ({ element }) => {
               Transforms.removeNodes(editor, { at: path });
               setIsMenuOpen(false);
             }}
+            ref={wrapperRef}
             variant='boxes.dropdownMenuItem'
           >
             Remove

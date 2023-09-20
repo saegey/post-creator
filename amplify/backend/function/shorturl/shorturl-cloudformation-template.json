@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda Function resource stack creation using Amplify CLI",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.4.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "blalblah",
+            "shorturl",
             {
               "Fn::Join": [
                 "",
                 [
-                  "blalblah",
+                  "shorturl",
                   "-",
                   {
                     "Ref": "env"
@@ -89,12 +89,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "nextjsblogLambdaRoledbb9ed0a",
+            "nextjsblogLambdaRole989dacf6",
             {
               "Fn::Join": [
                 "",
                 [
-                  "nextjsblogLambdaRoledbb9ed0a",
+                  "nextjsblogLambdaRole989dacf6",
                   "-",
                   {
                     "Ref": "env"
@@ -137,6 +137,17 @@
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem"
+              ],
+              "Resource": "arn:aws:dynamodb:*:*:table/*"
+            },
             {
               "Effect": "Allow",
               "Action": [

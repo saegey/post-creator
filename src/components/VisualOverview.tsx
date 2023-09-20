@@ -55,7 +55,7 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
       }),
     [activity, units.unitOfMeasure]
   );
-  console.log(downSampledData);
+  // console.log(downSampledData);
 
   const coordinates = React.useMemo(
     () => downSampledData.map((a) => a.c),

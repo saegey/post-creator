@@ -7,6 +7,7 @@ import { PowerCurveGraph } from './PowerCurveGraph';
 import { PostContext } from '../PostContext';
 import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';
+import { useClickOutside } from '../utils/ux';
 
 const PowerGraph = ({ element }) => {
   const { powerAnalysis, currentFtp } = React.useContext(PostContext);
@@ -14,6 +15,13 @@ const PowerGraph = ({ element }) => {
 
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
+
+  const wrapperRef = React.useRef('menu');
+  useClickOutside(wrapperRef, (e) => {
+    setIsMenuOpen(false);
+    e.stopPropagation();
+  });
+
   if (!powerAnalysis) {
     return <></>;
   }
@@ -61,6 +69,7 @@ const PowerGraph = ({ element }) => {
               Transforms.removeNodes(editor, { at: path });
               setIsMenuOpen(false);
             }}
+            ref={wrapperRef}
             variant='boxes.dropdownMenuItem'
           >
             Remove

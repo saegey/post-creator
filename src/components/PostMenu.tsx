@@ -16,6 +16,7 @@ import PreviewButton from './PreviewButton';
 import { PostContext } from '../PostContext';
 import { EditorContext } from './EditorContext';
 import BulletListIcon from './BulletListIcon';
+import ShareButton from './ShareButton';
 
 const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   const [isSaving, setIsSaving] = React.useState(false);
@@ -44,7 +45,13 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
 
   return (
     <>
-      {isImageModalOpen && <AddImage callback={insertImage} />}
+      {isImageModalOpen && (
+        <AddImage
+          callback={insertImage}
+          setIsOpen={setIsImageModalOpen}
+          isOpen={isImageModalOpen}
+        />
+      )}
 
       <Flex
         sx={{
@@ -73,13 +80,10 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
           editor={editor}
           setSavedMessage={setSavedMessage}
         />
-        <Link
-          href={`/posts/${id}/publish`}
-          rel='noopener noreferrer'
-          target='_blank'
-        >
+        <Link href={`/posts/${id}`} rel='noopener noreferrer' target='_blank'>
           <PreviewButton />
         </Link>
+        <ShareButton />
 
         <Box sx={{ marginLeft: 'auto' }}>
           <Flex sx={{ height: '100%' }}>

@@ -83,6 +83,7 @@ export const getBlog = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -199,6 +200,7 @@ export const getPost = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -234,6 +236,7 @@ export const getPost = /* GraphQL */ `
       createdAt
       heroImage
       subhead
+      shortUrl
       updatedAt
       blogPostsId
       postRelatedId
@@ -310,6 +313,7 @@ export const listPosts = /* GraphQL */ `
         createdAt
         heroImage
         subhead
+        shortUrl
         updatedAt
         blogPostsId
         postRelatedId
@@ -399,6 +403,7 @@ export const listPostsByCreatedAt = /* GraphQL */ `
         createdAt
         heroImage
         subhead
+        shortUrl
         updatedAt
         blogPostsId
         postRelatedId

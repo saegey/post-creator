@@ -1,16 +1,12 @@
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import Head from 'next/head';
-import { Amplify, withSSRContext, API, Auth } from 'aws-amplify';
-import { Grid, Box } from 'theme-ui';
+import { Amplify, API, Auth } from 'aws-amplify';
 import React from 'react';
 
-import Header from '../../src/components/Header';
 import { listPostsCustom } from '../../src/graphql/customQueries';
-import { GetServerSidePropsContext } from 'next';
 import awsconfig from '../../src/aws-exports';
-import PostCard from '../../src/components/PostCard';
-import AuthCustom from '../../src/components/AuthCustom';
 import PostsAll from '../../src/components/PostsAll';
+import AuthCustom from '../../src/components/AuthCustom';
+
 Amplify.configure({ ...awsconfig, ssr: true });
 
 export type PostType = Array<{
@@ -23,14 +19,14 @@ export type PostType = Array<{
   };
 }>;
 
-const MyPosts = ({ signOut, user }) => {
+const MyPosts = () => {
   const [posts, setPosts] = React.useState<PostType>();
 
   const getData = async () => {
     const user = await Auth.currentAuthenticatedUser();
     const response: any = await API.graphql({
       query: listPostsCustom,
-      authMode: 'API_KEY',
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
       variables: {
         filter: {
           postAuthorId: {
@@ -39,7 +35,7 @@ const MyPosts = ({ signOut, user }) => {
         },
       },
     });
-    // console.log('getData', JSON.stringify(response));
+
     return response.data.listPostsByCreatedAt.items.map((d) => {
       return { ...d, imagesObj: JSON.parse(d.images) };
     });

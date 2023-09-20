@@ -81,6 +81,7 @@ type Post
   createdAt: String!
   heroImage: AWSJSON
   subhead: String
+  shortUrl: String
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 }

@@ -39,6 +39,7 @@ export type PostContextType = {
   stoppedTime: number | null;
   timeInRed: number | null;
   date: string | null;
+  shortUrl: string | null;
   setActivity: React.Dispatch<React.SetStateAction<object>>;
   setTitle: React.Dispatch<React.SetStateAction<string | null>>;
   setSubhead: React.Dispatch<React.SetStateAction<string | null>>;
@@ -79,6 +80,7 @@ export type PostContextType = {
   >;
   setDate: React.Dispatch<React.SetStateAction<string>>;
   setPowerZoneBuckets: React.Dispatch<React.SetStateAction<Array<number>>>;
+  setShortUrl: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -107,6 +109,7 @@ const PostContext = React.createContext<PostContextType>({
   powerZones: [],
   powerZoneBuckets: [],
   heroImage: undefined,
+  shortUrl: null,
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},
@@ -132,6 +135,7 @@ const PostContext = React.createContext<PostContextType>({
   setPowerZoneBuckets: () => {},
   setHeroImage: () => {},
   setDate: () => {},
+  setShortUrl: () => {},
 });
 
 export { PostContext };

@@ -48,7 +48,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
             paddingBottom: '0px',
           }}
         >
-          <div>
+          <Box>
             <Flex sx={{ gap: '10px' }}>
               <Box sx={{ width: '30px', height: 'auto' }}>
                 <Logo />
@@ -60,13 +60,13 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
                 monopad
               </Text>
             </Flex>
-          </div>
-          <div style={{ marginLeft: 'auto' }}>
+          </Box>
+          <Box sx={{ marginLeft: 'auto' }}>
             <Close
               onClick={() => setMenuOpen(false)}
               sx={{ backgroundColor: 'background' }}
             />
-          </div>
+          </Box>
         </Flex>
         <Box
           sx={{

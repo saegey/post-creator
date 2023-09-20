@@ -66,6 +66,7 @@ export default function PostUpdateForm(props) {
     createdAt: "",
     heroImage: "",
     subhead: "",
+    shortUrl: "",
   };
   const [type, setType] = React.useState(initialValues.type);
   const [title, setTitle] = React.useState(initialValues.title);
@@ -130,6 +131,7 @@ export default function PostUpdateForm(props) {
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [heroImage, setHeroImage] = React.useState(initialValues.heroImage);
   const [subhead, setSubhead] = React.useState(initialValues.subhead);
+  const [shortUrl, setShortUrl] = React.useState(initialValues.shortUrl);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = postRecord
@@ -238,6 +240,7 @@ export default function PostUpdateForm(props) {
         : JSON.stringify(cleanValues.heroImage)
     );
     setSubhead(cleanValues.subhead);
+    setShortUrl(cleanValues.shortUrl);
     setErrors({});
   };
   const [postRecord, setPostRecord] = React.useState(postModelProp);
@@ -292,6 +295,7 @@ export default function PostUpdateForm(props) {
     createdAt: [{ type: "Required" }],
     heroImage: [{ type: "JSON" }],
     subhead: [],
+    shortUrl: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -354,6 +358,7 @@ export default function PostUpdateForm(props) {
           createdAt,
           heroImage: heroImage ?? null,
           subhead: subhead ?? null,
+          shortUrl: shortUrl ?? null,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -449,6 +454,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -507,6 +513,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -565,6 +572,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.gpxFile ?? value;
@@ -623,6 +631,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -681,6 +690,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.headerImage ?? value;
@@ -739,6 +749,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -797,6 +808,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.publishedDate ?? value;
@@ -855,6 +867,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -913,6 +926,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.postLocation ?? value;
@@ -971,6 +985,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.stravaUrl ?? value;
@@ -1029,6 +1044,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.resultsUrl ?? value;
@@ -1087,6 +1103,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.subType ?? value;
@@ -1145,6 +1162,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.teaser ?? value;
@@ -1203,6 +1221,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.currentFtp ?? value;
@@ -1261,6 +1280,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.components ?? value;
@@ -1319,6 +1339,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.powerAnalysis ?? value;
@@ -1377,6 +1398,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.coordinates ?? value;
@@ -1435,6 +1457,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.powers ?? value;
@@ -1493,6 +1516,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.elevation ?? value;
@@ -1551,6 +1575,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.elevationGrades ?? value;
@@ -1609,6 +1634,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.distances ?? value;
@@ -1671,6 +1697,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.elevationTotal ?? value;
@@ -1733,6 +1760,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.normalizedPower ?? value;
@@ -1795,6 +1823,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.distance ?? value;
@@ -1853,6 +1882,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.heartAnalysis ?? value;
@@ -1911,6 +1941,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.cadenceAnalysis ?? value;
@@ -1969,6 +2000,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.tempAnalysis ?? value;
@@ -2031,6 +2063,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.elapsedTime ?? value;
@@ -2093,6 +2126,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.stoppedTime ?? value;
@@ -2155,6 +2189,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.timeInRed ?? value;
@@ -2213,6 +2248,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.powerZones ?? value;
@@ -2271,6 +2307,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.powerZoneBuckets ?? value;
@@ -2329,6 +2366,7 @@ export default function PostUpdateForm(props) {
               createdAt: value,
               heroImage,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.createdAt ?? value;
@@ -2387,6 +2425,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage: value,
               subhead,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.heroImage ?? value;
@@ -2445,6 +2484,7 @@ export default function PostUpdateForm(props) {
               createdAt,
               heroImage,
               subhead: value,
+              shortUrl,
             };
             const result = onChange(modelFields);
             value = result?.subhead ?? value;
@@ -2458,6 +2498,65 @@ export default function PostUpdateForm(props) {
         errorMessage={errors.subhead?.errorMessage}
         hasError={errors.subhead?.hasError}
         {...getOverrideProps(overrides, "subhead")}
+      ></TextField>
+      <TextField
+        label="Short url"
+        isRequired={false}
+        isReadOnly={false}
+        value={shortUrl}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              type,
+              title,
+              gpxFile,
+              images,
+              headerImage,
+              date,
+              publishedDate,
+              location,
+              postLocation,
+              stravaUrl,
+              resultsUrl,
+              subType,
+              teaser,
+              currentFtp,
+              components,
+              powerAnalysis,
+              coordinates,
+              powers,
+              elevation,
+              elevationGrades,
+              distances,
+              elevationTotal,
+              normalizedPower,
+              distance,
+              heartAnalysis,
+              cadenceAnalysis,
+              tempAnalysis,
+              elapsedTime,
+              stoppedTime,
+              timeInRed,
+              powerZones,
+              powerZoneBuckets,
+              createdAt,
+              heroImage,
+              subhead,
+              shortUrl: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.shortUrl ?? value;
+          }
+          if (errors.shortUrl?.hasError) {
+            runValidationTasks("shortUrl", value);
+          }
+          setShortUrl(value);
+        }}
+        onBlur={() => runValidationTasks("shortUrl", shortUrl)}
+        errorMessage={errors.shortUrl?.errorMessage}
+        hasError={errors.shortUrl?.hasError}
+        {...getOverrideProps(overrides, "shortUrl")}
       ></TextField>
       <Flex
         justifyContent="space-between"

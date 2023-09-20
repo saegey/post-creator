@@ -5,7 +5,6 @@ import {
   Close,
   Text,
   Link as ThemeLink,
-  Button,
   useColorMode,
   Switch,
 } from 'theme-ui';
@@ -166,7 +165,14 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     Your Posts
                   </ThemeLink>
                 </Flex>
-                <Flex as='li'>
+                <Flex
+                  as='li'
+                  sx={{
+                    borderTopColor: 'divider',
+                    borderTopStyle: 'solid',
+                    borderTopWidth: '1px',
+                  }}
+                >
                   <Flex sx={{ width: '100%', padding: '5px' }}>
                     <Text as='span'>Dark Mode</Text>
                     <Box sx={{ marginLeft: 'auto' }}>

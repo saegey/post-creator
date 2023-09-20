@@ -20,6 +20,7 @@ import GraphSelectorMenu from './GraphSelectorMenu';
 import * as subscriptions from '../../src/graphql/subscriptions';
 import UploadGpxModal from './UploadGpxModal';
 import { OnUpdatePostSubscription } from '../API';
+import ShareModal from './ShareModal';
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
@@ -34,7 +35,7 @@ const PostEditor = ({ postId, initialState }) => {
     setPowerZones,
     setPowerZoneBuckets,
   } = React.useContext(PostContext);
-  const { setIsFtpUpdating, isPhotoCaptionOpen } =
+  const { setIsFtpUpdating, isPhotoCaptionOpen, isShareModalOpen } =
     React.useContext(EditorContext);
 
   const { isGraphMenuOpen, isGpxUploadOpen } = React.useContext(EditorContext);
@@ -121,6 +122,7 @@ const PostEditor = ({ postId, initialState }) => {
           <Flex>
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isGpxUploadOpen && <UploadGpxModal />}
+            {isShareModalOpen && <ShareModal postId={postId} />}
             <Box
               sx={{
                 marginTop: '20px',

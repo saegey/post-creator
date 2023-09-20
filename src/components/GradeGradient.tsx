@@ -18,7 +18,6 @@ interface GradeGradientProps {
 }
 
 const GradeGradient = ({ data, xMax }: GradeGradientProps): JSX.Element => {
-  console.log(xMax);
   const gradients = React.useMemo((): Array<JSX.Element | undefined> => {
     return data.map((d, i): JSX.Element | undefined => {
       if (

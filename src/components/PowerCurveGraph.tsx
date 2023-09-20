@@ -17,6 +17,7 @@ import {
 // import MaximizedContainer from '../common/MaximizedContainer'
 // import ExpandableCard from '../common/ExpandableCard'
 // import { formatSeconds, formatTime } from '../../../lib/formatters'
+import { formatTime } from '../utils/time';
 
 export interface Coordinate {
   x: number;
@@ -31,16 +32,6 @@ export const formatSeconds = (value: number) => {
     return `${(value / 60 / 60).toFixed(0)}h`;
   }
   return `${(value / 60).toFixed(0)}m`;
-};
-
-export const formatTime = (value: number) => {
-  if (value < 3600) {
-    return new Date(value * 1000)
-      .toISOString()
-      .substr(14, 5)
-      .replace(/^0+/, '');
-  }
-  return new Date(value * 1000).toISOString().substr(11, 8).replace(/^0+/, '');
 };
 
 // const scale = scaleLog().base(Math.E)

@@ -46,7 +46,6 @@ const downsampleElevation = (coordinates
             distance: totalDistance,
             grade: !Number.isNaN(grade) && isFinite(grade) ? grade : 0,
         });
-        // if (index % rate === 0 || index === 0) {
     });
     return downsampled;
 };

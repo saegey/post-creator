@@ -1,16 +1,9 @@
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { withSSRContext, API } from 'aws-amplify';
+import { withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
-import { Button, Box, Grid, Link as ThemeLink, Flex, Text } from 'theme-ui';
 import React from 'react';
-import Link from 'next/link';
-import { CldImage } from 'next-cloudinary';
 
 import { listPostsCustom } from '../src/graphql/customQueries';
-import Header from '../src/components/Header';
-import CreatePostModal from '../src/components/CreatePostModal';
 import { CloudinaryImage } from '../src/components/AddImage';
-import PostCard from '../src/components/PostCard';
 import AuthCustom from '../src/components/AuthCustom';
 import PostsAllUsers from '../src/components/PostsAllUsers';
 
