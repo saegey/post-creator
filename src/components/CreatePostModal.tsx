@@ -31,7 +31,7 @@ async function handleCreatePost(event) {
     if (!response || !response.data || !response.data.createPost) {
       console.error('failed to create post');
     }
-    window.location.href = `/posts/${response?.data?.createPost?.id}`;
+    window.location.href = `/posts/${response?.data?.createPost?.id}/edit`;
   } catch ({ errors }) {
     console.error(...errors);
     throw new Error(errors[0].message);

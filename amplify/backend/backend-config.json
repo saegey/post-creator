@@ -9,6 +9,14 @@
           ],
           "category": "function",
           "resourceName": "nextjsblog24b60079"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "shorturl"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -127,12 +135,6 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "blalblah": {
-      "build": true,
-      "dependsOn": [],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "nextjsblog24b60079": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -173,6 +175,11 @@
           "resourceName": "nextjsblog24b60079"
         }
       ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "shorturl": {
+      "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
@@ -241,9 +248,29 @@
           "resourceName": "postUpdateCalc"
         }
       ]
+    },
+    "AMPLIFY_function_shorturl_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "shorturl"
+        }
+      ]
+    },
+    "AMPLIFY_function_shorturl_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "shorturl"
+        }
+      ]
     }
   },
   "storage": {
+    "dynamo1a552de1": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
     "routeFiles": {
       "dependsOn": [
         {

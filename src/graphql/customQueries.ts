@@ -92,6 +92,7 @@ export const getPostInitial = /* GraphQL */ `
       updatedAt
       blogPostsId
       postRelatedId
+      shortUrl
       # owner
       __typename
     }

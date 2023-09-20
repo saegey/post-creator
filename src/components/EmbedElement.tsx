@@ -10,9 +10,10 @@ const EmbedElemnt = ({ element }) => {
   return (
     <Flex
       sx={{
-        width: '900px',
+        // width: '900px',
         minWidth: '100%',
-        maxWidth: '900px',
+        maxWidth: [null, null, '900px'],
+        width: ['100vw', '900px', '900px'],
         height: '700px',
 
         marginY: ['20px', '60px', '60px'],

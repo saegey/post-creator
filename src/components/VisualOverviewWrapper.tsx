@@ -7,6 +7,7 @@ import { Transforms } from 'slate';
 import { PostContext } from '../PostContext';
 import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';
+import { useClickOutside } from '../utils/ux';
 
 const VisualOverview = dynamic(import('./VisualOverview'), {
   ssr: false,
@@ -17,6 +18,12 @@ const VisualOverviewWrapper = ({ element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const wrapperRef = React.useRef('menu');
+  useClickOutside(wrapperRef, (e) => {
+    setIsMenuOpen(false);
+    e.stopPropagation();
+  });
 
   if (!activity || activity.length === 0) {
     return (
@@ -55,17 +62,19 @@ const VisualOverviewWrapper = ({ element }) => {
             }
           }}
         />
-        <Dropdown isOpen={isMenuOpen}>
-          <Box
-            onClick={() => {
-              Transforms.removeNodes(editor, { at: path });
-              setIsMenuOpen(false);
-            }}
-            variant='boxes.dropdownMenuItem'
-          >
-            Remove
-          </Box>
-        </Dropdown>
+        <Box ref={wrapperRef}>
+          <Dropdown isOpen={isMenuOpen}>
+            <Box
+              onClick={() => {
+                Transforms.removeNodes(editor, { at: path });
+                setIsMenuOpen(false);
+              }}
+              variant='boxes.dropdownMenuItem'
+            >
+              Remove
+            </Box>
+          </Dropdown>
+        </Box>
       </Box>
     </Box>
   );

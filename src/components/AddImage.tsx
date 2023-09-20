@@ -19,18 +19,14 @@ export interface CloudinaryImage {
   height: number;
 }
 
-const AddImage = ({ callback }) => {
+const AddImage = ({ callback, setIsOpen, isOpen }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
   const { setImages, images, id } = React.useContext(PostContext);
-  const { setIsImageModalOpen, isImageModalOpen } =
-    React.useContext(EditorContext);
+  // const { setIsImageModalOpen, isImageModalOpen } =
+  //   React.useContext(EditorContext);
 
   return (
-    <StandardModal
-      title={'Images'}
-      isOpen={isImageModalOpen}
-      setIsOpen={setIsImageModalOpen}
-    >
+    <StandardModal title={'Images'} isOpen={isOpen} setIsOpen={setIsOpen}>
       <Box sx={{}}>
         <Box
           sx={{
@@ -136,9 +132,9 @@ const AddImage = ({ callback }) => {
         >
           <Button
             onClick={() => {
-              console.log(callback);
+              // console.log(callback);
               callback({ selectedImage });
-              setIsImageModalOpen(false);
+              setIsOpen(false);
             }}
             disabled={selectedImage ? false : true}
           >

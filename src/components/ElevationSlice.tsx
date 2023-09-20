@@ -2,6 +2,7 @@ import { Box, Grid, Text } from 'theme-ui';
 import React from 'react';
 
 import { useUnits } from './UnitProvider';
+import { formatTime } from '../utils/time';
 
 export const gradeToColor = (grade: number): string => {
   if (grade > 0 && grade < 4) return 'green';
@@ -9,16 +10,6 @@ export const gradeToColor = (grade: number): string => {
   if (grade <= 0) return '#D3D3D3';
   if (grade >= 7) return 'red';
   return 'gray';
-};
-
-export const formatTime = (value: number) => {
-  if (value < 3600) {
-    return new Date(value * 1000)
-      .toISOString()
-      .substr(14, 5)
-      .replace(/^0+/, '');
-  }
-  return new Date(value * 1000).toISOString().substr(11, 8).replace(/^0+/, '');
 };
 
 const ElevationSlice = ({ marker }: any): JSX.Element => {
@@ -30,12 +21,6 @@ const ElevationSlice = ({ marker }: any): JSX.Element => {
       columns={[2, 4, 4]}
       sx={{
         padding: '10px',
-        // borderLeftColor: 'mutedAccent',
-        // borderLeftStyle: 'solid',
-        // borderLeftWidth: '1px',
-        // borderRightColor: 'mutedAccent',
-        // borderRightStyle: 'solid',
-        // borderRightWidth: '1px',
       }}
     >
       <Box>
@@ -52,9 +37,7 @@ const ElevationSlice = ({ marker }: any): JSX.Element => {
       <Box>
         <Text as='p'>Distance</Text>
         <Text sx={{ fontSize: '20px' }}>
-          {marker && marker.d
-            ? `${marker.d} ${units.distanceUnit}`
-            : '-'}
+          {marker && marker.d ? `${marker.d} ${units.distanceUnit}` : '-'}
         </Text>
       </Box>
       <Box>

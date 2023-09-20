@@ -1,0 +1,10 @@
+{
+  "resourceName": "dynamo1a552de1",
+  "tableName": "dynamo1a552de1",
+  "partitionKey": {
+    "fieldName": "url",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

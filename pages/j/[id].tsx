@@ -8,23 +8,20 @@ import {
   type SlateToReactConfig,
 } from '@slate-serializers/react';
 import { CldImage } from 'next-cloudinary';
-import PowerBreakdown from '../../../src/components/TimePowerZones';
+import PowerBreakdown from '../../src/components/TimePowerZones';
 
 import dynamic from 'next/dynamic';
-import HeaderPublic from '../../../src/components/HeaderPublic';
-import { getPostInitial } from '../../../src/graphql/customQueries';
-import ActivityOverview from '../../../src/components/ActivityOverview';
-import { PowerCurveGraph } from '../../../src/components/PowerCurveGraph';
-import { getActivity } from '../../../src/actions/PostGet';
-import PostHeader from '../../../src/components/PostHeader';
-import EmbedElemnt from '../../../src/components/EmbedElement';
+import HeaderPublic from '../../src/components/HeaderPublic';
+import { getPostInitial } from '../../src/graphql/customQueries';
+import ActivityOverview from '../../src/components/ActivityOverview';
+import { PowerCurveGraph } from '../../src/components/PowerCurveGraph';
+import { getActivity } from '../../src/actions/PostGet';
+import PostHeader from '../../src/components/PostHeader';
+import EmbedElemnt from '../../src/components/EmbedElement';
 
-const VisualOverview = dynamic(
-  import('../../../src/components/VisualOverview'),
-  {
-    ssr: false,
-  }
-); // Async API cannot be server-side rendered
+const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
+  ssr: false,
+}); // Async API cannot be server-side rendered
 
 type ServerSideProps = {
   req: object;

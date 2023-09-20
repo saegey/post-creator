@@ -13,6 +13,7 @@ import { PostSaveComponents } from '../actions/PostSave';
 import { PostContext } from '../PostContext';
 import Dropdown from './Dropdown';
 import OptionsButton from './OptionsButton';
+import { useClickOutside } from '../utils/ux';
 
 type SlateImageType = {
   type: 'image';
@@ -32,6 +33,13 @@ const ImageElement = ({ children, element }) => {
   const { id, title, postLocation } = React.useContext(PostContext);
   const selected = useSelected();
   const focused = useFocused();
+
+  const wrapperRef = React.useRef('menu');
+
+  useClickOutside(wrapperRef, (e) => {
+    setIsMenuOpen(false);
+    e.stopPropagation();
+  });
 
   const saveCaption = async (event: any) => {
     event.preventDefault();
@@ -152,6 +160,7 @@ const ImageElement = ({ children, element }) => {
             // width: '100%',
             // borderRadius: '5px',
           }}
+          ref={wrapperRef}
         >
           <OptionsButton
             onClick={() => {

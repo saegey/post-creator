@@ -11,6 +11,7 @@ import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';
 import { EditorContext } from './EditorContext';
 import PhotoCaptionModal from './PhotoCaptionModal';
+import { useClickOutside } from '../utils/ux';
 
 const HeroBanner = ({ element }) => {
   const { heroImage, setHeroImage, title, postLocation, date, subhead } =
@@ -24,6 +25,12 @@ const HeroBanner = ({ element }) => {
   } = React.useContext(EditorContext);
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const wrapperRef = React.useRef('menu');
+  useClickOutside(wrapperRef, (e) => {
+    setIsMenuOpen(false);
+    e.stopPropagation();
+  });
 
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
@@ -42,7 +49,13 @@ const HeroBanner = ({ element }) => {
         contentEditable={false}
       >
         {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
-        {isHeroImageModalOpen && <AddImage callback={addImage} />}
+        {isHeroImageModalOpen && (
+          <AddImage
+            setIsOpen={setIsHeroImageModalOpen}
+            isOpen={isHeroImageModalOpen}
+            callback={addImage}
+          />
+        )}
         {heroImage ? (
           <Flex sx={{ position: 'relative', backgroundColor: 'muted' }}>
             <PostHeader
@@ -69,7 +82,7 @@ const HeroBanner = ({ element }) => {
             />
 
             <Box sx={{ position: 'absolute', right: '10px', top: '20px' }}>
-              <Box sx={{ position: 'relative' }}>
+              <Box sx={{ position: 'relative' }} ref={wrapperRef}>
                 <OptionsButton
                   onClick={() => {
                     if (isMenuOpen) {
@@ -82,7 +95,6 @@ const HeroBanner = ({ element }) => {
                 <Dropdown isOpen={isMenuOpen}>
                   <Box
                     onClick={() => {
-                      console.log('phtoo caption');
                       setIsPhotoCaptionOpen(true);
                       setIsMenuOpen(false);
                     }}

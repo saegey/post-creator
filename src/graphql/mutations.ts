@@ -102,6 +102,7 @@ export const createBlog = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -165,6 +166,7 @@ export const updateBlog = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -228,6 +230,7 @@ export const deleteBlog = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -323,6 +326,7 @@ export const createPost = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -358,6 +362,7 @@ export const createPost = /* GraphQL */ `
       createdAt
       heroImage
       subhead
+      shortUrl
       updatedAt
       blogPostsId
       postRelatedId
@@ -445,6 +450,7 @@ export const updatePost = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -480,6 +486,7 @@ export const updatePost = /* GraphQL */ `
       createdAt
       heroImage
       subhead
+      shortUrl
       updatedAt
       blogPostsId
       postRelatedId
@@ -567,6 +574,7 @@ export const deletePost = /* GraphQL */ `
           createdAt
           heroImage
           subhead
+          shortUrl
           updatedAt
           blogPostsId
           postRelatedId
@@ -602,6 +610,7 @@ export const deletePost = /* GraphQL */ `
       createdAt
       heroImage
       subhead
+      shortUrl
       updatedAt
       blogPostsId
       postRelatedId

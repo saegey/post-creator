@@ -4,9 +4,7 @@ import React from 'react';
 
 import PostCard from './PostCard';
 import Header from './Header';
-// import { PostType } from '../../pages/posts';
 import CreatePostModal from './CreatePostModal';
-import { string } from 'slate';
 import { CloudinaryImage } from './AddImage';
 
 export type PostType = Array<{

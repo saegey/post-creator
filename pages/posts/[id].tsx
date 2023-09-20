@@ -1,14 +1,27 @@
 import { withSSRContext } from 'aws-amplify';
-import Head from 'next/head';
 import React from 'react';
-import { Amplify } from 'aws-amplify';
+import { Box, Flex, Text } from 'theme-ui';
+import Head from 'next/head';
+import {
+  slateToReactConfig,
+  type SlateToReactConfig,
+} from '@slate-serializers/react';
+import { CldImage } from 'next-cloudinary';
+import PowerBreakdown from '../../src/components/TimePowerZones';
 
-import awsconfig from '../../src/aws-exports';
-import { PostContext } from '../../src/PostContext';
+import dynamic from 'next/dynamic';
 import { getPostInitial } from '../../src/graphql/customQueries';
+import ActivityOverview from '../../src/components/ActivityOverview';
+import { PowerCurveGraph } from '../../src/components/PowerCurveGraph';
+import { getActivity } from '../../src/actions/PostGet';
+import PostHeader from '../../src/components/PostHeader';
+import EmbedElemnt from '../../src/components/EmbedElement';
 import AuthCustom from '../../src/components/AuthCustom';
-import EditUserPost from '../../src/components/EditUserPost';
-Amplify.configure(awsconfig);
+import PostView from '../../src/components/PostView';
+
+const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
+  ssr: false,
+}); // Async API cannot be server-side rendered
 
 type ServerSideProps = {
   req: object;
@@ -27,201 +40,360 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       id: params.id,
     },
   });
-
+  if (!data || !data.getPost) {
+    console.error('faileed too get activity data');
+    return;
+  }
   const post = data.getPost;
+  const activityString = await getActivity(post);
+
+  const activity = activityString.map((a, i) => {
+    return {
+      ...a,
+      g: a?.g !== null ? a?.g : 0,
+      d:
+        a?.d === 0
+          ? activityString[i - 1]
+            ? activityString[i - 1]?.d
+            : 0
+          : a?.d,
+    };
+  });
 
   return {
     props: {
-      postId: post.id,
-      postComponents: JSON.parse(post.components),
-      postTitle: post.title,
-      postSubhead: post.subhead,
-      postImages: JSON.parse(post.images),
-      postLocationOrig: post.postLocation,
-      postGpxFile: post.gpxFile,
-      postStravaUrl: post.stravaUrl,
-      postResultsUrl: post.resultsUrl,
-      postCurrentFtp: post.currentFtp,
-      postElevationTotal: post.elevationTotal,
-      postNormalizedPower: post.normalizedPower,
-      postDistance: post.distance,
-      postStoppedTime: post.stoppedTime,
-      postElapsedTime: post.elapsedTime,
-      postTimeInRed: post.timeInRed,
-      postHeartAnalysis: JSON.parse(post.heartAnalysis),
-      postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
-      postCadenceAnalysis: JSON.parse(post.cadenceAnalysis),
-      postTempAnalysis: JSON.parse(post.tempAnalysis),
-      postPowerZones: JSON.parse(post.powerZones),
-      postPowerZoneBuckets: JSON.parse(post.powerZoneBuckets),
-      postHeroImage: JSON.parse(post.heroImage),
-      postDate: post.date,
+      post: post,
+      activity: activity,
     },
   };
 };
 
-const Post = ({
-  postComponents,
-  postTitle,
-  postSubhead,
-  postLocationOrig,
-  postGpxFile,
-  postId,
-  postImages,
-  postResultsUrl,
-  postStravaUrl,
-  postCurrentFtp,
-  postElevationTotal,
-  postNormalizedPower,
-  postDistance,
-  postElapsedTime,
-  postStoppedTime,
-  postTimeInRed,
-  postHeartAnalysis,
-  postPowerAnalysis,
-  postCadenceAnalysis,
-  postTempAnalysis,
-  postPowerZones,
-  postPowerZoneBuckets,
-  postHeroImage,
-  postDate,
-}) => {
-  // const router = useRouter();
-  const [title, setTitle] = React.useState(postTitle);
-  const [subhead, setSubhead] = React.useState(postSubhead);
-  const [postLocation, setPostLocation] = React.useState(postLocationOrig);
-  const [id, setId] = React.useState(postId);
-  const [activity, setActivity] = React.useState([]);
-  const [gpxFile, setGpxFile] = React.useState(postGpxFile);
-  const [stravaUrl, setStravaUrl] = React.useState(postStravaUrl);
-  const [components, setComponents] = React.useState(postComponents);
-  const [images, setImages] = React.useState(postImages ? postImages : []);
-  const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
-  const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
+const Publish = ({ post, activity, signOut, user }): JSX.Element => {
+  const config: SlateToReactConfig = {
+    ...slateToReactConfig,
+    react: {
+      elementTransforms: {
+        ...slateToReactConfig.react.elementTransforms,
+        powergraph: ({ node, children = [] }) => {
+          const powerAnalysis = JSON.parse(post.powerAnalysis);
+          const graphData = Object.keys(powerAnalysis)
+            .map((k, i) => {
+              if (Number(k) > 0) {
+                return { x: Number(k), y: powerAnalysis[k] };
+              }
+            })
+            .filter((p) => p !== undefined);
 
-  const [powerAnalysis, setPowerAnalysis] = React.useState<{
-    entire: number;
-  } | null>(null);
-  const [heartAnalysis, setHeartAnalysis] = React.useState(postHeartAnalysis);
-  const [cadenceAnalysis, setCadenceAnalysis] =
-    React.useState(postCadenceAnalysis);
-  const [tempAnalysis, setTempAnalysis] = React.useState(postTempAnalysis);
+          return (
+            <Box
+              sx={{
+                maxWidth: '690px',
+                width: '100%',
+                marginX: 'auto',
+                height: ['300px', '450px', '450px'],
+                marginY: ['30px', '60px', '60px'],
+                backgroundColor: [
+                  null,
+                  'activityOverviewBackgroundColor',
+                  'activityOverviewBackgroundColor',
+                ],
+                paddingY: '10px',
+                borderRadius: '5px',
+              }}
+            >
+              {/* <h2>Power Curve</h2> */}
+              <PowerCurveGraph
+                ftp={post.currentFtp ? Number(post.currentFtp) : 0}
+                data={graphData as any}
+              />
+            </Box>
+          );
+        },
+        embed: ({ node, children = [] }) => {
+          return <EmbedElemnt element={node} />;
+        },
+        visualOverview: ({ node, children = [] }) => {
+          return (
+            <Flex sx={{ marginX: [null, '120px', '120px'] }}>
+              <Box sx={{ width: '900px', maxWidth: '900px', marginX: 'auto' }}>
+                <VisualOverview
+                  activity={activity}
+                  token={
+                    'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
+                  }
+                />
+              </Box>
+            </Flex>
+          );
+        },
+        timeInZones: ({ node, children = [] }) => {
+          return (
+            <Box
+              sx={{
+                marginY: ['20px', '60px', '60px'],
+                marginX: 'auto',
+                maxWidth: '690px',
+                backgroundColor: [
+                  null,
+                  'activityOverviewBackgroundColor',
+                  'activityOverviewBackgroundColor',
+                ],
+                padding: ['10px', '30px', '30px'],
+                borderRadius: '5px',
+              }}
+            >
+              <PowerBreakdown
+                powerZoneBuckets={JSON.parse(post.powerZoneBuckets)}
+                powerZones={JSON.parse(post.powerZones)}
+              />
+            </Box>
+          );
+        },
+        heroBanner: ({ node, children = [] }) => {
+          return (
+            <Box sx={{ marginBottom: '120px' }}>
+              <PostHeader
+                headerImage={
+                  <Box sx={{ width: '100%', height: '100%' }}>
+                    <CldImage
+                      width='1800'
+                      height='800'
+                      src={JSON.parse(post.heroImage)?.public_id}
+                      sizes='100vw'
+                      alt='race pic'
+                      quality={90}
+                      style={{
+                        objectFit: 'fill',
+                        width: '100%',
+                        height: '100%',
+                        // borderRadius: '5px',
+                      }}
+                    />
+                  </Box>
+                }
+                type={'Race'}
+                teaser={'This is an epic race that you need to attend.'}
+                headerImageCaption={
+                  'Thee fieelld strung out on the first descent'
+                }
+                title={post.title ? post.title : ''}
+                location={post.postLocation ? post.postLocation : ''}
+                date={'2023-09-09'}
+              />
+            </Box>
+          );
+        },
+        activityOverview: ({ node, children = [] }) => {
+          return (
+            <Box
+              sx={{
+                marginY: ['20px', '60px', '60px'],
+                maxWidth: '690px',
+                marginX: 'auto',
+                backgroundColor: [
+                  null,
+                  'activityOverviewBackgroundColor',
+                  'activityOverviewBackgroundColor',
+                ],
+                borderRadius: '5px',
+                padding: ['10px', '30px', '30px'],
+              }}
+            >
+              <ActivityOverview
+                data={{
+                  elevationGain: post.elevationTotal,
+                  distance: post.distance,
+                  normalizedPower: post.normalizedPower,
+                  heartAnalysis: JSON.parse(post.heartAnalysis),
+                  powerAnalysis: JSON.parse(post.powerAnalysis),
+                  cadenceAnalysis: JSON.parse(post.cadenceAnalysis),
+                  tempAnalysis: JSON.parse(post.tempAnalysis),
+                  stoppedTime: post.stoppedTime,
+                  elapsedTime: { seconds: post.elapsedTime },
+                  timeInRed: post.timeInRed,
+                }}
+                selectedFields={[
+                  'Normalized Power',
+                  'Avg Heart Rate',
+                  'Distance',
+                  'Elevation Gain',
+                  'Avg Temperature',
+                  'Avg Speed',
+                  'Elapsed Time',
+                  'Stopped Time',
+                  'Time in Red',
+                  'Avg Cadence',
+                  'Avg Power',
+                ]}
+              />
+            </Box>
+          );
+        },
+        'bulleted-list': ({ node, children = [] }) => {
+          return (
+            <Box
+              as='ul'
+              sx={{
+                paddingY: '40px',
+                paddingLeft: ['20px', '20px', '20px'],
+                marginX: 'auto',
+                maxWidth: '690px',
+                fontSize: '20px',
+                li: {
+                  paddingX: '5px',
+                  paddingY: '5px',
+                },
+              }}
+            >
+              {node.children.map((c, i) => {
+                return (
+                  <Box as='li'>
+                    {c.children.map((child) => {
+                      if (child.bold) {
+                        return (
+                          <Box as='span' sx={{ fontWeight: '700' }}>
+                            {child.text}
+                          </Box>
+                        );
+                      }
+                      return `${child.text}`;
+                    })}
+                  </Box>
+                );
+              })}
+            </Box>
+          );
+        },
+        paragraph: ({ node, children = [] }) => {
+          return (
+            <>
+              {node.children.map((c, i) => {
+                if (!c.text) {
+                  return;
+                }
+                return (
+                  <Text
+                    as='p'
+                    key={`paragraph-${i}`}
+                    sx={{
+                      // marginY: '15px',
+                      fontSize: '20px',
+                      maxWidth: '690px',
+                      // font-size: 20px;
+                      borderLeftWidth: '1px',
+                      paddingLeft: '8px',
+                      marginX: 'auto',
+                    }}
+                  >
+                    {c.text}
+                  </Text>
+                );
+              })}
+            </>
+          );
+        },
+        text: ({ node, children = [] }) => {
+          return (
+            <>
+              {node.children.map((c, i) => {
+                if (!c.text || c.text === '') {
+                  return;
+                }
+                return (
+                  <Text
+                    as='p'
+                    key={`text-paragraph-${i}`}
+                    sx={{
+                      // marginY: '15px',
+                      fontSize: '20px',
+                      maxWidth: '690px',
+                      marginX: 'auto',
+                      width: [null, '690px', '690px'],
+                      // font-size: 20px;
+                      borderLeftWidth: '1px',
+                      borderLeftStyle: 'solid',
+                      borderLeftColor: '#cccccc',
+                      paddingLeft: '8px',
+                    }}
+                  >
+                    {c.text}
+                  </Text>
+                );
+              })}
+            </>
+          );
+        },
+        'heading-two': ({ node, children = [] }) => {
+          return (
+            <>
+              {node.children.map((c, i) => {
+                if (!c.text) {
+                  return;
+                }
+                return (
+                  <Flex
+                    sx={{ maxWidth: '690px', width: '690px', marginX: 'auto' }}
+                    key={`heading-two-${i}`}
+                  >
+                    <Text
+                      as='h2'
+                      sx={{
+                        marginY: '15px',
+                        // fontSize: '20px',
+                        maxWidth: '690px',
+                      }}
+                    >
+                      {c.text}
+                    </Text>
+                  </Flex>
+                );
+              })}
+            </>
+          );
+        },
+        image: ({ node, children = [] }) => {
+          return (
+            <Flex>
+              <Box
+                sx={{
+                  marginY: ['20px', '60px', '60px'],
+                  maxWidth: '900px',
+                  width: '900px',
+                  marginX: 'auto',
+                }}
+              >
+                <CldImage
+                  width='1200'
+                  height='1200'
+                  src={node.public_id}
+                  sizes='100vw'
+                  alt='race pic'
+                  quality={90}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '5px',
+                  }}
+                />
+                <p>{node.caption}</p>
+              </Box>
+            </Flex>
+          );
+        },
+      },
+    },
+  };
 
-  const [initialLoad, setInitialLoad] = React.useState(true);
-
-  const [elevationTotal, setElevationTotal] =
-    React.useState(postElevationTotal);
-  const [normalizedPower, setNormalizedPower] =
-    React.useState(postNormalizedPower);
-  const [distance, setDistance] = React.useState(postDistance);
-  const [elapsedTime, setElapsedTime] = React.useState(postElapsedTime);
-  const [stoppedTime, setStoppedTime] = React.useState(postStoppedTime);
-  const [timeInRed, setTimeInRed] = React.useState(postTimeInRed);
-  const [powerZones, setPowerZones] = React.useState(postPowerZones);
-  const [powerZoneBuckets, setPowerZoneBuckets] =
-    React.useState(postPowerZoneBuckets);
-  const [heroImage, setHeroImage] = React.useState(postHeroImage);
-  const [date, setDate] = React.useState(postDate);
-
-  React.useEffect(() => {
-    if (!initialLoad) {
-      setId(postId);
-      setTitle(postTitle);
-      setSubhead(postSubhead);
-      setComponents(postComponents);
-      setPostLocation(postLocationOrig);
-      setGpxFile(postGpxFile);
-      setStravaUrl(postStravaUrl);
-      setImages(postImages);
-      setCurrentFtp(postCurrentFtp);
-      setElevationTotal(postElevationTotal);
-      setNormalizedPower(postNormalizedPower);
-      setDistance(postDistance);
-      setElapsedTime(postElapsedTime);
-      setStoppedTime(postStoppedTime);
-      setTimeInRed(postTimeInRed);
-      setHeartAnalysis(postHeartAnalysis);
-      setPowerAnalysis(postPowerAnalysis);
-      setCadenceAnalysis(postCadenceAnalysis);
-      setTempAnalysis(postTempAnalysis);
-      setPowerZones(postPowerZones !== null ? postPowerZones : []);
-      setPowerZoneBuckets(postPowerZoneBuckets);
-      setHeroImage(postHeroImage);
-      setDate(postDate);
-    }
-  }, [postComponents]);
-
-  React.useEffect(() => {
-    setInitialLoad(false);
-  }, []);
-
+  const components = JSON.parse(post.components);
   return (
     <AuthCustom>
-      <PostContext.Provider
-        value={{
-          title,
-          setTitle,
-          subhead,
-          setSubhead,
-          postLocation,
-          setPostLocation,
-          activity,
-          setActivity,
-          id,
-          setId,
-          gpxFile,
-          setGpxFile,
-          stravaUrl,
-          setStravaUrl,
-          components,
-          setComponents,
-          images,
-          setImages,
-          currentFtp,
-          setCurrentFtp,
-          resultsUrl,
-          setResultsUrl,
-          powerAnalysis,
-          setPowerAnalysis,
-          elevationTotal,
-          setElevationTotal,
-          normalizedPower,
-          setNormalizedPower,
-          distance,
-          setDistance,
-          elapsedTime,
-          setElapsedTime,
-          stoppedTime,
-          setStoppedTime,
-          timeInRed,
-          setTimeInRed,
-          heartAnalysis,
-          setHeartAnalysis,
-          cadenceAnalysis,
-          setCadenceAnalysis,
-          tempAnalysis,
-          setTempAnalysis,
-          powerZones,
-          setPowerZones,
-          powerZoneBuckets,
-          setPowerZoneBuckets,
-          heroImage,
-          setHeroImage,
-          date,
-          setDate,
-        }}
-      >
-        <div>
-          <Head>
-            <title>{title}</title>
-            <link rel='icon' href='/favicon.ico' />
-          </Head>
-
-          <EditUserPost postComponents={components} postId={id} />
-        </div>
-      </PostContext.Provider>
+      <Head>
+        <title>Home</title>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+      <PostView components={components} config={config} post={post} />
     </AuthCustom>
   );
 };
 
-export default Post;
+export default Publish;

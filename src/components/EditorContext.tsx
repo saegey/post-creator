@@ -13,6 +13,8 @@ export type EditorContextType = {
   setIsPhotoCaptionOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isHeroImageModalOpen: boolean;
   setIsHeroImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isShareModalOpen: boolean;
+  setIsShareModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -28,6 +30,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsHeroImageModalOpen: () => {},
   isPhotoCaptionOpen: false,
   setIsPhotoCaptionOpen: () => {},
+  isShareModalOpen: false,
+  setIsShareModalOpen: () => {},
 });
 
 export { EditorContext };

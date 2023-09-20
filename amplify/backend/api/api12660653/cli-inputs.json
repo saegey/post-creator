@@ -12,6 +12,19 @@
           "update"
         ]
       }
+    },
+    "/short-url": {
+      "name": "/short-url",
+      "lambdaFunction": "shorturl",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
     }
   }
 }

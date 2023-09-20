@@ -47,6 +47,29 @@ const HeaderPublic = () => {
                     borderBottomColor: 'divider',
                   }}
                 >
+                  <Box>
+                    <Flex
+                      sx={{
+                        gap: '10px',
+                        paddingLeft: '5px',
+                        marginLeft: '5px',
+                      }}
+                    >
+                      <Box sx={{ width: '30px', height: 'auto' }}>
+                        <Logo />
+                      </Box>
+                      <Text
+                        as='div'
+                        sx={{
+                          marginY: 'auto',
+                          fontSize: '22px',
+                          fontWeight: 700,
+                        }}
+                      >
+                        monopad
+                      </Text>
+                    </Flex>
+                  </Box>
                   <Close
                     onClick={() => setMenuOpen(false)}
                     sx={{ backgroundColor: 'background', marginLeft: 'auto' }}
@@ -126,11 +149,6 @@ const HeaderPublic = () => {
               aria-label='Toggle Menu'
               onClick={() => setMenuOpen(true)}
             />
-            <Flex sx={{ height: '100%' }}>
-              <Box sx={{ height: '32px', width: '32px', marginY: 'auto' }}>
-                <Logo />
-              </Box>
-            </Flex>
           </Flex>
         </Box>
       </Box>

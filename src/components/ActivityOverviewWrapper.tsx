@@ -8,9 +8,15 @@ import { PostContext } from '../PostContext';
 import { EditorContext } from './EditorContext';
 import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';
-
+import { useClickOutside } from '../utils/ux';
 const ActivityOverviewWrapper = ({ element }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const wrapperRef = React.useRef('menu');
+  useClickOutside(wrapperRef, (e) => {
+    setIsMenuOpen(false);
+    e.stopPropagation();
+  });
 
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
@@ -86,17 +92,20 @@ const ActivityOverviewWrapper = ({ element }) => {
             }
           }}
         />
-        <Dropdown isOpen={isMenuOpen}>
-          <Box
-            onClick={() => {
-              Transforms.removeNodes(editor, { at: path });
-              setIsMenuOpen(false);
-            }}
-            variant='boxes.dropdownMenuItem'
-          >
-            Remove
-          </Box>
-        </Dropdown>
+        <Box>
+          <Dropdown isOpen={isMenuOpen}>
+            <Box
+              onClick={() => {
+                Transforms.removeNodes(editor, { at: path });
+                setIsMenuOpen(false);
+              }}
+              ref={wrapperRef}
+              variant='boxes.dropdownMenuItem'
+            >
+              Remove
+            </Box>
+          </Dropdown>
+        </Box>
       </Box>
     </Box>
   );
