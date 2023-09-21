@@ -18,7 +18,7 @@ const PostView = ({
   config: any;
   post: any;
 }) => {
-  console.log(post.author.id === user.attributes.sub);
+  // console.log(post.author.id === user.attributes.sub);
   return (
     <Box
       as='main'

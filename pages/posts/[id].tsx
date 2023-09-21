@@ -68,7 +68,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   };
 };
 
-const Publish = ({ post, activity, signOut, user }): JSX.Element => {
+const Publish = ({ post, activity }): JSX.Element => {
   const config: SlateToReactConfig = {
     ...slateToReactConfig,
     react: {
@@ -247,7 +247,7 @@ const Publish = ({ post, activity, signOut, user }): JSX.Element => {
             >
               {node.children.map((c, i) => {
                 return (
-                  <Box as='li'>
+                  <Box as='li' key={`bullet-${i}`}>
                     {c.children.map((child) => {
                       if (child.bold) {
                         return (

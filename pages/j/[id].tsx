@@ -64,11 +64,14 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     props: {
       post: post,
       activity: activity,
+      env: process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'],
     },
   };
 };
 
-const Publish = ({ post, activity }): JSX.Element => {
+const Publish = ({ post, activity, env }): JSX.Element => {
+  console.log(JSON.stringify(env));
+
   const config: SlateToReactConfig = {
     ...slateToReactConfig,
     react: {
@@ -101,7 +104,6 @@ const Publish = ({ post, activity }): JSX.Element => {
                 borderRadius: '5px',
               }}
             >
-              {/* <h2>Power Curve</h2> */}
               <PowerCurveGraph
                 ftp={post.currentFtp ? Number(post.currentFtp) : 0}
                 data={graphData as any}
@@ -247,7 +249,7 @@ const Publish = ({ post, activity }): JSX.Element => {
             >
               {node.children.map((c, i) => {
                 return (
-                  <Box as='li'>
+                  <Box as='li' key={`box-${i}`}>
                     {c.children.map((child) => {
                       if (child.bold) {
                         return (
@@ -268,9 +270,9 @@ const Publish = ({ post, activity }): JSX.Element => {
           return (
             <>
               {node.children.map((c, i) => {
-                if (!c.text) {
-                  return;
-                }
+                // if (!c.text) {
+                //   return;
+                // }
                 return (
                   <Text
                     as='p'
@@ -296,9 +298,9 @@ const Publish = ({ post, activity }): JSX.Element => {
           return (
             <>
               {node.children.map((c, i) => {
-                if (!c.text || c.text === '') {
-                  return;
-                }
+                // if (!c.text || c.text === '') {
+                //   return;
+                // }
                 return (
                   <Text
                     as='p'

@@ -104,6 +104,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
               {recentPosts.map((post, i) => {
                 return (
                   <ThemeLink
+                    key={`link-${i}`}
                     as={Link}
                     sx={{
                       color: 'text',
@@ -113,7 +114,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
                     href={`/posts/${post.id}`}
                     onClick={() => setMenuOpen(false)}
                   >
-                    <Box as='li' key={`post-${i}`} variant='links.mainMenuItem'>
+                    <Box as='li' variant='links.mainMenuItem'>
                       {post.title}
                     </Box>
                   </ThemeLink>
