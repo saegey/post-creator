@@ -34,7 +34,7 @@ const RaceStats = ({ items }: RaceStatsProps) => {
     >
       {items.map((item, index) => {
         return (
-          <Box key={index}>
+          <Box key={`box-${index}`}>
             <>
               <Text
                 sx={{
