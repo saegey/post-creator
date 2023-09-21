@@ -158,6 +158,12 @@ const Publish = ({ post, activity, env }): JSX.Element => {
                 headerImage={
                   <Box sx={{ width: '100%', height: '100%' }}>
                     <CldImage
+                      config={{
+                        cloud: {
+                          cloudName:
+                            process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'],
+                        },
+                      }}
                       width='1800'
                       height='800'
                       src={JSON.parse(post.heroImage).public_id}
@@ -365,6 +371,12 @@ const Publish = ({ post, activity, env }): JSX.Element => {
                 }}
               >
                 <CldImage
+                  config={{
+                    cloud: {
+                      cloudName:
+                        process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'],
+                    },
+                  }}
                   width='1200'
                   height='1200'
                   src={node.public_id}
