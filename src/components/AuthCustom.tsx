@@ -2,7 +2,7 @@ import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import { Text } from 'theme-ui';
 
 const AuthCustom = ({ children }) => {
-  console.log('auth custooom');
+  // console.log('auth custooom');
   return (
     <Authenticator
       signUpAttributes={['name', 'preferred_username']}
