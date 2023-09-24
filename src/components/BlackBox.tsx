@@ -10,7 +10,7 @@ const BlackBox = ({ children, opacity = '0.2', onClick = () => {} }) => (
       left: '0',
       backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`,
       // background-color: rgba(var(--color), 0.8);
-      zIndex: 10,
+      zIndex: 30,
       display: 'flex',
     }}
     onClick={onClick}

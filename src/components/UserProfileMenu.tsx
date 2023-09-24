@@ -85,9 +85,10 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                         borderRadius: '100%',
                       }}
                       // preserveTransformations
-                      underlay={user.attributes.picture}
+                      // underlay={user.attributes.picture}
                       quality={90}
-                      sizes='100vw'
+                      // sizes='100vw'
+                      sizes='(max-width: 480px) 100vw, 50vw'
                       alt='Description of my image'
                     />
                   )}

@@ -90,7 +90,7 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
           sx={{
             gap: '20px',
             flexDirection: 'column',
-            maxHeight: '400px',
+            maxHeight: ['75vh', '400px', '400px'],
             overflow: 'scroll',
           }}
         >
