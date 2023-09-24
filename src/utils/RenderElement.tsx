@@ -54,6 +54,7 @@ const renderElement = ({ attributes, children, element }) => {
           style={{
             fontWeight: 700,
             maxWidth: '690px',
+            width: ['100%', '690px', '690px'],
             // width: '100vw',
             marginLeft: 'auto',
             marginRight: 'auto',
@@ -92,7 +93,7 @@ const renderElement = ({ attributes, children, element }) => {
           sx={{
             marginX: 'auto',
             // marginRight: 'auto',
-            width: '690px',
+            width: ['100%', '690px', '690px'],
             fontSize: '20px',
             marginY: '20px',
           }}

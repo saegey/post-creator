@@ -124,7 +124,8 @@ const GraphSelectorMenu = ({ editor }) => {
           top: [0, '55px', '55px'],
           marginTop: [0, 0, 0],
           width: ['100%', '300px', '300px'],
-          height: 'calc(100vh - 55px)',
+          height: ['100vh', 'calc(100vh - 55px)', 'calc(100vh - 55px)'],
+          zIndex: 30,
         }}
       >
         <Box>

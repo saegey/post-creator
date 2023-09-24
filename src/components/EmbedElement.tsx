@@ -1,4 +1,4 @@
-import { Box, Flex } from 'theme-ui';
+import { Box, Flex, Embed } from 'theme-ui';
 import { useUnits } from './UnitProvider';
 
 const EmbedElemnt = ({ element }) => {
@@ -6,30 +6,34 @@ const EmbedElemnt = ({ element }) => {
   const url = `${element.url}{${
     unitOfMeasure === 'metric' ? '&metricUnits=true' : ''
   }}`;
-  console.log(unitOfMeasure, url);
+
   return (
     <Flex
       sx={{
         // width: '900px',
         minWidth: '100%',
-        maxWidth: [null, null, '900px'],
-        width: ['100vw', '900px', '900px'],
-        height: '700px',
+        // maxWidth: [null, null, '900px'],
+        maxWidth: ['100vw', '900px', '900px'],
+        height: 'fit-content',
+        padding: ['10px', null, null],
 
         marginY: ['20px', '60px', '60px'],
       }}
-      contentEditable={false}
     >
-      <Box sx={{ marginX: 'auto' }}>
-        <iframe
+      <Box
+        sx={{ marginX: 'auto', width: ['100%', null, null], maxWidth: '900px' }}
+      >
+        <Embed
           src={url}
-          scrolling='no'
-          style={{ width: '900px', height: '700px', border: 'none' }}
+          sx={{
+            height: ['500px', '700px', '700px'],
+            width: '100%',
+            border: 'none',
+          }}
         />
       </Box>
     </Flex>
   );
-  return <h1>{JSON.stringify(element)}</h1>;
 };
 
 export default EmbedElemnt;

@@ -1,4 +1,4 @@
-import { Box, Flex, Button } from 'theme-ui';
+import { Box, Flex, Button, Image as ThemeImage } from 'theme-ui';
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
@@ -60,16 +60,18 @@ const HeroBanner = ({ element }) => {
           <Flex sx={{ position: 'relative', backgroundColor: 'muted' }}>
             <PostHeader
               headerImage={
-                <CldImage
+                <ThemeImage
+                  as={CldImage}
                   width='800'
                   height='800'
                   src={heroImage.public_id}
                   sizes='100vw'
                   alt='race pic'
-                  quality={90}
-                  style={{
+                  // quality={90}
+                  sx={{
                     objectFit: 'cover',
-                    height: '100%',
+                    height: [null, null, '100%'],
+                    width: ['100%', null, null],
                   }}
                 />
               }
