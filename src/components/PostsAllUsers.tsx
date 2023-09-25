@@ -31,23 +31,22 @@ const PostsAllUsers = ({
   const [newPost, setNewPost] = React.useState(false);
 
   return (
-    <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
+    <Box as='main' sx={{ height: '100vw' }}>
       {newPost && <CreatePostModal setMenuOpen={setNewPost} />}
       <Header user={user} signOut={signOut} title={'Posts'} />
       <Box
         sx={{
-          // marginTop: '60px',
           maxWidth: '900px',
-          marginLeft: ['10px', 'auto', 'auto'],
-          marginRight: ['10px', 'auto', 'auto'],
+          marginLeft: ['0px', 'auto', 'auto'],
+          marginRight: ['0px', 'auto', 'auto'],
           padding: '20px',
-          width: '100vw',
         }}
       >
-        <div>
+        <Box sx={{ paddingBottom: '20px' }}>
           <Button onClick={() => setNewPost(true)}>New Post</Button>
-        </div>
-        <Grid columns={[1, 2, 3]}>
+        </Box>
+
+        <Grid columns={[1, 2, 3]} sx={{ gridGap: '20px' }}>
           {posts && posts.map((post) => <PostCard post={post} />)}
         </Grid>
       </Box>

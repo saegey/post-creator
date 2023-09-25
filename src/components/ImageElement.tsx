@@ -7,7 +7,7 @@ import {
 import { Transforms } from 'slate';
 import { CldImage } from 'next-cloudinary';
 
-import { Box, Button, Label, Textarea, Close, Flex } from 'theme-ui';
+import { Box, Button, Label, Textarea, Close, Flex, Text } from 'theme-ui';
 import React from 'react';
 import { PostSaveComponents } from '../actions/PostSave';
 import { PostContext } from '../PostContext';
@@ -93,7 +93,7 @@ const ImageElement = ({ children, element }) => {
             boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}`,
           }}
         />
-        {element.caption && <p>{element.caption}</p>}
+        {element.caption && <Text as='p'>{element.caption}</Text>}
 
         {addCaption && (
           <>

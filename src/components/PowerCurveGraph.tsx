@@ -18,6 +18,7 @@ import {
 // import ExpandableCard from '../common/ExpandableCard'
 // import { formatSeconds, formatTime } from '../../../lib/formatters'
 import { formatTime } from '../utils/time';
+import { useViewport } from './ViewportProvider';
 
 export interface Coordinate {
   x: number;
@@ -54,20 +55,19 @@ PowerCurveGraphProps) => {
   // const mutedAccent = 'gray';
   const context = useThemeUI();
   const { theme } = context;
+  const { width } = useViewport();
+  const hideAxes = width < 400;
 
   return (
-    // <Box
-    //   sx={{
-    //     height: isMaximized ? '90%' : ['200px', '250px', '300px'],
-    //     maxWidth: isMaximized ? '100%' : '690px',
-    //     marginRight: 'auto',
-    //     marginLeft: 'auto',
-    //   }}
-    // >
     <ResponsiveContainer width='100%' height='100%'>
       <LineChart
         data={data}
-        margin={{ top: 25, right: 20, left: 20, bottom: 25 }}
+        margin={{
+          top: hideAxes ? 10 : 25,
+          right: hideAxes ? 20 : 20,
+          left: hideAxes ? -10 : 20,
+          bottom: hideAxes ? 0 : 25,
+        }}
       >
         <Line dataKey='y' dot={false} strokeWidth={2} />
         <YAxis
@@ -82,12 +82,21 @@ PowerCurveGraphProps) => {
           axisLine={{
             stroke: theme?.colors?.text as string,
           }}
-          label={{
-            value: 'Watts',
-            angle: -90,
-            position: 'left',
-            fill: theme?.colors?.text as string,
-          }}
+          padding={{ top: 0, bottom: 0 }}
+          label={
+            hideAxes
+              ? {
+                  angle: -90,
+                  position: 'left',
+                  fill: theme?.colors?.text as string,
+                }
+              : {
+                  value: 'Watts',
+                  angle: -90,
+                  position: 'left',
+                  fill: theme?.colors?.text as string,
+                }
+          }
         />
         <XAxis
           dataKey='x'
@@ -99,12 +108,14 @@ PowerCurveGraphProps) => {
           tickLine={{ stroke: theme?.colors?.text as string }}
           axisLine={{ stroke: theme?.colors?.text as string }}
         >
-          <Label
-            value='Time'
-            offset={0}
-            position='bottom'
-            fill={theme?.colors?.text as string}
-          />
+          {!hideAxes && (
+            <Label
+              value='Time'
+              offset={0}
+              position='bottom'
+              fill={theme?.colors?.text as string}
+            />
+          )}
         </XAxis>
         <Tooltip
           content={({ payload }) => {
@@ -132,38 +143,16 @@ PowerCurveGraphProps) => {
           strokeDasharray='3 3'
         >
           <Label
-            value='FTP'
+            value={`FTP - ${ftp} watts`}
             offset={10}
             position='insideBottomLeft'
             fill={theme?.colors?.text as string}
+            fontSize={'14px'}
           />
         </ReferenceLine>
       </LineChart>
     </ResponsiveContainer>
-    // </Box>/
   );
 };
 
 export { PowerCurveGraph };
-
-// const PowerCurveGraphWrapper = (props: PowerCurveGraphProps) => {
-//   const [isMax, setMax] = useState()
-
-//   return (
-//     <>
-//       {isMax && (
-//         <MaximizedContainer title={props.title} openModal={setMax}>
-//           <PowerCurveGraph isMaximized={true} {...props} />
-//         </MaximizedContainer>
-//       )}
-//       <ExpandableCard
-//         title={props.title}
-//         openModal={setMax}
-//         expandableOnMobile={false}
-//       >
-//         <PowerCurveGraph {...props} />
-//       </ExpandableCard>
-//     </>
-//   )
-// }
-// export default PowerCurveGraphWrapper

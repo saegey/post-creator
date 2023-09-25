@@ -12,9 +12,10 @@ html {
   padding: 0;
   /* height: 100%; */
   width: 100%;
+  max-width: 100%;
   font-family: 'Public Sans', sans-serif;
   /* min-width: 700px; */
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
   overflow-x: hidden;
 }
 

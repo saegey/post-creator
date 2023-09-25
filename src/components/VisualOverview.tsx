@@ -27,6 +27,8 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     c: [null, null],
     d: null,
   });
+
+  // console.log(width, height);
   const units = useUnits();
 
   const downSampledData = React.useMemo(
@@ -63,7 +65,7 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
   );
 
   return (
-    <Box sx={{ marginTop: '60px', borderRadius: '5px' }}>
+    <Box sx={{ marginTop: '60px', borderRadius: [0, '5px', '5px'] }}>
       <Map
         coordinates={coordinates}
         markerCoordinates={marker as any}

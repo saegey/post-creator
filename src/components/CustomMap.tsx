@@ -224,7 +224,7 @@ const Map = ({
       ref={mapContainerRef}
       sx={{
         width: '100%',
-        borderRadius: '5px',
+        borderRadius: [0, '5px', '5px'],
         height: ['300px', '450px', '450px'],
       }}
     />

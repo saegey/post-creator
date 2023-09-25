@@ -41,13 +41,13 @@ const PowerGraph = ({ element }) => {
         maxWidth: '690px',
         backgroundColor: 'activityOverviewBackgroundColor',
         borderRadius: '5px',
-        padding: '20px',
+        padding: ['10px', '20px', '20px'],
         position: 'relative',
         marginY: ['20px', '60px', '60px'],
       }}
       contentEditable={false}
     >
-      <Box sx={{ width: '100%', height: '450px' }}>
+      <Box sx={{ width: '100%', height: ['250px', '450px', '450px'] }}>
         <PowerCurveGraph
           ftp={currentFtp ? Number(currentFtp) : 0}
           data={graphData as any}

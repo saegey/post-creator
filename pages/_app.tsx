@@ -21,12 +21,11 @@ export default class App extends NextApp {
     return (
       <ErrorBoundary fallback={<h1>oh no</h1>}>
         <UnitProvider>
-          {/* <ViewportProvider> */}
-          <ThemeUIProvider theme={theme}>
-            <Component {...pageProps} />
-          </ThemeUIProvider>
-
-          {/* </ViewportProvider> */}
+          <ViewportProvider>
+            <ThemeUIProvider theme={theme}>
+              <Component {...pageProps} />
+            </ThemeUIProvider>
+          </ViewportProvider>
         </UnitProvider>
       </ErrorBoundary>
     );

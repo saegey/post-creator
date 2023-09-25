@@ -20,8 +20,8 @@ const PostsAll = ({
       sx={{
         // marginTop: '60px',
         maxWidth: '900px',
-        marginLeft: ['10px', 'auto', 'auto'],
-        marginRight: ['10px', 'auto', 'auto'],
+        marginLeft: ['0px', 'auto', 'auto'],
+        marginRight: ['0px', 'auto', 'auto'],
         padding: '20px',
         width: '100vw',
       }}

@@ -27,6 +27,7 @@ const PostHeader = ({
         // marginTop: '10px',
         flexDirection: ['column', 'row', 'row'],
         justifyContent: 'space-between',
+        width: '100%',
       }}
     >
       <Box
