@@ -1,23 +1,12 @@
 import { withSSRContext } from 'aws-amplify';
 import React from 'react';
 import Head from 'next/head';
-import {
-  slateToReactConfig,
-  type SlateToReactConfig,
-} from '@slate-serializers/react';
-import { CldImage } from 'next-cloudinary';
-import PowerBreakdown from '../../src/components/TimePowerZones';
 
-import dynamic from 'next/dynamic';
 import { getPostInitial } from '../../src/graphql/customQueries';
 import { getActivity } from '../../src/actions/PostGet';
 import AuthCustom from '../../src/components/AuthCustom';
 import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
-
-const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
-  ssr: false,
-}); // Async API cannot be server-side rendered
 
 type ServerSideProps = {
   req: object;

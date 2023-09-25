@@ -16,12 +16,12 @@ const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
 
   return (
     <>
-      <BlackBox opacity={'0.7'} onClick={() => setIsOpen(false)}>
+      <BlackBox opacity={'0.7'} onClick={() => setIsOpen(false)} zIndex={50}>
         <Box
           sx={{
             maxWidth: '690px',
             maxHeight: '800px',
-            height: ['100vh', 'auto', 'auto'],
+            height: ['auto', 'auto', 'auto'],
             width: ['100vw', null, null],
             margin: 'auto',
             background: 'background',

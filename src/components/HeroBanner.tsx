@@ -57,7 +57,14 @@ const HeroBanner = ({ element }) => {
           />
         )}
         {heroImage ? (
-          <Flex sx={{ position: 'relative', backgroundColor: 'muted' }}>
+          <Flex
+            sx={{
+              position: 'relative',
+              backgroundColor: 'muted',
+              width: '100%',
+              marginBottom: ['30px', '60px', '60px'],
+            }}
+          >
             <PostHeader
               headerImage={
                 <ThemeImage

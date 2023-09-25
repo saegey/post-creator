@@ -102,7 +102,7 @@ const SlatePublish = ({ post, activity }) => {
         },
         heroBanner: ({ node, children = [] }) => {
           return (
-            <Box sx={{ marginBottom: ['30px', '60px', '120px'] }}>
+            <Box sx={{ marginBottom: ['0px', '60px', '120px'] }}>
               <PostHeader
                 headerImage={
                   <Box sx={{ width: '100%', height: '100%' }}>
@@ -185,7 +185,7 @@ const SlatePublish = ({ post, activity }) => {
             <Box
               as='ul'
               sx={{
-                paddingY: '40px',
+                paddingY: ['0px', '40px', '40px'],
                 paddingLeft: ['40px', '20px', '20px'],
                 paddingRight: ['20px', '20px', '20px'],
                 marginX: 'auto',
@@ -286,7 +286,11 @@ const SlatePublish = ({ post, activity }) => {
                 }
                 return (
                   <Flex
-                    sx={{ maxWidth: '690px', width: '690px', marginX: 'auto' }}
+                    sx={{
+                      maxWidth: '690px',
+                      width: '690px',
+                      marginX: 'auto',
+                    }}
                     key={`heading-two-${i}`}
                   >
                     <Text
@@ -296,6 +300,7 @@ const SlatePublish = ({ post, activity }) => {
                         // fontSize: '20px',
                         width: ['100vw', null, null],
                         maxWidth: '690px',
+                        paddingX: ['20px', '0px', '0px'],
                       }}
                     >
                       {c.text}
@@ -331,7 +336,9 @@ const SlatePublish = ({ post, activity }) => {
                     borderRadius: ['0px', '5px', '5px'],
                   }}
                 />
-                <p>{node.caption}</p>
+                <Text as='p' sx={{ paddingX: ['10px', null, null] }}>
+                  {node.caption}
+                </Text>
               </Box>
             </Flex>
           );

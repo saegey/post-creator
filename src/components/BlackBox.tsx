@@ -1,6 +1,11 @@
 import { Box } from 'theme-ui';
 
-const BlackBox = ({ children, opacity = '0.2', onClick = () => {} }) => (
+const BlackBox = ({
+  children,
+  opacity = '0.2',
+  onClick = () => {},
+  zIndex = 30,
+}) => (
   <Box
     sx={{
       position: 'fixed',
@@ -10,7 +15,7 @@ const BlackBox = ({ children, opacity = '0.2', onClick = () => {} }) => (
       left: '0',
       backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`,
       // background-color: rgba(var(--color), 0.8);
-      zIndex: 30,
+      zIndex: zIndex,
       display: 'flex',
     }}
     onClick={onClick}

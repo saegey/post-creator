@@ -13,6 +13,7 @@ import HeroBannerIcon from './HeroBannerIcon';
 import EmbedIcon from './EmbedIcon';
 import StandardModal from './StandardModal';
 import EmbedSettings from './EmbedSettings';
+import { useViewport } from './ViewportProvider';
 
 const GraphSelectorMenu = ({ editor }) => {
   const { setIsGraphMenuOpen, setIsGpxUploadOpen } =
@@ -20,20 +21,28 @@ const GraphSelectorMenu = ({ editor }) => {
   const { gpxFile, stravaUrl, currentFtp, components } =
     React.useContext(PostContext);
   const [isEmbedModalOpen, setIsEmbedModalOpen] = React.useState(false);
+  const { width } = useViewport();
 
   const hero = components?.filter((c) => c.type === 'heroBanner');
   const heroBannerNotAdded = hero && hero.length > 0 ? false : true;
+  const shouldCloseMenu = width < 400;
+
+  const closeMenu = () => {
+    if (shouldCloseMenu) {
+      setIsGraphMenuOpen(false);
+    }
+  };
 
   const addMatchesBurned = () => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
         { type: 'matchesBurned', children: [{ text: '' }] } as Descendant,
       ]);
+      closeMenu();
     }
   };
 
   const addEmbed = () => {
-    console.log('addEmbed');
     setIsEmbedModalOpen(true);
   };
 
@@ -42,6 +51,7 @@ const GraphSelectorMenu = ({ editor }) => {
       { type: 'heroBanner', children: [{ text: '' }] } as Descendant,
       { type: 'text', children: [{ text: '' }] } as Descendant,
     ]);
+    closeMenu();
   };
 
   const addStravaLink = () => {
@@ -50,6 +60,7 @@ const GraphSelectorMenu = ({ editor }) => {
         { type: 'stravaLink', children: [{ text: '' }] } as Descendant,
         { type: 'text', children: [{ text: '' }] } as Descendant,
       ]);
+      closeMenu();
     }
   };
 
@@ -59,6 +70,7 @@ const GraphSelectorMenu = ({ editor }) => {
       Transforms.insertNodes(editor, [
         { type: 'timeInZones', children: [{ text: '' }] } as Descendant,
       ]);
+      closeMenu();
     }
   };
 
@@ -67,6 +79,7 @@ const GraphSelectorMenu = ({ editor }) => {
       Transforms.insertNodes(editor, [
         { type: 'visualOverview', children: [{ text: '' }] } as Descendant,
       ]);
+      closeMenu();
     }
   };
 
@@ -80,6 +93,7 @@ const GraphSelectorMenu = ({ editor }) => {
         } as Descendant,
         { type: 'text', children: [{ text: '' }] } as Descendant,
       ]);
+      closeMenu();
     }
   };
 
@@ -93,8 +107,8 @@ const GraphSelectorMenu = ({ editor }) => {
         } as Descendant,
         { type: 'text', children: [{ text: '' }] } as Descendant,
       ]);
+      closeMenu();
     }
-    // setIsGraphMenuOpen(false);
   };
 
   const color = gpxFile
