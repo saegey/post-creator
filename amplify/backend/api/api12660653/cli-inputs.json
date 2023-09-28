@@ -25,6 +25,26 @@
           "delete"
         ]
       }
+    },
+    "/raceresult": {
+      "name": "/raceresult",
+      "lambdaFunction": "raceresult",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    },
+    "/raceresult/results": {
+      "name": "/raceresult/results",
+      "lambdaFunction": "raceresultgetResults",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
     }
   }
 }

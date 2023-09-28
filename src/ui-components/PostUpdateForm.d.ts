@@ -50,6 +50,8 @@ export declare type PostUpdateFormInputValues = {
     heroImage?: string;
     subhead?: string;
     shortUrl?: string;
+    raceResults?: string;
+    raceResultsProvider?: string;
 };
 export declare type PostUpdateFormValidationValues = {
     type?: ValidationFunction<string>;
@@ -88,6 +90,8 @@ export declare type PostUpdateFormValidationValues = {
     heroImage?: ValidationFunction<string>;
     subhead?: ValidationFunction<string>;
     shortUrl?: ValidationFunction<string>;
+    raceResults?: ValidationFunction<string>;
+    raceResultsProvider?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PostUpdateFormOverridesProps = {
@@ -128,6 +132,8 @@ export declare type PostUpdateFormOverridesProps = {
     heroImage?: PrimitiveOverrideProps<TextAreaFieldProps>;
     subhead?: PrimitiveOverrideProps<TextFieldProps>;
     shortUrl?: PrimitiveOverrideProps<TextFieldProps>;
+    raceResults?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    raceResultsProvider?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type PostUpdateFormProps = React.PropsWithChildren<{
     overrides?: PostUpdateFormOverridesProps | undefined | null;

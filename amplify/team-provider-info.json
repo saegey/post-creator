@@ -37,6 +37,14 @@
         "shorturl": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/shorturl-74723544555a372b5151-build.zip"
+        },
+        "raceresult": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/raceresult-722b4b435a3262437766-build.zip"
+        },
+        "raceresultgetResults": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/raceresultgetResults-43357a2b684c2f2f5339-build.zip"
         }
       },
       "api": {

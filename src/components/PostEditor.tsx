@@ -21,6 +21,7 @@ import * as subscriptions from '../../src/graphql/subscriptions';
 import UploadGpxModal from './UploadGpxModal';
 import { OnUpdatePostSubscription } from '../API';
 import ShareModal from './ShareModal';
+import RaceResultsPreview from './RaceResultsPreview';
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
@@ -38,7 +39,8 @@ const PostEditor = ({ postId, initialState }) => {
   const { setIsFtpUpdating, isPhotoCaptionOpen, isShareModalOpen } =
     React.useContext(EditorContext);
 
-  const { isGraphMenuOpen, isGpxUploadOpen } = React.useContext(EditorContext);
+  const { isGraphMenuOpen, isGpxUploadOpen, isRaceResultsModalOpen } =
+    React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -123,6 +125,7 @@ const PostEditor = ({ postId, initialState }) => {
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isGpxUploadOpen && <UploadGpxModal />}
             {isShareModalOpen && <ShareModal postId={postId} />}
+            {isRaceResultsModalOpen && <RaceResultsPreview />}
             <Box
               sx={{
                 marginTop: '20px',

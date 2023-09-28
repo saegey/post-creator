@@ -5,6 +5,8 @@ export default {
     dropdownMenuHoverBackground: '#dcdcdc',
     activityOverviewBackgroundColor: '#f0f0f0',
     text: '#202020',
+    selectedBackground: '#555555',
+    selectedBackgroundText: 'white',
     editorBackground: '#f5f5f5',
     iconButtonBackground: '#fafafa',
     tooltipBackground: '#c2c2c2',

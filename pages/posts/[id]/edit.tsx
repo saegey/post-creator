@@ -128,6 +128,7 @@ const Post = ({
   const [date, setDate] = React.useState(postDate);
   const [author, setAuthor] = React.useState(postAuthor);
   const [shortUrl, setShortUrl] = React.useState(postShortUrl);
+  const [raceResults, setRaceResults] = React.useState();
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -219,6 +220,8 @@ const Post = ({
           setDate,
           shortUrl,
           setShortUrl,
+          raceResults,
+          setRaceResults,
         }}
       >
         <div>

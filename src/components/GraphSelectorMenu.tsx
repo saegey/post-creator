@@ -14,6 +14,8 @@ import EmbedIcon from './EmbedIcon';
 import StandardModal from './StandardModal';
 import EmbedSettings from './EmbedSettings';
 import { useViewport } from './ViewportProvider';
+import ResultsIcon from './ResultsIcon';
+import RaceResultsImport from './RaceResultsImport';
 
 const GraphSelectorMenu = ({ editor }) => {
   const { setIsGraphMenuOpen, setIsGpxUploadOpen } =
@@ -21,6 +23,8 @@ const GraphSelectorMenu = ({ editor }) => {
   const { gpxFile, stravaUrl, currentFtp, components } =
     React.useContext(PostContext);
   const [isEmbedModalOpen, setIsEmbedModalOpen] = React.useState(false);
+  const [isRaceResultModalOpen, setIsRaceResultModalOpen] =
+    React.useState(false);
   const { width } = useViewport();
 
   const hero = components?.filter((c) => c.type === 'heroBanner');
@@ -44,6 +48,10 @@ const GraphSelectorMenu = ({ editor }) => {
 
   const addEmbed = () => {
     setIsEmbedModalOpen(true);
+  };
+
+  const addRaceResults = () => {
+    setIsRaceResultModalOpen(true);
   };
 
   const addHeroBanner = () => {
@@ -117,6 +125,15 @@ const GraphSelectorMenu = ({ editor }) => {
 
   return (
     <>
+      {isRaceResultModalOpen && (
+        <StandardModal
+          title={'Race Results'}
+          setIsOpen={setIsRaceResultModalOpen}
+          isOpen={isRaceResultModalOpen}
+        >
+          <RaceResultsImport setIsOpen={setIsRaceResultModalOpen} />
+        </StandardModal>
+      )}
       {isEmbedModalOpen && (
         <StandardModal
           title={'Embed'}
@@ -382,6 +399,33 @@ const GraphSelectorMenu = ({ editor }) => {
                   }}
                 >
                   Embed RWGPS Route
+                </Text>
+              </Flex>
+            </Box>
+            <Box
+              onClick={() => addRaceResults()}
+              variant='boxes.sidebarMenuItem'
+              sx={{
+                cursor: 'pointer',
+              }}
+            >
+              <Flex>
+                <Box
+                  sx={{
+                    width: '25px',
+                    height: '25px',
+                    marginRight: '10px',
+                  }}
+                >
+                  <ResultsIcon />
+                </Box>
+                <Text
+                  as='span'
+                  sx={{
+                    color: 'text',
+                  }}
+                >
+                  Race Results
                 </Text>
               </Flex>
             </Box>

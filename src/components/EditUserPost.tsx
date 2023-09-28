@@ -29,20 +29,16 @@ const EditUserPost = ({
   const [isPhotoCaptionOpen, setIsPhotoCaptionOpen] = React.useState(false);
   const [isHeroImageModalOpen, setIsHeroImageModalOpen] = React.useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
+  const [isRaceResultsModalOpen, setIsRaceResultsModalOpen] =
+    React.useState(false);
 
   const { push } = useRouter();
 
   React.useEffect(() => {
-    // console.log(user.attributes.sub !== author.id);
     if (user.attributes.sub !== author.id) {
       push(`/posts/${postId}`);
     }
   }, []);
-
-  // if (user.attributes.sub !== author.id) {
-  //   console.log(user.attributes.sub !== author.id);
-  //   redirect('/login');
-  // }
 
   return (
     <Box
@@ -70,6 +66,8 @@ const EditUserPost = ({
             setIsHeroImageModalOpen,
             isShareModalOpen,
             setIsShareModalOpen,
+            isRaceResultsModalOpen,
+            setIsRaceResultsModalOpen,
           }}
         >
           <PostEditor postId={postId} initialState={postComponents} />
