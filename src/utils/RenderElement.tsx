@@ -88,7 +88,7 @@ const renderElement = ({ attributes, children, element }) => {
     case 'list-item':
       return <li {...attributes}>{children}</li>;
     case 'raceResultsDotCom':
-      return <RaceResultsDotComListWrapper element={element} />;
+      return <RaceResultsDotComListWrapper />;
     default:
       return (
         <Text
