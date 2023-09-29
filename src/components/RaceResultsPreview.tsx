@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Box, Flex, Button } from 'theme-ui';
+import { Text, Box, Flex, Button, Spinner } from 'theme-ui';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 import { Transforms, Descendant } from 'slate';
@@ -11,7 +11,9 @@ import { updatePost } from '../../src/graphql/mutations';
 
 const RaceResultsPreview = ({ editor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
-  const { raceResults, id } = React.useContext(PostContext);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const { raceResults, id, setRaceResults } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
 
   const saveResults = async () => {
@@ -72,8 +74,20 @@ const RaceResultsPreview = ({ editor }) => {
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
+                    setRaceResults({
+                      ...raceResults,
+                      selected: undefined,
+                    });
                   } else {
                     setSelectedRow(i);
+                    setRaceResults({
+                      ...raceResults,
+                      selected:
+                        raceResults && raceResults.results
+                          ? raceResults.results[i]
+                          : undefined,
+                    });
+                    // console.log(raceResults.results[i]);
                   }
                 }}
               >
@@ -110,6 +124,7 @@ const RaceResultsPreview = ({ editor }) => {
             disabled={selectedRow ? false : true}
             onClick={() => {
               console.log('clicked');
+              setIsLoading(true);
               saveResults().then((r) => {
                 Transforms.insertNodes(editor, [
                   {
@@ -118,11 +133,15 @@ const RaceResultsPreview = ({ editor }) => {
                   } as Descendant,
                   { type: 'text', children: [{ text: '' }] } as Descendant,
                 ]);
+                setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
               });
             }}
           >
-            Save
+            <Flex sx={{ gap: '10px' }}>
+              <Text as='span'>Save</Text>
+              {isLoading && <Spinner sx={{ size: '20px', color: 'white' }} />}
+            </Flex>
           </Button>
         </Flex>
       </Box>

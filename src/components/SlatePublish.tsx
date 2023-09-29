@@ -14,6 +14,7 @@ import ActivityOverview from '../../src/components/ActivityOverview';
 import { PowerCurveGraph } from '../../src/components/PowerCurveGraph';
 import PostHeader from '../../src/components/PostHeader';
 import EmbedElemnt from '../../src/components/EmbedElement';
+import RaceResultsDotComList from './RaceResultsDotComList';
 
 const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
   ssr: false,
@@ -309,6 +310,28 @@ const SlatePublish = ({ post, activity }) => {
                 );
               })}
             </>
+          );
+        },
+        raceResultsDotCom: ({ node, children = [] }) => {
+          return (
+            <Box
+              sx={{
+                marginY: ['20px', '60px', '60px'],
+                maxWidth: '690px',
+                marginX: 'auto',
+                backgroundColor: [
+                  null,
+                  'activityOverviewBackgroundColor',
+                  'activityOverviewBackgroundColor',
+                ],
+                borderRadius: '5px',
+                padding: ['20px', '30px', '30px'],
+              }}
+            >
+              <RaceResultsDotComList
+                raceResults={JSON.parse(post.raceResults)}
+              />
+            </Box>
           );
         },
         image: ({ node, children = [] }) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CloudinaryImage } from './components/AddImage';
+import { CloudinaryImage } from './AddImage';
 
 export type RaceResultRow = {
   selected:
