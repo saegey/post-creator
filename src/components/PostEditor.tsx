@@ -8,7 +8,7 @@ import { withHistory } from 'slate-history';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
 import PostMenu from './PostMenu';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import SkeletonPost from './SkeletonPost';
 import { getActivity } from '../../src/actions/PostGet';
@@ -21,6 +21,7 @@ import * as subscriptions from '../../src/graphql/subscriptions';
 import UploadGpxModal from './UploadGpxModal';
 import { OnUpdatePostSubscription } from '../API';
 import ShareModal from './ShareModal';
+import RaceResultsImport from './RaceResultsImport';
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
@@ -35,10 +36,15 @@ const PostEditor = ({ postId, initialState }) => {
     setPowerZones,
     setPowerZoneBuckets,
   } = React.useContext(PostContext);
-  const { setIsFtpUpdating, isPhotoCaptionOpen, isShareModalOpen } =
-    React.useContext(EditorContext);
 
-  const { isGraphMenuOpen, isGpxUploadOpen } = React.useContext(EditorContext);
+  const {
+    isGraphMenuOpen,
+    isGpxUploadOpen,
+    isRaceResultsModalOpen,
+    setIsFtpUpdating,
+    // isPhotoCaptionOpen,
+    isShareModalOpen,
+  } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -123,10 +129,10 @@ const PostEditor = ({ postId, initialState }) => {
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isGpxUploadOpen && <UploadGpxModal />}
             {isShareModalOpen && <ShareModal postId={postId} />}
+            {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
             <Box
               sx={{
                 marginTop: '20px',
-                // maxWidth: '900px',
                 minWidth: [null, null, '900px'],
                 marginLeft: isGraphMenuOpen
                   ? ['20px', '20px', 'auto']
@@ -141,13 +147,7 @@ const PostEditor = ({ postId, initialState }) => {
                 padding: '10px',
               }}
             >
-              <Slate
-                editor={editor}
-                initialValue={initialState}
-                // onChange={(val) => {
-                //   console.log(val);
-                // }}
-              >
+              <Slate editor={editor} initialValue={initialState}>
                 <Editable
                   spellCheck
                   autoFocus

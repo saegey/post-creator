@@ -1,11 +1,11 @@
 import { EditorContext } from './EditorContext';
 import StandardModal from './StandardModal';
 import React from 'react';
-// import Link from 'next/link';
-import { Button, Box, Grid, Link as ThemeLink, Flex, Text } from 'theme-ui';
-import { API, Amplify, Auth } from 'aws-amplify';
+import { Box, Link as ThemeLink, Flex, Text } from 'theme-ui';
+import { API } from 'aws-amplify';
 import { useRouter } from 'next/router';
-import { PostContext } from '../PostContext';
+
+import { PostContext } from './PostContext';
 import { updatePost } from '../../src/graphql/mutations';
 
 const ShareModal = ({ postId }) => {

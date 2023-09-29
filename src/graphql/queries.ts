@@ -84,6 +84,8 @@ export const getBlog = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -201,6 +203,8 @@ export const getPost = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -237,6 +241,8 @@ export const getPost = /* GraphQL */ `
       heroImage
       subhead
       shortUrl
+      raceResults
+      raceResultsProvider
       updatedAt
       blogPostsId
       postRelatedId
@@ -314,6 +320,8 @@ export const listPosts = /* GraphQL */ `
         heroImage
         subhead
         shortUrl
+        raceResults
+        raceResultsProvider
         updatedAt
         blogPostsId
         postRelatedId
@@ -404,6 +412,8 @@ export const listPostsByCreatedAt = /* GraphQL */ `
         heroImage
         subhead
         shortUrl
+        raceResults
+        raceResultsProvider
         updatedAt
         blogPostsId
         postRelatedId

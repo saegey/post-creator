@@ -17,6 +17,22 @@
           ],
           "category": "function",
           "resourceName": "shorturl"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "raceresult"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "raceresultgetResults"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -178,6 +194,16 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "raceresult": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "raceresultgetResults": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "shorturl": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -246,6 +272,38 @@
         {
           "category": "function",
           "resourceName": "postUpdateCalc"
+        }
+      ]
+    },
+    "AMPLIFY_function_raceresult_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "raceresult"
+        }
+      ]
+    },
+    "AMPLIFY_function_raceresult_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "raceresult"
+        }
+      ]
+    },
+    "AMPLIFY_function_raceresultgetResults_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "raceresultgetResults"
+        }
+      ]
+    },
+    "AMPLIFY_function_raceresultgetResults_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "raceresultgetResults"
         }
       ]
     },

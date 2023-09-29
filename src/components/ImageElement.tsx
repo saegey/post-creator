@@ -10,7 +10,7 @@ import { CldImage } from 'next-cloudinary';
 import { Box, Button, Label, Textarea, Close, Flex, Text } from 'theme-ui';
 import React from 'react';
 import { PostSaveComponents } from '../actions/PostSave';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import Dropdown from './Dropdown';
 import OptionsButton from './OptionsButton';
 import { useClickOutside } from '../utils/ux';

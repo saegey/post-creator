@@ -6,7 +6,7 @@ import PowerGraphIcon from './PowerGraphIcon';
 import { EditorContext } from './EditorContext';
 import ActivityOverviewIcon from './ActivityOverviewIcon';
 import TimePowerZonesIcon from './TimePowerZonesIcon';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import MatchesBurnedIcon from './MatchesBurnedIcon';
 import StravaIcon from './StravaIcon';
 import HeroBannerIcon from './HeroBannerIcon';
@@ -14,9 +14,10 @@ import EmbedIcon from './EmbedIcon';
 import StandardModal from './StandardModal';
 import EmbedSettings from './EmbedSettings';
 import { useViewport } from './ViewportProvider';
+import ResultsIcon from './ResultsIcon';
 
 const GraphSelectorMenu = ({ editor }) => {
-  const { setIsGraphMenuOpen, setIsGpxUploadOpen } =
+  const { setIsGraphMenuOpen, setIsGpxUploadOpen, setIsRaceResultsModalOpen } =
     React.useContext(EditorContext);
   const { gpxFile, stravaUrl, currentFtp, components } =
     React.useContext(PostContext);
@@ -44,6 +45,10 @@ const GraphSelectorMenu = ({ editor }) => {
 
   const addEmbed = () => {
     setIsEmbedModalOpen(true);
+  };
+
+  const addRaceResults = () => {
+    setIsRaceResultsModalOpen(true);
   };
 
   const addHeroBanner = () => {
@@ -139,7 +144,7 @@ const GraphSelectorMenu = ({ editor }) => {
           marginTop: [0, 0, 0],
           width: ['100%', '300px', '300px'],
           height: ['100vh', 'calc(100vh - 55px)', 'calc(100vh - 55px)'],
-          zIndex: 30,
+          zIndex: 20,
         }}
       >
         <Box>
@@ -382,6 +387,33 @@ const GraphSelectorMenu = ({ editor }) => {
                   }}
                 >
                   Embed RWGPS Route
+                </Text>
+              </Flex>
+            </Box>
+            <Box
+              onClick={() => addRaceResults()}
+              variant='boxes.sidebarMenuItem'
+              sx={{
+                cursor: 'pointer',
+              }}
+            >
+              <Flex>
+                <Box
+                  sx={{
+                    width: '25px',
+                    height: '25px',
+                    marginRight: '10px',
+                  }}
+                >
+                  <ResultsIcon />
+                </Box>
+                <Text
+                  as='span'
+                  sx={{
+                    color: 'text',
+                  }}
+                >
+                  Race Results
                 </Text>
               </Flex>
             </Box>

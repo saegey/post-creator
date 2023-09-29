@@ -1,6 +1,32 @@
 import React from 'react';
-// import React, { createContext, SetStateAction, useState, Dispatch } from 'react';
-import { CloudinaryImage } from './components/AddImage';
+import { CloudinaryImage } from './AddImage';
+
+export type RaceResultRow = {
+  selected:
+    | {
+        CatPlace: string;
+        Name: string;
+        Age: string;
+        Time: string;
+        Speed: string;
+        GenderPlace: string;
+        OverallPlace: string;
+        Bib: string;
+      }
+    | undefined;
+  results:
+    | Array<{
+        CatPlace: string;
+        Name: string;
+        Age: string;
+        Time: string;
+        Speed: string;
+        GenderPlace: string;
+        OverallPlace: string;
+        Bib: string;
+      }>
+    | undefined;
+};
 
 export type PostContextType = {
   id: string;
@@ -40,6 +66,7 @@ export type PostContextType = {
   timeInRed: number | null;
   date: string | null;
   shortUrl: string | null;
+  raceResults: RaceResultRow | undefined;
   setActivity: React.Dispatch<React.SetStateAction<object>>;
   setTitle: React.Dispatch<React.SetStateAction<string | null>>;
   setSubhead: React.Dispatch<React.SetStateAction<string | null>>;
@@ -81,6 +108,9 @@ export type PostContextType = {
   setDate: React.Dispatch<React.SetStateAction<string>>;
   setPowerZoneBuckets: React.Dispatch<React.SetStateAction<Array<number>>>;
   setShortUrl: React.Dispatch<React.SetStateAction<string>>;
+  setRaceResults: React.Dispatch<
+    React.SetStateAction<RaceResultRow | undefined>
+  >;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -110,6 +140,7 @@ const PostContext = React.createContext<PostContextType>({
   powerZoneBuckets: [],
   heroImage: undefined,
   shortUrl: null,
+  raceResults: { results: undefined, selected: undefined },
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},
@@ -136,6 +167,7 @@ const PostContext = React.createContext<PostContextType>({
   setHeroImage: () => {},
   setDate: () => {},
   setShortUrl: () => {},
+  setRaceResults: () => {},
 });
 
 export { PostContext };

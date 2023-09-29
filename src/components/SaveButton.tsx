@@ -1,7 +1,7 @@
 import { Spinner, Box } from 'theme-ui';
 import React from 'react';
 
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import { PostSaveComponents } from '../actions/PostSave';
 import TooltipButton from './TooltipButton';
 

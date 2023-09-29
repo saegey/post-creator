@@ -103,6 +103,8 @@ export const onCreateBlog = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -167,6 +169,8 @@ export const onUpdateBlog = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -231,6 +235,8 @@ export const onDeleteBlog = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -327,6 +333,8 @@ export const onCreatePost = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -363,6 +371,8 @@ export const onCreatePost = /* GraphQL */ `
       heroImage
       subhead
       shortUrl
+      raceResults
+      raceResultsProvider
       updatedAt
       blogPostsId
       postRelatedId
@@ -451,6 +461,8 @@ export const onUpdatePost = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -487,6 +499,8 @@ export const onUpdatePost = /* GraphQL */ `
       heroImage
       subhead
       shortUrl
+      raceResults
+      raceResultsProvider
       updatedAt
       blogPostsId
       postRelatedId
@@ -575,6 +589,8 @@ export const onDeletePost = /* GraphQL */ `
           heroImage
           subhead
           shortUrl
+          raceResults
+          raceResultsProvider
           updatedAt
           blogPostsId
           postRelatedId
@@ -611,6 +627,8 @@ export const onDeletePost = /* GraphQL */ `
       heroImage
       subhead
       shortUrl
+      raceResults
+      raceResultsProvider
       updatedAt
       blogPostsId
       postRelatedId

@@ -4,7 +4,7 @@ import React from 'react';
 import { Amplify } from 'aws-amplify';
 
 import awsconfig from '../../../src/aws-exports';
-import { PostContext } from '../../../src/PostContext';
+import { PostContext } from '../../../src/components/PostContext';
 import { getPostInitial } from '../../../src/graphql/customQueries';
 import AuthCustom from '../../../src/components/AuthCustom';
 import EditUserPost from '../../../src/components/EditUserPost';
@@ -58,6 +58,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postDate: post.date,
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
+      postRaceResults: JSON.parse(post.raceResults),
     },
   };
 };
@@ -89,6 +90,7 @@ const Post = ({
   postDate,
   postAuthor,
   postShortUrl,
+  postRaceResults,
 }) => {
   // const router = useRouter();
   const [title, setTitle] = React.useState(postTitle);
@@ -128,6 +130,7 @@ const Post = ({
   const [date, setDate] = React.useState(postDate);
   const [author, setAuthor] = React.useState(postAuthor);
   const [shortUrl, setShortUrl] = React.useState(postShortUrl);
+  const [raceResults, setRaceResults] = React.useState(postRaceResults);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -156,6 +159,7 @@ const Post = ({
       setDate(postDate);
       setAuthor(postAuthor);
       setShortUrl(postShortUrl);
+      setRaceResults(postRaceResults);
     }
   }, [postComponents]);
 
@@ -219,6 +223,8 @@ const Post = ({
           setDate,
           shortUrl,
           setShortUrl,
+          raceResults,
+          setRaceResults,
         }}
       >
         <div>

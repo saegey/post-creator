@@ -13,7 +13,7 @@ import ImagesButton from './ImagesButton';
 import SaveButton from './SaveButton';
 import BoldButton from './BoldButton';
 import PreviewButton from './PreviewButton';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import BulletListIcon from './BulletListIcon';
 import ShareButton from './ShareButton';

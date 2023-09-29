@@ -4,7 +4,7 @@ import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 
 import ActivityOverview from './ActivityOverview';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';

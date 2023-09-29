@@ -3,7 +3,7 @@ import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import { UpdatePostMutation } from '../../src/API';
 import StandardModal from './StandardModal';
