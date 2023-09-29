@@ -4,7 +4,7 @@ import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 import { Transforms, Descendant } from 'slate';
 
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import { UpdatePostMutation } from '../API';
 import { updatePost } from '../../src/graphql/mutations';

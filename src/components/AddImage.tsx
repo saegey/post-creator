@@ -4,7 +4,7 @@ import { CldImage, CldUploadButton } from 'next-cloudinary';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import StandardModal from './StandardModal';
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';

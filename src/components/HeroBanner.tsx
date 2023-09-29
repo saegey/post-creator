@@ -4,7 +4,7 @@ import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
 import { CldImage } from 'next-cloudinary';
 
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import AddImage from './AddImage';
 import PostHeader from './PostHeader';
 import OptionsButton from './OptionsButton';

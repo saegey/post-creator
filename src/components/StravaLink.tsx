@@ -1,13 +1,8 @@
-import {
-  useSlateStatic,
-  ReactEditor,
-  useSelected,
-  useFocused,
-} from 'slate-react';
-import { Transforms } from 'slate';
+import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Box, Close, Flex, Text, Link } from 'theme-ui';
 import React from 'react';
-import { PostContext } from '../PostContext';
+
+import { PostContext } from './PostContext';
 
 const StravaLink = ({ element }) => {
   const [isHover, setIsHover] = React.useState(false);

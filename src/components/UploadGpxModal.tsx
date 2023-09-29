@@ -6,7 +6,7 @@ import { Storage, API, PubSub } from 'aws-amplify';
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
 import BlackBox from './BlackBox';
-import { PostContext, PostContextType } from '../PostContext';
+import { PostContext, PostContextType } from './PostContext';
 import { getActivity, getPostQuery } from '../actions/PostGet';
 import {
   attachIoTPolicyToUser,

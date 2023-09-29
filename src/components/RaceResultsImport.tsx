@@ -2,7 +2,7 @@ import { Flex, Box, Label, Input, Button, Text, Select } from 'theme-ui';
 
 import { API } from 'aws-amplify';
 import React from 'react';
-import { PostContext, RaceResultRow } from '../PostContext';
+import { PostContext, RaceResultRow } from './PostContext';
 import { EditorContext } from './EditorContext';
 import RaceResultsPreview from './RaceResultsPreview';
 import StandardModal from './StandardModal';

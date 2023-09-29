@@ -8,7 +8,7 @@ import { withHistory } from 'slate-history';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
 import PostMenu from './PostMenu';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import SkeletonPost from './SkeletonPost';
 import { getActivity } from '../../src/actions/PostGet';

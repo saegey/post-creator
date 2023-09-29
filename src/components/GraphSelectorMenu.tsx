@@ -6,7 +6,7 @@ import PowerGraphIcon from './PowerGraphIcon';
 import { EditorContext } from './EditorContext';
 import ActivityOverviewIcon from './ActivityOverviewIcon';
 import TimePowerZonesIcon from './TimePowerZonesIcon';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import MatchesBurnedIcon from './MatchesBurnedIcon';
 import StravaIcon from './StravaIcon';
 import HeroBannerIcon from './HeroBannerIcon';

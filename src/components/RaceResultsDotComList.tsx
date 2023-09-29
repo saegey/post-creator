@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Text } from 'theme-ui';
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 
 const RaceResultsDotComList = () => {
   const { raceResults } = React.useContext(PostContext);

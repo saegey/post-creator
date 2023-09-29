@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { Box, Close, Spinner, Flex } from 'theme-ui';
 import { Transforms } from 'slate';
 
-import { PostContext } from '../PostContext';
+import { PostContext } from './PostContext';
 import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';
 import { useClickOutside } from '../utils/ux';

@@ -4,7 +4,7 @@ import React from 'react';
 import { Amplify } from 'aws-amplify';
 
 import awsconfig from '../../../src/aws-exports';
-import { PostContext } from '../../../src/PostContext';
+import { PostContext } from '../../../src/components/PostContext';
 import { getPostInitial } from '../../../src/graphql/customQueries';
 import AuthCustom from '../../../src/components/AuthCustom';
 import EditUserPost from '../../../src/components/EditUserPost';
