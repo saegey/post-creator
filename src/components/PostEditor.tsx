@@ -21,7 +21,7 @@ import * as subscriptions from '../../src/graphql/subscriptions';
 import UploadGpxModal from './UploadGpxModal';
 import { OnUpdatePostSubscription } from '../API';
 import ShareModal from './ShareModal';
-import RaceResultsPreview from './RaceResultsPreview';
+import RaceResultsImport from './RaceResultsImport';
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
@@ -36,11 +36,15 @@ const PostEditor = ({ postId, initialState }) => {
     setPowerZones,
     setPowerZoneBuckets,
   } = React.useContext(PostContext);
-  const { setIsFtpUpdating, isPhotoCaptionOpen, isShareModalOpen } =
-    React.useContext(EditorContext);
 
-  const { isGraphMenuOpen, isGpxUploadOpen, isRaceResultsModalOpen } =
-    React.useContext(EditorContext);
+  const {
+    isGraphMenuOpen,
+    isGpxUploadOpen,
+    isRaceResultsModalOpen,
+    setIsFtpUpdating,
+    // isPhotoCaptionOpen,
+    isShareModalOpen,
+  } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -125,11 +129,10 @@ const PostEditor = ({ postId, initialState }) => {
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isGpxUploadOpen && <UploadGpxModal />}
             {isShareModalOpen && <ShareModal postId={postId} />}
-            {isRaceResultsModalOpen && <RaceResultsPreview />}
+            {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
             <Box
               sx={{
                 marginTop: '20px',
-                // maxWidth: '900px',
                 minWidth: [null, null, '900px'],
                 marginLeft: isGraphMenuOpen
                   ? ['20px', '20px', 'auto']
@@ -144,13 +147,7 @@ const PostEditor = ({ postId, initialState }) => {
                 padding: '10px',
               }}
             >
-              <Slate
-                editor={editor}
-                initialValue={initialState}
-                // onChange={(val) => {
-                //   console.log(val);
-                // }}
-              >
+              <Slate editor={editor} initialValue={initialState}>
                 <Editable
                   spellCheck
                   autoFocus

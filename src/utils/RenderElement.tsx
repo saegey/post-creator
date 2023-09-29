@@ -10,6 +10,7 @@ import MatchesBurnedWrapper from '../components/MatchesBurnedWrapper';
 import StravaLink from '../components/StravaLink';
 import HeroBanner from '../components/HeroBanner';
 import EmbedElemnt from '../components/EmbedElement';
+import RaceResultsDotComList from '../components/RaceResultsDotComList';
 
 const Leaf = (props) => {
   return (
@@ -86,6 +87,8 @@ const renderElement = ({ attributes, children, element }) => {
       );
     case 'list-item':
       return <li {...attributes}>{children}</li>;
+    case 'raceResultsDotCom':
+      return <RaceResultsDotComList />;
     default:
       return (
         <Text

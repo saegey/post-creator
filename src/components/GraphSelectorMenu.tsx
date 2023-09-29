@@ -15,16 +15,13 @@ import StandardModal from './StandardModal';
 import EmbedSettings from './EmbedSettings';
 import { useViewport } from './ViewportProvider';
 import ResultsIcon from './ResultsIcon';
-import RaceResultsImport from './RaceResultsImport';
 
 const GraphSelectorMenu = ({ editor }) => {
-  const { setIsGraphMenuOpen, setIsGpxUploadOpen } =
+  const { setIsGraphMenuOpen, setIsGpxUploadOpen, setIsRaceResultsModalOpen } =
     React.useContext(EditorContext);
   const { gpxFile, stravaUrl, currentFtp, components } =
     React.useContext(PostContext);
   const [isEmbedModalOpen, setIsEmbedModalOpen] = React.useState(false);
-  const [isRaceResultModalOpen, setIsRaceResultModalOpen] =
-    React.useState(false);
   const { width } = useViewport();
 
   const hero = components?.filter((c) => c.type === 'heroBanner');
@@ -51,7 +48,7 @@ const GraphSelectorMenu = ({ editor }) => {
   };
 
   const addRaceResults = () => {
-    setIsRaceResultModalOpen(true);
+    setIsRaceResultsModalOpen(true);
   };
 
   const addHeroBanner = () => {
@@ -125,15 +122,6 @@ const GraphSelectorMenu = ({ editor }) => {
 
   return (
     <>
-      {isRaceResultModalOpen && (
-        <StandardModal
-          title={'Race Results'}
-          setIsOpen={setIsRaceResultModalOpen}
-          isOpen={isRaceResultModalOpen}
-        >
-          <RaceResultsImport setIsOpen={setIsRaceResultModalOpen} />
-        </StandardModal>
-      )}
       {isEmbedModalOpen && (
         <StandardModal
           title={'Embed'}

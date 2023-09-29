@@ -58,6 +58,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postDate: post.date,
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
+      postRaceResults: JSON.parse(post.raceResults),
     },
   };
 };
@@ -89,6 +90,7 @@ const Post = ({
   postDate,
   postAuthor,
   postShortUrl,
+  postRaceResults,
 }) => {
   // const router = useRouter();
   const [title, setTitle] = React.useState(postTitle);
@@ -128,7 +130,7 @@ const Post = ({
   const [date, setDate] = React.useState(postDate);
   const [author, setAuthor] = React.useState(postAuthor);
   const [shortUrl, setShortUrl] = React.useState(postShortUrl);
-  const [raceResults, setRaceResults] = React.useState();
+  const [raceResults, setRaceResults] = React.useState(postRaceResults);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -157,6 +159,7 @@ const Post = ({
       setDate(postDate);
       setAuthor(postAuthor);
       setShortUrl(postShortUrl);
+      setRaceResults(postRaceResults);
     }
   }, [postComponents]);
 

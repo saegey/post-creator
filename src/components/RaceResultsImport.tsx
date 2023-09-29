@@ -4,16 +4,22 @@ import { API } from 'aws-amplify';
 import React from 'react';
 import { PostContext } from '../PostContext';
 import { EditorContext } from './EditorContext';
+import RaceResultsPreview from './RaceResultsPreview';
+import StandardModal from './StandardModal';
 
-const RaceResultsImport = ({ setIsOpen }) => {
+const RaceResultsImport = ({ editor }) => {
   const [categories, setCategories] = React.useState();
   const [category, setCategory] = React.useState();
   const [division, setDivision] = React.useState();
   const [raceId, setRaceId] = React.useState();
   const [key, setKey] = React.useState();
   const [server, setServer] = React.useState();
+  const [previewResults, setPreviewResults] = React.useState(false);
+
+  const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =
+    React.useContext(EditorContext);
+
   const { setRaceResults } = React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
 
   const getResults = async () => {
     const res = await API.get(
@@ -59,81 +65,97 @@ const RaceResultsImport = ({ setIsOpen }) => {
   };
 
   return (
-    <Flex sx={{ gap: '10px', flexDirection: 'row' }}>
-      <form
-        onSubmit={(event: any) => {
-          event.preventDefault();
-          const form = new FormData(event.target);
-          const url = form.get('url') as string;
-          getCategories({ url }).then((r) => setCategories(r));
-        }}
-        style={{ width: '100%' }}
+    <>
+      <StandardModal
+        title={'Race Results'}
+        setIsOpen={setIsRaceResultsModalOpen}
+        isOpen={isRaceResultsModalOpen}
       >
-        <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
-          <Box>
-            <Label htmlFor='url'>Url</Label>
-            <Input id='url' name='url' variant={'defaultInput'} />
-          </Box>
-          {categories && (
-            <>
-              <Select
-                onChange={(e) => {
-                  setCategory(e.target.value);
-                }}
-              >
-                <option></option>
-                {categories.data?.filterValues[0].map(
-                  (c: string, i: number) => (
-                    <option key={`category-${i}`}>{c}</option>
-                  )
+        {previewResults && (
+          <RaceResultsPreview
+            editor={editor}
+            // isOpen={setIsRaceResultsModalOpen}
+          />
+        )}
+        {!previewResults && (
+          <Flex sx={{ gap: '10px', flexDirection: 'row' }}>
+            <form
+              onSubmit={(event: any) => {
+                event.preventDefault();
+                const form = new FormData(event.target);
+                const url = form.get('url') as string;
+                getCategories({ url }).then((r) => setCategories(r));
+              }}
+              style={{ width: '100%' }}
+            >
+              <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
+                <Box>
+                  <Label htmlFor='url'>Url</Label>
+                  <Input id='url' name='url' variant={'defaultInput'} />
+                </Box>
+                {categories && (
+                  <>
+                    <Select
+                      onChange={(e) => {
+                        setCategory(e.target.value);
+                      }}
+                    >
+                      <option></option>
+                      {categories.data?.filterValues[0].map(
+                        (c: string, i: number) => (
+                          <option key={`category-${i}`}>{c}</option>
+                        )
+                      )}
+                    </Select>
+                    <Select
+                      onChange={(e) => {
+                        setDivision(e.target.value);
+                      }}
+                    >
+                      <option></option>
+                      {categories.data?.filterValues[1].map(
+                        (c: string, i: number) => (
+                          <option key={`category-${i}`}>{c}</option>
+                        )
+                      )}
+                    </Select>
+                  </>
                 )}
-              </Select>
-              <Select
-                onChange={(e) => {
-                  setDivision(e.target.value);
-                }}
-              >
-                <option></option>
-                {categories.data?.filterValues[1].map(
-                  (c: string, i: number) => (
-                    <option key={`category-${i}`}>{c}</option>
-                  )
+                {!categories && (
+                  <Box sx={{ marginLeft: 'auto' }}>
+                    <Button>
+                      <Flex sx={{ gap: '10px' }}>
+                        <Text as='span'>Import</Text>
+                        {/* {isSaving && <Spinner sx={{ size: '20px', color: 'white' }} />} */}
+                      </Flex>
+                    </Button>
+                  </Box>
                 )}
-              </Select>
-            </>
-          )}
-          {!categories && (
-            <Box sx={{ marginLeft: 'auto' }}>
-              <Button>
-                <Flex sx={{ gap: '10px' }}>
-                  <Text as='span'>Import</Text>
-                  {/* {isSaving && <Spinner sx={{ size: '20px', color: 'white' }} />} */}
-                </Flex>
-              </Button>
-            </Box>
-          )}
-          {categories && (
-            <Box sx={{ marginLeft: 'auto' }}>
-              <Button
-                type='button'
-                onClick={() =>
-                  getResults().then((r) => {
-                    setRaceResults(r);
-                    setIsOpen(false);
-                    setIsRaceResultsModalOpen(true);
-                  })
-                }
-              >
-                <Flex sx={{ gap: '10px' }}>
-                  <Text as='span'>Get Results</Text>
-                  {/* {isSaving && <Spinner sx={{ size: '20px', color: 'white' }} />} */}
-                </Flex>
-              </Button>
-            </Box>
-          )}
-        </Flex>
-      </form>
-    </Flex>
+                {categories && (
+                  <Box sx={{ marginLeft: 'auto' }}>
+                    <Button
+                      type='button'
+                      onClick={() =>
+                        getResults().then((r) => {
+                          setRaceResults(r);
+                          // setIsOpen(false);
+                          setPreviewResults(true);
+                        })
+                      }
+                    >
+                      <Flex sx={{ gap: '10px' }}>
+                        <Text as='span'>Get Results</Text>
+                        {/* {isSaving && <Spinner sx={{ size: '20px', color: 'white' }} />} */}
+                      </Flex>
+                    </Button>
+                  </Box>
+                )}
+              </Flex>
+            </form>
+          </Flex>
+        )}
+      </StandardModal>
+    </>
   );
 };
 

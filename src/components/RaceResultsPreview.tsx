@@ -2,18 +2,17 @@ import React from 'react';
 import { Text, Box, Flex, Button } from 'theme-ui';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
+import { Transforms, Descendant } from 'slate';
 
 import { PostContext } from '../PostContext';
-import StandardModal from './StandardModal';
 import { EditorContext } from './EditorContext';
 import { UpdatePostMutation } from '../API';
 import { updatePost } from '../../src/graphql/mutations';
 
-const RaceResultsPreview = () => {
+const RaceResultsPreview = ({ editor }) => {
   const [selectedRow, setSelectedRow] = React.useState();
   const { raceResults, id } = React.useContext(PostContext);
-  const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =
-    React.useContext(EditorContext);
+  const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
 
   const saveResults = async () => {
     try {
@@ -32,8 +31,6 @@ const RaceResultsPreview = () => {
           },
         },
       });
-
-      setIsRaceResultsModalOpen(false);
       return response;
     } catch (errors) {
       console.error(errors);
@@ -41,11 +38,7 @@ const RaceResultsPreview = () => {
   };
 
   return (
-    <StandardModal
-      isOpen={isRaceResultsModalOpen}
-      setIsOpen={setIsRaceResultsModalOpen}
-      title='Race Results'
-    >
+    <>
       <Box sx={{ overflowY: 'auto', height: '500px' }}>
         <Flex sx={{ width: '100%', paddingX: '5px' }}>
           <Text as='span' sx={{ width: '60px' }}>
@@ -118,14 +111,24 @@ const RaceResultsPreview = () => {
             }}
             disabled={selectedRow ? false : true}
             onClick={() => {
-              saveResults().then((r) => console.log(r));
+              console.log('clicked');
+              saveResults().then((r) => {
+                Transforms.insertNodes(editor, [
+                  {
+                    type: 'raceResultsDotCom',
+                    children: [{ text: '' }],
+                  } as Descendant,
+                  { type: 'text', children: [{ text: '' }] } as Descendant,
+                ]);
+                setIsRaceResultsModalOpen(false);
+              });
             }}
           >
             Save
           </Button>
         </Flex>
       </Box>
-    </StandardModal>
+    </>
   );
 };
 

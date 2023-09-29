@@ -50,7 +50,10 @@ const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
               {title}
             </Text>
             <Close
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                console.log('clicked');
+                setIsOpen(false);
+              }}
               sx={{
                 alignItems: 'center',
                 height: '100%',
