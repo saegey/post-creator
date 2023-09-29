@@ -1,15 +1,31 @@
 import React from 'react';
 import { CloudinaryImage } from './components/AddImage';
 
-type RaceResultRow = {
-  CatPlace: string;
-  Name: string;
-  Age: string;
-  Time: string;
-  Speed: string;
-  GenderPlace: string;
-  OverallPlace: string;
-  Bib: string;
+export type RaceResultRow = {
+  selected:
+    | {
+        CatPlace: string;
+        Name: string;
+        Age: string;
+        Time: string;
+        Speed: string;
+        GenderPlace: string;
+        OverallPlace: string;
+        Bib: string;
+      }
+    | undefined;
+  results:
+    | Array<{
+        CatPlace: string;
+        Name: string;
+        Age: string;
+        Time: string;
+        Speed: string;
+        GenderPlace: string;
+        OverallPlace: string;
+        Bib: string;
+      }>
+    | undefined;
 };
 
 export type PostContextType = {
@@ -50,7 +66,7 @@ export type PostContextType = {
   timeInRed: number | null;
   date: string | null;
   shortUrl: string | null;
-  raceResults: Array<RaceResultRow> | undefined;
+  raceResults: RaceResultRow | undefined;
   setActivity: React.Dispatch<React.SetStateAction<object>>;
   setTitle: React.Dispatch<React.SetStateAction<string | null>>;
   setSubhead: React.Dispatch<React.SetStateAction<string | null>>;
@@ -93,7 +109,7 @@ export type PostContextType = {
   setPowerZoneBuckets: React.Dispatch<React.SetStateAction<Array<number>>>;
   setShortUrl: React.Dispatch<React.SetStateAction<string>>;
   setRaceResults: React.Dispatch<
-    React.SetStateAction<Array<RaceResultRow> | undefined>
+    React.SetStateAction<RaceResultRow | undefined>
   >;
 };
 
@@ -124,7 +140,7 @@ const PostContext = React.createContext<PostContextType>({
   powerZoneBuckets: [],
   heroImage: undefined,
   shortUrl: null,
-  raceResults: null,
+  raceResults: { results: undefined, selected: undefined },
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},

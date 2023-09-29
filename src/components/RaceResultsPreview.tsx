@@ -10,7 +10,7 @@ import { UpdatePostMutation } from '../API';
 import { updatePost } from '../../src/graphql/mutations';
 
 const RaceResultsPreview = ({ editor }) => {
-  const [selectedRow, setSelectedRow] = React.useState();
+  const [selectedRow, setSelectedRow] = React.useState<number>();
   const { raceResults, id } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
 
@@ -21,11 +21,7 @@ const RaceResultsPreview = ({ editor }) => {
         query: updatePost,
         variables: {
           input: {
-            raceResults: JSON.stringify({
-              results: raceResults,
-              selectedRow:
-                raceResults && selectedRow ? raceResults[selectedRow] : null,
-            }),
+            raceResults: JSON.stringify(raceResults),
             raceResultsProvider: 'myraceresults',
             id: id,
           },
@@ -52,46 +48,48 @@ const RaceResultsPreview = ({ editor }) => {
             Time
           </Text>
         </Flex>
-        {raceResults?.map((row, i) => {
-          return (
-            <Flex
-              key={`race-result-row-${i}`}
-              sx={{
-                backgroundColor:
-                  selectedRow === i ? 'selectedBackground' : null,
-                color: selectedRow === i ? 'selectedBackgroundText' : null,
-                borderRadius: selectedRow === i ? '5px' : null,
-                width: '100%',
-                cursor: 'pointer',
-                '&:hover': {
+        {raceResults &&
+          raceResults.results &&
+          raceResults.results.map((row, i) => {
+            return (
+              <Flex
+                key={`race-result-row-${i}`}
+                sx={{
                   backgroundColor:
-                    selectedRow === i ? 'selectedBackground' : 'muted',
-                  borderRadius: '5px',
-                },
-                paddingX: '5px',
-                paddingY: '2px',
-              }}
-              onClick={() => {
-                if (selectedRow === i) {
-                  setSelectedRow(undefined);
-                } else {
-                  setSelectedRow(i);
-                }
-              }}
-            >
-              <Text as='span' sx={{ width: '60px' }}>
-                {row.CatPlace}
-              </Text>
-              <Text as='span' sx={{ width: '300px' }}>
-                {row.Name}
-              </Text>
-              <Text as='span'>{row.Speed}</Text>
-              <Text as='span' sx={{ marginLeft: 'auto' }}>
-                {row.Time}
-              </Text>
-            </Flex>
-          );
-        })}
+                    selectedRow === i ? 'selectedBackground' : null,
+                  color: selectedRow === i ? 'selectedBackgroundText' : null,
+                  borderRadius: selectedRow === i ? '5px' : null,
+                  width: '100%',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor:
+                      selectedRow === i ? 'selectedBackground' : 'muted',
+                    borderRadius: '5px',
+                  },
+                  paddingX: '5px',
+                  paddingY: '2px',
+                }}
+                onClick={() => {
+                  if (selectedRow === i) {
+                    setSelectedRow(undefined);
+                  } else {
+                    setSelectedRow(i);
+                  }
+                }}
+              >
+                <Text as='span' sx={{ width: '60px' }}>
+                  {row.CatPlace}
+                </Text>
+                <Text as='span' sx={{ width: '300px' }}>
+                  {row.Name}
+                </Text>
+                <Text as='span'>{row.Speed}</Text>
+                <Text as='span' sx={{ marginLeft: 'auto' }}>
+                  {row.Time}
+                </Text>
+              </Flex>
+            );
+          })}
       </Box>
       <Box
         sx={{

@@ -2,16 +2,18 @@ import { Flex, Box, Label, Input, Button, Text, Select } from 'theme-ui';
 
 import { API } from 'aws-amplify';
 import React from 'react';
-import { PostContext } from '../PostContext';
+import { PostContext, RaceResultRow } from '../PostContext';
 import { EditorContext } from './EditorContext';
 import RaceResultsPreview from './RaceResultsPreview';
 import StandardModal from './StandardModal';
 
 const RaceResultsImport = ({ editor }) => {
-  const [categories, setCategories] = React.useState();
-  const [category, setCategory] = React.useState();
-  const [division, setDivision] = React.useState();
-  const [raceId, setRaceId] = React.useState();
+  const [categories, setCategories] = React.useState<{
+    data: { filterValues: Array<Array<string>> };
+  }>();
+  const [category, setCategory] = React.useState('');
+  const [division, setDivision] = React.useState('');
+  const [raceId, setRaceId] = React.useState('');
   const [key, setKey] = React.useState();
   const [server, setServer] = React.useState();
   const [previewResults, setPreviewResults] = React.useState(false);
@@ -22,6 +24,9 @@ const RaceResultsImport = ({ editor }) => {
   const { setRaceResults } = React.useContext(PostContext);
 
   const getResults = async () => {
+    if (!category || !division) {
+      throw new Error('No category or division for results');
+    }
     const res = await API.get(
       'api12660653',
       `/raceresult/results?category=${encodeURIComponent(
@@ -60,6 +65,7 @@ const RaceResultsImport = ({ editor }) => {
       // console.log(response);
       setKey(response.data.key);
       setServer(response.data.server);
+      setCategories(response);
       return response;
     }
   };
@@ -84,7 +90,7 @@ const RaceResultsImport = ({ editor }) => {
                 event.preventDefault();
                 const form = new FormData(event.target);
                 const url = form.get('url') as string;
-                getCategories({ url }).then((r) => setCategories(r));
+                getCategories({ url });
               }}
               style={{ width: '100%' }}
             >
@@ -136,8 +142,11 @@ const RaceResultsImport = ({ editor }) => {
                     <Button
                       type='button'
                       onClick={() =>
-                        getResults().then((r) => {
-                          setRaceResults(r);
+                        getResults().then((r: any) => {
+                          setRaceResults({
+                            results: r as any,
+                            selected: undefined,
+                          });
                           // setIsOpen(false);
                           setPreviewResults(true);
                         })

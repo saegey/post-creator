@@ -18,36 +18,39 @@ const RaceResultsDotComList = () => {
       }}
     >
       <Text as='h2'>Race Results</Text>
-      {raceResults?.results?.map((row) => {
-        return (
-          <Flex
-            sx={{
-              paddingY: '2px',
-              paddingX: '5px',
-              backgroundColor:
-                row.Name === raceResults?.selectedRow.Name
-                  ? 'selectedBackground'
-                  : null,
-              color:
-                row.Name === raceResults?.selectedRow.Name
-                  ? 'selectedBackgroundText'
-                  : null,
-              borderRadius: '5px',
-            }}
-          >
-            <Text as='span' sx={{ width: '60px' }}>
-              {row.CatPlace}
-            </Text>
-            <Text as='span' sx={{ width: '300px' }}>
-              {row.Name}
-            </Text>
-            <Text as='span'>{row.Speed}</Text>
-            <Text as='span' sx={{ marginLeft: 'auto' }}>
-              {row.Time}
-            </Text>
-          </Flex>
-        );
-      })}
+      <Box sx={{ height: '500px', overflowY: 'scroll' }}>
+        {raceResults &&
+          raceResults?.results?.map((row) => {
+            return (
+              <Flex
+                sx={{
+                  paddingY: '2px',
+                  paddingX: '5px',
+                  backgroundColor:
+                    row.Name === raceResults?.selected?.Name
+                      ? 'selectedBackground'
+                      : null,
+                  color:
+                    row.Name === raceResults?.selected?.Name
+                      ? 'selectedBackgroundText'
+                      : null,
+                  borderRadius: '5px',
+                }}
+              >
+                <Text as='span' sx={{ width: '60px' }}>
+                  {row.CatPlace}
+                </Text>
+                <Text as='span' sx={{ width: '300px' }}>
+                  {row.Name}
+                </Text>
+                <Text as='span'>{row.Speed}</Text>
+                <Text as='span' sx={{ marginLeft: 'auto' }}>
+                  {row.Time}
+                </Text>
+              </Flex>
+            );
+          })}
+      </Box>
     </Box>
   );
 };
