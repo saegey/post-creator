@@ -80,10 +80,10 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
         >
           <Flex as='nav' sx={{ flexDirection: 'column', paddingX: '10px' }}>
             <NavLink as={Link} href='/' variant='mainMenuItem'>
-              Home
+              All Posts
             </NavLink>
-            <NavLink as={Link} href='/' variant='mainMenuItem'>
-              Posts
+            <NavLink as={Link} href='/posts' variant='mainMenuItem'>
+              My Posts
             </NavLink>
           </Flex>
         </Box>
