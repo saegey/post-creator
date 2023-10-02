@@ -1,4 +1,4 @@
-import { Flex, Box, Alert, Close } from 'theme-ui';
+import { Flex, Box, Alert, Close, IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
 import { Descendant, Transforms } from 'slate';
@@ -17,6 +17,7 @@ import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import BulletListIcon from './BulletListIcon';
 import ShareButton from './ShareButton';
+import SettingsIcon from './SettingsIcon';
 
 const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   const [isSaving, setIsSaving] = React.useState(false);
@@ -94,7 +95,16 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
               }}
               onClick={() => setIsHoverSettings(true)}
             >
-              <OptionsButton />
+              {/* <OptionsButton /> */}
+              <IconButton
+                aria-label='Toggle options'
+                variant='iconButton'
+                // onClick={onClick}
+                type='button'
+                // sx={sx}
+              >
+                <SettingsIcon />
+              </IconButton>
             </Box>
           </Flex>
           {isHoverSettings && (

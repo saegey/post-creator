@@ -5,20 +5,18 @@ import { API } from 'aws-amplify';
 
 import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
-import { UpdatePostMutation } from '../../src/API';
+import { UpdatePostMutation, DeletePostMutation } from '../../src/API';
 import StandardModal from './StandardModal';
-import { updatePost } from '../../src/graphql/mutations';
+import { updatePost, deletePost } from '../../src/graphql/mutations';
 
 const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
   const {
     id,
-    resultsUrl,
     stravaUrl,
     gpxFile,
     setCurrentFtp,
     currentFtp,
     setStravaUrl,
-    setResultsUrl,
     title,
     setTitle,
     postLocation,
@@ -34,6 +32,25 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
 
   const [isSaving, setIsSaving] = React.useState(false);
 
+  const processDeletePost = async (event) => {
+    console.log('delete post');
+    try {
+      const response = (await API.graphql({
+        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        variables: {
+          input: {
+            id: id,
+          },
+        },
+        query: deletePost,
+      })) as GraphQLResult<DeletePostMutation>;
+      console.log(response);
+      window.location.href = `/posts`;
+    } catch (errors) {
+      console.error(errors);
+    }
+  };
+
   const saveSettings = async (event) => {
     setIsSaving(true);
     const form = new FormData(event.target);
@@ -44,7 +61,7 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
 
     setCurrentFtp(newFtp);
     setStravaUrl(form.get('stravaLink') as string);
-    setResultsUrl(form.get('resultsUrl') as string);
+    // setResultsUrl(form.get('resultsUrl') as string);
     setTitle(form.get('title') as string);
     setPostLocation(form.get('postLocation') as string);
     setDate(form.get('eventDate') as string);
@@ -57,7 +74,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
         variables: {
           input: {
             stravaUrl: form.get('stravaLink'),
-            resultsUrl: form.get('resultsUrl'),
             currentFtp: form.get('currentFtp'),
             title: form.get('title'),
             subhead: form.get('subhead'),
@@ -67,7 +83,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
           },
         },
       })) as GraphQLResult<UpdatePostMutation>;
-      // console.log('response', response);
 
       setSavedMessage(true);
       setIsSaving(false);
@@ -78,13 +93,12 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
   };
 
   return (
-    <StandardModal isOpen={isOpen} setIsOpen={setIsOpen} title={'Details'}>
+    <StandardModal isOpen={isOpen} setIsOpen={setIsOpen} title={'Settings'}>
       <form
         onSubmit={(event: any) => {
           event.preventDefault();
           saveSettings(event).then(() => console.log('save settings'));
         }}
-        // style={{ width: '100%' }}
       >
         <Flex
           sx={{
@@ -99,7 +113,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             <Input
               id='title'
               name='title'
-              // placeholder='http://strava.url'
               defaultValue={title ? title : ''}
               variant={'defaultInput'}
             />
@@ -109,7 +122,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             <Input
               id='subhead'
               name='subhead'
-              // placeholder='http://strava.url'
               defaultValue={subhead ? subhead : ''}
               variant={'defaultInput'}
             />
@@ -119,7 +131,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             <Input
               id='postLocation'
               name='postLocation'
-              // placeholder='http://strava.url'
               defaultValue={postLocation ? postLocation : ''}
               variant={'defaultInput'}
             />
@@ -135,23 +146,12 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             />
           </Box>
           <Box>
-            <Label htmlFor='resultsUrl'>Results Url</Label>
-            <Input
-              id='resultsUrl'
-              name='resultsUrl'
-              placeholder='http://results.url'
-              defaultValue={resultsUrl ? resultsUrl : ''}
-              variant={'defaultInput'}
-            />
-          </Box>
-          <Box>
             <Label htmlFor='gpxFile'>GPX File</Label>
             <Flex sx={{ gap: '10px', flexDirection: ['column', 'row', 'row'] }}>
               <Box sx={{ width: '100%' }}>
                 <Input
                   id='gpxFile'
                   name='gpxFile'
-                  // placeholder='http://results.url'
                   defaultValue={gpxFile ? gpxFile : ''}
                   variant={'defaultInput'}
                 />
@@ -174,7 +174,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             <Input
               id='currentFtp'
               name='currentFtp'
-              // placeholder='http://results.url'
               defaultValue={currentFtp ? currentFtp : ''}
               variant={'defaultInput'}
             />
@@ -184,10 +183,44 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             <Input
               id='eventDate'
               name='eventDate'
-              // placeholder='http://results.url'
               defaultValue={date ? date : ''}
               variant={'defaultInput'}
             />
+          </Box>
+          <Box>
+            <Flex>
+              <Box sx={{ width: '80%' }}>
+                <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
+                  Delete this post
+                </Text>
+                <Text sx={{ fontSize: '15px' }}>
+                  Once you delete a post, there is no going back. Please be
+                  certain.
+                </Text>
+              </Box>
+              <Box sx={{ marginLeft: 'auto' }}>
+                <Button
+                  sx={{
+                    background: '#eeeeee',
+                    borderColor: '#ababab',
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                    color: 'red',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    '&:hover': {
+                      backgroundColor: 'red',
+                      color: 'white',
+                      borderColor: 'red',
+                    },
+                  }}
+                  type='button'
+                  onClick={processDeletePost}
+                >
+                  Delete Post
+                </Button>
+              </Box>
+            </Flex>
           </Box>
         </Flex>
         <Flex

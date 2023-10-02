@@ -58,7 +58,7 @@ const PostEditor = ({ postId, initialState }) => {
     const subscription = API.graphql<
       GraphQLSubscription<OnUpdatePostSubscription>
     >(graphqlOperation(subscriptions.onUpdatePost)).subscribe({
-      next: ({ provider, value }) => {
+      next: ({ value }) => {
         if (
           !value.data?.onUpdatePost?.powerZoneBuckets ||
           !value.data?.onUpdatePost?.timeInRed ||
@@ -66,7 +66,6 @@ const PostEditor = ({ postId, initialState }) => {
         ) {
           return;
         }
-        // console.log({ provider, value });
 
         setTimeInRed(value.data?.onUpdatePost?.timeInRed);
         setPowerZoneBuckets(
