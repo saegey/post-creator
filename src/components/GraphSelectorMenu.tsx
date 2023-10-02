@@ -158,7 +158,12 @@ const GraphSelectorMenu = ({ editor }) => {
           >
             <Text
               as='span'
-              sx={{ lineHeight: '30px', fontSize: '18px', fontWeight: '600' }}
+              sx={{
+                lineHeight: '30px',
+                fontSize: '16px',
+                fontWeight: '600',
+                marginLeft: '10px',
+              }}
             >
               Components
             </Text>
