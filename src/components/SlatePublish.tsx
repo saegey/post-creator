@@ -101,7 +101,7 @@ const SlatePublish = ({ post, activity }) => {
             </Box>
           );
         },
-        heroBanner: ({ node, children = [] }) => {
+        heroBanner: ({ node }) => {
           return (
             <Box sx={{ marginBottom: ['0px', '60px', '120px'] }}>
               <PostHeader
@@ -124,13 +124,11 @@ const SlatePublish = ({ post, activity }) => {
                   </Box>
                 }
                 type={'Race'}
-                teaser={'This is an epic race that you need to attend.'}
-                headerImageCaption={
-                  'Thee fieelld strung out on the first descent'
-                }
+                teaser={post.subhead ? post.subhead : ''}
+                headerImageCaption={node.photoCaption}
                 title={post.title ? post.title : ''}
                 location={post.postLocation ? post.postLocation : ''}
-                date={'2023-09-09'}
+                date={post.date ? post.date : ''}
               />
             </Box>
           );
@@ -186,9 +184,13 @@ const SlatePublish = ({ post, activity }) => {
             <Box
               as='ul'
               sx={{
-                paddingY: ['0px', '40px', '40px'],
-                paddingLeft: ['40px', '20px', '20px'],
+                paddingTop: ['0px', '0px', '0px'],
+                paddingBottom: ['0px', '20px', '20px'],
+                paddingLeft: ['40px', '25px', '25px'],
                 paddingRight: ['20px', '20px', '20px'],
+                borderLeftColor: '#cccccc',
+                borderLeftStyle: 'solid',
+                borderLeftWidth: ['0px', '1px', '1px'],
                 marginX: 'auto',
                 maxWidth: '690px',
                 fontSize: '20px',
@@ -297,11 +299,13 @@ const SlatePublish = ({ post, activity }) => {
                     <Text
                       as='h2'
                       sx={{
-                        marginY: '15px',
+                        // marginY: '15px',
+                        paddingY: '15px',
                         // fontSize: '20px',
+                        borderLeft: '1px solid #cccccc',
                         width: ['100vw', null, null],
                         maxWidth: '690px',
-                        paddingX: ['20px', '0px', '0px'],
+                        paddingX: ['20px', '8px', '8px'],
                       }}
                     >
                       {c.text}

@@ -35,13 +35,6 @@ const PostHeader = ({
           width: ['100%', '65%', '65%'],
         }}
       >
-        {/* <CustomImage
-          image={getImage(headerImage)}
-          objectFit='fill'
-          alt={`Photo`}
-          variant='homePageImage'
-          theme={{ height: '100%' }}
-        /> */}
         {headerImage}
       </Box>
       <Flex
@@ -60,7 +53,18 @@ const PostHeader = ({
           borderBottomStyle: 'solid',
         }}
       >
-        <Text variant='postType' sx={{ marginTop: 'auto' }}>
+        <Text
+          variant='postType'
+          sx={{
+            marginTop: 'auto',
+            backgroundColor: 'text',
+            color: 'background',
+            fontSize: '14px',
+            fontWeight: '600',
+            padding: '2px 10px 2px 10px',
+            width: 'fit-content',
+          }}
+        >
           {type}
         </Text>
         <Text as='h1' variant='postTitle' sx={{ color: 'text' }}>

@@ -107,6 +107,7 @@ export default {
       animation: 'shine-lines 1.6s infinite linear',
     },
     sidebarMenuItem: {
+      fontSize: '15px',
       padding: '15px',
       borderRadius: '5px',
       width: '100%',
@@ -147,6 +148,15 @@ export default {
       // borderColor: 'buttonBorderColor',
       backgroundColor: 'iconButtonBackground',
       '&:hover': { backgroundColor: 'buttonBackgroundHoverColor' },
+    },
+    primaryButton: {
+      backgroundColor: 'text',
+      color: 'background',
+      fontSize: '14px',
+      fontWeight: '600',
+      '&:hover': {
+        backgroundColor: 'gray',
+      },
     },
   },
   forms: {

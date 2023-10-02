@@ -43,7 +43,9 @@ const PostsAllUsers = ({
         }}
       >
         <Box sx={{ paddingBottom: '20px' }}>
-          <Button onClick={() => setNewPost(true)}>New Post</Button>
+          <Button onClick={() => setNewPost(true)} variant='primaryButton'>
+            New Post
+          </Button>
         </Box>
 
         <Grid columns={[1, 2, 3]} sx={{ gridGap: '20px' }}>
