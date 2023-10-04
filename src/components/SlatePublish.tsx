@@ -247,7 +247,7 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         paragraph: ({ node, children = [] }) => {
-          console.log(node);
+          // console.log(node);
           return (
             <>
               {node.children.map((c, i) => {
@@ -277,7 +277,7 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         text: ({ node, children = [] }) => {
-          console.log(node);
+          // console.log(node);
           return (
             <Text
               as='p'
