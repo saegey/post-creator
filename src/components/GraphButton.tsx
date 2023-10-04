@@ -4,7 +4,7 @@ import { EditorContext } from './EditorContext';
 import TooltipButton from './TooltipButton';
 
 const GraphButton = () => {
-  const { setIsGraphMenuOpen, isGraphMenuOpen } =
+  const { setIsGraphMenuOpen, isGraphMenuOpen, setIsImageModalOpen } =
     React.useContext(EditorContext);
 
   return (
@@ -13,6 +13,7 @@ const GraphButton = () => {
         if (isGraphMenuOpen) {
           setIsGraphMenuOpen(false);
         } else {
+          setIsImageModalOpen(false);
           setIsGraphMenuOpen(true);
         }
       }}

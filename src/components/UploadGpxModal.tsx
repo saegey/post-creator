@@ -166,9 +166,23 @@ const UploadGpxModal = () => {
           zIndex: 5000,
         }}
       >
-        <Flex>
+        <Flex
+          sx={{
+            borderBottomColor: 'divider',
+            borderBottomStyle: 'solid',
+            borderBottomWidth: '1px',
+          }}
+        >
           <Box>
-            <Text as='h2'>Upload GPX file</Text>
+            <Text
+              as='div'
+              sx={{
+                fontSize: '20px',
+                fontWeight: 600,
+              }}
+            >
+              Upload GPX file
+            </Text>
           </Box>
           <Box
             sx={{
@@ -184,11 +198,12 @@ const UploadGpxModal = () => {
         </Flex>
 
         <Box>
-          <Box>
+          <Box sx={{ marginY: '20px' }}>
             <Input
               type='file'
+              variant='defaultInput'
               disabled={isUploading}
-              sx={{ marginY: '20px', border: '1px solid #cdcdcd' }}
+              // sx={{ marginY: '20px', border: '1px solid #cdcdcd' }}
               onChange={(e) => {
                 if (e.target && e.target.files && e.target.files.length > 0) {
                   setFileData(e.target?.files[0]);
@@ -201,12 +216,13 @@ const UploadGpxModal = () => {
           <Box>
             <Button
               onClick={uploadFile}
-              sx={{
-                ':disabled': {
-                  backgroundColor: '#c6c6c6',
-                  cursor: 'not-allowed',
-                },
-              }}
+              // sx={{
+              //   ':disabled': {
+              //     backgroundColor: '#c6c6c6',
+              //     cursor: 'not-allowed',
+              //   },
+              // }}
+              variant='primaryButton'
               disabled={processingFile}
             >
               Upload

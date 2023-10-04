@@ -1,11 +1,8 @@
 import { Flex, Box, Alert, Close, IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
-import { Descendant, Transforms } from 'slate';
 import Link from 'next/link';
 
-import AddImage from './AddImage';
-import OptionsButton from './OptionsButton';
 import ActivitySettings from './ActivitySettings';
 import HeadingButton from './HeadingButton';
 import GraphButton from './GraphButton';
@@ -24,36 +21,15 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   const [savedMessage, setSavedMessage] = React.useState(false);
   const [isHoverSettings, setIsHoverSettings] = React.useState(false);
   const { id } = React.useContext(PostContext);
-  const { setIsImageModalOpen, isImageModalOpen } =
+  const { setIsImageModalOpen, setIsGraphMenuOpen } =
     React.useContext(EditorContext);
 
   React.useEffect(() => {
     setSavedMessage(false);
   }, [id]);
 
-  const insertImage = ({ selectedImage }) => {
-    Transforms.insertNodes(editor, [
-      {
-        type: 'image',
-        asset_id: selectedImage?.asset_id,
-        public_id: selectedImage?.public_id,
-        children: [{ text: '' }],
-        void: true,
-      } as Descendant,
-      { type: 'text', children: [{ text: '' }] } as Descendant,
-    ]);
-  };
-
   return (
     <>
-      {isImageModalOpen && (
-        <AddImage
-          callback={insertImage}
-          setIsOpen={setIsImageModalOpen}
-          isOpen={isImageModalOpen}
-        />
-      )}
-
       <Flex
         sx={{
           gap: '5px',
@@ -73,7 +49,12 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
         <BoldButton editor={editor} />
         <HeadingButton editor={editor} />
         <BulletListIcon editor={editor} />
-        <ImagesButton onClick={() => setIsImageModalOpen(true)} />
+        <ImagesButton
+          onClick={() => {
+            setIsGraphMenuOpen(false);
+            setIsImageModalOpen(true);
+          }}
+        />
         <GraphButton />
         <SaveButton
           setIsSaving={setIsSaving}
@@ -93,15 +74,15 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
                 marginY: 'auto',
                 justifyContent: 'center',
               }}
-              onClick={() => setIsHoverSettings(true)}
+              onClick={() => {
+                setIsImageModalOpen(false);
+                setIsHoverSettings(true);
+              }}
             >
-              {/* <OptionsButton /> */}
               <IconButton
                 aria-label='Toggle options'
                 variant='iconButton'
-                // onClick={onClick}
                 type='button'
-                // sx={sx}
               >
                 <SettingsIcon />
               </IconButton>
@@ -116,7 +97,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
           )}
         </Box>
       </Flex>
-      {savedMessage && (
+      {/* {savedMessage && (
         <Alert
           sx={{
             borderRadius: 0,
@@ -132,7 +113,7 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
           Post saved successfully.
           <Close ml='auto' mr={-2} onClick={() => setSavedMessage(false)} />
         </Alert>
-      )}
+      )} */}
     </>
   );
 };

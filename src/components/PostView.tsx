@@ -57,6 +57,7 @@ const PostView = ({
             paddingTop: '30px',
           },
           position: 'relative',
+          paddingBottom: '100px',
         }}
       >
         <SlateToReact node={components} config={config} />

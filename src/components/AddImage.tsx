@@ -8,6 +8,7 @@ import { PostContext } from './PostContext';
 import StandardModal from './StandardModal';
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
+import SidebarLeft from './SidebarLeft';
 
 export interface CloudinaryImage {
   asset_id: string;
@@ -23,16 +24,30 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
   const { setImages, images, id } = React.useContext(PostContext);
 
   return (
-    <StandardModal title={'Images'} isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Box sx={{}}>
+    <SidebarLeft closeOnclick={() => setIsOpen(false)} title={'Photos'}>
+      {/* //{' '} */}
+      {/* <StandardModal title={'Images'} isOpen={isOpen} setIsOpen={setIsOpen}> */}
+      <Flex
+        sx={{
+          margin: '15px',
+          flexDirection: 'column',
+          height: 'calc(100% - 300px)',
+        }}
+      >
         <Box
           sx={{
             '.cloudButton': {
-              backgroundColor: 'primary',
+              backgroundColor: 'text',
               borderRadius: '5px',
               color: 'background',
+              fontSize: '14px',
+              fontWeight: '600',
               '&:hover': {
-                backgroundColor: '#616161',
+                backgroundColor: 'primaryButtonBackgroundHover',
+              },
+              ':disabled': {
+                backgroundColor: '#c6c6c6',
+                cursor: 'not-allowed',
               },
             },
           }}
@@ -65,81 +80,97 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
             }}
           />
         </Box>
-        <Grid
-          gap={'20px'}
-          columns={[2, 2, 2]}
-          sx={{ marginTop: '20px', overflow: 'scroll', maxHeight: '450px' }}
-        >
-          {images &&
-            images.map((image, i) => {
-              return (
-                <Flex
-                  sx={{
-                    backgroundColor: 'activityOverviewBackgroundColor',
-                    height: '100%',
-                    borderRadius: '5px',
-                    border:
-                      selectedImage &&
-                      image.secure_url === selectedImage.secure_url
-                        ? '2px solid blue'
-                        : 'none',
-                  }}
-                  key={`image-media-${i}`}
-                  onClick={() => {
-                    setSelectedImage(image);
-                  }}
-                >
-                  <Flex
-                    sx={{
-                      // width: 'auto',
-                      marginX: 'auto',
-                      // height: '250px',
-                      // width: '250px',
-                    }}
-                    key={`image-${i}`}
-                  >
-                    <Box sx={{ margin: 'auto' }}>
-                      <CldImage
-                        width={(image.width / image.height) * 250}
-                        height={250}
-                        src={image.public_id}
-                        underlay={image.public_id}
-                        quality={90}
-                        sizes='100vw'
-                        alt='Description of my image'
-                        style={{
-                          height: 'auto',
-                          maxWidth: '100%',
-                        }}
-                      />
-                    </Box>
-                  </Flex>
-                </Flex>
-              );
-            })}
-        </Grid>
-        <Box
-          sx={{
-            marginTop: '20px',
-            paddingTop: '20px',
-            borderTopWidth: '1px',
-            borderTopStyle: 'solid',
-            borderTopColor: 'divider',
-          }}
-        >
-          <Button
-            onClick={() => {
-              // console.log(callback);
-              callback({ selectedImage });
-              setIsOpen(false);
+        <Box sx={{ height: 'calc(100% + 0px)' }}>
+          <Flex
+            // gap={'20px'}
+            // columns={[2, 2, 2]}
+            sx={{
+              flex: '1 1 auto',
+              gap: '20px',
+              marginTop: '20px',
+              overflow: 'auto',
+              // maxHeight: '400px',
+              maxHeight: 'calc(100% - 70px)',
+              flexDirection: 'column',
             }}
-            disabled={selectedImage ? false : true}
           >
-            Choose
-          </Button>
+            {images &&
+              images.map((image, i) => {
+                return (
+                  <Box
+                    sx={{
+                      backgroundColor: 'activityOverviewBackgroundColor',
+                      height: '100%',
+                      flexDirection: 'row',
+                      borderRadius: '5px',
+                      border:
+                        selectedImage &&
+                        image.secure_url === selectedImage.secure_url
+                          ? '2px solid blue'
+                          : 'none',
+                    }}
+                    key={`image-media-${i}`}
+                    onClick={() => {
+                      setSelectedImage(image);
+                    }}
+                  >
+                    <Flex
+                      sx={{
+                        // width: 'auto',
+                        marginX: 'auto',
+                      }}
+                      key={`image-${i}`}
+                    >
+                      <Box sx={{ margin: 'auto', height: 'fit-content' }}>
+                        <CldImage
+                          width={(image.width / image.height) * 250}
+                          height={250}
+                          src={image.public_id}
+                          underlay={image.public_id}
+                          quality={90}
+                          sizes='100vw'
+                          alt='Description of my image'
+                          style={{
+                            height: 'auto',
+                            maxWidth: '100%',
+                          }}
+                        />
+                      </Box>
+                    </Flex>
+                  </Box>
+                );
+              })}
+          </Flex>
         </Box>
+      </Flex>
+      <Box
+        sx={{
+          flex: '0 1 40px',
+          display: 'flex',
+
+          marginY: '20px',
+          paddingLeft: '20px',
+          paddingTop: '20px',
+          borderTopWidth: '1px',
+          borderTopStyle: 'solid',
+          borderTopColor: 'divider',
+        }}
+      >
+        <Button
+          variant='primaryButton'
+          onClick={() => {
+            // console.log(callback);
+            callback({ selectedImage });
+            setIsOpen(false);
+          }}
+          disabled={selectedImage ? false : true}
+        >
+          Choose
+        </Button>
       </Box>
-    </StandardModal>
+      {/* //{' '} */}
+      {/* </StandardModal> */}
+    </SidebarLeft>
   );
 };
 

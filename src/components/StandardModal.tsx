@@ -25,7 +25,7 @@ const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
             width: ['100vw', null, null],
             margin: 'auto',
             background: 'background',
-            borderRadius: ['', '5px', '5px'],
+            borderRadius: [null, '5px', '5px'],
             padding: '20px',
             position: 'relative',
           }}
@@ -37,7 +37,7 @@ const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
               borderBottomColor: 'divider',
               borderBottomStyle: 'solid',
               paddingY: '5px',
-              marginBottom: '20px',
+              // marginBottom: '20px',
             }}
           >
             <Text

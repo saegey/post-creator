@@ -8,7 +8,7 @@ import {
 
 const EmbedSettings = ({ editor, isModalOpen }) => {
   return (
-    <Flex sx={{ gap: '10px', flexDirection: 'row' }}>
+    <Flex sx={{ gap: '10px', flexDirection: 'row', marginTop: '15px' }}>
       <form
         onSubmit={(event: any) => {
           event.preventDefault();
@@ -37,7 +37,9 @@ const EmbedSettings = ({ editor, isModalOpen }) => {
       >
         <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
           <Box>
-            <Label htmlFor='url'>Embed Code</Label>
+            <Label htmlFor='url' variant='defaultLabel'>
+              Embed Code
+            </Label>
             <Input
               id='url'
               name='url'
@@ -47,7 +49,7 @@ const EmbedSettings = ({ editor, isModalOpen }) => {
             />
           </Box>
           <Box sx={{ marginLeft: 'auto' }}>
-            <Button>
+            <Button variant='primaryButton'>
               <Flex sx={{ gap: '10px' }}>
                 <Text as='span'>Save</Text>
                 {/* {isSaving && <Spinner sx={{ size: '20px', color: 'white' }} />} */}

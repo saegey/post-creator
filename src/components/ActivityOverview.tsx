@@ -38,8 +38,8 @@ const RaceStats = ({ items }: RaceStatsProps) => {
             <>
               <Text
                 sx={{
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
+                  fontWeight: '400',
+                  // textTransform: 'uppercase',
                   fontSize: ['12px', '14px', '14px'],
                   color: 'text',
                 }}
@@ -50,9 +50,11 @@ const RaceStats = ({ items }: RaceStatsProps) => {
                 as='p'
                 sx={{
                   fontFamily: 'body',
-                  fontSize: ['20px', '30px', '30px'],
+                  fontSize: ['20px', '24px', '24px'],
+                  lineHeight: ['20px', '24px', '24px'],
                   fontWeight: ['600', '600', '600'],
-                  lineHeight: ['30px', '50px', '60px'],
+                  marginBottom: '10px',
+                  // lineHeight: ['30px', '50px', '60px'],
                 }}
               >
                 {item.value}

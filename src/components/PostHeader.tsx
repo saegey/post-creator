@@ -1,6 +1,4 @@
 import { Flex, Box, Text } from 'theme-ui';
-// import CustomImage from '../../CustomImage'
-// import { getImage, IGatsbyImageData } from 'gatsby-plugin-image'
 
 interface PostHeaderProps {
   headerImage: JSX.Element;
@@ -70,9 +68,7 @@ const PostHeader = ({
         <Text as='h1' variant='postTitle' sx={{ color: 'text' }}>
           {title}
         </Text>
-        <Text sx={{ fontSize: '14px', fontWeight: '300' }}>
-          {date} — {location}
-        </Text>
+
         <Text
           as='p'
           sx={{
@@ -83,6 +79,9 @@ const PostHeader = ({
           }}
         >
           {teaser}
+        </Text>
+        <Text sx={{ fontSize: '15px', fontWeight: '400' }}>
+          {date} — {location}
         </Text>
         <Text
           sx={{
