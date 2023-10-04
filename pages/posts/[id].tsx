@@ -8,7 +8,7 @@ import { getActivity } from '../../src/actions/PostGet';
 import AuthCustom from '../../src/components/AuthCustom';
 import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
-import Seo from '../../src/components/seo';
+
 
 type ServerSideProps = {
   req: object;
