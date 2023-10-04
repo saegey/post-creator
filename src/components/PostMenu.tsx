@@ -15,6 +15,8 @@ import { EditorContext } from './EditorContext';
 import BulletListIcon from './BulletListIcon';
 import ShareButton from './ShareButton';
 import SettingsIcon from './SettingsIcon';
+import { isBlockActive } from '../utils/SlateUtilityFunctions';
+import LinkButton from './LinkButton';
 
 const PostMenu = ({ editor }: { editor: ReactEditor }) => {
   const [isSaving, setIsSaving] = React.useState(false);
@@ -49,6 +51,11 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
         <BoldButton editor={editor} />
         <HeadingButton editor={editor} />
         <BulletListIcon editor={editor} />
+        <LinkButton
+          // key={element.id}
+          active={isBlockActive(editor, 'link')}
+          editor={editor}
+        />
         <ImagesButton
           onClick={() => {
             setIsGraphMenuOpen(false);

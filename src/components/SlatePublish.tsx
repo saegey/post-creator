@@ -1,6 +1,6 @@
 import { withSSRContext } from 'aws-amplify';
 import React from 'react';
-import { Box, Flex, Text, Image } from 'theme-ui';
+import { Box, Flex, Text, Image, Link } from 'theme-ui';
 import Head from 'next/head';
 import {
   slateToReactConfig,
@@ -19,6 +19,24 @@ import RaceResultsDotComList from './RaceResultsDotComList';
 const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
   ssr: false,
 }); // Async API cannot be server-side rendered
+
+const renderLink = (node) => {
+  console.log(node);
+  const attrs: any = {};
+
+  return (
+    <>
+      <Link
+        href={node.href}
+        {...attrs}
+        target={node.target}
+        sx={{ textDecorationColor: 'text', color: 'text' }}
+      >
+        {node.children.map((c) => c.text)}
+      </Link>
+    </>
+  );
+};
 
 const SlatePublish = ({ post, activity }) => {
   const config: SlateToReactConfig = {
@@ -133,7 +151,16 @@ const SlatePublish = ({ post, activity }) => {
             </Box>
           );
         },
-        activityOverview: ({ node, children = [] }) => {
+        // link: ({ node, children = [] }) => {
+        //   console.log(node, children);
+        //   // return `<a href="${node.url}">${children}</a>`;
+        //   return (
+        //     <Box>
+        //       <h1>hola</h1>
+        //     </Box>
+        //   );
+        // },
+        activityOverview: () => {
           return (
             <Box
               sx={{
@@ -220,6 +247,7 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         paragraph: ({ node, children = [] }) => {
+          console.log(node);
           return (
             <>
               {node.children.map((c, i) => {
@@ -249,35 +277,42 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         text: ({ node, children = [] }) => {
+          console.log(node);
           return (
-            <>
+            <Text
+              as='p'
+              sx={{
+                fontSize: '20px',
+                maxWidth: '690px',
+                marginX: 'auto',
+                // width: [null, '690px', '690px'],
+                width: ['100vw', null, null],
+                // font-size: 20px;
+                borderLeftWidth: ['0px', '1px', '1px'],
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#cccccc',
+                paddingX: ['20px', '8px', '8px'],
+              }}
+            >
               {node.children.map((c, i) => {
-                if (!c.text || c.text === '') {
-                  return;
+                if (c.type === 'link') {
+                  return renderLink(c);
                 }
                 return (
                   <Text
-                    as='p'
+                    as='span'
+                    className='text'
                     key={`text-paragraph-${i}`}
                     sx={{
                       // marginY: '15px',
-                      fontSize: '20px',
-                      maxWidth: '690px',
-                      marginX: 'auto',
-                      // width: [null, '690px', '690px'],
-                      width: ['100vw', null, null],
-                      // font-size: 20px;
-                      borderLeftWidth: ['0px', '1px', '1px'],
-                      borderLeftStyle: 'solid',
-                      borderLeftColor: '#cccccc',
-                      paddingX: ['20px', '8px', '8px'],
+                      fontWeight: c.bold ? '700' : null,
                     }}
                   >
                     {c.text}
                   </Text>
                 );
               })}
-            </>
+            </Text>
           );
         },
         'heading-two': ({ node, children = [] }) => {

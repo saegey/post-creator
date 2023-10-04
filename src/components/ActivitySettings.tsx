@@ -33,7 +33,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
   const [isSaving, setIsSaving] = React.useState(false);
 
   const processDeletePost = async (event) => {
-    console.log('delete post');
     try {
       const response = (await API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
