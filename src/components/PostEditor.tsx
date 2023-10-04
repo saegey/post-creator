@@ -24,9 +24,12 @@ import { OnUpdatePostSubscription } from '../API';
 import ShareModal from './ShareModal';
 import RaceResultsImport from './RaceResultsImport';
 import AddImage from './AddImage';
+import withLinks from './plugins/withLinks';
 
 const PostEditor = ({ postId, initialState }) => {
-  const [editor] = React.useState(() => withHistory(withReact(createEditor())));
+  const [editor] = React.useState(() =>
+    withHistory(withLinks(withReact(createEditor())))
+  );
   const [loading, setLoading] = React.useState(true);
 
   const {

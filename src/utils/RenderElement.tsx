@@ -11,6 +11,7 @@ import StravaLink from '../components/StravaLink';
 import HeroBanner from '../components/HeroBanner';
 import EmbedElemnt from '../components/EmbedElement';
 import RaceResultsDotComListWrapper from '../components/RaceResultsDotComListWrapper';
+import Link from '../components/Link';
 
 const Leaf = (props) => {
   return (
@@ -28,7 +29,9 @@ const renderLeaf = (props) => {
   return <Leaf {...props} />;
 };
 
-const renderElement = ({ attributes, children, element }) => {
+const renderElement = (props) => {
+  const { attributes, children, element } = props;
+
   switch (element.type) {
     case 'embed':
       return <EmbedElemnt element={element} />;
@@ -48,6 +51,8 @@ const renderElement = ({ attributes, children, element }) => {
       return <ImageElement children={children} element={element} />;
     case 'heroBanner':
       return <HeroBanner element={element} />;
+    case 'link':
+      return <Link {...props} />;
 
     case 'heading-two':
       return (
