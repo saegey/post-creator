@@ -65,49 +65,33 @@ const Publish = ({ post, activity }): JSX.Element => {
   return (
     <>
       <Head>
-        <title>View Post - {post.title}</title>
-        <meta
-          property='twitter:title'
-          name='twitter:title'
-          content={post.title}
-        />
-        <meta
-          property='twitter:description'
-          name='twitter:description'
-          content={post.subhead}
-        />
+        <title>{post.title}</title>
+        <meta name='description' content={post.subhead} />
+        <meta property='twitter:domain' content={`mopd.us`} />
+        <meta name='twitter:title' content={post.title} />
+        <meta name='twitter:description' content={post.subhead} />
         <meta
           property='twitter:url'
-          name='twitter:url'
           content={`http://mopd.us/${post.shortUrl}`}
         />
-        <meta
-          property='twitter:card'
-          name='twitter:card'
-          content='summary_large_image'
-        />
-        <meta
-          property='og:url'
-          name='og:url'
-          content={`http://mopd.us/${post.shortUrl}`}
-        />
-        <meta
-          property='og:description'
-          name='og:description'
-          content={post.subhead}
-        />
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:image' content={`${url}`} />
+
+        <meta property='og:url' content={`http://mopd.us/${post.shortUrl}`} />
+        <meta property='og:type' content='article' />
+        <meta property='og:description' content={post.subhead} />
+        <meta property='og:image' content={`${url}`} />
         <meta
           name='author'
           content={post.author ? post.author.fullName : 'unknown'}
         />
-        <meta property='og:type' name='og:type' content='article' />
 
         <link
           rel='icon'
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
         />
-        <meta property='image' name='image' content={`${url}`} />
-        <meta property='og:image' name='og:image' content={`${url}`} />
+
+        {/* <meta property='og:image' name='og:image' content={`${url}`} /> */}
       </Head>
 
       <Box
