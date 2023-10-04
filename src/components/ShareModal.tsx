@@ -58,10 +58,9 @@ const ShareModal = ({ postId }) => {
   };
 
   React.useEffect(() => {
-    // console.log('this is  test', shortUrl);
     getShortUrl();
   }, []);
-  // return <h1>this is it</h1>;
+
   return (
     <StandardModal
       isOpen={isShareModalOpen}
@@ -75,7 +74,7 @@ const ShareModal = ({ postId }) => {
           borderStyle: 'solid',
           borderWidth: '1px',
           borderColor: '#d5d5d5',
-          // padding: '5px',
+          marginTop: '15px',
         }}
       >
         <Text
@@ -83,10 +82,6 @@ const ShareModal = ({ postId }) => {
             textDecoration: 'none',
             color: 'text',
             marginRight: 'auto',
-            // borderRadius: '5px',
-            // borderStyle: 'solid',
-            // borderWidth: '1px',
-            // borderColor: 'red',
             padding: '5px',
           }}
         >{`https://mopd.us/${shortUrl}`}</Text>
@@ -111,14 +106,6 @@ const ShareModal = ({ postId }) => {
               borderLeft: '10px solid transparent',
               borderRight: '10px solid transparent',
               width: 0,
-              // marginLeft: '-5px',
-              // borderWidth: '5px',
-              // borderStyle: 'solid',
-              // borderTopColor: 'transparent',
-              // borderRightColor: 'tooltipBackground',
-              // borderLeftColor: 'transparent',
-              // borderBottomColor: 'transparent',
-              // borderColor: 'red transparent transparent transparent',
             },
           }}
           onClick={() => {

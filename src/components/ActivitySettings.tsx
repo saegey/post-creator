@@ -61,7 +61,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
 
     setCurrentFtp(newFtp);
     setStravaUrl(form.get('stravaLink') as string);
-    // setResultsUrl(form.get('resultsUrl') as string);
     setTitle(form.get('title') as string);
     setPostLocation(form.get('postLocation') as string);
     setDate(form.get('eventDate') as string);
@@ -102,14 +101,17 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
       >
         <Flex
           sx={{
-            gap: '20px',
+            gap: '15px',
             flexDirection: 'column',
-            maxHeight: ['75vh', '400px', '400px'],
+            // maxHeight: ['75vh', '400px', '400px'],
             overflow: 'scroll',
+            paddingTop: '10px',
           }}
         >
           <Box>
-            <Label htmlFor='title'>Title</Label>
+            <Label htmlFor='title' variant={'defaultLabel'}>
+              Title
+            </Label>
             <Input
               id='title'
               name='title'
@@ -118,7 +120,9 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             />
           </Box>
           <Box>
-            <Label htmlFor='title'>Subhead</Label>
+            <Label htmlFor='title' variant={'defaultLabel'}>
+              Subhead
+            </Label>
             <Input
               id='subhead'
               name='subhead'
@@ -127,7 +131,9 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             />
           </Box>
           <Box>
-            <Label htmlFor='postLocation'>Location</Label>
+            <Label htmlFor='postLocation' variant={'defaultLabel'}>
+              Location
+            </Label>
             <Input
               id='postLocation'
               name='postLocation'
@@ -136,7 +142,9 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             />
           </Box>
           <Box>
-            <Label htmlFor='stravaLink'>Strava Url</Label>
+            <Label htmlFor='stravaLink' variant={'defaultLabel'}>
+              Strava Url
+            </Label>
             <Input
               id='stravaLink'
               name='stravaLink'
@@ -146,7 +154,9 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             />
           </Box>
           <Box>
-            <Label htmlFor='gpxFile'>GPX File</Label>
+            <Label htmlFor='gpxFile' variant='defaultLabel'>
+              GPX File
+            </Label>
             <Flex sx={{ gap: '10px', flexDirection: ['column', 'row', 'row'] }}>
               <Box sx={{ width: '100%' }}>
                 <Input
@@ -162,7 +172,12 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
                   onClick={() => {
                     setIsGpxUploadOpen(true);
                   }}
-                  sx={{ width: '100%', borderColor: '#898989' }}
+                  sx={{
+                    width: '100%',
+                    // borderColor: '#898989',
+                    // paddingY: '6px',
+                  }}
+                  variant='primaryButton'
                 >
                   Upload GPX
                 </Button>
@@ -170,7 +185,9 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             </Flex>
           </Box>
           <Box>
-            <Label htmlFor='currentFtp'>Current FTP</Label>
+            <Label htmlFor='currentFtp' variant={'defaultLabel'}>
+              Event FTP
+            </Label>
             <Input
               id='currentFtp'
               name='currentFtp'
@@ -179,7 +196,9 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             />
           </Box>
           <Box>
-            <Label htmlFor='eventDate'>Event Date</Label>
+            <Label htmlFor='eventDate' variant={'defaultLabel'}>
+              Event Date
+            </Label>
             <Input
               id='eventDate'
               name='eventDate'
@@ -189,7 +208,7 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
           </Box>
           <Box>
             <Flex>
-              <Box sx={{ width: '80%' }}>
+              <Box sx={{ width: '70%' }}>
                 <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
                   Delete this post
                 </Text>
@@ -198,22 +217,9 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
                   certain.
                 </Text>
               </Box>
-              <Box sx={{ marginLeft: 'auto' }}>
+              <Box sx={{ marginLeft: 'auto', marginY: 'auto' }}>
                 <Button
-                  sx={{
-                    background: '#eeeeee',
-                    borderColor: '#ababab',
-                    borderWidth: '1px',
-                    borderStyle: 'solid',
-                    color: 'red',
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    '&:hover': {
-                      backgroundColor: 'red',
-                      color: 'white',
-                      borderColor: 'red',
-                    },
-                  }}
+                  variant='dangerButton'
                   type='button'
                   onClick={processDeletePost}
                 >
@@ -236,14 +242,12 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
             <Flex sx={{ gap: '10px', marginTop: '10px' }}>
               <Button
                 type='button'
-                sx={{
-                  backgroundColor: 'cancelButtonColor',
-                }}
+                variant='secondaryButton'
                 onClick={() => setIsOpen(false)}
               >
                 Cancel
               </Button>
-              <Button>
+              <Button variant='primaryButton'>
                 <Flex sx={{ gap: '10px' }}>
                   <Text as='span'>Save</Text>
                   {isSaving && (

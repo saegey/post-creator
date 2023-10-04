@@ -108,7 +108,7 @@ const Profile = ({ signOut, user }) => {
         </Head>
         <main>
           <Header user={user} signOut={signOut} title={'Profile'} />
-          {wasSaved && (
+          {/* {wasSaved && (
             <Alert
               sx={{
                 borderRadius: 0,
@@ -120,7 +120,7 @@ const Profile = ({ signOut, user }) => {
               Profile saved successfully.
               <Close ml='auto' mr={-2} onClick={() => setWasSaved(false)} />
             </Alert>
-          )}
+          )} */}
           <div
             style={{
               // marginTop: '60px',
@@ -154,7 +154,9 @@ const Profile = ({ signOut, user }) => {
                 >
                   <Flex sx={{ flexDirection: 'column', gap: '10px' }}>
                     <Box>
-                      <Label htmlFor='fullName'>Name</Label>
+                      <Label htmlFor='fullName' variant='defaultLabel'>
+                        Name
+                      </Label>
                       <Input
                         id='fullName'
                         name='fullName'
@@ -164,7 +166,9 @@ const Profile = ({ signOut, user }) => {
                       />
                     </Box>
                     <Box>
-                      <Label htmlFor='username'>Username</Label>
+                      <Label htmlFor='username' variant='defaultLabel'>
+                        Username
+                      </Label>
                       <Input
                         id='username'
                         name='username'
@@ -174,7 +178,9 @@ const Profile = ({ signOut, user }) => {
                       />
                     </Box>
                     <Box>
-                      <Label htmlFor='location'>Location</Label>
+                      <Label htmlFor='location' variant='defaultLabel'>
+                        Location
+                      </Label>
                       <Input
                         id='location'
                         name='location'
@@ -184,9 +190,7 @@ const Profile = ({ signOut, user }) => {
                       />
                     </Box>
                     <Box sx={{ marginTop: '10px' }}>
-                      <Button
-                        sx={{ '&:hover': { backgroundColor: '#515151' } }}
-                      >
+                      <Button variant='primaryButton'>
                         <Flex sx={{ gap: '10px' }}>
                           <Text as='span'>Save</Text>
                           {isSaving && (

@@ -9,8 +9,17 @@ const RaceResultsDotComList = ({
 }) => {
   return (
     <>
-      <Text as='h2'>Race Results</Text>
-      <Box sx={{ height: '500px', overflowY: 'scroll' }}>
+      <Text
+        as='h2'
+        sx={{
+          borderBottomColor: 'dividerDark',
+          borderBottomWidth: '1px',
+          borderBottomStyle: 'solid',
+        }}
+      >
+        Results
+      </Text>
+      <Box sx={{ height: '500px', overflowY: 'scroll', paddingTop: '10px' }}>
         {raceResults &&
           raceResults?.results?.map((row) => {
             return (

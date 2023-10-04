@@ -15,6 +15,7 @@ import StandardModal from './StandardModal';
 import EmbedSettings from './EmbedSettings';
 import { useViewport } from './ViewportProvider';
 import ResultsIcon from './ResultsIcon';
+import SidebarLeft from './SidebarLeft';
 
 const GraphSelectorMenu = ({ editor }) => {
   const { setIsGraphMenuOpen, setIsGpxUploadOpen, setIsRaceResultsModalOpen } =
@@ -131,300 +132,263 @@ const GraphSelectorMenu = ({ editor }) => {
           <EmbedSettings editor={editor} isModalOpen={setIsEmbedModalOpen} />
         </StandardModal>
       )}
-      <Box
-        sx={{
-          backgroundColor: 'sideMenuBackground',
-          minWidth: '300px',
-          borderRightColor: 'sideMenuRightBorder',
-          borderRightStyle: 'solid',
-          borderRightWidth: '1px',
-          position: ['absolute', 'sticky', 'sticky'],
-          display: ['absolute', null, null],
-          top: [0, '55px', '55px'],
-          marginTop: [0, 0, 0],
-          width: ['100%', '300px', '300px'],
-          height: ['100vh', 'calc(100vh - 55px)', 'calc(100vh - 55px)'],
-          zIndex: 20,
-        }}
+      <SidebarLeft
+        closeOnclick={() => setIsGraphMenuOpen(false)}
+        title={'Components'}
       >
-        <Box>
-          <Flex
+        <Flex sx={{ flexDirection: 'column', margin: '10px' }}>
+          <Box
+            onClick={() => {
+              if (gpxFile) {
+                addPowerCurve();
+              }
+            }}
+            variant='boxes.sidebarMenuItem'
             sx={{
-              padding: '15px',
-              borderBottomColor: 'divider',
-              borderBottomStyle: 'solid',
-              borderBottomWidth: '1px',
+              cursor: gpxFile ? 'pointer' : 'not-allowed',
             }}
           >
-            <Text
-              as='span'
-              sx={{
-                lineHeight: '30px',
-                fontSize: '16px',
-                fontWeight: '600',
-                marginLeft: '10px',
-              }}
-            >
-              Components
-            </Text>
-            <Close
-              onClick={() => setIsGraphMenuOpen(false)}
-              sx={{ marginLeft: 'auto' }}
-            />
-          </Flex>
-          <Flex sx={{ flexDirection: 'column', margin: '10px' }}>
-            <Box
-              onClick={() => {
-                if (gpxFile) {
-                  addPowerCurve();
-                }
-              }}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: gpxFile ? 'pointer' : 'not-allowed',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                  // onMouseEnter={() => {}}
-                >
-                  <PowerGraphIcon color={color} />
-                </Box>
-                <Text as='span' sx={{ color: color }}>
-                  Power Curve
-                </Text>
-              </Flex>
-            </Box>
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+                // onMouseEnter={() => {}}
+              >
+                <PowerGraphIcon color={color} />
+              </Box>
+              <Text as='span' sx={{ color: color }}>
+                Power Curve
+              </Text>
+            </Flex>
+          </Box>
 
-            <Box
-              onClick={addActivityOverview}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: gpxFile ? 'pointer' : 'not-allowed',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
+          <Box
+            onClick={addActivityOverview}
+            variant='boxes.sidebarMenuItem'
+            sx={{
+              cursor: gpxFile ? 'pointer' : 'not-allowed',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <ActivityOverviewIcon color={color} />
+              </Box>
+              <Text as='span' sx={{ color: color }}>
+                Activity Overview
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={addTimePowerZones}
+            variant='boxes.sidebarMenuItem'
+            sx={{
+              cursor: gpxFile ? 'pointer' : 'not-allowed',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <TimePowerZonesIcon color={color} />
+              </Box>
+              <Text as='span' sx={{ color: color }}>
+                Time in Zones
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={addMap}
+            sx={{
+              cursor: gpxFile ? 'pointer' : 'not-allowed',
+            }}
+            variant='boxes.sidebarMenuItem'
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <svg
+                  className='childButton'
+                  width='24px'
+                  height='24px'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
                 >
-                  <ActivityOverviewIcon color={color} />
-                </Box>
-                <Text as='span' sx={{ color: color }}>
-                  Activity Overview
-                </Text>
-              </Flex>
-            </Box>
-            <Box
-              onClick={addTimePowerZones}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: gpxFile ? 'pointer' : 'not-allowed',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                >
-                  <TimePowerZonesIcon color={color} />
-                </Box>
-                <Text as='span' sx={{ color: color }}>
-                  Time in Zones
-                </Text>
-              </Flex>
-            </Box>
-            <Box
-              onClick={addMap}
-              sx={{
-                cursor: gpxFile ? 'pointer' : 'not-allowed',
-              }}
-              variant='boxes.sidebarMenuItem'
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                >
-                  <svg
-                    className='childButton'
-                    width='24px'
-                    height='24px'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path
-                      d='M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z'
-                      stroke={color}
-                      strokeWidth='2'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                  </svg>
-                </Box>
-                <Text as='span' sx={{ color: color }}>
-                  Route Overview
-                </Text>
-              </Flex>
-            </Box>
-            <Box
-              onClick={addMatchesBurned}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: gpxFile ? 'pointer' : 'not-allowed',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                >
-                  <MatchesBurnedIcon color={color} />
-                </Box>
-                <Text as='span' sx={{ color: color }}>
-                  Matches Burned
-                </Text>
-              </Flex>
-            </Box>
-            <Box
-              onClick={addStravaLink}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: stravaUrl ? 'pointer' : 'not-allowed',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                >
-                  <StravaIcon
-                    color={
-                      stravaUrl
-                        ? 'var(--theme-ui-colors-text)'
-                        : 'var(--theme-ui-colors-iconButtonDisabled'
-                    }
+                  <path
+                    d='M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z'
+                    stroke={color}
+                    strokeWidth='2'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
                   />
-                </Box>
-                <Text
-                  as='span'
-                  sx={{ color: stravaUrl ? null : 'iconButtonDisabled' }}
-                >
-                  Strava Link
-                </Text>
-              </Flex>
-            </Box>
-            <Box
-              onClick={addHeroBanner}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: heroBannerNotAdded ? 'pointer' : 'not-allowed',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                >
-                  <HeroBannerIcon
-                    color={
-                      heroBannerNotAdded
-                        ? 'var(--theme-ui-colors-text)'
-                        : 'var(--theme-ui-colors-iconButtonDisabled'
-                    }
-                  />
-                </Box>
-                <Text
-                  as='span'
-                  sx={{
-                    color: heroBannerNotAdded ? 'text' : 'iconButtonDisabled',
-                  }}
-                >
-                  Hero Banner
-                </Text>
-              </Flex>
-            </Box>
-            <Box
-              onClick={() => addEmbed()}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: 'pointer',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                >
-                  <EmbedIcon />
-                </Box>
-                <Text
-                  as='span'
-                  sx={{
-                    color: 'text',
-                  }}
-                >
-                  Embed RWGPS Route
-                </Text>
-              </Flex>
-            </Box>
-            <Box
-              onClick={() => addRaceResults()}
-              variant='boxes.sidebarMenuItem'
-              sx={{
-                cursor: 'pointer',
-              }}
-            >
-              <Flex>
-                <Box
-                  sx={{
-                    width: '25px',
-                    height: '25px',
-                    marginRight: '10px',
-                  }}
-                >
-                  <ResultsIcon />
-                </Box>
-                <Text
-                  as='span'
-                  sx={{
-                    color: 'text',
-                  }}
-                >
-                  Race Results
-                </Text>
-              </Flex>
-            </Box>
-          </Flex>
+                </svg>
+              </Box>
+              <Text as='span' sx={{ color: color }}>
+                Route Overview
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={addMatchesBurned}
+            variant='boxes.sidebarMenuItem'
+            sx={{
+              cursor: gpxFile ? 'pointer' : 'not-allowed',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <MatchesBurnedIcon color={color} />
+              </Box>
+              <Text as='span' sx={{ color: color }}>
+                Matches Burned
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={addStravaLink}
+            variant='boxes.sidebarMenuItem'
+            sx={{
+              cursor: stravaUrl ? 'pointer' : 'not-allowed',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <StravaIcon
+                  color={
+                    stravaUrl
+                      ? 'var(--theme-ui-colors-text)'
+                      : 'var(--theme-ui-colors-iconButtonDisabled'
+                  }
+                />
+              </Box>
+              <Text
+                as='span'
+                sx={{ color: stravaUrl ? null : 'iconButtonDisabled' }}
+              >
+                Strava Link
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={addHeroBanner}
+            variant='boxes.sidebarMenuItem'
+            sx={{
+              cursor: heroBannerNotAdded ? 'pointer' : 'not-allowed',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <HeroBannerIcon
+                  color={
+                    heroBannerNotAdded
+                      ? 'var(--theme-ui-colors-text)'
+                      : 'var(--theme-ui-colors-iconButtonDisabled'
+                  }
+                />
+              </Box>
+              <Text
+                as='span'
+                sx={{
+                  color: heroBannerNotAdded ? 'text' : 'iconButtonDisabled',
+                }}
+              >
+                Hero Banner
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={() => addEmbed()}
+            variant='boxes.sidebarMenuItem'
+            sx={{
+              cursor: 'pointer',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <EmbedIcon />
+              </Box>
+              <Text
+                as='span'
+                sx={{
+                  color: 'text',
+                }}
+              >
+                Embed RWGPS Route
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={() => addRaceResults()}
+            variant='boxes.sidebarMenuItem'
+            sx={{
+              cursor: 'pointer',
+            }}
+          >
+            <Flex>
+              <Box
+                sx={{
+                  width: '25px',
+                  height: '25px',
+                  marginRight: '10px',
+                }}
+              >
+                <ResultsIcon />
+              </Box>
+              <Text
+                as='span'
+                sx={{
+                  color: 'text',
+                }}
+              >
+                Race Results
+              </Text>
+            </Flex>
+          </Box>
+        </Flex>
 
-          {/* {!gpxFile && (
+        {/* {!gpxFile && (
           <Flex
             sx={{
               position: 'absolute',
@@ -436,7 +400,6 @@ const GraphSelectorMenu = ({ editor }) => {
             }}
           ></Flex>
         )} */}
-        </Box>
         {!gpxFile && (
           <Box
             sx={{
@@ -452,6 +415,7 @@ const GraphSelectorMenu = ({ editor }) => {
               </Text>
               <Button
                 type='button'
+                variant='primaryButton'
                 onClick={() => {
                   setIsGpxUploadOpen(true);
                 }}
@@ -462,7 +426,7 @@ const GraphSelectorMenu = ({ editor }) => {
             </Box>
           </Box>
         )}
-      </Box>
+      </SidebarLeft>
     </>
   );
 };

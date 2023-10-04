@@ -65,10 +65,12 @@ const CreatePostModal = ({ setMenuOpen }) => {
             </Box>
           </Flex>
           <form onSubmit={handleCreatePost}>
-            <Label htmlFor='title'>Title</Label>
+            <Label htmlFor='title' variant='defaultLabel'>
+              Title
+            </Label>
             <Input name='title' id='title' mb={3} variant={'defaultInput'} />
 
-            <Button>Create</Button>
+            <Button variant='primaryButton'>Create</Button>
           </form>
         </Box>
       </Box>

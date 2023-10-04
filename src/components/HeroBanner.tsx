@@ -35,10 +35,7 @@ const HeroBanner = ({ element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
 
-  const addImage = ({ selectedImage }) => {
-    setHeroImage(selectedImage);
-    setIsHeroImageModalOpen(false);
-  };
+
 
   return (
     <>
@@ -49,13 +46,7 @@ const HeroBanner = ({ element }) => {
         contentEditable={false}
       >
         {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
-        {isHeroImageModalOpen && (
-          <AddImage
-            setIsOpen={setIsHeroImageModalOpen}
-            isOpen={isHeroImageModalOpen}
-            callback={addImage}
-          />
-        )}
+
         {heroImage ? (
           <Flex
             sx={{

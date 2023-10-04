@@ -5,6 +5,7 @@ import React from 'react';
 import { createEditor, Editor } from 'slate';
 import { Flex, Box } from 'theme-ui';
 import { withHistory } from 'slate-history';
+import { Descendant, Transforms } from 'slate';
 
 import renderElement, { renderLeaf } from '../../src/utils/RenderElement';
 import PostMenu from './PostMenu';
@@ -22,6 +23,7 @@ import UploadGpxModal from './UploadGpxModal';
 import { OnUpdatePostSubscription } from '../API';
 import ShareModal from './ShareModal';
 import RaceResultsImport from './RaceResultsImport';
+import AddImage from './AddImage';
 
 const PostEditor = ({ postId, initialState }) => {
   const [editor] = React.useState(() => withHistory(withReact(createEditor())));
@@ -35,6 +37,7 @@ const PostEditor = ({ postId, initialState }) => {
     setTimeInRed,
     setPowerZones,
     setPowerZoneBuckets,
+    setHeroImage,
   } = React.useContext(PostContext);
 
   const {
@@ -42,8 +45,12 @@ const PostEditor = ({ postId, initialState }) => {
     isGpxUploadOpen,
     isRaceResultsModalOpen,
     setIsFtpUpdating,
+    isImageModalOpen,
+    setIsImageModalOpen,
     // isPhotoCaptionOpen,
     isShareModalOpen,
+    setIsHeroImageModalOpen,
+    isHeroImageModalOpen,
   } = React.useContext(EditorContext);
 
   React.useEffect(() => {
@@ -117,6 +124,24 @@ const PostEditor = ({ postId, initialState }) => {
     });
   }, [id]);
 
+  const insertImage = ({ selectedImage }) => {
+    Transforms.insertNodes(editor, [
+      {
+        type: 'image',
+        asset_id: selectedImage?.asset_id,
+        public_id: selectedImage?.public_id,
+        children: [{ text: '' }],
+        void: true,
+      } as Descendant,
+      { type: 'text', children: [{ text: '' }] } as Descendant,
+    ]);
+  };
+
+  const addImage = ({ selectedImage }) => {
+    setHeroImage(selectedImage);
+    setIsHeroImageModalOpen(false);
+  };
+
   return (
     <>
       {loading ? (
@@ -126,6 +151,20 @@ const PostEditor = ({ postId, initialState }) => {
           <PostMenu editor={editor} />
           <Flex>
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
+            {isImageModalOpen && (
+              <AddImage
+                callback={insertImage}
+                setIsOpen={setIsImageModalOpen}
+                isOpen={isImageModalOpen}
+              />
+            )}
+            {isHeroImageModalOpen && (
+              <AddImage
+                setIsOpen={setIsHeroImageModalOpen}
+                isOpen={isHeroImageModalOpen}
+                callback={addImage}
+              />
+            )}
             {isGpxUploadOpen && <UploadGpxModal />}
             {isShareModalOpen && <ShareModal postId={postId} />}
             {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}

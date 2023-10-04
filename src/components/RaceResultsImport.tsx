@@ -100,7 +100,9 @@ const RaceResultsImport = ({ editor }) => {
             >
               <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
                 <Box>
-                  <Label htmlFor='url'>Url</Label>
+                  <Label htmlFor='url' variant='defaultLabel'>
+                    Url
+                  </Label>
                   <Input
                     id='url'
                     name='url'
@@ -111,7 +113,9 @@ const RaceResultsImport = ({ editor }) => {
                 {categories && (
                   <>
                     <Box>
-                      <Label htmlFor='url'>Category</Label>
+                      <Label htmlFor='url' variant='defaultLabel'>
+                        Category
+                      </Label>
                       <Select
                         id='category'
                         variant={'defaultInput'}
@@ -128,7 +132,9 @@ const RaceResultsImport = ({ editor }) => {
                       </Select>
                     </Box>
                     <Box>
-                      <Label htmlFor='url'>Division</Label>
+                      <Label htmlFor='url' variant='defaultLabel'>
+                        Division
+                      </Label>
                       <Select
                         variant={'defaultInput'}
                         onChange={(e) => {
@@ -147,7 +153,10 @@ const RaceResultsImport = ({ editor }) => {
                 )}
                 {!categories && (
                   <Box sx={{ marginLeft: 'auto' }}>
-                    <Button disabled={isLoading ? true : false}>
+                    <Button
+                      disabled={isLoading ? true : false}
+                      variant='primaryButton'
+                    >
                       <Flex sx={{ gap: '10px' }}>
                         <Text as='span'>Import</Text>
                         {isLoading && (
@@ -161,6 +170,7 @@ const RaceResultsImport = ({ editor }) => {
                   <Box sx={{ marginLeft: 'auto' }}>
                     <Button
                       type='button'
+                      variant='primaryButton'
                       onClick={() => {
                         setIsLoading(true);
                         getResults().then((r: any) => {
@@ -168,7 +178,6 @@ const RaceResultsImport = ({ editor }) => {
                             results: r as any,
                             selected: undefined,
                           });
-                          // setIsOpen(false);
                           setPreviewResults(true);
                           setIsLoading(false);
                         });
@@ -188,7 +197,6 @@ const RaceResultsImport = ({ editor }) => {
           </Flex>
         )}
       </StandardModal>
-      {/* {isLoading && <BlackBox zIndex={60}>saving</BlackBox>} */}
     </>
   );
 };

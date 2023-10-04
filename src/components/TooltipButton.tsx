@@ -34,7 +34,7 @@ const TooltipButton = ({
       }}
     >
       {children}
-      <Text
+      {/* <Text
         id='tooltip1'
         as='span'
         sx={{
@@ -53,7 +53,7 @@ const TooltipButton = ({
         }}
       >
         {tooltipText}
-      </Text>
+      </Text> */}
     </IconButton>
   );
 };

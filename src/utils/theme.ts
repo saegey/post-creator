@@ -1,6 +1,12 @@
 // src/utils/theme.ts
 export default {
   colors: {
+    inputBackgroundColor: '#ebebeb',
+    inputFocusBorderColor: '#969696',
+    secondaryButtonBackground: '#f0f0f0',
+    secondaryButtonBackgroundHover: '#e4e4e4',
+    primaryButtonBackgroundHover: '#5a5a5a',
+    buttonHoverBackground: 'gray',
     dropdownMenuBackground: '#f9f9f9',
     dropdownMenuHoverBackground: '#dcdcdc',
     activityOverviewBackgroundColor: '#f0f0f0',
@@ -14,6 +20,7 @@ export default {
     iconButtonBackgroundDisabled: '#e9e9e9',
     buttonBorderColor: '#d4d4d4',
     divider: '#e4e4e4',
+    dividerDark: '#b5b5b5',
     sideMenuBackground: '#ffffff',
     sideMenuDivider: '#c1c1c1',
     sideMenuRightBorder: '#dfdfdf',
@@ -29,7 +36,7 @@ export default {
     background: '#fff',
     primary: 'black',
     secondary: '#3f3f3f',
-    muted: '#e0e0e0',
+    muted: '#f9f9f9',
     highlight: '#9f9f9f',
     gray: '#6c6c6c',
     accent: '#3f3f3f',
@@ -44,6 +51,12 @@ export default {
     chartAxes: 'black',
     modes: {
       dark: {
+        inputFocusBorderColor: '#ffffff',
+        inputBackgroundColor: '#434343',
+        secondaryButtonBackground: '#444444',
+        secondaryButtonBackgroundHover: '#525252',
+        primaryButtonBackgroundHover: '#e4e4e4',
+        // secondaryButtonBackgroundHover:
         sideMenuRightBorder: '#494949',
         activityOverviewBackgroundColor: '#3a3a3a',
         sideMenuBackground: '#181818',
@@ -155,20 +168,56 @@ export default {
       fontSize: '14px',
       fontWeight: '600',
       '&:hover': {
-        backgroundColor: 'gray',
+        backgroundColor: 'primaryButtonBackgroundHover',
+      },
+      ':disabled': {
+        backgroundColor: '#c6c6c6',
+        cursor: 'not-allowed',
+      },
+    },
+    secondaryButton: {
+      backgroundColor: 'secondaryButtonBackground',
+      color: 'text',
+      fontSize: '14px',
+      fontWeight: '600',
+      '&:hover': {
+        backgroundColor: 'secondaryButtonBackgroundHover',
+      },
+    },
+    dangerButton: {
+      paddingY: '6px',
+      background: '#eeeeee',
+      borderColor: '#ababab',
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      color: 'red',
+      fontSize: '15px',
+      fontWeight: '600',
+      '&:hover': {
+        backgroundColor: 'red',
+        color: 'white',
+        borderColor: 'red',
       },
     },
   },
   forms: {
     defaultInput: {
-      borderColor: 'inputBorderColor',
+      borderColor: 'transparent',
       '&:focus': {
-        backgroundColor: 'inputFocusBackground',
+        // backgroundColor: 'inputFocusBackground',
+        borderColor: 'inputFocusBorderColor',
+        outline: 'none',
       },
+      backgroundColor: 'inputBackgroundColor',
+      fontSize: '16px',
+      padding: '6px',
+    },
+    defaultLabel: {
+      fontSize: '15px',
     },
   },
   fonts: {
-    body: '"Public Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+    body: '"SF Pro Display", "Public Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading:
       'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     monospace: 'Menlo, monospace',
@@ -178,16 +227,6 @@ export default {
     body: 400,
     heading: 700,
     bold: 700,
-  },
-  styles: {
-    h1: {
-      fontSize: 40,
-      fontFamily: 'heading',
-      fontWeight: 'heading',
-      color: 'primary',
-      mt: 4,
-      mb: 2,
-    },
   },
   sizes: {
     container: {
