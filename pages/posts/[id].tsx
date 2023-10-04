@@ -9,7 +9,6 @@ import AuthCustom from '../../src/components/AuthCustom';
 import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
 
-
 type ServerSideProps = {
   req: object;
   params: {
@@ -66,7 +65,7 @@ const Publish = ({ post, activity }): JSX.Element => {
   return (
     <AuthCustom>
       <Head>
-        <title>View Post - {post.title}</title>
+        <title>{post.title}</title>
         <meta
           property='twitter:title'
           name='twitter:title'
@@ -89,26 +88,27 @@ const Publish = ({ post, activity }): JSX.Element => {
         />
         <meta
           property='og:url'
-          name='og:url'
+          name='url'
           content={`http://mopd.us/${post.shortUrl}`}
         />
         <meta
           property='og:description'
-          name='og:description'
+          name='description'
           content={post.subhead}
         />
+        <meta property='og:title' name='title' content={post.subhead} />
         <meta
           name='author'
           content={post.author ? post.author.fullName : 'unknown'}
         />
-        <meta property='og:type' name='og:type' content='article' />
+        <meta property='og:type' content='article' />
 
         <link
           rel='icon'
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
         />
-        <meta property='image' name='image' content={`${url}`} />
-        <meta property='og:image' name='og:image' content={`${url}`} />
+        <meta property='og:image' name='image' content={`${url}`} />
+        {/* <meta property='og:image' name='og:image' content={`${url}`} /> */}
       </Head>
       <PostView components={components} config={config} post={post} />
     </AuthCustom>
