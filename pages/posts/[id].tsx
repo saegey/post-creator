@@ -77,11 +77,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 
 const Publish = ({ post, activity }): JSX.Element => {
   const config = SlatePublish({ post, activity });
-  const components = JSON.parse(post.components);
-
-  const url = getCldOgImageUrl({
-    src: JSON.parse(post.heroImage).public_id,
-  });
+  const components = JSON.parse(post.components)
 
   return (
     <AuthCustom>
