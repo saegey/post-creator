@@ -19,7 +19,7 @@
     "aws-xray-sdk": "^3.5.1",
     "formidable": "^3.5.0",
     "mapbox-gl": "^2.15.0",
-    "next": "latest",
+    "next": "^13.5.4",
     "next-cloudinary": "^4.19.0",
     "node-fetch": "^3.3.2",
     "react": "18.2.0",
