@@ -4,6 +4,7 @@ import { Box, Container } from 'theme-ui';
 import Head from 'next/head';
 import { SlateToReact } from '@slate-serializers/react';
 import { getCldOgImageUrl } from 'next-cloudinary';
+import { constructCloudinaryUrl } from '@cloudinary-util/url-loader';
 
 import HeaderPublic from '../../src/components/HeaderPublic';
 import { getPostInitial } from '../../src/graphql/customQueries';
@@ -16,6 +17,8 @@ type ServerSideProps = {
     id: string;
   };
 };
+
+const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
 
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const SSR = withSSRContext({ req });
@@ -46,8 +49,17 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
           : a?.d,
     };
   });
-  const url = getCldOgImageUrl({
-    src: JSON.parse(post.heroImage).public_id,
+  const url = constructCloudinaryUrl({
+    options: {
+      src: JSON.parse(post.heroImage).public_id,
+      width: 800,
+      height: 600,
+    },
+    config: {
+      cloud: {
+        cloudName: cloudUrl,
+      },
+    },
   });
 
   const metaTags = {
