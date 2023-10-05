@@ -19,7 +19,7 @@ const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
 }); // Async API cannot be server-side rendered
 
 const renderLink = (node) => {
-  console.log(node);
+  // console.log(node);
   const attrs: any = {};
 
   return (
