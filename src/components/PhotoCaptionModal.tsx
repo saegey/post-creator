@@ -12,7 +12,6 @@ const PhotoCaptionModal = ({ element }) => {
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
 
-  console.log(isPhotoCaptionOpen, path);
   return (
     <>
       <StandardModal
@@ -34,10 +33,6 @@ const PhotoCaptionModal = ({ element }) => {
               const form = new FormData(event.target);
               const caption = form.get('caption');
 
-              console.log('caption', path, caption, {
-                ...element,
-                photoCaption: caption,
-              });
               Transforms.setNodes(
                 editor,
                 { ...element, photoCaption: caption },

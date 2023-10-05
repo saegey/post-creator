@@ -15,13 +15,12 @@ const EmbedSettings = ({ editor, isModalOpen }) => {
           const form = new FormData(event.target);
           const el = document.createElement('html');
           el.innerHTML = form.get('url') as string;
-          // console.log(el?.querySelector('iframe')?.src);
+
           const iframe = el.querySelector('iframe');
           if (!iframe) {
             return;
           }
           const url = new URL(iframe.src);
-          console.log(JSON.stringify(url.search));
           const finalUrl = `https://ridewithgps.com/embeds?${url.search}`;
           Transforms.insertNodes<SlateElement>(editor, [
             {

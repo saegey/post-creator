@@ -58,7 +58,7 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
             options={{ cropping: true }}
             onSuccess={async (d) => {
               images?.push(d.info as CloudinaryImage);
-              // console.log(d, images);
+
               if (images) {
                 setImages([...images]);
                 try {
@@ -72,7 +72,6 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
                       },
                     },
                   })) as GraphQLResult<UpdatePostMutation>;
-                  console.log('response', response);
                 } catch (errors) {
                   console.error(errors);
                 }
@@ -159,7 +158,6 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
         <Button
           variant='primaryButton'
           onClick={() => {
-            // console.log(callback);
             callback({ selectedImage });
             setIsOpen(false);
           }}

@@ -88,7 +88,6 @@ const PostEditor = ({ postId, initialState }) => {
     });
 
     return () => {
-      console.log('post subscription destroy');
       subscription.unsubscribe();
     };
   }, []);
