@@ -1,7 +1,8 @@
 import { withSSRContext } from 'aws-amplify';
 import React from 'react';
 import Head from 'next/head';
-import { getCldOgImageUrl } from 'next-cloudinary';
+// import { getCldOgImageUrl } from 'next-cloudinary';
+import { constructCloudinaryUrl } from '@cloudinary-util/url-loader';
 
 import { getPostInitial } from '../../src/graphql/customQueries';
 import { getActivity } from '../../src/actions/PostGet';
@@ -15,6 +16,8 @@ type ServerSideProps = {
     id: string;
   };
 };
+
+const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
 
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const SSR = withSSRContext({ req });
@@ -46,8 +49,23 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     };
   });
 
-  const url = getCldOgImageUrl({
-    src: JSON.parse(post.heroImage).public_id,
+  // const url = getCldOgImageUrl(
+  //   {
+  //     src: JSON.parse(post.heroImage).public_id,
+  //   },
+  //   { cloud: { cloudName: 'name' } }
+  // );
+  const url = constructCloudinaryUrl({
+    options: {
+      src: JSON.parse(post.heroImage).public_id,
+      width: 800,
+      height: 600,
+    },
+    config: {
+      cloud: {
+        cloudName: cloudUrl,
+      },
+    },
   });
 
   const metaTags = {
@@ -77,7 +95,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 
 const Publish = ({ post, activity }): JSX.Element => {
   const config = SlatePublish({ post, activity });
-  const components = JSON.parse(post.components)
+  const components = JSON.parse(post.components);
 
   return (
     <AuthCustom>
