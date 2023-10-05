@@ -51,7 +51,6 @@ const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
             </Text>
             <Close
               onClick={() => {
-                console.log('clicked');
                 setIsOpen(false);
               }}
               sx={{

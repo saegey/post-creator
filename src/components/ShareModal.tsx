@@ -54,7 +54,6 @@ const ShareModal = ({ postId }) => {
     } catch (error) {
       console.error(error);
     }
-    console.log('res', res.data.Attributes.id);
   };
 
   React.useEffect(() => {

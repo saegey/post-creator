@@ -70,7 +70,6 @@ const RaceResultsImport = ({ editor }) => {
         response: true, // OPTIONAL (return the entire Axios response object instead of only response.data)
       };
       const response = await API.get(apiName, path, myInit);
-      // console.log(response);
       setKey(response.data.key);
       setServer(response.data.server);
       setCategories(response);

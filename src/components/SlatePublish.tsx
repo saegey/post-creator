@@ -1,15 +1,13 @@
-import { withSSRContext } from 'aws-amplify';
 import React from 'react';
 import { Box, Flex, Text, Image, Link } from 'theme-ui';
-import Head from 'next/head';
 import {
   slateToReactConfig,
   type SlateToReactConfig,
 } from '@slate-serializers/react';
 import { CldImage } from 'next-cloudinary';
-import PowerBreakdown from '../../src/components/TimePowerZones';
 import dynamic from 'next/dynamic';
 
+import PowerBreakdown from '../../src/components/TimePowerZones';
 import ActivityOverview from '../../src/components/ActivityOverview';
 import { PowerCurveGraph } from '../../src/components/PowerCurveGraph';
 import PostHeader from '../../src/components/PostHeader';

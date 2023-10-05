@@ -43,7 +43,6 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
         },
         query: deletePost,
       })) as GraphQLResult<DeletePostMutation>;
-      console.log(response);
       window.location.href = `/posts`;
     } catch (errors) {
       console.error(errors);

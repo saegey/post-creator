@@ -119,7 +119,6 @@ const UploadGpxModal = () => {
 
     return PubSub.subscribe('newpost').subscribe({
       next: (data: any) => {
-        console.log(data.value.phase);
         const phase = data.value.phase;
         setProcessingGpxStatus(processStatuses[data.value.phase]);
 

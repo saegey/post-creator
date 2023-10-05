@@ -46,10 +46,31 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     };
   });
 
+  const url = getCldOgImageUrl({
+    src: JSON.parse(post.heroImage).public_id,
+  });
+
+  const metaTags = {
+    description: post.subhead.split(0, 150),
+    'twitter:domain': 'mopd.us',
+    'twitter:title': post.title,
+    'twitter:description': post.subhead.split(0, 150),
+    'twitter:url': `http://mopd.us/${post.shortUrl}`,
+    'twitter:card': 'summary_large_image',
+    'twitter:image': `${url}`,
+    'og:title': `${post.title}`,
+    'og:description': post.subhead.split(0, 150),
+    'og:image': url,
+    'og:type': 'article',
+    'og:url': `http://mopd.us/${post.shortUrl}`,
+    author: post.author ? post.author.fullName : 'unknown',
+  };
+
   return {
     props: {
       post: post,
       activity: activity,
+      metaTags,
     },
   };
 };
@@ -66,49 +87,10 @@ const Publish = ({ post, activity }): JSX.Element => {
     <AuthCustom>
       <Head>
         <title>{post.title}</title>
-        <meta
-          property='twitter:title'
-          name='twitter:title'
-          content={post.title}
-        />
-        <meta
-          property='twitter:description'
-          name='twitter:description'
-          content={post.subhead}
-        />
-        <meta
-          property='twitter:url'
-          name='twitter:url'
-          content={`http://mopd.us/${post.shortUrl}`}
-        />
-        <meta
-          property='twitter:card'
-          name='twitter:card'
-          content='summary_large_image'
-        />
-        <meta
-          property='og:url'
-          name='url'
-          content={`http://mopd.us/${post.shortUrl}`}
-        />
-        <meta
-          property='og:description'
-          name='description'
-          content={post.subhead}
-        />
-        <meta property='og:title' name='title' content={post.subhead} />
-        <meta
-          name='author'
-          content={post.author ? post.author.fullName : 'unknown'}
-        />
-        <meta property='og:type' content='article' />
-
         <link
           rel='icon'
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
         />
-        <meta property='og:image' name='image' content={`${url}`} />
-        {/* <meta property='og:image' name='og:image' content={`${url}`} /> */}
       </Head>
       <PostView components={components} config={config} post={post} />
     </AuthCustom>

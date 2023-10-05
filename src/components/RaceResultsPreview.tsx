@@ -87,7 +87,6 @@ const RaceResultsPreview = ({ editor }) => {
                           ? raceResults.results[i]
                           : undefined,
                     });
-                    // console.log(raceResults.results[i]);
                   }
                 }}
               >
@@ -123,7 +122,6 @@ const RaceResultsPreview = ({ editor }) => {
             }}
             disabled={selectedRow ? false : true}
             onClick={() => {
-              console.log('clicked');
               setIsLoading(true);
               saveResults().then((r) => {
                 Transforms.insertNodes(editor, [
