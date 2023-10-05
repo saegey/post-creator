@@ -11,7 +11,7 @@ async function handleCreatePost(event) {
 
   const form = new FormData(event.target);
   const user = await Auth.currentAuthenticatedUser();
-  console.log(user);
+  // console.log(user);
 
   try {
     const response = (await API.graphql({
@@ -45,7 +45,7 @@ const CreatePostModal = ({ setMenuOpen }) => {
         sx={{
           width: '70%',
           maxWidth: '690px',
-          height: '400px',
+          height: 'fit-content',
           margin: 'auto',
           background: 'background',
           borderRadius: '5px',
@@ -58,7 +58,7 @@ const CreatePostModal = ({ setMenuOpen }) => {
         >
           <Flex sx={{ marginBottom: '40px' }}>
             <Box>
-              <h2>New Post</h2>
+              <h2>Create new post</h2>
             </Box>
             <Box sx={{ marginLeft: 'auto' }}>
               <Close onClick={() => setMenuOpen(false)} />

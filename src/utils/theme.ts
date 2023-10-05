@@ -169,6 +169,7 @@ export default {
       fontWeight: '600',
       '&:hover': {
         backgroundColor: 'primaryButtonBackgroundHover',
+        cursor: 'pointer',
       },
       ':disabled': {
         backgroundColor: '#c6c6c6',

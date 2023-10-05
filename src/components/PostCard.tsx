@@ -5,7 +5,10 @@ import { CldImage } from 'next-cloudinary';
 
 const PostCard = ({ post, showAuthor = true }) => {
   return (
-    <Box sx={{ listStyleType: 'none' }} key={`post-${post.id}`}>
+    <Box
+      sx={{ listStyleType: 'none', '&:hover': { cursor: 'pointer' } }}
+      key={`post-${post.id}`}
+    >
       <ThemeLink
         as={Link}
         sx={{ textDecoration: 'none' }}
