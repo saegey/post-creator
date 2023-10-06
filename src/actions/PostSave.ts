@@ -44,7 +44,6 @@ PostSaveProps) => {
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
-    console.log(response, postId, title, postLocation, components);
   } catch (errors) {
     console.error(errors);
   }

@@ -19,7 +19,6 @@ const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
 }); // Async API cannot be server-side rendered
 
 const renderLink = (node) => {
-  // console.log(node);
   const attrs: any = {};
 
   return (
@@ -149,15 +148,6 @@ const SlatePublish = ({ post, activity }) => {
             </Box>
           );
         },
-        // link: ({ node, children = [] }) => {
-        //   console.log(node, children);
-        //   // return `<a href="${node.url}">${children}</a>`;
-        //   return (
-        //     <Box>
-        //       <h1>hola</h1>
-        //     </Box>
-        //   );
-        // },
         activityOverview: () => {
           return (
             <Box
@@ -245,7 +235,6 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         paragraph: ({ node, children = [] }) => {
-          // console.log(node);
           return (
             <>
               {node.children.map((c, i) => {
@@ -274,8 +263,7 @@ const SlatePublish = ({ post, activity }) => {
             </>
           );
         },
-        text: ({ node, children = [] }) => {
-          // console.log(node);
+        text: ({ node }) => {
           return (
             <Text
               as='p'
@@ -283,9 +271,7 @@ const SlatePublish = ({ post, activity }) => {
                 fontSize: '20px',
                 maxWidth: '690px',
                 marginX: 'auto',
-                // width: [null, '690px', '690px'],
                 width: ['100vw', null, null],
-                // font-size: 20px;
                 borderLeftWidth: ['0px', '1px', '1px'],
                 borderLeftStyle: 'solid',
                 borderLeftColor: '#cccccc',
@@ -302,7 +288,6 @@ const SlatePublish = ({ post, activity }) => {
                     className='text'
                     key={`text-paragraph-${i}`}
                     sx={{
-                      // marginY: '15px',
                       fontWeight: c.bold ? '700' : null,
                     }}
                   >

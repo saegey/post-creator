@@ -43,7 +43,12 @@ export default class App extends NextApp {
           <Head>
             {metaTags &&
               Object.entries(metaTags).map((entry) => (
-                <meta property={entry[0]} name={entry[0]} content={entry[1]} />
+                <meta
+                  property={entry[0]}
+                  name={entry[0]}
+                  content={entry[1]}
+                  key={entry[0]}
+                />
               ))}
           </Head>
           <UnitProvider>

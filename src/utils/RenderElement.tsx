@@ -56,19 +56,20 @@ const renderElement = (props) => {
 
     case 'heading-two':
       return (
-        <h2
-          style={{
+        <Text
+          as='h2'
+          sx={{
             fontWeight: 700,
             maxWidth: '690px',
             width: ['100%', '690px', '690px'],
-            // width: '100vw',
             marginLeft: 'auto',
             marginRight: 'auto',
           }}
           {...attributes}
+          {...element.attr}
         >
           {children}
-        </h2>
+        </Text>
       );
     case 'bulleted-list':
       return (

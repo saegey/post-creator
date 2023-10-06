@@ -29,53 +29,56 @@ export const fontFamilyMap = {
   serif: 'Georgia, Times New Roaman,serif',
   monospace: 'Monaco, Courier New,monospace',
 };
-// export const toggleBlock = (editor, format) => {
-//   const isActive = isBlockActive(editor, format);
-//   const isList = list_types.includes(format);
-//   const isIndent = alignment.includes(format);
-//   const isAligned = alignment.some((alignmentType) =>
-//     isBlockActive(editor, alignmentType)
-//   );
 
-//   /*If the node is already aligned and change in indent is called we should unwrap it first and split the node to prevent
-//     messy, nested DOM structure and bugs due to that.*/
-//   if (isAligned && isIndent) {
-//     Transforms.unwrapNodes(editor, {
-//       match: (n: CustomStringElement) =>
-//         alignment.includes(
-//           !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
-//         ),
-//       split: true,
-//     });
-//   }
+export const toggleBlock = (editor, format) => {
+  const isActive = isBlockActive(editor, format);
+  const isList = list_types.includes(format);
+  const isIndent = alignment.includes(format);
+  const isAligned = alignment.some((alignmentType) =>
+    isBlockActive(editor, alignmentType)
+  );
 
-//   /* Wraping the nodes for alignment, to allow it to co-exist with other block level operations*/
-//   if (isIndent) {
-//     Transforms.wrapNodes(editor, {
-//       type: format,
-//       children: [],
-//     } as CustomNode);
-//     return;
-//   }
-//   Transforms.unwrapNodes(editor, {
-//     match: (n: CustomNode) =>
-//       list_types.includes(
-//         !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
-//       ),
-//     split: true,
-//   });
+  /*If the node is already aligned and change in indent is called we should unwrap it first and split the node to prevent
+    messy, nested DOM structure and bugs due to that.*/
+  if (isAligned && isIndent) {
+    Transforms.unwrapNodes(editor, {
+      match: (n: CustomStringElement) =>
+        alignment.includes(
+          !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
+        ),
+      split: true,
+    });
+  }
 
-//   Transforms.setNodes(editor, {
-//     type: isActive ? 'paragraph' : isList ? 'list-item' : format,
-//   } as CustomElement);
+  /* Wraping the nodes for alignment, to allow it to co-exist with other block level operations*/
+  if (isIndent) {
+    Transforms.wrapNodes(editor, {
+      type: format,
+      children: [],
+    } as CustomNode);
+    return;
+  }
 
-//   if (isList && !isActive) {
-//     Transforms.wrapNodes(editor, {
-//       type: format,
-//       children: [],
-//     } as CustomElement);
-//   }
-// };
+  Transforms.unwrapNodes(editor, {
+    match: (n: CustomNode) =>
+      list_types.includes(
+        !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
+      ),
+    split: true,
+  });
+
+  Transforms.setNodes(editor, {
+    type: isActive ? 'paragraph' : isList ? 'list-item' : format,
+  } as CustomElement);
+
+  if (isList && !isActive) {
+    Transforms.wrapNodes(editor, {
+      type: format,
+      children: [],
+    } as CustomElement);
+  }
+};
+
 export const addMarkData = (editor, data) => {
   Editor.addMark(editor, data.format, data.value);
 };
@@ -95,12 +98,14 @@ export const isMarkActive = (editor, format) => {
 };
 
 export const isBlockActive = (editor, format) => {
-  const match = Editor.nodes(editor, {
-    match: (n: CustomNode) =>
-      !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === format,
-  });
+  const [match] = Array.from(
+    Editor.nodes(editor, {
+      match: (n: CustomNode) =>
+        !Editor.isEditor(n) && SlateElement.isElement(n) && n.type === format,
+    })
+  );
 
-  return !match;
+  return !!match;
 };
 
 export const activeMark = (editor, format) => {

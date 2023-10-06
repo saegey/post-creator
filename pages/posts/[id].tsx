@@ -63,7 +63,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
         },
       })
     : '';
-  // console.log(post);
 
   const metaTags = {
     description: post.subhead ? post.subhead.split(0, 150) : '',

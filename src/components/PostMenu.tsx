@@ -2,6 +2,7 @@ import { Flex, Box, Alert, Close, IconButton } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
 import Link from 'next/link';
+import { useSlate } from 'slate-react';
 
 import ActivitySettings from './ActivitySettings';
 import HeadingButton from './HeadingButton';
@@ -18,13 +19,15 @@ import SettingsIcon from './SettingsIcon';
 import { isBlockActive } from '../utils/SlateUtilityFunctions';
 import LinkButton from './LinkButton';
 
-const PostMenu = ({ editor }: { editor: ReactEditor }) => {
+const PostMenu = () => {
   const [isSaving, setIsSaving] = React.useState(false);
   const [savedMessage, setSavedMessage] = React.useState(false);
   const [isHoverSettings, setIsHoverSettings] = React.useState(false);
   const { id } = React.useContext(PostContext);
   const { setIsImageModalOpen, setIsGraphMenuOpen } =
     React.useContext(EditorContext);
+
+  const editor = useSlate();
 
   React.useEffect(() => {
     setSavedMessage(false);
@@ -48,8 +51,8 @@ const PostMenu = ({ editor }: { editor: ReactEditor }) => {
           width: '100vw',
         }}
       >
-        <BoldButton editor={editor} />
-        <HeadingButton editor={editor} />
+        <BoldButton editor={editor} format='bold' />
+        <HeadingButton editor={editor} format='heading-two' />
         <BulletListIcon editor={editor} />
         <LinkButton
           // key={element.id}

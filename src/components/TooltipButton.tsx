@@ -5,7 +5,7 @@ const TooltipButton = ({
   title,
   tooltipText,
   children,
-  disabled = false,
+  disabled = false
 }) => {
   return (
     <IconButton

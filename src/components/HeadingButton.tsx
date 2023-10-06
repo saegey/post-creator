@@ -1,42 +1,52 @@
 import { IconButton } from 'theme-ui';
-import { ReactEditor } from 'slate-react';
-import { Transforms, Editor, Element as SlateElement } from 'slate';
+import { Transforms, Editor, Element as SlateElement, BaseEditor } from 'slate';
+import { isBlockActive } from '../utils/SlateUtilityFunctions';
 
-const toggleHeading = ({ editor }: { editor: ReactEditor }) => {
+const HeadingButton = ({
+  editor,
+  format,
+}: {
+  format: string;
+  editor: BaseEditor;
+}) => {
   const { selection } = editor;
-  if (!selection) return false;
-
-  const [match] = Array.from(
-    Editor.nodes(editor, {
-      at: Editor.unhangRange(editor, selection),
-      match: (n) =>
-        !Editor.isEditor(n) &&
-        SlateElement.isElement(n) &&
-        n['type'] === 'heading-two',
-    })
-  );
-
-  if (match) {
-    let newProperties: Partial<SlateElement>;
-    newProperties = { type: 'paragraph' } as any;
-    Transforms.setNodes<SlateElement>(editor, newProperties);
-  } else {
-    let newProperties: Partial<SlateElement>;
-    newProperties = { type: 'heading-two' } as any;
-    Transforms.setNodes<SlateElement>(editor, newProperties);
-  }
-};
-
-const HeadingButton = ({ editor }: { editor: ReactEditor }) => {
   return (
     <IconButton
       aria-label='Toggle header'
-      onClick={() => toggleHeading({ editor })}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        if (!selection) return false;
+
+        const [match] = Array.from(
+          Editor.nodes(editor, {
+            at: Editor.unhangRange(editor, selection),
+            match: (n) =>
+              !Editor.isEditor(n) &&
+              SlateElement.isElement(n) &&
+              n['type'] === 'heading-two',
+          })
+        );
+
+        if (match) {
+          let newProperties: Partial<SlateElement>;
+          newProperties = { type: 'paragraph' } as any;
+          Transforms.setNodes<SlateElement>(editor, newProperties);
+        } else {
+          let newProperties: Partial<SlateElement>;
+          newProperties = { type: format } as any;
+          Transforms.setNodes<SlateElement>(editor, newProperties);
+        }
+      }}
       variant='iconButton'
+      key='headingtwo'
     >
       <svg
         className='menu-button'
-        fill='var(--theme-ui-colors-text)'
+        fill={
+          isBlockActive(editor, format)
+            ? 'var(--theme-ui-colors-text)'
+            : 'var(--theme-ui-colors-iconButtonDisabled)'
+        }
         width='100%'
         height='100%'
         viewBox='0 0 24 24'

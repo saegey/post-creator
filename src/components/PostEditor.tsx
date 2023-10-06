@@ -27,8 +27,12 @@ import AddImage from './AddImage';
 import withLinks from './plugins/withLinks';
 
 const PostEditor = ({ postId, initialState }) => {
-  const [editor] = React.useState(() =>
-    withHistory(withLinks(withReact(createEditor())))
+  // const [editor] = React.useState(() =>
+  //   withHistory(withLinks(withReact(createEditor())))
+  // );
+  const editor = React.useMemo(
+    () => withHistory(withLinks(withReact(createEditor()))),
+    []
   );
   const [loading, setLoading] = React.useState(true);
 
@@ -37,6 +41,7 @@ const PostEditor = ({ postId, initialState }) => {
     setActivity,
     setPowerAnalysis,
     components,
+    setComponents,
     setTimeInRed,
     setPowerZones,
     setPowerZoneBuckets,
@@ -92,10 +97,10 @@ const PostEditor = ({ postId, initialState }) => {
     };
   }, []);
 
-  React.useEffect(() => {
-    editor.children = components as any;
-    editor.onChange();
-  }, [components]);
+  // React.useEffect(() => {
+  //   editor.children = components as any;
+  //   editor.onChange();
+  // }, [components]);
 
   const getData = async () => {
     const { data } = (await API.graphql({
@@ -150,7 +155,6 @@ const PostEditor = ({ postId, initialState }) => {
         <SkeletonPost />
       ) : (
         <>
-          <PostMenu editor={editor} />
           <Flex>
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isImageModalOpen && (
@@ -172,7 +176,7 @@ const PostEditor = ({ postId, initialState }) => {
             {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
             <Box
               sx={{
-                marginTop: '20px',
+                // marginTop: '20px',
                 minWidth: [null, null, '900px'],
                 marginLeft: isGraphMenuOpen
                   ? ['20px', '20px', 'auto']
@@ -184,29 +188,22 @@ const PostEditor = ({ postId, initialState }) => {
                 width: ['100%', null, null],
                 backgroundColor: 'background',
                 borderRadius: '10px',
-                padding: '10px',
+                padding: '0px',
               }}
             >
-              <Slate editor={editor} initialValue={initialState}>
+              <Slate
+                editor={editor}
+                initialValue={initialState}
+                value={components}
+                onChange={(newValue) => {
+                  setComponents(newValue);
+                }}
+              >
+                <PostMenu />
                 <Editable
                   spellCheck
                   autoFocus
                   renderElement={renderElement}
-                  style={{ padding: '2px' }}
-                  onKeyDown={(event) => {
-                    if (event.key === 'b' && event.metaKey) {
-                      event.preventDefault();
-
-                      const marks = Editor.marks(editor);
-                      const isActive = marks ? marks['bold'] === true : false;
-
-                      if (isActive) {
-                        Editor.removeMark(editor, 'bold');
-                      } else {
-                        Editor.addMark(editor, 'bold', true);
-                      }
-                    }
-                  }}
                   renderLeaf={renderLeaf}
                 />
               </Slate>
