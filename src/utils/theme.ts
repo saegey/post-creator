@@ -1,6 +1,8 @@
 // src/utils/theme.ts
 export default {
   colors: {
+    skeletonLight: 'hsl(0, 0%, 99%)',
+    skeletonDark: 'hsl(0, 0%, 93%)',
     inputBackgroundColor: '#ebebeb',
     inputFocusBorderColor: '#969696',
     secondaryButtonBackground: '#f0f0f0',
@@ -51,6 +53,8 @@ export default {
     chartAxes: 'black',
     modes: {
       dark: {
+        skeletonLight: 'hsl(0, 0%, 12%)',
+        skeletonDark: 'hsl(0, 0%, 7%)',
         inputFocusBorderColor: '#ffffff',
         inputBackgroundColor: '#434343',
         secondaryButtonBackground: '#444444',
@@ -111,13 +115,13 @@ export default {
   },
   boxes: {
     skeletonButton: {
-      height: '33px',
-      width: '163px',
+      height: '32px',
+      width: '32px',
       borderRadius: '5px',
-      backgroundImage:
-        'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-      backgroundSize: '600px',
-      animation: 'shine-lines 1.6s infinite linear',
+      // backgroundImage:
+      //   'linear-gradient(90deg, var(  --theme-ui-colors-iconButtonBackground) 0px, #e8e8e8 40px, var(  --theme-ui-colors-iconButtonBackground) 80px)',
+      // backgroundSize: '600px',
+      // animation: 'shine-lines 1.6s infinite linear',
     },
     sidebarMenuItem: {
       fontSize: '15px',

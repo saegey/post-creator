@@ -62,7 +62,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
             <Flex
               sx={{
                 width: '100%',
-                marginTop: '10px',
+                margin: '10px',
                 padding: '10px',
                 borderBottomStyle: 'solid',
                 borderBottomWidth: '1px',
@@ -70,30 +70,38 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
               }}
             >
               <Flex sx={{ gap: '10px', width: '100%' }}>
-                <Box sx={{ height: '40px', width: '40px' }}>
+                <Flex
+                  sx={{
+                    height: '100%',
+                    // width: '40px',
+                    flexDirection: 'column',
+                  }}
+                >
                   {user.attributes.picture && (
-                    <CldImage
-                      width='400'
-                      height='300'
-                      src={user.attributes.picture}
-                      style={{
-                        // objectFit: 'cover',
-                        width: '100%',
-                        height: '100%',
-                        marginTop: 'auto',
-                        marginBottom: 'auto',
-                        borderRadius: '100%',
-                      }}
-                      // preserveTransformations
-                      // underlay={user.attributes.picture}
-                      quality={90}
-                      // sizes='100vw'
-                      sizes='(max-width: 480px) 100vw, 50vw'
-                      alt='Description of my image'
-                    />
+                    <Box sx={{ width: '40px', height: '40px' }}>
+                      <CldImage
+                        width='400'
+                        height='300'
+                        src={user.attributes.picture}
+                        style={{
+                          // objectFit: 'cover',
+                          width: '100%',
+                          height: 'auto',
+                          marginTop: 'auto',
+                          marginBottom: 'auto',
+                          borderRadius: '100%',
+                        }}
+                        // preserveTransformations
+                        // underlay={user.attributes.picture}
+                        quality={90}
+                        // sizes='100vw'
+                        sizes='(max-width: 480px) 100vw, 50vw'
+                        alt='Description of my image'
+                      />
+                    </Box>
                   )}
                   {!user.attributes.picture && <AvatarButton />}
-                </Box>
+                </Flex>
                 <Box>
                   <Text as='div' sx={{ color: 'text' }}>
                     {user.attributes.name}
@@ -103,7 +111,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     sx={{
                       lineHeight: '12px',
                       fontWeight: 700,
-                      marginTop: '5px',
+                      // marginTop: '5px',
                       color: 'text',
                     }}
                   >
