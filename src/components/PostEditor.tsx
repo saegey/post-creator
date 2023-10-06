@@ -27,9 +27,6 @@ import AddImage from './AddImage';
 import withLinks from './plugins/withLinks';
 
 const PostEditor = ({ postId, initialState }) => {
-  // const [editor] = React.useState(() =>
-  //   withHistory(withLinks(withReact(createEditor())))
-  // );
   const editor = React.useMemo(
     () => withHistory(withLinks(withReact(createEditor()))),
     []
@@ -40,7 +37,6 @@ const PostEditor = ({ postId, initialState }) => {
     id,
     setActivity,
     setPowerAnalysis,
-    components,
     setComponents,
     setTimeInRed,
     setPowerZones,
@@ -55,7 +51,6 @@ const PostEditor = ({ postId, initialState }) => {
     setIsFtpUpdating,
     isImageModalOpen,
     setIsImageModalOpen,
-    // isPhotoCaptionOpen,
     isShareModalOpen,
     setIsHeroImageModalOpen,
     isHeroImageModalOpen,
@@ -194,7 +189,7 @@ const PostEditor = ({ postId, initialState }) => {
               <Slate
                 editor={editor}
                 initialValue={initialState}
-                value={components}
+                // value={components}
                 onChange={(newValue) => {
                   setComponents(newValue);
                 }}
