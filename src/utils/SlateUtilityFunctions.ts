@@ -4,7 +4,6 @@ import {
   Element as SlateElement,
   BaseElement,
 } from 'slate';
-import { useSlateStatic } from 'slate-react';
 
 interface CustomNode extends BaseElement {
   type: boolean;
@@ -17,7 +16,7 @@ interface CustomStringElement extends BaseElement {
 }
 
 const alignment = ['alignLeft', 'alignRight', 'alignCenter'];
-const list_types = ['orderedList', 'unorderedList'];
+const list_types = ['orderedList', 'bulleted-list'];
 export const sizeMap = {
   small: '0.75em',
   normal: '1em',
@@ -40,15 +39,15 @@ export const toggleBlock = (editor, format) => {
 
   /*If the node is already aligned and change in indent is called we should unwrap it first and split the node to prevent
     messy, nested DOM structure and bugs due to that.*/
-  if (isAligned && isIndent) {
-    Transforms.unwrapNodes(editor, {
-      match: (n: CustomStringElement) =>
-        alignment.includes(
-          !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
-        ),
-      split: true,
-    });
-  }
+  // if (isAligned && isIndent) {
+  //   Transforms.unwrapNodes(editor, {
+  //     match: (n: CustomStringElement) =>
+  //       alignment.includes(
+  //         !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
+  //       ),
+  //     split: true,
+  //   });
+  // }
 
   /* Wraping the nodes for alignment, to allow it to co-exist with other block level operations*/
   if (isIndent) {
@@ -60,10 +59,10 @@ export const toggleBlock = (editor, format) => {
   }
 
   Transforms.unwrapNodes(editor, {
-    match: (n: CustomNode) =>
-      list_types.includes(
-        !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
-      ),
+    match: (n: CustomStringElement) =>
+      !Editor.isEditor(n) &&
+      SlateElement.isElement(n) &&
+      list_types.includes(n.type),
     split: true,
   });
 
