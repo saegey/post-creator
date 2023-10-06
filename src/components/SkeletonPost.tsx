@@ -18,152 +18,93 @@ const SkeletonPost = () => {
           borderBottomColor: 'buttonBorderColor',
         }}
       >
-        <Box variant='boxes.skeletonButton' />
-        <Box variant='boxes.skeletonButton' />
-        <Box variant='boxes.skeletonButton' />
+        {Array.from(Array(9).keys()).map((b) => (
+          <Box variant='boxes.skeletonButton' className='skeleton' />
+        ))}
       </Flex>
       <Box
         sx={{
-          marginTop: '0px',
-          maxWidth: '900px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
+          marginTop: '20px',
+          minWidth: [null, null, '900px'],
+          marginLeft: [0, 0, 'auto'],
+          marginRight: [0, 0, 'auto'],
+          marginBottom: '50px',
+          width: ['100%', null, null],
           backgroundColor: 'background',
           borderRadius: '10px',
-          border: '1px dotted #bcbcbc',
           padding: '10px',
         }}
       >
         <Flex sx={{ flexDirection: 'column', gap: '20px' }}>
           <Box
             sx={{
-              width: ['100%', '500px', '500px'],
-              height: '40px',
-              backgroundImage:
-                'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-              backgroundSize: '600px',
-              animation: 'shine-avatar 1.6s infinite linear',
-              borderRadius: '100px',
-            }}
-          />
-          <Box
-            sx={{
-              width: '300px',
-              height: '30px',
-              backgroundImage:
-                'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-              backgroundSize: '600px',
-              animation: 'shine-avatar 1.6s infinite linear',
-              borderRadius: '100px',
-            }}
-          />
-          <Box sx={{ width: '80%', marginX: 'auto' }}>
-            <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
-              <Box
-                sx={{
-                  width: '100%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-              <Box
-                sx={{
-                  width: '80%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-              <Box
-                sx={{
-                  width: '90%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-              <Box
-                sx={{
-                  width: '60%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-            </Flex>
-          </Box>
-          <Box
-            sx={{
               width: '100%',
+              // maxWidth: '690px',
               height: '450px',
-              backgroundImage:
-                'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-              backgroundSize: '600px',
-              animation: 'shine-avatar 1.6s infinite linear',
+              backgroundSize: '400px',
               borderRadius: '5px',
             }}
+            className='skeleton'
           />
-          <Box sx={{ width: '80%', marginX: 'auto' }}>
-            <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
-              <Box
-                sx={{
-                  width: '100%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-              <Box
-                sx={{
-                  width: '80%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-              <Box
-                sx={{
-                  width: '90%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-              <Box
-                sx={{
-                  width: '60%',
-                  height: '20px',
-                  backgroundImage:
-                    'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
-                  backgroundSize: '600px',
-                  animation: 'shine-avatar 1.6s infinite linear',
-                  borderRadius: '40px',
-                }}
-              />
-            </Flex>
-          </Box>
+          <Flex>
+            <Box sx={{ marginX: 'auto', maxWidth: '690px', width: '690px' }}>
+              <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
+                <Box
+                  sx={{
+                    width: '100%',
+                    // maxWidth: '690px',
+                    height: '20px',
+                    backgroundSize: '600px',
+                    borderRadius: '5px',
+                  }}
+                  className='skeleton'
+                />
+                <Box
+                  sx={{
+                    width: '100%',
+                    // maxWidth: '690px',
+                    height: '20px',
+                    backgroundSize: '600px',
+                    borderRadius: '5px',
+                  }}
+                  className='skeleton'
+                />
+                <Box
+                  sx={{
+                    width: '100%',
+                    // maxWidth: '690px',
+                    height: '20px',
+                    backgroundSize: '600px',
+                    borderRadius: '5px',
+                  }}
+                  className='skeleton'
+                />
+                <Box
+                  sx={{
+                    width: '100%',
+                    // maxWidth: '690px',
+                    height: '20px',
+                    backgroundSize: '600px',
+                    borderRadius: '5px',
+                  }}
+                  className='skeleton'
+                />
+              </Flex>
+            </Box>
+          </Flex>
+          <Flex>
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: '690px',
+                marginX: 'auto',
+                height: '450px',
+                backgroundSize: '400px',
+                borderRadius: '5px',
+              }}
+              className='skeleton'
+            />
+          </Flex>
         </Flex>
       </Box>
     </>

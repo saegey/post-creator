@@ -12,8 +12,9 @@ const AvatarButton = ({
       onClick={onClick}
       sx={{
         width: '32px',
-        height: 'auto',
+        height: 'fit-content',
         cursor: 'pointer',
+        marginY: 'auto',
       }}
     >
       <svg

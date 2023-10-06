@@ -41,29 +41,24 @@ const PostsAll = ({
             <Flex
               sx={{
                 height: '240px',
-                backgroundImage:
-                  'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
                 borderRadius: '5px',
-                animation: 'shine-avatar 1.6s infinite linear',
               }}
+              className='skeleton'
             ></Flex>
             <Flex
               sx={{
                 height: '240px',
-                backgroundImage:
-                  'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
                 borderRadius: '5px',
-                animation: 'shine-avatar 1.6s infinite linear',
               }}
+              className='skeleton'
             ></Flex>
             <Flex
               sx={{
                 height: '240px',
-                backgroundImage:
-                  'linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px)',
+
                 borderRadius: '5px',
-                animation: 'shine-avatar 1.6s infinite linear',
               }}
+              className='skeleton'
             ></Flex>
           </Grid>
         )}
