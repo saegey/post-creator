@@ -29,15 +29,11 @@ const BulletListIcon = ({ editor }) => {
         }
       }}
       title={'Bullet List'}
+      variant='iconButton'
     >
       <Box sx={{ padding: '2px', marginY: 'auto' }}>
         <svg width='100%' height='100%' viewBox='0 -3.5 29 29' version='1.1'>
-          <g
-            stroke='none'
-            strokeWidth='1'
-            fill='none'
-            fillRule='evenodd'
-          >
+          <g stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
             <g
               id='Icon-Set-Filled'
               transform='translate(-571.000000, -210.000000)'

@@ -20,6 +20,7 @@ const BoldButton = ({
       }}
       title={'Toggle Bold Text'}
       key='bold1'
+      variant='iconButton'
     >
       <BoldIcon active={isMarkActive(editor, format)} />
     </IconButton>
