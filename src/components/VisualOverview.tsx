@@ -28,7 +28,6 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     d: null,
   });
 
-  // console.log(width, height);
   const units = useUnits();
 
   const downSampledData = React.useMemo(

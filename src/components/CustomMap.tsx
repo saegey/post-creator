@@ -60,17 +60,6 @@ const Map = ({
     }
     const geojsonSource = map.current?.getSource('route') as GeoJSONSource;
     if (!geojsonSource) {
-      console.log('customMap - source is mssing, add sourcee', {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates,
-          },
-        },
-      });
       map.current?.addSource('route', {
         type: 'geojson',
         data: {
@@ -83,7 +72,7 @@ const Map = ({
         },
       });
     } else {
-      console.log('customMap - updatee source');
+      // console.log('customMap - updatee source');
       try {
         const data = {
           type: 'FeatureCollection',
@@ -194,7 +183,7 @@ const Map = ({
 
     map.current.once('load', () => {
       setIsMapLoaded(true);
-      console.log('customMap - once load hook');
+      // console.log('customMap - once load hook');
     });
 
     // Create a 'LngLatBounds' with both corners at the first coordinate.
@@ -210,11 +199,11 @@ const Map = ({
     if (map.current) {
       return () => {
         map.current?.remove();
-        console.log('map destroy');
+        // console.log('map destroy');
       };
     } else {
       return () => {
-        console.log('map destroy empty');
+        // console.log('map destroy empty');
       };
     }
   }, []);

@@ -18,10 +18,6 @@ const PostsAll = ({
 }) => {
   const [newPost, setNewPost] = React.useState(false);
 
-  useEffect(() => {
-    console.log('initialLoad');
-  }, []);
-
   return (
     <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
       {newPost && <CreatePostModal setMenuOpen={setNewPost} />}

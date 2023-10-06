@@ -45,7 +45,6 @@ class UnitProvider extends React.Component<MyProps, MyState> {
   };
 
   changeToMetric = () => {
-    // console.log('change to mmetric');
     this.setState(() => ({
       unitOfMeasure: 'metric',
       distanceUnit: 'km',
@@ -55,7 +54,6 @@ class UnitProvider extends React.Component<MyProps, MyState> {
 
   toggleUnit = () => {
     const { unitOfMeasure } = this.state;
-    // console.log(unitOfMeasure);
     if (unitOfMeasure === 'imperial') {
       this.changeToMetric();
     } else {
@@ -63,7 +61,6 @@ class UnitProvider extends React.Component<MyProps, MyState> {
     }
     localStorage.setItem('unitOfMeasure', unitOfMeasure);
     return unitOfMeasure;
-    // this.setState({ unitOfMeasure, elevationUnit, distanceUnit });
   };
 
   render() {

@@ -11,7 +11,6 @@ async function handleCreatePost(event) {
 
   const form = new FormData(event.target);
   const user = await Auth.currentAuthenticatedUser();
-  // console.log(user);
 
   try {
     const response = (await API.graphql({

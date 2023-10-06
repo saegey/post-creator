@@ -97,7 +97,6 @@ const HeaderPublic = () => {
                             onClick={(e) => {
                               const next = mode === 'dark' ? 'light' : 'dark';
                               setMode(next);
-                              // console.log(next);
                             }}
                           />
                         </Box>
