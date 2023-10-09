@@ -1,10 +1,14 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Grid, Box, Button, Flex, Text } from 'theme-ui';
+import { API, Auth } from 'aws-amplify';
+import { GraphQLResult } from '@aws-amplify/api';
 import React, { useEffect } from 'react';
 
 import PostCard from './PostCard';
 import Header from '../../src/components/Header';
 import { PostType } from '../../pages/posts';
+import { CreatePostMutation } from '../API';
+import { createPost } from '../graphql/mutations';
 import CreatePostModal from './CreatePostModal';
 
 const PostsAll = ({
@@ -16,11 +20,32 @@ const PostsAll = ({
   user?: any;
   posts: PostType | undefined;
 }) => {
-  const [newPost, setNewPost] = React.useState(false);
+  // const [newPost, setNewPost] = React.useState(false);
+
+  const createNewPost = async () => {
+    const response = (await API.graphql({
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      query: createPost,
+      variables: {
+        input: {
+          title: '',
+          type: 'Post',
+          components: JSON.stringify([
+            { type: 'text', children: [{ text: '' }] },
+          ]),
+          postAuthorId: user.attributes.sub,
+        },
+      },
+    })) as GraphQLResult<CreatePostMutation>;
+    if (!response || !response.data || !response.data.createPost) {
+      console.error('failed to create post');
+    }
+    window.location.href = `/posts/${response?.data?.createPost?.id}/edit`;
+    // setNewPost(true);
+  };
 
   return (
     <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
-      {newPost && <CreatePostModal setMenuOpen={setNewPost} />}
       <Header user={user} signOut={signOut} title={'My Posts'} />
       <Box
         sx={{
@@ -60,7 +85,7 @@ const PostsAll = ({
         )}
         {posts && posts.length > 0 && (
           <Box sx={{ paddingBottom: '20px' }}>
-            <Button onClick={() => setNewPost(true)} variant='primaryButton'>
+            <Button onClick={() => createNewPost()} variant='primaryButton'>
               New Post
             </Button>
           </Box>
@@ -91,7 +116,7 @@ const PostsAll = ({
             </Text>
             When you share posts, they will appear on your profile.
             <Box>
-              <Button variant='primaryButton' onClick={() => setNewPost(true)}>
+              <Button variant='primaryButton' onClick={() => createNewPost()}>
                 Share your first post
               </Button>
             </Box>

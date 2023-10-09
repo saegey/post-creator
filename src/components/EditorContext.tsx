@@ -17,6 +17,8 @@ export type EditorContextType = {
   setIsShareModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isRaceResultsModalOpen: boolean;
   setIsRaceResultsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isSettingsModalOpen: boolean;
+  setIsSettingsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -36,6 +38,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsShareModalOpen: () => {},
   isRaceResultsModalOpen: false,
   setIsRaceResultsModalOpen: () => {},
+  isSettingsModalOpen: false,
+  setIsSettingsModalOpen: () => {},
 });
 
 export { EditorContext };

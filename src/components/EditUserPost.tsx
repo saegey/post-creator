@@ -21,7 +21,6 @@ const EditUserPost = ({
   author,
   signOut,
 }: EditUserPostProps) => {
-  // editor context
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
   const [isGpxUploadOpen, setIsGpxUploadOpen] = React.useState(false);
@@ -31,8 +30,10 @@ const EditUserPost = ({
   const [isShareModalOpen, setIsShareModalOpen] = React.useState(false);
   const [isRaceResultsModalOpen, setIsRaceResultsModalOpen] =
     React.useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState(false);
 
   const { push } = useRouter();
+  // console.log(postComponents);
 
   React.useEffect(() => {
     if (user.attributes.sub !== author.id) {
@@ -68,6 +69,8 @@ const EditUserPost = ({
             setIsShareModalOpen,
             isRaceResultsModalOpen,
             setIsRaceResultsModalOpen,
+            isSettingsModalOpen,
+            setIsSettingsModalOpen,
           }}
         >
           <PostEditor postId={postId} initialState={postComponents} />

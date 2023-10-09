@@ -1,8 +1,8 @@
 import { withSSRContext } from 'aws-amplify';
 import React from 'react';
 import Head from 'next/head';
-// import { getCldOgImageUrl } from 'next-cloudinary';
 import { constructCloudinaryUrl } from '@cloudinary-util/url-loader';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import { getPostInitial } from '../../src/graphql/customQueries';
 import { getActivity } from '../../src/actions/PostGet';
@@ -49,31 +49,29 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     };
   });
 
-  const url = post.heroImage
-    ? constructCloudinaryUrl({
-        options: {
-          src: JSON.parse(post.heroImage).public_id,
-          width: 800,
-          height: 600,
-        },
-        config: {
-          cloud: {
-            cloudName: cloudUrl,
-          },
-        },
-      })
-    : '';
+  const url = constructCloudinaryUrl({
+    options: {
+      src: JSON.parse(post.heroImage).public_id,
+      width: 800,
+      height: 600,
+    },
+    config: {
+      cloud: {
+        cloudName: cloudUrl,
+      },
+    },
+  });
 
   const metaTags = {
     description: post.subhead ? post.subhead.split(0, 150) : '',
     'twitter:domain': 'mopd.us',
     'twitter:title': post.title,
-    'twitter:description':  post.subhead ? post.subhead.split(0, 150) : '',
+    'twitter:description': post.subhead ? post.subhead.split(0, 150) : '',
     'twitter:url': `http://mopd.us/${post.shortUrl}`,
     'twitter:card': 'summary_large_image',
     'twitter:image': `${post.heroImage ? url : ''}`,
     'og:title': `${post.title}`,
-    'og:description':  post.subhead ? post.subhead.split(0, 150) : '',
+    'og:description': post.subhead ? post.subhead.split(0, 150) : '',
     'og:image': url,
     'og:type': 'article',
     'og:url': `http://mopd.us/${post.shortUrl}`,
@@ -89,9 +87,10 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   };
 };
 
-const Publish = ({ post, activity }): JSX.Element => {
+const Publish = ({ post, activity, user }): JSX.Element => {
   const config = SlatePublish({ post, activity });
   const components = JSON.parse(post.components);
+  // console.log(post.author);
 
   return (
     <AuthCustom>
@@ -102,9 +101,14 @@ const Publish = ({ post, activity }): JSX.Element => {
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
         />
       </Head>
-      <PostView components={components} config={config} post={post} />
+      <PostView
+        components={components}
+        config={config}
+        post={post}
+        user={user}
+      />
     </AuthCustom>
   );
 };
 
-export default Publish;
+export default withAuthenticator(Publish);

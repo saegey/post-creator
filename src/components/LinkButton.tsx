@@ -1,19 +1,9 @@
 import { useRef, useState } from 'react';
 import { insertLink } from '../utils/link';
 
-import {
-  Button,
-  Box,
-  Input,
-  Checkbox,
-  Flex,
-  Label,
-  IconButton,
-} from 'theme-ui';
-import { isBlockActive } from '../utils/SlateUtilityFunctions';
+import { Box, Input, Checkbox, Flex, Label, IconButton } from 'theme-ui';
 import usePopup from './usePopup';
 import { Transforms } from 'slate';
-import TooltipButton from './TooltipButton';
 
 const LinkButton = (props) => {
   const { editor } = props;
@@ -33,7 +23,8 @@ const LinkButton = (props) => {
     setShowPopup((prev) => !prev);
     setShowInNewTab(false);
   };
-  const toggleLink = () => {
+  const toggleLink = (e) => {
+    e.preventDefault();
     setSelection(editor.selection);
     setShowPopup((prev) => !prev);
   };
@@ -46,12 +37,10 @@ const LinkButton = (props) => {
   };
   return (
     <Box ref={linkInputRef} sx={{ position: 'relative', display: 'inline' }}>
-      <TooltipButton
-        onClick={toggleLink}
+      <IconButton
+        onMouseDown={toggleLink}
         title={'Toggle Bold Text'}
-        tooltipText={'Toggle selected to bold ⌘B'}
-        // format={'link'}
-        // active={isBlockActive(editor, 'link')}
+        variant='iconButton'
       >
         <svg
           width='100%'
@@ -69,7 +58,7 @@ const LinkButton = (props) => {
           />
         </svg>
         {/* <Icon icon='link' /> */}
-      </TooltipButton>
+      </IconButton>
       {showPopup && (
         <Box
           sx={{
@@ -92,7 +81,6 @@ const LinkButton = (props) => {
               name='url'
               value={url}
               placeholder='https://google.com'
-              // defaultValue={title ? title : ''}
               variant={'defaultInput'}
               onChange={handleInputChange}
             />
@@ -143,8 +131,6 @@ const LinkButton = (props) => {
           <Flex>
             <Label>
               <Checkbox
-                // type='checkbox'
-                // checked={showInNewTab}
                 onChange={handleInputChange}
               />
               <span style={{ fontSize: '14px' }}>Open in new tab</span>

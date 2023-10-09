@@ -93,6 +93,14 @@ const Post = ({
   postRaceResults,
 }) => {
   // const router = useRouter();
+  console.log(postComponents);
+  const isNewPost = (postComponents) => {
+    if (postComponents.length === 1 && postComponents[0].type === 'text') {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const [title, setTitle] = React.useState(postTitle);
   const [subhead, setSubhead] = React.useState(postSubhead);
   const [postLocation, setPostLocation] = React.useState(postLocationOrig);
@@ -100,8 +108,26 @@ const Post = ({
   const [activity, setActivity] = React.useState([]);
   const [gpxFile, setGpxFile] = React.useState(postGpxFile);
   const [stravaUrl, setStravaUrl] = React.useState(postStravaUrl);
-  const [components, setComponents] = React.useState(postComponents);
+  const [components, setComponents] = React.useState(
+    isNewPost(postComponents)
+      ? [
+          {
+            type: 'heroBanner',
+            children: [{ text: '' }],
+          },
+          {
+            type: 'postAuthor',
+            children: [{ text: '' }],
+          },
+          {
+            type: 'paragraph',
+            children: [{ text: 'Discuss your race...' }],
+          },
+        ]
+      : postComponents
+  );
   const [images, setImages] = React.useState(postImages ? postImages : []);
+
   const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
 
@@ -225,6 +251,8 @@ const Post = ({
           setShortUrl,
           raceResults,
           setRaceResults,
+          author,
+          setAuthor,
         }}
       >
         <div>

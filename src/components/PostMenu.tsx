@@ -22,10 +22,14 @@ import LinkButton from './LinkButton';
 const PostMenu = () => {
   const [isSaving, setIsSaving] = React.useState(false);
   const [savedMessage, setSavedMessage] = React.useState(false);
-  const [isHoverSettings, setIsHoverSettings] = React.useState(false);
+  // const [isHoverSettings, setIsHoverSettings] = React.useState(false);
   const { id } = React.useContext(PostContext);
-  const { setIsImageModalOpen, setIsGraphMenuOpen } =
-    React.useContext(EditorContext);
+  const {
+    setIsImageModalOpen,
+    setIsGraphMenuOpen,
+    isSettingsModalOpen,
+    setIsSettingsModalOpen,
+  } = React.useContext(EditorContext);
 
   const editor = useSlate();
 
@@ -86,7 +90,7 @@ const PostMenu = () => {
               }}
               onClick={() => {
                 setIsImageModalOpen(false);
-                setIsHoverSettings(true);
+                setIsSettingsModalOpen(true);
               }}
             >
               <IconButton
@@ -98,10 +102,10 @@ const PostMenu = () => {
               </IconButton>
             </Box>
           </Flex>
-          {isHoverSettings && (
+          {isSettingsModalOpen && (
             <ActivitySettings
-              isOpen={isHoverSettings}
-              setIsOpen={setIsHoverSettings}
+              // isOpen={isSettingsModalOpen}
+              // setIsOpen={set}
               setSavedMessage={setSavedMessage}
             />
           )}

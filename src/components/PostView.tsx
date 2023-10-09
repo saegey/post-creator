@@ -11,9 +11,10 @@ import Header from './Header';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import Link from 'next/link';
+import HeaderPublic from './HeaderPublic';
 
 const PostView = ({
-  user,
+  user = undefined,
   signOut,
   components,
   config,
@@ -25,6 +26,7 @@ const PostView = ({
   config: any;
   post: any;
 }) => {
+  console.log(user);
   return (
     <Box
       as='main'
@@ -32,7 +34,9 @@ const PostView = ({
         marginBottom: 'auto',
       }}
     >
-      <Header user={user} signOut={signOut} title={'Post'} />
+      {user && <Header user={user} signOut={signOut} title={'Post'} />}
+      {!user && <HeaderPublic />}
+
       <Container
         as='article'
         className='article'
@@ -60,7 +64,7 @@ const PostView = ({
         }}
       >
         <SlateToReact node={components} config={config} />
-        {post.author.id === user.attributes.sub && (
+        {user && post.author.id === user.attributes.sub && (
           <Box sx={{ position: 'absolute', top: '20px', right: '20px' }}>
             <ThemeLink
               as={Link}
@@ -120,4 +124,4 @@ const PostView = ({
   );
 };
 
-export default withAuthenticator(PostView);
+export default PostView;

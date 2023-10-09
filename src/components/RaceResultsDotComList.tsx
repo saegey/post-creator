@@ -36,12 +36,13 @@ const RaceResultsDotComList = ({
                       ? 'selectedBackgroundText'
                       : null,
                   borderRadius: '5px',
+                  fontSize: ['15px', '16px', '17px'],
                 }}
               >
-                <Text as='span' sx={{ width: '60px' }}>
+                <Text as='span' sx={{ width: ['30px', '60px', '60px'] }}>
                   {row.CatPlace}
                 </Text>
-                <Text as='span' sx={{ width: '300px' }}>
+                <Text as='span' sx={{ width: ['150px', '300px', '300px'] }}>
                   {row.Name}
                 </Text>
                 <Text as='span'>{row.Speed}</Text>

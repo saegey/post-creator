@@ -25,10 +25,11 @@ import ShareModal from './ShareModal';
 import RaceResultsImport from './RaceResultsImport';
 import AddImage from './AddImage';
 import withLinks from './plugins/withLinks';
+import withLayout from './withLayout';
 
 const PostEditor = ({ postId, initialState }) => {
   const editor = React.useMemo(
-    () => withHistory(withLinks(withReact(createEditor()))),
+    () => withLayout(withHistory(withLinks(withReact(createEditor())))),
     []
   );
   const [loading, setLoading] = React.useState(true);
@@ -91,11 +92,6 @@ const PostEditor = ({ postId, initialState }) => {
       subscription.unsubscribe();
     };
   }, []);
-
-  // React.useEffect(() => {
-  //   editor.children = components as any;
-  //   editor.onChange();
-  // }, [components]);
 
   const getData = async () => {
     const { data } = (await API.graphql({
@@ -184,15 +180,16 @@ const PostEditor = ({ postId, initialState }) => {
                 backgroundColor: 'background',
                 borderRadius: '10px',
                 padding: '0px',
+                paddingBottom: '200px',
               }}
             >
               <Slate
                 editor={editor}
                 initialValue={initialState}
-                // value={components}
                 onChange={(newValue) => {
                   setComponents(newValue);
                 }}
+                // style={{ marginBottom: '200px' }}
               >
                 <PostMenu />
                 <Editable
@@ -200,6 +197,7 @@ const PostEditor = ({ postId, initialState }) => {
                   autoFocus
                   renderElement={renderElement}
                   renderLeaf={renderLeaf}
+                  style={{ paddingBottom: '200px' }}
                 />
               </Slate>
             </Box>

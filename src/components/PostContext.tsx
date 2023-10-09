@@ -28,6 +28,8 @@ export type RaceResultRow = {
     | undefined;
 };
 
+export type Author = { fullName: string; image: string };
+
 export type PostContextType = {
   id: string;
   title: string | null;
@@ -43,6 +45,7 @@ export type PostContextType = {
   gpxFile: string | null;
   stravaUrl: string | undefined;
   components: Array<{ type: string; children: Array<{ text: string }> }> | null;
+  author: { fullName: string; image: string } | undefined;
   images: Array<CloudinaryImage> | null;
   heroImage: CloudinaryImage | undefined;
   currentFtp: string | null;
@@ -111,6 +114,7 @@ export type PostContextType = {
   setRaceResults: React.Dispatch<
     React.SetStateAction<RaceResultRow | undefined>
   >;
+  setAuthor: React.Dispatch<React.SetStateAction<Author | undefined>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -132,6 +136,7 @@ const PostContext = React.createContext<PostContextType>({
   tempAnalysis: null,
   elevationTotal: null,
   normalizedPower: null,
+  author: undefined,
   distance: null,
   elapsedTime: null,
   stoppedTime: null,
@@ -168,6 +173,7 @@ const PostContext = React.createContext<PostContextType>({
   setDate: () => {},
   setShortUrl: () => {},
   setRaceResults: () => {},
+  setAuthor: () => {},
 });
 
 export { PostContext };
