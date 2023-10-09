@@ -21,9 +21,10 @@ const RaceResultsDotComList = ({
       </Text>
       <Box sx={{ height: '500px', overflowY: 'scroll', paddingTop: '10px' }}>
         {raceResults &&
-          raceResults?.results?.map((row) => {
+          raceResults?.results?.map((row, i) => {
             return (
               <Flex
+                key={`result-${i}`}
                 sx={{
                   paddingY: '2px',
                   paddingX: '5px',
@@ -36,12 +37,13 @@ const RaceResultsDotComList = ({
                       ? 'selectedBackgroundText'
                       : null,
                   borderRadius: '5px',
+                  fontSize: ['15px', '16px', '17px'],
                 }}
               >
-                <Text as='span' sx={{ width: '60px' }}>
+                <Text as='span' sx={{ width: ['30px', '60px', '60px'] }}>
                   {row.CatPlace}
                 </Text>
-                <Text as='span' sx={{ width: '300px' }}>
+                <Text as='span' sx={{ width: ['150px', '300px', '300px'] }}>
                   {row.Name}
                 </Text>
                 <Text as='span'>{row.Speed}</Text>

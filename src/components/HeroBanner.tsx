@@ -1,25 +1,36 @@
-import { Box, Flex, Button, Image as ThemeImage } from 'theme-ui';
+import {
+  Box,
+  Flex,
+  Button,
+  Image as ThemeImage,
+  Text,
+  ImageProps,
+} from 'theme-ui';
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
-import { CldImage } from 'next-cloudinary';
+import { CldImage, CldImageProps } from 'next-cloudinary';
 
 import { PostContext } from './PostContext';
-import AddImage from './AddImage';
 import PostHeader from './PostHeader';
 import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';
 import { EditorContext } from './EditorContext';
 import PhotoCaptionModal from './PhotoCaptionModal';
 import { useClickOutside } from '../utils/ux';
+import PostHeaderTextBlock from './PostHeaderTextBlock';
+
+// interface CustomImage extends HTMLImageElement {
+//   priority: boolean;
+// }
 
 const HeroBanner = ({ element }) => {
-  const { heroImage, setHeroImage, title, postLocation, date, subhead } =
+  const { heroImage, title, postLocation, date, subhead } =
     React.useContext(PostContext);
 
   const {
     setIsHeroImageModalOpen,
-    isHeroImageModalOpen,
+    // isHeroImageModalOpen,
     setIsPhotoCaptionOpen,
     isPhotoCaptionOpen,
   } = React.useContext(EditorContext);
@@ -32,111 +43,121 @@ const HeroBanner = ({ element }) => {
     e.stopPropagation();
   });
 
+  const menu = (
+    <Box sx={{ position: 'absolute', right: '10px', top: '20px' }}>
+      <Box sx={{ position: 'relative' }} ref={wrapperRef}>
+        <OptionsButton
+          onClick={() => {
+            if (isMenuOpen) {
+              setIsMenuOpen(false);
+            } else {
+              setIsMenuOpen(true);
+            }
+          }}
+        />
+        <Dropdown isOpen={isMenuOpen}>
+          <Box
+            onClick={() => {
+              setIsPhotoCaptionOpen(true);
+              setIsMenuOpen(false);
+            }}
+            variant='boxes.dropdownMenuItem'
+          >
+            Photo Caption
+          </Box>
+          <Box
+            onClick={() => {
+              setIsHeroImageModalOpen(true);
+              setIsMenuOpen(false);
+            }}
+            variant='boxes.dropdownMenuItem'
+          >
+            Change Image
+          </Box>
+          {/* <Box
+            onClick={() => Transforms.removeNodes(editor, { at: path })}
+            variant='boxes.dropdownMenuItem'
+          >
+            Remove
+          </Box> */}
+        </Dropdown>
+      </Box>
+    </Box>
+  );
+
   const editor = useSlateStatic() as ReactEditor;
-  const path = ReactEditor.findPath(editor, element);
-
-
+  // const path = ReactEditor.findPath(editor, element);
 
   return (
     <>
       <Box
         sx={{
           width: '100%',
+          marginBottom: '60px',
         }}
         contentEditable={false}
       >
         {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
-
-        {heroImage ? (
-          <Flex
+        <Flex
+          sx={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '500px',
+            flexDirection: ['column', 'row', 'row'],
+            width: '100%',
+          }}
+        >
+          <Box
             sx={{
-              position: 'relative',
-              backgroundColor: 'muted',
-              width: '100%',
-              marginBottom: ['30px', '60px', '60px'],
-            }}
-          >
-            <PostHeader
-              headerImage={
-                <ThemeImage
-                  as={CldImage}
-                  width='800'
-                  height='800'
-                  src={heroImage.public_id}
-                  sizes='100vw'
-                  alt='race pic'
-                  // quality={90}
-                  sx={{
-                    objectFit: 'cover',
-                    height: [null, null, '100%'],
-                    width: ['100%', null, null],
-                  }}
-                />
-              }
-              type={'Race'}
-              teaser={subhead ? subhead : ''}
-              headerImageCaption={element.photoCaption}
-              title={title ? title : ''}
-              location={postLocation ? postLocation : ''}
-              date={date ? date : ''}
-            />
-
-            <Box sx={{ position: 'absolute', right: '10px', top: '20px' }}>
-              <Box sx={{ position: 'relative' }} ref={wrapperRef}>
-                <OptionsButton
-                  onClick={() => {
-                    if (isMenuOpen) {
-                      setIsMenuOpen(false);
-                    } else {
-                      setIsMenuOpen(true);
-                    }
-                  }}
-                />
-                <Dropdown isOpen={isMenuOpen}>
-                  <Box
-                    onClick={() => {
-                      setIsPhotoCaptionOpen(true);
-                      setIsMenuOpen(false);
-                    }}
-                    variant='boxes.dropdownMenuItem'
-                  >
-                    Photo Caption
-                  </Box>
-                  <Box
-                    onClick={() => {
-                      setIsHeroImageModalOpen(true);
-                      setIsMenuOpen(false);
-                    }}
-                    variant='boxes.dropdownMenuItem'
-                  >
-                    Change Image
-                  </Box>
-                  <Box
-                    onClick={() => Transforms.removeNodes(editor, { at: path })}
-                    variant='boxes.dropdownMenuItem'
-                  >
-                    Remove
-                  </Box>
-                </Dropdown>
-              </Box>
-            </Box>
-          </Flex>
-        ) : (
-          <Flex
-            sx={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '500px',
+              width: ['100%', '65%', '65%'],
+              height: '100%',
               backgroundColor: 'gray',
+              justifyContent: 'center',
+              display: 'flex',
+
+              // height: heroImage ? '500px' : null,
             }}
           >
-            {/* <Box sx={{ position: 'absolute' }}> */}
-            <Button type='button' onClick={() => setIsHeroImageModalOpen(true)}>
-              Add Image
-            </Button>
-            {/* </Box> */}
-          </Flex>
-        )}
+            {!heroImage && (
+              <Button
+                type='button'
+                variant='primaryButton'
+                sx={{ marginY: 'auto' }}
+                onClick={() => setIsHeroImageModalOpen(true)}
+              >
+                Add Image
+              </Button>
+            )}
+            {heroImage && (
+              <ThemeImage
+                as={CldImage}
+                // priority={true}
+                width='800'
+                height='500'
+                src={heroImage.public_id}
+                // sizes='100vw'
+                alt='race pic'
+                sx={{
+                  objectFit: 'cover',
+                  height: [null, null, '100%'],
+                  width: ['100%', null, null],
+                }}
+              />
+            )}
+          </Box>
+          <PostHeaderTextBlock
+            type={'Race'}
+            title={title ? title : 'Title'}
+            teaser={subhead ? subhead : 'Subhead'}
+            date={date ? date : 'Event date'}
+            location={postLocation ? postLocation : 'Location'}
+            headerImageCaption={
+              element.photoCaption ? element.photoCaption : 'Enter caption here'
+            }
+            height='100%'
+          />
+          {menu}
+        </Flex>
       </Box>
     </>
   );

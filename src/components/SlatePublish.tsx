@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Image, Link } from 'theme-ui';
+import { Box, Flex, Text, Image as ThemeImage, Link } from 'theme-ui';
 import {
   slateToReactConfig,
   type SlateToReactConfig,
@@ -13,6 +13,8 @@ import { PowerCurveGraph } from '../../src/components/PowerCurveGraph';
 import PostHeader from '../../src/components/PostHeader';
 import EmbedElemnt from '../../src/components/EmbedElement';
 import RaceResultsDotComList from './RaceResultsDotComList';
+import PostHeaderTextBlock from './PostHeaderTextBlock';
+import PostAuthor from './PostAuthor';
 
 const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
   ssr: false,
@@ -36,6 +38,8 @@ const renderLink = (node) => {
 };
 
 const SlatePublish = ({ post, activity }) => {
+  const { title, subhead, date, postLocation, headerImageCaption } = post;
+
   const config: SlateToReactConfig = {
     ...slateToReactConfig,
     react: {
@@ -118,33 +122,57 @@ const SlatePublish = ({ post, activity }) => {
         },
         heroBanner: ({ node }) => {
           return (
-            <Box sx={{ marginBottom: ['0px', '60px', '120px'] }}>
-              <PostHeader
-                headerImage={
-                  <Box sx={{ width: '100%', height: '100%' }}>
-                    <CldImage
-                      width='1800'
-                      height='800'
-                      src={JSON.parse(post.heroImage)?.public_id}
-                      sizes='100vw'
-                      alt='race pic'
-                      quality={90}
-                      style={{
-                        objectFit: 'fill',
-                        width: '100%',
-                        height: '100%',
-                        // borderRadius: '5px',
-                      }}
-                    />
-                  </Box>
-                }
-                type={'Race'}
-                teaser={post.subhead ? post.subhead : ''}
-                headerImageCaption={node.photoCaption}
-                title={post.title ? post.title : ''}
-                location={post.postLocation ? post.postLocation : ''}
-                date={post.date ? post.date : ''}
-              />
+            <Box
+              sx={{
+                width: '100%',
+                marginBottom: '60px',
+              }}
+            >
+              <Flex
+                sx={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '500px',
+                  flexDirection: ['column', 'row', 'row'],
+                  width: '100%',
+                }}
+              >
+                {' '}
+                <Box
+                  sx={{
+                    width: ['100%', '65%', '65%'],
+                    height: '100%',
+                    backgroundColor: 'gray',
+                    justifyContent: 'center',
+                    display: 'flex',
+                  }}
+                >
+                  <ThemeImage
+                    as={CldImage}
+                    width='800'
+                    height='500'
+                    src={JSON.parse(post.heroImage)?.public_id}
+                    sizes='100vw'
+                    alt='race pic'
+                    sx={{
+                      objectFit: 'cover',
+                      height: [null, null, '100%'],
+                      width: ['100%', null, null],
+                    }}
+                  />
+                </Box>
+                <PostHeaderTextBlock
+                  type={'Race'}
+                  title={title ? title : 'Title'}
+                  teaser={subhead ? subhead : 'Subhead'}
+                  date={date ? date : 'Event date'}
+                  location={postLocation ? postLocation : 'Location'}
+                  headerImageCaption={
+                    node.photoCaption ? node.photoCaption : 'Enter caption here'
+                  }
+                  height='100%'
+                />
+              </Flex>
             </Box>
           );
         },
@@ -298,7 +326,7 @@ const SlatePublish = ({ post, activity }) => {
             </Text>
           );
         },
-        'heading-two': ({ node, children = [] }) => {
+        'heading-two': ({ node }) => {
           return (
             <>
               {node.children.map((c, i) => {
@@ -317,9 +345,7 @@ const SlatePublish = ({ post, activity }) => {
                     <Text
                       as='h2'
                       sx={{
-                        // marginY: '15px',
                         paddingY: '15px',
-                        // fontSize: '20px',
                         borderLeft: '1px solid #cccccc',
                         width: ['100vw', null, null],
                         maxWidth: '690px',
@@ -334,26 +360,18 @@ const SlatePublish = ({ post, activity }) => {
             </>
           );
         },
-        raceResultsDotCom: ({ node, children = [] }) => {
+        raceResultsDotCom: () => {
           return (
-            <Box
-              sx={{
-                marginY: ['20px', '60px', '60px'],
-                maxWidth: '690px',
-                marginX: 'auto',
-                backgroundColor: [
-                  null,
-                  'activityOverviewBackgroundColor',
-                  'activityOverviewBackgroundColor',
-                ],
-                borderRadius: '5px',
-                padding: ['20px', '30px', '30px'],
-              }}
-            >
+            <Box variant='boxes.componentCard'>
               <RaceResultsDotComList
                 raceResults={JSON.parse(post.raceResults)}
               />
             </Box>
+          );
+        },
+        postAuthor: () => {
+          return (
+            <PostAuthor postAuthor={post.author} publishedDate={'10-05-22'} />
           );
         },
         image: ({ node, children = [] }) => {
@@ -367,7 +385,7 @@ const SlatePublish = ({ post, activity }) => {
                   marginX: 'auto',
                 }}
               >
-                <Image
+                <ThemeImage
                   as={CldImage}
                   width='1200'
                   height='1200'

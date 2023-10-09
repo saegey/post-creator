@@ -2,12 +2,11 @@ import React from 'react';
 import { MenuButton, Box, Flex } from 'theme-ui';
 import { API } from 'aws-amplify';
 import { CldImage } from 'next-cloudinary';
+import { GraphQLResult } from '@aws-amplify/api';
 
 import { listPostsCustom } from '../graphql/customQueries';
 import AvatarButton from './AvatarButton';
-import { GraphQLResult } from '@aws-amplify/api';
 import { ListPostsByCreatedAtQuery } from '../API';
-import Logo from './Logo';
 import UserProfileMenu from './UserProfileMenu';
 import UserMainMenu from './UserMainMenu';
 

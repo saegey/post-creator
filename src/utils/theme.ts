@@ -136,6 +136,19 @@ export default {
         },
       },
     },
+    componentCard: {
+      marginX: 'auto',
+      maxWidth: '690px',
+      backgroundColor: [
+        'background',
+        'activityOverviewBackgroundColor',
+        'activityOverviewBackgroundColor',
+      ],
+      borderRadius: ['0px', '5px', '5px'],
+      padding: ['10px', '20px', '20px'],
+      position: 'relative',
+      marginY: ['20px', '60px', '60px'],
+    },
     dropdownMenuItem: {
       padding: '10px',
       cursor: 'pointer',

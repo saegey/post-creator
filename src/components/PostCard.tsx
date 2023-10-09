@@ -74,8 +74,11 @@ const PostCard = ({ post, showAuthor = true }) => {
             borderRightColor: 'postCardBorder',
           }}
         >
-          <Text as='div' sx={{ fontWeight: 600, color: 'text' }}>
-            {post.title}
+          <Text
+            as='div'
+            sx={{ fontWeight: 600, color: post.title ? 'text' : 'gray' }}
+          >
+            {post.title ? post.title : 'Untitled'}
           </Text>
           {showAuthor && post.author && (
             <Flex sx={{ gap: '10px', marginTop: '5px' }}>

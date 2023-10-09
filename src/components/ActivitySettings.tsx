@@ -9,7 +9,7 @@ import { UpdatePostMutation, DeletePostMutation } from '../../src/API';
 import StandardModal from './StandardModal';
 import { updatePost, deletePost } from '../../src/graphql/mutations';
 
-const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
+const ActivitySettings = ({ setSavedMessage }) => {
   const {
     id,
     stravaUrl,
@@ -27,8 +27,12 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
     setSubhead,
   } = React.useContext(PostContext);
 
-  const { setIsFtpUpdating, setIsGpxUploadOpen } =
-    React.useContext(EditorContext);
+  const {
+    setIsFtpUpdating,
+    setIsGpxUploadOpen,
+    isSettingsModalOpen,
+    setIsSettingsModalOpen,
+  } = React.useContext(EditorContext);
 
   const [isSaving, setIsSaving] = React.useState(false);
 
@@ -83,14 +87,18 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
 
       setSavedMessage(true);
       setIsSaving(false);
-      setIsOpen(false);
+      setIsSettingsModalOpen(false);
     } catch (errors) {
       console.error(errors);
     }
   };
 
   return (
-    <StandardModal isOpen={isOpen} setIsOpen={setIsOpen} title={'Settings'}>
+    <StandardModal
+      isOpen={isSettingsModalOpen}
+      setIsOpen={setIsSettingsModalOpen}
+      title={'Post Settings'}
+    >
       <form
         onSubmit={(event: any) => {
           event.preventDefault();
@@ -101,7 +109,7 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
           sx={{
             gap: '15px',
             flexDirection: 'column',
-            // maxHeight: ['75vh', '400px', '400px'],
+            maxHeight: ['70vh', '500px', '500px'],
             overflow: 'scroll',
             paddingTop: '10px',
           }}
@@ -241,7 +249,7 @@ const ActivitySettings = ({ isOpen, setIsOpen, setSavedMessage }) => {
               <Button
                 type='button'
                 variant='secondaryButton'
-                onClick={() => setIsOpen(false)}
+                onClick={() => setIsSettingsModalOpen(false)}
               >
                 Cancel
               </Button>

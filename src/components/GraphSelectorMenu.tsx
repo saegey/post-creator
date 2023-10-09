@@ -75,6 +75,7 @@ const GraphSelectorMenu = ({ editor }) => {
     if (gpxFile && currentFtp) {
       Transforms.insertNodes(editor, [
         { type: 'timeInZones', children: [{ text: '' }] } as Descendant,
+        { type: 'text', children: [{ text: '' }] } as Descendant,
       ]);
       closeMenu();
     }
@@ -84,6 +85,7 @@ const GraphSelectorMenu = ({ editor }) => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
         { type: 'visualOverview', children: [{ text: '' }] } as Descendant,
+        { type: 'text', children: [{ text: '' }] } as Descendant,
       ]);
       closeMenu();
     }
@@ -246,7 +248,7 @@ const GraphSelectorMenu = ({ editor }) => {
               </Text>
             </Flex>
           </Box>
-          <Box
+          {/* <Box
             onClick={addMatchesBurned}
             variant='boxes.sidebarMenuItem'
             sx={{
@@ -267,7 +269,7 @@ const GraphSelectorMenu = ({ editor }) => {
                 Matches Burned
               </Text>
             </Flex>
-          </Box>
+          </Box> */}
           <Box
             onClick={addStravaLink}
             variant='boxes.sidebarMenuItem'

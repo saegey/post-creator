@@ -35,18 +35,7 @@ const PowerGraph = ({ element }) => {
     .filter((p) => p !== undefined);
 
   return (
-    <Box
-      sx={{
-        marginX: 'auto',
-        maxWidth: '690px',
-        backgroundColor: 'activityOverviewBackgroundColor',
-        borderRadius: '5px',
-        padding: ['10px', '20px', '20px'],
-        position: 'relative',
-        marginY: ['20px', '60px', '60px'],
-      }}
-      contentEditable={false}
-    >
+    <Box variant='boxes.componentCard' contentEditable={false}>
       <Box sx={{ width: '100%', height: ['250px', '450px', '450px'] }}>
         <PowerCurveGraph
           ftp={currentFtp ? Number(currentFtp) : 0}

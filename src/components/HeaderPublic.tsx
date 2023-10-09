@@ -7,6 +7,7 @@ import {
   Switch,
   useColorMode,
   Close,
+  Link,
 } from 'theme-ui';
 
 import Logo from './Logo';
@@ -58,16 +59,19 @@ const HeaderPublic = () => {
                       <Box sx={{ width: '30px', height: 'auto' }}>
                         <Logo />
                       </Box>
-                      <Text
-                        as='div'
-                        sx={{
-                          marginY: 'auto',
-                          fontSize: '22px',
-                          fontWeight: 700,
-                        }}
-                      >
-                        monopad
-                      </Text>
+                      <Link href='/' sx={{ textDecoration: 'none' }}>
+                        <Text
+                          as='div'
+                          sx={{
+                            marginY: 'auto',
+                            fontSize: '22px',
+                            fontWeight: 700,
+                            color: 'text',
+                          }}
+                        >
+                          monopad
+                        </Text>
+                      </Link>
                     </Flex>
                   </Box>
                   <Close

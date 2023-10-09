@@ -37,18 +37,7 @@ const ActivityOverviewWrapper = ({ element }) => {
   const { isFtpUpdating } = React.useContext(EditorContext);
 
   return (
-    <Box
-      sx={{
-        backgroundColor: 'activityOverviewBackgroundColor',
-        borderRadius: '5px',
-        padding: ['10px', '30px', '30px'],
-        position: 'relative',
-        maxWidth: '690px',
-        marginY: ['20px', '60px', '60px'],
-        marginX: 'auto',
-      }}
-      contentEditable={false}
-    >
+    <Box variant='boxes.componentCard' contentEditable={false}>
       <ActivityOverview
         data={{
           elevationGain: elevationTotal ? elevationTotal : 0,

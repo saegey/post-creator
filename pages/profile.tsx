@@ -1,21 +1,11 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Auth, API } from 'aws-amplify';
 import Head from 'next/head';
-import {
-  Label,
-  Input,
-  Box,
-  Flex,
-  Button,
-  Spinner,
-  Text,
-  Alert,
-  Close,
-} from 'theme-ui';
-import { CldImage, CldUploadButton } from 'next-cloudinary';
-import { updateUser } from '../src/graphql/mutations';
+import { Label, Input, Box, Flex, Button, Spinner, Text } from 'theme-ui';
 import React from 'react';
+import { CldImage, CldUploadButton } from 'next-cloudinary';
 
+import { updateUser } from '../src/graphql/mutations';
 import Header from '../src/components/Header';
 import { CloudinaryImage } from '../src/components/AddImage';
 
@@ -94,7 +84,6 @@ const Profile = ({ signOut, user }) => {
       },
     });
     setIsSaving(false);
-    // console.log(fullName, response);
   }
 
   return (

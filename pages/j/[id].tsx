@@ -1,14 +1,13 @@
 import { withSSRContext } from 'aws-amplify';
 import React from 'react';
-import { Box, Container } from 'theme-ui';
 import Head from 'next/head';
-import { SlateToReact } from '@slate-serializers/react';
-import { getCldOgImageUrl } from 'next-cloudinary';
 import { constructCloudinaryUrl } from '@cloudinary-util/url-loader';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 
-import HeaderPublic from '../../src/components/HeaderPublic';
 import { getPostInitial } from '../../src/graphql/customQueries';
 import { getActivity } from '../../src/actions/PostGet';
+import AuthCustom from '../../src/components/AuthCustom';
+import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
 
 type ServerSideProps = {
@@ -30,6 +29,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       id: params.id,
     },
   });
+
   if (!data || !data.getPost) {
     console.error('faileed too get activity data');
     return;
@@ -49,6 +49,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
           : a?.d,
     };
   });
+
   const url = constructCloudinaryUrl({
     options: {
       src: JSON.parse(post.heroImage).public_id,
@@ -63,15 +64,17 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   });
 
   const metaTags = {
-    description: post.subhead.split(0, 150),
+    description: post.subhead ? post.subhead.split(0, 150) : '',
     'twitter:domain': 'mopd.us',
     'twitter:title': post.title,
-    'twitter:description': post.subhead.split(0, 150),
+    'twitter:description': post.subhead ? post.subhead.split(0, 150) : '',
     'twitter:url': `http://mopd.us/${post.shortUrl}`,
     'twitter:card': 'summary_large_image',
-    'twitter:image': `${url}`,
+    'twitter:image': `${
+      post.heroImage && JSON.parse(post.heroImage) ? url : ''
+    }`,
     'og:title': `${post.title}`,
-    'og:description': post.subhead.split(0, 150),
+    'og:description': post.subhead ? post.subhead.split(0, 150) : '',
     'og:image': url,
     'og:type': 'article',
     'og:url': `http://mopd.us/${post.shortUrl}`,
@@ -90,8 +93,10 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({ post, activity }): JSX.Element => {
   const config = SlatePublish({ post, activity });
   const components = JSON.parse(post.components);
+  // console.log(post.author);
 
   return (
+    // <AuthCustom>
     <>
       <Head>
         <title>{post.title}</title>
@@ -100,41 +105,12 @@ const Publish = ({ post, activity }): JSX.Element => {
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
         />
       </Head>
-
-      <Box
-        as='main'
-        sx={{
-          marginBottom: 'auto',
-        }}
-      >
-        <HeaderPublic />
-        <Container
-          as='article'
-          className='article'
-          sx={{
-            '&.article>p+p': {
-              paddingTop: '30px',
-            },
-            '&.article>h2+ul': {
-              paddingTop: '30px',
-            },
-            '&.article>ul+h2': {
-              paddingTop: '30px',
-            },
-            '&.article>ol+h2': {
-              paddingTop: '30px',
-            },
-            '&.article>h2+ol': {
-              paddingTop: '0px',
-            },
-            '&.article>p+h2': {
-              paddingTop: '30px',
-            },
-          }}
-        >
-          <SlateToReact node={components} config={config} />
-        </Container>
-      </Box>
+      <PostView
+        components={components}
+        config={config}
+        post={post}
+        user={undefined}
+      />
     </>
   );
 };

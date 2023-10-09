@@ -12,6 +12,7 @@ import HeroBanner from '../components/HeroBanner';
 import EmbedElemnt from '../components/EmbedElement';
 import RaceResultsDotComListWrapper from '../components/RaceResultsDotComListWrapper';
 import Link from '../components/Link';
+import PostAuthor from '../components/PostAuthor';
 
 const Leaf = (props) => {
   return (
@@ -33,6 +34,8 @@ const renderElement = (props) => {
   const { attributes, children, element } = props;
 
   switch (element.type) {
+    case 'postAuthor':
+      return <PostAuthor publishedDate={'10-05-22'} />;
     case 'embed':
       return <EmbedElemnt element={element} />;
     case 'stravaLink':
@@ -64,6 +67,7 @@ const renderElement = (props) => {
             width: ['100%', '690px', '690px'],
             marginLeft: 'auto',
             marginRight: 'auto',
+            paddingX: ['10px', '0px', '0px'],
           }}
           {...attributes}
           {...element.attr}
@@ -105,6 +109,7 @@ const renderElement = (props) => {
             width: ['100%', '690px', '690px'],
             fontSize: '20px',
             marginY: '20px',
+            paddingX: ['10px', '0px', '0px'],
           }}
           {...attributes}
         >
