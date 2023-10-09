@@ -1,14 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
-import { Slate, Editable, withReact } from 'slate-react';
 import {
   Transforms,
-  createEditor,
   Node,
   Element as SlateElement,
   Descendant,
   Editor,
+  BaseElement,
 } from 'slate';
-import { withHistory } from 'slate-history';
 
 export type ParagraphElement = {
   type: 'paragraph';
@@ -16,11 +13,15 @@ export type ParagraphElement = {
   children: Descendant[];
 };
 
+export type CustomElement = {
+  type: string;
+  children: Descendant[];
+};
+
 export type TitleElement = { type: 'heroBanner'; children: Descendant[] };
 
 const withLayout = (editor) => {
   const { normalizeNode } = editor;
-  console.log(editor);
 
   editor.normalizeNode = ([node, path]) => {
     if (path.length === 0) {
@@ -51,18 +52,20 @@ const withLayout = (editor) => {
         };
         Transforms.insertNodes(editor, paragraph, { at: path.concat(2) });
       }
-
-      for (const [child, childPath] of Node.children(editor, path)) {
+      for (const [child, childPath] of Array.from(
+        Node.children(editor, path) as unknown as any[]
+      )) {
         let type: string;
         const slateIndex = childPath[0];
+        const childType = child.type as string;
         const enforceType = (type) => {
           if (
             SlateElement.isElement(child) &&
-            child.type !== type &&
+            childType !== type &&
             type === 'postAuthor'
           ) {
-            const newProperties: Partial<SlateElement> = { type };
-            Transforms.setNodes<SlateElement>(editor, newProperties, {
+            const newProperties: Partial<CustomElement> = { type };
+            Transforms.setNodes<BaseElement>(editor, newProperties, {
               at: childPath,
             });
           }
@@ -78,7 +81,7 @@ const withLayout = (editor) => {
             enforceType(type);
           case 2:
             type = 'postAuthor';
-            // enforceType(type);
+          // enforceType(type);
           default:
             break;
         }
@@ -92,48 +95,3 @@ const withLayout = (editor) => {
 };
 
 export default withLayout;
-
-// const ForcedLayoutExample = () => {
-//   const renderElement = useCallback(props => <Element {...props} />, [])
-//   const editor = useMemo(
-//     () => withLayout(withHistory(withReact(createEditor()))),
-//     []
-//   )
-//   return (
-//     <Slate editor={editor} initialValue={initialValue}>
-//       <Editable
-//         renderElement={renderElement}
-//         placeholder="Enter a title…"
-//         spellCheck
-//         autoFocus
-//       />
-//     </Slate>
-//   )
-// }
-
-// const Element = ({ attributes, children, element }) => {
-//   switch (element.type) {
-//     case 'title':
-//       return <h2 {...attributes}>{children}</h2>
-//     case 'paragraph':
-//       return <p {...attributes}>{children}</p>
-//   }
-// }
-
-// const initialValue: Descendant[] = [
-//   {
-//     type: 'title',
-//     children: [{ text: 'Enforce Your Layout!' }],
-//   },
-//   {
-//     type: 'paragraph',
-//     children: [
-//       {
-//         text:
-//           'This example shows how to enforce your layout with domain-specific constraints. This document will always have a title block at the top and at least one paragraph in the body. Try deleting them and see what happens!',
-//       },
-//     ],
-//   },
-// ]
-
-// export default ForcedLayoutExample;

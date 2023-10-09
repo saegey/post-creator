@@ -17,7 +17,7 @@ const PostHeaderTextBlock = ({
   date: string;
   headerImageCaption: string;
   location: string;
-  height: string | null;
+  height?: string | null;
 }) => {
   const { isSettingsModalOpen, setIsSettingsModalOpen } =
     React.useContext(EditorContext);
@@ -40,6 +40,7 @@ const PostHeaderTextBlock = ({
         cursor: 'text',
       }}
       onClick={() => setIsSettingsModalOpen(true)}
+      contentEditable={false}
     >
       <Text
         variant='postType'

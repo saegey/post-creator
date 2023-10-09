@@ -3,12 +3,12 @@ import PostHeaderTextBlock from './PostHeaderTextBlock';
 
 interface PostHeaderProps {
   headerImage: JSX.Element;
-  type: String;
-  title: String;
-  date: String;
-  location: String;
-  teaser?: String | undefined;
-  headerImageCaption?: String | undefined;
+  type: string;
+  title: string;
+  date: string;
+  location: string;
+  teaser?: string | undefined;
+  headerImageCaption?: string | undefined;
 }
 
 const PostHeader = ({

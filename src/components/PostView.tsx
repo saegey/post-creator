@@ -26,7 +26,7 @@ const PostView = ({
   config: any;
   post: any;
 }) => {
-  console.log(user);
+  // console.log(user);
   return (
     <Box
       as='main'
@@ -65,7 +65,10 @@ const PostView = ({
       >
         <SlateToReact node={components} config={config} />
         {user && post.author.id === user.attributes.sub && (
-          <Box sx={{ position: 'absolute', top: '20px', right: '20px' }}>
+          <Box
+            sx={{ position: 'absolute', top: '20px', right: '20px' }}
+            key='user-settings'
+          >
             <ThemeLink
               as={Link}
               sx={{ textDecoration: 'none' }}

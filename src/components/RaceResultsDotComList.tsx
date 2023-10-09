@@ -21,9 +21,10 @@ const RaceResultsDotComList = ({
       </Text>
       <Box sx={{ height: '500px', overflowY: 'scroll', paddingTop: '10px' }}>
         {raceResults &&
-          raceResults?.results?.map((row) => {
+          raceResults?.results?.map((row, i) => {
             return (
               <Flex
+                key={`result-${i}`}
                 sx={{
                   paddingY: '2px',
                   paddingX: '5px',

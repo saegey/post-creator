@@ -18,8 +18,12 @@ const SkeletonPost = () => {
           borderBottomColor: 'buttonBorderColor',
         }}
       >
-        {Array.from(Array(9).keys()).map((b) => (
-          <Box variant='boxes.skeletonButton' className='skeleton' />
+        {Array.from(Array(9).keys()).map((_b, i) => (
+          <Box
+            variant='boxes.skeletonButton'
+            className='skeleton'
+            key={`skel-button-${i}`}
+          />
         ))}
       </Flex>
       <Box

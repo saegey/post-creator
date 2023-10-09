@@ -29,6 +29,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       id: params.id,
     },
   });
+
   if (!data || !data.getPost) {
     console.error('faileed too get activity data');
     return;
@@ -69,7 +70,9 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     'twitter:description': post.subhead ? post.subhead.split(0, 150) : '',
     'twitter:url': `http://mopd.us/${post.shortUrl}`,
     'twitter:card': 'summary_large_image',
-    'twitter:image': `${post.heroImage ? url : ''}`,
+    'twitter:image': `${
+      post.heroImage && JSON.parse(post.heroImage) ? url : ''
+    }`,
     'og:title': `${post.title}`,
     'og:description': post.subhead ? post.subhead.split(0, 150) : '',
     'og:image': url,
@@ -93,7 +96,8 @@ const Publish = ({ post, activity }): JSX.Element => {
   // console.log(post.author);
 
   return (
-    <AuthCustom>
+    // <AuthCustom>
+    <>
       <Head>
         <title>{post.title}</title>
         <link
@@ -107,8 +111,8 @@ const Publish = ({ post, activity }): JSX.Element => {
         post={post}
         user={undefined}
       />
-    </AuthCustom>
+    </>
   );
 };
 
-export default withAuthenticator(Publish);
+export default Publish;

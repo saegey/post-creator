@@ -7,10 +7,10 @@ const ViewportProvider = ({
 }: {
   children: JSX.Element;
 }): JSX.Element => {
-  const isBrowser = typeof window !== 'undefined';
-  if (!isBrowser) return <></>;
-  const [width, setWidth] = React.useState(window.innerWidth);
-  const [height, setHeight] = React.useState(window.innerHeight);
+  // const isBrowser = typeof window !== 'undefined';
+  // if (!isBrowser) return <></>;
+  const [width, setWidth] = React.useState<number>(0);
+  const [height, setHeight] = React.useState<number>(0);
 
   const handleWindowResize = () => {
     setWidth(window.innerWidth);
@@ -18,6 +18,8 @@ const ViewportProvider = ({
   };
 
   React.useEffect(() => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
     window.addEventListener('resize', handleWindowResize);
     return () => window.removeEventListener('resize', handleWindowResize);
   }, []);

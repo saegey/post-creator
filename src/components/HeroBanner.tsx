@@ -1,8 +1,15 @@
-import { Box, Flex, Button, Image as ThemeImage, Text } from 'theme-ui';
+import {
+  Box,
+  Flex,
+  Button,
+  Image as ThemeImage,
+  Text,
+  ImageProps,
+} from 'theme-ui';
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
-import { CldImage } from 'next-cloudinary';
+import { CldImage, CldImageProps } from 'next-cloudinary';
 
 import { PostContext } from './PostContext';
 import PostHeader from './PostHeader';
@@ -13,13 +20,17 @@ import PhotoCaptionModal from './PhotoCaptionModal';
 import { useClickOutside } from '../utils/ux';
 import PostHeaderTextBlock from './PostHeaderTextBlock';
 
+// interface CustomImage extends HTMLImageElement {
+//   priority: boolean;
+// }
+
 const HeroBanner = ({ element }) => {
-  const { heroImage, setHeroImage, title, postLocation, date, subhead } =
+  const { heroImage, title, postLocation, date, subhead } =
     React.useContext(PostContext);
 
   const {
     setIsHeroImageModalOpen,
-    isHeroImageModalOpen,
+    // isHeroImageModalOpen,
     setIsPhotoCaptionOpen,
     isPhotoCaptionOpen,
   } = React.useContext(EditorContext);
@@ -75,7 +86,7 @@ const HeroBanner = ({ element }) => {
   );
 
   const editor = useSlateStatic() as ReactEditor;
-  const path = ReactEditor.findPath(editor, element);
+  // const path = ReactEditor.findPath(editor, element);
 
   return (
     <>
@@ -120,10 +131,11 @@ const HeroBanner = ({ element }) => {
             {heroImage && (
               <ThemeImage
                 as={CldImage}
+                // priority={true}
                 width='800'
                 height='500'
                 src={heroImage.public_id}
-                sizes='100vw'
+                // sizes='100vw'
                 alt='race pic'
                 sx={{
                   objectFit: 'cover',
@@ -146,7 +158,6 @@ const HeroBanner = ({ element }) => {
           />
           {menu}
         </Flex>
-        {/* )} */}
       </Box>
     </>
   );
