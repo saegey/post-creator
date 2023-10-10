@@ -390,18 +390,23 @@ const SlatePublish = ({ post, activity }) => {
                   marginX: 'auto',
                 }}
               >
-                <ThemeImage
-                  as={CldImage}
+                <CldImage
+                  // as={CldImage}
                   width='1200'
                   height='1200'
                   src={node.public_id}
                   sizes='100vw'
                   alt='race pic'
                   // quality={'90'}
-                  sx={{
+                  style={{
                     width: '100%',
                     height: 'auto',
-                    borderRadius: ['0px', '5px', '5px'],
+                    borderRadius: '5px',
+                  }}
+                  config={{
+                    cloud: {
+                      cloudName: cloudUrl,
+                    },
                   }}
                 />
                 <Text as='p' sx={{ paddingX: ['10px', null, null] }}>
