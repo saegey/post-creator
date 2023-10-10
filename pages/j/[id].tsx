@@ -2,14 +2,19 @@ import { withSSRContext } from 'aws-amplify';
 import React from 'react';
 import Head from 'next/head';
 import { constructCloudinaryUrl } from '@cloudinary-util/url-loader';
-import { withAuthenticator } from '@aws-amplify/ui-react';
+// import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import { getPostInitial } from '../../src/graphql/customQueries';
 import { getActivity } from '../../src/actions/PostGet';
-import AuthCustom from '../../src/components/AuthCustom';
-import PostView from '../../src/components/PostView';
+// import AuthCustom from '../../src/components/AuthCustom';
+// import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
 import { cloudUrl } from '../../src/utils/cloudinary';
+import dynamic from 'next/dynamic';
+
+const PostView = dynamic(import('../../src/components/PostView'), {
+  ssr: false,
+});
 
 type ServerSideProps = {
   req: object;
