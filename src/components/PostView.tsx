@@ -8,9 +8,8 @@ import {
 } from 'theme-ui';
 import { SlateToReact } from '@slate-serializers/react';
 import Header from './Header';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-
 import Link from 'next/link';
+
 import HeaderPublic from './HeaderPublic';
 
 const PostView = ({
