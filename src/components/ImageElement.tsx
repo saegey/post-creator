@@ -14,6 +14,7 @@ import { PostContext } from './PostContext';
 import Dropdown from './Dropdown';
 import OptionsButton from './OptionsButton';
 import { useClickOutside } from '../utils/ux';
+import { cloudUrl } from '../utils/cloudinary';
 
 type SlateImageType = {
   type: 'image';
@@ -91,6 +92,11 @@ const ImageElement = ({ children, element }) => {
             height: 'auto',
             borderRadius: '5px',
             boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}`,
+          }}
+          config={{
+            cloud: {
+              cloudName: cloudUrl,
+            },
           }}
         />
         {element.caption && <Text as='p'>{element.caption}</Text>}

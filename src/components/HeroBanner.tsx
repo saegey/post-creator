@@ -9,16 +9,17 @@ import {
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import { Transforms } from 'slate';
-import { CldImage, CldImageProps } from 'next-cloudinary';
+import { CldImage, CldImageProps, CldOgImage } from 'next-cloudinary';
 
 import { PostContext } from './PostContext';
-import PostHeader from './PostHeader';
 import OptionsButton from './OptionsButton';
 import Dropdown from './Dropdown';
 import { EditorContext } from './EditorContext';
 import PhotoCaptionModal from './PhotoCaptionModal';
 import { useClickOutside } from '../utils/ux';
 import PostHeaderTextBlock from './PostHeaderTextBlock';
+
+const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
 
 // interface CustomImage extends HTMLImageElement {
 //   priority: boolean;
@@ -129,18 +130,23 @@ const HeroBanner = ({ element }) => {
               </Button>
             )}
             {heroImage && (
-              <ThemeImage
-                as={CldImage}
+              <CldImage
+                // as={CldImage}
                 // priority={true}
                 width='800'
                 height='500'
                 src={heroImage.public_id}
                 // sizes='100vw'
                 alt='race pic'
-                sx={{
+                style={{
                   objectFit: 'cover',
-                  height: [null, null, '100%'],
-                  width: ['100%', null, null],
+                  height: '100%',
+                  // width: ['100%', null, null],
+                }}
+                config={{
+                  cloud: {
+                    cloudName: cloudUrl,
+                  },
                 }}
               />
             )}

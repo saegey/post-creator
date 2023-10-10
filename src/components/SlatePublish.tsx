@@ -10,11 +10,11 @@ import dynamic from 'next/dynamic';
 import PowerBreakdown from '../../src/components/TimePowerZones';
 import ActivityOverview from '../../src/components/ActivityOverview';
 import { PowerCurveGraph } from '../../src/components/PowerCurveGraph';
-import PostHeader from '../../src/components/PostHeader';
 import EmbedElemnt from '../../src/components/EmbedElement';
 import RaceResultsDotComList from './RaceResultsDotComList';
 import PostHeaderTextBlock from './PostHeaderTextBlock';
 import PostAuthor from './PostAuthor';
+import { cloudUrl } from '../utils/cloudinary';
 
 const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
   ssr: false,
@@ -147,17 +147,22 @@ const SlatePublish = ({ post, activity }) => {
                     display: 'flex',
                   }}
                 >
-                  <ThemeImage
-                    as={CldImage}
+                  <CldImage
+                    // as={CldImage}
                     width='800'
                     height='500'
                     src={JSON.parse(post.heroImage)?.public_id}
                     sizes='100vw'
                     alt='race pic'
-                    sx={{
+                    style={{
                       objectFit: 'cover',
-                      height: [null, null, '100%'],
-                      width: ['100%', null, null],
+                      height: '100%',
+                      width: 'null',
+                    }}
+                    config={{
+                      cloud: {
+                        cloudName: cloudUrl,
+                      },
                     }}
                   />
                 </Box>

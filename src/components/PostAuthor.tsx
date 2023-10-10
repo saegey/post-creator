@@ -7,6 +7,7 @@ import { CldImage } from 'next-cloudinary';
 import { useViewport } from './ViewportProvider';
 import { PostContext } from './PostContext';
 import AvatarButton from './AvatarButton';
+import { cloudUrl } from '../utils/cloudinary';
 
 interface PostAuthorProps {
   publishedDate: string;
@@ -62,6 +63,11 @@ const PostAuthor = ({
                 marginTop: 'auto',
                 marginBottom: 'auto',
                 borderRadius: '100%',
+              }}
+              config={{
+                cloud: {
+                  cloudName: cloudUrl,
+                },
               }}
               // preserveTransformations
               // underlay={user.attributes.picture}

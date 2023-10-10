@@ -9,6 +9,7 @@ import { getActivity } from '../../src/actions/PostGet';
 import AuthCustom from '../../src/components/AuthCustom';
 import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
+import { cloudUrl } from '../../src/utils/cloudinary';
 
 type ServerSideProps = {
   req: object;
@@ -17,7 +18,7 @@ type ServerSideProps = {
   };
 };
 
-const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
+// const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
 
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const SSR = withSSRContext({ req });
@@ -93,7 +94,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({ post, activity }): JSX.Element => {
   const config = SlatePublish({ post, activity });
   const components = JSON.parse(post.components);
-  // console.log(post.author);
 
   return (
     // <AuthCustom>
@@ -109,7 +109,7 @@ const Publish = ({ post, activity }): JSX.Element => {
         components={components}
         config={config}
         post={post}
-        user={undefined}
+        // user={undefined}
       />
     </>
   );
