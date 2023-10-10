@@ -15,10 +15,11 @@ import RaceResultsDotComList from './RaceResultsDotComList';
 import PostHeaderTextBlock from './PostHeaderTextBlock';
 import PostAuthor from './PostAuthor';
 import { cloudUrl } from '../utils/cloudinary';
+import VisualOverview from '../../src/components/VisualOverview';
 
-const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
-  ssr: false,
-}); // Async API cannot be server-side rendered
+// const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
+//   ssr: false,
+// }); // Async API cannot be server-side rendered
 
 const renderLink = (node) => {
   const attrs: any = {};
@@ -142,20 +143,20 @@ const SlatePublish = ({ post, activity }) => {
                   sx={{
                     width: ['100%', '65%', '65%'],
                     height: '100%',
-                    backgroundColor: 'gray',
+                    backgroundColor: 'black',
                     justifyContent: 'center',
                     display: 'flex',
                   }}
                 >
                   <CldImage
                     // as={CldImage}
-                    width='800'
+                    width='1200'
                     height='500'
                     src={JSON.parse(post.heroImage)?.public_id}
                     sizes='100vw'
                     alt='race pic'
                     style={{
-                      objectFit: 'cover',
+                      objectFit: 'contain',
                       height: '100%',
                       width: 'null',
                     }}
@@ -269,31 +270,37 @@ const SlatePublish = ({ post, activity }) => {
         },
         paragraph: ({ node, children = [] }) => {
           return (
-            <>
+            <Text
+              as='p'
+              sx={{
+                fontSize: '20px',
+                maxWidth: '690px',
+                marginX: 'auto',
+                width: ['100vw', null, null],
+                borderLeftWidth: ['0px', '1px', '1px'],
+                borderLeftStyle: 'solid',
+                borderLeftColor: '#cccccc',
+                paddingX: ['20px', '8px', '8px'],
+              }}
+            >
               {node.children.map((c, i) => {
-                if (!c.text) {
-                  return;
+                if (c.type === 'link') {
+                  return renderLink(c);
                 }
                 return (
                   <Text
-                    as='p'
-                    key={`paragraph-${i}`}
+                    as='span'
+                    className='text'
+                    key={`text-paragraph-${i}`}
                     sx={{
-                      fontSize: '20px',
-                      maxWidth: '690px',
-                      width: ['100vw', null, null],
-                      borderLeftWidth: ['0px', '1px', '1px'],
-                      borderLeftStyle: 'solid',
-                      borderLeftColor: '#cccccc',
-                      paddingX: ['20px', '8px', '8px'],
-                      marginX: 'auto',
+                      fontWeight: c.bold ? '700' : null,
                     }}
                   >
                     {c.text}
                   </Text>
                 );
               })}
-            </>
+            </Text>
           );
         },
         text: ({ node }) => {

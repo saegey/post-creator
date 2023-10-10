@@ -133,13 +133,13 @@ const HeroBanner = ({ element }) => {
               <CldImage
                 // as={CldImage}
                 // priority={true}
-                width='800'
+                width='1200'
                 height='500'
                 src={heroImage.public_id}
                 // sizes='100vw'
                 alt='race pic'
                 style={{
-                  objectFit: 'cover',
+                  objectFit: 'contain',
                   height: '100%',
                   // width: ['100%', null, null],
                 }}
