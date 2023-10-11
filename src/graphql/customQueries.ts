@@ -1,3 +1,9 @@
+import * as APITypes from '../API';
+type GeneratedQuery<InputType, OutputType> = string & {
+  __generatedQueryInput: InputType;
+  __generatedQueryOutput: OutputType;
+};
+
 export const getActivityQuery = /* GraphQL */ `
   query GetActivityQuery($id: ID!) {
     getPost(id: $id) {
@@ -119,3 +125,56 @@ export const listPostsCustom = /* GraphQL */ `
     }
   }
 `;
+
+export const getPublishedPost =
+  /* GraphQL */ `query GetPublishedPost($id: ID!) {
+  getPublishedPost(id: $id) {
+    id
+    title
+    gpxFile
+    images
+    headerImage
+    date
+    publishedDate
+    location
+    postLocation
+    stravaUrl
+    resultsUrl
+    subType
+    teaser
+    currentFtp
+    components
+    powerAnalysis
+    coordinates
+    powers
+    elevation
+    elevationGrades
+    distances
+    author
+    elevationTotal
+    normalizedPower
+    distance
+    heartAnalysis
+    cadenceAnalysis
+    tempAnalysis
+    elapsedTime
+    stoppedTime
+    timeInRed
+    powerZones
+    powerZoneBuckets
+    createdAt
+    heroImage
+    subhead
+    shortUrl
+    raceResults
+    raceResultsProvider
+    updatedAt
+    # publishedPostOriginalPostId
+    owner
+    __typename
+  }
+}
+` as GeneratedQuery<
+    APITypes.GetPublishedPostQueryVariables,
+    APITypes.GetPublishedPostQuery
+  >;

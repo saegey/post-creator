@@ -53,6 +53,16 @@ const ActivitySettings = ({ setSavedMessage }) => {
     }
   };
 
+  const publishPost = async (event) => {
+    const response = await API.post('api12660653', '/post/publish', {
+      response: true,
+      body: {
+        postId: id,
+      },
+    });
+    console.log(response);
+  };
+
   const saveSettings = async (event) => {
     setIsSaving(true);
     const form = new FormData(event.target);
@@ -216,6 +226,27 @@ const ActivitySettings = ({ setSavedMessage }) => {
             <Flex>
               <Box sx={{ width: '70%' }}>
                 <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
+                  Publish
+                </Text>
+                <Text sx={{ fontSize: '15px' }}>
+                  Publish this post so anyone can view it.
+                </Text>
+              </Box>
+              <Box sx={{ marginLeft: 'auto', marginY: 'auto' }}>
+                <Button
+                  variant='primaryButton'
+                  type='button'
+                  onClick={publishPost}
+                >
+                  Publish
+                </Button>
+              </Box>
+            </Flex>
+          </Box>
+          <Box>
+            <Flex>
+              <Box sx={{ width: '70%' }}>
+                <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
                   Delete this post
                 </Text>
                 <Text sx={{ fontSize: '15px' }}>
@@ -229,7 +260,7 @@ const ActivitySettings = ({ setSavedMessage }) => {
                   type='button'
                   onClick={processDeletePost}
                 >
-                  Delete Post
+                  Delete
                 </Button>
               </Box>
             </Flex>

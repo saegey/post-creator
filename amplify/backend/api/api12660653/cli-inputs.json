@@ -45,6 +45,19 @@
           "read"
         ]
       }
+    },
+    "/post/publish": {
+      "name": "/post/publish",
+      "lambdaFunction": "publishPost",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
     }
   }
 }

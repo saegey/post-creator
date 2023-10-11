@@ -3,12 +3,15 @@ import React from 'react';
 import Head from 'next/head';
 import { constructCloudinaryUrl } from '@cloudinary-util/url-loader';
 import { withAuthenticator } from '@aws-amplify/ui-react';
+// import { Amplify } from 'aws-amplify';
 
 import { getPostInitial } from '../../src/graphql/customQueries';
 import { getActivity } from '../../src/actions/PostGet';
 import AuthCustom from '../../src/components/AuthCustom';
 import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
+
+// import awsconfig from '../../src/aws-exports';
 
 type ServerSideProps = {
   req: object;
@@ -17,14 +20,16 @@ type ServerSideProps = {
   };
 };
 
+// Amplify.configure({ ...awsconfig, ssr: true });
+
 const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
 
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
-  const SSR = withSSRContext({ req });
+  const { API } = withSSRContext({ req });
 
-  const { data } = await SSR.API.graphql({
+  const { data } = await API.graphql({
     query: getPostInitial,
-    authMode: 'API_KEY',
+    authMode: 'AMAZON_COGNITO_USER_POOLS',
     variables: {
       id: params.id,
     },

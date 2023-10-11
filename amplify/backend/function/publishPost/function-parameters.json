@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "api": {
+      "nextjsblog": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

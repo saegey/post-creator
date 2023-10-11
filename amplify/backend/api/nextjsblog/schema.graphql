@@ -10,6 +10,7 @@ type User
     rules: [
       { allow: owner, operations: [create, update, delete, read] }
       { allow: public, operations: [read] }
+      { allow: private, provider: iam }
     ]
   ) {
   id: ID!
@@ -21,10 +22,69 @@ type User
 
 type Blog
   @model
-  @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: public, operations: [read] }
+      { allow: private, provider: iam }
+    ]
+  ) {
   id: ID!
   name: String!
   posts: [Post] @hasMany
+}
+
+type PublishedPost
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: owner, operations: [create, update, delete, read] }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  gpxFile: String
+  images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  postLocation: String
+  stravaUrl: String
+  resultsUrl: String
+  # type: String
+  subType: String
+  teaser: String
+  currentFtp: String
+  components: AWSJSON
+  powerAnalysis: AWSJSON
+  coordinates: AWSJSON
+  powers: AWSJSON
+  elevation: AWSJSON
+  elevationGrades: AWSJSON
+  distances: AWSJSON
+  # blog: Blog @belongsTo
+  # related: [Post] @hasMany
+  author: AWSJSON
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
+  powerZones: AWSJSON
+  powerZoneBuckets: AWSJSON
+  createdAt: String!
+  heroImage: AWSJSON
+  subhead: String
+  shortUrl: String
+  raceResults: AWSJSON
+  raceResultsProvider: String
+  originalPost: Post @hasOne
 }
 
 type Post
@@ -32,7 +92,7 @@ type Post
   @auth(
     rules: [
       { allow: owner, operations: [create, delete, read, update] }
-      { allow: public, operations: [read] }
+      # { allow: public, operations: [read] }
       { allow: private, provider: iam }
     ]
   ) {
@@ -84,6 +144,7 @@ type Post
   shortUrl: String
   raceResults: AWSJSON
   raceResultsProvider: String
+  privacyStatus: String
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 }

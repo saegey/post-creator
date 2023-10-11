@@ -3,12 +3,12 @@ import Head from 'next/head';
 import React from 'react';
 import { Amplify } from 'aws-amplify';
 
-import awsconfig from '../../../src/aws-exports';
+// import awsconfig from '../../../src/aws-exports';
 import { PostContext } from '../../../src/components/PostContext';
 import { getPostInitial } from '../../../src/graphql/customQueries';
 import AuthCustom from '../../../src/components/AuthCustom';
 import EditUserPost from '../../../src/components/EditUserPost';
-Amplify.configure(awsconfig);
+// Amplify.configure(awsconfig);
 
 type ServerSideProps = {
   req: object;
@@ -18,11 +18,11 @@ type ServerSideProps = {
 };
 
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
-  const SSR = withSSRContext({ req });
+  const { API } = withSSRContext({ req });
 
-  const { data } = await SSR.API.graphql({
+  const { data } = await API.graphql({
     query: getPostInitial,
-    authMode: 'API_KEY',
+    authMode: 'AMAZON_COGNITO_USER_POOLS',
     variables: {
       id: params.id,
     },

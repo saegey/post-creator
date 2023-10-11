@@ -33,6 +33,14 @@
           ],
           "category": "function",
           "resourceName": "raceresultgetResults"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "publishPost"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -194,6 +202,22 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "publishPost": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "raceresult": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -272,6 +296,22 @@
         {
           "category": "function",
           "resourceName": "postUpdateCalc"
+        }
+      ]
+    },
+    "AMPLIFY_function_publishPost_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "publishPost"
+        }
+      ]
+    },
+    "AMPLIFY_function_publishPost_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "publishPost"
         }
       ]
     },
