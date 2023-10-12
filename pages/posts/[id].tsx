@@ -95,6 +95,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({ post, activity, user }): JSX.Element => {
   const config = SlatePublish({ post, activity });
   const components = JSON.parse(post.components);
+  // post.author = JSON.parse(post.author);
   // console.log(post.author);
 
   return (

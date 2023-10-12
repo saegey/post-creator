@@ -319,6 +319,7 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
     shortUrl
     raceResults
     raceResultsProvider
+    originalPostId
     originalPost {
       type
       id
@@ -444,6 +445,7 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
     shortUrl
     raceResults
     raceResultsProvider
+    originalPostId
     originalPost {
       type
       id
@@ -569,6 +571,7 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
     shortUrl
     raceResults
     raceResultsProvider
+    originalPostId
     originalPost {
       type
       id

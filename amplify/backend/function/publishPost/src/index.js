@@ -23,6 +23,8 @@ const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
 // AWS.config.update({ region: AWS_REGION });
 const ddb = new aws.DynamoDB();
 
+const docClient = new aws.DynamoDB.DocumentClient();
+
 const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
 
 const postTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
@@ -91,19 +93,6 @@ const query = /* GraphQL */ `
   }
 `;
 
-const uncompress = async (input) => {
-  return new Promise((resolve, reject) => {
-    return zlib.gunzip(Buffer.from(input, 'base64'), (err, buffer) => {
-      if (!err) {
-        const widgetString = buffer.toString('utf-8');
-        resolve(widgetString);
-      } else {
-        reject(err);
-      }
-    });
-  });
-};
-
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
   const { body } = event;
@@ -163,57 +152,150 @@ exports.handler = async (event) => {
   const identityId =
     event.requestContext.identity.cognitoIdentityId.split(':')[1];
 
-  let params = {
-    Item: {
-      id: { S: uuid.v1() },
-      __typename: { S: 'PublishedPost' },
-      owner: {
-        S: `${identityId}::${identityId}`,
-      },
-      title: { S: resBody.data.getPost.title },
-      images: {
-        S: resBody.data.getPost.images ? resBody.data.getPost.images : '[]',
-      },
-      publishedDate: {
-        S: resBody.data.getPost.publishedDate
-          ? resBody.data.getPost.publishedDate
-          : '',
-      },
-      postLocation: {
-        S: resBody.data.getPost.postLocation
-          ? resBody.data.getPost.postLocation
-          : '',
-      },
-      teaser: {
-        S: resBody.data.getPost.teaser ? resBody.data.getPost.teaser : '',
-      },
-      currentFtp: {
-        S: resBody.data.getPost.currentFtp
-          ? resBody.data.getPost.currentFtp
-          : '0',
-      },
-      components: {
-        S: resBody.data.getPost.components
-          ? resBody.data.getPost.components
-          : '[]',
-      },
-      powerAnalysis: {
-        S: resBody.data.getPost.powerAnalysis
-          ? resBody.data.getPost.powerAnalysis
-          : '',
-      },
-      createdAt: { S: date.toISOString() },
-      updatedAt: { S: date.toISOString() },
-    },
+  const getParams = {
     TableName: postTable,
+    // Key: {
+    //   originalPostId: {
+    //     S: resBody.data.getPost.id,
+    //   },
+    // },
+    IndexName: 'PublishedPostByOriginalPostId',
+    KeyConditionExpression: '#originalPostId = :originalPostId',
+    ExpressionAttributeNames: {
+      '#originalPostId': 'originalPostId',
+    },
+    ExpressionAttributeValues: {
+      ':originalPostId': postId,
+    },
+    // ProjectionExpression: 'ATTRIBUTE_NAME',
   };
-  console.log(params);
+
+  // Call DynamoDB to read the item from the table
+
+  let existingId = undefined;
+
+  await docClient
+    .query(getParams, function (err, data) {
+      if (err) {
+        console.log('Error', err);
+      } else {
+        if (data.Items && data.Items.length > 0) {
+          existingId = data.Items[0].id;
+        }
+        console.log('Success', data, existingId);
+      }
+    })
+    .promise();
+
+  const publishedPostId = existingId ? existingId : uuid.v1();
+
+  const docParams = {
+    TableName: postTable,
+    Key: { id: publishedPostId },
+    UpdateExpression:
+      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, teaser = :teaser, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt',
+    ExpressionAttributeNames: {
+      // '#id': 'id',
+      '#typename': '__typename',
+      '#ownername': 'owner',
+    },
+    ExpressionAttributeValues: {
+      ':typename': 'PublishedPost',
+      ':owner': `${identityId}::${identityId}`,
+      ':originalPostId': resBody.data.getPost.id,
+      ':title': resBody.data.getPost.title,
+      ':gpxFile': resBody.data.getPost.gpxFile
+        ? resBody.data.getPost.gpxFile
+        : '',
+      ':images': resBody.data.getPost.images
+        ? JSON.parse(resBody.data.getPost.images)
+        : '[]',
+      ':postLocation': resBody.data.getPost.postLocation
+        ? resBody.data.getPost.postLocation
+        : '',
+      ':createdAt': date.toISOString(),
+      ':updatedAt': date.toISOString(),
+      ':teaser': resBody.data.getPost.teaser ? resBody.data.getPost.teaser : '',
+      ':currentFtp': resBody.data.getPost.currentFtp
+        ? resBody.data.getPost.currentFtp
+        : 0,
+      ':components': resBody.data.getPost.components
+        ? JSON.parse(resBody.data.getPost.components)
+        : '[]',
+      ':powerAnalysis': resBody.data.getPost.powerAnalysis
+        ? JSON.parse(resBody.data.getPost.powerAnalysis)
+        : '{}',
+      ':coordinates': resBody.data.getPost.coordinates
+        ? resBody.data.getPost.coordinates.slice(1, -1)
+        : '{}',
+      ':powers': resBody.data.getPost.powers
+        ? resBody.data.getPost.powers.slice(1, -1)
+        : '{}',
+      ':elevation': resBody.data.getPost.elevation
+        ? resBody.data.getPost.elevation.slice(1, -1)
+        : '{}',
+      ':elevationGrades': resBody.data.getPost.elevationGrades
+        ? resBody.data.getPost.elevationGrades.slice(1, -1)
+        : '{}',
+      ':distance': resBody.data.getPost.distance
+        ? resBody.data.getPost.distance
+        : 0,
+      ':author': resBody.data.getPost.author
+        ? resBody.data.getPost.author
+        : '{}',
+      ':elevationTotal': resBody.data.getPost.elevationTotal
+        ? resBody.data.getPost.elevationTotal
+        : 0,
+      ':normalizedPower': resBody.data.getPost.normalizedPower
+        ? resBody.data.getPost.normalizedPower
+        : 0,
+      ':heartAnalysis': resBody.data.getPost.heartAnalysis
+        ? JSON.parse(resBody.data.getPost.heartAnalysis)
+        : '{}',
+      ':cadenceAnalysis': resBody.data.getPost.cadenceAnalysis
+        ? JSON.parse(resBody.data.getPost.cadenceAnalysis)
+        : '{}',
+      ':tempAnalysis': resBody.data.getPost.tempAnalysis
+        ? JSON.parse(resBody.data.getPost.tempAnalysis)
+        : '{}',
+      ':elapsedTime': resBody.data.getPost.elapsedTime
+        ? resBody.data.getPost.elapsedTime
+        : 0,
+      ':stoppedTime': resBody.data.getPost.stoppedTime
+        ? resBody.data.getPost.stoppedTime
+        : 0,
+      ':timeInRed': resBody.data.getPost.timeInRed
+        ? resBody.data.getPost.timeInRed
+        : 0,
+      ':powerZones': resBody.data.getPost.powerZones
+        ? JSON.parse(resBody.data.getPost.powerZones)
+        : '{}',
+      ':powerZoneBuckets': resBody.data.getPost.powerZoneBuckets
+        ? JSON.parse(resBody.data.getPost.powerZoneBuckets)
+        : '{}',
+      ':heroImage': resBody.data.getPost.heroImage
+        ? JSON.parse(resBody.data.getPost.heroImage)
+        : '{}',
+      ':subhead': resBody.data.getPost.subhead
+        ? resBody.data.getPost.subhead
+        : '',
+      ':raceResults': resBody.data.getPost.raceResults
+        ? JSON.parse(resBody.data.getPost.raceResults)
+        : '{}',
+      ':raceResultsProvider': resBody.data.getPost.raceResults
+        ? resBody.data.getPost.raceResults
+        : '',
+    },
+    ReturnValues: 'ALL_NEW',
+  };
+  console.log(docParams);
 
   try {
-    await ddb.putItem(params).promise();
-    console.log('Success');
+    const res = await docClient.update(docParams).promise();
+    console.log(res);
   } catch (err) {
     console.log('Error', err);
+    console.log(JSON.stringify(err.__type));
   }
 
   return {

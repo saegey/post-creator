@@ -84,6 +84,12 @@ type PublishedPost
   shortUrl: String
   raceResults: AWSJSON
   raceResultsProvider: String
+  originalPostId: String
+    @index(
+      name: "PublishedPostByOriginalPostId"
+      queryField: "PublishedPostByOriginalPostId"
+      sortKeyFields: ["createdAt"]
+    )
   originalPost: Post @hasOne
 }
 

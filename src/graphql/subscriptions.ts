@@ -319,6 +319,7 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
     shortUrl
     raceResults
     raceResultsProvider
+    originalPostId
     originalPost {
       type
       id
@@ -444,6 +445,7 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
     shortUrl
     raceResults
     raceResultsProvider
+    originalPostId
     originalPost {
       type
       id
@@ -569,6 +571,7 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
     shortUrl
     raceResults
     raceResultsProvider
+    originalPostId
     originalPost {
       type
       id

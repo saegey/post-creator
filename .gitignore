@@ -49,4 +49,5 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
+src/ui-components/
 #amplify-do-not-edit-end

@@ -171,6 +171,7 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
     shortUrl
     raceResults
     raceResultsProvider
+    originalPostId
     originalPost {
       type
       id
@@ -298,6 +299,7 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       shortUrl
       raceResults
       raceResultsProvider
+      originalPostId
       originalPost {
         type
         id
@@ -359,8 +361,125 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
   APITypes.ListPublishedPostsQueryVariables,
   APITypes.ListPublishedPostsQuery
 >;
-export const getPost = /* GraphQL */ `
- GetPost($id: ID!) {
+export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostByOriginalPostId(
+  $originalPostId: String!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelPublishedPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  PublishedPostByOriginalPostId(
+    originalPostId: $originalPostId
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      gpxFile
+      images
+      headerImage
+      date
+      publishedDate
+      location
+      postLocation
+      stravaUrl
+      resultsUrl
+      subType
+      teaser
+      currentFtp
+      components
+      powerAnalysis
+      coordinates
+      powers
+      elevation
+      elevationGrades
+      distances
+      author
+      elevationTotal
+      normalizedPower
+      distance
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      elapsedTime
+      stoppedTime
+      timeInRed
+      powerZones
+      powerZoneBuckets
+      createdAt
+      heroImage
+      subhead
+      shortUrl
+      raceResults
+      raceResultsProvider
+      originalPostId
+      originalPost {
+        type
+        id
+        title
+        gpxFile
+        images
+        headerImage
+        date
+        publishedDate
+        location
+        postLocation
+        stravaUrl
+        resultsUrl
+        subType
+        teaser
+        currentFtp
+        components
+        powerAnalysis
+        coordinates
+        powers
+        elevation
+        elevationGrades
+        distances
+        elevationTotal
+        normalizedPower
+        distance
+        heartAnalysis
+        cadenceAnalysis
+        tempAnalysis
+        elapsedTime
+        stoppedTime
+        timeInRed
+        powerZones
+        powerZoneBuckets
+        createdAt
+        heroImage
+        subhead
+        shortUrl
+        raceResults
+        raceResultsProvider
+        privacyStatus
+        updatedAt
+        blogPostsId
+        postRelatedId
+        postAuthorId
+        owner
+        __typename
+      }
+      updatedAt
+      publishedPostOriginalPostId
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PublishedPostByOriginalPostIdQueryVariables,
+  APITypes.PublishedPostByOriginalPostIdQuery
+>;
+export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {
     type
     id
