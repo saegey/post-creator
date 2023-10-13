@@ -230,11 +230,13 @@ exports.handler = async (event) => {
     TableName: postTable,
     Key: { id: publishedPostId },
     UpdateExpression:
-      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, teaser = :teaser, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = :shortUrl, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt',
+      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, teaser = :teaser, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = :shortUrl, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date',
     ExpressionAttributeNames: {
       // '#id': 'id',
       '#typename': '__typename',
       '#ownername': 'owner',
+      '#typelabel': 'type',
+      '#datelabel': 'date',
     },
     ExpressionAttributeValues: {
       ':typename': 'PublishedPost',
@@ -323,6 +325,8 @@ exports.handler = async (event) => {
         ? resBody.data.getPost.raceResults
         : '',
       ':shortUrl': shortUrl,
+      ':type': 'PublishedPost',
+      ':date': resBody.data.getPost.date ? resBody.data.getPost.date : '',
     },
     ReturnValues: 'ALL_NEW',
   };
@@ -335,7 +339,7 @@ exports.handler = async (event) => {
     console.log(res);
   } catch (err) {
     console.log('Error', err);
-    console.log(JSON.stringify(err.__type));
+    // console.log(JSON.stringify(err.__type));
   }
 
   return {

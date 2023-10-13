@@ -118,8 +118,27 @@ export const getPostInitial = /* GraphQL */ `
 `;
 
 export const listPostsCustom = /* GraphQL */ `
-  query listPostsByCreatedAt {
-    listPostsByCreatedAt(type: "Post", sortDirection: DESC) {
+  query listPublishedPostsByCreatedAt($filter: ModelPublishedPostFilterInput) {
+    listPublishedPostsByCreatedAt(
+      type: "PublishedPost"
+      sortDirection: DESC
+      filter: $filter
+    ) {
+      items {
+        id
+        title
+        createdAt
+        images
+        author
+        # postAuthorId
+      }
+    }
+  }
+`;
+
+export const listMyPostsCustom = /* GraphQL */ `
+  query listPostsByCreatedAt($filter: ModelPostFilterInput) {
+    listPostsByCreatedAt(type: "Post", sortDirection: DESC, filter: $filter) {
       items {
         id
         title
@@ -131,7 +150,8 @@ export const listPostsCustom = /* GraphQL */ `
           fullName
           image
         }
-        postAuthorId
+        privacyStatus
+        # postAuthorId
       }
     }
   }
@@ -180,6 +200,7 @@ export const getPublishedPost =
     raceResults
     raceResultsProvider
     updatedAt
+		originalPostId
     # publishedPostOriginalPostId
     owner
     __typename

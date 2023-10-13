@@ -23,7 +23,7 @@ const PostAuthor = ({
 }: PostAuthorProps) => {
   const post = React.useContext(PostContext);
   const author = postAuthor ? postAuthor : post.author;
-  console.log(author);
+  // console.log(author);
   // console.log(author);
   const { width } = useViewport();
   return (

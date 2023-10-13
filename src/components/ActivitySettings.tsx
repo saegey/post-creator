@@ -82,7 +82,7 @@ const ActivitySettings = ({ setSavedMessage }) => {
       },
     });
     setIsPublishing(false);
-    console.log(response);
+    // console.log(response);
   };
 
   const saveSettings = async (event) => {

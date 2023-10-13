@@ -12,11 +12,11 @@ import { useClickOutside } from '../utils/ux';
 const PowerGraph = ({ element }) => {
   const { powerAnalysis, currentFtp } = React.useContext(PostContext);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const wrapperRef = React.useRef('menu');
 
   const editor = useSlateStatic() as ReactEditor;
   const path = ReactEditor.findPath(editor, element);
 
-  const wrapperRef = React.useRef('menu');
   useClickOutside(wrapperRef, (e) => {
     setIsMenuOpen(false);
     e.stopPropagation();

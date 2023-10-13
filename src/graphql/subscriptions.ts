@@ -291,6 +291,7 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
     postLocation
     stravaUrl
     resultsUrl
+    type
     subType
     teaser
     currentFtp
@@ -417,6 +418,7 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
     postLocation
     stravaUrl
     resultsUrl
+    type
     subType
     teaser
     currentFtp
@@ -543,6 +545,7 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
     postLocation
     stravaUrl
     resultsUrl
+    type
     subType
     teaser
     currentFtp

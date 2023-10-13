@@ -96,7 +96,7 @@ const PostEditor = ({ postId, initialState }) => {
   const getData = async () => {
     const { data } = (await API.graphql({
       query: getActivityQuery,
-      authMode: 'API_KEY',
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
       variables: {
         id: id,
       },

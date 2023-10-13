@@ -6,7 +6,7 @@ import { GraphQLResult } from '@aws-amplify/api';
 
 import { listPostsCustom } from '../graphql/customQueries';
 import AvatarButton from './AvatarButton';
-import { ListPostsByCreatedAtQuery } from '../API';
+import { ListPostsByCreatedAtQuery, ListPublishedPostsQuery } from '../API';
 import UserProfileMenu from './UserProfileMenu';
 import UserMainMenu from './UserMainMenu';
 
@@ -18,20 +18,25 @@ const Header = ({ user, signOut, title }) => {
   >([]);
 
   const listRecentPosts = async () => {
-    const { data } = (await API.graphql({
+    const { data } = await API.graphql({
       query: listPostsCustom,
-      authMode: 'API_KEY',
-    })) as GraphQLResult<ListPostsByCreatedAtQuery>;
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+    });
+    // as GraphQLResult<ListPublishedPostsQuery>;
 
     return data;
   };
 
   React.useEffect(() => {
     listRecentPosts().then((d) => {
-      if (!d || !d.listPostsByCreatedAt || !d.listPostsByCreatedAt.items) {
+      if (
+        !d ||
+        !d.listPublishedPostsByCreatedAt ||
+        !d.listPublishedPostsByCreatedAt.items
+      ) {
         console.error('failed to get listPosts');
       } else {
-        setRecentPosts(d?.listPostsByCreatedAt?.items as any);
+        setRecentPosts(d?.listPublishedPostsByCreatedAt?.items as any);
       }
     });
   }, []);

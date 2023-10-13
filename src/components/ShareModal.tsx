@@ -48,7 +48,7 @@ const ShareModal = ({ postId }) => {
           },
         },
       });
-      console.log(results);
+      // console.log(results);
       setShortUrl(results.data.listPublishedPosts.items[0].shortUrl);
       // setShortUrl(results.data.Attributes.id);
       // return shortUrl;

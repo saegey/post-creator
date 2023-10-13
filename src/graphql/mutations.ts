@@ -291,6 +291,7 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
     postLocation
     stravaUrl
     resultsUrl
+    type
     subType
     teaser
     currentFtp
@@ -417,6 +418,7 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
     postLocation
     stravaUrl
     resultsUrl
+    type
     subType
     teaser
     currentFtp
@@ -543,6 +545,7 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
     postLocation
     stravaUrl
     resultsUrl
+    type
     subType
     teaser
     currentFtp

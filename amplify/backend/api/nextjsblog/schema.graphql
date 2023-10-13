@@ -53,7 +53,12 @@ type PublishedPost
   postLocation: String
   stravaUrl: String
   resultsUrl: String
-  # type: String
+  type: String
+    @index(
+      name: "PublishedPostsByCreatedAt"
+      queryField: "listPublishedPostsByCreatedAt"
+      sortKeyFields: ["createdAt"]
+    )
   subType: String
   teaser: String
   currentFtp: String
