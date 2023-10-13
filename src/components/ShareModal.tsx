@@ -1,17 +1,19 @@
 import { EditorContext } from './EditorContext';
 import StandardModal from './StandardModal';
 import React from 'react';
-import { Box, Link as ThemeLink, Flex, Text } from 'theme-ui';
+import { Box, Link as ThemeLink, Flex, Text, Spinner } from 'theme-ui';
 import { API } from 'aws-amplify';
 import { useRouter } from 'next/router';
 
 import { PostContext } from './PostContext';
-import { updatePost } from '../../src/graphql/mutations';
+// import { updatePost } from '../../src/graphql/mutations';
+import { getShortUrl } from '../graphql/customQueries';
 
 const ShareModal = ({ postId }) => {
   const { isShareModalOpen, setIsShareModalOpen } =
     React.useContext(EditorContext);
-  const { shortUrl, setShortUrl, id } = React.useContext(PostContext);
+  const { id } = React.useContext(PostContext);
+  const [shortUrl, setShortUrl] = React.useState();
   const [isClicked, setIsClicked] = React.useState(false);
 
   const { asPath } = useRouter();
@@ -23,41 +25,40 @@ const ShareModal = ({ postId }) => {
   const URL = `${origin}${asPath}`;
   console.log(URL);
 
-  const createShortUrl = async () => {
-    const response = await API.post('api12660653', '/short-url', {
-      response: true,
-      body: {
-        url: `${origin}/j/${postId}`,
-      },
-    });
-    return response;
-  };
+  // const createShortUrl = async () => {
+  //   const response = await API.post('api12660653', '/short-url', {
+  //     response: true,
+  //     body: {
+  //       url: `${origin}/j/${postId}`,
+  //     },
+  //   });
+  //   return response;
+  // };
 
-  const getShortUrl = async () => {
-    if (shortUrl) {
-      return shortUrl;
-    }
-    const res = await createShortUrl();
-    setShortUrl(res.data.Attributes.id);
+  const fetch = async () => {
     try {
       const results = await API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
-        query: updatePost,
+        query: getShortUrl,
         variables: {
-          input: {
-            id: id,
-            shortUrl: res.data.Attributes.id,
+          filter: {
+            originalPostId: {
+              eq: id,
+            },
           },
         },
       });
-      return shortUrl;
+      console.log(results);
+      setShortUrl(results.data.listPublishedPosts.items[0].shortUrl);
+      // setShortUrl(results.data.Attributes.id);
+      // return shortUrl;
     } catch (error) {
       console.error(error);
     }
   };
 
   React.useEffect(() => {
-    getShortUrl();
+    fetch();
   }, []);
 
   return (
@@ -76,14 +77,28 @@ const ShareModal = ({ postId }) => {
           marginTop: '15px',
         }}
       >
-        <Text
-          sx={{
-            textDecoration: 'none',
-            color: 'text',
-            marginRight: 'auto',
-            padding: '5px',
-          }}
-        >{`https://mopd.us/${shortUrl}`}</Text>
+        {!shortUrl && (
+          <Spinner
+            sx={{
+              marginRight: 'auto',
+              padding: '5px',
+              width: '32px',
+              height: 'auto',
+            }}
+          />
+        )}
+        {shortUrl && (
+          <Text
+            sx={{
+              textDecoration: 'none',
+              color: 'text',
+              marginRight: 'auto',
+              padding: '5px',
+            }}
+          >
+            {`https://mopd.us/${shortUrl}`}
+          </Text>
+        )}
         <Box
           sx={{
             width: '30px',

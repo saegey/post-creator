@@ -21,13 +21,23 @@ const { Sha256 } = crypto;
 
 const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
 // AWS.config.update({ region: AWS_REGION });
-const ddb = new aws.DynamoDB();
+// const ddb = new aws.DynamoDB();
 
 const docClient = new aws.DynamoDB.DocumentClient();
 
 const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
 
 const postTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
+
+const generateUID = () => {
+  // I generate the UID from two parts here
+  // to ensure the random number provide enough bits.
+  var firstPart = (Math.random() * 46656) | 0;
+  var secondPart = (Math.random() * 46656) | 0;
+  firstPart = ('000' + firstPart.toString(36)).slice(-3);
+  secondPart = ('000' + secondPart.toString(36)).slice(-3);
+  return firstPart + secondPart;
+};
 
 const query = /* GraphQL */ `
   query GetPost($id: ID!) {
@@ -95,8 +105,9 @@ const query = /* GraphQL */ `
 
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
+
   const { body } = event;
-  const { postId } = JSON.parse(body);
+  const { postId, origin } = JSON.parse(body);
 
   console.log(`postId: ${postId}`);
 
@@ -149,16 +160,16 @@ exports.handler = async (event) => {
     };
   }
 
-  const identityId =
-    event.requestContext.identity.cognitoIdentityId.split(':')[1];
+  // const identityId =
+  // 	event.requestContext.identity.cognitoIdentityId.split(':')[1];
 
+  const identityId = event.requestContext.identity.cognitoAuthenticationProvider
+    .split(':')
+    .pop();
+
+  // console.log(JSON.stringify(event.requestContext.identity));
   const getParams = {
     TableName: postTable,
-    // Key: {
-    //   originalPostId: {
-    //     S: resBody.data.getPost.id,
-    //   },
-    // },
     IndexName: 'PublishedPostByOriginalPostId',
     KeyConditionExpression: '#originalPostId = :originalPostId',
     ExpressionAttributeNames: {
@@ -173,6 +184,7 @@ exports.handler = async (event) => {
   // Call DynamoDB to read the item from the table
 
   let existingId = undefined;
+  let shortUrl = undefined;
 
   await docClient
     .query(getParams, function (err, data) {
@@ -181,6 +193,7 @@ exports.handler = async (event) => {
       } else {
         if (data.Items && data.Items.length > 0) {
           existingId = data.Items[0].id;
+          shortUrl = data.Items[0].shortUrl;
         }
         console.log('Success', data, existingId);
       }
@@ -189,11 +202,35 @@ exports.handler = async (event) => {
 
   const publishedPostId = existingId ? existingId : uuid.v1();
 
+  if (!existingId) {
+    const shortUrlParams = {
+      TableName: 'url-short-LinkTable-1GWGF5F1ZD65K',
+      Key: {
+        id: generateUID(),
+      },
+      UpdateExpression: 'SET #url = :u, #owner = :o',
+      ExpressionAttributeValues: {
+        ':u': `${origin}/j/${publishedPostId}`,
+        ':o': `${identityId}::${identityId}`,
+      },
+      ExpressionAttributeNames: {
+        '#url': 'url',
+        '#owner': 'owner',
+      },
+      ReturnValues: 'ALL_NEW',
+    };
+
+    const resShort = await docClient.update(shortUrlParams).promise();
+    console.log(resShort);
+    shortUrl = resShort.Attributes.id;
+    // shortUrl = 't';
+  }
+
   const docParams = {
     TableName: postTable,
     Key: { id: publishedPostId },
     UpdateExpression:
-      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, teaser = :teaser, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt',
+      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, teaser = :teaser, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = :shortUrl, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt',
     ExpressionAttributeNames: {
       // '#id': 'id',
       '#typename': '__typename',
@@ -285,13 +322,16 @@ exports.handler = async (event) => {
       ':raceResultsProvider': resBody.data.getPost.raceResults
         ? resBody.data.getPost.raceResults
         : '',
+      ':shortUrl': shortUrl,
     },
     ReturnValues: 'ALL_NEW',
   };
   console.log(docParams);
 
+  let res;
+
   try {
-    const res = await docClient.update(docParams).promise();
+    res = await docClient.update(docParams).promise();
     console.log(res);
   } catch (err) {
     console.log('Error', err);
@@ -304,6 +344,6 @@ exports.handler = async (event) => {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': '*',
     },
-    body: JSON.stringify('Hello from Lambda!'),
+    body: JSON.stringify(res),
   };
 };

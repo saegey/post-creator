@@ -2,6 +2,7 @@ import { Box, Flex, Text, Input, Button, Label, Spinner } from 'theme-ui';
 import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
+import { useRouter } from 'next/router';
 
 import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
@@ -35,6 +36,14 @@ const ActivitySettings = ({ setSavedMessage }) => {
   } = React.useContext(EditorContext);
 
   const [isSaving, setIsSaving] = React.useState(false);
+  const [isPublishing, setIsPublishing] = React.useState(false);
+  const { asPath } = useRouter();
+  const origin =
+    typeof window !== 'undefined' && window.location.origin
+      ? window.location.origin
+      : '';
+  const URL = `${origin}${asPath}`;
+  console.log(URL);
 
   const processDeletePost = async (event) => {
     try {
@@ -54,12 +63,25 @@ const ActivitySettings = ({ setSavedMessage }) => {
   };
 
   const publishPost = async (event) => {
+    setIsPublishing(true);
+
+    // const shortUrlRes = await API.post('api12660653', '/short-url', {
+    //   response: true,
+    //   body: {
+    //     url: `${origin}/j/${id}`,
+    //   },
+    // });
+    // console.log(shortUrlRes);
+
     const response = await API.post('api12660653', '/post/publish', {
       response: true,
       body: {
         postId: id,
+        origin: `${origin}/`,
+        // shortUrl: shortUrlRes.data.Attributes.id,
       },
     });
+    setIsPublishing(false);
     console.log(response);
   };
 
@@ -238,7 +260,12 @@ const ActivitySettings = ({ setSavedMessage }) => {
                   type='button'
                   onClick={publishPost}
                 >
-                  Publish
+                  <Flex sx={{ gap: '10px' }}>
+                    <Text as='span'>Publish</Text>
+                    {isPublishing && (
+                      <Spinner sx={{ size: '20px', color: 'white' }} />
+                    )}
+                  </Flex>
                 </Button>
               </Box>
             </Flex>

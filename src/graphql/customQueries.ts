@@ -19,6 +19,17 @@ export const getActivityQuery = /* GraphQL */ `
   }
 `;
 
+export const getShortUrl = /* GraphQL */ `
+  query ListPublishedPosts {
+    listPublishedPosts {
+      items {
+        id
+        shortUrl
+      }
+    }
+  }
+`;
+
 export type getActivityQueryProps = {
   getPost?: {
     powerAnalysis?: string | null;
