@@ -11,7 +11,6 @@ import Header from '../../src/components/Header';
 import { PostType } from '../../pages/posts';
 import { CreatePostMutation } from '../API';
 import { createPost } from '../graphql/mutations';
-import CreatePostModal from './CreatePostModal';
 import {
   listMyPostsCustom,
   listPostsCustom,
@@ -110,6 +109,7 @@ const PostsAll = ({
         input: {
           title: '',
           type: 'Post',
+          privacyStatus: 'draft',
           components: JSON.stringify([
             { type: 'text', children: [{ text: '' }] },
           ]),
@@ -126,7 +126,7 @@ const PostsAll = ({
 
   return (
     <Box as='main' sx={{ backgroundColor: 'background', height: '100vw' }}>
-      <Header user={user} signOut={signOut} title={'My Posts'} />
+      <Header user={user} signOut={signOut} />
       <Box
         sx={{
           // marginTop: '60px',
@@ -138,11 +138,18 @@ const PostsAll = ({
         }}
       >
         {/* {posts && posts.length > 0 && ( */}
-        <Box sx={{ paddingBottom: '20px' }}>
-          <Button onClick={() => createNewPost()} variant='primaryButton'>
-            New Post
-          </Button>
-        </Box>
+        <Flex>
+          <Box>
+            <Text sx={{ fontSize: '28px', fontWeight: '600' }}>Your Posts</Text>
+          </Box>
+          <Flex
+            sx={{ paddingBottom: '20px', flexGrow: 1, justifyContent: 'right' }}
+          >
+            <Button onClick={() => createNewPost()} variant='primaryButton'>
+              New Post
+            </Button>
+          </Flex>
+        </Flex>
         {/* )} */}
 
         <Flex as='nav' sx={{ marginBottom: '10px' }}>

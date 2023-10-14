@@ -20,14 +20,10 @@ const { HttpRequest } = require('@aws-sdk/protocol-http');
 const { Sha256 } = crypto;
 
 const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
-// AWS.config.update({ region: AWS_REGION });
-// const ddb = new aws.DynamoDB();
-
 const docClient = new aws.DynamoDB.DocumentClient();
-
 const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
-
-const postTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
+const publishedPostTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
+const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 
 const generateUID = () => {
   // I generate the UID from two parts here
@@ -169,7 +165,7 @@ exports.handler = async (event) => {
 
   // console.log(JSON.stringify(event.requestContext.identity));
   const getParams = {
-    TableName: postTable,
+    TableName: publishedPostTable,
     IndexName: 'PublishedPostByOriginalPostId',
     KeyConditionExpression: '#originalPostId = :originalPostId',
     ExpressionAttributeNames: {
@@ -210,7 +206,7 @@ exports.handler = async (event) => {
       },
       UpdateExpression: 'SET #url = :u, #owner = :o',
       ExpressionAttributeValues: {
-        ':u': `${origin}/j/${publishedPostId}`,
+        ':u': `${origin}j/${publishedPostId}`,
         ':o': `${identityId}::${identityId}`,
       },
       ExpressionAttributeNames: {
@@ -221,13 +217,13 @@ exports.handler = async (event) => {
     };
 
     const resShort = await docClient.update(shortUrlParams).promise();
-    console.log(resShort);
+    console.log('shorturlres', resShort);
     shortUrl = resShort.Attributes.id;
     // shortUrl = 't';
   }
 
   const docParams = {
-    TableName: postTable,
+    TableName: publishedPostTable,
     Key: { id: publishedPostId },
     UpdateExpression:
       'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, teaser = :teaser, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = :shortUrl, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date',
@@ -331,6 +327,29 @@ exports.handler = async (event) => {
     ReturnValues: 'ALL_NEW',
   };
   console.log(docParams);
+
+  const postUpdateParams = {
+    Key: { id: postId },
+    UpdateExpression: 'SET privacyStatus = :privacyStatus',
+    TableName: postTable,
+    // IndexName: 'PublishedPostByOriginalPostId',
+    // KeyConditionExpression: '#originalPostId = :originalPostId',
+    ExpressionAttributeValues: {
+      ':privacyStatus': 'published',
+    },
+    ReturnValues: 'ALL_NEW',
+  };
+  console.log(postUpdateParams);
+
+  await docClient
+    .update(postUpdateParams, function (err, data) {
+      if (err) {
+        console.log('Error', err);
+      } else {
+        console.log('Success', data);
+      }
+    })
+    .promise();
 
   let res;
 

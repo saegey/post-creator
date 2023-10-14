@@ -10,7 +10,7 @@ import { ListPostsByCreatedAtQuery, ListPublishedPostsQuery } from '../API';
 import UserProfileMenu from './UserProfileMenu';
 import UserMainMenu from './UserMainMenu';
 
-const Header = ({ user, signOut, title }) => {
+const Header = ({ user, signOut, title = undefined }) => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const [recentPosts, setRecentPosts] = React.useState<
@@ -83,13 +83,13 @@ const Header = ({ user, signOut, title }) => {
                 <Logo />
               </Box>
             </Flex> */}
-            {title && (
+            {/* {title && (
               <Flex as='div' sx={{ fontSize: '16px', fontWeight: 500 }}>
                 <Box as='span' sx={{ marginY: 'auto' }}>
                   {title}
                 </Box>
               </Flex>
-            )}
+            )} */}
           </Flex>
           <div style={{ marginLeft: 'auto' }}>
             {user && user.attributes.picture && (
