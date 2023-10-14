@@ -37,7 +37,7 @@ const ShareModal = ({ postId }) => {
 
   const fetch = async () => {
     try {
-      const results = await API.graphql({
+      const results = (await API.graphql({
         authMode: 'AMAZON_COGNITO_USER_POOLS',
         query: getShortUrl,
         variables: {
@@ -47,7 +47,7 @@ const ShareModal = ({ postId }) => {
             },
           },
         },
-      });
+      })) as any;
       // console.log(results);
       setShortUrl(results.data.listPublishedPosts.items[0].shortUrl);
       // setShortUrl(results.data.Attributes.id);

@@ -49,7 +49,7 @@ const EditUserPost = ({
         flexGrow: 1,
       }}
     >
-      <Header user={user} signOut={signOut} title={'Edit Post'} />
+      <Header user={user} signOut={signOut} />
       <Box>
         <EditorContext.Provider
           value={{

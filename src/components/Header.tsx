@@ -18,10 +18,10 @@ const Header = ({ user, signOut, title = undefined }) => {
   >([]);
 
   const listRecentPosts = async () => {
-    const { data } = await API.graphql({
+    const { data } = (await API.graphql({
       query: listPostsCustom,
       authMode: 'AMAZON_COGNITO_USER_POOLS',
-    });
+    })) as { data: any };
     // as GraphQLResult<ListPublishedPostsQuery>;
 
     return data;

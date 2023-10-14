@@ -37,8 +37,7 @@ const PostsAllUsers = ({
 
   return (
     <Box as='main' sx={{ height: '100vw' }}>
-      {/* {newPost && <CreatePostModal setMenuOpen={setNewPost} />} */}
-      <Header user={user} signOut={signOut} title={'Posts'} />
+      <Header user={user} signOut={signOut} />
       <Box
         sx={{
           maxWidth: '900px',
