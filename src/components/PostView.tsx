@@ -33,7 +33,7 @@ const PostView = ({
         marginBottom: 'auto',
       }}
     >
-      {user && <Header user={user} signOut={signOut} title={'Post'} />}
+      {user && <Header user={user} signOut={signOut} />}
       {!user && <HeaderPublic />}
 
       <Container
@@ -71,7 +71,7 @@ const PostView = ({
             <ThemeLink
               as={Link}
               sx={{ textDecoration: 'none' }}
-              href={`/posts/${post.id}/edit`}
+              href={`/posts/${post.originalPostId}/edit`}
               key={`link-post-${post.id}`}
             >
               <Button

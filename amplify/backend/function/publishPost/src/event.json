@@ -1,0 +1,9 @@
+{
+  "postId": "8f60b55f-889f-4903-bd92-5e2d8ae0a495",
+  "body": "{ \"postId\": \"8f60b55f-889f-4903-bd92-5e2d8ae0a495\" }",
+  "requestContext": {
+    "identity": {
+      "cognitoIdentityId": "d0793677-36a8-4f9d-96aa-af199ce7dd0f"
+    }
+  }
+}

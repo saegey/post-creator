@@ -2,6 +2,7 @@ import { Box, Flex, Text, Input, Button, Label, Spinner } from 'theme-ui';
 import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
+import { useRouter } from 'next/router';
 
 import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
@@ -35,6 +36,14 @@ const ActivitySettings = ({ setSavedMessage }) => {
   } = React.useContext(EditorContext);
 
   const [isSaving, setIsSaving] = React.useState(false);
+  const [isPublishing, setIsPublishing] = React.useState(false);
+  const { asPath } = useRouter();
+  const origin =
+    typeof window !== 'undefined' && window.location.origin
+      ? window.location.origin
+      : '';
+  const URL = `${origin}${asPath}`;
+  console.log(URL);
 
   const processDeletePost = async (event) => {
     try {
@@ -51,6 +60,29 @@ const ActivitySettings = ({ setSavedMessage }) => {
     } catch (errors) {
       console.error(errors);
     }
+  };
+
+  const publishPost = async (event) => {
+    setIsPublishing(true);
+
+    // const shortUrlRes = await API.post('api12660653', '/short-url', {
+    //   response: true,
+    //   body: {
+    //     url: `${origin}/j/${id}`,
+    //   },
+    // });
+    // console.log(shortUrlRes);
+
+    const response = await API.post('api12660653', '/post/publish', {
+      response: true,
+      body: {
+        postId: id,
+        origin: `${origin}/`,
+        // shortUrl: shortUrlRes.data.Attributes.id,
+      },
+    });
+    setIsPublishing(false);
+    // console.log(response);
   };
 
   const saveSettings = async (event) => {
@@ -216,6 +248,32 @@ const ActivitySettings = ({ setSavedMessage }) => {
             <Flex>
               <Box sx={{ width: '70%' }}>
                 <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
+                  Publish
+                </Text>
+                <Text sx={{ fontSize: '15px' }}>
+                  Publish this post so anyone can view it.
+                </Text>
+              </Box>
+              <Box sx={{ marginLeft: 'auto', marginY: 'auto' }}>
+                <Button
+                  variant='primaryButton'
+                  type='button'
+                  onClick={publishPost}
+                >
+                  <Flex sx={{ gap: '10px' }}>
+                    <Text as='span'>Publish</Text>
+                    {isPublishing && (
+                      <Spinner sx={{ size: '20px', color: 'white' }} />
+                    )}
+                  </Flex>
+                </Button>
+              </Box>
+            </Flex>
+          </Box>
+          <Box>
+            <Flex>
+              <Box sx={{ width: '70%' }}>
+                <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
                   Delete this post
                 </Text>
                 <Text sx={{ fontSize: '15px' }}>
@@ -229,7 +287,7 @@ const ActivitySettings = ({ setSavedMessage }) => {
                   type='button'
                   onClick={processDeletePost}
                 >
-                  Delete Post
+                  Delete
                 </Button>
               </Box>
             </Flex>

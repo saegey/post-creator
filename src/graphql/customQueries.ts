@@ -1,3 +1,9 @@
+import * as APITypes from '../API';
+type GeneratedQuery<InputType, OutputType> = string & {
+  __generatedQueryInput: InputType;
+  __generatedQueryOutput: OutputType;
+};
+
 export const getActivityQuery = /* GraphQL */ `
   query GetActivityQuery($id: ID!) {
     getPost(id: $id) {
@@ -9,6 +15,17 @@ export const getActivityQuery = /* GraphQL */ `
       distances
       # owner
       __typename
+    }
+  }
+`;
+
+export const getShortUrl = /* GraphQL */ `
+  query ListPublishedPosts {
+    listPublishedPosts {
+      items {
+        id
+        shortUrl
+      }
     }
   }
 `;
@@ -101,8 +118,27 @@ export const getPostInitial = /* GraphQL */ `
 `;
 
 export const listPostsCustom = /* GraphQL */ `
-  query listPostsByCreatedAt {
-    listPostsByCreatedAt(type: "Post", sortDirection: DESC) {
+  query listPublishedPostsByCreatedAt($filter: ModelPublishedPostFilterInput) {
+    listPublishedPostsByCreatedAt(
+      type: "PublishedPost"
+      sortDirection: DESC
+      filter: $filter
+    ) {
+      items {
+        id
+        title
+        createdAt
+        images
+        author
+        # postAuthorId
+      }
+    }
+  }
+`;
+
+export const listMyPostsCustom = /* GraphQL */ `
+  query listPostsByCreatedAt($filter: ModelPostFilterInput) {
+    listPostsByCreatedAt(type: "Post", sortDirection: DESC, filter: $filter) {
       items {
         id
         title
@@ -114,8 +150,63 @@ export const listPostsCustom = /* GraphQL */ `
           fullName
           image
         }
-        postAuthorId
+        privacyStatus
+        # postAuthorId
       }
     }
   }
 `;
+
+export const getPublishedPost =
+  /* GraphQL */ `query GetPublishedPost($id: ID!) {
+  getPublishedPost(id: $id) {
+    id
+    title
+    gpxFile
+    images
+    headerImage
+    date
+    publishedDate
+    location
+    postLocation
+    stravaUrl
+    resultsUrl
+    subType
+    teaser
+    currentFtp
+    components
+    powerAnalysis
+    coordinates
+    powers
+    elevation
+    elevationGrades
+    distances
+    author
+    elevationTotal
+    normalizedPower
+    distance
+    heartAnalysis
+    cadenceAnalysis
+    tempAnalysis
+    elapsedTime
+    stoppedTime
+    timeInRed
+    powerZones
+    powerZoneBuckets
+    createdAt
+    heroImage
+    subhead
+    shortUrl
+    raceResults
+    raceResultsProvider
+    updatedAt
+		originalPostId
+    # publishedPostOriginalPostId
+    owner
+    __typename
+  }
+}
+` as GeneratedQuery<
+    APITypes.GetPublishedPostQueryVariables,
+    APITypes.GetPublishedPostQuery
+  >;

@@ -9,11 +9,12 @@ import PostsAllUsers from '../src/components/PostsAllUsers';
 
 type ListPosts = {
   data: {
-    listPostsByCreatedAt: {
+    listPublishedPostsByCreatedAt: {
       items: Array<{
         id: string;
         title: string;
         images: string;
+        author: string;
       }>;
     };
   };
@@ -30,8 +31,12 @@ export const getServerSideProps = async ({ req }) => {
 
     return {
       props: {
-        posts: response.data.listPostsByCreatedAt.items.map((d) => {
-          return { ...d, imagesObj: JSON.parse(d.images) };
+        posts: response.data.listPublishedPostsByCreatedAt.items.map((d) => {
+          return {
+            ...d,
+            imagesObj: JSON.parse(d.images),
+            author: JSON.parse(d.author),
+          };
         }),
       },
     };

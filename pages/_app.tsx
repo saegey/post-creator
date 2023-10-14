@@ -15,7 +15,7 @@ import '@aws-amplify/ui-react/styles.css';
 import '../styles/globals.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-Amplify.configure(awsconfig);
+Amplify.configure({ ...awsconfig, ssr: true });
 
 export default class App extends NextApp {
   render() {

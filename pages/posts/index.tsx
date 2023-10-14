@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Amplify, API, Auth } from 'aws-amplify';
 import React from 'react';
 
-import { listPostsCustom } from '../../src/graphql/customQueries';
+import { listMyPostsCustom } from '../../src/graphql/customQueries';
 import awsconfig from '../../src/aws-exports';
 import PostsAll from '../../src/components/PostsAll';
 import AuthCustom from '../../src/components/AuthCustom';
@@ -20,30 +20,35 @@ export type PostType = Array<{
 }>;
 
 const MyPosts = () => {
-  const [posts, setPosts] = React.useState<PostType>();
+  // const [posts, setPosts] = React.useState<PostType>();
 
-  const getData = async () => {
-    const user = await Auth.currentAuthenticatedUser();
-    const response: any = await API.graphql({
-      query: listPostsCustom,
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
-      variables: {
-        filter: {
-          postAuthorId: {
-            eq: user.attributes.sub,
-          },
-        },
-      },
-    });
+  // const getData = async (type = 'draft') => {
+  //   const user = await Auth.currentAuthenticatedUser();
+  //   const response: any = await API.graphql({
+  //     query: listMyPostsCustom,
+  //     authMode: 'AMAZON_COGNITO_USER_POOLS',
+  //     variables: {
+  //       filter: {
+  //         // postAuthorId: {
+  //         //   eq: user.attributes.sub,
+  //         // },
+  //         privacyStatus: {
+  //           eq: type,
+  //         },
+  //       },
+  //     },
+  //   });
 
-    return response.data.listPostsByCreatedAt.items.map((d) => {
-      return { ...d, imagesObj: JSON.parse(d.images) };
-    });
-  };
+  //   response.data.listPostsByCreatedAt.items.map((d) => {
+  //     return { ...d, imagesObj: JSON.parse(d.images) };
+  //   });
 
-  React.useEffect(() => {
-    getData().then((d) => setPosts(d));
-  }, []);
+  //   setPosts(response.data.listPostsByCreatedAt);
+  // };
+
+  // React.useEffect(() => {
+  //   getData();
+  // }, []);
 
   return (
     <AuthCustom>
@@ -52,7 +57,7 @@ const MyPosts = () => {
           <title>My Posts</title>
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <PostsAll posts={posts} />
+        <PostsAll view='my' />
       </div>
     </AuthCustom>
   );

@@ -96,7 +96,7 @@ const Profile = ({ signOut, user }) => {
           <link rel='icon' href='/favicon.ico' />
         </Head>
         <main>
-          <Header user={user} signOut={signOut} title={'Profile'} />
+          <Header user={user} signOut={signOut} />
           {/* {wasSaved && (
             <Alert
               sx={{
