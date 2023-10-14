@@ -51,7 +51,6 @@ const query = /* GraphQL */ `
       stravaUrl
       resultsUrl
       subType
-      teaser
       currentFtp
       components
       powerAnalysis
@@ -182,41 +181,51 @@ exports.handler = async (event) => {
   let existingId = undefined;
   let shortUrl = undefined;
 
-  await docClient
-    .query(getParams, function (err, data) {
-      if (err) {
-        console.log('Error', err);
-      } else {
-        if (data.Items && data.Items.length > 0) {
-          existingId = data.Items[0].id;
-          shortUrl = data.Items[0].shortUrl;
+  try {
+    await docClient
+      .query(getParams, function (err, data) {
+        if (err) {
+          console.log('Error', err);
+        } else {
+          if (data.Items && data.Items.length > 0) {
+            existingId = data.Items[0].id;
+            shortUrl = data.Items[0].shortUrl;
+          }
+          console.log('Success', data, existingId);
         }
-        console.log('Success', data, existingId);
-      }
-    })
-    .promise();
+      })
+      .promise();
+  } catch (e) {
+    console.error(JSON.stringify(e));
+  }
 
   const publishedPostId = existingId ? existingId : uuid.v1();
 
   if (!existingId) {
-    const shortUrlParams = {
-      TableName: 'url-short-LinkTable-1GWGF5F1ZD65K',
-      Key: {
-        id: generateUID(),
-      },
-      UpdateExpression: 'SET #url = :u, #owner = :o',
-      ExpressionAttributeValues: {
-        ':u': `${origin}j/${publishedPostId}`,
-        ':o': `${identityId}::${identityId}`,
-      },
-      ExpressionAttributeNames: {
-        '#url': 'url',
-        '#owner': 'owner',
-      },
-      ReturnValues: 'ALL_NEW',
-    };
+    let resShort;
+    try {
+      const shortUrlParams = {
+        TableName: 'url-short-LinkTable-1GWGF5F1ZD65K',
+        Key: {
+          id: generateUID(),
+        },
+        UpdateExpression: 'SET #url = :u, #owner = :o',
+        ExpressionAttributeValues: {
+          ':u': `${origin}j/${publishedPostId}`,
+          ':o': `${identityId}::${identityId}`,
+        },
+        ExpressionAttributeNames: {
+          '#url': 'url',
+          '#owner': 'owner',
+        },
+        ReturnValues: 'ALL_NEW',
+      };
 
-    const resShort = await docClient.update(shortUrlParams).promise();
+      resShort = await docClient.update(shortUrlParams).promise();
+    } catch (e) {
+      console.error(e);
+    }
+
     console.log('shorturlres', resShort);
     shortUrl = resShort.Attributes.id;
     // shortUrl = 't';
@@ -226,7 +235,7 @@ exports.handler = async (event) => {
     TableName: publishedPostTable,
     Key: { id: publishedPostId },
     UpdateExpression:
-      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, teaser = :teaser, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = :shortUrl, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date',
+      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, distances = :distances',
     ExpressionAttributeNames: {
       // '#id': 'id',
       '#typename': '__typename',
@@ -250,7 +259,6 @@ exports.handler = async (event) => {
         : '',
       ':createdAt': date.toISOString(),
       ':updatedAt': date.toISOString(),
-      ':teaser': resBody.data.getPost.teaser ? resBody.data.getPost.teaser : '',
       ':currentFtp': resBody.data.getPost.currentFtp
         ? resBody.data.getPost.currentFtp
         : 0,
@@ -318,15 +326,31 @@ exports.handler = async (event) => {
         ? JSON.parse(resBody.data.getPost.raceResults)
         : '{}',
       ':raceResultsProvider': resBody.data.getPost.raceResults
-        ? resBody.data.getPost.raceResults
+        ? resBody.data.getPost.raceResultsProvider
         : '',
-      ':shortUrl': shortUrl,
+      ':shortUrl': shortUrl ? shortUrl : '',
       ':type': 'PublishedPost',
       ':date': resBody.data.getPost.date ? resBody.data.getPost.date : '',
+      ':stravaUrl': resBody.data.getPost.stravaUrl
+        ? resBody.data.getPost.stravaUrl
+        : '',
+      ':distances': resBody.data.getPost.distances
+        ? resBody.data.getPost.distances.slice(1, -1)
+        : '{}',
     },
     ReturnValues: 'ALL_NEW',
   };
   console.log(docParams);
+
+  let res;
+
+  try {
+    res = await docClient.update(docParams).promise();
+    console.log(res);
+  } catch (err) {
+    console.log('Error', err);
+    // console.log(JSON.stringify(err.__type));
+  }
 
   const postUpdateParams = {
     Key: { id: postId },
@@ -341,24 +365,18 @@ exports.handler = async (event) => {
   };
   console.log(postUpdateParams);
 
-  await docClient
-    .update(postUpdateParams, function (err, data) {
-      if (err) {
-        console.log('Error', err);
-      } else {
-        console.log('Success', data);
-      }
-    })
-    .promise();
-
-  let res;
-
   try {
-    res = await docClient.update(docParams).promise();
-    console.log(res);
-  } catch (err) {
-    console.log('Error', err);
-    // console.log(JSON.stringify(err.__type));
+    await docClient
+      .update(postUpdateParams, function (err, data) {
+        if (err) {
+          console.log('Error', err);
+        } else {
+          console.log('Success', data);
+        }
+      })
+      .promise();
+  } catch (e) {
+    console.error(e);
   }
 
   return {

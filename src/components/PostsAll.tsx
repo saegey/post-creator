@@ -159,8 +159,9 @@ const PostsAll = ({
             sx={{
               paddingY: '8px',
               paddingRight: '8px',
-              borderBottom:
-                status === 'draft' ? '1px solid black' : '1px solid #e8e8e8',
+              borderBottomWidth: '1px',
+              borderBottomStyle: 'solid',
+              borderBottomColor: status === 'draft' ? 'text' : 'divider',
               fontWeight: '500',
             }}
             onClick={(e) => {
@@ -179,10 +180,11 @@ const PostsAll = ({
             href='#!'
             p={2}
             sx={{
-              borderBottom:
-                status === 'published'
-                  ? '1px solid black'
-                  : '1px solid #e8e8e8',
+              paddingY: '8px',
+              paddingRight: '8px',
+              borderBottomWidth: '1px',
+              borderBottomStyle: 'solid',
+              borderBottomColor: status === 'published' ? 'text' : 'divider',
               fontWeight: '500',
             }}
             onClick={(e) => {
@@ -198,11 +200,23 @@ const PostsAll = ({
           <NavLink
             href='#!'
             p={2}
-            sx={{ borderBottom: '1px solid #e8e8e8', fontWeight: '500' }}
+            sx={{
+              borderBottomWidth: '1px',
+              borderBottomStyle: 'solid',
+              borderBottomColor: 'divider',
+              fontWeight: '500',
+            }}
           >
             Unlisted
           </NavLink>
-          <Box sx={{ flexGrow: 1, borderBottom: '1px solid #e8e8e8' }}></Box>
+          <Box
+            sx={{
+              flexGrow: 1,
+              borderBottomWidth: '1px',
+              borderBottomStyle: 'solid',
+              borderBottomColor: 'divider',
+            }}
+          ></Box>
         </Flex>
 
         {!posts && (
