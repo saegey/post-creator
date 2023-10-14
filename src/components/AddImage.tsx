@@ -17,6 +17,7 @@ export interface CloudinaryImage {
   format: 'jpeg' | 'jpg' | 'png';
   width: number;
   height: number;
+  colors: Array<string>;
 }
 
 const AddImage = ({ callback, setIsOpen, isOpen }) => {

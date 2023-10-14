@@ -24,15 +24,17 @@ const PostHeaderTextBlock = ({
   return (
     <Flex
       sx={{
-        width: ['calc(100% - 40px)', '35%', '35%'],
-        marginX: ['20px', '0', '0'],
+        width: '100%',
+        marginX: ['10px', '0', '0'],
         bg: ['', 'muted', 'muted'],
         paddingY: ['10px', '20px', '20px'],
         paddingX: [0, '20px', '20px'],
         gap: '10px',
         flexDirection: 'column',
         justifyContent: 'center',
+        alignContent: 'center',
         position: 'relative',
+        // display: 'inline',
         borderBottomColor: 'muted',
         borderBottomWidth: ['1px', 0, 0],
         borderBottomStyle: 'solid',
