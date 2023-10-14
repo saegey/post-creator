@@ -1,10 +1,8 @@
 import { Flex, Box, Text } from 'theme-ui';
-// import { StaticImage } from 'gatsby-plugin-image';
 import moment from 'moment';
 import React from 'react';
 import { CldImage } from 'next-cloudinary';
 
-import { useViewport } from './ViewportProvider';
 import { PostContext } from './PostContext';
 import AvatarButton from './AvatarButton';
 import { cloudUrl } from '../utils/cloudinary';
@@ -23,9 +21,7 @@ const PostAuthor = ({
 }: PostAuthorProps) => {
   const post = React.useContext(PostContext) as any;
   const author = postAuthor ? postAuthor : post.author;
-  // console.log(author);
-  // console.log(author);
-  const { width } = useViewport();
+
   return (
     <Box
       sx={{

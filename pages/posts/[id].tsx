@@ -11,9 +11,6 @@ import AuthCustom from '../../src/components/AuthCustom';
 import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
 import { getPost } from '../../src/graphql/queries';
-import { useViewport } from '../../src/components/ViewportProvider';
-
-// import awsconfig from '../../src/aws-exports';
 
 type ServerSideProps = {
   req: object;
@@ -21,8 +18,6 @@ type ServerSideProps = {
     id: string;
   };
 };
-
-// Amplify.configure({ ...awsconfig, ssr: true });
 
 const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
 
@@ -114,10 +109,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({ post, activity, user }): JSX.Element => {
   const config = SlatePublish({ post, activity });
   const components = JSON.parse(post.components);
-  // const { width, height } = useViewport();
-  // console.log('width', width);
-  // post.author = JSON.parse(post.author);
-  // console.log(post.author);
 
   return (
     <AuthCustom>

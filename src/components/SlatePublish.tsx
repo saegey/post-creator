@@ -16,7 +16,6 @@ import PostHeaderTextBlock from './PostHeaderTextBlock';
 import PostAuthor from './PostAuthor';
 import { cloudUrl } from '../utils/cloudinary';
 import VisualOverview from '../../src/components/VisualOverview';
-import { useViewport } from './ViewportProvider';
 
 // const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
 //   ssr: false,
@@ -38,13 +37,9 @@ const renderLink = (node) => {
     </>
   );
 };
-// import { useViewport } from './ViewportProvider';
 
 const SlatePublish = ({ post, activity }) => {
   const { title, subhead, date, postLocation, headerImageCaption } = post;
-  // const { width, height } = useViewport();
-
-  // console.log('width', width);
 
   const config: SlateToReactConfig = {
     ...slateToReactConfig,
@@ -128,8 +123,7 @@ const SlatePublish = ({ post, activity }) => {
         },
         heroBanner: ({ node }) => {
           const heroImage = JSON.parse(post.heroImage);
-          // const { width, height } = useViewport();
-          // console.log(width);
+
           return (
             <Box
               sx={{
