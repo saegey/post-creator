@@ -6,12 +6,11 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 // import { Amplify } from 'aws-amplify';
 
 import { getPublishedPost } from '../../src/graphql/customQueries';
-import { getActivity } from '../../src/actions/PostGet';
+import { getActivity, getPostQuery } from '../../src/actions/PostGet';
 import AuthCustom from '../../src/components/AuthCustom';
 import PostView from '../../src/components/PostView';
 import SlatePublish from '../../src/components/SlatePublish';
-
-// import awsconfig from '../../src/aws-exports';
+import { getPost } from '../../src/graphql/queries';
 
 type ServerSideProps = {
   req: object;
@@ -20,12 +19,12 @@ type ServerSideProps = {
   };
 };
 
-// Amplify.configure({ ...awsconfig, ssr: true });
-
 const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
 
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const { API } = withSSRContext({ req });
+
+  let post;
 
   const { data } = await API.graphql({
     query: getPublishedPost,
@@ -35,12 +34,26 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     },
   });
   if (!data || !data.getPublishedPost) {
-    console.error('faileed too get activity data');
-    return;
+    // console.error('faileed too get activity data');
+    const { data } = await API.graphql({
+      query: getPost,
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      variables: {
+        id: params.id,
+      },
+    });
+    console.log(data);
+    post = data.getPost;
+
+    // return;
+  } else {
+    post = data.getPublishedPost;
   }
-  const post = data.getPublishedPost;
+  console.log(post);
+
   const activityString = await getActivity(post);
-  post.author = JSON.parse(post.author);
+  post.author =
+    typeof post.author === 'string' ? JSON.parse(post.author) : post.author;
 
   const activity = activityString.map((a, i) => {
     return {
@@ -96,8 +109,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({ post, activity, user }): JSX.Element => {
   const config = SlatePublish({ post, activity });
   const components = JSON.parse(post.components);
-  // post.author = JSON.parse(post.author);
-  // console.log(post.author);
 
   return (
     <AuthCustom>

@@ -122,6 +122,8 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         heroBanner: ({ node }) => {
+          const heroImage = JSON.parse(post.heroImage);
+
           return (
             <Box
               sx={{
@@ -131,9 +133,7 @@ const SlatePublish = ({ post, activity }) => {
             >
               <Flex
                 sx={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '500px',
+                  height: 'fit-content',
                   flexDirection: ['column', 'row', 'row'],
                   width: '100%',
                 }}
@@ -141,24 +141,39 @@ const SlatePublish = ({ post, activity }) => {
                 {' '}
                 <Box
                   sx={{
+                    backgroundColor: heroImage.colors[0],
                     width: ['100%', '65%', '65%'],
-                    height: '100%',
-                    backgroundColor: 'black',
-                    justifyContent: 'center',
-                    display: 'flex',
+                    display: ['inline-block', '', ''],
+                    height: '600px',
+                    // height: ['400px', '600px', '600px'],
+                    // '@media (max-width: 400px)': {
+                    //   height: '300px',
+                    // },
+
+                    // '@media only screen and (max-width: 600px) and (min-width: 400px)':
+                    //   {
+                    //     height: '400px',
+                    //   },
+                    '@media (min-width: 900px)': {
+                      height: '700px',
+                    },
                   }}
                 >
                   <CldImage
                     // as={CldImage}
-                    width='1200'
-                    height='500'
-                    src={JSON.parse(post.heroImage)?.public_id}
-                    sizes='100vw'
+                    priority={true}
+                    width={heroImage.width}
+                    height={heroImage.height}
+                    src={heroImage.public_id}
+                    // sizes='100vw'
                     alt='race pic'
                     style={{
                       objectFit: 'contain',
-                      height: '100%',
-                      width: 'null',
+                      // height: '100%',
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                      // width: '100%',
+                      // width: ['100%', null, null],
                     }}
                     config={{
                       cloud: {
@@ -167,17 +182,21 @@ const SlatePublish = ({ post, activity }) => {
                     }}
                   />
                 </Box>
-                <PostHeaderTextBlock
-                  type={'Race'}
-                  title={title ? title : 'Title'}
-                  teaser={subhead ? subhead : 'Subhead'}
-                  date={date ? date : 'Event date'}
-                  location={postLocation ? postLocation : 'Location'}
-                  headerImageCaption={
-                    node.photoCaption ? node.photoCaption : 'Enter caption here'
-                  }
-                  height='100%'
-                />
+                <Box sx={{ width: ['100%', '35%', '35%'] }}>
+                  <PostHeaderTextBlock
+                    type={'Race'}
+                    title={title ? title : 'Title'}
+                    teaser={subhead ? subhead : 'Subhead'}
+                    date={date ? date : 'Event date'}
+                    location={postLocation ? postLocation : 'Location'}
+                    headerImageCaption={
+                      node.photoCaption
+                        ? node.photoCaption
+                        : 'Enter caption here'
+                    }
+                    height='100%'
+                  />
+                </Box>
               </Flex>
             </Box>
           );
@@ -383,7 +402,10 @@ const SlatePublish = ({ post, activity }) => {
         },
         postAuthor: () => {
           return (
-            <PostAuthor postAuthor={post.author} publishedDate={'10-05-22'} />
+            <PostAuthor
+              postAuthor={post.author}
+              publishedDate={post.createdAt}
+            />
           );
         },
         image: ({ node, children = [] }) => {

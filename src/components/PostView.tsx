@@ -12,6 +12,7 @@ import Link from 'next/link';
 
 import HeaderPublic from './HeaderPublic';
 
+
 const PostView = ({
   user = undefined,
   signOut,
@@ -25,7 +26,8 @@ const PostView = ({
   config: any;
   post: any;
 }) => {
-  // console.log(user);
+  // console.log(post);
+
   return (
     <Box
       as='main'
@@ -71,7 +73,11 @@ const PostView = ({
             <ThemeLink
               as={Link}
               sx={{ textDecoration: 'none' }}
-              href={`/posts/${post.originalPostId}/edit`}
+              href={
+                post.__typename === 'PublishedPost'
+                  ? `/posts/${post.originalPostId}/edit`
+                  : `/posts/${post.id}/edit`
+              }
               key={`link-post-${post.id}`}
             >
               <Button

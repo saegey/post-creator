@@ -87,6 +87,7 @@ const HeroBanner = ({ element }) => {
   );
 
   const editor = useSlateStatic() as ReactEditor;
+
   // const path = ReactEditor.findPath(editor, element);
 
   return (
@@ -101,46 +102,85 @@ const HeroBanner = ({ element }) => {
         {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
         <Flex
           sx={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '500px',
+            height: 'fit-content',
             flexDirection: ['column', 'row', 'row'],
             width: '100%',
           }}
         >
-          <Box
-            sx={{
-              width: ['100%', '65%', '65%'],
-              height: '100%',
-              backgroundColor: 'gray',
-              justifyContent: 'center',
-              display: 'flex',
+          {!heroImage && (
+            <Flex
+              sx={{
+                width: ['100%', '65%', '65%'],
 
-              // height: heroImage ? '500px' : null,
-            }}
-          >
-            {!heroImage && (
-              <Button
-                type='button'
-                variant='primaryButton'
-                sx={{ marginY: 'auto' }}
-                onClick={() => setIsHeroImageModalOpen(true)}
-              >
-                Add Image
-              </Button>
-            )}
-            {heroImage && (
+                background: 'divider',
+                justifyContent: 'center',
+                alignContent: 'center',
+                height: '600px',
+                // height: ['400px', '600px', '600px'],
+                // '@media (max-width: 400px)': {
+                //   height: '300px',
+                // },
+
+                // '@media only screen and (max-width: 600px) and (min-width: 400px)':
+                //   {
+                //     height: '400px',
+                //   },
+                '@media (min-width: 900px)': {
+                  height: '700px',
+                },
+              }}
+            >
+              <Flex>
+                <Button
+                  type='button'
+                  variant='primaryButton'
+                  sx={{
+                    marginY: 'auto',
+                  }}
+                  onClick={() => setIsHeroImageModalOpen(true)}
+                >
+                  Add Image
+                </Button>
+              </Flex>
+            </Flex>
+          )}
+          {heroImage && (
+            <Box
+              sx={{
+                backgroundColor: heroImage.colors[0],
+                width: ['100%', '65%', '65%'],
+                display: ['inline-block', '', ''],
+                height: '600px',
+                // height: ['400px', '600px', '600px'],
+                // '@media (max-width: 400px)': {
+                //   height: '300px',
+                // },
+
+                // '@media only screen and (max-width: 600px) and (min-width: 400px)':
+                //   {
+                //     height: '400px',
+                //   },
+                '@media (min-width: 900px)': {
+                  height: '700px',
+                },
+              }}
+            >
               <CldImage
                 // as={CldImage}
-                // priority={true}
-                width='1200'
-                height='500'
+                priority={true}
+                width={heroImage.width}
+                height={heroImage.height}
                 src={heroImage.public_id}
                 // sizes='100vw'
                 alt='race pic'
                 style={{
                   objectFit: 'contain',
-                  height: '100%',
+                  // height: '100%',
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+
+                  // '@media (max-width: 600px)': { maxWidth: '300px' },
+                  // width: '100%',
                   // width: ['100%', null, null],
                 }}
                 config={{
@@ -149,19 +189,24 @@ const HeroBanner = ({ element }) => {
                   },
                 }}
               />
-            )}
+            </Box>
+          )}
+          <Box sx={{ width: ['100%', '35%', '35%'] }}>
+            <PostHeaderTextBlock
+              type={'Race'}
+              title={title ? title : 'Title'}
+              teaser={subhead ? subhead : 'Subhead'}
+              date={date ? date : 'Event date'}
+              location={postLocation ? postLocation : 'Location'}
+              headerImageCaption={
+                element.photoCaption
+                  ? element.photoCaption
+                  : 'Enter caption here'
+              }
+              height='100%'
+            />
           </Box>
-          <PostHeaderTextBlock
-            type={'Race'}
-            title={title ? title : 'Title'}
-            teaser={subhead ? subhead : 'Subhead'}
-            date={date ? date : 'Event date'}
-            location={postLocation ? postLocation : 'Location'}
-            headerImageCaption={
-              element.photoCaption ? element.photoCaption : 'Enter caption here'
-            }
-            height='100%'
-          />
+
           {menu}
         </Flex>
       </Box>
