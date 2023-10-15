@@ -58,21 +58,21 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     };
   });
 
-  const url = '';
+  // const url = '';
   // console.log(post.heroImage.split(1, -1));
 
-  // const url = constructCloudinaryUrl({
-  //   options: {
-  //     src: JSON.parse(post.heroImage).public_id,
-  //     width: 800,
-  //     height: 600,
-  //   },
-  //   config: {
-  //     cloud: {
-  //       cloudName: cloudUrl,
-  //     },
-  //   },
-  // });
+  const url = constructCloudinaryUrl({
+    options: {
+      src: JSON.parse(post.heroImage).public_id,
+      width: 800,
+      height: 600,
+    },
+    config: {
+      cloud: {
+        cloudName: cloudUrl,
+      },
+    },
+  });
 
   const metaTags = {
     description: post.subhead ? post.subhead.split(0, 150) : '',
@@ -104,7 +104,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({ post, activity }): JSX.Element => {
   const config = SlatePublish({ post, activity });
   const components = JSON.parse(post.components);
-  console.log(components, post);
+  // console.log(components, post);
   // post.author = JSON.parse(post.author);
 
   return (

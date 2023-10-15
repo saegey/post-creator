@@ -389,19 +389,6 @@ const GraphSelectorMenu = ({ editor }) => {
             </Flex>
           </Box>
         </Flex>
-
-        {/* {!gpxFile && (
-          <Flex
-            sx={{
-              position: 'absolute',
-              top: '62px',
-              height: '80vh',
-              // background: '#9d9d9d8f',
-              width: ['100%', '300px', '300px'],
-              flexDirection: 'column',
-            }}
-          ></Flex>
-        )} */}
         {!gpxFile && (
           <Box
             sx={{

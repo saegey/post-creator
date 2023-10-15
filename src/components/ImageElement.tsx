@@ -31,9 +31,13 @@ const ImageElement = ({ children, element }) => {
   const path = ReactEditor.findPath(editor, element);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [addCaption, setAddCaption] = React.useState(false);
-  const { id, title, postLocation } = React.useContext(PostContext);
+  const { id, title, postLocation, images } = React.useContext(PostContext);
   const selected = useSelected();
   const focused = useFocused();
+
+  const imageMeta = images?.find((i) => i.public_id === element.public_id);
+
+  // console.log(imageMeta);
 
   const wrapperRef = React.useRef('menu');
 
@@ -72,33 +76,53 @@ const ImageElement = ({ children, element }) => {
       <Box
         sx={{
           position: 'relative',
-          width: '100%',
+          width: ['100%', '900px', '900px'],
           maxWidth: '900px',
           marginX: 'auto',
           marginY: ['20px', '60px', '60px'],
-          height: 'auto',
+          height: '600px',
+          // maxHeight: '600px',
           marginBottom: '20px',
         }}
       >
-        <CldImage
-          width='800'
-          height='800'
-          src={element.public_id}
-          sizes='100vw'
-          alt='race pic'
-          quality={90}
-          style={{
+        <Flex
+          sx={{
             width: '100%',
-            height: 'auto',
-            borderRadius: '5px',
-            boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}`,
+            height: '600px',
+            backgroundColor: imageMeta?.colors[0],
+            borderRadius: [0, '5px', '5px'],
           }}
-          config={{
-            cloud: {
-              cloudName: cloudUrl,
-            },
-          }}
-        />
+        >
+          <CldImage
+            width='1200'
+            height='1200'
+            src={element.public_id}
+            sizes='100vw'
+            alt='race pic'
+            quality={90}
+            style={{
+              objectFit: 'contain',
+              // height: '100%',
+              width: '100%',
+              maxHeight: '100%',
+              borderRadius:
+                imageMeta &&
+                imageMeta.width &&
+                imageMeta.height &&
+                imageMeta?.width > imageMeta?.height
+                  ? '5px'
+                  : '0px',
+              boxShadow: `${
+                selected && focused ? '0 0 0 3px #B4D5FF' : 'none'
+              }`,
+            }}
+            config={{
+              cloud: {
+                cloudName: cloudUrl,
+              },
+            }}
+          />
+        </Flex>
         {element.caption && <Text as='p'>{element.caption}</Text>}
 
         {addCaption && (
