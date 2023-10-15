@@ -12,10 +12,10 @@ const SidebarLeft = ({ closeOnclick, children, title }) => {
         borderRightWidth: '1px',
         position: ['absolute', 'sticky', 'sticky'],
         display: ['absolute', null, null],
-        top: [0, '55px', '55px'],
+        top: 0,
         marginTop: [0, 0, 0],
         width: ['100%', '300px', '300px'],
-        height: ['100vh', 'calc(100vh - 55px)', 'calc(100vh - 55px)'],
+        height: '100vh',
         zIndex: 20,
       }}
     >

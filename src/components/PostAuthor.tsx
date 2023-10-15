@@ -27,13 +27,17 @@ const PostAuthor = ({
   return (
     <Box
       sx={{
-        position: width < 960 ? 'relative' : 'absolute',
-        marginTop: '20px',
+        position: width < 1015 ? 'relative' : 'absolute',
+        marginTop: ['20px', '0px', '0px'],
         maxWidth: '690px',
-        marginX: ['10px', '20px', '120px'],
-        width: width < 960 ? null : '150px',
+
+        '@media only screen and (max-width: 1315px) and (min-width: 1015px)': {
+          marginX: '60px',
+        },
+        marginX: width < 1015 ? 'auto' : '200px',
+        width: width < 1015 ? '690px' : '150px',
         height: '100%',
-        marginBottom: ['20px', '60px', '60px'],
+        marginBottom: ['20px', '30px', '60px'],
       }}
       contentEditable='false'
     >
@@ -42,6 +46,7 @@ const PostAuthor = ({
           flexDirection: ['row', 'row', 'column'],
           alignItems: 'flex-start',
           gap: '20px',
+          marginLeft: ['10px', 0, 0],
         }}
       >
         {author && author.image && (

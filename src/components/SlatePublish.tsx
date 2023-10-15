@@ -5,7 +5,6 @@ import {
   type SlateToReactConfig,
 } from '@slate-serializers/react';
 import { CldImage } from 'next-cloudinary';
-import dynamic from 'next/dynamic';
 
 import PowerBreakdown from '../../src/components/TimePowerZones';
 import ActivityOverview from '../../src/components/ActivityOverview';
@@ -16,10 +15,6 @@ import PostHeaderTextBlock from './PostHeaderTextBlock';
 import PostAuthor from './PostAuthor';
 import { cloudUrl } from '../utils/cloudinary';
 import VisualOverview from '../../src/components/VisualOverview';
-
-// const VisualOverview = dynamic(import('../../src/components/VisualOverview'), {
-//   ssr: false,
-// }); // Async API cannot be server-side rendered
 
 const renderLink = (node) => {
   const attrs: any = {};
@@ -39,7 +34,8 @@ const renderLink = (node) => {
 };
 
 const SlatePublish = ({ post, activity }) => {
-  const { title, subhead, date, postLocation, headerImageCaption } = post;
+  const { title, subhead, date, postLocation, headerImageCaption, images } =
+    post;
 
   const config: SlateToReactConfig = {
     ...slateToReactConfig,
@@ -409,35 +405,58 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         image: ({ node, children = [] }) => {
+          const imageMeta = JSON.parse(images)?.find(
+            (i) => i.public_id === node.public_id
+          );
           return (
             <Flex>
               <Box
                 sx={{
-                  marginY: ['20px', '60px', '60px'],
-                  maxWidth: '900px',
+                  position: 'relative',
                   width: '900px',
+                  maxWidth: '900px',
                   marginX: 'auto',
+                  marginY: ['20px', '60px', '60px'],
+                  height: '600px',
+                  // maxHeight: '600px',
+                  marginBottom: '20px',
                 }}
               >
-                <CldImage
-                  // as={CldImage}
-                  width='1200'
-                  height='1200'
-                  src={node.public_id}
-                  sizes='100vw'
-                  alt='race pic'
-                  // quality={'90'}
-                  style={{
+                <Flex
+                  sx={{
                     width: '100%',
-                    height: 'auto',
-                    borderRadius: '5px',
+                    height: '600px',
+                    backgroundColor: imageMeta?.colors[0],
+                    borderRadius: [0, '5px', '5px'],
                   }}
-                  config={{
-                    cloud: {
-                      cloudName: cloudUrl,
-                    },
-                  }}
-                />
+                >
+                  <CldImage
+                    width='1200'
+                    height='1200'
+                    src={node.public_id}
+                    sizes='100vw'
+                    alt='race pic'
+                    quality={90}
+                    style={{
+                      objectFit: 'contain',
+                      // height: '100%',
+                      width: '100%',
+                      maxHeight: '100%',
+                      borderRadius:
+                        imageMeta &&
+                        imageMeta.width &&
+                        imageMeta.height &&
+                        imageMeta?.width > imageMeta?.height
+                          ? '5px'
+                          : '0px',
+                    }}
+                    config={{
+                      cloud: {
+                        cloudName: cloudUrl,
+                      },
+                    }}
+                  />
+                </Flex>
                 <Text as='p' sx={{ paddingX: ['10px', null, null] }}>
                   {node.caption}
                 </Text>

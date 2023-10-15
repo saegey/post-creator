@@ -13,13 +13,11 @@ const ViewportProvider = ({
   const [height, setHeight] = React.useState<number>(0);
 
   const handleWindowResize = () => {
-    // console.log('window change size');
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
   };
 
   React.useEffect(() => {
-    console.log(window);
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
     window.addEventListener('resize', handleWindowResize);

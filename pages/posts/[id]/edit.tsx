@@ -92,8 +92,6 @@ const Post = ({
   postShortUrl,
   postRaceResults,
 }) => {
-  // const router = useRouter();
-  // console.log(postComponents);
   const isNewPost = (postComponents) => {
     if (postComponents.length === 1 && postComponents[0].type === 'text') {
       return true;
