@@ -6,6 +6,7 @@ import { CldImage } from 'next-cloudinary';
 import { PostContext } from './PostContext';
 import AvatarButton from './AvatarButton';
 import { cloudUrl } from '../utils/cloudinary';
+import { useViewport } from './ViewportProvider';
 
 interface PostAuthorProps {
   publishedDate: string;
@@ -19,6 +20,7 @@ const PostAuthor = ({
   publishedDate,
   postAuthor = undefined,
 }: PostAuthorProps) => {
+  const { width } = useViewport();
   const post = React.useContext(PostContext) as any;
   const author = postAuthor ? postAuthor : post.author;
 
