@@ -26,8 +26,6 @@ const PostView = ({
   config: any;
   post: any;
 }) => {
-  // console.log(post);
-
   return (
     <Box
       as='main'

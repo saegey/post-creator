@@ -44,12 +44,9 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     });
     console.log(data);
     post = data.getPost;
-
-    // return;
   } else {
     post = data.getPublishedPost;
   }
-  console.log(post);
 
   const activityString = await getActivity(post);
   post.author =
