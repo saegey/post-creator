@@ -2,15 +2,11 @@
   "resourceName": "routeFiles",
   "policyUUID": "7fae7328",
   "bucketName": "nextjsblog619f9308251149be95e1a59d89c85e5e",
-  "storageAccess": "authAndGuest",
-  "guestAccess": [
-    "READ"
-  ],
+  "storageAccess": "auth",
+  "guestAccess": [],
   "authAccess": [
     "CREATE_AND_UPDATE",
-    "READ",
-    "DELETE"
+    "READ"
   ],
-  "triggerFunction": "S3Trigger71ba5706",
-  "groupAccess": {}
+  "triggerFunction": "S3Trigger71ba5706"
 }

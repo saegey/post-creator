@@ -8,11 +8,11 @@ export const getActivityQuery = /* GraphQL */ `
   query GetActivityQuery($id: ID!) {
     getPost(id: $id) {
       powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
+      # coordinates
+      # powers
+      # elevation
+      # elevationGrades
+      # distances
       # owner
       __typename
     }
@@ -20,7 +20,7 @@ export const getActivityQuery = /* GraphQL */ `
 `;
 
 export const getShortUrl = /* GraphQL */ `
-  query ListPublishedPosts {
+  query ListPublishedPostsCustom {
     listPublishedPosts {
       items {
         id
@@ -78,6 +78,7 @@ export const getPostInitial = /* GraphQL */ `
       tempAnalysis
       powerZones
       powerZoneBuckets
+      timeSeriesFile
       coordinates
       powers
       elevation
@@ -158,7 +159,7 @@ export const listMyPostsCustom = /* GraphQL */ `
 `;
 
 export const getPublishedPost =
-  /* GraphQL */ `query GetPublishedPost($id: ID!) {
+  /* GraphQL */ `query GetPublishedPostCustom($id: ID!) {
   getPublishedPost(id: $id) {
     id
     title
@@ -189,6 +190,7 @@ export const getPublishedPost =
     cadenceAnalysis
     tempAnalysis
     elapsedTime
+    timeSeriesFile
     stoppedTime
     timeInRed
     powerZones

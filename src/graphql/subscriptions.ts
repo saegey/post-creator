@@ -89,6 +89,7 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -158,6 +159,7 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -227,6 +229,7 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -334,6 +337,7 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
@@ -461,6 +465,7 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
@@ -588,6 +593,7 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
@@ -673,6 +679,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
@@ -709,6 +716,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -805,6 +813,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
@@ -841,6 +850,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -937,6 +947,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
@@ -973,6 +984,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp

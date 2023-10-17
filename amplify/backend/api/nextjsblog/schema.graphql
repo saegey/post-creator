@@ -124,6 +124,7 @@ type Post
   postLocation: String
   stravaUrl: String
   resultsUrl: String
+  timeSeriesFile: String
   # type: String
   subType: String
   teaser: String

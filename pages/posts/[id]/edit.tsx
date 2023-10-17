@@ -1,7 +1,7 @@
 import { withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
 import React from 'react';
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 
 // import awsconfig from '../../../src/aws-exports';
 import { PostContext } from '../../../src/components/PostContext';
@@ -59,6 +59,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
       postRaceResults: JSON.parse(post.raceResults),
+      postTimeSeriesFile: post.timeSeriesFile,
     },
   };
 };
@@ -91,6 +92,7 @@ const Post = ({
   postAuthor,
   postShortUrl,
   postRaceResults,
+  postTimeSeriesFile,
 }) => {
   const isNewPost = (postComponents) => {
     if (postComponents.length === 1 && postComponents[0].type === 'text') {
@@ -155,6 +157,8 @@ const Post = ({
   const [author, setAuthor] = React.useState(postAuthor);
   const [shortUrl, setShortUrl] = React.useState(postShortUrl);
   const [raceResults, setRaceResults] = React.useState(postRaceResults);
+  const [timeSeriesFile, setTimeSeriesFile] =
+    React.useState(postTimeSeriesFile);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -184,12 +188,19 @@ const Post = ({
       setAuthor(postAuthor);
       setShortUrl(postShortUrl);
       setRaceResults(postRaceResults);
+      setTimeSeriesFile(postTimeSeriesFile);
     }
   }, [postComponents]);
 
   React.useEffect(() => {
     setInitialLoad(false);
+    // getUser().then((g) => console.log(g.identityId));
   }, []);
+
+  // const getUser = async () => {
+  //   return await Auth.currentUserCredentials();
+  //   // console.log("identityId", credentials.identityId);
+  // };
 
   return (
     <AuthCustom>
@@ -251,6 +262,8 @@ const Post = ({
           setRaceResults,
           author,
           setAuthor,
+          timeSeriesFile,
+          setTimeSeriesFile,
         }}
       >
         <div>

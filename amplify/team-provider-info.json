@@ -24,7 +24,7 @@
         },
         "S3Trigger71ba5706": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/S3Trigger71ba5706-5a4a5852534d384d4b63-build.zip"
+          "s3Key": "amplify-builds/S3Trigger71ba5706-433657336e7873724930-build.zip"
         },
         "UserPostConfirmation": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",

@@ -1,5 +1,5 @@
 import { Slate, Editable, withReact } from 'slate-react';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { GraphQLResult, GraphQLSubscription } from '@aws-amplify/api';
 import React from 'react';
 import { createEditor, Editor } from 'slate';
@@ -36,6 +36,7 @@ const PostEditor = ({ postId, initialState }) => {
 
   const {
     id,
+    timeSeriesFile,
     setActivity,
     setPowerAnalysis,
     setComponents,
@@ -94,26 +95,21 @@ const PostEditor = ({ postId, initialState }) => {
   }, []);
 
   const getData = async () => {
-    const { data } = (await API.graphql({
-      query: getActivityQuery,
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
-      variables: {
-        id: id,
-      },
-    })) as GraphQLResult<getActivityQueryProps>;
+    if (timeSeriesFile) {
+      // console.log(timeSeriesFile);
+      const result = await Storage.get(timeSeriesFile, {
+        download: true,
+        // customPrefix: {
+        //   public: 'private/us-east-1:29b6299d-6fd7-44d5-a53e-2a94fdf5401d/',
+        // },
+        level: 'private',
+      });
+      const timeSeriesData = await new Response(result.Body).json();
 
-    if (!data || !data.getPost) {
-      console.error('faileed too get activity data');
-      return;
+      const activity = await getActivity(timeSeriesData);
+      setPowerAnalysis(timeSeriesData.powerAnalysis);
+      return activity;
     }
-
-    const activity = await getActivity(data.getPost);
-
-    if (data.getPost.powerAnalysis) {
-      setPowerAnalysis(JSON.parse(data.getPost.powerAnalysis));
-    }
-
-    return activity;
   };
 
   React.useEffect(() => {

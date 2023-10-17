@@ -89,6 +89,7 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -158,6 +159,7 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -227,6 +229,7 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -334,6 +337,7 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
@@ -461,6 +465,7 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
@@ -588,6 +593,7 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
@@ -673,6 +679,7 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
@@ -709,6 +716,7 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -805,6 +813,7 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
@@ -841,6 +850,7 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
@@ -937,6 +947,7 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
@@ -973,6 +984,7 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp

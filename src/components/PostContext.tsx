@@ -70,6 +70,7 @@ export type PostContextType = {
   date: string | null;
   shortUrl: string | null;
   raceResults: RaceResultRow | undefined;
+  timeSeriesFile: string | undefined;
   setActivity: React.Dispatch<React.SetStateAction<object>>;
   setTitle: React.Dispatch<React.SetStateAction<string | null>>;
   setSubhead: React.Dispatch<React.SetStateAction<string | null>>;
@@ -115,6 +116,7 @@ export type PostContextType = {
     React.SetStateAction<RaceResultRow | undefined>
   >;
   setAuthor: React.Dispatch<React.SetStateAction<Author | undefined>>;
+  setTimeSeriesFile: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -146,6 +148,7 @@ const PostContext = React.createContext<PostContextType>({
   heroImage: undefined,
   shortUrl: null,
   raceResults: { results: undefined, selected: undefined },
+  timeSeriesFile: undefined,
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},
@@ -174,6 +177,7 @@ const PostContext = React.createContext<PostContextType>({
   setShortUrl: () => {},
   setRaceResults: () => {},
   setAuthor: () => {},
+  setTimeSeriesFile: () => {},
 });
 
 export { PostContext };

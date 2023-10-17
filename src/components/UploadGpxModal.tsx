@@ -1,7 +1,7 @@
 import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
 import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
-import { Storage, API, PubSub } from 'aws-amplify';
+import { Storage, API, PubSub, Auth } from 'aws-amplify';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
@@ -59,7 +59,10 @@ const UploadGpxModal = () => {
     setIsProcessingFile(true);
 
     if (!fileData || !fileData.name) return;
-    const result = await Storage.put(fileData.name, fileData, {
+
+    const user = await Auth.currentUserCredentials();
+
+    const result = await Storage.put(`uploads/${fileData.name}`, fileData, {
       progressCallback(progress) {
         setProgress({ loaded: progress.loaded, total: progress.total });
         if (progress.total === progress.loaded) {
@@ -69,9 +72,10 @@ const UploadGpxModal = () => {
       metadata: {
         postId: id,
         currentFtp: currentFtp ? currentFtp : '0',
+        identityId: user.identityId,
       },
       contentType: fileData.type,
-      level: 'public',
+      level: 'private',
     });
 
     try {
