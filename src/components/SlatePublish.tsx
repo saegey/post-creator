@@ -96,7 +96,7 @@ const SlatePublish = ({ post }) => {
         },
         visualOverview: ({ node, children = [] }) => {
           const postContext = React.useContext(PostContext);
-          console.log(postContext);
+
           return (
             <Flex sx={{ marginX: [null, '120px', '120px'] }}>
               <Box sx={{ width: '900px', maxWidth: '900px', marginX: 'auto' }}>

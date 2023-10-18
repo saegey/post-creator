@@ -2,10 +2,9 @@ import { Box, Spinner } from 'theme-ui';
 import React from 'react';
 
 import Map from './CustomMap';
-import ElevationGraph, { GradeGradientActivty } from './ElevationGraph';
+import ElevationGraph from './ElevationGraph';
 import ElevationSlice, { gradeToColor } from './ElevationSlice';
 import { useUnits } from './UnitProvider';
-import { PostContext } from './PostContext';
 
 interface ActivityEvent {
   c: Array<number> | Array<null>;
@@ -28,8 +27,6 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
       </Box>
     );
   }
-  // const postContext = React.useContext(PostContext);
-  // console.log(postContext);
 
   const [marker, setMarker] = React.useState({
     t: null,
@@ -77,7 +74,6 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
 
   return (
     <Box sx={{ marginTop: '60px', borderRadius: [0, '5px', '5px'] }}>
-      {/* <Box>{JSON.stringify(activity)}</Box> */}
       <Map
         coordinates={coordinates}
         markerCoordinates={marker as any}

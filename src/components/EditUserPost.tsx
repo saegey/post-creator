@@ -31,6 +31,10 @@ const EditUserPost = ({
   const [isRaceResultsModalOpen, setIsRaceResultsModalOpen] =
     React.useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState(false);
+  const [isSavingPost, setIsSavingPost] = React.useState(false);
+  const [savingStatus, setSavingStatus] = React.useState('');
+  const [isPublishedConfirmationOpen, setIsPublishedConfirmationOpen] =
+    React.useState(false);
 
   const { push } = useRouter();
   // console.log(postComponents);
@@ -71,6 +75,12 @@ const EditUserPost = ({
             setIsRaceResultsModalOpen,
             isSettingsModalOpen,
             setIsSettingsModalOpen,
+            isSavingPost,
+            setIsSavingPost,
+            savingStatus,
+            setSavingStatus,
+            isPublishedConfirmationOpen,
+            setIsPublishedConfirmationOpen,
           }}
         >
           <PostEditor postId={postId} initialState={postComponents} />

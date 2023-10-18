@@ -22,6 +22,8 @@ import RaceResultsImport from './RaceResultsImport';
 import AddImage from './AddImage';
 import withLinks from './plugins/withLinks';
 import withLayout from './withLayout';
+import { PostSaveComponents } from '../actions/PostSave';
+import PublishModalConfirmation from './PublishModalConfirmation';
 
 const PostEditor = ({ postId, initialState }) => {
   const editor = React.useMemo(
@@ -29,10 +31,15 @@ const PostEditor = ({ postId, initialState }) => {
     []
   );
   const [loading, setLoading] = React.useState(true);
+  const [timeoutLink, setTimeoutLink] = React.useState();
+  // const [savingText, setSavingText] = React.useState();
 
   const {
     id,
     timeSeriesFile,
+    title,
+    postLocation,
+    heroImage,
     setActivity,
     setPowerAnalysis,
     setComponents,
@@ -52,6 +59,9 @@ const PostEditor = ({ postId, initialState }) => {
     isShareModalOpen,
     setIsHeroImageModalOpen,
     isHeroImageModalOpen,
+    setIsSavingPost,
+    setSavingStatus,
+    isPublishedConfirmationOpen,
   } = React.useContext(EditorContext);
 
   React.useEffect(() => {
@@ -136,6 +146,7 @@ const PostEditor = ({ postId, initialState }) => {
     setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
   };
+  let timeoutHandle;
 
   return (
     <>
@@ -144,6 +155,7 @@ const PostEditor = ({ postId, initialState }) => {
       ) : (
         <>
           <Flex>
+            {isPublishedConfirmationOpen && <PublishModalConfirmation />}
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isImageModalOpen && (
               <AddImage
@@ -184,9 +196,41 @@ const PostEditor = ({ postId, initialState }) => {
                 editor={editor}
                 initialValue={initialState}
                 onChange={(newValue) => {
+                  const ops = editor.operations.filter((o) => {
+                    if (o) {
+                      return o.type !== 'set_selection';
+                    }
+                    return false;
+                  });
+                  // console.log(ops);
+                  if (ops && ops.length === 0) {
+                    return;
+                  }
+                  setSavingStatus('');
+
+                  if (timeoutLink) {
+                    clearTimeout(timeoutLink);
+                  }
+                  timeoutHandle = setTimeout(async () => {
+                    // console.log('Delayed for 2 second.');
+                    setIsSavingPost(true);
+                    setSavingStatus('saving...');
+
+                    await PostSaveComponents({
+                      postId: id,
+                      title: title,
+                      postLocation: postLocation,
+                      components: editor.children,
+                      heroImage: heroImage ? JSON.stringify(heroImage) : '',
+                    });
+                    setSavingStatus('saved');
+
+                    setIsSavingPost(false);
+                  }, 2000);
+
+                  setTimeoutLink(timeoutHandle);
                   setComponents && setComponents(newValue);
                 }}
-                // style={{ marginBottom: '200px' }}
               >
                 <PostMenu />
                 <Editable

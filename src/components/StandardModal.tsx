@@ -3,7 +3,17 @@ import React from 'react';
 
 import BlackBox from './BlackBox';
 
-const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
+const StandardModal = ({
+  children,
+  isOpen,
+  setIsOpen,
+  title = undefined,
+}: {
+  children: any;
+  isOpen: boolean;
+  setIsOpen: any;
+  title?: string | undefined;
+}) => {
   React.useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -33,22 +43,25 @@ const StandardModal = ({ children, isOpen, setIsOpen, title }) => {
         >
           <Flex
             sx={{
-              borderBottomWidth: '1px',
+              borderBottomWidth: title ? '1px' : '0px',
               borderBottomColor: 'divider',
               borderBottomStyle: 'solid',
               paddingY: '5px',
               // marginBottom: '20px',
             }}
           >
-            <Text
-              as='div'
-              sx={{
-                fontSize: '20px',
-                fontWeight: 600,
-              }}
-            >
-              {title}
-            </Text>
+            {title && (
+              <Text
+                as='div'
+                sx={{
+                  fontSize: '20px',
+                  fontWeight: 600,
+                }}
+              >
+                {title}
+              </Text>
+            )}
+
             <Close
               onClick={() => {
                 setIsOpen(false);

@@ -60,6 +60,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postShortUrl: post.shortUrl,
       postRaceResults: JSON.parse(post.raceResults),
       postTimeSeriesFile: post.timeSeriesFile,
+      postPrivacyStatus: post.privacyStatus,
     },
   };
 };
@@ -93,6 +94,7 @@ const Post = ({
   postShortUrl,
   postRaceResults,
   postTimeSeriesFile,
+  postPrivacyStatus,
 }) => {
   const isNewPost = (postComponents) => {
     if (postComponents.length === 1 && postComponents[0].type === 'text') {
@@ -162,6 +164,7 @@ const Post = ({
   const [raceResults, setRaceResults] = React.useState(postRaceResults);
   const [timeSeriesFile, setTimeSeriesFile] =
     React.useState(postTimeSeriesFile);
+  const [privacyStatus, setPrivacyStatus] = React.useState(postPrivacyStatus);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -192,6 +195,7 @@ const Post = ({
       setShortUrl(postShortUrl);
       setRaceResults(postRaceResults);
       setTimeSeriesFile(postTimeSeriesFile);
+      setPrivacyStatus(postPrivacyStatus);
     }
   }, [postComponents]);
 
@@ -261,6 +265,8 @@ const Post = ({
           setAuthor,
           timeSeriesFile,
           setTimeSeriesFile,
+          privacyStatus,
+          setPrivacyStatus,
         }}
       >
         <div>
