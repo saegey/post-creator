@@ -1,4 +1,4 @@
-import { Flex, Box, Alert, Close, IconButton } from 'theme-ui';
+import { Flex, Box, Alert, Close, IconButton, Text } from 'theme-ui';
 import { ReactEditor } from 'slate-react';
 import React from 'react';
 import Link from 'next/link';
@@ -20,7 +20,9 @@ import { isBlockActive } from '../utils/SlateUtilityFunctions';
 import LinkButton from './LinkButton';
 
 const PostMenu = () => {
-  const [isSaving, setIsSaving] = React.useState(false);
+  // const [isSaving, setIsSaving] = React.useState(false);
+  const { isSavingPost, setIsSavingPost, savingStatus, setSavingStatus } =
+    React.useContext(EditorContext);
   const [savedMessage, setSavedMessage] = React.useState(false);
   // const [isHoverSettings, setIsHoverSettings] = React.useState(false);
   const { id } = React.useContext(PostContext);
@@ -70,16 +72,21 @@ const PostMenu = () => {
           }}
         />
         <GraphButton />
-        <SaveButton
-          setIsSaving={setIsSaving}
-          isSaving={isSaving}
-          editor={editor}
-          setSavedMessage={setSavedMessage}
-        />
         <Link href={`/posts/${id}`} rel='noopener noreferrer' target='_blank'>
           <PreviewButton />
         </Link>
         <ShareButton />
+        <Text
+          sx={{
+            fontSize: '16px',
+            lineHeight: '16px',
+            /* align-content: center; */
+            marginY: 'auto',
+            marginX: '8px',
+          }}
+        >
+          {savingStatus}
+        </Text>
 
         <Box sx={{ marginLeft: 'auto' }}>
           <Flex sx={{ height: '100%' }}>

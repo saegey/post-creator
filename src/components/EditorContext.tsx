@@ -19,6 +19,10 @@ export type EditorContextType = {
   setIsRaceResultsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isSettingsModalOpen: boolean;
   setIsSettingsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isSavingPost: boolean;
+  setIsSavingPost: React.Dispatch<React.SetStateAction<boolean>>;
+  savingStatus: string;
+  setSavingStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -40,6 +44,10 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsRaceResultsModalOpen: () => {},
   isSettingsModalOpen: false,
   setIsSettingsModalOpen: () => {},
+  isSavingPost: false,
+  setIsSavingPost: () => {},
+  savingStatus: '',
+  setSavingStatus: () => {},
 });
 
 export { EditorContext };
