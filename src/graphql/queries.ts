@@ -2,7 +2,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-import * as APITypes from '../API';
+import * as APITypes from "../API";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -62,16 +62,11 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -130,8 +125,7 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
   }
 }
 ` as GeneratedQuery<APITypes.ListBlogsQueryVariables, APITypes.ListBlogsQuery>;
-export const getPublishedPost =
-  /* GraphQL */ `query GetPublishedPost($id: ID!) {
+export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) {
   getPublishedPost(id: $id) {
     id
     title
@@ -149,12 +143,6 @@ export const getPublishedPost =
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     author
     elevationTotal
     normalizedPower
@@ -166,6 +154,7 @@ export const getPublishedPost =
     stoppedTime
     timeInRed
     powerZones
+    timeSeriesFile
     powerZoneBuckets
     createdAt
     heroImage
@@ -187,16 +176,11 @@ export const getPublishedPost =
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name
@@ -252,9 +236,9 @@ export const getPublishedPost =
   }
 }
 ` as GeneratedQuery<
-    APITypes.GetPublishedPostQueryVariables,
-    APITypes.GetPublishedPostQuery
-  >;
+  APITypes.GetPublishedPostQueryVariables,
+  APITypes.GetPublishedPostQuery
+>;
 export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
   $filter: ModelPublishedPostFilterInput
   $limit: Int
@@ -278,12 +262,6 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       author
       elevationTotal
       normalizedPower
@@ -295,6 +273,7 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       stoppedTime
       timeInRed
       powerZones
+      timeSeriesFile
       powerZoneBuckets
       createdAt
       heroImage
@@ -316,16 +295,11 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -364,24 +338,61 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
   APITypes.ListPublishedPostsQueryVariables,
   APITypes.ListPublishedPostsQuery
 >;
-export const listPublishedPostsByCreatedAt = /* GraphQL */ `
-  query ListPublishedPostsByCreatedAt(
-    $type: String!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPublishedPostFilterInput
-    $limit: Int
-    $nextToken: String
+export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedPostsByCreatedAt(
+  $type: String!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelPublishedPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPublishedPostsByCreatedAt(
+    type: $type
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
   ) {
-    listPublishedPostsByCreatedAt(
-      type: $type
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
+    items {
+      id
+      title
+      gpxFile
+      images
+      headerImage
+      date
+      publishedDate
+      location
+      postLocation
+      stravaUrl
+      resultsUrl
+      type
+      subType
+      teaser
+      currentFtp
+      components
+      author
+      elevationTotal
+      normalizedPower
+      distance
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      elapsedTime
+      stoppedTime
+      timeInRed
+      powerZones
+      timeSeriesFile
+      powerZoneBuckets
+      createdAt
+      heroImage
+      subhead
+      shortUrl
+      raceResults
+      raceResultsProvider
+      originalPostId
+      originalPost {
+        type
         id
         title
         gpxFile
@@ -393,18 +404,11 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `
         postLocation
         stravaUrl
         resultsUrl
-        type
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
-        author
         elevationTotal
         normalizedPower
         distance
@@ -422,83 +426,82 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `
         shortUrl
         raceResults
         raceResultsProvider
-        originalPostId
-        originalPost {
-          type
-          id
-          title
-          gpxFile
-          images
-          headerImage
-          date
-          publishedDate
-          location
-          postLocation
-          stravaUrl
-          resultsUrl
-          subType
-          teaser
-          currentFtp
-          components
-          powerAnalysis
-          coordinates
-          powers
-          elevation
-          elevationGrades
-          distances
-          elevationTotal
-          normalizedPower
-          distance
-          heartAnalysis
-          cadenceAnalysis
-          tempAnalysis
-          elapsedTime
-          stoppedTime
-          timeInRed
-          powerZones
-          powerZoneBuckets
-          createdAt
-          heroImage
-          subhead
-          shortUrl
-          raceResults
-          raceResultsProvider
-          privacyStatus
-          updatedAt
-          blogPostsId
-          postRelatedId
-          postAuthorId
-          owner
-          __typename
-        }
+        privacyStatus
         updatedAt
-        publishedPostOriginalPostId
+        blogPostsId
+        postRelatedId
+        postAuthorId
         owner
         __typename
       }
-      nextToken
+      updatedAt
+      publishedPostOriginalPostId
+      owner
       __typename
     }
+    nextToken
+    __typename
   }
-`;
-export const PublishedPostByOriginalPostId = /* GraphQL */ `
-  query PublishedPostByOriginalPostId(
-    $originalPostId: String!
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPublishedPostFilterInput
-    $limit: Int
-    $nextToken: String
+}
+` as GeneratedQuery<
+  APITypes.ListPublishedPostsByCreatedAtQueryVariables,
+  APITypes.ListPublishedPostsByCreatedAtQuery
+>;
+export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostByOriginalPostId(
+  $originalPostId: String!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelPublishedPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  PublishedPostByOriginalPostId(
+    originalPostId: $originalPostId
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
   ) {
-    PublishedPostByOriginalPostId(
-      originalPostId: $originalPostId
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
+    items {
+      id
+      title
+      gpxFile
+      images
+      headerImage
+      date
+      publishedDate
+      location
+      postLocation
+      stravaUrl
+      resultsUrl
+      type
+      subType
+      teaser
+      currentFtp
+      components
+      author
+      elevationTotal
+      normalizedPower
+      distance
+      heartAnalysis
+      cadenceAnalysis
+      tempAnalysis
+      elapsedTime
+      stoppedTime
+      timeInRed
+      powerZones
+      timeSeriesFile
+      powerZoneBuckets
+      createdAt
+      heroImage
+      subhead
+      shortUrl
+      raceResults
+      raceResultsProvider
+      originalPostId
+      originalPost {
+        type
         id
         title
         gpxFile
@@ -510,18 +513,11 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `
         postLocation
         stravaUrl
         resultsUrl
-        type
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
-        author
         elevationTotal
         normalizedPower
         distance
@@ -539,65 +535,27 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `
         shortUrl
         raceResults
         raceResultsProvider
-        originalPostId
-        originalPost {
-          type
-          id
-          title
-          gpxFile
-          images
-          headerImage
-          date
-          publishedDate
-          location
-          postLocation
-          stravaUrl
-          resultsUrl
-          subType
-          teaser
-          currentFtp
-          components
-          powerAnalysis
-          coordinates
-          powers
-          elevation
-          elevationGrades
-          distances
-          elevationTotal
-          normalizedPower
-          distance
-          heartAnalysis
-          cadenceAnalysis
-          tempAnalysis
-          elapsedTime
-          stoppedTime
-          timeInRed
-          powerZones
-          powerZoneBuckets
-          createdAt
-          heroImage
-          subhead
-          shortUrl
-          raceResults
-          raceResultsProvider
-          privacyStatus
-          updatedAt
-          blogPostsId
-          postRelatedId
-          postAuthorId
-          owner
-          __typename
-        }
+        privacyStatus
         updatedAt
-        publishedPostOriginalPostId
+        blogPostsId
+        postRelatedId
+        postAuthorId
         owner
         __typename
       }
-      nextToken
+      updatedAt
+      publishedPostOriginalPostId
+      owner
       __typename
     }
+    nextToken
+    __typename
   }
-`;
+}
+` as GeneratedQuery<
+  APITypes.PublishedPostByOriginalPostIdQueryVariables,
+  APITypes.PublishedPostByOriginalPostIdQuery
+>;
 export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {
     type
@@ -612,16 +570,11 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     blog {
       id
       name
@@ -648,16 +601,11 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -743,16 +691,11 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name
@@ -835,16 +778,11 @@ export const listPostsByCreatedAt = /* GraphQL */ `query ListPostsByCreatedAt(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name

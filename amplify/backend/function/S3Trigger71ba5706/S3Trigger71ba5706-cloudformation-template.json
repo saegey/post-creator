@@ -22,6 +22,10 @@
     "apinextjsblogGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apinextjsblogGraphQLAPIKeyOutput"
+    },
+    "storagerouteFilesBucketName": {
+      "Type": "String",
+      "Default": "storagerouteFilesBucketName"
     }
   },
   "Conditions": {
@@ -77,6 +81,9 @@
             },
             "API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT": {
               "Ref": "apinextjsblogGraphQLAPIKeyOutput"
+            },
+            "STORAGE_ROUTEFILES_BUCKETNAME": {
+              "Ref": "storagerouteFilesBucketName"
             }
           }
         },
@@ -87,8 +94,8 @@
           ]
         },
         "Runtime": "nodejs18.x",
-        "Timeout": 200,
-        "MemorySize": 1536,
+        "Timeout": 120,
+        "MemorySize": 10240,
         "Code": {
           "S3Bucket": {
             "Ref": "deploymentBucketName"
@@ -200,6 +207,27 @@
                   }
                 ]
               }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storagerouteFilesBucketName"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -263,6 +291,27 @@
                         "Ref": "apinextjsblogGraphQLAPIIdOutput"
                       },
                       "/types/Mutation/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storagerouteFilesBucketName"
+                      },
+                      "/*"
                     ]
                   ]
                 }

@@ -1,7 +1,7 @@
 import { withSSRContext } from 'aws-amplify';
 import Head from 'next/head';
 import React from 'react';
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 
 // import awsconfig from '../../../src/aws-exports';
 import { PostContext } from '../../../src/components/PostContext';
@@ -49,7 +49,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postElapsedTime: post.elapsedTime,
       postTimeInRed: post.timeInRed,
       postHeartAnalysis: JSON.parse(post.heartAnalysis),
-      postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
+      // postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
       postCadenceAnalysis: JSON.parse(post.cadenceAnalysis),
       postTempAnalysis: JSON.parse(post.tempAnalysis),
       postPowerZones: JSON.parse(post.powerZones),
@@ -59,6 +59,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
       postRaceResults: JSON.parse(post.raceResults),
+      postTimeSeriesFile: post.timeSeriesFile,
     },
   };
 };
@@ -91,6 +92,7 @@ const Post = ({
   postAuthor,
   postShortUrl,
   postRaceResults,
+  postTimeSeriesFile,
 }) => {
   const isNewPost = (postComponents) => {
     if (postComponents.length === 1 && postComponents[0].type === 'text') {
@@ -129,9 +131,12 @@ const Post = ({
   const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
 
-  const [powerAnalysis, setPowerAnalysis] = React.useState<{
-    entire: number;
-  } | null>(null);
+  const [powerAnalysis, setPowerAnalysis] = React.useState<
+    | {
+        entire: number;
+      }
+    | undefined
+  >();
   const [heartAnalysis, setHeartAnalysis] = React.useState(postHeartAnalysis);
   const [cadenceAnalysis, setCadenceAnalysis] =
     React.useState(postCadenceAnalysis);
@@ -155,6 +160,8 @@ const Post = ({
   const [author, setAuthor] = React.useState(postAuthor);
   const [shortUrl, setShortUrl] = React.useState(postShortUrl);
   const [raceResults, setRaceResults] = React.useState(postRaceResults);
+  const [timeSeriesFile, setTimeSeriesFile] =
+    React.useState(postTimeSeriesFile);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -184,6 +191,7 @@ const Post = ({
       setAuthor(postAuthor);
       setShortUrl(postShortUrl);
       setRaceResults(postRaceResults);
+      setTimeSeriesFile(postTimeSeriesFile);
     }
   }, [postComponents]);
 
@@ -251,6 +259,8 @@ const Post = ({
           setRaceResults,
           author,
           setAuthor,
+          timeSeriesFile,
+          setTimeSeriesFile,
         }}
       >
         <div>

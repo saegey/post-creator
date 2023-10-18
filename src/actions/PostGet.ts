@@ -18,23 +18,17 @@ export interface GraphQLResult {
 
 const getActivity = async (post: any) => {
   // const raw = await uncompress(post.coordinates);
-  const coordinates = JSON.parse(
-    post.coordinates ? ((await uncompress(post.coordinates)) as string) : '{}'
-  ) as Array<Array<number>>;
+  const coordinates = post.coordinates
+    ? (post.coordinates as string)
+    : ('{}' as any);
 
-  const elevation = JSON.parse(
-    post.elevation ? ((await uncompress(post.elevation)) as string) : '{}'
-  ) as Array<number>;
+  const elevation = post.elevation ? (post.elevation as string) : '{}';
 
-  const distances = JSON.parse(
-    post.distances ? ((await uncompress(post.distances)) as string) : '{}'
-  ) as Array<number>;
+  const distances = post.distances ? (post.distances as string) : '{}';
 
-  const grades = JSON.parse(
-    post.elevationGrades
-      ? ((await uncompress(post.elevationGrades)) as string)
-      : '{}'
-  );
+  const grades = post.elevationGrades ? (post.elevationGrades as string) : '{}';
+
+  console.log(coordinates);
 
   return coordinates && coordinates.length > 0
     ? coordinates

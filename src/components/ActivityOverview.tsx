@@ -74,21 +74,21 @@ type Props = {
     normalizedPower: number;
     heartAnalysis: {
       entire: number;
-    } | null;
+    } | undefined;
     tempAnalysis: {
       entire: number;
-    } | null;
+    } | undefined;
     powerAnalysis: {
       entire: number;
-    } | null;
+    } | undefined;
     cadenceAnalysis: {
       entire: number;
-    } | null;
+    } | undefined;
     elapsedTime: {
       seconds: number;
     };
     stoppedTime: number;
-    timeInRed: number | string | null;
+    timeInRed: number | string | undefined;
   };
   selectedFields: string[];
 };

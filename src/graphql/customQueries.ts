@@ -7,12 +7,12 @@ type GeneratedQuery<InputType, OutputType> = string & {
 export const getActivityQuery = /* GraphQL */ `
   query GetActivityQuery($id: ID!) {
     getPost(id: $id) {
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
+      # powerAnalysis
+      # coordinates
+      # powers
+      # elevation
+      # elevationGrades
+      # distances
       # owner
       __typename
     }
@@ -20,7 +20,7 @@ export const getActivityQuery = /* GraphQL */ `
 `;
 
 export const getShortUrl = /* GraphQL */ `
-  query ListPublishedPosts {
+  query ListPublishedPostsCustom {
     listPublishedPosts {
       items {
         id
@@ -32,15 +32,15 @@ export const getShortUrl = /* GraphQL */ `
 
 export type getActivityQueryProps = {
   getPost?: {
-    powerAnalysis?: string | null;
+    // powerAnalysis?: string | null;
     cadenceAnalysis?: string | null;
     tempAnalysis?: string | null;
     heartAnalysis?: string | null;
-    coordinates?: string | null;
-    powers?: string | null;
-    elevation?: string | null;
-    elevationGrades?: string | null;
-    distances?: string | null;
+    // coordinates?: string | null;
+    // powers?: string | null;
+    // elevation?: string | null;
+    // elevationGrades?: string | null;
+    // distances?: string | null;
     owner?: string | null;
     __typename: 'Post';
   } | null;
@@ -72,17 +72,18 @@ export const getPostInitial = /* GraphQL */ `
       elapsedTime
       stoppedTime
       timeInRed
-      powerAnalysis
+      # powerAnalysis
       heartAnalysis
       cadenceAnalysis
       tempAnalysis
       powerZones
       powerZoneBuckets
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
+      timeSeriesFile
+      # coordinates
+      # powers
+      # elevation
+      # elevationGrades
+      # distances
       heroImage
       blog {
         id
@@ -158,7 +159,7 @@ export const listMyPostsCustom = /* GraphQL */ `
 `;
 
 export const getPublishedPost =
-  /* GraphQL */ `query GetPublishedPost($id: ID!) {
+  /* GraphQL */ `query GetPublishedPostCustom($id: ID!) {
   getPublishedPost(id: $id) {
     id
     title
@@ -175,12 +176,12 @@ export const getPublishedPost =
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
+    # powerAnalysis
+    # coordinates
+    # powers
+    # elevation
+    # elevationGrades
+    # distances
     author
     elevationTotal
     normalizedPower
@@ -189,6 +190,7 @@ export const getPublishedPost =
     cadenceAnalysis
     tempAnalysis
     elapsedTime
+    timeSeriesFile
     stoppedTime
     timeInRed
     powerZones
@@ -201,7 +203,6 @@ export const getPublishedPost =
     raceResultsProvider
     updatedAt
 		originalPostId
-    # publishedPostOriginalPostId
     owner
     __typename
   }

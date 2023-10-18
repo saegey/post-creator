@@ -11,6 +11,7 @@ const helpers_1 = require("@turf/helpers");
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const aws_xray_sdk_1 = __importDefault(require("aws-xray-sdk"));
 const zlib_1 = __importDefault(require("zlib"));
+const uuid_1 = require("uuid");
 const gpxHelper_1 = require("./gpxHelper");
 // import { AWSIoTProvider } from '@aws-amplify/pubsub';
 // const AWS = require('aws-sdk');
@@ -129,15 +130,15 @@ const publishMessage = async (payload) => {
 };
 exports.handler = async function (event) {
     console.log('Event => ' + JSON.stringify(event));
+    if (event.Records[0].s3.object.key.includes('timeseries')) {
+        return;
+    }
     await publishMessage({ phase: 'start' });
     const segment = aws_xray_sdk_1.default.getSegment();
     const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
     console.log('Dynamo Table: ', postTable);
     const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
     let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
-    // const imgSize = event.Records[0].s3.object.size;
-    // const maxSize = 5000000; // More that 5Mb images would be rejected
-    // const filename = key.split('.').slice(0, -1).join('.');
     const fileParams = { Bucket: bucket, Key: key };
     const s3getTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('s3get');
     const file = await S3.getObject({
@@ -181,7 +182,7 @@ exports.handler = async function (event) {
         elevationGain = (0, gpxHelper_1.calcElevationGain)(coordinates);
         stoppedTime = (0, gpxHelper_1.calcStoppage)(coordinates, times);
         elapsedTime = (0, gpxHelper_1.dateDiff)(new Date(times[0]), new Date(times.at(-1))).seconds;
-        const downsampleElevationTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
+        const downsampleElevationTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('elevationAnalysis');
         elevation = (0, exports.calcElevation)(coordinates);
         distances = (0, exports.calcDistances)(coordinates);
         elevationGrades = (0, exports.calcElevationGrades)(coordinates, distances);
@@ -199,6 +200,26 @@ exports.handler = async function (event) {
         downsampleElevationTimer.close();
     });
     await publishMessage({ phase: 'process-data' });
+    const s3key = `timeseries/${(0, uuid_1.v4)()}.json`;
+    const s3Putparams = {
+        Body: JSON.stringify({
+            coordinates,
+            elevation,
+            powers,
+            distances,
+            elevationGrades,
+            powerAnalysis,
+        }),
+        Bucket: bucket,
+        Key: `private/${metaData.Metadata.identityid}/${s3key}`,
+    };
+    try {
+        const s3res = await S3.putObject(s3Putparams).promise();
+        console.log(s3res);
+    }
+    catch (e) {
+        console.error(JSON.stringify(e));
+    }
     const updateDynamoTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('updateDynamo');
     try {
         const res = await docClient
@@ -207,28 +228,20 @@ exports.handler = async function (event) {
             Key: {
                 id: postId,
             },
-            UpdateExpression: 'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red',
+            UpdateExpression: 'SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf',
             ExpressionAttributeValues: {
                 ':ta': tempAnalysis,
                 ':ca': cadenceAnalysis,
                 ':dis': distance,
-                ':s': powerAnalysis,
                 ':hr': heartAnalysis,
                 ':el': elevationGain,
                 ':st': stoppedTime,
                 ':et': elapsedTime,
-                ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
-                ':e': await shrinkify({ field: elevation, name: 'elevation' }),
-                ':p': await shrinkify({ field: powers, name: 'powers' }),
-                ':d': await shrinkify({ field: distances, name: 'distances' }),
-                ':eg': await shrinkify({
-                    field: elevationGrades,
-                    name: 'elevationGrades',
-                }),
                 ':np': normalizedPower,
                 ':pz': zones ? zones : [],
                 ':pzb': powerZoneBuckets ? powerZoneBuckets : [],
                 ':red': timeInRedSecs ? timeInRedSecs : 0,
+                ':tsf': s3key,
             },
         })
             .promise();
@@ -238,5 +251,4 @@ exports.handler = async function (event) {
     }
     updateDynamoTimer.close();
     await publishMessage({ phase: 'update-data' });
-    // console.log(JSON.stringify(res));
 };

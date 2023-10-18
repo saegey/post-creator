@@ -1,4 +1,4 @@
-import { Grid, Box, Text } from 'theme-ui';
+import { Grid, Box, Text, Spinner } from 'theme-ui';
 import React from 'react';
 
 import { formatTime } from '../utils/time';
@@ -7,14 +7,23 @@ const PowerBreakdown = ({
   powerZoneBuckets,
   powerZones,
 }: {
-  powerZoneBuckets: Array<number>;
-  powerZones: Array<{
-    powerLow: number;
-    powerHigh: number;
-    zone: number;
-    title: string;
-  }>;
+  powerZoneBuckets: Array<number> | undefined;
+  powerZones:
+    | Array<{
+        powerLow: number;
+        powerHigh: number;
+        zone: number;
+        title: string;
+      }>
+    | undefined;
 }) => {
+  if (!powerZones) {
+    return (
+      <Box>
+        <Spinner />
+      </Box>
+    );
+  }
   return (
     <>
       <Grid gap={2} columns={[3, 3, 3]}>
@@ -55,7 +64,7 @@ const PowerBreakdown = ({
                     lineHeight: '30px',
                   }}
                 >
-                  {formatTime(powerZoneBuckets[index])}
+                  {powerZoneBuckets ? formatTime(powerZoneBuckets[index]) : ''}
                 </Text>
               </Box>
             );

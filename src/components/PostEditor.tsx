@@ -1,5 +1,5 @@
 import { Slate, Editable, withReact } from 'slate-react';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { GraphQLResult, GraphQLSubscription } from '@aws-amplify/api';
 import React from 'react';
 import { createEditor, Editor } from 'slate';
@@ -13,10 +13,6 @@ import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import SkeletonPost from './SkeletonPost';
 import { getActivity } from '../../src/actions/PostGet';
-import {
-  getActivityQuery,
-  getActivityQueryProps,
-} from '../../src/graphql/customQueries';
 import GraphSelectorMenu from './GraphSelectorMenu';
 import * as subscriptions from '../../src/graphql/subscriptions';
 import UploadGpxModal from './UploadGpxModal';
@@ -36,6 +32,7 @@ const PostEditor = ({ postId, initialState }) => {
 
   const {
     id,
+    timeSeriesFile,
     setActivity,
     setPowerAnalysis,
     setComponents,
@@ -78,11 +75,13 @@ const PostEditor = ({ postId, initialState }) => {
           return;
         }
 
-        setTimeInRed(value.data?.onUpdatePost?.timeInRed);
-        setPowerZoneBuckets(
-          JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
-        );
-        setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
+        setTimeInRed && setTimeInRed(value.data?.onUpdatePost?.timeInRed);
+        setPowerZoneBuckets &&
+          setPowerZoneBuckets(
+            JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
+          );
+        setPowerZones &&
+          setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
         setIsFtpUpdating(false);
       },
       error: (error) => console.warn(error),
@@ -94,31 +93,29 @@ const PostEditor = ({ postId, initialState }) => {
   }, []);
 
   const getData = async () => {
-    const { data } = (await API.graphql({
-      query: getActivityQuery,
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
-      variables: {
-        id: id,
-      },
-    })) as GraphQLResult<getActivityQueryProps>;
+    if (timeSeriesFile) {
+      // console.log(timeSeriesFile);
+      const result = await Storage.get(timeSeriesFile, {
+        download: true,
+        // customPrefix: {
+        //   public: 'private/us-east-1:29b6299d-6fd7-44d5-a53e-2a94fdf5401d/',
+        // },
+        level: 'private',
+      });
+      const timeSeriesData = await new Response(result.Body).json();
+      // console.log(result);
 
-    if (!data || !data.getPost) {
-      console.error('faileed too get activity data');
-      return;
+      const activity = await getActivity(timeSeriesData);
+      setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
+      return activity;
+    } else {
+      console.log('no timeserriees files');
     }
-
-    const activity = await getActivity(data.getPost);
-
-    if (data.getPost.powerAnalysis) {
-      setPowerAnalysis(JSON.parse(data.getPost.powerAnalysis));
-    }
-
-    return activity;
   };
 
   React.useEffect(() => {
     getData().then((d) => {
-      setActivity(d as any);
+      setActivity && setActivity(d as any);
     });
   }, [id]);
 
@@ -136,7 +133,7 @@ const PostEditor = ({ postId, initialState }) => {
   };
 
   const addImage = ({ selectedImage }) => {
-    setHeroImage(selectedImage);
+    setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
   };
 
@@ -187,7 +184,7 @@ const PostEditor = ({ postId, initialState }) => {
                 editor={editor}
                 initialValue={initialState}
                 onChange={(newValue) => {
-                  setComponents(newValue);
+                  setComponents && setComponents(newValue);
                 }}
                 // style={{ marginBottom: '200px' }}
               >

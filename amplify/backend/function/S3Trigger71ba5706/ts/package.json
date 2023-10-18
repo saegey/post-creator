@@ -15,12 +15,12 @@
     "@xmldom/xmldom": "^0.8.10",
     "aws-sdk": "^2.1435.0",
     "aws-xray-sdk": "^3.5.1",
-    "snappy": "^7.2.2",
-    "snappyjs": "^0.7.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.119",
     "@types/node": "^20.5.0",
+    "@types/uuid": "^9.0.5",
     "typescript": "^5.1.6"
   }
 }

@@ -61,7 +61,7 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
               images?.push(d.info as CloudinaryImage);
 
               if (images) {
-                setImages([...images]);
+                setImages && setImages([...images]);
                 try {
                   const response = (await API.graphql({
                     authMode: 'AMAZON_COGNITO_USER_POOLS',

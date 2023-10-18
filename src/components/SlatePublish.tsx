@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Image as ThemeImage, Link } from 'theme-ui';
+import { Box, Flex, Text, Image as ThemeImage, Link, Spinner } from 'theme-ui';
 import {
   slateToReactConfig,
   type SlateToReactConfig,
@@ -15,6 +15,7 @@ import PostHeaderTextBlock from './PostHeaderTextBlock';
 import PostAuthor from './PostAuthor';
 import { cloudUrl } from '../utils/cloudinary';
 import VisualOverview from '../../src/components/VisualOverview';
+import { PostContext } from './PostContext';
 
 const renderLink = (node) => {
   const attrs: any = {};
@@ -33,7 +34,7 @@ const renderLink = (node) => {
   );
 };
 
-const SlatePublish = ({ post, activity }) => {
+const SlatePublish = ({ post }) => {
   const { title, subhead, date, postLocation, headerImageCaption, images } =
     post;
 
@@ -43,11 +44,25 @@ const SlatePublish = ({ post, activity }) => {
       elementTransforms: {
         ...slateToReactConfig.react.elementTransforms,
         powergraph: ({ node, children = [] }) => {
-          const powerAnalysis = JSON.parse(post.powerAnalysis);
-          const graphData = Object.keys(powerAnalysis)
+          // const powerAnalysis = JSON.parse(post.powerAnalysis);
+          const postContext = React.useContext(PostContext);
+          if (!postContext.powerAnalysis) {
+            return (
+              <Box>
+                <Spinner />
+              </Box>
+            );
+          }
+          const graphData = Object.keys(postContext.powerAnalysis)
             .map((k, i) => {
               if (Number(k) > 0) {
-                return { x: Number(k), y: powerAnalysis[k] };
+                return {
+                  x: Number(k),
+                  y:
+                    postContext && postContext.powerAnalysis
+                      ? postContext.powerAnalysis[k]
+                      : 0,
+                };
               }
             })
             .filter((p) => p !== undefined);
@@ -69,7 +84,6 @@ const SlatePublish = ({ post, activity }) => {
                 borderRadius: '5px',
               }}
             >
-              {/* <h2>Power Curve</h2> */}
               <PowerCurveGraph
                 ftp={post.currentFtp ? Number(post.currentFtp) : 0}
                 data={graphData as any}
@@ -81,11 +95,17 @@ const SlatePublish = ({ post, activity }) => {
           return <EmbedElemnt element={node} />;
         },
         visualOverview: ({ node, children = [] }) => {
+          const postContext = React.useContext(PostContext);
+          console.log(postContext);
           return (
             <Flex sx={{ marginX: [null, '120px', '120px'] }}>
               <Box sx={{ width: '900px', maxWidth: '900px', marginX: 'auto' }}>
                 <VisualOverview
-                  activity={activity}
+                  activity={
+                    postContext && postContext.activity
+                      ? postContext.activity
+                      : undefined
+                  }
                   token={
                     'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
                   }
@@ -118,6 +138,7 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         heroBanner: ({ node }) => {
+          console.log('herro banner');
           const heroImage = JSON.parse(post.heroImage);
 
           return (
@@ -198,6 +219,7 @@ const SlatePublish = ({ post, activity }) => {
           );
         },
         activityOverview: () => {
+          const { powerAnalysis } = React.useContext(PostContext);
           return (
             <Box
               sx={{
@@ -219,7 +241,7 @@ const SlatePublish = ({ post, activity }) => {
                   distance: post.distance,
                   normalizedPower: post.normalizedPower,
                   heartAnalysis: JSON.parse(post.heartAnalysis),
-                  powerAnalysis: JSON.parse(post.powerAnalysis),
+                  powerAnalysis: powerAnalysis,
                   cadenceAnalysis: JSON.parse(post.cadenceAnalysis),
                   tempAnalysis: JSON.parse(post.tempAnalysis),
                   stoppedTime: post.stoppedTime,

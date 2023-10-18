@@ -31,74 +31,81 @@ export type RaceResultRow = {
 export type Author = { fullName: string; image: string };
 
 export type PostContextType = {
-  id: string;
-  title: string | null;
-  subhead: string | null;
-  postLocation: string | null;
-  activity: Array<{
+  id?: string | undefined;
+  title?: string | undefined;
+  subhead?: string | null;
+  postLocation?: string | undefined;
+  activity?: Array<{
     c: Array<number>;
     d: number;
     e: number;
     g: number;
     t: number;
   }> | null;
-  gpxFile: string | null;
-  stravaUrl: string | undefined;
-  components: Array<{ type: string; children: Array<{ text: string }> }> | null;
-  author: { fullName: string; image: string } | undefined;
-  images: Array<CloudinaryImage> | null;
-  heroImage: CloudinaryImage | undefined;
-  currentFtp: string | null;
-  resultsUrl: string | null;
-  powerAnalysis: { entire: number } | null;
-  heartAnalysis: { entire: number } | null;
-  cadenceAnalysis: { entire: number } | null;
-  tempAnalysis: { entire: number } | null;
-  powerZones: Array<{
+  gpxFile?: string | null;
+  stravaUrl?: string | undefined;
+  components?: Array<{
+    type: string;
+    children: Array<{ text: string }>;
+  }> | null;
+  author?: { fullName: string; image: string } | undefined;
+  images?: Array<CloudinaryImage> | null;
+  heroImage?: CloudinaryImage | undefined;
+  currentFtp?: string | null;
+  resultsUrl?: string | null;
+  powerAnalysis?: { entire: number } | undefined;
+  heartAnalysis?: { entire: number } | undefined;
+  cadenceAnalysis?: { entire: number } | undefined;
+  tempAnalysis?: { entire: number } | undefined;
+  powerZones?: Array<{
     powerLow: number;
     powerHigh: number;
     zone: number;
     title: string;
   }>;
-  powerZoneBuckets: Array<number>;
-  elevationTotal: number | null;
-  normalizedPower: number | null;
-  distance: number | null;
-  elapsedTime: number | null;
-  stoppedTime: number | null;
-  timeInRed: number | null;
-  date: string | null;
-  shortUrl: string | null;
-  raceResults: RaceResultRow | undefined;
-  setActivity: React.Dispatch<React.SetStateAction<object>>;
-  setTitle: React.Dispatch<React.SetStateAction<string | null>>;
-  setSubhead: React.Dispatch<React.SetStateAction<string | null>>;
-  setGpxFile: React.Dispatch<React.SetStateAction<string>>;
-  setPostLocation: React.Dispatch<React.SetStateAction<string | null>>;
-  setId: React.Dispatch<React.SetStateAction<string>>;
-  setStravaUrl: React.Dispatch<React.SetStateAction<string>>;
-  setComponents: React.Dispatch<React.SetStateAction<Array<object>>>;
-  setImages: React.Dispatch<
+  powerZoneBuckets?: Array<number>;
+  elevationTotal?: number | null;
+  normalizedPower?: number | null;
+  distance?: number | null;
+  elapsedTime?: number | null;
+  stoppedTime?: number | null;
+  timeInRed?: number | undefined;
+  date?: string | null;
+  shortUrl?: string | null;
+  raceResults?: RaceResultRow | undefined;
+  timeSeriesFile?: string | undefined;
+  setActivity?: React.Dispatch<React.SetStateAction<object>>;
+  setTitle?: React.Dispatch<React.SetStateAction<string | null>>;
+  setSubhead?: React.Dispatch<React.SetStateAction<string | null>>;
+  setGpxFile?: React.Dispatch<React.SetStateAction<string>>;
+  setPostLocation?: React.Dispatch<React.SetStateAction<string | null>>;
+  setId?: React.Dispatch<React.SetStateAction<string>>;
+  setStravaUrl?: React.Dispatch<React.SetStateAction<string>>;
+  setComponents?: React.Dispatch<React.SetStateAction<Array<object>>>;
+  setImages?: React.Dispatch<
     React.SetStateAction<Array<CloudinaryImage> | null>
   >;
-  setHeroImage: React.Dispatch<CloudinaryImage | undefined>;
-  setCurrentFtp: React.Dispatch<React.SetStateAction<string>>;
-  setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
-  setPowerAnalysis: React.Dispatch<
-    React.SetStateAction<{
-      entire: number;
-    } | null>
+  setHeroImage?: React.Dispatch<CloudinaryImage | undefined>;
+  setCurrentFtp?: React.Dispatch<React.SetStateAction<string>>;
+  setResultsUrl?: React.Dispatch<React.SetStateAction<string>>;
+  setPowerAnalysis?: React.Dispatch<
+    React.SetStateAction<
+      | {
+          entire: number;
+        }
+      | undefined
+    >
   >;
-  setHeartAnalysis: React.Dispatch<React.SetStateAction<string>>;
-  setCadenceAnalysis: React.Dispatch<React.SetStateAction<string>>;
-  setTempAnalysis: React.Dispatch<React.SetStateAction<string>>;
-  setElevationTotal: React.Dispatch<React.SetStateAction<number>>;
-  setNormalizedPower: React.Dispatch<React.SetStateAction<number>>;
-  setDistance: React.Dispatch<React.SetStateAction<number>>;
-  setElapsedTime: React.Dispatch<React.SetStateAction<number>>;
-  setStoppedTime: React.Dispatch<React.SetStateAction<number>>;
-  setTimeInRed: React.Dispatch<React.SetStateAction<number>>;
-  setPowerZones: React.Dispatch<
+  setHeartAnalysis?: React.Dispatch<React.SetStateAction<string>>;
+  setCadenceAnalysis?: React.Dispatch<React.SetStateAction<string>>;
+  setTempAnalysis?: React.Dispatch<React.SetStateAction<string>>;
+  setElevationTotal?: React.Dispatch<React.SetStateAction<number>>;
+  setNormalizedPower?: React.Dispatch<React.SetStateAction<number>>;
+  setDistance?: React.Dispatch<React.SetStateAction<number>>;
+  setElapsedTime?: React.Dispatch<React.SetStateAction<number>>;
+  setStoppedTime?: React.Dispatch<React.SetStateAction<number>>;
+  setTimeInRed?: React.Dispatch<React.SetStateAction<number>>;
+  setPowerZones?: React.Dispatch<
     React.SetStateAction<
       Array<{
         powerLow: number;
@@ -108,13 +115,14 @@ export type PostContextType = {
       }>
     >
   >;
-  setDate: React.Dispatch<React.SetStateAction<string>>;
-  setPowerZoneBuckets: React.Dispatch<React.SetStateAction<Array<number>>>;
-  setShortUrl: React.Dispatch<React.SetStateAction<string>>;
-  setRaceResults: React.Dispatch<
+  setDate?: React.Dispatch<React.SetStateAction<string>>;
+  setPowerZoneBuckets?: React.Dispatch<React.SetStateAction<Array<number>>>;
+  setShortUrl?: React.Dispatch<React.SetStateAction<string>>;
+  setRaceResults?: React.Dispatch<
     React.SetStateAction<RaceResultRow | undefined>
   >;
-  setAuthor: React.Dispatch<React.SetStateAction<Author | undefined>>;
+  setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined>>;
+  setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -130,22 +138,23 @@ const PostContext = React.createContext<PostContextType>({
   images: [],
   currentFtp: '',
   resultsUrl: '',
-  powerAnalysis: null,
-  heartAnalysis: null,
-  cadenceAnalysis: null,
-  tempAnalysis: null,
-  elevationTotal: null,
-  normalizedPower: null,
+  powerAnalysis: undefined,
+  heartAnalysis: undefined,
+  cadenceAnalysis: undefined,
+  tempAnalysis: undefined,
+  elevationTotal: undefined,
+  normalizedPower: undefined,
   author: undefined,
   distance: null,
   elapsedTime: null,
   stoppedTime: null,
-  timeInRed: null,
+  timeInRed: undefined,
   powerZones: [],
   powerZoneBuckets: [],
   heroImage: undefined,
   shortUrl: null,
   raceResults: { results: undefined, selected: undefined },
+  timeSeriesFile: undefined,
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},
@@ -174,6 +183,7 @@ const PostContext = React.createContext<PostContextType>({
   setShortUrl: () => {},
   setRaceResults: () => {},
   setAuthor: () => {},
+  setTimeSeriesFile: () => {},
 });
 
 export { PostContext };

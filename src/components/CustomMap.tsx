@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from 'theme-ui';
+import { Box, Spinner } from 'theme-ui';
 import mapboxgl, { GeoJSONSource, SkyLayer } from 'mapbox-gl';
 
 type ActivityEvent = {
@@ -50,6 +50,13 @@ const Map = ({
   markerCoordinates,
   token,
 }: MapProps): JSX.Element => {
+  if (!coordinates || coordinates.length === 0) {
+    return (
+      <Box>
+        <Spinner />
+      </Box>
+    );
+  }
   const mapContainerRef = React.useRef();
   const map = React.useRef<mapboxgl.Map>();
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);

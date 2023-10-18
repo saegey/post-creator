@@ -89,16 +89,11 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -158,16 +153,11 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -227,16 +217,11 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -296,12 +281,6 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     author
     elevationTotal
     normalizedPower
@@ -313,6 +292,7 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
     stoppedTime
     timeInRed
     powerZones
+    timeSeriesFile
     powerZoneBuckets
     createdAt
     heroImage
@@ -334,16 +314,11 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name
@@ -423,12 +398,6 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     author
     elevationTotal
     normalizedPower
@@ -440,6 +409,7 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
     stoppedTime
     timeInRed
     powerZones
+    timeSeriesFile
     powerZoneBuckets
     createdAt
     heroImage
@@ -461,16 +431,11 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name
@@ -550,12 +515,6 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     author
     elevationTotal
     normalizedPower
@@ -567,6 +526,7 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
     stoppedTime
     timeInRed
     powerZones
+    timeSeriesFile
     powerZoneBuckets
     createdAt
     heroImage
@@ -588,16 +548,11 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
       postLocation
       stravaUrl
       resultsUrl
+      timeSeriesFile
       subType
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name
@@ -673,16 +628,11 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     blog {
       id
       name
@@ -709,16 +659,11 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -805,16 +750,11 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     blog {
       id
       name
@@ -841,16 +781,11 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -937,16 +872,11 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     postLocation
     stravaUrl
     resultsUrl
+    timeSeriesFile
     subType
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     blog {
       id
       name
@@ -973,16 +903,11 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
         postLocation
         stravaUrl
         resultsUrl
+        timeSeriesFile
         subType
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance

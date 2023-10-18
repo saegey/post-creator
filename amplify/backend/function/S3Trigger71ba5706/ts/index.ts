@@ -5,6 +5,7 @@ import { lineString } from '@turf/helpers';
 import AWS from 'aws-sdk';
 import AWSXRay from 'aws-xray-sdk';
 import zlib from 'zlib';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   calcElevationGain,
@@ -182,6 +183,9 @@ const publishMessage = async (payload: object) => {
 
 exports.handler = async function (event: TriggerEvent) {
   console.log('Event => ' + JSON.stringify(event));
+  if (event.Records[0].s3.object.key.includes('timeseries')) {
+    return;
+  }
 
   await publishMessage({ phase: 'start' });
   const segment = AWSXRay.getSegment();
@@ -190,9 +194,6 @@ exports.handler = async function (event: TriggerEvent) {
 
   const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
   let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
-  // const imgSize = event.Records[0].s3.object.size;
-  // const maxSize = 5000000; // More that 5Mb images would be rejected
-  // const filename = key.split('.').slice(0, -1).join('.');
   const fileParams = { Bucket: bucket, Key: key };
 
   const s3getTimer = segment?.addNewSubsegment('s3get');
@@ -249,7 +250,8 @@ exports.handler = async function (event: TriggerEvent) {
     stoppedTime = calcStoppage(coordinates, times);
     elapsedTime = dateDiff(new Date(times[0]), new Date(times.at(-1))).seconds;
 
-    const downsampleElevationTimer = segment?.addNewSubsegment('powerAnalysis');
+    const downsampleElevationTimer =
+      segment?.addNewSubsegment('elevationAnalysis');
     elevation = calcElevation(coordinates);
     distances = calcDistances(coordinates);
     elevationGrades = calcElevationGrades(coordinates, distances);
@@ -271,6 +273,26 @@ exports.handler = async function (event: TriggerEvent) {
 
   await publishMessage({ phase: 'process-data' });
 
+  const s3key = `timeseries/${uuidv4()}.json`;
+  const s3Putparams = {
+    Body: JSON.stringify({
+      coordinates,
+      elevation,
+      powers,
+      distances,
+      elevationGrades,
+      powerAnalysis,
+    }),
+    Bucket: bucket,
+    Key: `private/${metaData.Metadata.identityid}/${s3key}`,
+  };
+  try {
+    const s3res = await S3.putObject(s3Putparams).promise();
+    console.log(s3res);
+  } catch (e) {
+    console.error(JSON.stringify(e));
+  }
+
   const updateDynamoTimer = segment?.addNewSubsegment('updateDynamo');
   try {
     const res = await docClient
@@ -280,28 +302,20 @@ exports.handler = async function (event: TriggerEvent) {
           id: postId,
         },
         UpdateExpression:
-          'SET distance = :dis, powerAnalysis = :s, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, coordinates = :c, elevation = :e, powers = :p, distances = :d, elevationGrades = :eg, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red',
+          'SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf',
         ExpressionAttributeValues: {
           ':ta': tempAnalysis,
           ':ca': cadenceAnalysis,
           ':dis': distance,
-          ':s': powerAnalysis,
           ':hr': heartAnalysis,
           ':el': elevationGain,
           ':st': stoppedTime,
           ':et': elapsedTime,
-          ':c': await shrinkify({ field: coordinates, name: 'coordinates' }),
-          ':e': await shrinkify({ field: elevation, name: 'elevation' }),
-          ':p': await shrinkify({ field: powers, name: 'powers' }),
-          ':d': await shrinkify({ field: distances, name: 'distances' }),
-          ':eg': await shrinkify({
-            field: elevationGrades,
-            name: 'elevationGrades',
-          }),
           ':np': normalizedPower,
           ':pz': zones ? zones : [],
           ':pzb': powerZoneBuckets ? powerZoneBuckets : [],
           ':red': timeInRedSecs ? timeInRedSecs : 0,
+          ':tsf': s3key,
         },
       })
       .promise();
@@ -311,5 +325,4 @@ exports.handler = async function (event: TriggerEvent) {
 
   updateDynamoTimer.close();
   await publishMessage({ phase: 'update-data' });
-  // console.log(JSON.stringify(res));
 };

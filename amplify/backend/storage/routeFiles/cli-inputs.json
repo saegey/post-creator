@@ -11,6 +11,5 @@
     "READ",
     "DELETE"
   ],
-  "triggerFunction": "S3Trigger71ba5706",
-  "groupAccess": {}
+  "triggerFunction": "S3Trigger71ba5706"
 }
