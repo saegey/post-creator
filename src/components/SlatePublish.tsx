@@ -56,7 +56,13 @@ const SlatePublish = ({ post }) => {
           const graphData = Object.keys(postContext.powerAnalysis)
             .map((k, i) => {
               if (Number(k) > 0) {
-                return { x: Number(k), y: postContext.powerAnalysis[k] };
+                return {
+                  x: Number(k),
+                  y:
+                    postContext && postContext.powerAnalysis
+                      ? postContext.powerAnalysis[k]
+                      : 0,
+                };
               }
             })
             .filter((p) => p !== undefined);
@@ -95,7 +101,11 @@ const SlatePublish = ({ post }) => {
             <Flex sx={{ marginX: [null, '120px', '120px'] }}>
               <Box sx={{ width: '900px', maxWidth: '900px', marginX: 'auto' }}>
                 <VisualOverview
-                  activity={postContext.activity}
+                  activity={
+                    postContext && postContext.activity
+                      ? postContext.activity
+                      : undefined
+                  }
                   token={
                     'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
                   }

@@ -96,12 +96,12 @@ const ActivitySettings = ({ setSavedMessage }) => {
       setIsFtpUpdating(true);
     }
 
-    setCurrentFtp(newFtp);
-    setStravaUrl(form.get('stravaLink') as string);
-    setTitle(form.get('title') as string);
-    setPostLocation(form.get('postLocation') as string);
-    setDate(form.get('eventDate') as string);
-    setSubhead(form.get('subhead') as string);
+    setCurrentFtp && setCurrentFtp(newFtp);
+    setStravaUrl && setStravaUrl(form.get('stravaLink') as string);
+    setTitle && setTitle(form.get('title') as string);
+    setPostLocation && setPostLocation(form.get('postLocation') as string);
+    setDate && setDate(form.get('eventDate') as string);
+    setSubhead && setSubhead(form.get('subhead') as string);
 
     try {
       const response = (await API.graphql({

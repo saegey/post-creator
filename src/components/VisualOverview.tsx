@@ -16,7 +16,7 @@ interface ActivityEvent {
 }
 
 interface Vizprops {
-  activity: Array<ActivityEvent>;
+  activity?: Array<ActivityEvent> | undefined;
   token: string;
 }
 
@@ -68,12 +68,12 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
           })
         : undefined,
     [activity, units.unitOfMeasure]
-  );
+  ) as any;
 
   const coordinates = React.useMemo(
     () => (downSampledData ? downSampledData.map((a) => a.c) : undefined),
     [downSampledData]
-  );
+  ) as any;
 
   return (
     <Box sx={{ marginTop: '60px', borderRadius: [0, '5px', '5px'] }}>

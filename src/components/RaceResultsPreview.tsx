@@ -74,19 +74,21 @@ const RaceResultsPreview = ({ editor }) => {
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
-                    setRaceResults({
-                      ...raceResults,
-                      selected: undefined,
-                    });
+                    setRaceResults &&
+                      setRaceResults({
+                        ...raceResults,
+                        selected: undefined,
+                      });
                   } else {
                     setSelectedRow(i);
-                    setRaceResults({
-                      ...raceResults,
-                      selected:
-                        raceResults && raceResults.results
-                          ? raceResults.results[i]
-                          : undefined,
-                    });
+                    setRaceResults &&
+                      setRaceResults({
+                        ...raceResults,
+                        selected:
+                          raceResults && raceResults.results
+                            ? raceResults.results[i]
+                            : undefined,
+                      });
                   }
                 }}
               >

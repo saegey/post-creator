@@ -173,10 +173,11 @@ const RaceResultsImport = ({ editor }) => {
                       onClick={() => {
                         setIsLoading(true);
                         getResults().then((r: any) => {
-                          setRaceResults({
-                            results: r as any,
-                            selected: undefined,
-                          });
+                          setRaceResults &&
+                            setRaceResults({
+                              results: r as any,
+                              selected: undefined,
+                            });
                           setPreviewResults(true);
                           setIsLoading(false);
                         });

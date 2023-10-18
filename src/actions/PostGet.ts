@@ -18,7 +18,9 @@ export interface GraphQLResult {
 
 const getActivity = async (post: any) => {
   // const raw = await uncompress(post.coordinates);
-  const coordinates = post.coordinates ? (post.coordinates as string) : '{}';
+  const coordinates = post.coordinates
+    ? (post.coordinates as string)
+    : ('{}' as any);
 
   const elevation = post.elevation ? (post.elevation as string) : '{}';
 

@@ -75,11 +75,13 @@ const PostEditor = ({ postId, initialState }) => {
           return;
         }
 
-        setTimeInRed(value.data?.onUpdatePost?.timeInRed);
-        setPowerZoneBuckets(
-          JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
-        );
-        setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
+        setTimeInRed && setTimeInRed(value.data?.onUpdatePost?.timeInRed);
+        setPowerZoneBuckets &&
+          setPowerZoneBuckets(
+            JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
+          );
+        setPowerZones &&
+          setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
         setIsFtpUpdating(false);
       },
       error: (error) => console.warn(error),
@@ -104,7 +106,7 @@ const PostEditor = ({ postId, initialState }) => {
       // console.log(result);
 
       const activity = await getActivity(timeSeriesData);
-      setPowerAnalysis(timeSeriesData.powerAnalysis);
+      setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
       return activity;
     } else {
       console.log('no timeserriees files');
@@ -113,7 +115,7 @@ const PostEditor = ({ postId, initialState }) => {
 
   React.useEffect(() => {
     getData().then((d) => {
-      setActivity(d as any);
+      setActivity && setActivity(d as any);
     });
   }, [id]);
 
@@ -131,7 +133,7 @@ const PostEditor = ({ postId, initialState }) => {
   };
 
   const addImage = ({ selectedImage }) => {
-    setHeroImage(selectedImage);
+    setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
   };
 
@@ -182,7 +184,7 @@ const PostEditor = ({ postId, initialState }) => {
                 editor={editor}
                 initialValue={initialState}
                 onChange={(newValue) => {
-                  setComponents(newValue);
+                  setComponents && setComponents(newValue);
                 }}
                 // style={{ marginBottom: '200px' }}
               >

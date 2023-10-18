@@ -7,9 +7,9 @@ import { updatePostMinimal } from '../graphql/customMutations';
 // import { CloudinaryImage } from '../components/AddImage';
 
 interface PostSaveProps {
-  postId: string;
-  title: string | null;
-  postLocation: string | null;
+  postId: string | undefined;
+  title: string | undefined;
+  postLocation: string | undefined;
   components: Array<any>;
   stravaUrl?: string;
   resultsUrl?: string;

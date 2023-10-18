@@ -73,7 +73,7 @@ const UploadGpxModal = () => {
         }
       },
       metadata: {
-        postId: id,
+        postId: id ? id : '',
         currentFtp: currentFtp ? currentFtp : '0',
         identityId: user.identityId,
       },
@@ -99,13 +99,13 @@ const UploadGpxModal = () => {
   };
 
   const getPost = async () => {
-    const { data } = await API.graphql({
+    const { data } = (await API.graphql({
       query: getPostInitial,
       authMode: 'AMAZON_COGNITO_USER_POOLS',
       variables: {
         id: id,
       },
-    });
+    })) as any;
     const {
       timeSeriesFile,
       gpxFile,
@@ -121,19 +121,19 @@ const UploadGpxModal = () => {
       powerZoneBuckets,
       timeInRed,
     } = data.getPost;
-    setGpxFile(gpxFile);
-    setElevationTotal(elevationTotal);
-    setDistance(distance);
-    setElapsedTime(elapsedTime);
-    setStoppedTime(stoppedTime);
-    setTimeSeriesFile(timeSeriesFile);
-    setNormalizedPower(normalizedPower);
-    setTempAnalysis(JSON.parse(tempAnalysis));
-    setHeartAnalysis(JSON.parse(heartAnalysis));
-    setCadenceAnalysis(JSON.parse(cadenceAnalysis));
-    setPowerZones(JSON.parse(powerZones));
-    setPowerZoneBuckets(JSON.parse(powerZoneBuckets));
-    setTimeInRed(timeInRed);
+    setGpxFile && setGpxFile(gpxFile);
+    setElevationTotal && setElevationTotal(elevationTotal);
+    setDistance && setDistance(distance);
+    setElapsedTime && setElapsedTime(elapsedTime);
+    setStoppedTime && setStoppedTime(stoppedTime);
+    setTimeSeriesFile && setTimeSeriesFile(timeSeriesFile);
+    setNormalizedPower && setNormalizedPower(normalizedPower);
+    setTempAnalysis && setTempAnalysis(JSON.parse(tempAnalysis));
+    setHeartAnalysis && setHeartAnalysis(JSON.parse(heartAnalysis));
+    setCadenceAnalysis && setCadenceAnalysis(JSON.parse(cadenceAnalysis));
+    setPowerZones && setPowerZones(JSON.parse(powerZones));
+    setPowerZoneBuckets && setPowerZoneBuckets(JSON.parse(powerZoneBuckets));
+    setTimeInRed && setTimeInRed(timeInRed);
 
     const result = await Storage.get(timeSeriesFile, {
       download: true,
@@ -143,9 +143,9 @@ const UploadGpxModal = () => {
       level: 'private',
     });
     const timeSeriesData = await new Response(result.Body).json();
-    setPowerAnalysis(timeSeriesData.powerAnalysis);
+    setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
     const activity = await getActivity(timeSeriesData);
-    setActivity(activity);
+    setActivity && setActivity(activity);
     setProcessingGpxStatus('GPX file has been processed and analyzed');
     setIsProcessingFile(false);
     // return post;

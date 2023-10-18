@@ -131,9 +131,12 @@ const Post = ({
   const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
 
-  const [powerAnalysis, setPowerAnalysis] = React.useState<{
-    entire: number;
-  } | null>(null);
+  const [powerAnalysis, setPowerAnalysis] = React.useState<
+    | {
+        entire: number;
+      }
+    | undefined
+  >();
   const [heartAnalysis, setHeartAnalysis] = React.useState(postHeartAnalysis);
   const [cadenceAnalysis, setCadenceAnalysis] =
     React.useState(postCadenceAnalysis);
