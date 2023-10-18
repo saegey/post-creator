@@ -26,6 +26,8 @@ const getActivity = async (post: any) => {
 
   const grades = post.elevationGrades ? (post.elevationGrades as string) : '{}';
 
+  console.log(coordinates);
+
   return coordinates && coordinates.length > 0
     ? coordinates
         .map((_, i) => {

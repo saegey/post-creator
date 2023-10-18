@@ -50,7 +50,7 @@ export type PostContextType = {
   heroImage: CloudinaryImage | undefined;
   currentFtp: string | null;
   resultsUrl: string | null;
-  powerAnalysis: { entire: number } | null;
+  powerAnalysis: { entire: number } | undefined;
   heartAnalysis: { entire: number } | null;
   cadenceAnalysis: { entire: number } | null;
   tempAnalysis: { entire: number } | null;
@@ -86,9 +86,12 @@ export type PostContextType = {
   setCurrentFtp: React.Dispatch<React.SetStateAction<string>>;
   setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
   setPowerAnalysis: React.Dispatch<
-    React.SetStateAction<{
-      entire: number;
-    } | null>
+    React.SetStateAction<
+      | {
+          entire: number;
+        }
+      | undefined
+    >
   >;
   setHeartAnalysis: React.Dispatch<React.SetStateAction<string>>;
   setCadenceAnalysis: React.Dispatch<React.SetStateAction<string>>;

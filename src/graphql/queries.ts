@@ -67,12 +67,6 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -149,12 +143,6 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     author
     elevationTotal
     normalizedPower
@@ -166,6 +154,7 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
     stoppedTime
     timeInRed
     powerZones
+    timeSeriesFile
     powerZoneBuckets
     createdAt
     heroImage
@@ -192,12 +181,6 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name
@@ -279,12 +262,6 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       author
       elevationTotal
       normalizedPower
@@ -296,6 +273,7 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       stoppedTime
       timeInRed
       powerZones
+      timeSeriesFile
       powerZoneBuckets
       createdAt
       heroImage
@@ -322,12 +300,6 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -399,12 +371,6 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       author
       elevationTotal
       normalizedPower
@@ -416,6 +382,7 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
       stoppedTime
       timeInRed
       powerZones
+      timeSeriesFile
       powerZoneBuckets
       createdAt
       heroImage
@@ -442,12 +409,6 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -519,12 +480,6 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       author
       elevationTotal
       normalizedPower
@@ -536,6 +491,7 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
       stoppedTime
       timeInRed
       powerZones
+      timeSeriesFile
       powerZoneBuckets
       createdAt
       heroImage
@@ -562,12 +518,6 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -625,12 +575,6 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
     blog {
       id
       name
@@ -662,12 +606,6 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
         teaser
         currentFtp
         components
-        powerAnalysis
-        coordinates
-        powers
-        elevation
-        elevationGrades
-        distances
         elevationTotal
         normalizedPower
         distance
@@ -758,12 +696,6 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name
@@ -851,12 +783,6 @@ export const listPostsByCreatedAt = /* GraphQL */ `query ListPostsByCreatedAt(
       teaser
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
       blog {
         id
         name

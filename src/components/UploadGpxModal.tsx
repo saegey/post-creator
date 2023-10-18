@@ -14,6 +14,7 @@ import {
   getEndpoint,
 } from '../../src/actions/PubSub';
 import { EditorContext } from './EditorContext';
+import { getPostInitial } from '../../src/graphql/customQueries';
 
 const processStatuses = {
   'file-downloaded': 'File being downloaded for processing.',
@@ -50,6 +51,8 @@ const UploadGpxModal = () => {
     setPowerAnalysis,
     setPowerZoneBuckets,
     setPowerZones,
+    setTimeSeriesFile,
+    timeSeriesFile,
   }: PostContextType = React.useContext(PostContext);
 
   const { setIsGpxUploadOpen } = React.useContext(EditorContext);
@@ -95,22 +98,58 @@ const UploadGpxModal = () => {
     }
   };
 
-  const processUpdates = async (post) => {
-    const activity = await getActivity(post);
+  const getPost = async () => {
+    const { data } = await API.graphql({
+      query: getPostInitial,
+      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      variables: {
+        id: id,
+      },
+    });
+    const {
+      timeSeriesFile,
+      gpxFile,
+      elevationTotal,
+      distance,
+      elapsedTime,
+      stoppedTime,
+      normalizedPower,
+      tempAnalysis,
+      cadenceAnalysis,
+      heartAnalysis,
+      powerZones,
+      powerZoneBuckets,
+      timeInRed,
+    } = data.getPost;
+    setGpxFile(gpxFile);
+    setElevationTotal(elevationTotal);
+    setDistance(distance);
+    setElapsedTime(elapsedTime);
+    setStoppedTime(stoppedTime);
+    setTimeSeriesFile(timeSeriesFile);
+    setNormalizedPower(normalizedPower);
+    setTempAnalysis(JSON.parse(tempAnalysis));
+    setHeartAnalysis(JSON.parse(heartAnalysis));
+    setCadenceAnalysis(JSON.parse(cadenceAnalysis));
+    setPowerZones(JSON.parse(powerZones));
+    setPowerZoneBuckets(JSON.parse(powerZoneBuckets));
+    setTimeInRed(timeInRed);
+
+    const result = await Storage.get(timeSeriesFile, {
+      download: true,
+      // customPrefix: {
+      //   public: 'private/us-east-1:29b6299d-6fd7-44d5-a53e-2a94fdf5401d/',
+      // },
+      level: 'private',
+    });
+    const timeSeriesData = await new Response(result.Body).json();
+    setPowerAnalysis(timeSeriesData.powerAnalysis);
+    const activity = await getActivity(timeSeriesData);
     setActivity(activity);
-    setGpxFile(post.gpxFile);
-    setElevationTotal(post.elevationTotal);
-    setDistance(post.distance);
-    setElapsedTime(post.elapsedTime);
-    setStoppedTime(post.stoppedTime);
-    setNormalizedPower(post.normalizedPower);
-    setTempAnalysis(JSON.parse(post.tempAnalysis));
-    setHeartAnalysis(JSON.parse(post.heartAnalysis));
-    setCadenceAnalysis(JSON.parse(post.cadenceAnalysis));
-    setPowerAnalysis(JSON.parse(post.powerAnalysis));
-    setPowerZones(JSON.parse(post.powerZones));
-    setPowerZoneBuckets(JSON.parse(post.powerZoneBuckets));
-    setTimeInRed(post.timeInRed);
+    setProcessingGpxStatus('GPX file has been processed and analyzed');
+    setIsProcessingFile(false);
+    // return post;
+    // console.log(post);
   };
 
   const setUpSub = async () => {
@@ -127,15 +166,7 @@ const UploadGpxModal = () => {
         setProcessingGpxStatus(processStatuses[data.value.phase]);
 
         if (phase === 'update-data') {
-          getPostQuery(id).then((d) => {
-            processUpdates(d.data?.getPost).then(() => {
-              // setIsGpxUploadOpen(false);
-              setProcessingGpxStatus(
-                'GPX file has been processed and analyzed'
-              );
-              setIsProcessingFile(false);
-            });
-          });
+          getPost();
         }
       },
       error: (error) => console.error(error),

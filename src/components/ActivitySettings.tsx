@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Input, Button, Label, Spinner } from 'theme-ui';
 import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
-import { API } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import { useRouter } from 'next/router';
 
 import { PostContext } from './PostContext';
@@ -72,12 +72,15 @@ const ActivitySettings = ({ setSavedMessage }) => {
     //   },
     // });
     // console.log(shortUrlRes);
+    // const user = await Auth.currentUserCredentials();
 
     const response = await API.post('api12660653', '/post/publish', {
       response: true,
       body: {
         postId: id,
         origin: `${origin}/`,
+        // identityId: user.identityId,
+
         // shortUrl: shortUrlRes.data.Attributes.id,
       },
     });

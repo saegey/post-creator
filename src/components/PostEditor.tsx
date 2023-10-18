@@ -13,10 +13,6 @@ import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import SkeletonPost from './SkeletonPost';
 import { getActivity } from '../../src/actions/PostGet';
-import {
-  getActivityQuery,
-  getActivityQueryProps,
-} from '../../src/graphql/customQueries';
 import GraphSelectorMenu from './GraphSelectorMenu';
 import * as subscriptions from '../../src/graphql/subscriptions';
 import UploadGpxModal from './UploadGpxModal';
@@ -105,10 +101,13 @@ const PostEditor = ({ postId, initialState }) => {
         level: 'private',
       });
       const timeSeriesData = await new Response(result.Body).json();
+      // console.log(result);
 
       const activity = await getActivity(timeSeriesData);
       setPowerAnalysis(timeSeriesData.powerAnalysis);
       return activity;
+    } else {
+      console.log('no timeserriees files');
     }
   };
 

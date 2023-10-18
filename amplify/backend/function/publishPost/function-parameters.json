@@ -5,6 +5,13 @@
         "Query",
         "Mutation"
       ]
+    },
+    "storage": {
+      "routeFiles": [
+        "create",
+        "read",
+        "update"
+      ]
     }
   },
   "lambdaLayers": []

@@ -49,7 +49,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postElapsedTime: post.elapsedTime,
       postTimeInRed: post.timeInRed,
       postHeartAnalysis: JSON.parse(post.heartAnalysis),
-      postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
+      // postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
       postCadenceAnalysis: JSON.parse(post.cadenceAnalysis),
       postTempAnalysis: JSON.parse(post.tempAnalysis),
       postPowerZones: JSON.parse(post.powerZones),
@@ -194,13 +194,7 @@ const Post = ({
 
   React.useEffect(() => {
     setInitialLoad(false);
-    // getUser().then((g) => console.log(g.identityId));
   }, []);
-
-  // const getUser = async () => {
-  //   return await Auth.currentUserCredentials();
-  //   // console.log("identityId", credentials.identityId);
-  // };
 
   return (
     <AuthCustom>

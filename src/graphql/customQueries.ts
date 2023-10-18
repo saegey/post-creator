@@ -7,7 +7,7 @@ type GeneratedQuery<InputType, OutputType> = string & {
 export const getActivityQuery = /* GraphQL */ `
   query GetActivityQuery($id: ID!) {
     getPost(id: $id) {
-      powerAnalysis
+      # powerAnalysis
       # coordinates
       # powers
       # elevation
@@ -32,15 +32,15 @@ export const getShortUrl = /* GraphQL */ `
 
 export type getActivityQueryProps = {
   getPost?: {
-    powerAnalysis?: string | null;
+    // powerAnalysis?: string | null;
     cadenceAnalysis?: string | null;
     tempAnalysis?: string | null;
     heartAnalysis?: string | null;
-    coordinates?: string | null;
-    powers?: string | null;
-    elevation?: string | null;
-    elevationGrades?: string | null;
-    distances?: string | null;
+    // coordinates?: string | null;
+    // powers?: string | null;
+    // elevation?: string | null;
+    // elevationGrades?: string | null;
+    // distances?: string | null;
     owner?: string | null;
     __typename: 'Post';
   } | null;
@@ -72,18 +72,18 @@ export const getPostInitial = /* GraphQL */ `
       elapsedTime
       stoppedTime
       timeInRed
-      powerAnalysis
+      # powerAnalysis
       heartAnalysis
       cadenceAnalysis
       tempAnalysis
       powerZones
       powerZoneBuckets
       timeSeriesFile
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
+      # coordinates
+      # powers
+      # elevation
+      # elevationGrades
+      # distances
       heroImage
       blog {
         id
@@ -176,12 +176,12 @@ export const getPublishedPost =
     teaser
     currentFtp
     components
-    powerAnalysis
-    coordinates
-    powers
-    elevation
-    elevationGrades
-    distances
+    # powerAnalysis
+    # coordinates
+    # powers
+    # elevation
+    # elevationGrades
+    # distances
     author
     elevationTotal
     normalizedPower
@@ -203,7 +203,6 @@ export const getPublishedPost =
     raceResultsProvider
     updatedAt
 		originalPostId
-    # publishedPostOriginalPostId
     owner
     __typename
   }

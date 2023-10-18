@@ -213,6 +213,13 @@
           ],
           "category": "api",
           "resourceName": "nextjsblog"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "routeFiles"
         }
       ],
       "providerPlugin": "awscloudformation",

@@ -63,7 +63,7 @@ const PostView = ({
         }}
       >
         <SlateToReact node={components} config={config} />
-        {user && post.author.id === user.attributes.sub && (
+        {user && (
           <Box
             sx={{ position: 'absolute', top: '20px', right: '20px' }}
             key='user-settings'

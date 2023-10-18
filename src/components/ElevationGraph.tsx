@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from 'recharts';
-import { Box, useThemeUI } from 'theme-ui';
+import { Box, Spinner, useThemeUI } from 'theme-ui';
 import React from 'react';
 
 import { useViewport } from './ViewportProvider';
@@ -37,6 +37,13 @@ interface NewLineGraphProps {
 }
 
 const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
+  if (!downSampledData || downSampledData.length === 0) {
+    return (
+      <Box>
+        <Spinner />
+      </Box>
+    );
+  }
   const themeContext = useThemeUI();
   // const { width, height } = useViewport();
   const units = useUnits();

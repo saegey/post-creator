@@ -4,13 +4,14 @@
 	API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT
 	ENV
 	REGION
+	STORAGE_ROUTEFILES_BUCKETNAME
 Amplify Params - DO NOT EDIT */
 
 // /**
 //  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
 //  */
 
-const aws = require('aws-sdk');
+const AWS = require('aws-sdk');
 const uuid = require('uuid');
 const zlib = require('zlib');
 const crypto = require('@aws-crypto/sha256-js');
@@ -19,8 +20,10 @@ const { SignatureV4 } = require('@aws-sdk/signature-v4');
 const { HttpRequest } = require('@aws-sdk/protocol-http');
 const { Sha256 } = crypto;
 
+const docClient = new AWS.DynamoDB.DocumentClient();
+const S3 = new AWS.S3();
+
 const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
-const docClient = new aws.DynamoDB.DocumentClient();
 const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
 const publishedPostTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
@@ -53,12 +56,12 @@ const query = /* GraphQL */ `
       subType
       currentFtp
       components
-      powerAnalysis
-      coordinates
-      powers
-      elevation
-      elevationGrades
-      distances
+      # powerAnalysis
+      # coordinates
+      # powers
+      # elevation
+      # elevationGrades
+      # distances
       author {
         id
         fullName
@@ -92,6 +95,7 @@ const query = /* GraphQL */ `
       blogPostsId
       postRelatedId
       postAuthorId
+      timeSeriesFile
       owner
       __typename
     }
@@ -104,7 +108,11 @@ exports.handler = async (event) => {
   const { body } = event;
   const { postId, origin } = JSON.parse(body);
 
-  console.log(`postId: ${postId}`);
+  console.log(
+    `postId: ${postId}, identityId: ${JSON.stringify(
+      event.requestContext.identity.cognitoIdentityId
+    )}`
+  );
 
   let date = new Date();
 
@@ -231,11 +239,47 @@ exports.handler = async (event) => {
     // shortUrl = 't';
   }
 
+  const privateTimeSeriesFile = await S3.getObject({
+    Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
+    Key: `private/${event.requestContext.identity.cognitoIdentityId}/${resBody.data.getPost.timeSeriesFile}`,
+  }).promise();
+
+  const {
+    coordinates,
+    elevation,
+    powers,
+    distances,
+    elevationGrades,
+    powerAnalysis,
+  } = JSON.parse(privateTimeSeriesFile.Body.toString('utf-8'));
+
+  const s3key = `timeseries/${uuid.v1()}.json`;
+  const s3Putparams = {
+    Body: JSON.stringify({
+      coordinates,
+      elevation,
+      powers,
+      distances,
+      elevationGrades,
+      powerAnalysis,
+    }),
+    Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
+    Key: `public/${s3key}`,
+    // ACL: 'public-read',
+  };
+
+  try {
+    const s3res = await S3.putObject(s3Putparams).promise();
+    console.log(s3res);
+  } catch (e) {
+    console.error(JSON.stringify(e));
+  }
+
   const docParams = {
     TableName: publishedPostTable,
     Key: { id: publishedPostId },
     UpdateExpression:
-      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, powerAnalysis = :powerAnalysis, coordinates = :coordinates, powers = :powers, elevation = :elevation, elevationGrades = :elevationGrades, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, distances = :distances',
+      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile',
     ExpressionAttributeNames: {
       // '#id': 'id',
       '#typename': '__typename',
@@ -265,24 +309,6 @@ exports.handler = async (event) => {
       ':components': resBody.data.getPost.components
         ? JSON.parse(resBody.data.getPost.components)
         : '[]',
-      ':powerAnalysis': resBody.data.getPost.powerAnalysis
-        ? JSON.parse(resBody.data.getPost.powerAnalysis)
-        : '{}',
-      ':coordinates': resBody.data.getPost.coordinates
-        ? resBody.data.getPost.coordinates.slice(1, -1)
-        : '{}',
-      ':powers': resBody.data.getPost.powers
-        ? resBody.data.getPost.powers.slice(1, -1)
-        : '{}',
-      ':elevation': resBody.data.getPost.elevation
-        ? resBody.data.getPost.elevation.slice(1, -1)
-        : '{}',
-      ':elevationGrades': resBody.data.getPost.elevationGrades
-        ? resBody.data.getPost.elevationGrades.slice(1, -1)
-        : '{}',
-      ':distance': resBody.data.getPost.distance
-        ? resBody.data.getPost.distance
-        : 0,
       ':author': resBody.data.getPost.author
         ? resBody.data.getPost.author
         : '{}',
@@ -334,9 +360,10 @@ exports.handler = async (event) => {
       ':stravaUrl': resBody.data.getPost.stravaUrl
         ? resBody.data.getPost.stravaUrl
         : '',
-      ':distances': resBody.data.getPost.distances
-        ? resBody.data.getPost.distances.slice(1, -1)
-        : '{}',
+      ':timeSeriesFile': s3key,
+      ':distance': resBody.data.getPost.distance
+        ? resBody.data.getPost.distance
+        : '',
     },
     ReturnValues: 'ALL_NEW',
   };

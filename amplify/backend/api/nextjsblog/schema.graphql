@@ -63,12 +63,12 @@ type PublishedPost
   teaser: String
   currentFtp: String
   components: AWSJSON
-  powerAnalysis: AWSJSON
-  coordinates: AWSJSON
-  powers: AWSJSON
-  elevation: AWSJSON
-  elevationGrades: AWSJSON
-  distances: AWSJSON
+  # powerAnalysis: AWSJSON
+  # coordinates: AWSJSON
+  # powers: AWSJSON
+  # elevation: AWSJSON
+  # elevationGrades: AWSJSON
+  # distances: AWSJSON
   # blog: Blog @belongsTo
   # related: [Post] @hasMany
   author: AWSJSON
@@ -82,6 +82,7 @@ type PublishedPost
   stoppedTime: Int
   timeInRed: Int
   powerZones: AWSJSON
+  timeSeriesFile: String
   powerZoneBuckets: AWSJSON
   createdAt: String!
   heroImage: AWSJSON
@@ -130,12 +131,12 @@ type Post
   teaser: String
   currentFtp: String
   components: AWSJSON
-  powerAnalysis: AWSJSON
-  coordinates: AWSJSON
-  powers: AWSJSON
-  elevation: AWSJSON
-  elevationGrades: AWSJSON
-  distances: AWSJSON
+  # powerAnalysis: AWSJSON
+  # coordinates: AWSJSON
+  # powers: AWSJSON
+  # elevation: AWSJSON
+  # elevationGrades: AWSJSON
+  # distances: AWSJSON
   blog: Blog @belongsTo
   related: [Post] @hasMany
   author: User @hasOne
