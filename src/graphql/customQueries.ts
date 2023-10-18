@@ -112,6 +112,7 @@ export const getPostInitial = /* GraphQL */ `
       postRelatedId
       shortUrl
       raceResults
+      privacyStatus
       # owner
       __typename
     }

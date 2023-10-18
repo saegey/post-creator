@@ -23,6 +23,7 @@ import AddImage from './AddImage';
 import withLinks from './plugins/withLinks';
 import withLayout from './withLayout';
 import { PostSaveComponents } from '../actions/PostSave';
+import PublishModalConfirmation from './PublishModalConfirmation';
 
 const PostEditor = ({ postId, initialState }) => {
   const editor = React.useMemo(
@@ -60,6 +61,7 @@ const PostEditor = ({ postId, initialState }) => {
     isHeroImageModalOpen,
     setIsSavingPost,
     setSavingStatus,
+    isPublishedConfirmationOpen,
   } = React.useContext(EditorContext);
 
   React.useEffect(() => {
@@ -153,6 +155,7 @@ const PostEditor = ({ postId, initialState }) => {
       ) : (
         <>
           <Flex>
+            {isPublishedConfirmationOpen && <PublishModalConfirmation />}
             {isGraphMenuOpen && <GraphSelectorMenu editor={editor} />}
             {isImageModalOpen && (
               <AddImage
@@ -199,7 +202,7 @@ const PostEditor = ({ postId, initialState }) => {
                     }
                     return false;
                   });
-                  console.log(ops);
+                  // console.log(ops);
                   if (ops && ops.length === 0) {
                     return;
                   }

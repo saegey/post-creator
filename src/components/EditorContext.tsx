@@ -23,6 +23,8 @@ export type EditorContextType = {
   setIsSavingPost: React.Dispatch<React.SetStateAction<boolean>>;
   savingStatus: string;
   setSavingStatus: React.Dispatch<React.SetStateAction<string>>;
+  isPublishedConfirmationOpen: boolean;
+  setIsPublishedConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -48,6 +50,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsSavingPost: () => {},
   savingStatus: '',
   setSavingStatus: () => {},
+  isPublishedConfirmationOpen: false,
+  setIsPublishedConfirmationOpen: () => {},
 });
 
 export { EditorContext };
