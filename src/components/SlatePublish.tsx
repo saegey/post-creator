@@ -434,12 +434,7 @@ const SlatePublish = ({ post }) => {
           );
         },
         postAuthor: () => {
-          return (
-            <PostAuthor
-              postAuthor={post.author}
-              publishedDate={post.createdAt}
-            />
-          );
+          return <PostAuthor />;
         },
         image: ({ node, children = [] }) => {
           const imageMeta = JSON.parse(images)?.find(

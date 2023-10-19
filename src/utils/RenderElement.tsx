@@ -35,7 +35,7 @@ const renderElement = (props) => {
 
   switch (element.type) {
     case 'postAuthor':
-      return <PostAuthor publishedDate={element} />;
+      return <PostAuthor />;
     case 'embed':
       return <EmbedElemnt element={element} />;
     case 'stravaLink':
