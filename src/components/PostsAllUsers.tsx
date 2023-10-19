@@ -76,7 +76,14 @@ const PostsAllUsers = ({
         </Box>
 
         <Grid columns={[1, 2, 3]} sx={{ gridGap: '20px' }}>
-          {posts && posts.map((post) => <PostCard post={post} />)}
+          {posts &&
+            posts.map((post, i) => {
+              return (
+                <div key={`postcard-${i}`}>
+                  <PostCard post={post} />
+                </div>
+              );
+            })}
         </Grid>
       </Box>
     </Box>

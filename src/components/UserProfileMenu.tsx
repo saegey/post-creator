@@ -187,7 +187,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     <Box sx={{ marginLeft: 'auto' }}>
                       <Switch
                         checked={mode === 'dark' ? true : false}
-                        onClick={(e) => {
+                        onChange={(e) => {
                           const next = mode === 'dark' ? 'light' : 'dark';
                           setMode(next);
                         }}
@@ -206,7 +206,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     <Box sx={{ marginLeft: 'auto' }}>
                       <Switch
                         checked={unitOfMeasure !== 'imperial' ? true : false}
-                        onClick={(e) => {
+                        onChange={(e) => {
                           toggleUnit();
                         }}
                       />

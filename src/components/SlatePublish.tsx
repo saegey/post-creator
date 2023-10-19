@@ -48,7 +48,7 @@ const SlatePublish = ({ post }) => {
           const postContext = React.useContext(PostContext);
           if (!postContext.powerAnalysis) {
             return (
-              <Box>
+              <Box key={`{powergraph-${post.id}}`}>
                 <Spinner />
               </Box>
             );
@@ -83,6 +83,7 @@ const SlatePublish = ({ post }) => {
                 paddingY: '10px',
                 borderRadius: '5px',
               }}
+              key={`{powergraph-${post.id}}`}
             >
               <PowerCurveGraph
                 ftp={post.currentFtp ? Number(post.currentFtp) : 0}
@@ -92,13 +93,20 @@ const SlatePublish = ({ post }) => {
           );
         },
         embed: ({ node, children = [] }) => {
-          return <EmbedElemnt element={node} />;
+          return (
+            <div key={`{embed-${post.id}}`}>
+              <EmbedElemnt element={node} />
+            </div>
+          );
         },
         visualOverview: ({ node, children = [] }) => {
           const postContext = React.useContext(PostContext);
 
           return (
-            <Flex sx={{ marginX: [null, '120px', '120px'] }}>
+            <Flex
+              sx={{ marginX: [null, '120px', '120px'] }}
+              key={`{visualoverview-${post.id}}`}
+            >
               <Box sx={{ width: '900px', maxWidth: '900px', marginX: 'auto' }}>
                 <VisualOverview
                   activity={
@@ -129,6 +137,7 @@ const SlatePublish = ({ post }) => {
                 padding: ['20px', '30px', '30px'],
                 borderRadius: '5px',
               }}
+              key={`{timeInZones-${post.id}}`}
             >
               <PowerBreakdown
                 powerZoneBuckets={JSON.parse(post.powerZoneBuckets)}
@@ -138,7 +147,6 @@ const SlatePublish = ({ post }) => {
           );
         },
         heroBanner: ({ node }) => {
-          console.log('herro banner');
           const heroImage = JSON.parse(post.heroImage);
 
           return (
@@ -147,6 +155,7 @@ const SlatePublish = ({ post }) => {
                 width: '100%',
                 marginBottom: '60px',
               }}
+              key={`{herobanner-${post.id}}`}
             >
               <Flex
                 sx={{
@@ -234,6 +243,7 @@ const SlatePublish = ({ post }) => {
                 borderRadius: '5px',
                 padding: ['20px', '30px', '30px'],
               }}
+              key={`{activityOverview-${post.id}}`}
             >
               <ActivityOverview
                 data={{
@@ -285,14 +295,19 @@ const SlatePublish = ({ post }) => {
                   paddingY: '5px',
                 },
               }}
+              key={`{bulleted-list-${post.id}}`}
             >
               {node.children.map((c, i) => {
                 return (
                   <Box as='li' key={`bullet-${i}`}>
-                    {c.children.map((child) => {
+                    {c.children.map((child, itemNum) => {
                       if (child.bold) {
                         return (
-                          <Box as='span' sx={{ fontWeight: '700' }}>
+                          <Box
+                            as='span'
+                            sx={{ fontWeight: '700' }}
+                            key={`bulleted-list-${post.id}-${itemNum}`}
+                          >
                             {child.text}
                           </Box>
                         );

@@ -42,8 +42,6 @@ const PostsAll = ({
   } else if (!search && !status) {
     setStatus('draft');
   }
-  // console.log(search, status);
-  // const [newPost, setNewPost] = React.useState(false);
 
   const getDraftPosts = async (type = 'draft') => {
     const response: any = await API.graphql({
@@ -73,16 +71,6 @@ const PostsAll = ({
     const response: any = await API.graphql({
       query: listPostsCustom,
       authMode: 'AMAZON_COGNITO_USER_POOLS',
-      // variables: {
-      //   filter: {
-      //     author: {
-      //       eq: user.attributes.sub,
-      //     },
-      //     // privacyStatus: {
-      //     //   eq: 'type',
-      //     // },
-      //   },
-      // },
     });
 
     setPosts(
@@ -137,7 +125,6 @@ const PostsAll = ({
           width: '100vw',
         }}
       >
-        {/* {posts && posts.length > 0 && ( */}
         <Flex>
           <Box>
             <Text sx={{ fontSize: '28px', fontWeight: '600' }}>Your Posts</Text>
@@ -150,12 +137,10 @@ const PostsAll = ({
             </Button>
           </Flex>
         </Flex>
-        {/* )} */}
 
         <Flex as='nav' sx={{ marginBottom: '10px' }}>
           <NavLink
             href='#!'
-            // p={2}
             sx={{
               paddingY: '8px',
               paddingRight: '8px',
@@ -170,7 +155,6 @@ const PostsAll = ({
               setStatus('draft');
               getDraftPosts();
 
-              // getData;
               router.push('/posts?status=draft');
             }}
           >
@@ -283,7 +267,9 @@ const PostsAll = ({
           <>
             <Grid columns={[1, 2, 3]}>
               {posts.map((post, i) => (
-                <PostCard post={post} showAuthor={false} key={`post${i}`} />
+                <div key={`post${i}`}>
+                  <PostCard post={post} showAuthor={false} />
+                </div>
               ))}
             </Grid>
           </>
