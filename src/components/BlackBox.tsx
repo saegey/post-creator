@@ -7,6 +7,13 @@ const BlackBox = ({
   zIndex = 30,
   fullScreen = false,
   noModal = false,
+}: {
+  children: JSX.Element;
+  opacity?: string;
+  onClick?: () => void;
+  zIndex?: number;
+  fullScreen?: boolean;
+  noModal?: boolean;
 }) => (
   <Box
     sx={{
@@ -18,11 +25,9 @@ const BlackBox = ({
       backgroundColor: fullScreen
         ? 'background'
         : `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`,
-      // background-color: rgba(var(--color), 0.8);
       zIndex: zIndex,
       display: 'flex',
       justifyContent: !noModal || fullScreen ? 'center' : '',
-      // verticalAlign: fullScreen ? 'middle' : '',
       alignItems: !noModal || fullScreen ? 'center' : '',
     }}
     onClick={onClick}

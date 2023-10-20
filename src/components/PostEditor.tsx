@@ -172,9 +172,7 @@ const PostEditor = ({ postId, initialState }) => {
               />
             )}
             {isGpxUploadOpen && <UploadGpxModal />}
-            {isShareModalOpen && (
-              <ShareModal postId={postId} fullScreen={true} />
-            )}
+            {isShareModalOpen && <ShareModal postId={postId}  />}
             {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
             <Box
               sx={{
