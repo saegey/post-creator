@@ -1,4 +1,3 @@
-import BlackBox from './BlackBox';
 import {
   Box,
   Flex,
@@ -14,6 +13,7 @@ import { CldImage } from 'next-cloudinary';
 
 import AvatarButton from './AvatarButton';
 import { useUnits } from './UnitProvider';
+import BlackBox from './layout/BlackBox';
 
 const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
   const ref = React.useRef<any>();
@@ -200,7 +200,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   <Flex sx={{ width: '100%', padding: '5px' }}>
                     <Text as='span'>
                       Units{' '}
-                      <Text as='span' sx={{ color: '#aeaeae' }}>
+                      <Text as='span' sx={{ color: 'textMuted' }}>
                         imperial/metric
                       </Text>
                     </Text>

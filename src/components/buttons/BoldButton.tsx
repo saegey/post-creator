@@ -2,8 +2,7 @@ import { IconButton } from 'theme-ui';
 import { BaseEditor } from 'slate';
 import React from 'react';
 
-import { isMarkActive, toggleMark } from '../utils/SlateUtilityFunctions';
-import BoldIcon from './BoldIcon';
+import { isMarkActive, toggleMark } from '../../utils/SlateUtilityFunctions';
 
 const BoldButton = ({
   editor,

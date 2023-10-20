@@ -5,7 +5,7 @@ import { Storage, API, PubSub, Auth } from 'aws-amplify';
 
 import { UpdatePostMutation } from '../../src/API';
 import { updatePost } from '../../src/graphql/mutations';
-import BlackBox from './BlackBox';
+import BlackBox from './layout/BlackBox';
 import { PostContext, PostContextType } from './PostContext';
 import { getActivity, getPostQuery } from '../actions/PostGet';
 import {
@@ -250,12 +250,6 @@ const UploadGpxModal = () => {
           <Box>
             <Button
               onClick={uploadFile}
-              // sx={{
-              //   ':disabled': {
-              //     backgroundColor: '#c6c6c6',
-              //     cursor: 'not-allowed',
-              //   },
-              // }}
               variant='primaryButton'
               disabled={processingFile}
             >

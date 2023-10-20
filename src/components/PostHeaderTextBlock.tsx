@@ -34,7 +34,6 @@ const PostHeaderTextBlock = ({
         justifyContent: 'center',
         alignContent: 'center',
         position: 'relative',
-        // display: 'inline',
         borderBottomColor: 'muted',
         borderBottomWidth: ['1px', 0, 0],
         borderBottomStyle: 'solid',
@@ -61,7 +60,10 @@ const PostHeaderTextBlock = ({
       <Text
         as='h1'
         variant='postTitle'
-        sx={{ color: title === 'Title' ? 'gray' : 'text', lineHeight: '38px' }}
+        sx={{
+          color: title === 'Title' ? 'textMuted' : 'text',
+          lineHeight: '38px',
+        }}
       >
         {title}
       </Text>
@@ -69,7 +71,7 @@ const PostHeaderTextBlock = ({
       <Text
         as='p'
         sx={{
-          color: teaser === 'Subhead' ? 'gray' : 'text',
+          color: teaser === 'Subhead' ? 'textMuted' : 'text',
           fontWeight: '500',
           fontSize: '16px',
           lineHeight: '22px',
@@ -78,17 +80,17 @@ const PostHeaderTextBlock = ({
         {teaser}
       </Text>
       <Text sx={{ fontSize: '15px', fontWeight: '400' }}>
-        <Text sx={{ color: date === 'Event date' ? 'gray' : 'text' }}>
+        <Text sx={{ color: date === 'Event date' ? 'textMuted' : 'text' }}>
           {date}
         </Text>{' '}
         —{' '}
-        <Text sx={{ color: location === 'Location' ? 'gray' : 'text' }}>
+        <Text sx={{ color: location === 'Location' ? 'textMuted' : 'text' }}>
           {location}
         </Text>
       </Text>
       <Text
         sx={{
-          color: headerImageCaption === 'Enter caption here' ? 'gray' : 'text',
+          color: headerImageCaption === 'Enter caption here' ? 'textMuted' : 'text',
           marginTop: 'auto',
           fontSize: '12px',
           lineHeight: '15px',

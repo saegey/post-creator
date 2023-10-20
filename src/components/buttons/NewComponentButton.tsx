@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { EditorContext } from './EditorContext';
+import { EditorContext } from './../EditorContext';
 import { IconButton } from 'theme-ui';
 
-const GraphButton = () => {
+const NewComponentButton = () => {
   const { setIsGraphMenuOpen, isGraphMenuOpen, setIsImageModalOpen } =
     React.useContext(EditorContext);
 
@@ -24,7 +24,6 @@ const GraphButton = () => {
         marginBottom: ['5px', 0, 0],
         verticalAlign: 'top',
       }}
-      // tooltipText={'Add Component'}
     >
       <svg
         width='100%'
@@ -41,31 +40,8 @@ const GraphButton = () => {
           fill='var(--theme-ui-colors-text)'
         />
       </svg>
-      {/* <svg
-        width='100%'
-        height='100%'
-        className='menu-button'
-        viewBox='0 0 24 24'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <path
-          d='M4 5V19C4 19.5523 4.44772 20 5 20H19'
-          stroke='var(--theme-ui-colors-text)'
-          strokeWidth='2'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        />
-        <path
-          d='M18 9L13 13.9999L10.5 11.4998L7 14.9998'
-          stroke='var(--theme-ui-colors-text)'
-          strokeWidth='2'
-          strokeLinecap='round'
-          strokeLinejoin='round'
-        />
-      </svg> */}
     </IconButton>
   );
 };
 
-export default GraphButton;
+export default NewComponentButton;

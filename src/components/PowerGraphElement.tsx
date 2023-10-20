@@ -6,7 +6,7 @@ import React from 'react';
 import { PowerCurveGraph } from './PowerCurveGraph';
 import { PostContext } from './PostContext';
 import OptionsButton from './OptionsButton';
-import Dropdown from './Dropdown';
+import Dropdown from './shared/Dropdown';
 import { useClickOutside } from '../utils/ux';
 
 const PowerGraph = ({ element }) => {

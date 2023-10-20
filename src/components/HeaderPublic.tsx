@@ -11,7 +11,7 @@ import {
 } from 'theme-ui';
 
 import Logo from './Logo';
-import BlackBox from './BlackBox';
+import BlackBox from './layout/BlackBox';
 import { useUnits } from './UnitProvider';
 
 const HeaderPublic = () => {
@@ -110,7 +110,7 @@ const HeaderPublic = () => {
                       <Flex sx={{ width: '100%', padding: '5px' }}>
                         <Text as='span'>
                           Units{' '}
-                          <Text as='span' sx={{ color: '#aeaeae' }}>
+                          <Text as='span' sx={{ color: 'textMuted' }}>
                             imperial/metric
                           </Text>
                         </Text>

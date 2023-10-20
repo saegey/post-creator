@@ -32,13 +32,13 @@ const EditAvatar = () => {
     <Box
       sx={{
         '.cloudBtn': {
-          backgroundColor: '#eaeaea',
-          border: '1px solid #9d9d9d',
-          fontSize: '13px',
-          color: 'black',
+          backgroundColor: 'unset',
+          fontSize: '15px',
+          fontWeight: '500',
+          color: 'text',
           paddingY: '4px',
           '&:hover': {
-            backgroundColor: '#d9d9d9',
+            textDecoration: 'underline',
           },
         },
       }}
@@ -54,7 +54,9 @@ const EditAvatar = () => {
             updateAvatar({ picture: image.public_id });
           }
         }}
-      />
+      >
+        Change profile image
+      </CldUploadButton>
     </Box>
   );
 };
@@ -97,22 +99,8 @@ const Profile = ({ signOut, user }) => {
         </Head>
         <main>
           <Header user={user} signOut={signOut} />
-          {/* {wasSaved && (
-            <Alert
-              sx={{
-                borderRadius: 0,
-                backgroundColor: 'alertBackground',
-                color: 'alertForeground',
-                fontWeight: '400',
-              }}
-            >
-              Profile saved successfully.
-              <Close ml='auto' mr={-2} onClick={() => setWasSaved(false)} />
-            </Alert>
-          )} */}
           <div
             style={{
-              // marginTop: '60px',
               paddingTop: '40px',
               maxWidth: '900px',
               marginLeft: 'auto',
@@ -231,11 +219,9 @@ const Profile = ({ signOut, user }) => {
                       <path d='M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M256,90  ' />
                     </svg>
                   )}
-                  <Box
-                    sx={{ position: 'absolute', bottom: '12px', left: '-3px' }}
-                  >
+                  <Flex sx={{ justifyContent: 'center' }}>
                     <EditAvatar />
-                  </Box>
+                  </Flex>
                 </Box>
               </Box>
             </Flex>

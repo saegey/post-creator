@@ -4,7 +4,7 @@ import { Transforms, Descendant } from 'slate';
 import PowerGraphIcon from './PowerGraphIcon';
 
 import { EditorContext } from './EditorContext';
-import ActivityOverviewIcon from './ActivityOverviewIcon';
+import ActivityOverviewIcon from './icons/ActivityOverviewIcon';
 import TimePowerZonesIcon from './TimePowerZonesIcon';
 import { PostContext } from './PostContext';
 import MatchesBurnedIcon from './MatchesBurnedIcon';
@@ -64,16 +64,9 @@ const GraphSelectorMenu = ({ editor }) => {
 
   const addStravaLink = () => {
     setIsStravaModalOpen(true);
-    // if (stravaUrl) {
-    // Transforms.insertNodes(editor, [
-    //   { type: 'stravaLink', children: [{ text: '' }] } as Descendant,
-    //   { type: 'text', children: [{ text: '' }] } as Descendant,
-    // ]);
-    // closeMenu();
   };
 
   const addTimePowerZones = () => {
-    // Zones
     if (gpxFile && currentFtp) {
       Transforms.insertNodes(editor, [
         { type: 'timeInZones', children: [{ text: '' }] } as Descendant,
@@ -413,7 +406,7 @@ const GraphSelectorMenu = ({ editor }) => {
                 onClick={() => {
                   setIsGpxUploadOpen(true);
                 }}
-                sx={{ width: '100%', borderColor: '#898989' }}
+                sx={{ width: '100%' }}
               >
                 Upload GPX
               </Button>

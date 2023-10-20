@@ -3,7 +3,7 @@ import { Transforms } from 'slate';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import React from 'react';
 import MatchesBurned from './MatchesBurned';
-import Dropdown from './Dropdown';
+import Dropdown from './shared/Dropdown';
 import OptionsButton from './OptionsButton';
 import { useClickOutside } from '../utils/ux';
 

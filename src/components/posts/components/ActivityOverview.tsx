@@ -1,7 +1,7 @@
 import { Box, Text, Grid } from 'theme-ui';
 import React from 'react';
 
-import { useUnits } from './UnitProvider';
+import { useUnits } from '../../UnitProvider';
 
 interface Item {
   title: string;
@@ -72,18 +72,26 @@ type Props = {
     elevationGain: number;
     distance: number;
     normalizedPower: number;
-    heartAnalysis: {
-      entire: number;
-    } | undefined;
-    tempAnalysis: {
-      entire: number;
-    } | undefined;
-    powerAnalysis: {
-      entire: number;
-    } | undefined;
-    cadenceAnalysis: {
-      entire: number;
-    } | undefined;
+    heartAnalysis:
+      | {
+          entire: number;
+        }
+      | undefined;
+    tempAnalysis:
+      | {
+          entire: number;
+        }
+      | undefined;
+    powerAnalysis:
+      | {
+          entire: number;
+        }
+      | undefined;
+    cadenceAnalysis:
+      | {
+          entire: number;
+        }
+      | undefined;
     elapsedTime: {
       seconds: number;
     };

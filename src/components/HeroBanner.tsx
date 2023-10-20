@@ -1,29 +1,16 @@
-import {
-  Box,
-  Flex,
-  Button,
-  Image as ThemeImage,
-  Text,
-  ImageProps,
-} from 'theme-ui';
+import { Box, Flex, Button } from 'theme-ui';
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
-import { Transforms } from 'slate';
-import { CldImage, CldImageProps, CldOgImage } from 'next-cloudinary';
+import { CldImage } from 'next-cloudinary';
 
 import { PostContext } from './PostContext';
 import OptionsButton from './OptionsButton';
-import Dropdown from './Dropdown';
+import Dropdown from './shared/Dropdown';
 import { EditorContext } from './EditorContext';
 import PhotoCaptionModal from './PhotoCaptionModal';
 import { useClickOutside } from '../utils/ux';
 import PostHeaderTextBlock from './PostHeaderTextBlock';
-
-const cloudUrl = process.env['NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME'];
-
-// interface CustomImage extends HTMLImageElement {
-//   priority: boolean;
-// }
+import { cloudUrl } from '../utils/cloudinary';
 
 const HeroBanner = ({ element }) => {
   const { heroImage, title, postLocation, date, subhead } =

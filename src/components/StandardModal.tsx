@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Close } from 'theme-ui';
 import React from 'react';
 
-import BlackBox from './BlackBox';
+import BlackBox from './layout/BlackBox';
 
 const StandardModal = ({
   children,

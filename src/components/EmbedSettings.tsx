@@ -1,10 +1,5 @@
-import { Flex, Box, Label, Input, Button, Spinner, Text } from 'theme-ui';
-import {
-  Descendant,
-  Transforms,
-  Element as SlateElement,
-  EditorVoidOptions,
-} from 'slate';
+import { Flex, Box, Label, Input, Button, Text } from 'theme-ui';
+import { Descendant, Transforms, Element as SlateElement } from 'slate';
 
 const EmbedSettings = ({ editor, isModalOpen }) => {
   return (
@@ -39,19 +34,12 @@ const EmbedSettings = ({ editor, isModalOpen }) => {
             <Label htmlFor='url' variant='defaultLabel'>
               Embed Code
             </Label>
-            <Input
-              id='url'
-              name='url'
-              // placeholder='http://strava.url'
-              // defaultValue={title ? title : ''}
-              variant={'defaultInput'}
-            />
+            <Input id='url' name='url' variant={'defaultInput'} />
           </Box>
           <Box sx={{ marginLeft: 'auto' }}>
             <Button variant='primaryButton'>
               <Flex sx={{ gap: '10px' }}>
                 <Text as='span'>Save</Text>
-                {/* {isSaving && <Spinner sx={{ size: '20px', color: 'white' }} />} */}
               </Flex>
             </Button>
           </Box>

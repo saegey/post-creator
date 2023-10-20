@@ -1,7 +1,7 @@
 import { Box, Flex, Text, Input, Button, Label, Spinner } from 'theme-ui';
 import React from 'react';
 import { GraphQLResult } from '@aws-amplify/api';
-import { API, Auth } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import { useRouter } from 'next/router';
 
 import { PostContext } from './PostContext';
@@ -10,7 +10,7 @@ import { UpdatePostMutation, DeletePostMutation } from '../../src/API';
 import StandardModal from './StandardModal';
 import { updatePost, deletePost } from '../../src/graphql/mutations';
 
-const ActivitySettings = ({ setSavedMessage }) => {
+const PostSettings = () => {
   const {
     id,
     gpxFile,
@@ -34,14 +34,12 @@ const ActivitySettings = ({ setSavedMessage }) => {
   } = React.useContext(EditorContext);
 
   const [isSaving, setIsSaving] = React.useState(false);
-  const [isPublishing, setIsPublishing] = React.useState(false);
   const { asPath } = useRouter();
   const origin =
     typeof window !== 'undefined' && window.location.origin
       ? window.location.origin
       : '';
   const URL = `${origin}${asPath}`;
-  console.log(URL);
 
   const processDeletePost = async (event) => {
     try {
@@ -90,7 +88,6 @@ const ActivitySettings = ({ setSavedMessage }) => {
         },
       })) as GraphQLResult<UpdatePostMutation>;
 
-      setSavedMessage(true);
       setIsSaving(false);
       setIsSettingsModalOpen(false);
     } catch (errors) {
@@ -174,8 +171,6 @@ const ActivitySettings = ({ setSavedMessage }) => {
                   }}
                   sx={{
                     width: '100%',
-                    // borderColor: '#898989',
-                    // paddingY: '6px',
                   }}
                   variant='primaryButton'
                 >
@@ -255,7 +250,7 @@ const ActivitySettings = ({ setSavedMessage }) => {
                 <Flex sx={{ gap: '10px' }}>
                   <Text as='span'>Save</Text>
                   {isSaving && (
-                    <Spinner sx={{ size: '20px', color: 'white' }} />
+                    <Spinner sx={{ size: '20px', color: 'spinnerButton' }} />
                   )}
                 </Flex>
               </Button>
@@ -267,4 +262,4 @@ const ActivitySettings = ({ setSavedMessage }) => {
   );
 };
 
-export default ActivitySettings;
+export default PostSettings;

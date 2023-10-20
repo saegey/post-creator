@@ -4,11 +4,14 @@ import Link from 'next/link';
 import { useSlate } from 'slate-react';
 import { API } from 'aws-amplify';
 
-import ActivitySettings from './ActivitySettings';
-import HeadingButton from './HeadingButton';
-import GraphButton from './GraphButton';
+import PostSettings from './PostSettings';
+
 import ImagesButton from './ImagesButton';
-import BoldButton from './BoldButton';
+
+import BoldButton from './buttons/BoldButton';
+import HeadingButton from './buttons/HeadingButton';
+import NewComponentButton from './buttons/NewComponentButton';
+
 import PreviewButton from './PreviewButton';
 import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
@@ -19,10 +22,6 @@ import { isBlockActive } from '../utils/SlateUtilityFunctions';
 import LinkButton from './LinkButton';
 
 const PostMenu = () => {
-  // const [isSaving, setIsSaving] = React.useState(false);
-  const { isSavingPost, setIsSavingPost, savingStatus, setSavingStatus } =
-    React.useContext(EditorContext);
-  const [savedMessage, setSavedMessage] = React.useState(false);
   const [isPublishing, setIsPublishing] = React.useState(false);
 
   const { id } = React.useContext(PostContext);
@@ -31,15 +30,11 @@ const PostMenu = () => {
     setIsGraphMenuOpen,
     isSettingsModalOpen,
     setIsSettingsModalOpen,
-    isPublishedConfirmationOpen,
     setIsPublishedConfirmationOpen,
+    savingStatus,
   } = React.useContext(EditorContext);
 
   const editor = useSlate();
-
-  React.useEffect(() => {
-    setSavedMessage(false);
-  }, [id]);
 
   const publishPost = async (event) => {
     setIsPublishing(true);
@@ -70,25 +65,20 @@ const PostMenu = () => {
           borderBottomStyle: 'solid',
           borderBottomWidth: '1px',
           borderBottomColor: 'divider',
-          // boxShadow: '1px 4px 5px var(--theme-ui-colors-menuBoxShadow)',
           width: '100vw',
         }}
       >
         <BoldButton editor={editor} format='bold' />
         <HeadingButton editor={editor} format='heading-two' />
         <BulletListIcon editor={editor} />
-        <LinkButton
-          // key={element.id}
-          active={isBlockActive(editor, 'link')}
-          editor={editor}
-        />
+        <LinkButton active={isBlockActive(editor, 'link')} editor={editor} />
         <ImagesButton
           onClick={() => {
             setIsGraphMenuOpen(false);
             setIsImageModalOpen(true);
           }}
         />
-        <GraphButton />
+        <NewComponentButton />
         <Link href={`/posts/${id}`} rel='noopener noreferrer' target='_blank'>
           <PreviewButton />
         </Link>
@@ -97,7 +87,6 @@ const PostMenu = () => {
           sx={{
             fontSize: '16px',
             lineHeight: '16px',
-            /* align-content: center; */
             marginY: 'auto',
             marginX: '8px',
           }}
@@ -116,7 +105,7 @@ const PostMenu = () => {
               <Flex sx={{ gap: '10px' }}>
                 <Text as='span'>Publish</Text>
                 {isPublishing && (
-                  <Spinner sx={{ size: '20px', color: 'white' }} />
+                  <Spinner sx={{ size: '20px', color: 'spinnerButton' }} />
                 )}
               </Flex>
             </Button>
@@ -139,32 +128,9 @@ const PostMenu = () => {
               </IconButton>
             </Box>
           </Flex>
-          {isSettingsModalOpen && (
-            <ActivitySettings
-              // isOpen={isSettingsModalOpen}
-              // setIsOpen={set}
-              setSavedMessage={setSavedMessage}
-            />
-          )}
+          {isSettingsModalOpen && <PostSettings />}
         </Box>
       </Box>
-      {/* {savedMessage && (
-        <Alert
-          sx={{
-            borderRadius: 0,
-            position: 'sticky',
-            width: '100vw',
-            top: '55px',
-            zIndex: 3,
-            backgroundColor: 'alertBackground',
-            color: 'alertForeground',
-            fontWeight: '400',
-          }}
-        >
-          Post saved successfully.
-          <Close ml='auto' mr={-2} onClick={() => setSavedMessage(false)} />
-        </Alert>
-      )} */}
     </>
   );
 };

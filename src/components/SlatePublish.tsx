@@ -7,7 +7,7 @@ import {
 import { CldImage } from 'next-cloudinary';
 
 import PowerBreakdown from '../../src/components/TimePowerZones';
-import ActivityOverview from '../../src/components/ActivityOverview';
+import ActivityOverview from '../../src/components/posts/components/ActivityOverview';
 import { PowerCurveGraph } from '../../src/components/PowerCurveGraph';
 import EmbedElemnt from '../../src/components/EmbedElement';
 import RaceResultsDotComList from './RaceResultsDotComList';
@@ -291,7 +291,7 @@ const SlatePublish = ({ post }) => {
                 paddingBottom: ['0px', '20px', '20px'],
                 paddingLeft: ['40px', '25px', '25px'],
                 paddingRight: ['20px', '20px', '20px'],
-                borderLeftColor: '#cccccc',
+                borderLeftColor: 'postBorderLeft',
                 borderLeftStyle: 'solid',
                 borderLeftWidth: ['0px', '1px', '1px'],
                 marginX: 'auto',
@@ -338,7 +338,7 @@ const SlatePublish = ({ post }) => {
                 width: ['100vw', null, null],
                 borderLeftWidth: ['0px', '1px', '1px'],
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#cccccc',
+                borderLeftColor: 'postBorderLeft',
                 paddingX: ['20px', '8px', '8px'],
               }}
             >
@@ -373,7 +373,7 @@ const SlatePublish = ({ post }) => {
                 width: ['100vw', null, null],
                 borderLeftWidth: ['0px', '1px', '1px'],
                 borderLeftStyle: 'solid',
-                borderLeftColor: '#cccccc',
+                borderLeftColor: 'postBorderLeft',
                 paddingX: ['20px', '8px', '8px'],
               }}
             >
@@ -417,7 +417,7 @@ const SlatePublish = ({ post }) => {
                       as='h2'
                       sx={{
                         paddingY: '15px',
-                        borderLeft: '1px solid #cccccc',
+                        borderLeft: '1px solid postBorderLeft',
                         width: ['100vw', null, null],
                         maxWidth: '690px',
                         paddingX: ['20px', '8px', '8px'],

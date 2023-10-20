@@ -44,7 +44,6 @@ const PostCard = ({ post, showAuthor = true }) => {
                 borderTopLeftRadius: '5px',
                 borderTopRightRadius: '5px',
               }}
-              // preserveTransformations/
               underlay={post.imagesObj[0].public_id}
               quality={90}
               sizes='100vw'
@@ -55,7 +54,6 @@ const PostCard = ({ post, showAuthor = true }) => {
             <Box
               sx={{
                 width: '100%',
-                // backgroundColor: '#e6e6e6',
               }}
             />
           )}
@@ -63,7 +61,6 @@ const PostCard = ({ post, showAuthor = true }) => {
         <Box
           sx={{
             backgroundColor: 'postCardTextBackground',
-            // color: 'text',
             padding: '10px',
             borderBottomLeftRadius: '5px',
             borderBottomRightRadius: '5px',
