@@ -41,6 +41,11 @@ const LinkButton = (props) => {
         onMouseDown={toggleLink}
         title={'Toggle Bold Text'}
         variant='iconButton'
+        sx={{
+          marginX: ['5px', 0, 0],
+          marginBottom: ['5px', 0, 0],
+          verticalAlign: 'top',
+        }}
       >
         <svg
           width='100%'
@@ -130,9 +135,7 @@ const LinkButton = (props) => {
           </div>
           <Flex>
             <Label>
-              <Checkbox
-                onChange={handleInputChange}
-              />
+              <Checkbox onChange={handleInputChange} />
               <span style={{ fontSize: '14px' }}>Open in new tab</span>
             </Label>
           </Flex>

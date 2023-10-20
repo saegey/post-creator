@@ -11,6 +11,11 @@ const ImagesButton = ({
       aria-label='Toggle dark mode'
       onClick={onClick}
       variant='iconButton'
+      sx={{
+        marginX: ['5px', 0, 0],
+        marginBottom: ['5px', 0, 0],
+        verticalAlign: 'top',
+      }}
     >
       <svg
         width='24px'

@@ -1,4 +1,4 @@
-import { Flex, Box, Text } from 'theme-ui';
+import { Flex, Box, Text, Spinner } from 'theme-ui';
 import moment from 'moment';
 import React from 'react';
 import { CldImage } from 'next-cloudinary';
@@ -8,18 +8,13 @@ import AvatarButton from './AvatarButton';
 import { cloudUrl } from '../utils/cloudinary';
 import { useViewport } from './ViewportProvider';
 
-interface PostAuthorProps {
-  postAuthor?: {
-    fullName: string;
-    username: string;
-    image: string;
-  };
-}
-
-const PostAuthor = ({ postAuthor = undefined }: PostAuthorProps) => {
+const PostAuthor = ({ post }: { post: any | undefined }) => {
+  console.log(post);
+  if (!post) {
+    return <Spinner />;
+  }
   const { width } = useViewport();
-  const post = React.useContext(PostContext) as any;
-  const author = postAuthor ? postAuthor : post.author;
+  const { author } = post;
 
   return (
     <div contentEditable={false}>
@@ -72,8 +67,6 @@ const PostAuthor = ({ postAuthor = undefined }: PostAuthorProps) => {
                     cloudName: cloudUrl,
                   },
                 }}
-                // preserveTransformations
-                // underlay={user.attributes.picture}
                 quality={90}
                 sizes='100vw'
                 alt='Description of my image'

@@ -25,6 +25,7 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
       onClick={() => {
         setMenuOpen(false);
       }}
+      noModal={true}
     >
       <Flex
         sx={{

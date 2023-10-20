@@ -29,9 +29,9 @@ const PostView = ({
   return (
     <Box
       as='main'
-      sx={{
-        marginBottom: 'auto',
-      }}
+      // sx={{
+      //   marginBottom: 'auto',/
+      // }}
     >
       {user && <Header user={user} signOut={signOut} />}
       {!user && <HeaderPublic />}

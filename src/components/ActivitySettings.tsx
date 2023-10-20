@@ -13,11 +13,9 @@ import { updatePost, deletePost } from '../../src/graphql/mutations';
 const ActivitySettings = ({ setSavedMessage }) => {
   const {
     id,
-    stravaUrl,
     gpxFile,
     setCurrentFtp,
     currentFtp,
-    setStravaUrl,
     title,
     setTitle,
     postLocation,
@@ -62,32 +60,6 @@ const ActivitySettings = ({ setSavedMessage }) => {
     }
   };
 
-  const publishPost = async (event) => {
-    setIsPublishing(true);
-
-    // const shortUrlRes = await API.post('api12660653', '/short-url', {
-    //   response: true,
-    //   body: {
-    //     url: `${origin}/j/${id}`,
-    //   },
-    // });
-    // console.log(shortUrlRes);
-    // const user = await Auth.currentUserCredentials();
-
-    const response = await API.post('api12660653', '/post/publish', {
-      response: true,
-      body: {
-        postId: id,
-        origin: `${origin}/`,
-        // identityId: user.identityId,
-
-        // shortUrl: shortUrlRes.data.Attributes.id,
-      },
-    });
-    setIsPublishing(false);
-    // console.log(response);
-  };
-
   const saveSettings = async (event) => {
     setIsSaving(true);
     const form = new FormData(event.target);
@@ -97,7 +69,6 @@ const ActivitySettings = ({ setSavedMessage }) => {
     }
 
     setCurrentFtp && setCurrentFtp(newFtp);
-    setStravaUrl && setStravaUrl(form.get('stravaLink') as string);
     setTitle && setTitle(form.get('title') as string);
     setPostLocation && setPostLocation(form.get('postLocation') as string);
     setDate && setDate(form.get('eventDate') as string);
@@ -109,7 +80,6 @@ const ActivitySettings = ({ setSavedMessage }) => {
         query: updatePost,
         variables: {
           input: {
-            stravaUrl: form.get('stravaLink'),
             currentFtp: form.get('currentFtp'),
             title: form.get('title'),
             subhead: form.get('subhead'),
@@ -133,6 +103,7 @@ const ActivitySettings = ({ setSavedMessage }) => {
       isOpen={isSettingsModalOpen}
       setIsOpen={setIsSettingsModalOpen}
       title={'Post Settings'}
+      fullScreen={true}
     >
       <form
         onSubmit={(event: any) => {
@@ -144,7 +115,7 @@ const ActivitySettings = ({ setSavedMessage }) => {
           sx={{
             gap: '15px',
             flexDirection: 'column',
-            maxHeight: ['70vh', '500px', '500px'],
+            maxHeight: ['70vh', '', ''],
             overflow: 'scroll',
             paddingTop: '10px',
           }}
@@ -179,18 +150,6 @@ const ActivitySettings = ({ setSavedMessage }) => {
               id='postLocation'
               name='postLocation'
               defaultValue={postLocation ? postLocation : ''}
-              variant={'defaultInput'}
-            />
-          </Box>
-          <Box>
-            <Label htmlFor='stravaLink' variant={'defaultLabel'}>
-              Strava Url
-            </Label>
-            <Input
-              id='stravaLink'
-              name='stravaLink'
-              placeholder='http://strava.url'
-              defaultValue={stravaUrl ? stravaUrl : ''}
               variant={'defaultInput'}
             />
           </Box>
@@ -251,32 +210,6 @@ const ActivitySettings = ({ setSavedMessage }) => {
             <Flex>
               <Box sx={{ width: '70%' }}>
                 <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
-                  Publish
-                </Text>
-                <Text sx={{ fontSize: '15px' }}>
-                  Publish this post so anyone can view it.
-                </Text>
-              </Box>
-              <Box sx={{ marginLeft: 'auto', marginY: 'auto' }}>
-                <Button
-                  variant='primaryButton'
-                  type='button'
-                  onClick={publishPost}
-                >
-                  <Flex sx={{ gap: '10px' }}>
-                    <Text as='span'>Publish</Text>
-                    {isPublishing && (
-                      <Spinner sx={{ size: '20px', color: 'white' }} />
-                    )}
-                  </Flex>
-                </Button>
-              </Box>
-            </Flex>
-          </Box>
-          <Box>
-            <Flex>
-              <Box sx={{ width: '70%' }}>
-                <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
                   Delete this post
                 </Text>
                 <Text sx={{ fontSize: '15px' }}>
@@ -303,9 +236,13 @@ const ActivitySettings = ({ setSavedMessage }) => {
             borderTopStyle: 'solid',
             marginTop: '10px',
             paddingTop: '10px',
+            position: ['fixed', 'inherit', 'inherit'],
+            bottom: ['0', '', ''],
+            width: '100%',
+            marginY: '20px',
           }}
         >
-          <Box sx={{ marginLeft: 'auto' }}>
+          <Box sx={{ marginLeft: ['', 'auto', 'auto'] }}>
             <Flex sx={{ gap: '10px', marginTop: '10px' }}>
               <Button
                 type='button'

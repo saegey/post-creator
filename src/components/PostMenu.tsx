@@ -57,8 +57,9 @@ const PostMenu = () => {
 
   return (
     <>
-      <Flex
+      <Box
         sx={{
+          display: ['block', 'flex', 'flex'],
           gap: '5px',
           position: 'sticky',
           top: '0px',
@@ -105,12 +106,12 @@ const PostMenu = () => {
         </Text>
 
         <Box sx={{ marginLeft: 'auto' }}>
-          <Flex sx={{ height: '100%', gap: '20px' }}>
+          <Flex sx={{ height: '100%', gap: ['5px', '20px', '20px'] }}>
             <Button
               variant='primaryButton'
               type='button'
               onClick={publishPost}
-              sx={{ height: '30px', lineHeight: '14px' }}
+              sx={{ height: ['32px', '30px', '30px'], lineHeight: '14px' }}
             >
               <Flex sx={{ gap: '10px' }}>
                 <Text as='span'>Publish</Text>
@@ -146,7 +147,7 @@ const PostMenu = () => {
             />
           )}
         </Box>
-      </Flex>
+      </Box>
       {/* {savedMessage && (
         <Alert
           sx={{

@@ -28,7 +28,12 @@ const BulletListIcon = ({ editor }) => {
           Transforms.wrapNodes(editor, block);
         }
       }}
-      title={'Bullet List'}
+      title={'Toggle bullet list'}
+      sx={{
+        marginX: ['5px', 0, 0],
+        marginBottom: ['5px', 0, 0],
+        verticalAlign: 'top',
+      }}
       variant='iconButton'
     >
       <Box sx={{ padding: '2px', marginY: 'auto' }}>

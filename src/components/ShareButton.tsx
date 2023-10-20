@@ -1,21 +1,26 @@
-import { Box } from 'theme-ui';
+import { Box, IconButton } from 'theme-ui';
 import React from 'react';
 
 import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
-import TooltipButton from './TooltipButton';
 
 const ShareButton = () => {
   const { privacyStatus } = React.useContext(PostContext);
   const { setIsShareModalOpen } = React.useContext(EditorContext);
   return (
-    <TooltipButton
+    <IconButton
       // onClick={toggleBold}
       onClick={() => {
         setIsShareModalOpen(true);
       }}
       title={'Share post'}
-      tooltipText={'Share post'}
+      sx={{
+        marginX: ['5px', 0, 0],
+        marginBottom: ['5px', 0, 0],
+        verticalAlign: 'top',
+      }}
+      variant='iconButton'
+      // tooltipText={'Share post'}
       disabled={privacyStatus === 'draft'}
     >
       <Box sx={{ padding: '3px', marginY: 'auto' }}>
@@ -50,7 +55,7 @@ const ShareButton = () => {
           </g>
         </svg>
       </Box>
-    </TooltipButton>
+    </IconButton>
   );
 };
 

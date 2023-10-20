@@ -83,6 +83,7 @@ const EditUserPost = ({
             setIsPublishedConfirmationOpen,
           }}
         >
+
           <PostEditor postId={postId} initialState={postComponents} />
         </EditorContext.Provider>
       </Box>

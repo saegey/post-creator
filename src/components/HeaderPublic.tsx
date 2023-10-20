@@ -23,7 +23,7 @@ const HeaderPublic = () => {
   return (
     <>
       {menuOpen && (
-        <BlackBox>
+        <BlackBox noModal={true}>
           <Flex sx={{ marginRight: 'auto' }}>
             <Box
               ref={ref}

@@ -13,6 +13,7 @@ import EmbedElemnt from '../components/EmbedElement';
 import RaceResultsDotComListWrapper from '../components/RaceResultsDotComListWrapper';
 import Link from '../components/Link';
 import PostAuthor from '../components/PostAuthor';
+import PostAuthorWrapper from '../components/PostAuthorWrapper';
 
 const Leaf = (props) => {
   return (
@@ -35,10 +36,10 @@ const renderElement = (props) => {
 
   switch (element.type) {
     case 'postAuthor':
-      return <PostAuthor />;
+      return <PostAuthorWrapper />;
     case 'embed':
       return <EmbedElemnt element={element} />;
-    case 'stravaLink':
+    case 'stravaEmbed':
       return <StravaLink element={element} />;
     case 'powergraph':
       return <PowerGraphElement element={element} />;

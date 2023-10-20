@@ -39,6 +39,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
       onClick={() => {
         setProfileOpen(false);
       }}
+      noModal={true}
     >
       <Flex
         sx={{ marginLeft: 'auto' }}
