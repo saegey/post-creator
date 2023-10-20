@@ -5,7 +5,7 @@ import React from 'react';
 
 import TimePowerZones from './TimePowerZones';
 import { PostContext } from './PostContext';
-import Dropdown from './Dropdown';
+import Dropdown from './shared/Dropdown';
 import OptionsButton from './OptionsButton';
 import { useClickOutside } from '../utils/ux';
 

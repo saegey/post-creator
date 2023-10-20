@@ -15,7 +15,7 @@ import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import RaceResultsPreview from './RaceResultsPreview';
 import StandardModal from './StandardModal';
-import BlackBox from './BlackBox';
+import BlackBox from './layout/BlackBox';
 
 const RaceResultsImport = ({ editor }) => {
   const [categories, setCategories] = React.useState<{
@@ -159,7 +159,7 @@ const RaceResultsImport = ({ editor }) => {
                       <Flex sx={{ gap: '10px' }}>
                         <Text as='span'>Import</Text>
                         {isLoading && (
-                          <Spinner sx={{ size: '20px', color: 'white' }} />
+                          <Spinner sx={{ size: '20px', color: 'spinnerButton' }} />
                         )}
                       </Flex>
                     </Button>
@@ -186,7 +186,7 @@ const RaceResultsImport = ({ editor }) => {
                       <Flex sx={{ gap: '10px' }}>
                         <Text as='span'>Import</Text>
                         {isLoading && (
-                          <Spinner sx={{ size: '20px', color: 'white' }} />
+                          <Spinner sx={{ size: '20px', color: 'spinnerButton' }} />
                         )}
                       </Flex>
                     </Button>

@@ -52,7 +52,6 @@ const ShareModal = ({ postId }) => {
       isOpen={isShareModalOpen}
       setIsOpen={setIsShareModalOpen}
       title={'Share Post'}
-      // fullScreen={false}
     >
       <Flex
         sx={{
@@ -60,7 +59,7 @@ const ShareModal = ({ postId }) => {
           borderRadius: '5px',
           borderStyle: 'solid',
           borderWidth: '1px',
-          borderColor: '#d5d5d5',
+          borderColor: 'divider',
           marginTop: '15px',
         }}
       >
@@ -92,7 +91,9 @@ const ShareModal = ({ postId }) => {
             height: 'auto',
             cursor: 'pointer',
             padding: '5px',
-            borderLeft: '1px solid #bebebe',
+            borderLeftColor: 'divider',
+            borderLeftStyle: 'solid',
+            borderLeftWidth: '1px',
             '#tooltip2::after': {
               content: '""',
               position: 'absolute',

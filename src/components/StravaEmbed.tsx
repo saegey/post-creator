@@ -45,8 +45,7 @@ const StravaEmbed = ({ editor, isModalOpen }) => {
             <Input
               id='url'
               name='url'
-              // placeholder='http://strava.url'
-              // defaultValue={title ? title : ''}
+              placeholder='https://www.strava.com/activities/xxxxxxxxx'
               variant={'defaultInput'}
             />
           </Box>
@@ -54,7 +53,6 @@ const StravaEmbed = ({ editor, isModalOpen }) => {
             <Button variant='primaryButton'>
               <Flex sx={{ gap: '10px' }}>
                 <Text as='span'>Save</Text>
-                {/* {isSaving && <Spinner sx={{ size: '20px', color: 'white' }} />} */}
               </Flex>
             </Button>
           </Box>

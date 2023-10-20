@@ -11,7 +11,7 @@ import { Box, Button, Label, Textarea, Close, Flex, Text } from 'theme-ui';
 import React from 'react';
 import { PostSaveComponents } from '../actions/PostSave';
 import { PostContext } from './PostContext';
-import Dropdown from './Dropdown';
+import Dropdown from './shared/Dropdown';
 import OptionsButton from './OptionsButton';
 import { useClickOutside } from '../utils/ux';
 import { cloudUrl } from '../utils/cloudinary';
@@ -132,8 +132,8 @@ const ImageElement = ({ children, element }) => {
                 position: 'absolute',
                 right: '0px',
                 top: '0px',
-                height: 'calc(100% - 6px)',
-                background: '#000000c2',
+                height: '100%',
+                background: 'editorBackground',
                 width: '100%',
                 borderRadius: '5px',
               }}
@@ -147,7 +147,7 @@ const ImageElement = ({ children, element }) => {
                   }}
                 >
                   <Close
-                    sx={{ color: 'white' }}
+                    sx={{ zIndex: '10' }}
                     onClick={() => setAddCaption(false)}
                   />
                 </Box>
@@ -161,11 +161,11 @@ const ImageElement = ({ children, element }) => {
                 }}
               >
                 <form onSubmit={saveCaption}>
-                  <Label sx={{ color: 'white' }} htmlFor='caption'>
+                  <Label sx={{ color: 'text' }} htmlFor='caption'>
                     Caption
                   </Label>
                   <Textarea
-                    sx={{ background: 'white' }}
+                    sx={{ background: 'inputBackgroundColor' }}
                     name='caption'
                     id='caption'
                     rows={6}
@@ -174,56 +174,58 @@ const ImageElement = ({ children, element }) => {
                     {element.caption}
                   </Textarea>
 
-                  <Button sx={{ backgroundColor: 'gray' }}>Save</Button>
+                  <Button variant='primaryButton'>Save</Button>
                 </form>
               </Box>
             </Box>
           </>
         )}
-        <Box
-          sx={{
-            position: 'absolute',
-            right: '10px',
-            top: '10px',
-            // height: 'calc(100% - 6px)',
-            // background: '#000000c2',
-            // width: '100%',
-            // borderRadius: '5px',
-          }}
-          ref={wrapperRef}
-        >
-          <OptionsButton
-            onClick={() => {
-              if (isMenuOpen) {
-                setIsMenuOpen(false);
-              } else {
-                setIsMenuOpen(true);
-              }
+        {!addCaption && (
+          <Box
+            sx={{
+              position: 'absolute',
+              right: '10px',
+              top: '10px',
+              // height: 'calc(100% - 6px)',
+              // background: '#000000c2',
+              // width: '100%',
+              // borderRadius: '5px',
             }}
-          />
-          <Dropdown isOpen={isMenuOpen}>
-            <Flex sx={{ gap: '10px', flexDirection: 'column' }}>
-              <Box
-                onClick={() => {
-                  setAddCaption(true);
+            ref={wrapperRef}
+          >
+            <OptionsButton
+              onClick={() => {
+                if (isMenuOpen) {
                   setIsMenuOpen(false);
-                }}
-                variant='boxes.dropdownMenuItem'
-              >
-                {element.caption ? 'Edit' : 'Add'} Caption
-              </Box>
-              <Box
-                onClick={(e) => {
-                  Transforms.removeNodes(editor, { at: path });
-                  setIsMenuOpen(false);
-                }}
-                variant='boxes.dropdownMenuItem'
-              >
-                Delete
-              </Box>
-            </Flex>
-          </Dropdown>
-        </Box>
+                } else {
+                  setIsMenuOpen(true);
+                }
+              }}
+            />
+            <Dropdown isOpen={isMenuOpen}>
+              <Flex sx={{ gap: '10px', flexDirection: 'column' }}>
+                <Box
+                  onClick={() => {
+                    setAddCaption(true);
+                    setIsMenuOpen(false);
+                  }}
+                  variant='boxes.dropdownMenuItem'
+                >
+                  {element.caption ? 'Edit' : 'Add'} Caption
+                </Box>
+                <Box
+                  onClick={(e) => {
+                    Transforms.removeNodes(editor, { at: path });
+                    setIsMenuOpen(false);
+                  }}
+                  variant='boxes.dropdownMenuItem'
+                >
+                  Delete
+                </Box>
+              </Flex>
+            </Dropdown>
+          </Box>
+        )}
       </Box>
       {children}
     </Box>

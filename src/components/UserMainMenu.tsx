@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Flex, Close, NavLink, Text, Link as ThemeLink } from 'theme-ui';
 import Link from 'next/link';
 
-import BlackBox from './BlackBox';
+import BlackBox from './layout/BlackBox';
 import Logo from './Logo';
 
 const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {

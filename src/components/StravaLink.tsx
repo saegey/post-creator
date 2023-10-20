@@ -1,31 +1,19 @@
-import { useSlateStatic, ReactEditor } from 'slate-react';
-import { Box, Close, Flex, Text, Link, Embed } from 'theme-ui';
+import { Box, Flex, Embed } from 'theme-ui';
 import React from 'react';
 
-import { PostContext } from './PostContext';
-
 const StravaLink = ({ element }) => {
-  const [isHover, setIsHover] = React.useState(false);
-
-  // const editor = useSlateStatic() as ReactEditor;
-  // const path = ReactEditor.findPath(editor, element);
   if (!element.activityId) {
     return <></>;
   }
-  // const { stravaUrl } = React.useContext(PostContext);
 
   return (
-    <Flex
-      contentEditable={false}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
+    <Flex contentEditable={false}>
       <Box
         sx={{
           marginX: 'auto',
           width: ['100%', null, null],
           maxWidth: '450px',
-          // height: '550px',
+          marginY: ['20px', '30px', '60px'],
         }}
       >
         <Embed
@@ -37,10 +25,6 @@ const StravaLink = ({ element }) => {
           }}
         />
       </Box>
-
-      {/* </Flex>
-        </Link> */}
-      {/* </Box> */}
     </Flex>
   );
 };

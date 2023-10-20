@@ -1,6 +1,7 @@
 // src/utils/theme.ts
 export default {
   colors: {
+    postBorderLeft: '#cccccc',
     skeletonLight: 'hsl(0, 0%, 99%)',
     skeletonDark: 'hsl(0, 0%, 93%)',
     inputBackgroundColor: '#ebebeb',
@@ -51,8 +52,10 @@ export default {
     blackBoxColor: '0, 0, 0',
     chartTooltipBackground: '#dadada',
     chartAxes: 'black',
+    spinnerButton: 'white',
     modes: {
       dark: {
+        spinnerButton: 'black',
         skeletonLight: 'hsl(0, 0%, 12%)',
         skeletonDark: 'hsl(0, 0%, 7%)',
         inputFocusBorderColor: '#ffffff',
@@ -153,7 +156,6 @@ export default {
       padding: '10px',
       cursor: 'pointer',
       '&:hover': {
-        // backgroundColor: '#dcdcdc',
         backgroundColor: 'dropdownMenuHoverBackground',
         borderRadius: '5px',
       },

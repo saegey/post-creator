@@ -1,6 +1,6 @@
 import { IconButton } from 'theme-ui';
 import { Transforms, Editor, Element as SlateElement, BaseEditor } from 'slate';
-import { isBlockActive } from '../utils/SlateUtilityFunctions';
+import { isBlockActive } from '../../utils/SlateUtilityFunctions';
 
 const HeadingButton = ({
   editor,

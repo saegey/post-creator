@@ -1,11 +1,10 @@
-import { Box, Flex, Button, Grid } from 'theme-ui';
+import { Box, Flex, Button } from 'theme-ui';
 import React from 'react';
 import { CldImage, CldUploadButton } from 'next-cloudinary';
 import { GraphQLResult } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 
 import { PostContext } from './PostContext';
-import StandardModal from './StandardModal';
 import { updatePost } from '../../src/graphql/mutations';
 import { UpdatePostMutation } from '../../src/API';
 import SidebarLeft from './SidebarLeft';
@@ -26,8 +25,6 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
 
   return (
     <SidebarLeft closeOnclick={() => setIsOpen(false)} title={'Photos'}>
-      {/* //{' '} */}
-      {/* <StandardModal title={'Images'} isOpen={isOpen} setIsOpen={setIsOpen}> */}
       <Flex
         sx={{
           margin: '15px',
@@ -45,10 +42,6 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
               fontWeight: '600',
               '&:hover': {
                 backgroundColor: 'primaryButtonBackgroundHover',
-              },
-              ':disabled': {
-                backgroundColor: '#c6c6c6',
-                cursor: 'not-allowed',
               },
             },
           }}
@@ -82,14 +75,11 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
         </Box>
         <Box sx={{ height: 'calc(100% + 0px)' }}>
           <Flex
-            // gap={'20px'}
-            // columns={[2, 2, 2]}
             sx={{
               flex: '1 1 auto',
               gap: '20px',
               marginTop: '20px',
               overflow: 'auto',
-              // maxHeight: '400px',
               maxHeight: 'calc(100% - 70px)',
               flexDirection: 'column',
             }}
@@ -116,7 +106,6 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
                   >
                     <Flex
                       sx={{
-                        // width: 'auto',
                         marginX: 'auto',
                       }}
                       key={`image-${i}`}
@@ -147,7 +136,6 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
         sx={{
           flex: '0 1 40px',
           display: 'flex',
-
           marginY: '20px',
           paddingLeft: '20px',
           paddingTop: '20px',
@@ -167,8 +155,6 @@ const AddImage = ({ callback, setIsOpen, isOpen }) => {
           Choose
         </Button>
       </Box>
-      {/* //{' '} */}
-      {/* </StandardModal> */}
     </SidebarLeft>
   );
 };

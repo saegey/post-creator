@@ -1,14 +1,15 @@
-import { Box, Close } from 'theme-ui';
+import { Box } from 'theme-ui';
 import { Transforms } from 'slate';
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 
-import ActivityOverview from './ActivityOverview';
+import ActivityOverview from './posts/components/ActivityOverview';
 import { PostContext } from './PostContext';
 import { EditorContext } from './EditorContext';
 import OptionsButton from './OptionsButton';
-import Dropdown from './Dropdown';
+import Dropdown from './shared/Dropdown';
 import { useClickOutside } from '../utils/ux';
+
 const ActivityOverviewWrapper = ({ element }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 

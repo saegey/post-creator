@@ -87,7 +87,7 @@ const PublishModalConfirmation = () => {
           borderRadius: '5px',
           borderStyle: 'solid',
           borderWidth: '1px',
-          borderColor: '#d5d5d5',
+          borderColor: 'divider',
           marginTop: '15px',
         }}
       >
@@ -119,7 +119,10 @@ const PublishModalConfirmation = () => {
             height: 'auto',
             cursor: 'pointer',
             padding: '5px',
-            borderLeft: '1px solid #bebebe',
+            borderLeftStyle: 'solid',
+            borderLeftColor: 'divider',
+            borderLeftWidth: '1px',
+            // borderLeft: '1px solid divider',
             '#tooltip2::after': {
               content: '""',
               position: 'absolute',
@@ -171,9 +174,8 @@ const PublishModalConfirmation = () => {
               position: 'absolute',
               zIndex: 1000,
               borderRadius: '5px',
-              top: '41px',
+              top: '180px',
               right: '5px',
-              // left: '120%',
             }}
           >
             Copied!

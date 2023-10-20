@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSlateStatic, ReactEditor } from 'slate-react';
 import dynamic from 'next/dynamic';
-import { Box, Close, Spinner, Flex } from 'theme-ui';
+import { Box, Spinner, Flex } from 'theme-ui';
 import { Transforms } from 'slate';
 
 import { PostContext } from './PostContext';
 import OptionsButton from './OptionsButton';
-import Dropdown from './Dropdown';
+import Dropdown from './shared/Dropdown';
 import { useClickOutside } from '../utils/ux';
 
 const VisualOverview = dynamic(import('./VisualOverview'), {
@@ -27,7 +27,14 @@ const VisualOverviewWrapper = ({ element }) => {
 
   if (!activity || activity.length === 0) {
     return (
-      <Flex sx={{ width: '900px', backgroundColor: '#ddd' }}>
+      <Flex
+        sx={{
+          width: '900px',
+          marginX: 'auto',
+          backgroundColor: 'divider',
+          borderRadius: '5px',
+        }}
+      >
         <Spinner sx={{ margin: 'auto' }} />
       </Flex>
     );
