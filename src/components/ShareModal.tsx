@@ -23,17 +23,6 @@ const ShareModal = ({ postId }) => {
       : '';
 
   const URL = `${origin}${asPath}`;
-  console.log(URL);
-
-  // const createShortUrl = async () => {
-  //   const response = await API.post('api12660653', '/short-url', {
-  //     response: true,
-  //     body: {
-  //       url: `${origin}/j/${postId}`,
-  //     },
-  //   });
-  //   return response;
-  // };
 
   const fetch = async () => {
     try {
@@ -48,10 +37,7 @@ const ShareModal = ({ postId }) => {
           },
         },
       })) as any;
-      // console.log(results);
       setShortUrl(results.data.listPublishedPosts.items[0].shortUrl);
-      // setShortUrl(results.data.Attributes.id);
-      // return shortUrl;
     } catch (error) {
       console.error(error);
     }
@@ -66,6 +52,7 @@ const ShareModal = ({ postId }) => {
       isOpen={isShareModalOpen}
       setIsOpen={setIsShareModalOpen}
       title={'Share Post'}
+      // fullScreen={false}
     >
       <Flex
         sx={{

@@ -22,7 +22,7 @@ const PostCard = ({ post, showAuthor = true }) => {
         <Flex
           sx={{
             height: '240px',
-            borderType: 'solid',
+            borderStyle: 'solid',
             borderWidth: '1px',
             borderColor: 'postCardBorder',
             borderTopLeftRadius: '5px',

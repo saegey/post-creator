@@ -1,14 +1,17 @@
 import React from 'react';
-import { Box } from 'theme-ui';
-
-import TooltipButton from './TooltipButton';
+import { Box, IconButton } from 'theme-ui';
 
 const PreviewButton = () => {
   return (
-    <TooltipButton
-      onClick={() => {}}
+    <IconButton
+      // onClick={() => {}}
       title='Preview Post'
-      tooltipText={'Preview Post'}
+      variant='iconButton'
+      sx={{
+        marginX: ['5px', 0, 0],
+        marginBottom: ['5px', 0, 0],
+        verticalAlign: 'top',
+      }}
     >
       <Box sx={{ padding: '2px', marginY: 'auto' }}>
         <svg
@@ -26,7 +29,7 @@ const PreviewButton = () => {
           </g>
         </svg>
       </Box>
-    </TooltipButton>
+    </IconButton>
   );
 };
 

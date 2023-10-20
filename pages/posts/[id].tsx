@@ -43,28 +43,28 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
         id: params.id,
       },
     });
-    console.log(data);
     post = data.getPost;
   } else {
     post = data.getPublishedPost;
   }
-  console.log(post);
 
   post.author =
     post.__typename === 'PublishedPost' ? JSON.parse(post.author) : post.author;
 
-  const url = constructCloudinaryUrl({
-    options: {
-      src: JSON.parse(post.heroImage).public_id,
-      width: 800,
-      height: 600,
-    },
-    config: {
-      cloud: {
-        cloudName: cloudUrl,
-      },
-    },
-  });
+  const url = post.heroImage
+    ? constructCloudinaryUrl({
+        options: {
+          src: JSON.parse(post.heroImage).public_id,
+          width: 800,
+          height: 600,
+        },
+        config: {
+          cloud: {
+            cloudName: cloudUrl,
+          },
+        },
+      })
+    : '';
 
   const metaTags = {
     description: post.subhead ? post.subhead.split(0, 150) : '',
@@ -79,13 +79,12 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     'og:image': url,
     'og:type': 'article',
     'og:url': `http://mopd.us/${post.shortUrl}`,
-    // author: post.author ? post.author.fullName : 'unknown',
+    author: post.author ? post.author.fullName : 'unknown',
   };
 
   return {
     props: {
       post: post,
-      // activity: activity,
       metaTags,
     },
   };
@@ -94,7 +93,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({ post, user }): JSX.Element => {
   const config = SlatePublish({ post });
   const components = JSON.parse(post.components);
-  // const { setActivity, activity } = React.useContext(PostContext);
+
   const [activity, setActivity] = React.useState([]);
   const [powerAnalysis, setPowerAnalysis] = React.useState();
 
@@ -128,6 +127,10 @@ const Publish = ({ post, user }): JSX.Element => {
   };
 
   React.useEffect(() => {
+    if (!post.gpxFile) {
+      console.log('no gpx file', post);
+      return;
+    }
     getTimeSeriesFile(post).then((e) => {
       // console.log(e.powerAnalysis);
       setActivity(e);

@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { EditorContext } from './EditorContext';
-import TooltipButton from './TooltipButton';
+import { IconButton } from 'theme-ui';
 
 const GraphButton = () => {
   const { setIsGraphMenuOpen, isGraphMenuOpen, setIsImageModalOpen } =
     React.useContext(EditorContext);
 
   return (
-    <TooltipButton
+    <IconButton
       onClick={() => {
         if (isGraphMenuOpen) {
           setIsGraphMenuOpen(false);
@@ -18,7 +18,13 @@ const GraphButton = () => {
         }
       }}
       title='Add Widget'
-      tooltipText={'Add Component'}
+      variant='iconButton'
+      sx={{
+        marginX: ['5px', 0, 0],
+        marginBottom: ['5px', 0, 0],
+        verticalAlign: 'top',
+      }}
+      // tooltipText={'Add Component'}
     >
       <svg
         width='100%'
@@ -58,7 +64,7 @@ const GraphButton = () => {
           strokeLinejoin='round'
         />
       </svg> */}
-    </TooltipButton>
+    </IconButton>
   );
 };
 

@@ -8,11 +8,13 @@ const StandardModal = ({
   isOpen,
   setIsOpen,
   title = undefined,
+  fullScreen = false,
 }: {
   children: any;
   isOpen: boolean;
   setIsOpen: any;
   title?: string | undefined;
+  fullScreen?: boolean;
 }) => {
   React.useEffect(() => {
     if (isOpen) {
@@ -26,18 +28,24 @@ const StandardModal = ({
 
   return (
     <>
-      <BlackBox opacity={'0.7'} onClick={() => setIsOpen(false)} zIndex={50}>
+      <BlackBox
+        opacity={'0.7'}
+        onClick={() => setIsOpen(false)}
+        zIndex={50}
+        fullScreen={fullScreen}
+      >
         <Box
           sx={{
             maxWidth: '690px',
-            maxHeight: '800px',
-            height: ['auto', 'auto', 'auto'],
-            width: ['100vw', null, null],
+            position: ['fixed', 'inherit', 'inherit'],
+            maxHeight: ['100%', '800px', '800px'],
+            height: ['100%', 'auto', 'auto'],
+            width: ['100%', null, null],
             margin: 'auto',
             background: 'background',
             borderRadius: [null, '5px', '5px'],
             padding: '20px',
-            position: 'relative',
+            // position: ['fixed', 'inherit', 'inherit'],
           }}
           onClick={(e) => e.stopPropagation()}
         >

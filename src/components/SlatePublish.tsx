@@ -16,6 +16,7 @@ import PostAuthor from './PostAuthor';
 import { cloudUrl } from '../utils/cloudinary';
 import VisualOverview from '../../src/components/VisualOverview';
 import { PostContext } from './PostContext';
+import StravaLink from './StravaLink';
 
 const renderLink = (node) => {
   const attrs: any = {};
@@ -99,6 +100,9 @@ const SlatePublish = ({ post }) => {
             </div>
           );
         },
+        stravaEmbed: ({ node, children = [] }) => {
+          return <StravaLink element={node} />;
+        },
         visualOverview: ({ node, children = [] }) => {
           const postContext = React.useContext(PostContext);
 
@@ -148,6 +152,9 @@ const SlatePublish = ({ post }) => {
         },
         heroBanner: ({ node }) => {
           const heroImage = JSON.parse(post.heroImage);
+          if (!heroImage) {
+            return <></>;
+          }
 
           return (
             <Box
@@ -167,7 +174,7 @@ const SlatePublish = ({ post }) => {
                 {' '}
                 <Box
                   sx={{
-                    backgroundColor: heroImage.colors[0],
+                    backgroundColor: heroImage ? heroImage.colors[0] : 'red',
                     width: ['100%', '65%', '65%'],
                     display: ['inline-block', '', ''],
                     height: '600px',
@@ -434,7 +441,7 @@ const SlatePublish = ({ post }) => {
           );
         },
         postAuthor: () => {
-          return <PostAuthor />;
+          return <PostAuthor post={post} />;
         },
         image: ({ node, children = [] }) => {
           const imageMeta = JSON.parse(images)?.find(

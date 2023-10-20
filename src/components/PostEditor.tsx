@@ -3,7 +3,7 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { GraphQLResult, GraphQLSubscription } from '@aws-amplify/api';
 import React from 'react';
 import { createEditor, Editor } from 'slate';
-import { Flex, Box } from 'theme-ui';
+import { Flex, Box, Embed } from 'theme-ui';
 import { withHistory } from 'slate-history';
 import { Descendant, Transforms } from 'slate';
 
@@ -172,7 +172,9 @@ const PostEditor = ({ postId, initialState }) => {
               />
             )}
             {isGpxUploadOpen && <UploadGpxModal />}
-            {isShareModalOpen && <ShareModal postId={postId} />}
+            {isShareModalOpen && (
+              <ShareModal postId={postId} fullScreen={true} />
+            )}
             {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
             <Box
               sx={{

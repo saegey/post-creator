@@ -41,9 +41,12 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   }
   const post = data.getPublishedPost;
   // const activityString = await getActivity(post);
-  post.author = JSON.parse(post.author);
+  console.log(post.author);
+
+  post.author =
+    typeof post.author === 'string' ? JSON.parse(post.author) : post.author;
   // const url = '';
-  // console.log(post.heroImage.split(1, -1));
+  console.log(post.author);
 
   const url = constructCloudinaryUrl({
     options: {
@@ -91,6 +94,7 @@ const Publish = ({ post }): JSX.Element => {
 
   const [activity, setActivity] = React.useState([]);
   const [powerAnalysis, setPowerAnalysis] = React.useState();
+  // const [author, setAuthor] = React.useState();
 
   const getTimeSeriesFile = async (post) => {
     const result = await Storage.get(post.timeSeriesFile, {
@@ -134,7 +138,12 @@ const Publish = ({ post }): JSX.Element => {
     // <AuthCustom>
     <>
       <PostContext.Provider
-        value={{ activity, setActivity, powerAnalysis, setPowerAnalysis }}
+        value={{
+          activity,
+          setActivity,
+          powerAnalysis,
+          setPowerAnalysis,
+        }}
       >
         <Head>
           <title>{post.title}</title>

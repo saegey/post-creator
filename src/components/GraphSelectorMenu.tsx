@@ -16,6 +16,7 @@ import EmbedSettings from './EmbedSettings';
 import { useViewport } from './ViewportProvider';
 import ResultsIcon from './ResultsIcon';
 import SidebarLeft from './SidebarLeft';
+import StravaEmbed from './StravaEmbed';
 
 const GraphSelectorMenu = ({ editor }) => {
   const { setIsGraphMenuOpen, setIsGpxUploadOpen, setIsRaceResultsModalOpen } =
@@ -23,6 +24,7 @@ const GraphSelectorMenu = ({ editor }) => {
   const { gpxFile, stravaUrl, currentFtp, components } =
     React.useContext(PostContext);
   const [isEmbedModalOpen, setIsEmbedModalOpen] = React.useState(false);
+  const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
   const { width } = useViewport();
 
   const hero = components?.filter((c) => c.type === 'heroBanner');
@@ -61,13 +63,13 @@ const GraphSelectorMenu = ({ editor }) => {
   };
 
   const addStravaLink = () => {
-    if (stravaUrl) {
-      Transforms.insertNodes(editor, [
-        { type: 'stravaLink', children: [{ text: '' }] } as Descendant,
-        { type: 'text', children: [{ text: '' }] } as Descendant,
-      ]);
-      closeMenu();
-    }
+    setIsStravaModalOpen(true);
+    // if (stravaUrl) {
+    // Transforms.insertNodes(editor, [
+    //   { type: 'stravaLink', children: [{ text: '' }] } as Descendant,
+    //   { type: 'text', children: [{ text: '' }] } as Descendant,
+    // ]);
+    // closeMenu();
   };
 
   const addTimePowerZones = () => {
@@ -132,6 +134,15 @@ const GraphSelectorMenu = ({ editor }) => {
           isOpen={isEmbedModalOpen}
         >
           <EmbedSettings editor={editor} isModalOpen={setIsEmbedModalOpen} />
+        </StandardModal>
+      )}
+      {isStravaModalOpen && (
+        <StandardModal
+          title={'Strava Embed'}
+          setIsOpen={setIsStravaModalOpen}
+          isOpen={isStravaModalOpen}
+        >
+          <StravaEmbed editor={editor} isModalOpen={setIsStravaModalOpen} />
         </StandardModal>
       )}
       <SidebarLeft
@@ -274,7 +285,7 @@ const GraphSelectorMenu = ({ editor }) => {
             onClick={addStravaLink}
             variant='boxes.sidebarMenuItem'
             sx={{
-              cursor: stravaUrl ? 'pointer' : 'not-allowed',
+              cursor: 'pointer',
             }}
           >
             <Flex>
@@ -285,19 +296,13 @@ const GraphSelectorMenu = ({ editor }) => {
                   marginRight: '10px',
                 }}
               >
-                <StravaIcon
-                  color={
-                    stravaUrl
-                      ? 'var(--theme-ui-colors-text)'
-                      : 'var(--theme-ui-colors-iconButtonDisabled'
-                  }
-                />
+                <StravaIcon color={'var(--theme-ui-colors-text)'} />
               </Box>
               <Text
                 as='span'
-                sx={{ color: stravaUrl ? null : 'iconButtonDisabled' }}
+                // sx={{ color: null : 'iconButtonDisabled' }}
               >
-                Strava Link
+                Embed Strava activity
               </Text>
             </Flex>
           </Box>
