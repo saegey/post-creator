@@ -145,11 +145,10 @@ const UploadGpxModal = () => {
     const timeSeriesData = await new Response(result.Body).json();
     setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
     const activity = await getActivity(timeSeriesData);
+
     setActivity && setActivity(activity);
     setProcessingGpxStatus('GPX file has been processed and analyzed');
     setIsProcessingFile(false);
-    // return post;
-    // console.log(post);
   };
 
   const setUpSub = async () => {
@@ -160,7 +159,7 @@ const UploadGpxModal = () => {
       setSubPubConfigured(true);
     }
 
-    return PubSub.subscribe('newpost').subscribe({
+    return PubSub.subscribe(`post-${id}`).subscribe({
       next: (data: any) => {
         const phase = data.value.phase;
         setProcessingGpxStatus(processStatuses[data.value.phase]);

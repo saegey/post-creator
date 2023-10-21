@@ -5,7 +5,7 @@ import { CldImage } from 'next-cloudinary';
 import { GraphQLResult } from '@aws-amplify/api';
 
 import { listPostsCustom } from '../graphql/customQueries';
-import AvatarButton from './AvatarButton';
+import AvatarIcon from './icons/AvatarIcon';
 import { ListPostsByCreatedAtQuery, ListPublishedPostsQuery } from '../API';
 import UserProfileMenu from './UserProfileMenu';
 import UserMainMenu from './UserMainMenu';
@@ -117,7 +117,7 @@ const Header = ({ user, signOut, title = undefined }) => {
             )}
             {!user ||
               (!user.attributes.picture && (
-                <AvatarButton onClick={() => setProfileOpen(true)} />
+                <AvatarIcon onClick={() => setProfileOpen(true)} />
               ))}
           </div>
         </Box>

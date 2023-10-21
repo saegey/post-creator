@@ -1,7 +1,7 @@
 import { Box } from 'theme-ui';
 import { MouseEventHandler } from 'react';
 
-const AvatarButton = ({
+const AvatarIcon = ({
   onClick,
 }: {
   onClick?: MouseEventHandler<HTMLDivElement>;
@@ -30,4 +30,4 @@ const AvatarButton = ({
   );
 };
 
-export default AvatarButton;
+export default AvatarIcon;

@@ -6,8 +6,7 @@ import { API } from 'aws-amplify';
 
 import PostSettings from './PostSettings';
 
-import ImagesButton from './ImagesButton';
-
+import ImagesButton from './buttons/ImagesButton';
 import BoldButton from './buttons/BoldButton';
 import HeadingButton from './buttons/HeadingButton';
 import NewComponentButton from './buttons/NewComponentButton';
