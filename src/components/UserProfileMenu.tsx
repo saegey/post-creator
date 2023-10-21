@@ -11,7 +11,7 @@ import Link from 'next/link';
 import React from 'react';
 import { CldImage } from 'next-cloudinary';
 
-import AvatarButton from './AvatarButton';
+import AvatarIcon from './icons/AvatarIcon';
 import { useUnits } from './UnitProvider';
 import BlackBox from './layout/BlackBox';
 
@@ -101,7 +101,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                       />
                     </Box>
                   )}
-                  {!user.attributes.picture && <AvatarButton />}
+                  {!user.attributes.picture && <AvatarIcon />}
                 </Flex>
                 <Box>
                   <Text as='div' sx={{ color: 'text' }}>

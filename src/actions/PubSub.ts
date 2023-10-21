@@ -40,7 +40,6 @@ const attachIoTPolicyToUser = async () => {
   // var userInfo = await Auth.currentUserInfo({ bypassCache: true });
 	const userInfo = await Auth.currentUserInfo()
   const iotPolicyIsAttached = userInfo.attributes[IOT_ATTRIBUTE_FLAG] === 'true';
-  console.log(userInfo);
 
   if (!iotPolicyIsAttached) {
     const apiName = 'api12660653';

@@ -3,13 +3,11 @@ import moment from 'moment';
 import React from 'react';
 import { CldImage } from 'next-cloudinary';
 
-import { PostContext } from './PostContext';
-import AvatarButton from './AvatarButton';
+import AvatarIcon from './icons/AvatarIcon';
 import { cloudUrl } from '../utils/cloudinary';
 import { useViewport } from './ViewportProvider';
 
 const PostAuthor = ({ post }: { post: any | undefined }) => {
-  console.log(post);
   if (!post) {
     return <Spinner />;
   }
@@ -73,7 +71,7 @@ const PostAuthor = ({ post }: { post: any | undefined }) => {
               />
             </Box>
           )}
-          {author && !author.image && <AvatarButton />}
+          {author && !author.image && <AvatarIcon />}
           <Flex sx={{ flexDirection: 'column' }}>
             <Text
               as='span'

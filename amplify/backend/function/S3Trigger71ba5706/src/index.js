@@ -13,8 +13,6 @@ const aws_xray_sdk_1 = __importDefault(require("aws-xray-sdk"));
 const zlib_1 = __importDefault(require("zlib"));
 const uuid_1 = require("uuid");
 const gpxHelper_1 = require("./gpxHelper");
-// import { AWSIoTProvider } from '@aws-amplify/pubsub';
-// const AWS = require('aws-sdk');
 const iotdata = new aws_sdk_1.default.IotData({
     endpoint: 'a29ieb9zd32ips-ats.iot.us-east-1.amazonaws.com',
 });
@@ -108,24 +106,15 @@ const compress = async (input) => {
         });
     });
 };
-const shrinkify = async ({ field, name }) => {
-    // compress the content
-    const fieldString = JSON.stringify(field);
-    const fieldCompressed = await compress(field);
-    // more stats about the content
-    console.log(`${name}: total size (uncompressed): ~${Math.round(fieldString.length / 1024)} KB`);
-    console.log(`${name}: total size (compressed): ~${Math.round(fieldCompressed.length / 1024)} KB`);
-    return fieldCompressed;
-};
-const message = (payload) => {
+const message = ({ payload, topic }) => {
     return {
-        topic: 'newpost',
+        topic,
         payload: JSON.stringify(payload),
         qos: 0,
     };
 };
-const publishMessage = async (payload) => {
-    const response = await iotdata.publish(message(payload)).promise();
+const publishMessage = async ({ payload, topic, }) => {
+    const response = await iotdata.publish(message({ payload, topic })).promise();
     console.log(response, JSON.stringify(payload));
 };
 exports.handler = async function (event) {
@@ -133,7 +122,7 @@ exports.handler = async function (event) {
     if (event.Records[0].s3.object.key.includes('timeseries')) {
         return;
     }
-    await publishMessage({ phase: 'start' });
+    // await publishMessage({ phase: 'start' });
     const segment = aws_xray_sdk_1.default.getSegment();
     const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
     console.log('Dynamo Table: ', postTable);
@@ -146,21 +135,34 @@ exports.handler = async function (event) {
         Key: key,
     }).promise();
     s3getTimer.close();
-    await publishMessage({ phase: 'file-downloaded' });
     const s3metaTimer = segment.addNewSubsegment('s3meta');
     const metaData = await S3.headObject(fileParams).promise();
     console.log('metadata', JSON.stringify(metaData));
     s3metaTimer.close();
-    await publishMessage({ phase: 'meta-downloaded' });
+    const postId = metaData.Metadata.postid;
+    const publishTopic = `post-${postId}`;
+    // await publishMessage({
+    //   payload: { phase: 'meta-downloaded' },
+    //   topic: publishTopic,
+    // });
+    await publishMessage({
+        payload: { phase: 'file-downloaded' },
+        topic: publishTopic,
+    });
     const xmlParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('xmlParse');
     const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString('utf-8'));
     xmlParseTimer.close();
-    await publishMessage({ phase: 'xml-parse' });
+    await publishMessage({
+        payload: { phase: 'xml-parse' },
+        topic: publishTopic,
+    });
     const gpxParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('gpxParse');
     const gpxData = (0, togeojson_1.gpx)(xmlDoc);
     gpxParseTimer.close();
-    await publishMessage({ phase: 'gpx-parse' });
-    const postId = metaData.Metadata.postid;
+    await publishMessage({
+        payload: { phase: 'gpx-parse' },
+        topic: publishTopic,
+    });
     const currentFtp = metaData.Metadata.currentftp;
     let coordinates = [];
     let powers, powerAnalysis, elevation, distances, elevationGrades;
@@ -199,7 +201,10 @@ exports.handler = async function (event) {
         }
         downsampleElevationTimer.close();
     });
-    await publishMessage({ phase: 'process-data' });
+    await publishMessage({
+        payload: { phase: 'process-data' },
+        topic: publishTopic,
+    });
     const s3key = `timeseries/${(0, uuid_1.v4)()}.json`;
     const s3Putparams = {
         Body: JSON.stringify({
@@ -250,5 +255,8 @@ exports.handler = async function (event) {
         console.error(JSON.stringify(e));
     }
     updateDynamoTimer.close();
-    await publishMessage({ phase: 'update-data' });
+    await publishMessage({
+        payload: { phase: 'update-data' },
+        topic: publishTopic,
+    });
 };
