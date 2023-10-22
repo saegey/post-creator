@@ -113,6 +113,7 @@ export default {
       // textDecoration: 'none',
       padding: '5px',
       width: '100%',
+      fontSize: ['17px', '15px', '15px'],
       textDecoration: 'none',
     },
   },

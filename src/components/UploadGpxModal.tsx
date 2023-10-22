@@ -21,8 +21,8 @@ const processStatuses = {
   'meta-downloaded': 'File metadata being fetched',
   'xml-parse': 'XML is being parsed',
   'gpx-parse': 'GPX XML is being converted to GeoJSON',
-  'process-data': 'Data is being processed and deriving metrics',
-  'update-data': 'Metrics and data is being saved',
+  'process-data': 'Data is being processed and calculating metrics',
+  'update-data': 'Metrics are being saved',
 };
 
 const UploadGpxModal = () => {

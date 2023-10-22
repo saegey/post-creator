@@ -1,4 +1,5 @@
 import { Box } from 'theme-ui';
+import React from 'react';
 
 const BlackBox = ({
   children,
@@ -7,13 +8,15 @@ const BlackBox = ({
   zIndex = 30,
   fullScreen = false,
   noModal = false,
+  noBackground = false,
 }: {
   children: JSX.Element;
   opacity?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   zIndex?: number;
   fullScreen?: boolean;
   noModal?: boolean;
+  noBackground?: boolean;
 }) => (
   <Box
     sx={{
@@ -22,7 +25,9 @@ const BlackBox = ({
       height: '100%',
       width: '100%',
       left: '0',
-      backgroundColor: fullScreen
+      backgroundColor: noBackground
+        ? 'unset'
+        : fullScreen
         ? 'background'
         : `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`,
       zIndex: zIndex,

@@ -74,7 +74,6 @@ const UserMainMenu = ({ menuOpen, setMenuOpen, recentPosts }) => {
             borderBottomWidth: '1px',
             borderBottomStyle: 'solid',
             borderBottomColor: 'divider',
-            // borderBottom: '1px solid divider',
             margin: '5px',
             paddingY: '10px',
           }}
