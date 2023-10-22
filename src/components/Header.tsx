@@ -1,45 +1,12 @@
 import React from 'react';
 import { MenuButton, Box, Flex } from 'theme-ui';
-import { API } from 'aws-amplify';
 import { CldImage } from 'next-cloudinary';
-import { GraphQLResult } from '@aws-amplify/api';
 
-import { listPostsCustom } from '../graphql/customQueries';
 import AvatarIcon from './icons/AvatarIcon';
-import { ListPostsByCreatedAtQuery, ListPublishedPostsQuery } from '../API';
 import UserProfileMenu from './UserProfileMenu';
-import UserMainMenu from './UserMainMenu';
 
 const Header = ({ user, signOut, title = undefined }) => {
-  // const [menuOpen, setMenuOpen] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
-  // const [recentPosts, setRecentPosts] = React.useState<
-  //   Array<{ id: string; title: string }>
-  // >([]);
-
-  // const listRecentPosts = async () => {
-  //   const { data } = (await API.graphql({
-  //     query: listPostsCustom,
-  //     authMode: 'AMAZON_COGNITO_USER_POOLS',
-  //   })) as { data: any };
-  //   // as GraphQLResult<ListPublishedPostsQuery>;
-
-  //   return data;
-  // };
-
-  // React.useEffect(() => {
-  //   listRecentPosts().then((d) => {
-  //     if (
-  //       !d ||
-  //       !d.listPublishedPostsByCreatedAt ||
-  //       !d.listPublishedPostsByCreatedAt.items
-  //     ) {
-  //       console.error('failed to get listPosts');
-  //     } else {
-  //       setRecentPosts(d?.listPublishedPostsByCreatedAt?.items as any);
-  //     }
-  //   });
-  // }, []);
 
   return (
     <>
@@ -51,11 +18,6 @@ const Header = ({ user, signOut, title = undefined }) => {
             signOut={signOut}
             user={user}
           />
-          {/* <UserMainMenu
-            menuOpen={menuOpen}
-            setMenuOpen={setMenuOpen}
-            recentPosts={recentPosts}
-          /> */}
         </Box>
       )}
 
@@ -72,13 +34,7 @@ const Header = ({ user, signOut, title = undefined }) => {
             zIndex: 99,
           }}
         >
-          <Flex sx={{ gap: '15px', flexGrow: 1 }}>
-            {/* <MenuButton
-              sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
-              aria-label='Toggle Menu'
-              onClick={() => setMenuOpen(true)}
-            /> */}
-          </Flex>
+          <Flex sx={{ gap: '15px', flexGrow: 1 }}></Flex>
           <Flex
             sx={{
               justifyContent: 'end',
@@ -91,7 +47,6 @@ const Header = ({ user, signOut, title = undefined }) => {
             <MenuButton
               sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
               aria-label='Toggle Menu'
-              // onClick={() => setMenuOpen(true)}
             />
             {user && user.attributes.picture && (
               <Box
@@ -107,15 +62,12 @@ const Header = ({ user, signOut, title = undefined }) => {
                   height='300'
                   src={user.attributes.picture}
                   style={{
-                    // objectFit: 'cover',
                     width: '100%',
                     height: '100%',
                     marginTop: 'auto',
                     marginBottom: 'auto',
                     borderRadius: '100%',
                   }}
-                  // preserveTransformations
-                  underlay={user.attributes.picture}
                   quality={90}
                   sizes='100vw'
                   alt='Description of my image'

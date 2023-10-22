@@ -1,16 +1,10 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import { Grid, Box, Button } from 'theme-ui';
+import { Grid, Box } from 'theme-ui';
 import React from 'react';
-// import { GraphQLResult } from '@aws-amplify/api';
-// import { API, Auth } from 'aws-amplify';
-// import { Box, Flex, Close, Label, Input, Button } from 'theme-ui';
 
-// import { CreatePostMutation } from '../API';
 import PostCard from './PostCard';
 import Header from './Header';
-// import CreatePostModal from './CreatePostModal';
 import { CloudinaryImage } from './AddImage';
-// import { createPost } from '../graphql/mutations';
 
 export type PostType = Array<{
   id: string;
@@ -33,8 +27,6 @@ const PostsAllUsers = ({
   user?: any;
   posts: PostType | undefined;
 }) => {
-  // const [newPost, setNewPost] = React.useState(false);
-
   return (
     <Box as='main' sx={{ height: '100vw' }}>
       <Header user={user} signOut={signOut} />

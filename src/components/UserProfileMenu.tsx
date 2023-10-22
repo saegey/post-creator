@@ -15,10 +15,8 @@ import AvatarIcon from './icons/AvatarIcon';
 import { useUnits } from './UnitProvider';
 import BlackBox from './layout/BlackBox';
 import { useViewport } from './ViewportProvider';
-import { useClickOutside } from '../utils/ux';
 
 const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
-  // const ref = React.useRef<any>();
   const [mode, setMode] = useColorMode();
   const { toggleUnit, unitOfMeasure } = useUnits();
   const { width } = useViewport();
@@ -37,12 +35,6 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
     return <></>;
   }
 
-  // const wrapperRef = React.useRef('profileMenu');
-  // useClickOutside(wrapperRef, (e) => {
-  //   setProfileOpen(false);
-  //   e.stopPropagation();
-  // });
-
   return (
     <BlackBox
       onClick={(e) => {
@@ -54,17 +46,12 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
       noModal={true}
     >
       <Flex
-        // ref={wrapperRef}
         sx={{
           marginLeft: ['auto', 0, 0],
           position: 'relative',
           flexGrow: 1,
           justifyContent: 'end',
         }}
-
-        // onClick={(e) => {
-        //   e.stopPropagation();
-        // }}
       >
         <Box
           sx={{
@@ -115,15 +102,12 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                         height='300'
                         src={user.attributes.picture}
                         style={{
-                          // objectFit: 'cover',
                           width: '100%',
                           height: 'auto',
                           marginTop: 'auto',
                           marginBottom: 'auto',
                           borderRadius: '100%',
                         }}
-                        // preserveTransformations
-                        // underlay={user.attributes.picture}
                         quality={90}
                         // sizes='100vw'
                         sizes='(max-width: 480px) 100vw, 50vw'
