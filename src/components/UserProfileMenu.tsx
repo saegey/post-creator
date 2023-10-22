@@ -14,11 +14,12 @@ import { CldImage } from 'next-cloudinary';
 import AvatarIcon from './icons/AvatarIcon';
 import { useUnits } from './UnitProvider';
 import BlackBox from './layout/BlackBox';
+import { useViewport } from './ViewportProvider';
 
 const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
-  const ref = React.useRef<any>();
   const [mode, setMode] = useColorMode();
   const { toggleUnit, unitOfMeasure } = useUnits();
+  const { width } = useViewport();
 
   React.useEffect(() => {
     if (profileOpen) {
@@ -36,34 +37,50 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
 
   return (
     <BlackBox
-      onClick={() => {
+      onClick={(e) => {
         setProfileOpen(false);
+        e.stopPropagation();
+        console.log('blackbox');
       }}
+      noBackground={width > 640 ? true : false}
       noModal={true}
     >
       <Flex
-        sx={{ marginLeft: 'auto' }}
-        onClick={(e) => {
-          e.stopPropagation();
+        sx={{
+          marginLeft: ['auto', 0, 0],
+          position: 'relative',
+          flexGrow: 1,
+          justifyContent: 'end',
         }}
       >
         <Box
-          ref={ref}
           sx={{
+            // right: 0,
             flexDirection: 'column',
-            width: '400px',
-            height: '100%',
+            width: ['400px', '300px', '300px'],
+            height: ['100%', 'fit-content', 'fit-content'],
+            // position: ['inherit', 'absolute', 'absolute'],
+            position: 'relative',
+            top: ['', '53px', '53px'],
+            right: ['', '10px', '10px'],
             backgroundColor: 'background',
             animation: 'fadeIn .2s;',
             borderTopLeftRadius: '10px',
             borderBottomLeftRadius: '10px',
+            borderTopRightRadius: [0, '10px', '10px'],
+            borderBottomRightRadius: [0, '10px', '10px'],
+            borderStyle: ['none', 'solid', 'solid'],
+            borderColor: 'divider',
+            borderWidth: [0, '1px', '1px'],
+            boxShadow:
+              '0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05)',
           }}
         >
           <Box sx={{ marginLeft: 'auto' }}>
             <Flex
               sx={{
-                width: '100%',
-                margin: '10px',
+                // width: '100%',
+                margin: ['10px', 0, 0],
                 padding: '10px',
                 borderBottomStyle: 'solid',
                 borderBottomWidth: '1px',
@@ -73,7 +90,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
               <Flex sx={{ gap: '10px', width: '100%' }}>
                 <Flex
                   sx={{
-                    height: '100%',
+                    height: ['100%', 'fit-content', 'fit-content'],
                     // width: '40px',
                     flexDirection: 'column',
                   }}
@@ -85,15 +102,12 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                         height='300'
                         src={user.attributes.picture}
                         style={{
-                          // objectFit: 'cover',
                           width: '100%',
                           height: 'auto',
                           marginTop: 'auto',
                           marginBottom: 'auto',
                           borderRadius: '100%',
                         }}
-                        // preserveTransformations
-                        // underlay={user.attributes.picture}
                         quality={90}
                         // sizes='100vw'
                         sizes='(max-width: 480px) 100vw, 50vw'
@@ -104,7 +118,10 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   {!user.attributes.picture && <AvatarIcon />}
                 </Flex>
                 <Box>
-                  <Text as='div' sx={{ color: 'text' }}>
+                  <Text
+                    as='div'
+                    sx={{ color: 'text', fontSize: ['17px', '15px', '15px'] }}
+                  >
                     {user.attributes.name}
                   </Text>
                   <Text
@@ -114,6 +131,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                       fontWeight: 700,
                       // marginTop: '5px',
                       color: 'text',
+                      fontSize: ['17px', '15px', '15px'],
                     }}
                   >
                     {user.attributes.preferred_username}
@@ -122,10 +140,14 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
               </Flex>
               <Close
                 onClick={() => setProfileOpen(false)}
-                sx={{ backgroundColor: 'background', marginLeft: 'auto' }}
+                sx={{
+                  display: ['inherit', 'none', 'none'],
+                  backgroundColor: 'background',
+                  marginLeft: 'auto',
+                }}
               />
             </Flex>
-            <Box sx={{ padding: '10px' }}>
+            <Box sx={{ padding: ['10px', 0, 0] }}>
               <Box
                 as='ul'
                 sx={{
@@ -134,7 +156,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     padding: '5px',
                     margin: '5px',
                     fontWeight: 500,
-                    fontSize: '16px',
+                    fontSize: ['17px', '15px', '15px'],
                   },
                 }}
               >
@@ -150,6 +172,7 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                       color: 'text',
                       padding: '5px',
                       width: '100%',
+                      fontSize: ['17px', '15px', '15px'],
                     }}
                     href={`/profile`}
                     // onClick={() => setMenuOpen(false)}
@@ -169,10 +192,30 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                       color: 'text',
                       padding: '5px',
                       width: '100%',
+                      fontSize: ['17px', '15px', '15px'],
                     }}
                     href={`/posts`}
                   >
                     Your Posts
+                  </ThemeLink>
+                </Flex>
+                <Flex as='li'>
+                  <ThemeLink
+                    as={Link}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: 'menuItemBackgroundHoverColor',
+                        borderRadius: '5px',
+                      },
+                      textDecoration: 'none',
+                      color: 'text',
+                      padding: '5px',
+                      width: '100%',
+                      fontSize: ['17px', '15px', '15px'],
+                    }}
+                    href={`/`}
+                  >
+                    Explore
                   </ThemeLink>
                 </Flex>
                 <Flex
@@ -183,8 +226,15 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                     borderTopWidth: '1px',
                   }}
                 >
-                  <Flex sx={{ width: '100%', padding: '5px' }}>
-                    <Text as='span'>Dark Mode</Text>
+                  <Flex
+                    sx={{ width: '100%', padding: '5px' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Text as='span' sx={{ fontSize: ['17px', '15px', '15px'] }}>
+                      Dark Mode
+                    </Text>
                     <Box sx={{ marginLeft: 'auto' }}>
                       <Switch
                         checked={mode === 'dark' ? true : false}
@@ -197,8 +247,13 @@ const UserProfileMenu = ({ setProfileOpen, profileOpen, signOut, user }) => {
                   </Flex>
                 </Flex>
                 <Flex as='li'>
-                  <Flex sx={{ width: '100%', padding: '5px' }}>
-                    <Text as='span'>
+                  <Flex
+                    sx={{ width: '100%', padding: '5px' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Text as='span' sx={{ fontSize: ['17px', '15px', '15px'] }}>
                       Units{' '}
                       <Text as='span' sx={{ color: 'textMuted' }}>
                         imperial/metric
