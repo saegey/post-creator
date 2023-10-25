@@ -19,7 +19,7 @@ const renderLink = (node: LinkType) => {
 };
 
 const ParagraphViewWrapper = ({ node }: { node?: ParagraphElement }) => {
-  console.log(node);
+  // console.log(node);
   return (
     <Text
       as="p"

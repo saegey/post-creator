@@ -112,7 +112,7 @@ const PostsAll = ({
   };
 
   React.useEffect(() => {
-    console.log('useffeect', status);
+    // console.log('useffeect', status);
     if (status === 'draft') {
       getDraftPosts();
     }

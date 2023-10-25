@@ -42,7 +42,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       notFound: true,
     };
   }
-  console.log("images", JSON.stringify(post));
+  // console.log("images", JSON.stringify(post));
 
   return {
     props: {

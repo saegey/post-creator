@@ -5,7 +5,7 @@ import { PostContext } from "./PostContext";
 
 const PowerGraphViewWrapper = () => {
   const { powerAnalysis, id, currentFtp } = React.useContext(PostContext);
-  console.log(currentFtp);
+  // console.log(currentFtp);
   if (!powerAnalysis) {
     return (
       <Box key={`{powergraph-${id}}`}>
