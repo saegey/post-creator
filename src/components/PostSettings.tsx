@@ -1,14 +1,14 @@
-import { Box, Flex, Text, Input, Button, Label, Spinner } from 'theme-ui';
-import React from 'react';
-import { GraphQLResult } from '@aws-amplify/api';
-import { API } from 'aws-amplify';
-import { useRouter } from 'next/router';
+import { Box, Flex, Text, Input, Button, Label, Spinner } from "theme-ui";
+import React from "react";
+import { GraphQLResult } from "@aws-amplify/api";
+import { API } from "aws-amplify";
+import { useRouter } from "next/router";
 
-import { PostContext } from './PostContext';
-import { EditorContext } from './EditorContext';
-import { UpdatePostMutation, DeletePostMutation } from '../../src/API';
-import StandardModal from './StandardModal';
-import { updatePost, deletePost } from '../../src/graphql/mutations';
+import { PostContext } from "./PostContext";
+import { EditorContext } from "./EditorContext";
+import { UpdatePostMutation, DeletePostMutation } from "../../src/API";
+import StandardModal from "./StandardModal";
+import { updatePost, deletePost } from "../../src/graphql/mutations";
 
 const PostSettings = () => {
   const {
@@ -36,15 +36,15 @@ const PostSettings = () => {
   const [isSaving, setIsSaving] = React.useState(false);
   const { asPath } = useRouter();
   const origin =
-    typeof window !== 'undefined' && window.location.origin
+    typeof window !== "undefined" && window.location.origin
       ? window.location.origin
-      : '';
+      : "";
   const URL = `${origin}${asPath}`;
 
-  const processDeletePost = async (event) => {
+  const processDeletePost = async () => {
     try {
       const response = (await API.graphql({
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: "AMAZON_COGNITO_USER_POOLS",
         variables: {
           input: {
             id: id,
@@ -58,31 +58,31 @@ const PostSettings = () => {
     }
   };
 
-  const saveSettings = async (event) => {
+  const saveSettings = async (event: React.FormEvent<HTMLFormElement>) => {
     setIsSaving(true);
-    const form = new FormData(event.target);
-    const newFtp = form.get('currentFtp') as string;
-    if (newFtp !== currentFtp) {
+    const form = new FormData(event.target as HTMLFormElement);
+    const newFtp = form.get("currentFtp") as string;
+    if (Number(newFtp) !== Number(currentFtp)) {
       setIsFtpUpdating(true);
     }
 
-    setCurrentFtp && setCurrentFtp(newFtp);
-    setTitle && setTitle(form.get('title') as string);
-    setPostLocation && setPostLocation(form.get('postLocation') as string);
-    setDate && setDate(form.get('eventDate') as string);
-    setSubhead && setSubhead(form.get('subhead') as string);
+    setCurrentFtp && setCurrentFtp(Number(newFtp));
+    setTitle && setTitle(form.get("title") as string);
+    setPostLocation && setPostLocation(form.get("postLocation") as string);
+    setDate && setDate(form.get("eventDate") as string);
+    setSubhead && setSubhead(form.get("subhead") as string);
 
     try {
       const response = (await API.graphql({
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: "AMAZON_COGNITO_USER_POOLS",
         query: updatePost,
         variables: {
           input: {
-            currentFtp: form.get('currentFtp'),
-            title: form.get('title'),
-            subhead: form.get('subhead'),
-            postLocation: form.get('postLocation'),
-            date: form.get('eventDate'),
+            currentFtp: form.get("currentFtp"),
+            title: form.get("title"),
+            subhead: form.get("subhead"),
+            postLocation: form.get("postLocation"),
+            date: form.get("eventDate"),
             id: id,
           },
         },
@@ -99,80 +99,80 @@ const PostSettings = () => {
     <StandardModal
       isOpen={isSettingsModalOpen}
       setIsOpen={setIsSettingsModalOpen}
-      title={'Post Settings'}
+      title={"Post Settings"}
       fullScreen={true}
     >
       <form
-        onSubmit={(event: any) => {
+        onSubmit={(event) => {
           event.preventDefault();
-          saveSettings(event).then(() => console.log('save settings'));
+          saveSettings(event).then(() => console.log("save settings"));
         }}
       >
         <Flex
           sx={{
-            gap: '15px',
-            flexDirection: 'column',
-            maxHeight: ['70vh', '', ''],
-            overflow: 'scroll',
-            paddingTop: '10px',
+            gap: "15px",
+            flexDirection: "column",
+            maxHeight: ["70vh", "", ""],
+            overflow: "scroll",
+            paddingTop: "10px",
           }}
         >
           <Box>
-            <Label htmlFor='title' variant={'defaultLabel'}>
+            <Label htmlFor="title" variant={"defaultLabel"}>
               Title
             </Label>
             <Input
-              id='title'
-              name='title'
-              defaultValue={title ? title : ''}
-              variant={'defaultInput'}
+              id="title"
+              name="title"
+              defaultValue={title ? title : ""}
+              variant={"defaultInput"}
             />
           </Box>
           <Box>
-            <Label htmlFor='title' variant={'defaultLabel'}>
+            <Label htmlFor="title" variant={"defaultLabel"}>
               Subhead
             </Label>
             <Input
-              id='subhead'
-              name='subhead'
-              defaultValue={subhead ? subhead : ''}
-              variant={'defaultInput'}
+              id="subhead"
+              name="subhead"
+              defaultValue={subhead ? subhead : ""}
+              variant={"defaultInput"}
             />
           </Box>
           <Box>
-            <Label htmlFor='postLocation' variant={'defaultLabel'}>
+            <Label htmlFor="postLocation" variant={"defaultLabel"}>
               Location
             </Label>
             <Input
-              id='postLocation'
-              name='postLocation'
-              defaultValue={postLocation ? postLocation : ''}
-              variant={'defaultInput'}
+              id="postLocation"
+              name="postLocation"
+              defaultValue={postLocation ? postLocation : ""}
+              variant={"defaultInput"}
             />
           </Box>
           <Box>
-            <Label htmlFor='gpxFile' variant='defaultLabel'>
+            <Label htmlFor="gpxFile" variant="defaultLabel">
               GPX File
             </Label>
-            <Flex sx={{ gap: '10px', flexDirection: ['column', 'row', 'row'] }}>
-              <Box sx={{ width: '100%' }}>
+            <Flex sx={{ gap: "10px", flexDirection: ["column", "row", "row"] }}>
+              <Box sx={{ width: "100%" }}>
                 <Input
-                  id='gpxFile'
-                  name='gpxFile'
-                  defaultValue={gpxFile ? gpxFile : ''}
-                  variant={'defaultInput'}
+                  id="gpxFile"
+                  name="gpxFile"
+                  defaultValue={gpxFile ? gpxFile : ""}
+                  variant={"defaultInput"}
                 />
               </Box>
-              <Box sx={{ width: ['', '25%', '25%'] }}>
+              <Box sx={{ width: ["", "25%", "25%"] }}>
                 <Button
-                  type='button'
+                  type="button"
                   onClick={() => {
                     setIsGpxUploadOpen(true);
                   }}
                   sx={{
-                    width: '100%',
+                    width: "100%",
                   }}
-                  variant='primaryButton'
+                  variant="primaryButton"
                 >
                   Upload GPX
                 </Button>
@@ -180,42 +180,42 @@ const PostSettings = () => {
             </Flex>
           </Box>
           <Box>
-            <Label htmlFor='currentFtp' variant={'defaultLabel'}>
+            <Label htmlFor="currentFtp" variant={"defaultLabel"}>
               Event FTP
             </Label>
             <Input
-              id='currentFtp'
-              name='currentFtp'
-              defaultValue={currentFtp ? currentFtp : ''}
-              variant={'defaultInput'}
+              id="currentFtp"
+              name="currentFtp"
+              defaultValue={currentFtp ? currentFtp : ""}
+              variant={"defaultInput"}
             />
           </Box>
           <Box>
-            <Label htmlFor='eventDate' variant={'defaultLabel'}>
+            <Label htmlFor="eventDate" variant={"defaultLabel"}>
               Event Date
             </Label>
             <Input
-              id='eventDate'
-              name='eventDate'
-              defaultValue={date ? date : ''}
-              variant={'defaultInput'}
+              id="eventDate"
+              name="eventDate"
+              defaultValue={date ? date : ""}
+              variant={"defaultInput"}
             />
           </Box>
           <Box>
             <Flex>
-              <Box sx={{ width: '70%' }}>
-                <Text as='p' sx={{ fontWeight: '700', fontSize: '15px' }}>
+              <Box sx={{ width: "70%" }}>
+                <Text as="p" sx={{ fontWeight: "700", fontSize: "15px" }}>
                   Delete this post
                 </Text>
-                <Text sx={{ fontSize: '15px' }}>
+                <Text sx={{ fontSize: "15px" }}>
                   Once you delete a post, there is no going back. Please be
                   certain.
                 </Text>
               </Box>
-              <Box sx={{ marginLeft: 'auto', marginY: 'auto' }}>
+              <Box sx={{ marginLeft: "auto", marginY: "auto" }}>
                 <Button
-                  variant='dangerButton'
-                  type='button'
+                  variant="dangerButton"
+                  type="button"
                   onClick={processDeletePost}
                 >
                   Delete
@@ -226,31 +226,31 @@ const PostSettings = () => {
         </Flex>
         <Flex
           sx={{
-            borderTopWidth: '1px',
-            borderTopColor: 'divider',
-            borderTopStyle: 'solid',
-            marginTop: '10px',
-            paddingTop: '10px',
-            position: ['fixed', 'inherit', 'inherit'],
-            bottom: ['0', '', ''],
-            width: '100%',
-            marginY: '20px',
+            borderTopWidth: "1px",
+            borderTopColor: "divider",
+            borderTopStyle: "solid",
+            marginTop: "10px",
+            paddingTop: "10px",
+            position: ["fixed", "inherit", "inherit"],
+            bottom: ["0", "", ""],
+            width: "100%",
+            marginY: "20px",
           }}
         >
-          <Box sx={{ marginLeft: ['', 'auto', 'auto'] }}>
-            <Flex sx={{ gap: '10px', marginTop: '10px' }}>
+          <Box sx={{ marginLeft: ["", "auto", "auto"] }}>
+            <Flex sx={{ gap: "10px", marginTop: "10px" }}>
               <Button
-                type='button'
-                variant='secondaryButton'
+                type="button"
+                variant="secondaryButton"
                 onClick={() => setIsSettingsModalOpen(false)}
               >
                 Cancel
               </Button>
-              <Button variant='primaryButton'>
-                <Flex sx={{ gap: '10px' }}>
-                  <Text as='span'>Save</Text>
+              <Button variant="primaryButton">
+                <Flex sx={{ gap: "10px" }}>
+                  <Text as="span">Save</Text>
                   {isSaving && (
-                    <Spinner sx={{ size: '20px', color: 'spinnerButton' }} />
+                    <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
                   )}
                 </Flex>
               </Button>

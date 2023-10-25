@@ -1,7 +1,7 @@
-import { Box, Text, Grid } from 'theme-ui';
-import React from 'react';
+import { Box, Text, Grid } from "theme-ui";
+import React from "react";
 
-import { useUnits } from '../../UnitProvider';
+import { useUnits } from "../../UnitProvider";
 
 interface Item {
   title: string;
@@ -12,14 +12,17 @@ type RaceStatsProps = {
   items: Item[];
 };
 
-const getTimeInRed = (timeInRed) => {
+const getTimeInRed = (timeInRed: number | string | undefined) => {
+  if (timeInRed === "....") {
+    return "....";
+  }
   if (timeInRed === 0 || timeInRed === null) {
-    return 'no power data';
+    return "no power data";
   }
-  if (timeInRed === '....') {
-    return '....';
+  if (typeof timeInRed === "number") {
+    return `${new Date(timeInRed * 1000).toISOString().substr(11, 8)}`;
   }
-  return `${new Date(timeInRed * 1000).toISOString().substr(11, 8)}`;
+  return "---";
 };
 
 const RaceStats = ({ items }: RaceStatsProps) => {
@@ -28,8 +31,8 @@ const RaceStats = ({ items }: RaceStatsProps) => {
       gap={2}
       columns={[2, 2, 3]}
       sx={{
-        borderRadius: '4px',
-        gap: ['10px', '5px 100px', '5px'],
+        borderRadius: "4px",
+        gap: ["10px", "5px 100px", "5px"],
       }}
     >
       {items.map((item, index) => {
@@ -38,22 +41,22 @@ const RaceStats = ({ items }: RaceStatsProps) => {
             <>
               <Text
                 sx={{
-                  fontWeight: '400',
+                  fontWeight: "400",
                   // textTransform: 'uppercase',
-                  fontSize: ['12px', '14px', '14px'],
-                  color: 'text',
+                  fontSize: ["12px", "14px", "14px"],
+                  color: "text",
                 }}
               >
                 {item.title}
               </Text>
               <Text
-                as='p'
+                as="p"
                 sx={{
-                  fontFamily: 'body',
-                  fontSize: ['20px', '24px', '24px'],
-                  lineHeight: ['20px', '24px', '24px'],
-                  fontWeight: ['600', '600', '600'],
-                  marginBottom: '10px',
+                  fontFamily: "body",
+                  fontSize: ["20px", "24px", "24px"],
+                  lineHeight: ["20px", "24px", "24px"],
+                  fontWeight: ["600", "600", "600"],
+                  marginBottom: "10px",
                   // lineHeight: ['30px', '50px', '60px'],
                 }}
               >
@@ -69,34 +72,19 @@ const RaceStats = ({ items }: RaceStatsProps) => {
 
 type Props = {
   data: {
-    elevationGain: number;
-    distance: number;
-    normalizedPower: number;
-    heartAnalysis:
-      | {
-          entire: number;
-        }
-      | undefined;
-    tempAnalysis:
-      | {
-          entire: number;
-        }
-      | undefined;
-    powerAnalysis:
-      | {
-          entire: number;
-        }
-      | undefined;
-    cadenceAnalysis:
-      | {
-          entire: number;
-        }
-      | undefined;
-    elapsedTime: {
+    elevationGain?: number;
+    distance?: number;
+    normalizedPower?: number;
+    heartAnalysis?: Record<"entire" | number, number>[] | undefined;
+    // heartAnalysis: Map<"entire", number>[] | undefined;
+    tempAnalysis?: Record<string | number, number>[] | undefined;
+    powerAnalysis?: Record<string | number, number>[] | undefined;
+    cadenceAnalysis?: Record<string | number, number>[] | undefined;
+    elapsedTime?: {
       seconds: number;
     };
-    stoppedTime: number;
-    timeInRed: number | string | undefined;
+    stoppedTime?: number;
+    timeInRed?: number | string | undefined;
   };
   selectedFields: string[];
 };
@@ -114,88 +102,121 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     cadenceAnalysis,
     timeInRed,
   } = data;
+
   const units = useUnits();
 
   const items = [
     {
-      title: 'Normalized Power',
-      value: `${normalizedPower ? normalizedPower.toFixed() : ''} watts`,
+      title: "Normalized Power",
+      value: `${normalizedPower ? normalizedPower.toFixed() : ""} watts`,
     },
     {
-      title: 'Elevation Gain',
+      title: "Elevation Gain",
       value:
-        units.unitOfMeasure === 'metric'
-          ? `${elevationGain.toFixed(0)} meters`
-          : `${(elevationGain * 3.280839895).toLocaleString(undefined, {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            })} ft`,
+        units.unitOfMeasure === "metric"
+          ? `${elevationGain && elevationGain.toFixed(0)} meters`
+          : `${
+              elevationGain &&
+              (elevationGain * 3.280839895).toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              })
+            } ft`,
     },
     {
-      title: 'Avg Heart Rate',
-      value: heartAnalysis ? `${heartAnalysis.entire} bpm` : 'undfined',
+      title: "Avg Heart Rate",
+      value: heartAnalysis
+        ? `${heartAnalysis["entire" as keyof Object]} bpm`
+        : "undfined",
     },
     {
-      title: 'Distance',
+      title: "Distance",
       value:
-        units.unitOfMeasure === 'metric'
-          ? `${distance.toFixed(2)} km`
-          : `${(distance * 0.621371).toFixed()} miles`,
+        units.unitOfMeasure === "metric"
+          ? `${distance && distance.toFixed(2)} km`
+          : `${distance && (distance * 0.621371).toFixed()} miles`,
     },
     {
-      title: 'Elapsed Time',
-      value: `${new Date(elapsedTime.seconds * 1000)
-        .toISOString()
-        .substr(11, 8)}`,
+      title: "Elapsed Time",
+      value: `${
+        elapsedTime &&
+        new Date(elapsedTime.seconds * 1000).toISOString().substr(11, 8)
+      }`,
     },
     {
-      title: 'Moving Time',
-      value: `${new Date((elapsedTime.seconds - stoppedTime) * 1000)
-        .toISOString()
-        .substr(11, 8)}`,
-    },
-    {
-      title: 'Avg Temperature',
+      title: "Moving Time",
       value:
-        units.unitOfMeasure === 'metric'
-          ? `${tempAnalysis?.entire.toFixed()} °C`
-          : tempAnalysis && tempAnalysis.entire
-          ? `${(tempAnalysis?.entire * (9 / 5) + 32).toFixed()} °F`
-          : '',
+        elapsedTime && elapsedTime.seconds
+          ? `${new Date(
+              (elapsedTime.seconds - (stoppedTime ? stoppedTime : 0)) * 1000
+            )
+              .toISOString()
+              .substr(11, 8)}`
+          : "",
     },
     {
-      title: 'Avg Speed',
+      title: "Avg Temperature",
       value:
-        units.unitOfMeasure === 'metric'
+        units.unitOfMeasure === "metric"
+          ? `${Number(
+              tempAnalysis ? tempAnalysis["entire" as keyof Object] : 0
+            ).toFixed()} °C`
+          : tempAnalysis && tempAnalysis["entire" as keyof Object]
           ? `${(
-              ((distance * 1000) / (elapsedTime.seconds - stoppedTime)) *
-              3.6
-            ).toFixed(2)} km/h`
-          : `${(
-              (distance / (elapsedTime.seconds - stoppedTime)) *
-              2236.9362920544
-            ).toFixed(2)} mph`,
+              Number(tempAnalysis["entire" as keyof Object]) * (9 / 5) +
+              32
+            ).toFixed()} °F`
+          : "",
     },
     {
-      title: 'Avg Power',
-      value: powerAnalysis ? `${powerAnalysis.entire} watts` : 'N/A',
+      title: "Avg Speed",
+      value:
+        units.unitOfMeasure === "metric"
+          ? `${
+              distance &&
+              elapsedTime &&
+              (
+                ((distance * 1000) /
+                  (elapsedTime.seconds - (stoppedTime ? stoppedTime : 0))) *
+                3.6
+              ).toFixed(2)
+            } km/h`
+          : `${
+              distance &&
+              elapsedTime &&
+              stoppedTime &&
+              (
+                (distance / (elapsedTime.seconds - stoppedTime)) *
+                2236.9362920544
+              ).toFixed(2)
+            } mph`,
     },
     {
-      title: 'Time Stopped',
-      value: new Date(stoppedTime * 1000).toISOString().substr(11, 8),
+      title: "Avg Power",
+      value: powerAnalysis
+        ? `${powerAnalysis["entire" as keyof Object]} watts`
+        : "N/A",
     },
     {
-      title: 'Avg Cadence',
-      value: cadenceAnalysis ? `${cadenceAnalysis.entire} rpm` : 'N/A',
+      title: "Time Stopped",
+      value: stoppedTime
+        ? new Date(stoppedTime * 1000).toISOString().substr(11, 8)
+        : "",
     },
     {
-      title: 'Time in Red',
+      title: "Avg Cadence",
+      value: cadenceAnalysis
+        ? `${cadenceAnalysis["entire" as keyof Object]} rpm`
+        : "N/A",
+    },
+    {
+      title: "Time in Red",
       value: getTimeInRed(timeInRed),
     },
   ];
 
   return (
-    <Box variant='boxes.figure'>
+    <Box variant="boxes.figure">
       <RaceStats
         items={items.filter((activity) =>
           selectedFields.includes(activity.title)

@@ -1,16 +1,24 @@
-import { withSSRContext, Storage } from 'aws-amplify';
-import React from 'react';
-import Head from 'next/head';
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import { withSSRContext, Storage } from "aws-amplify";
+import React from "react";
+import Head from "next/head";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import { GraphQLResult } from "@aws-amplify/api";
 
-import { getPublishedPost } from '../../src/graphql/customQueries';
-import { getActivity, getPostQuery } from '../../src/actions/PostGet';
-import AuthCustom from '../../src/components/AuthCustom';
-import PostView from '../../src/components/PostView';
-import SlatePublish from '../../src/components/SlatePublish';
-import { getPost } from '../../src/graphql/queries';
-import { PostContext } from '../../src/components/PostContext';
-import { generate as generateMetaTags } from '../../src/utils/metaTags';
+import { getPublishedPost } from "../../src/graphql/customQueries";
+import { getActivity } from "../../src/actions/PostGet";
+import AuthCustom from "../../src/components/AuthCustom";
+import PostView from "../../src/components/PostView";
+import SlatePublish from "../../src/components/SlatePublish";
+import { getPost } from "../../src/graphql/queries";
+import { PostContext } from "../../src/components/PostContext";
+import { generate as generateMetaTags } from "../../src/utils/metaTags";
+import { GetPublishedPostQuery } from "../../src/API";
+import {
+  ActivityItem,
+  CognitoUserExt,
+  CustomElement,
+  PostViewType,
+} from "../../src/types/common";
 
 type ServerSideProps = {
   req: object;
@@ -24,18 +32,18 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 
   let post;
 
-  const { data } = await API.graphql({
+  const { data } = (await API.graphql({
     query: getPublishedPost,
-    authMode: 'API_KEY',
+    authMode: "API_KEY",
     variables: {
       id: params.id,
     },
-  });
+  })) as GraphQLResult<GetPublishedPostQuery>;
 
   if (!data || !data.getPublishedPost) {
     const { data } = await API.graphql({
       query: getPost,
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      authMode: "AMAZON_COGNITO_USER_POOLS",
       variables: {
         id: params.id,
       },
@@ -46,7 +54,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   }
 
   post.author =
-    post.__typename === 'PublishedPost' ? JSON.parse(post.author) : post.author;
+    post.__typename === "PublishedPost" ? JSON.parse(post.author) : post.author;
 
   return {
     props: {
@@ -56,48 +64,58 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   };
 };
 
-const Publish = ({ post, user }): JSX.Element => {
-  const config = SlatePublish({ post });
-  const components = JSON.parse(post.components);
+const Publish = ({
+  post,
+  user,
+}: {
+  post: PostViewType;
+  user: CognitoUserExt;
+}): JSX.Element => {
+  const config = SlatePublish();
+  const components = post.components
+    ? (JSON.parse(post.components) as CustomElement[])
+    : undefined;
 
-  const [activity, setActivity] = React.useState([]);
-  const [powerAnalysis, setPowerAnalysis] = React.useState();
+  const [activity, setActivity] = React.useState<ActivityItem[] | undefined>();
+  const [powerAnalysis, setPowerAnalysis] = React.useState<
+    Array<Record<number | string, number>> | undefined
+  >();
 
-  const getTimeSeriesFile = async (post) => {
-    const result = await Storage.get(post.timeSeriesFile, {
+  const getTimeSeriesFile = async (timeSeriesFile: string) => {
+    const result = await Storage.get(timeSeriesFile, {
       download: true,
-      // customPrefix: {
-      //   public: 'private/us-east-1:29b6299d-6fd7-44d5-a53e-2a94fdf5401d/',
-      // },
-      level: post.__typename === 'PublishedPost' ? 'public' : 'private',
+      level: post.__typename === "PublishedPost" ? "public" : "private",
     });
     const timeSeriesData = await new Response(result.Body).json();
     setPowerAnalysis(timeSeriesData.powerAnalysis);
 
     const activityString = await getActivity(timeSeriesData);
-
-    const activity = activityString.map((a, i) => {
-      return {
-        ...a,
-        g: a?.g !== null ? a?.g : 0,
-        d:
-          a?.d === 0
-            ? activityString[i - 1]
-              ? activityString[i - 1]?.d
-              : 0
-            : a?.d,
-      };
-    });
+    const activity =
+      activityString &&
+      activityString.map((a, i) => {
+        return {
+          t: a?.t,
+          c: a?.c,
+          g: a?.g !== null ? a?.g : 0,
+          e: a?.e === null ? 0 : a?.e,
+          d:
+            a?.d === 0
+              ? activityString[i - 1]
+                ? activityString[i - 1]?.d
+                : 0
+              : a?.d,
+        };
+      });
 
     return activity;
   };
 
   React.useEffect(() => {
-    if (!post.gpxFile) {
-      console.log('no gpx file', post);
+    if (!post.gpxFile || !post.timeSeriesFile) {
+      console.log("no gpx file", post);
       return;
     }
-    getTimeSeriesFile(post).then((e) => {
+    getTimeSeriesFile(post.timeSeriesFile).then((e) => {
       setActivity(e);
     });
   }, []);
@@ -110,7 +128,7 @@ const Publish = ({ post, user }): JSX.Element => {
         <Head>
           <title>{post.title}</title>
           <link
-            rel='icon'
+            rel="icon"
             href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
           />
         </Head>

@@ -1,39 +1,38 @@
-import { Box, Flex, Button } from 'theme-ui';
-import React from 'react';
-import { useSlateStatic, ReactEditor } from 'slate-react';
-import { CldImage } from 'next-cloudinary';
+import { Box, Flex, Button } from "theme-ui";
+import React from "react";
+import { CldImage } from "next-cloudinary";
 
-import { PostContext } from './PostContext';
-import OptionsButton from './OptionsButton';
-import Dropdown from './shared/Dropdown';
-import { EditorContext } from './EditorContext';
-import PhotoCaptionModal from './PhotoCaptionModal';
-import { useClickOutside } from '../utils/ux';
-import PostHeaderTextBlock from './PostHeaderTextBlock';
-import { cloudUrl } from '../utils/cloudinary';
+import { PostContext } from "./PostContext";
+import OptionsButton from "./OptionsButton";
+import Dropdown from "./shared/Dropdown";
+import { EditorContext } from "./EditorContext";
+import PhotoCaptionModal from "./PhotoCaptionModal";
+import { useClickOutside } from "../utils/ux";
+import PostHeaderTextBlock from "./PostHeaderTextBlock";
+import { cloudUrl } from "../utils/cloudinary";
+import { HeroBannerType } from "../types/common";
 
-const HeroBanner = ({ element }) => {
+const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { heroImage, title, postLocation, date, subhead } =
     React.useContext(PostContext);
 
-  const {
-    setIsHeroImageModalOpen,
-    // isHeroImageModalOpen,
-    setIsPhotoCaptionOpen,
-    isPhotoCaptionOpen,
-  } = React.useContext(EditorContext);
+  const { setIsHeroImageModalOpen, setIsPhotoCaptionOpen, isPhotoCaptionOpen } =
+    React.useContext(EditorContext);
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const wrapperRef = React.useRef('menu');
-  useClickOutside(wrapperRef, (e) => {
-    setIsMenuOpen(false);
-    e.stopPropagation();
-  });
+  const wrapperRef = React.useRef();
+  useClickOutside(
+    wrapperRef,
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setIsMenuOpen(false);
+      e.stopPropagation();
+    }
+  );
 
   const menu = (
-    <Box sx={{ position: 'absolute', right: '10px', top: '20px' }}>
-      <Box sx={{ position: 'relative' }} ref={wrapperRef}>
+    <Box sx={{ position: "absolute", right: "10px", top: "20px" }}>
+      <Box sx={{ position: "relative" }} ref={wrapperRef}>
         <OptionsButton
           onClick={() => {
             if (isMenuOpen) {
@@ -49,7 +48,7 @@ const HeroBanner = ({ element }) => {
               setIsPhotoCaptionOpen(true);
               setIsMenuOpen(false);
             }}
-            variant='boxes.dropdownMenuItem'
+            variant="boxes.dropdownMenuItem"
           >
             Photo Caption
           </Box>
@@ -58,71 +57,53 @@ const HeroBanner = ({ element }) => {
               setIsHeroImageModalOpen(true);
               setIsMenuOpen(false);
             }}
-            variant='boxes.dropdownMenuItem'
+            variant="boxes.dropdownMenuItem"
           >
             Change Image
           </Box>
-          {/* <Box
-            onClick={() => Transforms.removeNodes(editor, { at: path })}
-            variant='boxes.dropdownMenuItem'
-          >
-            Remove
-          </Box> */}
         </Dropdown>
       </Box>
     </Box>
   );
 
-  const editor = useSlateStatic() as ReactEditor;
-
-  // const path = ReactEditor.findPath(editor, element);
-
+  console.log(heroImage);
   return (
     <>
       <Box
         sx={{
-          width: '100%',
-          marginBottom: '60px',
+          width: "100%",
+          marginBottom: "60px",
         }}
         contentEditable={false}
       >
         {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
         <Flex
           sx={{
-            height: 'fit-content',
-            flexDirection: ['column', 'row', 'row'],
-            width: '100%',
+            height: "fit-content",
+            flexDirection: ["column", "row", "row"],
+            width: "100%",
           }}
         >
           {!heroImage && (
             <Flex
               sx={{
-                width: ['100%', '65%', '65%'],
+                width: ["100%", "65%", "65%"],
 
-                background: 'divider',
-                justifyContent: 'center',
-                alignContent: 'center',
-                height: '600px',
-                // height: ['400px', '600px', '600px'],
-                // '@media (max-width: 400px)': {
-                //   height: '300px',
-                // },
-
-                // '@media only screen and (max-width: 600px) and (min-width: 400px)':
-                //   {
-                //     height: '400px',
-                //   },
-                '@media (min-width: 900px)': {
-                  height: '700px',
+                background: "divider",
+                justifyContent: "center",
+                alignContent: "center",
+                height: "600px",
+                "@media (min-width: 900px)": {
+                  height: "700px",
                 },
               }}
             >
               <Flex>
                 <Button
-                  type='button'
-                  variant='primaryButton'
+                  type="button"
+                  variant="primaryButton"
                   sx={{
-                    marginY: 'auto',
+                    marginY: "auto",
                   }}
                   onClick={() => setIsHeroImageModalOpen(true)}
                 >
@@ -131,44 +112,29 @@ const HeroBanner = ({ element }) => {
               </Flex>
             </Flex>
           )}
-          {heroImage && (
+          {heroImage && heroImage !== null ? (
             <Box
               sx={{
-                backgroundColor: heroImage.colors[0],
-                width: ['100%', '65%', '65%'],
-                display: ['inline-block', '', ''],
-                height: '600px',
-                // height: ['400px', '600px', '600px'],
-                // '@media (max-width: 400px)': {
-                //   height: '300px',
-                // },
-
-                // '@media only screen and (max-width: 600px) and (min-width: 400px)':
-                //   {
-                //     height: '400px',
-                //   },
-                '@media (min-width: 900px)': {
-                  height: '700px',
+                backgroundColor:
+                  heroImage && heroImage.colors ? heroImage.colors[0] : "black",
+                width: ["100%", "65%", "65%"],
+                display: ["inline-block", "", ""],
+                height: "600px",
+                "@media (min-width: 900px)": {
+                  height: "700px",
                 },
               }}
             >
               <CldImage
-                // as={CldImage}
                 priority={true}
                 width={heroImage.width}
                 height={heroImage.height}
                 src={heroImage.public_id}
-                // sizes='100vw'
-                alt='race pic'
+                alt="race pic"
                 style={{
-                  objectFit: 'contain',
-                  // height: '100%',
-                  maxWidth: '100%',
-                  maxHeight: '100%',
-
-                  // '@media (max-width: 600px)': { maxWidth: '300px' },
-                  // width: '100%',
-                  // width: ['100%', null, null],
+                  objectFit: "contain",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
                 }}
                 config={{
                   cloud: {
@@ -177,20 +143,22 @@ const HeroBanner = ({ element }) => {
                 }}
               />
             </Box>
+          ) : (
+            <></>
           )}
-          <Box sx={{ width: ['100%', '35%', '35%'] }}>
+          <Box sx={{ width: ["100%", "35%", "35%"] }}>
             <PostHeaderTextBlock
-              type={'Race'}
-              title={title ? title : 'Title'}
-              teaser={subhead ? subhead : 'Subhead'}
-              date={date ? date : 'Event date'}
-              location={postLocation ? postLocation : 'Location'}
+              type={"Race"}
+              title={title ? title : "Title"}
+              teaser={subhead ? subhead : "Subhead"}
+              date={date ? date : "Event date"}
+              location={postLocation ? postLocation : "Location"}
               headerImageCaption={
                 element.photoCaption
                   ? element.photoCaption
-                  : 'Enter caption here'
+                  : "Enter caption here"
               }
-              height='100%'
+              height="100%"
             />
           </Box>
 

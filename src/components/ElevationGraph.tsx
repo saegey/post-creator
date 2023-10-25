@@ -6,13 +6,13 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
-} from 'recharts';
-import { Box, Spinner, useThemeUI } from 'theme-ui';
-import React from 'react';
+} from "recharts";
+import { Box, Spinner, useThemeUI } from "theme-ui";
+import React from "react";
 
-import { useViewport } from './ViewportProvider';
-import GradeGradient from './GradeGradient';
-import { useUnits } from './UnitProvider';
+import { useViewport } from "./ViewportProvider";
+import GradeGradient from "./GradeGradient";
+import { useUnits } from "./UnitProvider";
 
 type ActivityEvent = {
   c: Array<number> | Array<null>;
@@ -71,19 +71,19 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
   return (
     <Box
       sx={{
-        width: '100%',
-        height: ['150px', '200px', '300px'],
-        borderWidth: '1px',
+        width: "100%",
+        height: ["150px", "200px", "300px"],
+        borderWidth: "1px",
         // paddingY: [0, '20px', '20px'],
         paddingX: 0,
       }}
     >
-      <ResponsiveContainer width='100%' height='100%'>
+      <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={downSampledData}
           onMouseMove={(e) => {
             if (!e || !e.activePayload) {
-              setMarker({ t: '' });
+              setMarker({ t: "" });
               return;
             }
 
@@ -97,22 +97,22 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
 
           <Tooltip content={<></>} />
           <defs>
-            <linearGradient id='splitColor' x1='0' y1='0' x2='1' y2='0'>
+            <linearGradient id="splitColor" x1="0" y1="0" x2="1" y2="0">
               <GradeGradient data={downSampledData} xMax={xMax} />
             </linearGradient>
           </defs>
           {!hideAxes && (
             <XAxis
-              dataKey='d'
-              type='number'
+              dataKey="d"
+              type="number"
               ticks={calcTicks()}
               domain={[0, xMax]}
               tickCount={5}
               interval={0}
               label={{
                 value: `Distance (${units.distanceUnit})`,
-                position: 'bottom',
-                fontSize: '14px',
+                position: "bottom",
+                fontSize: "14px",
               }}
               allowDecimals={true}
               tickFormatter={(t) => {
@@ -120,7 +120,7 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
               }}
               tick={{
                 fill: themeContext?.theme?.colors?.text as string,
-                fontSize: '14px',
+                fontSize: "14px",
               }}
               hide={hideAxes}
               stroke={themeContext?.theme?.colors?.chartAxes as string}
@@ -128,28 +128,28 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
           )}
           {!hideAxes && (
             <YAxis
-              type='number'
+              type="number"
               label={{
                 value: `Elevation (${units.elevationUnit})`,
                 angle: -90,
-                position: 'left',
-                fontSize: '14px',
+                position: "left",
+                fontSize: "14px",
               }}
-              dataKey='e'
+              dataKey="e"
               tick={{
                 fill: themeContext?.theme?.colors?.text as string,
-                fontSize: '14px',
+                fontSize: "14px",
               }}
               stroke={themeContext?.theme?.colors?.chartAxes as string}
               hide={hideAxes}
             />
           )}
           <Area
-            type='basisOpen'
-            dataKey='e'
-            stroke='url(#splitColor)'
+            type="basisOpen"
+            dataKey="e"
+            stroke="url(#splitColor)"
             strokeWidth={3}
-            fill='gray'
+            fill="gray"
             fillOpacity={0.1}
             dot={false}
           />

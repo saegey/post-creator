@@ -1,34 +1,23 @@
+import { Transforms, Node, Element as SlateElement, Editor } from "slate";
+
 import {
-  Transforms,
-  Node,
-  Element as SlateElement,
-  Descendant,
-  Editor,
-  BaseElement,
-} from 'slate';
+  CustomEditor,
+  CustomElement,
+  HeroBannerType,
+  ParagraphElement,
+  PostAuthor,
+} from "../types/common";
 
-export type ParagraphElement = {
-  type: 'paragraph';
-  align?: string;
-  children: Descendant[];
-};
-
-export type CustomElement = {
-  type: string;
-  children: Descendant[];
-};
-
-export type TitleElement = { type: 'heroBanner'; children: Descendant[] };
-
-const withLayout = (editor) => {
+const withLayout = (editor: CustomEditor) => {
   const { normalizeNode } = editor;
 
   editor.normalizeNode = ([node, path]) => {
     if (path.length === 0) {
-      if (editor.children.length <= 1 && Editor.string(editor, [0, 0]) === '') {
-        const title: TitleElement = {
-          type: 'heroBanner',
-          children: [{ text: '' }],
+      if (editor.children.length <= 1 && Editor.string(editor, [0, 0]) === "") {
+        const title: HeroBannerType = {
+          type: "heroBanner",
+          children: [{ text: "" }],
+          void: true,
         };
         Transforms.insertNodes(editor, title, {
           at: path.concat(0),
@@ -38,17 +27,17 @@ const withLayout = (editor) => {
 
       if (editor.children.length < 2) {
         const postAuthor = {
-          type: 'postAuthor',
-          children: [{ text: '' }],
-        };
+          type: "postAuthor",
+          children: [{ text: "" }],
+        } as PostAuthor;
 
         Transforms.insertNodes(editor, postAuthor, { at: path.concat(1) });
       }
 
       if (editor.children.length < 3) {
         const paragraph: ParagraphElement = {
-          type: 'paragraph',
-          children: [{ text: '' }],
+          type: "paragraph",
+          children: [{ text: "" }],
         };
         Transforms.insertNodes(editor, paragraph, { at: path.concat(2) });
       }
@@ -58,14 +47,14 @@ const withLayout = (editor) => {
         let type: string;
         const slateIndex = childPath[0];
         const childType = child.type as string;
-        const enforceType = (type) => {
+        const enforceType = (type: string) => {
           if (
             SlateElement.isElement(child) &&
             childType !== type &&
-            type === 'postAuthor'
+            type === "postAuthor"
           ) {
             const newProperties: Partial<CustomElement> = { type };
-            Transforms.setNodes<BaseElement>(editor, newProperties, {
+            Transforms.setNodes<CustomElement>(editor, newProperties, {
               at: childPath,
             });
           }
@@ -73,14 +62,14 @@ const withLayout = (editor) => {
 
         switch (slateIndex) {
           case 0:
-            type = 'heroBanner';
+            type = "heroBanner";
             enforceType(type);
             break;
           case 1:
-            type = 'paragraph';
+            type = "paragraph";
             enforceType(type);
           case 2:
-            type = 'postAuthor';
+            type = "postAuthor";
           // enforceType(type);
           default:
             break;

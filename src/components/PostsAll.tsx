@@ -2,7 +2,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import { Grid, Box, Button, Flex, Text, NavLink } from 'theme-ui';
 import { API, Auth } from 'aws-amplify';
 import { GraphQLResult } from '@aws-amplify/api';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 
@@ -16,18 +16,45 @@ import {
   listPostsCustom,
 } from '../../src/graphql/customQueries';
 
+interface ListPostsByCreatedAtTypes {
+  listPostsByCreatedAt: {
+    items: Array<{
+      id: string;
+      title: string;
+      createdAt: string;
+      images: string;
+      author: {
+        id: string;
+        username: string;
+        fullName: string;
+        image: string;
+      };
+      privacyStatus: string;
+    }>;
+  };
+}
+
+interface ListPublishedPostsByCreatedAtTypes {
+  listPublishedPostsByCreatedAt: {
+    items: Array<{
+      id: string;
+      title: string;
+      createdAt: string;
+      images: string;
+      author: string;
+      privacyStatus?: string;
+    }>;
+  };
+}
+
 const PostsAll = ({
   signOut,
   user,
-  // posts,
   view = 'all',
-}: // getData,
-{
+}: {
   signOut?: any;
   user?: any;
-  // posts: PostType | undefined;
   view: string;
-  // getData: (string) => {};
 }) => {
   const router = useRouter();
 
@@ -35,16 +62,17 @@ const PostsAll = ({
   const [posts, setPosts] = React.useState<PostType>();
 
   const searchParams = useSearchParams();
+  console.log('searchParams', searchParams.get('status'));
 
   const search = searchParams.get('status');
-  if (search && !status) {
+  if (search && (!status || search !== status)) {
     setStatus(search);
   } else if (!search && !status) {
     setStatus('draft');
   }
 
   const getDraftPosts = async (type = 'draft') => {
-    const response: any = await API.graphql({
+    const response = (await API.graphql({
       query: listMyPostsCustom,
       authMode: 'AMAZON_COGNITO_USER_POOLS',
       variables: {
@@ -57,30 +85,34 @@ const PostsAll = ({
           },
         },
       },
-    });
+    })) as GraphQLResult<ListPostsByCreatedAtTypes>;
 
     setPosts(
-      response.data.listPostsByCreatedAt.items.map((d) => {
+      response.data?.listPostsByCreatedAt.items.map((d) => {
         return { ...d, imagesObj: JSON.parse(d.images) };
       })
     );
   };
 
   const getPublishedPost = async () => {
-    const user = await Auth.currentAuthenticatedUser();
-    const response: any = await API.graphql({
+    const response = (await API.graphql({
       query: listPostsCustom,
       authMode: 'AMAZON_COGNITO_USER_POOLS',
-    });
+    })) as GraphQLResult<ListPublishedPostsByCreatedAtTypes>;
 
     setPosts(
-      response.data.listPublishedPostsByCreatedAt.items.map((d) => {
-        return { ...d, imagesObj: JSON.parse(d.images) };
+      response.data?.listPublishedPostsByCreatedAt.items.map((d) => {
+        return {
+          ...d,
+          imagesObj: JSON.parse(d.images),
+          author: JSON.parse(d.author),
+        };
       })
     );
   };
 
   React.useEffect(() => {
+    console.log('useffeect', status);
     if (status === 'draft') {
       getDraftPosts();
     }
@@ -105,6 +137,7 @@ const PostsAll = ({
         },
       },
     })) as GraphQLResult<CreatePostMutation>;
+
     if (!response || !response.data || !response.data.createPost) {
       console.error('failed to create post');
     }

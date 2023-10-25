@@ -1,41 +1,49 @@
-import React from 'react';
-import { useSlateStatic, ReactEditor } from 'slate-react';
-import dynamic from 'next/dynamic';
-import { Box, Spinner, Flex } from 'theme-ui';
-import { Transforms } from 'slate';
+import React from "react";
+import { useSlateStatic, ReactEditor } from "slate-react";
+import dynamic from "next/dynamic";
+import { Box, Spinner, Flex } from "theme-ui";
+import { Transforms } from "slate";
 
-import { PostContext } from './PostContext';
-import OptionsButton from './OptionsButton';
-import Dropdown from './shared/Dropdown';
-import { useClickOutside } from '../utils/ux';
+import { PostContext } from "./PostContext";
+import OptionsButton from "./OptionsButton";
+import Dropdown from "./shared/Dropdown";
+import { useClickOutside } from "../utils/ux";
+import { VisualOverviewType } from "../types/common";
 
-const VisualOverview = dynamic(import('./VisualOverview'), {
+const VisualOverview = dynamic(import("./VisualOverview"), {
   ssr: false,
 }); // Async API cannot be server-side rendered
 
-const VisualOverviewWrapper = ({ element }) => {
+const VisualOverviewWrapper = ({
+  element,
+}: {
+  element: VisualOverviewType;
+}) => {
   const { activity } = React.useContext(PostContext);
-  const editor = useSlateStatic() as ReactEditor;
+  const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const wrapperRef = React.useRef();
 
-  const wrapperRef = React.useRef('menu');
-  useClickOutside(wrapperRef, (e) => {
-    setIsMenuOpen(false);
-    e.stopPropagation();
-  });
+  useClickOutside(
+    wrapperRef,
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setIsMenuOpen(false);
+      e.stopPropagation();
+    }
+  );
 
   if (!activity || activity.length === 0) {
     return (
       <Flex
         sx={{
-          width: '900px',
-          marginX: 'auto',
-          backgroundColor: 'divider',
-          borderRadius: '5px',
+          width: "900px",
+          marginX: "auto",
+          backgroundColor: "divider",
+          borderRadius: "5px",
         }}
       >
-        <Spinner sx={{ margin: 'auto' }} />
+        <Spinner sx={{ margin: "auto" }} />
       </Flex>
     );
   }
@@ -50,16 +58,16 @@ const VisualOverviewWrapper = ({ element }) => {
 
   return (
     <Box
-      sx={{ position: 'relative', maxWidth: '900px', marginX: 'auto' }}
+      sx={{ position: "relative", maxWidth: "900px", marginX: "auto" }}
       contentEditable={false}
     >
       <VisualOverview
         activity={fixedData}
         token={
-          'pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg'
+          "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
         }
       />
-      <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
+      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
         <OptionsButton
           onClick={() => {
             if (isMenuOpen) {
@@ -76,7 +84,7 @@ const VisualOverviewWrapper = ({ element }) => {
                 Transforms.removeNodes(editor, { at: path });
                 setIsMenuOpen(false);
               }}
-              variant='boxes.dropdownMenuItem'
+              variant="boxes.dropdownMenuItem"
             >
               Remove
             </Box>

@@ -1,36 +1,28 @@
-import { Box, Flex, Button, Text, Input, Progress, Close } from 'theme-ui';
-import React from 'react';
-import { GraphQLResult } from '@aws-amplify/api';
-import { Storage, API, PubSub, Auth } from 'aws-amplify';
+import { Box, Flex, Button, Text, Input, Progress, Close } from "theme-ui";
+import React from "react";
+import { GraphQLResult } from "@aws-amplify/api";
+import { Storage, API, PubSub, Auth } from "aws-amplify";
 
-import { UpdatePostMutation } from '../../src/API';
-import { updatePost } from '../../src/graphql/mutations';
-import BlackBox from './layout/BlackBox';
-import { PostContext, PostContextType } from './PostContext';
-import { getActivity, getPostQuery } from '../actions/PostGet';
+import { UpdatePostMutation } from "../../src/API";
+import { updatePost } from "../../src/graphql/mutations";
+import BlackBox from "./layout/BlackBox";
+import { PostContext, PostContextType } from "./PostContext";
+import { getActivity } from "../actions/PostGet";
 import {
   attachIoTPolicyToUser,
   configurePubSub,
   getEndpoint,
-} from '../../src/actions/PubSub';
-import { EditorContext } from './EditorContext';
-import { getPostInitial } from '../../src/graphql/customQueries';
-
-const processStatuses = {
-  'file-downloaded': 'File being downloaded for processing.',
-  'meta-downloaded': 'File metadata being fetched',
-  'xml-parse': 'XML is being parsed',
-  'gpx-parse': 'GPX XML is being converted to GeoJSON',
-  'process-data': 'Data is being processed and calculating metrics',
-  'update-data': 'Metrics are being saved',
-};
+} from "../../src/actions/PubSub";
+import { EditorContext } from "./EditorContext";
+import { getPostInitial } from "../../src/graphql/customQueries";
+import { ZenObservable } from "zen-observable-ts";
 
 const UploadGpxModal = () => {
   const [fileData, setFileData] = React.useState<File>();
   const [isUploading, setIsUploading] = React.useState(false);
   const [progress, setProgress] = React.useState({ loaded: 0, total: 0 });
   const [processingGpxStatus, setProcessingGpxStatus] =
-    React.useState('Pending');
+    React.useState("Pending");
   const [processingFile, setIsProcessingFile] = React.useState(false);
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
 
@@ -69,21 +61,21 @@ const UploadGpxModal = () => {
       progressCallback(progress) {
         setProgress({ loaded: progress.loaded, total: progress.total });
         if (progress.total === progress.loaded) {
-          setProcessingGpxStatus('File successfully uploaded');
+          setProcessingGpxStatus("File successfully uploaded");
         }
       },
       metadata: {
-        postId: id ? id : '',
-        currentFtp: currentFtp ? currentFtp : '0',
+        postId: id ? id : "",
+        currentFtp: (currentFtp ? currentFtp : 0).toString(),
         identityId: user.identityId,
       },
       contentType: fileData.type,
-      level: 'private',
+      level: "private",
     });
 
     try {
       (await API.graphql({
-        authMode: 'AMAZON_COGNITO_USER_POOLS',
+        authMode: "AMAZON_COGNITO_USER_POOLS",
         query: updatePost,
         variables: {
           input: {
@@ -101,7 +93,7 @@ const UploadGpxModal = () => {
   const getPost = async () => {
     const { data } = (await API.graphql({
       query: getPostInitial,
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      authMode: "AMAZON_COGNITO_USER_POOLS",
       variables: {
         id: id,
       },
@@ -140,14 +132,14 @@ const UploadGpxModal = () => {
       // customPrefix: {
       //   public: 'private/us-east-1:29b6299d-6fd7-44d5-a53e-2a94fdf5401d/',
       // },
-      level: 'private',
+      level: "private",
     });
     const timeSeriesData = await new Response(result.Body).json();
     setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
     const activity = await getActivity(timeSeriesData);
 
     setActivity && setActivity(activity);
-    setProcessingGpxStatus('GPX file has been processed and analyzed');
+    setProcessingGpxStatus("GPX file has been processed and analyzed");
     setIsProcessingFile(false);
   };
 
@@ -161,10 +153,29 @@ const UploadGpxModal = () => {
 
     return PubSub.subscribe(`post-${id}`).subscribe({
       next: (data: any) => {
-        const phase = data.value.phase;
-        setProcessingGpxStatus(processStatuses[data.value.phase]);
+        const phase = data.value.phase as string;
+        if (phase === "file-downloaded") {
+          setProcessingGpxStatus("File being downloaded for processing.");
+        }
+        if (phase === "meta-downloaded") {
+          setProcessingGpxStatus("File metadata being fetched.");
+        }
+        if (phase === "xml-parse") {
+          setProcessingGpxStatus("XML is being parsed.");
+        }
 
-        if (phase === 'update-data') {
+        if (phase === "gpx-parse") {
+          setProcessingGpxStatus("GPX XML is being converted to GeoJSON.");
+        }
+
+        if (phase === "process-data") {
+          setProcessingGpxStatus(
+            "Data is being processed and calculating metrics."
+          );
+        }
+
+        if (phase === "update-data") {
+          setProcessingGpxStatus("Metrics are being saved.");
           getPost();
         }
       },
@@ -173,7 +184,7 @@ const UploadGpxModal = () => {
   };
 
   React.useEffect(() => {
-    let subUpdates;
+    let subUpdates: ZenObservable.Subscription;
 
     setUpSub().then((sub) => {
       subUpdates = sub;
@@ -190,27 +201,27 @@ const UploadGpxModal = () => {
     <BlackBox>
       <Box
         sx={{
-          width: '80%',
-          maxWidth: '710px',
-          margin: 'auto',
-          background: 'background',
-          borderRadius: '5px',
-          padding: '20px',
+          width: "80%",
+          maxWidth: "710px",
+          margin: "auto",
+          background: "background",
+          borderRadius: "5px",
+          padding: "20px",
           zIndex: 5000,
         }}
       >
         <Flex
           sx={{
-            borderBottomColor: 'divider',
-            borderBottomStyle: 'solid',
-            borderBottomWidth: '1px',
+            borderBottomColor: "divider",
+            borderBottomStyle: "solid",
+            borderBottomWidth: "1px",
           }}
         >
           <Box>
             <Text
-              as='div'
+              as="div"
               sx={{
-                fontSize: '20px',
+                fontSize: "20px",
                 fontWeight: 600,
               }}
             >
@@ -219,7 +230,7 @@ const UploadGpxModal = () => {
           </Box>
           <Box
             sx={{
-              marginLeft: 'auto',
+              marginLeft: "auto",
             }}
           >
             <Close
@@ -231,17 +242,17 @@ const UploadGpxModal = () => {
         </Flex>
 
         <Box>
-          <Box sx={{ marginY: '20px' }}>
+          <Box sx={{ marginY: "20px" }}>
             <Input
-              type='file'
-              variant='defaultInput'
+              type="file"
+              variant="defaultInput"
               disabled={isUploading}
               // sx={{ marginY: '20px', border: '1px solid #cdcdcd' }}
               onChange={(e) => {
                 if (e.target && e.target.files && e.target.files.length > 0) {
                   setFileData(e.target?.files[0]);
                 } else {
-                  console.log('no file attached');
+                  console.log("no file attached");
                 }
               }}
             />
@@ -249,13 +260,13 @@ const UploadGpxModal = () => {
           <Box>
             <Button
               onClick={uploadFile}
-              variant='primaryButton'
+              variant="primaryButton"
               disabled={processingFile}
             >
               Upload
             </Button>
           </Box>
-          <Box sx={{ marginTop: '20px' }}>
+          <Box sx={{ marginTop: "20px" }}>
             {progress.loaded > 0 && (
               <>
                 <Progress
@@ -268,10 +279,10 @@ const UploadGpxModal = () => {
               </>
             )}
           </Box>
-          <Text as='span'>
+          <Text as="span">
             {progress.total === progress.loaded && progress.loaded !== 0
               ? processingGpxStatus
-              : ''}
+              : ""}
           </Text>
         </Box>
       </Box>

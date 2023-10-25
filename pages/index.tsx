@@ -1,41 +1,42 @@
-import { withSSRContext } from 'aws-amplify';
-import Head from 'next/head';
-import React from 'react';
+import { withSSRContext } from "aws-amplify";
+import Head from "next/head";
+import React from "react";
+import { NextApiRequest } from "next";
+import { GraphQLResult } from "@aws-amplify/api";
 
-import { listPostsCustom } from '../src/graphql/customQueries';
-import { CloudinaryImage } from '../src/components/AddImage';
-import AuthCustom from '../src/components/AuthCustom';
-import PostsAllUsers from '../src/components/PostsAllUsers';
+import { listPostsCustom } from "../src/graphql/customQueries";
+import { CloudinaryImage } from "../src/components/AddImage";
+import AuthCustom from "../src/components/AuthCustom";
+import PostsAllUsers from "../src/components/PostsAllUsers";
+import { ListPostsCustom } from "../src/API";
+import { CognitoUserExt } from "../src/types/common";
 
-type ListPosts = {
-  data: {
-    listPublishedPostsByCreatedAt: {
-      items: Array<{
-        id: string;
-        title: string;
-        images: string;
-        author: string;
-      }>;
-    };
-  };
-};
-
-export const getServerSideProps = async ({ req }) => {
+export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
 
   try {
-    const response: ListPosts = await SSR.API.graphql({
+    const response = (await SSR.API.graphql({
       query: listPostsCustom,
-      authMode: 'API_KEY',
-    });
+      authMode: "API_KEY",
+    })) as GraphQLResult<ListPostsCustom>;
 
     return {
       props: {
-        posts: response.data.listPublishedPostsByCreatedAt.items.map((d) => {
+        posts: response?.data?.listPublishedPostsByCreatedAt?.items.map((d) => {
           return {
             ...d,
-            imagesObj: JSON.parse(d.images),
-            author: JSON.parse(d.author),
+            imagesObj: JSON.parse(d.images ? d.images : ""),
+            author: JSON.parse(d.author ? d.author : "") as {
+              __typename: "User";
+              id: string;
+              fullName: string;
+              email: string;
+              image?: string | null;
+              username?: string | null;
+              createdAt: string;
+              updatedAt: string;
+              owner?: string | null;
+            },
           };
         }),
       },
@@ -49,8 +50,8 @@ export const getServerSideProps = async ({ req }) => {
 };
 
 type HomeProps = {
-  signOut: () => {};
-  user: object;
+  signOut: () => void;
+  user: CognitoUserExt;
   posts: Array<{
     id: string;
     title: string;
@@ -61,16 +62,17 @@ type HomeProps = {
       username: string;
       image: string;
     };
+    privacyStatus: string;
   }>;
 };
 
-const Home = ({ signOut, user, posts = [] }: HomeProps) => {
+const Home = ({ posts = [] }: HomeProps) => {
   return (
     <AuthCustom>
       <>
         <Head>
           <title>Home</title>
-          <link rel='icon' href='/favicon.ico' />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <PostsAllUsers posts={posts} />
       </>

@@ -1,19 +1,21 @@
-import { Box } from 'theme-ui';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import { Box } from "theme-ui";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import React from "react";
+import { useRouter } from "next/navigation";
 
-import PostEditor from '../../src/components/PostEditor';
-import Header from '../../src/components/Header';
-import { EditorContext } from '../../src/components/EditorContext';
+import PostEditor from "../../src/components/PostEditor";
+import Header from "../../src/components/Header";
+import { EditorContext } from "../../src/components/EditorContext";
+import { CognitoUserExt } from "../types/common";
 
 type EditUserPostProps = {
-  user?: any;
+  user?: CognitoUserExt;
   postComponents: any;
   postId: string;
   author: any;
-  signOut?: any;
+  signOut?: () => void;
 };
+
 const EditUserPost = ({
   user,
   postComponents,
@@ -32,24 +34,28 @@ const EditUserPost = ({
     React.useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState(false);
   const [isSavingPost, setIsSavingPost] = React.useState(false);
-  const [savingStatus, setSavingStatus] = React.useState('');
+  const [savingStatus, setSavingStatus] = React.useState("");
   const [isPublishedConfirmationOpen, setIsPublishedConfirmationOpen] =
     React.useState(false);
 
   const { push } = useRouter();
-  // console.log(postComponents);
 
   React.useEffect(() => {
-    if (user.attributes.sub !== author.id) {
+    if (user?.attributes.sub !== author.id) {
       push(`/posts/${postId}`);
     }
   }, []);
 
+  if (!user) {
+    push("/");
+    return;
+  }
+
   return (
     <Box
-      as='main'
+      as="main"
       sx={{
-        width: '100vw',
+        width: "100vw",
         flexGrow: 1,
       }}
     >
@@ -83,8 +89,7 @@ const EditUserPost = ({
             setIsPublishedConfirmationOpen,
           }}
         >
-
-          <PostEditor postId={postId} initialState={postComponents} />
+          <PostEditor initialState={postComponents} />
         </EditorContext.Provider>
       </Box>
     </Box>

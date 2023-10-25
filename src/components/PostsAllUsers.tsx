@@ -16,6 +16,7 @@ export type PostType = Array<{
     username: string;
     image: string;
   };
+  privacyStatus: string;
 }>;
 
 const PostsAllUsers = ({
@@ -42,9 +43,9 @@ const PostsAllUsers = ({
           {posts &&
             posts.map((post, i) => {
               return (
-                <div key={`postcard-${i}`}>
+                <Box key={`postcard-${i}`}>
                   <PostCard post={post} />
-                </div>
+                </Box>
               );
             })}
         </Grid>

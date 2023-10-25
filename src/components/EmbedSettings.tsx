@@ -1,17 +1,24 @@
-import { Flex, Box, Label, Input, Button, Text } from 'theme-ui';
-import { Descendant, Transforms, Element as SlateElement } from 'slate';
+import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
+import { Transforms, Element as SlateElement } from "slate";
+import { CustomEditor } from "../types/common";
 
-const EmbedSettings = ({ editor, isModalOpen }) => {
+const EmbedSettings = ({
+  editor,
+  isModalOpen,
+}: {
+  editor: CustomEditor;
+  isModalOpen: (arg0: boolean) => void;
+}) => {
   return (
-    <Flex sx={{ gap: '10px', flexDirection: 'row', marginTop: '15px' }}>
+    <Flex sx={{ gap: "10px", flexDirection: "row", marginTop: "15px" }}>
       <form
         onSubmit={(event: any) => {
           event.preventDefault();
           const form = new FormData(event.target);
-          const el = document.createElement('html');
-          el.innerHTML = form.get('url') as string;
+          const el = document.createElement("html");
+          el.innerHTML = form.get("url") as string;
 
-          const iframe = el.querySelector('iframe');
+          const iframe = el.querySelector("iframe");
           if (!iframe) {
             return;
           }
@@ -19,27 +26,27 @@ const EmbedSettings = ({ editor, isModalOpen }) => {
           const finalUrl = `https://ridewithgps.com/embeds?${url.search}`;
           Transforms.insertNodes<SlateElement>(editor, [
             {
-              type: 'embed',
+              type: "embed",
               void: true,
               url: finalUrl,
-              children: [{ text: '' }],
-            } as Descendant,
+              children: [{ text: "" }],
+            },
           ]);
           isModalOpen(false);
         }}
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
-        <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
+        <Flex sx={{ gap: "20px", flexDirection: "column" }}>
           <Box>
-            <Label htmlFor='url' variant='defaultLabel'>
+            <Label htmlFor="url" variant="defaultLabel">
               Embed Code
             </Label>
-            <Input id='url' name='url' variant={'defaultInput'} />
+            <Input id="url" name="url" variant={"defaultInput"} />
           </Box>
-          <Box sx={{ marginLeft: 'auto' }}>
-            <Button variant='primaryButton'>
-              <Flex sx={{ gap: '10px' }}>
-                <Text as='span'>Save</Text>
+          <Box sx={{ marginLeft: "auto" }}>
+            <Button variant="primaryButton">
+              <Flex sx={{ gap: "10px" }}>
+                <Text as="span">Save</Text>
               </Flex>
             </Button>
           </Box>

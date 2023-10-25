@@ -1,5 +1,5 @@
-import length from '@turf/length';
-import { lineString } from '@turf/helpers';
+import length from "@turf/length";
+import { lineString } from "@turf/helpers";
 
 type Coordinate = [number, number, number];
 type ProcessedCoordinate = {
@@ -40,7 +40,7 @@ export const downsampleElevation = (
           [coordinates[index][0], coordinates[index][1]],
           [coordinates[index + 1][0], coordinates[index + 1][1]],
         ]),
-        { units: 'meters' }
+        { units: "meters" }
       );
       distances.push(totalDistance);
     }
@@ -92,16 +92,16 @@ export const calcPowerZoneBuckets = ({
 
 export const calcPowerZones = (ftp: number) => {
   const zonesPercent = [
-    { zone: 0, title: 'Not pedaling', powerLow: '0', powerHigh: '0' },
-    { zone: 1, title: 'Active Recovery', powerLow: '1', powerHigh: '56' },
-    { zone: 2, title: 'Endurance', powerLow: '56', powerHigh: '76' },
-    { zone: 3, title: 'Tempo', powerLow: '76', powerHigh: '91' },
-    { zone: 4, title: 'Threshold', powerLow: '91', powerHigh: '106' },
-    { zone: 5, title: 'VO2max', powerLow: '106', powerHigh: '121' },
+    { zone: 0, title: "Not pedaling", powerLow: "0", powerHigh: "0" },
+    { zone: 1, title: "Active Recovery", powerLow: "1", powerHigh: "56" },
+    { zone: 2, title: "Endurance", powerLow: "56", powerHigh: "76" },
+    { zone: 3, title: "Tempo", powerLow: "76", powerHigh: "91" },
+    { zone: 4, title: "Threshold", powerLow: "91", powerHigh: "106" },
+    { zone: 5, title: "VO2max", powerLow: "106", powerHigh: "121" },
     {
       zone: 6,
-      title: 'Anaerobic Capacity',
-      powerLow: '121',
+      title: "Anaerobic Capacity",
+      powerLow: "121",
       powerHigh: null,
     },
   ];
@@ -149,13 +149,13 @@ type timeInRedType = {
 };
 export const timeInRed = ({ powers, ftp }: timeInRedType) => {
   let secsInRed = 0;
-  powers.map((p) => (p > ftp ? (secsInRed += 1) : ''));
+  powers.map((p) => (p > ftp ? (secsInRed += 1) : ""));
   return secsInRed;
 };
 
 export const totalWattsOverFtp = ({ powers, ftp }: timeInRedType) => {
   let total = 0;
-  powers.map((p) => (p > ftp ? (total += p - ftp) : ''));
+  powers.map((p) => (p > ftp ? (total += p - ftp) : ""));
   return total;
 };
 
@@ -194,7 +194,10 @@ export const calcMatchesBurned = (powers: number[], times: Date[]) => {
   } while (index < powers.length);
 
   const formatted = matches.map((m) => {
-    const totalJoules = m.vals.reduce((partialSum, a) => partialSum + a, 0);
+    const totalJoules = m.vals.reduce(
+      (partialSum: number, a: number) => partialSum + a,
+      0
+    );
     return {
       totalJoules: totalJoules,
       vals: m.vals,
@@ -223,7 +226,7 @@ export const calcBestPowers = (
   const averagePower = Math.round(sum / filteredVals.length);
 
   const response: Record<number | string, number> = {};
-  response['entire'] = averagePower;
+  response["entire"] = averagePower;
 
   times.forEach((time) => {
     if (time > filteredVals.length) return;

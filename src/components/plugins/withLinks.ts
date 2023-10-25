@@ -1,7 +1,10 @@
-const withLinks = (editor) => {
+import { CustomEditor } from "../../types/common";
+
+const withLinks = (editor: CustomEditor) => {
   const { isInline } = editor;
+
   editor.isInline = (element) =>
-    element.type === 'link' ? true : isInline(element);
+    element.type === "link" ? true : isInline(element);
   return editor;
 };
 

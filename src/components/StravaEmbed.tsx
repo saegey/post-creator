@@ -1,58 +1,53 @@
-import { Flex, Box, Label, Input, Button, Spinner, Text } from 'theme-ui';
-import {
-  Descendant,
-  Transforms,
-  Element as SlateElement,
-  EditorVoidOptions,
-} from 'slate';
+import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
+import { Transforms, Element as SlateElement } from "slate";
 
-const StravaEmbed = ({ editor, isModalOpen }) => {
+import { CustomEditor, ParagraphElement } from "../types/common";
+
+interface StravaEmbedProps {
+  editor: CustomEditor;
+  isModalOpen: (arg: boolean) => void;
+}
+const StravaEmbed = ({ editor, isModalOpen }: StravaEmbedProps) => {
   return (
-    <Flex sx={{ gap: '10px', flexDirection: 'row', marginTop: '15px' }}>
+    <Flex sx={{ gap: "10px", flexDirection: "row", marginTop: "15px" }}>
       <form
         onSubmit={(event: any) => {
           event.preventDefault();
           const form = new FormData(event.target);
-          // const el = document.createElement('html');
-          const inputUrl = form.get('url') as string;
-
-          // const divContent = el.querySelector('div');
-          // if (!iframe) {
-          //   return;
-          // }
+          const inputUrl = form.get("url") as string;
           const url = new URL(inputUrl);
           const activityId = JSON.stringify(url.pathname.match(/(\d+)/));
-          console.log(activityId);
-          // const finalUrl = `https://ridewithgps.com/embeds?${url.search}`;
+
           Transforms.insertNodes<SlateElement>(editor, [
             {
-              type: 'stravaEmbed',
+              type: "stravaEmbed",
               void: true,
               activityId: JSON.parse(activityId)[0],
-              children: [{ text: '' }],
-            } as Descendant,
-            { type: 'matchesBurned', children: [{ text: '' }] } as Descendant,
+              children: [{ text: "" }],
+            },
+            { type: "paragraph", children: [{ text: "" }] } as ParagraphElement,
           ]);
+
           isModalOpen(false);
         }}
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
-        <Flex sx={{ gap: '20px', flexDirection: 'column' }}>
+        <Flex sx={{ gap: "20px", flexDirection: "column" }}>
           <Box>
-            <Label htmlFor='url' variant='defaultLabel'>
+            <Label htmlFor="url" variant="defaultLabel">
               Link to Strava activity
             </Label>
             <Input
-              id='url'
-              name='url'
-              placeholder='https://www.strava.com/activities/xxxxxxxxx'
-              variant={'defaultInput'}
+              id="url"
+              name="url"
+              placeholder="https://www.strava.com/activities/xxxxxxxxx"
+              variant={"defaultInput"}
             />
           </Box>
-          <Box sx={{ marginLeft: 'auto' }}>
-            <Button variant='primaryButton'>
-              <Flex sx={{ gap: '10px' }}>
-                <Text as='span'>Save</Text>
+          <Box sx={{ marginLeft: "auto" }}>
+            <Button variant="primaryButton">
+              <Flex sx={{ gap: "10px" }}>
+                <Text as="span">Save</Text>
               </Flex>
             </Button>
           </Box>

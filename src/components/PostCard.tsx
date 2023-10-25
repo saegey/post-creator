@@ -1,9 +1,25 @@
-import { Button, Box, Grid, Link as ThemeLink, Flex, Text } from 'theme-ui';
+import { Box, Link as ThemeLink, Flex, Text } from 'theme-ui';
 import React from 'react';
 import Link from 'next/link';
 import { CldImage } from 'next-cloudinary';
+import { CloudinaryImage } from './AddImage';
 
-const PostCard = ({ post, showAuthor = true }) => {
+interface PostCardProps {
+  post: {
+    id: string;
+    author: {
+      username: string;
+      fullName: string;
+      image: string;
+    };
+    title: string;
+    privacyStatus?: string;
+    imagesObj: Array<CloudinaryImage>;
+  };
+  showAuthor?: boolean;
+}
+
+const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
   return (
     <Box
       sx={{ listStyleType: 'none', '&:hover': { cursor: 'pointer' } }}
@@ -98,7 +114,7 @@ const PostCard = ({ post, showAuthor = true }) => {
                       borderRadius: '100%',
                     }}
                     // preserveTransformations
-                    underlay={post.author?.image}
+                    // underlay={post.author?.image}
                     quality={90}
                     sizes='100vw'
                     alt='Description of my image'

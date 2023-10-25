@@ -1,14 +1,22 @@
-import { withSSRContext } from 'aws-amplify';
-import Head from 'next/head';
-import React from 'react';
-import { Amplify, Auth } from 'aws-amplify';
+import { withSSRContext } from "aws-amplify";
+import Head from "next/head";
+import React from "react";
+import { GraphQLResult } from "@aws-amplify/api";
+import { CloudinaryImage } from "../../../src/components/AddImage";
 
-// import awsconfig from '../../../src/aws-exports';
-import { PostContext } from '../../../src/components/PostContext';
-import { getPostInitial } from '../../../src/graphql/customQueries';
-import AuthCustom from '../../../src/components/AuthCustom';
-import EditUserPost from '../../../src/components/EditUserPost';
-// Amplify.configure(awsconfig);
+import {
+  PostContext,
+  RaceResultRow,
+} from "../../../src/components/PostContext";
+import { getPostInitial } from "../../../src/graphql/customQueries";
+import AuthCustom from "../../../src/components/AuthCustom";
+import EditUserPost from "../../../src/components/EditUserPost";
+import { GetPostInitialQuery } from "../../../src/API";
+import {
+  ActivityItem,
+  CustomElement,
+  PostType,
+} from "../../../src/types/common";
 
 type ServerSideProps = {
   req: object;
@@ -20,23 +28,34 @@ type ServerSideProps = {
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const { API } = withSSRContext({ req });
 
-  const { data } = await API.graphql({
+  const res = (await API.graphql({
     query: getPostInitial,
-    authMode: 'AMAZON_COGNITO_USER_POOLS',
+    authMode: "AMAZON_COGNITO_USER_POOLS",
     variables: {
       id: params.id,
     },
-  });
+  })) as GraphQLResult<GetPostInitialQuery>;
 
-  const post = data.getPost;
+  const post = res.data?.getPost;
+  if (!res.data || !post) {
+    return {
+      notFound: true,
+    };
+  }
+  console.log("images", JSON.stringify(post));
 
   return {
     props: {
       postId: post.id,
-      postComponents: JSON.parse(post.components),
+      postComponents: post.components
+        ? (JSON.parse(post.components) as Array<CustomElement>)
+        : [],
       postTitle: post.title,
       postSubhead: post.subhead,
-      postImages: JSON.parse(post.images),
+      postImages:
+        post.images && post.images !== null
+          ? (JSON.parse(post.images) as Array<CloudinaryImage>)
+          : [],
       postLocationOrig: post.postLocation,
       postGpxFile: post.gpxFile,
       postStravaUrl: post.stravaUrl,
@@ -48,19 +67,30 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postStoppedTime: post.stoppedTime,
       postElapsedTime: post.elapsedTime,
       postTimeInRed: post.timeInRed,
-      postHeartAnalysis: JSON.parse(post.heartAnalysis),
-      // postPowerAnalysis: JSON.parse(post.powerAnalysis) as { entire: number },
-      postCadenceAnalysis: JSON.parse(post.cadenceAnalysis),
-      postTempAnalysis: JSON.parse(post.tempAnalysis),
-      postPowerZones: JSON.parse(post.powerZones),
-      postPowerZoneBuckets: JSON.parse(post.powerZoneBuckets),
-      postHeroImage: JSON.parse(post.heroImage),
+      postHeartAnalysis:
+        post.heartAnalysis && post.heartAnalysis !== null
+          ? JSON.parse(post.heartAnalysis)
+          : null,
+      postCadenceAnalysis: post.cadenceAnalysis
+        ? JSON.parse(post.cadenceAnalysis)
+        : null,
+      postTempAnalysis: post.tempAnalysis
+        ? JSON.parse(post.tempAnalysis)
+        : null,
+      postPowerZones: post.powerZones ? JSON.parse(post.powerZones) : null,
+      postPowerZoneBuckets: post.powerZoneBuckets
+        ? JSON.parse(post.powerZoneBuckets)
+        : null,
+      postHeroImage: post.heroImage ? JSON.parse(post.heroImage) : null,
       postDate: post.date,
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
-      postRaceResults: JSON.parse(post.raceResults),
+      postRaceResults: post.raceResults
+        ? JSON.parse(post.raceResults)
+        : null,
       postTimeSeriesFile: post.timeSeriesFile,
-      postPrivacyStatus: post.privacyStatus,
+      postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
+      postCreatedAt: post.createdAt,
     },
   };
 };
@@ -95,76 +125,107 @@ const Post = ({
   postRaceResults,
   postTimeSeriesFile,
   postPrivacyStatus,
-}) => {
-  const isNewPost = (postComponents) => {
-    if (postComponents.length === 1 && postComponents[0].type === 'text') {
+  postCreatedAt,
+}: PostType) => {
+  const isNewPost = (postComponents: Array<CustomElement>) => {
+    if (postComponents.length === 1 && postComponents[0].type === "text") {
       return true;
     } else {
       return false;
     }
   };
-  const [title, setTitle] = React.useState(postTitle);
-  const [subhead, setSubhead] = React.useState(postSubhead);
-  const [postLocation, setPostLocation] = React.useState(postLocationOrig);
+  const [title, setTitle] = React.useState<string | undefined>(postTitle);
+  const [subhead, setSubhead] = React.useState<string | undefined>(postSubhead);
+  const [postLocation, setPostLocation] = React.useState<string | undefined>(
+    postLocationOrig
+  );
   const [id, setId] = React.useState(postId);
-  const [activity, setActivity] = React.useState([]);
+  const [activity, setActivity] = React.useState<ActivityItem[] | undefined>();
   const [gpxFile, setGpxFile] = React.useState(postGpxFile);
-  const [stravaUrl, setStravaUrl] = React.useState(postStravaUrl);
+  const [stravaUrl, setStravaUrl] = React.useState<string | undefined>(
+    postStravaUrl
+  );
   const [components, setComponents] = React.useState(
-    isNewPost(postComponents)
+    (isNewPost(postComponents)
       ? [
           {
-            type: 'heroBanner',
-            children: [{ text: '' }],
+            type: "heroBanner",
+            children: [{ text: "" }],
           },
           {
-            type: 'postAuthor',
-            children: [{ text: '' }],
+            type: "postAuthor",
+            children: [{ text: "" }],
           },
           {
-            type: 'paragraph',
-            children: [{ text: 'Discuss your race...' }],
+            type: "paragraph",
+            children: [{ text: "Discuss your race..." }],
           },
         ]
-      : postComponents
+      : postComponents) as Array<CustomElement> | undefined
   );
-  const [images, setImages] = React.useState(postImages ? postImages : []);
+  const [images, setImages] = React.useState<
+    Array<CloudinaryImage> | undefined
+  >(postImages ? postImages : undefined);
 
-  const [currentFtp, setCurrentFtp] = React.useState(postCurrentFtp);
-  const [resultsUrl, setResultsUrl] = React.useState(postResultsUrl);
+  const [currentFtp, setCurrentFtp] = React.useState<number | undefined>(
+    postCurrentFtp
+  );
+  const [resultsUrl, setResultsUrl] = React.useState<string | undefined>(
+    postResultsUrl
+  );
 
-  const [powerAnalysis, setPowerAnalysis] = React.useState<
-    | {
-        entire: number;
-      }
-    | undefined
-  >();
-  const [heartAnalysis, setHeartAnalysis] = React.useState(postHeartAnalysis);
-  const [cadenceAnalysis, setCadenceAnalysis] =
-    React.useState(postCadenceAnalysis);
-  const [tempAnalysis, setTempAnalysis] = React.useState(postTempAnalysis);
+  const [powerAnalysis, setPowerAnalysis] =
+    React.useState<Array<Record<string | number, number>>>();
+  const [heartAnalysis, setHeartAnalysis] = React.useState<
+    Array<Record<number | string, number>> | undefined
+  >(postHeartAnalysis);
+  const [cadenceAnalysis, setCadenceAnalysis] = React.useState<
+    Array<Record<number | string, number>> | undefined
+  >(postCadenceAnalysis);
+  const [tempAnalysis, setTempAnalysis] = React.useState<
+    Array<Record<number | string, number>> | undefined
+  >(postTempAnalysis);
 
   const [initialLoad, setInitialLoad] = React.useState(true);
 
-  const [elevationTotal, setElevationTotal] =
-    React.useState(postElevationTotal);
-  const [normalizedPower, setNormalizedPower] =
-    React.useState(postNormalizedPower);
-  const [distance, setDistance] = React.useState(postDistance);
-  const [elapsedTime, setElapsedTime] = React.useState(postElapsedTime);
-  const [stoppedTime, setStoppedTime] = React.useState(postStoppedTime);
-  const [timeInRed, setTimeInRed] = React.useState(postTimeInRed);
+  const [elevationTotal, setElevationTotal] = React.useState<
+    number | undefined
+  >(postElevationTotal);
+  const [normalizedPower, setNormalizedPower] = React.useState<
+    number | undefined
+  >(postNormalizedPower);
+  const [distance, setDistance] = React.useState<number | undefined>(
+    postDistance
+  );
+  const [elapsedTime, setElapsedTime] = React.useState<number | undefined>(
+    postElapsedTime
+  );
+  const [stoppedTime, setStoppedTime] = React.useState<number | undefined>(
+    postStoppedTime
+  );
+  const [timeInRed, setTimeInRed] = React.useState<number | undefined>(
+    postTimeInRed
+  );
   const [powerZones, setPowerZones] = React.useState(postPowerZones);
   const [powerZoneBuckets, setPowerZoneBuckets] =
     React.useState(postPowerZoneBuckets);
   const [heroImage, setHeroImage] = React.useState(postHeroImage);
-  const [date, setDate] = React.useState(postDate);
+  const [date, setDate] = React.useState<string | undefined>(postDate);
   const [author, setAuthor] = React.useState(postAuthor);
-  const [shortUrl, setShortUrl] = React.useState(postShortUrl);
-  const [raceResults, setRaceResults] = React.useState(postRaceResults);
+  const [shortUrl, setShortUrl] = React.useState<string | undefined>(
+    postShortUrl
+  );
+  const [raceResults, setRaceResults] = React.useState<
+    RaceResultRow | undefined
+  >(postRaceResults);
   const [timeSeriesFile, setTimeSeriesFile] =
     React.useState(postTimeSeriesFile);
-  const [privacyStatus, setPrivacyStatus] = React.useState(postPrivacyStatus);
+  const [privacyStatus, setPrivacyStatus] = React.useState<string | undefined>(
+    postPrivacyStatus
+  );
+  const [createdAt, setCreatedAt] = React.useState<string | undefined>(
+    postCreatedAt
+  );
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -196,6 +257,7 @@ const Post = ({
       setRaceResults(postRaceResults);
       setTimeSeriesFile(postTimeSeriesFile);
       setPrivacyStatus(postPrivacyStatus);
+      setCreatedAt(postCreatedAt);
     }
   }, [postComponents]);
 
@@ -267,20 +329,23 @@ const Post = ({
           setTimeSeriesFile,
           privacyStatus,
           setPrivacyStatus,
+          createdAt,
+          setCreatedAt,
         }}
       >
-        <div>
+        <>
           <Head>
             <title>{title}</title>
-            <link rel='icon' href='/favicon.ico' />
+            <link rel="icon" href="/favicon.ico" />
           </Head>
 
           <EditUserPost
             postComponents={components}
             postId={postId}
             author={author}
+            // user={user}
           />
-        </div>
+        </>
       </PostContext.Provider>
     </AuthCustom>
   );

@@ -1,10 +1,10 @@
-import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
-import { Text } from 'theme-ui';
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import { Text } from "theme-ui";
 
-const AuthCustom = ({ children }) => {
+const AuthCustom = ({ children }: { children: JSX.Element }) => {
   return (
     <Authenticator
-      signUpAttributes={['name', 'preferred_username']}
+      signUpAttributes={["name", "preferred_username"]}
       components={{
         SignUp: {
           FormFields() {
@@ -12,7 +12,7 @@ const AuthCustom = ({ children }) => {
 
             return (
               <>
-                <Text as='h2' sx={{ color: 'text' }}>
+                <Text as="h2" sx={{ color: "text" }}>
                   monopad
                 </Text>
                 {/* Re-use default `Authenticator.SignUp.FormFields` */}

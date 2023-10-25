@@ -1,33 +1,33 @@
-import { Flex, Text, Box, Close, Button } from 'theme-ui';
-import React from 'react';
-import { Transforms, Descendant } from 'slate';
-import PowerGraphIcon from './PowerGraphIcon';
+import { Flex, Text, Box, Button } from "theme-ui";
+import React from "react";
+import { Transforms, Descendant } from "slate";
+import PowerGraphIcon from "./PowerGraphIcon";
 
-import { EditorContext } from './EditorContext';
-import ActivityOverviewIcon from './icons/ActivityOverviewIcon';
-import TimePowerZonesIcon from './TimePowerZonesIcon';
-import { PostContext } from './PostContext';
-import MatchesBurnedIcon from './MatchesBurnedIcon';
-import StravaIcon from './StravaIcon';
-import HeroBannerIcon from './HeroBannerIcon';
-import EmbedIcon from './EmbedIcon';
-import StandardModal from './StandardModal';
-import EmbedSettings from './EmbedSettings';
-import { useViewport } from './ViewportProvider';
-import ResultsIcon from './ResultsIcon';
-import SidebarLeft from './SidebarLeft';
-import StravaEmbed from './StravaEmbed';
+import { EditorContext } from "./EditorContext";
+import ActivityOverviewIcon from "./icons/ActivityOverviewIcon";
+import TimePowerZonesIcon from "./TimePowerZonesIcon";
+import { PostContext } from "./PostContext";
+import StravaIcon from "./StravaIcon";
+import HeroBannerIcon from "./HeroBannerIcon";
+import EmbedIcon from "./EmbedIcon";
+import StandardModal from "./StandardModal";
+import EmbedSettings from "./EmbedSettings";
+import { useViewport } from "./ViewportProvider";
+import ResultsIcon from "./ResultsIcon";
+import SidebarLeft from "./SidebarLeft";
+import StravaEmbed from "./StravaEmbed";
+import { CustomEditor, TextElement } from "../types/common";
 
-const GraphSelectorMenu = ({ editor }) => {
+const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
   const { setIsGraphMenuOpen, setIsGpxUploadOpen, setIsRaceResultsModalOpen } =
     React.useContext(EditorContext);
-  const { gpxFile, stravaUrl, currentFtp, components } =
-    React.useContext(PostContext);
+  const { width } = useViewport();
+  const { gpxFile, currentFtp, components } = React.useContext(PostContext);
+
   const [isEmbedModalOpen, setIsEmbedModalOpen] = React.useState(false);
   const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
-  const { width } = useViewport();
 
-  const hero = components?.filter((c) => c.type === 'heroBanner');
+  const hero = components?.filter((c) => c.type === "heroBanner");
   const heroBannerNotAdded = hero && hero.length > 0 ? false : true;
   const shouldCloseMenu = width < 400;
 
@@ -37,14 +37,14 @@ const GraphSelectorMenu = ({ editor }) => {
     }
   };
 
-  const addMatchesBurned = () => {
-    if (gpxFile) {
-      Transforms.insertNodes(editor, [
-        { type: 'matchesBurned', children: [{ text: '' }] } as Descendant,
-      ]);
-      closeMenu();
-    }
-  };
+  // const addMatchesBurned = () => {
+  //   if (gpxFile) {
+  //     Transforms.insertNodes(editor, [
+  //       { type: 'matchesBurned', children: [{ text: '' }] } as Descendant,
+  //     ]);
+  //     closeMenu();
+  //   }
+  // };
 
   const addEmbed = () => {
     setIsEmbedModalOpen(true);
@@ -56,8 +56,8 @@ const GraphSelectorMenu = ({ editor }) => {
 
   const addHeroBanner = () => {
     Transforms.insertNodes(editor, [
-      { type: 'heroBanner', children: [{ text: '' }] } as Descendant,
-      { type: 'text', children: [{ text: '' }] } as Descendant,
+      { type: "heroBanner", children: [{ text: "" }], void: true },
+      { type: "text", children: [{ text: "" }] } as TextElement,
     ]);
     closeMenu();
   };
@@ -69,8 +69,8 @@ const GraphSelectorMenu = ({ editor }) => {
   const addTimePowerZones = () => {
     if (gpxFile && currentFtp) {
       Transforms.insertNodes(editor, [
-        { type: 'timeInZones', children: [{ text: '' }] } as Descendant,
-        { type: 'text', children: [{ text: '' }] } as Descendant,
+        { type: "timeInZones", children: [{ text: "" }], void: true },
+        { type: "text", children: [{ text: "" }] } as TextElement,
       ]);
       closeMenu();
     }
@@ -79,8 +79,8 @@ const GraphSelectorMenu = ({ editor }) => {
   const addMap = () => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
-        { type: 'visualOverview', children: [{ text: '' }] } as Descendant,
-        { type: 'text', children: [{ text: '' }] } as Descendant,
+        { type: "visualOverview", children: [{ text: "" }], void: true },
+        { type: "text", children: [{ text: "" }] } as TextElement,
       ]);
       closeMenu();
     }
@@ -90,11 +90,11 @@ const GraphSelectorMenu = ({ editor }) => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
         {
-          type: 'powergraph',
-          children: [{ text: '' }],
+          type: "powergraph",
+          children: [{ text: "" }],
           void: true,
-        } as Descendant,
-        { type: 'text', children: [{ text: '' }] } as Descendant,
+        },
+        { type: "text", children: [{ text: "" }] } as TextElement,
       ]);
       closeMenu();
     }
@@ -104,11 +104,11 @@ const GraphSelectorMenu = ({ editor }) => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
         {
-          type: 'activityOverview',
-          children: [{ text: '' }],
+          type: "activityOverview",
+          children: [{ text: "" }],
           void: true,
-        } as Descendant,
-        { type: 'text', children: [{ text: '' }] } as Descendant,
+        },
+        { type: "text", children: [{ text: "" }] } as TextElement,
       ]);
       closeMenu();
     }
@@ -122,7 +122,7 @@ const GraphSelectorMenu = ({ editor }) => {
     <>
       {isEmbedModalOpen && (
         <StandardModal
-          title={'Embed'}
+          title={"Embed"}
           setIsOpen={setIsEmbedModalOpen}
           isOpen={isEmbedModalOpen}
         >
@@ -131,7 +131,7 @@ const GraphSelectorMenu = ({ editor }) => {
       )}
       {isStravaModalOpen && (
         <StandardModal
-          title={'Strava Embed'}
+          title={"Strava Embed"}
           setIsOpen={setIsStravaModalOpen}
           isOpen={isStravaModalOpen}
         >
@@ -140,32 +140,32 @@ const GraphSelectorMenu = ({ editor }) => {
       )}
       <SidebarLeft
         closeOnclick={() => setIsGraphMenuOpen(false)}
-        title={'Components'}
+        title={"Components"}
       >
-        <Flex sx={{ flexDirection: 'column', margin: '10px' }}>
+        <Flex sx={{ flexDirection: "column", margin: "10px" }}>
           <Box
             onClick={() => {
               if (gpxFile) {
                 addPowerCurve();
               }
             }}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: gpxFile ? 'pointer' : 'not-allowed',
+              cursor: gpxFile ? "pointer" : "not-allowed",
             }}
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
                 // onMouseEnter={() => {}}
               >
                 <PowerGraphIcon color={color} />
               </Box>
-              <Text as='span' sx={{ color: color }}>
+              <Text as="span" sx={{ color: color }}>
                 Power Curve
               </Text>
             </Flex>
@@ -173,44 +173,44 @@ const GraphSelectorMenu = ({ editor }) => {
 
           <Box
             onClick={addActivityOverview}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: gpxFile ? 'pointer' : 'not-allowed',
+              cursor: gpxFile ? "pointer" : "not-allowed",
             }}
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
               >
                 <ActivityOverviewIcon color={color} />
               </Box>
-              <Text as='span' sx={{ color: color }}>
+              <Text as="span" sx={{ color: color }}>
                 Activity Overview
               </Text>
             </Flex>
           </Box>
           <Box
             onClick={addTimePowerZones}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: gpxFile ? 'pointer' : 'not-allowed',
+              cursor: gpxFile ? "pointer" : "not-allowed",
             }}
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
               >
                 <TimePowerZonesIcon color={color} />
               </Box>
-              <Text as='span' sx={{ color: color }}>
+              <Text as="span" sx={{ color: color }}>
                 Time in Zones
               </Text>
             </Flex>
@@ -218,36 +218,36 @@ const GraphSelectorMenu = ({ editor }) => {
           <Box
             onClick={addMap}
             sx={{
-              cursor: gpxFile ? 'pointer' : 'not-allowed',
+              cursor: gpxFile ? "pointer" : "not-allowed",
             }}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
               >
                 <svg
-                  className='childButton'
-                  width='24px'
-                  height='24px'
-                  viewBox='0 0 24 24'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
+                  className="childButton"
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d='M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z'
+                    d="M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z"
                     stroke={color}
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </Box>
-              <Text as='span' sx={{ color: color }}>
+              <Text as="span" sx={{ color: color }}>
                 Route Overview
               </Text>
             </Flex>
@@ -276,56 +276,51 @@ const GraphSelectorMenu = ({ editor }) => {
           </Box> */}
           <Box
             onClick={addStravaLink}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
               >
-                <StravaIcon color={'var(--theme-ui-colors-text)'} />
+                <StravaIcon color={"var(--theme-ui-colors-text)"} />
               </Box>
-              <Text
-                as='span'
-                // sx={{ color: null : 'iconButtonDisabled' }}
-              >
-                Embed Strava activity
-              </Text>
+              <Text as="span">Embed Strava activity</Text>
             </Flex>
           </Box>
           <Box
             onClick={addHeroBanner}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: heroBannerNotAdded ? 'pointer' : 'not-allowed',
+              cursor: heroBannerNotAdded ? "pointer" : "not-allowed",
             }}
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
               >
                 <HeroBannerIcon
                   color={
                     heroBannerNotAdded
-                      ? 'var(--theme-ui-colors-text)'
-                      : 'var(--theme-ui-colors-iconButtonDisabled'
+                      ? "var(--theme-ui-colors-text)"
+                      : "var(--theme-ui-colors-iconButtonDisabled"
                   }
                 />
               </Box>
               <Text
-                as='span'
+                as="span"
                 sx={{
-                  color: heroBannerNotAdded ? 'text' : 'iconButtonDisabled',
+                  color: heroBannerNotAdded ? "text" : "iconButtonDisabled",
                 }}
               >
                 Hero Banner
@@ -334,25 +329,25 @@ const GraphSelectorMenu = ({ editor }) => {
           </Box>
           <Box
             onClick={() => addEmbed()}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
               >
                 <EmbedIcon />
               </Box>
               <Text
-                as='span'
+                as="span"
                 sx={{
-                  color: 'text',
+                  color: "text",
                 }}
               >
                 Embed RWGPS Route
@@ -361,25 +356,25 @@ const GraphSelectorMenu = ({ editor }) => {
           </Box>
           <Box
             onClick={() => addRaceResults()}
-            variant='boxes.sidebarMenuItem'
+            variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           >
             <Flex>
               <Box
                 sx={{
-                  width: '25px',
-                  height: '25px',
-                  marginRight: '10px',
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "10px",
                 }}
               >
                 <ResultsIcon />
               </Box>
               <Text
-                as='span'
+                as="span"
                 sx={{
-                  color: 'text',
+                  color: "text",
                 }}
               >
                 Race Results
@@ -390,23 +385,23 @@ const GraphSelectorMenu = ({ editor }) => {
         {!gpxFile && (
           <Box
             sx={{
-              marginY: 'auto',
-              borderTopColor: 'divider',
-              borderTopStyle: 'solid',
-              borderTopWidth: '1px',
+              marginY: "auto",
+              borderTopColor: "divider",
+              borderTopStyle: "solid",
+              borderTopWidth: "1px",
             }}
           >
-            <Box sx={{ marginX: '15px' }}>
-              <Text as='p' sx={{ marginY: '10px' }}>
+            <Box sx={{ marginX: "15px" }}>
+              <Text as="p" sx={{ marginY: "10px" }}>
                 A GPX file must be uploaded to enabled activity components.
               </Text>
               <Button
-                type='button'
-                variant='primaryButton'
+                type="button"
+                variant="primaryButton"
                 onClick={() => {
                   setIsGpxUploadOpen(true);
                 }}
-                sx={{ width: '100%' }}
+                sx={{ width: "100%" }}
               >
                 Upload GPX
               </Button>
