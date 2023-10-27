@@ -54,7 +54,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
   const [posts, setPosts] = React.useState<PostType>();
 
   const searchParams = useSearchParams();
-  // console.log('searchParams', searchParams.get('status'));
 
   const search = searchParams.get("status");
   if (search && (!status || search !== status)) {
@@ -104,7 +103,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
   };
 
   React.useEffect(() => {
-    // console.log('useffeect', status);
     if (status === "draft") {
       getDraftPosts();
     }

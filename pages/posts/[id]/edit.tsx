@@ -42,17 +42,13 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     })) as GraphQLResult<GetPostInitialQuery>;
   } catch (error: unknown) {
     const knownError = error as GraphQLError;
-    // console.log(error instanceof)
-    // const error = error as GraphQLError
     if (knownError.errors.find((e) => e.errorType === "Unauthorized")) {
       return {
         props: { errorCode: 403 },
       };
     }
-    console.log(JSON.stringify(error));
   }
 
-  console.log(res);
   if (!res || !res.data) {
     return {
       notFound: true,
@@ -65,7 +61,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       notFound: true,
     };
   }
-  // console.log("images", JSON.stringify(post));
 
   return {
     props: {

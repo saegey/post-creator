@@ -23,7 +23,7 @@ const PublishModalConfirmation = () => {
       : '';
 
   const URL = `${origin}${asPath}`;
-  console.log(URL);
+  // console.log(URL);
 
   // const createShortUrl = async () => {
   //   const response = await API.post('api12660653', '/short-url', {

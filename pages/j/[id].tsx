@@ -55,10 +55,8 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const author = (
     typeof post.author === "string" ? JSON.parse(post.author) : post.author
   ) as Author;
-  console.log("author", author);
 
   const newPost = { ...post, author: author ? author : undefined };
-  console.log("newpooostuathor", newPost.author);
   return {
     props: {
       post: newPost,

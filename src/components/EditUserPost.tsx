@@ -40,7 +40,6 @@ const EditUserPost = ({
   const { push } = useRouter();
 
   React.useEffect(() => {
-    console.log(user, author);
     if (user?.attributes.sub !== author.id) {
       push(`/posts/${postId}`);
     }

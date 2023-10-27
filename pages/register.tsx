@@ -24,7 +24,6 @@ const RegisterPage: React.FC = () => {
 
     try {
       const result = await Auth.confirmSignUp(username, code);
-      console.log(result);
       Router.push("/login");
     } catch (error) {
       console.error("Error verifying user:", error);
@@ -52,7 +51,6 @@ const RegisterPage: React.FC = () => {
       });
 
       // Auth.confirmSignUp()
-      console.log(result);
       console.log("User registered:", result);
       setUsername(email);
       return result;
@@ -70,7 +68,6 @@ const RegisterPage: React.FC = () => {
     event.preventDefault();
     verifyUser(event).then(() => console.log("done"));
 
-    // registerUser(event).then(() => console.log("done"));
   };
 
   return (

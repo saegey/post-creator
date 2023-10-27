@@ -65,7 +65,6 @@ const app = ({ Component, pageProps }: AppProps) => {
             },
           };
           setUser(user);
-          // console.log(user);
           //set user data to redux/context
           break;
         }
@@ -89,7 +88,6 @@ const app = ({ Component, pageProps }: AppProps) => {
 
       if (sessionData) {
         const { payload } = sessionData;
-        // console.log("payload", payload);
         //"custom:role": role if custom attribute is added
         const {
           email,
@@ -115,7 +113,7 @@ const app = ({ Component, pageProps }: AppProps) => {
             profile,
           },
         };
-        console.log("user", user);
+        // console.log("user", user);
         setUser(user);
       }
     } catch (e) {
@@ -127,7 +125,6 @@ const app = ({ Component, pageProps }: AppProps) => {
   React.useEffect(() => {
     initialLoad();
     getCurrentSession();
-    // console.log(user);
   }, []);
 
   const { metaTags } = pageProps as {
