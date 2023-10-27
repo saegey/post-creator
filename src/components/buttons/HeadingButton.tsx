@@ -10,6 +10,7 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
       aria-label="Toggle header"
       onMouseDown={(e) => {
         e.preventDefault();
+        console.log(selection);
         if (!selection) return false;
 
         const [match] = Array.from(
@@ -28,7 +29,7 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
           Transforms.setNodes<SlateElement>(editor, newProperties);
         } else {
           let newProperties: Partial<SlateElement>;
-          newProperties = { type: "paragraph" } as any;
+          newProperties = { type: "heading-two" } as any;
           Transforms.setNodes<SlateElement>(editor, newProperties);
         }
       }}

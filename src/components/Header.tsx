@@ -6,15 +6,7 @@ import AvatarIcon from "./icons/AvatarIcon";
 import UserProfileMenu from "./UserProfileMenu";
 import { IUser } from "../../pages/_app";
 
-const Header = ({
-  user,
-  signOut,
-}: // title = undefined,
-{
-  user: IUser;
-  signOut?: () => void;
-  // title?: string | undefined;
-}) => {
+const Header = ({ user }: { user: IUser }) => {
   const [profileOpen, setProfileOpen] = React.useState(false);
 
   return (
@@ -24,7 +16,6 @@ const Header = ({
           <UserProfileMenu
             setProfileOpen={setProfileOpen}
             profileOpen={profileOpen}
-            signOut={signOut}
             user={user}
           />
         </Box>

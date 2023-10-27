@@ -1,6 +1,6 @@
 import { Box } from "theme-ui";
 import React from "react";
-import { useRouter } from "next/navigation";
+import Router from "next/router";
 
 import PostEditor from "../../src/components/PostEditor";
 import Header from "../../src/components/Header";
@@ -12,7 +12,6 @@ type EditUserPostProps = {
   postComponents: any;
   postId: string;
   author: any;
-  signOut?: () => void;
 };
 
 const EditUserPost = ({
@@ -20,7 +19,6 @@ const EditUserPost = ({
   postComponents,
   postId,
   author,
-  signOut,
 }: EditUserPostProps) => {
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
@@ -37,18 +35,17 @@ const EditUserPost = ({
   const [isPublishedConfirmationOpen, setIsPublishedConfirmationOpen] =
     React.useState(false);
 
-  const { push } = useRouter();
+  // const { push } = useRouter();
 
   React.useEffect(() => {
     if (user?.attributes.sub !== author.id) {
-      push(`/posts/${postId}`);
+      Router.push(`/posts/${postId}`);
+    }
+    if (!user) {
+      Router.push("/");
+      return;
     }
   }, []);
-
-  if (!user) {
-    push("/");
-    return;
-  }
 
   return (
     <Box
@@ -58,7 +55,7 @@ const EditUserPost = ({
         flexGrow: 1,
       }}
     >
-      <Header user={user} signOut={signOut} />
+      {user && <Header user={user} />}
       <Box>
         <EditorContext.Provider
           value={{

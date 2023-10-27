@@ -21,14 +21,12 @@ import { IUser } from "../../pages/_app";
 interface UserProfileMenuType {
   setProfileOpen: (arg: boolean) => void;
   profileOpen: boolean;
-  signOut?: () => void;
   user: IUser;
 }
 
 const UserProfileMenu = ({
   setProfileOpen,
   profileOpen,
-  signOut,
   user,
 }: UserProfileMenuType) => {
   const [mode, setMode] = useColorMode();
@@ -76,8 +74,8 @@ const UserProfileMenu = ({
             right: ["", "10px", "10px"],
             backgroundColor: "background",
             animation: "fadeIn .2s;",
-            borderTopLeftRadius: "10px",
-            borderBottomLeftRadius: "10px",
+            borderTopLeftRadius: [0, "10px", "10px"],
+            borderBottomLeftRadius: [0, "10px", "10px"],
             borderTopRightRadius: [0, "10px", "10px"],
             borderBottomRightRadius: [0, "10px", "10px"],
             borderStyle: ["none", "solid", "solid"],

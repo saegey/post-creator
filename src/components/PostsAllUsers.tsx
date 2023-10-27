@@ -36,7 +36,7 @@ const PostsAllUsers = ({
 
   return (
     <Box as="main" sx={{ height: "100vw" }}>
-      <Header user={user} signOut={signOut} />
+      <Header user={user} />
       <Box
         sx={{
           maxWidth: "900px",
