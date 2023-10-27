@@ -88,7 +88,8 @@ const renderElement = (props: {
             paddingLeft: ["20px", "20px", "20px"],
             marginX: "auto",
             maxWidth: "690px",
-            fontSize: "20px",
+            fontSize: "19px",
+            lineHeight: "30px",
             li: {
               paddingX: "5px",
               paddingY: "5px",
@@ -111,7 +112,8 @@ const renderElement = (props: {
             marginX: "auto",
             // marginRight: 'auto',
             width: ["100%", "690px", "690px"],
-            fontSize: "20px",
+            fontSize: "19px",
+            lineHeight: "30px",
             marginY: "20px",
             paddingX: ["10px", "0px", "0px"],
           }}

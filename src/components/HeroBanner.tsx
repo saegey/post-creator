@@ -66,7 +66,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
     </Box>
   );
 
-  console.log(heroImage);
+
   return (
     <>
       <Box

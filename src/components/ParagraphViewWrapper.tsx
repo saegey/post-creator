@@ -23,7 +23,8 @@ const ParagraphViewWrapper = ({ node }: { node?: ParagraphElement }) => {
     <Text
       as="p"
       sx={{
-        fontSize: "20px",
+        fontSize: "19px",
+        lineHeight: "30px",
         maxWidth: "690px",
         marginX: "auto",
         width: ["100vw", null, null],

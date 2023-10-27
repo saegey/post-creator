@@ -3,6 +3,7 @@ import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { useRouter } from "next/router";
+import Router from "next/router";
 
 import { PostContext } from "./PostContext";
 import { EditorContext } from "./EditorContext";
@@ -52,7 +53,8 @@ const PostSettings = () => {
         },
         query: deletePost,
       })) as GraphQLResult<DeletePostMutation>;
-      window.location.href = `/posts`;
+      // window.location.href = `/posts`;
+      Router.push(`/posts`);
     } catch (errors) {
       console.error(errors);
     }
