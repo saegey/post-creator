@@ -21,14 +21,12 @@ import { IUser } from "../../pages/_app";
 interface UserProfileMenuType {
   setProfileOpen: (arg: boolean) => void;
   profileOpen: boolean;
-  signOut?: () => void;
   user: IUser;
 }
 
 const UserProfileMenu = ({
   setProfileOpen,
   profileOpen,
-  signOut,
   user,
 }: UserProfileMenuType) => {
   const [mode, setMode] = useColorMode();

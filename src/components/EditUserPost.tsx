@@ -12,7 +12,6 @@ type EditUserPostProps = {
   postComponents: any;
   postId: string;
   author: any;
-  signOut?: () => void;
 };
 
 const EditUserPost = ({
@@ -20,7 +19,6 @@ const EditUserPost = ({
   postComponents,
   postId,
   author,
-  signOut,
 }: EditUserPostProps) => {
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
@@ -57,7 +55,7 @@ const EditUserPost = ({
         flexGrow: 1,
       }}
     >
-      <Header user={user} signOut={signOut} />
+      {user && <Header user={user} />}
       <Box>
         <EditorContext.Provider
           value={{

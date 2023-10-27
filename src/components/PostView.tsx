@@ -11,17 +11,15 @@ import Header from "./Header";
 import Link from "next/link";
 
 import HeaderPublic from "./HeaderPublic";
-import { CognitoUserExt, CustomElement } from "../types/common";
+import { CustomElement } from "../types/common";
 import { IUser } from "../../pages/_app";
 
 const PostView = ({
   user = undefined,
-  signOut,
   components,
   config,
   post,
 }: {
-  signOut?: () => void;
   user?: IUser;
   components: CustomElement[] | undefined;
   config: any;
@@ -29,7 +27,7 @@ const PostView = ({
 }) => {
   return (
     <Box as="main">
-      {user && <Header user={user} signOut={signOut ? signOut : () => {}} />}
+      {user && <Header user={user} />}
       {!user && <HeaderPublic />}
 
       <Container
