@@ -16,12 +16,13 @@ import { useUnits } from "./UnitProvider";
 import BlackBox from "./layout/BlackBox";
 import { useViewport } from "./ViewportProvider";
 import { CognitoUserExt } from "../types/common";
+import { IUser } from "../../pages/_app";
 
 interface UserProfileMenuType {
   setProfileOpen: (arg: boolean) => void;
   profileOpen: boolean;
   signOut?: () => void;
-  user: CognitoUserExt;
+  user: IUser;
 }
 
 const UserProfileMenu = ({
@@ -298,9 +299,23 @@ const UserProfileMenu = ({
                     borderTopWidth: "1px",
                   }}
                 >
-                  <Text as="span" variant={"menuItem"} onClick={signOut}>
-                    Sign out
-                  </Text>
+                  <ThemeLink
+                    as={Link}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "menuItemBackgroundHoverColor",
+                        borderRadius: "5px",
+                      },
+                      textDecoration: "none",
+                      color: "text",
+                      padding: "5px",
+                      width: "100%",
+                      fontSize: ["17px", "15px", "15px"],
+                    }}
+                    href={`/logout`}
+                  >
+                    Sign Out
+                  </ThemeLink>
                 </Flex>
               </Box>
             </Box>

@@ -10,7 +10,7 @@ import { PostContext } from "./PostContext";
 const HeroBannerViewWrapper = ({ node }: { node?: HeroBannerType }) => {
   const { heroImage, id, title, subhead, date, postLocation } =
     React.useContext(PostContext);
-  console.log("heroImage", heroImage, title);
+  // console.log("heroImage", heroImage, title);
   // const heroImage = JSON.parse(post.heroImage);
   if (!heroImage) {
     return <></>;

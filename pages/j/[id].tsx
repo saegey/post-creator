@@ -20,9 +20,9 @@ import {
   PostViewType,
   TimeSeriesDataType,
   PowerZoneType,
-  RaceResultsDotComType,
 } from "../../src/types/common";
 import { CloudinaryImage } from "../../src/components/AddImage";
+import { UserContext } from "../../src/components/UserContext";
 
 const PostView = dynamic(import("../../src/components/PostView"), {
   ssr: false,
@@ -55,9 +55,10 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const author = (
     typeof post.author === "string" ? JSON.parse(post.author) : post.author
   ) as Author;
+  console.log("author", author);
 
   const newPost = { ...post, author: author ? author : undefined };
-
+  console.log("newpooostuathor", newPost.author);
   return {
     props: {
       post: newPost,
@@ -72,6 +73,7 @@ const Publish = ({ post }: { post: PostViewType }): JSX.Element => {
     post.components ? JSON.parse(post.components) : []
   ) as CustomElement[];
 
+  const { user } = React.useContext(UserContext);
   const [activity, setActivity] = React.useState<ActivityItem[] | undefined>(
     undefined
   );
@@ -111,9 +113,7 @@ const Publish = ({ post }: { post: PostViewType }): JSX.Element => {
     post.heroImage ? JSON.parse(post.heroImage) : undefined
   );
   const [author, setAuthor] = React.useState<Author | undefined>(
-    post.author && typeof post.author === "string"
-      ? JSON.parse(post.author)
-      : undefined
+    post.author ? post.author : undefined
   );
 
   const [powerZones, setPowerZones] = React.useState<PowerZoneType[]>(
@@ -250,7 +250,12 @@ const Publish = ({ post }: { post: PostViewType }): JSX.Element => {
             href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
           />
         </Head>
-        <PostView components={components} config={config} post={post} />
+        <PostView
+          components={components}
+          config={config}
+          post={post}
+          user={user}
+        />
       </PostContext.Provider>
     </>
   );

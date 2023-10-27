@@ -12,6 +12,7 @@ import Link from "next/link";
 
 import HeaderPublic from "./HeaderPublic";
 import { CognitoUserExt, CustomElement } from "../types/common";
+import { IUser } from "../../pages/_app";
 
 const PostView = ({
   user = undefined,
@@ -21,7 +22,7 @@ const PostView = ({
   post,
 }: {
   signOut?: () => void;
-  user?: CognitoUserExt;
+  user?: IUser;
   components: CustomElement[] | undefined;
   config: any;
   post: any;
@@ -59,7 +60,7 @@ const PostView = ({
       >
         {components && <SlateToReact node={components} config={config} />}
 
-        {user && (
+        {user && post.owner === user.attributes.sub && (
           <Box
             sx={{ position: "absolute", top: "20px", right: "20px" }}
             key="user-settings"

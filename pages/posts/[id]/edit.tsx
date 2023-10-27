@@ -3,20 +3,22 @@ import Head from "next/head";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { CloudinaryImage } from "../../../src/components/AddImage";
+import Error from "next/error";
 
 import {
   PostContext,
   RaceResultRow,
 } from "../../../src/components/PostContext";
 import { getPostInitial } from "../../../src/graphql/customQueries";
-import AuthCustom from "../../../src/components/AuthCustom";
 import EditUserPost from "../../../src/components/EditUserPost";
 import { GetPostInitialQuery } from "../../../src/API";
 import {
   ActivityItem,
   CustomElement,
+  GraphQLError,
   PostType,
 } from "../../../src/types/common";
+import { UserContext } from "../../../src/components/UserContext";
 
 type ServerSideProps = {
   req: object;
@@ -28,16 +30,37 @@ type ServerSideProps = {
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const { API } = withSSRContext({ req });
 
-  const res = (await API.graphql({
-    query: getPostInitial,
-    authMode: "AMAZON_COGNITO_USER_POOLS",
-    variables: {
-      id: params.id,
-    },
-  })) as GraphQLResult<GetPostInitialQuery>;
+  let res;
+
+  try {
+    res = (await API.graphql({
+      query: getPostInitial,
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+      variables: {
+        id: params.id,
+      },
+    })) as GraphQLResult<GetPostInitialQuery>;
+  } catch (error: unknown) {
+    const knownError = error as GraphQLError;
+    // console.log(error instanceof)
+    // const error = error as GraphQLError
+    if (knownError.errors.find((e) => e.errorType === "Unauthorized")) {
+      return {
+        props: { errorCode: 403 },
+      };
+    }
+    console.log(JSON.stringify(error));
+  }
+
+  console.log(res);
+  if (!res || !res.data) {
+    return {
+      notFound: true,
+    };
+  }
 
   const post = res.data?.getPost;
-  if (!res.data || !post) {
+  if (!post) {
     return {
       notFound: true,
     };
@@ -85,9 +108,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postDate: post.date,
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
-      postRaceResults: post.raceResults
-        ? JSON.parse(post.raceResults)
-        : null,
+      postRaceResults: post.raceResults ? JSON.parse(post.raceResults) : null,
       postTimeSeriesFile: post.timeSeriesFile,
       postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
       postCreatedAt: post.createdAt,
@@ -126,7 +147,11 @@ const Post = ({
   postTimeSeriesFile,
   postPrivacyStatus,
   postCreatedAt,
+  errorCode,
 }: PostType) => {
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
+  }
   const isNewPost = (postComponents: Array<CustomElement>) => {
     if (postComponents.length === 1 && postComponents[0].type === "text") {
       return true;
@@ -226,6 +251,7 @@ const Post = ({
   const [createdAt, setCreatedAt] = React.useState<string | undefined>(
     postCreatedAt
   );
+  const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     if (!initialLoad) {
@@ -266,88 +292,86 @@ const Post = ({
   }, []);
 
   return (
-    <AuthCustom>
-      <PostContext.Provider
-        value={{
-          title,
-          setTitle,
-          subhead,
-          setSubhead,
-          postLocation,
-          setPostLocation,
-          activity,
-          setActivity,
-          id,
-          setId,
-          gpxFile,
-          setGpxFile,
-          stravaUrl,
-          setStravaUrl,
-          components,
-          setComponents,
-          images,
-          setImages,
-          currentFtp,
-          setCurrentFtp,
-          resultsUrl,
-          setResultsUrl,
-          powerAnalysis,
-          setPowerAnalysis,
-          elevationTotal,
-          setElevationTotal,
-          normalizedPower,
-          setNormalizedPower,
-          distance,
-          setDistance,
-          elapsedTime,
-          setElapsedTime,
-          stoppedTime,
-          setStoppedTime,
-          timeInRed,
-          setTimeInRed,
-          heartAnalysis,
-          setHeartAnalysis,
-          cadenceAnalysis,
-          setCadenceAnalysis,
-          tempAnalysis,
-          setTempAnalysis,
-          powerZones,
-          setPowerZones,
-          powerZoneBuckets,
-          setPowerZoneBuckets,
-          heroImage,
-          setHeroImage,
-          date,
-          setDate,
-          shortUrl,
-          setShortUrl,
-          raceResults,
-          setRaceResults,
-          author,
-          setAuthor,
-          timeSeriesFile,
-          setTimeSeriesFile,
-          privacyStatus,
-          setPrivacyStatus,
-          createdAt,
-          setCreatedAt,
-        }}
-      >
-        <>
-          <Head>
-            <title>{title}</title>
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
+    <PostContext.Provider
+      value={{
+        title,
+        setTitle,
+        subhead,
+        setSubhead,
+        postLocation,
+        setPostLocation,
+        activity,
+        setActivity,
+        id,
+        setId,
+        gpxFile,
+        setGpxFile,
+        stravaUrl,
+        setStravaUrl,
+        components,
+        setComponents,
+        images,
+        setImages,
+        currentFtp,
+        setCurrentFtp,
+        resultsUrl,
+        setResultsUrl,
+        powerAnalysis,
+        setPowerAnalysis,
+        elevationTotal,
+        setElevationTotal,
+        normalizedPower,
+        setNormalizedPower,
+        distance,
+        setDistance,
+        elapsedTime,
+        setElapsedTime,
+        stoppedTime,
+        setStoppedTime,
+        timeInRed,
+        setTimeInRed,
+        heartAnalysis,
+        setHeartAnalysis,
+        cadenceAnalysis,
+        setCadenceAnalysis,
+        tempAnalysis,
+        setTempAnalysis,
+        powerZones,
+        setPowerZones,
+        powerZoneBuckets,
+        setPowerZoneBuckets,
+        heroImage,
+        setHeroImage,
+        date,
+        setDate,
+        shortUrl,
+        setShortUrl,
+        raceResults,
+        setRaceResults,
+        author,
+        setAuthor,
+        timeSeriesFile,
+        setTimeSeriesFile,
+        privacyStatus,
+        setPrivacyStatus,
+        createdAt,
+        setCreatedAt,
+      }}
+    >
+      <>
+        <Head>
+          <title>{title}</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-          <EditUserPost
-            postComponents={components}
-            postId={postId}
-            author={author}
-            // user={user}
-          />
-        </>
-      </PostContext.Provider>
-    </AuthCustom>
+        <EditUserPost
+          postComponents={components}
+          postId={postId}
+          author={author}
+          user={user}
+        />
+      </>
+    </PostContext.Provider>
   );
 };
 

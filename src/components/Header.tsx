@@ -4,16 +4,16 @@ import { CldImage } from "next-cloudinary";
 
 import AvatarIcon from "./icons/AvatarIcon";
 import UserProfileMenu from "./UserProfileMenu";
-import { CognitoUserExt } from "../types/common";
+import { IUser } from "../../pages/_app";
 
 const Header = ({
   user,
   signOut,
-  title = undefined,
-}: {
-  user: CognitoUserExt;
+}: // title = undefined,
+{
+  user: IUser;
   signOut?: () => void;
-  title?: string | undefined;
+  // title?: string | undefined;
 }) => {
   const [profileOpen, setProfileOpen] = React.useState(false);
 
@@ -86,7 +86,7 @@ const Header = ({
               sx={{ marginY: "auto", border: "1px solid buttonBorderColor" }}
               aria-label="Toggle Menu"
             />
-            {user && user.attributes.picture && (
+            {user && user.attributes && user.attributes.picture && (
               <Box
                 sx={{
                   height: "38px",

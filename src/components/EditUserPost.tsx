@@ -1,15 +1,14 @@
 import { Box } from "theme-ui";
-import { withAuthenticator } from "@aws-amplify/ui-react";
 import React from "react";
 import { useRouter } from "next/navigation";
 
 import PostEditor from "../../src/components/PostEditor";
 import Header from "../../src/components/Header";
 import { EditorContext } from "../../src/components/EditorContext";
-import { CognitoUserExt } from "../types/common";
+import { IUser } from "../../pages/_app";
 
 type EditUserPostProps = {
-  user?: CognitoUserExt;
+  user?: IUser;
   postComponents: any;
   postId: string;
   author: any;
@@ -41,6 +40,7 @@ const EditUserPost = ({
   const { push } = useRouter();
 
   React.useEffect(() => {
+    console.log(user, author);
     if (user?.attributes.sub !== author.id) {
       push(`/posts/${postId}`);
     }
@@ -96,4 +96,4 @@ const EditUserPost = ({
   );
 };
 
-export default withAuthenticator(EditUserPost);
+export default EditUserPost;

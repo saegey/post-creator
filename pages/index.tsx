@@ -6,10 +6,10 @@ import { GraphQLResult } from "@aws-amplify/api";
 
 import { listPostsCustom } from "../src/graphql/customQueries";
 import { CloudinaryImage } from "../src/components/AddImage";
-import AuthCustom from "../src/components/AuthCustom";
 import PostsAllUsers from "../src/components/PostsAllUsers";
 import { ListPostsCustom } from "../src/API";
 import { CognitoUserExt } from "../src/types/common";
+import { UserContext } from "../src/components/UserContext";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
@@ -67,16 +67,16 @@ type HomeProps = {
 };
 
 const Home = ({ posts = [] }: HomeProps) => {
+  const { user } = React.useContext(UserContext);
+
   return (
-    <AuthCustom>
-      <>
-        <Head>
-          <title>Home</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <PostsAllUsers posts={posts} />
-      </>
-    </AuthCustom>
+    <>
+      <Head>
+        <title>Home</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      {user && <PostsAllUsers posts={posts} user={user} />}
+    </>
   );
 };
 

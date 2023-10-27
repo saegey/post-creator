@@ -6,6 +6,18 @@ import { HistoryEditor } from "slate-history";
 import { BaseElement } from "slate";
 
 import { Author, RaceResultRow } from "../components/PostContext";
+
+export interface GraphQLError {
+  data: any;
+  errors: Array<{
+    path: Array<string>;
+    data: null;
+    errorType: string;
+    errorInfo: null;
+    locations: Array<string>;
+    message: string;
+  }>;
+}
 /*
  * Custom attributes type defined according to the attributes used in this app
  */
@@ -269,4 +281,5 @@ export interface PostType {
   postTimeSeriesFile: string | undefined;
   postPrivacyStatus: string | undefined;
   postCreatedAt: string | undefined;
+  errorCode?: number;
 }

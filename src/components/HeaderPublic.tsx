@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   MenuButton,
   Box,
@@ -8,11 +8,11 @@ import {
   useColorMode,
   Close,
   Link,
-} from 'theme-ui';
+} from "theme-ui";
 
-import Logo from './Logo';
-import BlackBox from './layout/BlackBox';
-import { useUnits } from './UnitProvider';
+import Logo from "./Logo";
+import BlackBox from "./layout/BlackBox";
+import { useUnits } from "./UnitProvider";
 
 const HeaderPublic = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -24,49 +24,49 @@ const HeaderPublic = () => {
     <>
       {menuOpen && (
         <BlackBox noModal={true}>
-          <Flex sx={{ marginRight: 'auto' }}>
+          <Flex sx={{ marginRight: "auto" }}>
             <Box
               ref={ref}
               sx={{
-                flexDirection: 'column',
-                width: '400px',
-                height: '100%',
-                backgroundColor: 'background',
-                animation: 'fadeIn .2s;',
-                borderTopRightRadius: '10px',
-                borderBottomRightRadius: '10px',
+                flexDirection: "column",
+                width: "400px",
+                height: "100%",
+                backgroundColor: "background",
+                animation: "fadeIn .2s;",
+                borderTopRightRadius: "10px",
+                borderBottomRightRadius: "10px",
               }}
             >
-              <Box sx={{ marginLeft: 'auto' }}>
+              <Box sx={{ marginLeft: "auto" }}>
                 <Flex
                   sx={{
-                    width: '100%',
-                    marginTop: '10px',
-                    padding: '10px',
-                    borderBottomStyle: 'solid',
-                    borderBottomWidth: '1px',
-                    borderBottomColor: 'divider',
+                    width: "100%",
+                    marginTop: "10px",
+                    padding: "10px",
+                    borderBottomStyle: "solid",
+                    borderBottomWidth: "1px",
+                    borderBottomColor: "divider",
                   }}
                 >
                   <Box>
                     <Flex
                       sx={{
-                        gap: '10px',
-                        paddingLeft: '5px',
-                        marginLeft: '5px',
+                        gap: "10px",
+                        paddingLeft: "5px",
+                        marginLeft: "5px",
                       }}
                     >
-                      <Box sx={{ width: '30px', height: 'auto' }}>
+                      <Box sx={{ width: "30px", height: "auto" }}>
                         <Logo />
                       </Box>
-                      <Link href='/' sx={{ textDecoration: 'none' }}>
+                      <Link href="/" sx={{ textDecoration: "none" }}>
                         <Text
-                          as='div'
+                          as="div"
                           sx={{
-                            marginY: 'auto',
-                            fontSize: '22px',
+                            marginY: "auto",
+                            fontSize: "22px",
                             fontWeight: 700,
-                            color: 'text',
+                            color: "text",
                           }}
                         >
                           monopad
@@ -76,48 +76,48 @@ const HeaderPublic = () => {
                   </Box>
                   <Close
                     onClick={() => setMenuOpen(false)}
-                    sx={{ backgroundColor: 'background', marginLeft: 'auto' }}
+                    sx={{ backgroundColor: "background", marginLeft: "auto" }}
                   />
                 </Flex>
-                <Box sx={{ padding: '10px' }}>
+                <Box sx={{ padding: "10px" }}>
                   <Box
-                    as='ul'
+                    as="ul"
                     sx={{
-                      listStyleType: 'none',
+                      listStyleType: "none",
                       li: {
-                        padding: '5px',
-                        margin: '5px',
+                        padding: "5px",
+                        margin: "5px",
                         fontWeight: 500,
-                        fontSize: '16px',
+                        fontSize: "16px",
                       },
                     }}
                   >
-                    <Flex as='li'>
-                      <Flex sx={{ width: '100%', padding: '5px' }}>
-                        <Text as='span'>Dark Mode</Text>
-                        <Box sx={{ marginLeft: 'auto' }}>
+                    <Flex as="li">
+                      <Flex sx={{ width: "100%", padding: "5px" }}>
+                        <Text as="span">Dark Mode</Text>
+                        <Box sx={{ marginLeft: "auto" }}>
                           <Switch
-                            checked={mode === 'dark' ? true : false}
+                            checked={mode === "dark" ? true : false}
                             onClick={(e) => {
-                              const next = mode === 'dark' ? 'light' : 'dark';
+                              const next = mode === "dark" ? "light" : "dark";
                               setMode(next);
                             }}
                           />
                         </Box>
                       </Flex>
                     </Flex>
-                    <Flex as='li'>
-                      <Flex sx={{ width: '100%', padding: '5px' }}>
-                        <Text as='span'>
-                          Units{' '}
-                          <Text as='span' sx={{ color: 'textMuted' }}>
+                    <Flex as="li">
+                      <Flex sx={{ width: "100%", padding: "5px" }}>
+                        <Text as="span">
+                          Units{" "}
+                          <Text as="span" sx={{ color: "textMuted" }}>
                             imperial/metric
                           </Text>
                         </Text>
-                        <Box sx={{ marginLeft: 'auto' }}>
+                        <Box sx={{ marginLeft: "auto" }}>
                           <Switch
                             checked={
-                              unitOfMeasure !== 'imperial' ? true : false
+                              unitOfMeasure !== "imperial" ? true : false
                             }
                             onClick={() => {
                               toggleUnit();
@@ -126,6 +126,21 @@ const HeaderPublic = () => {
                         </Box>
                       </Flex>
                     </Flex>
+                    <Flex as="li">
+                      <Link href="/login" sx={{ textDecoration: "none" }}>
+                        <Text
+                          as="div"
+                          sx={{
+                            marginY: "auto",
+                            fontSize: "18px",
+                            fontWeight: 700,
+                            color: "text",
+                          }}
+                        >
+                          Sign In
+                        </Text>
+                      </Link>
+                    </Flex>
                   </Box>
                 </Box>
               </Box>
@@ -133,23 +148,23 @@ const HeaderPublic = () => {
           </Flex>
         </BlackBox>
       )}
-      <Box as='header' sx={{ width: '100vw' }}>
+      <Box as="header" sx={{ width: "100vw" }}>
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            padding: '10px',
-            borderBottomWidth: '1px',
-            borderBottomColor: 'divider',
-            borderBottomStyle: 'solid',
-            backgroundColor: 'background',
+            display: "flex",
+            flexDirection: "row",
+            padding: "10px",
+            borderBottomWidth: "1px",
+            borderBottomColor: "divider",
+            borderBottomStyle: "solid",
+            backgroundColor: "background",
             zIndex: 99,
           }}
         >
-          <Flex sx={{ gap: '15px' }}>
+          <Flex sx={{ gap: "15px" }}>
             <MenuButton
-              sx={{ marginY: 'auto', border: '1px solid buttonBorderColor' }}
-              aria-label='Toggle Menu'
+              sx={{ marginY: "auto", border: "1px solid buttonBorderColor" }}
+              aria-label="Toggle Menu"
               onClick={() => setMenuOpen(true)}
             />
           </Flex>
