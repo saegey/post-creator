@@ -18,7 +18,7 @@
 // export default Logo;
 
 const Logo = () => (
-  <svg style={{}} width='100%' height='100%' viewBox='0 0 204 204' fill='none'>
+  <svg width='100%' height='100%' viewBox='0 0 204 204' fill='none'>
     <mask id='path-1-inside-1_3_13' fill='white'>
       <path
         fillRule='evenodd'

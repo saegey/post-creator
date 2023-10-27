@@ -1,10 +1,11 @@
-import { Box, Spinner } from 'theme-ui';
-import React from 'react';
+import { Box, Spinner } from "theme-ui";
+import React from "react";
 
-import Map from './CustomMap';
-import ElevationGraph from './ElevationGraph';
-import ElevationSlice, { gradeToColor } from './ElevationSlice';
-import { useUnits } from './UnitProvider';
+import Map from "./CustomMap";
+import ElevationGraph from "./ElevationGraph";
+import ElevationSlice, { gradeToColor } from "./ElevationSlice";
+import { useUnits } from "./UnitProvider";
+import { ActivityItem } from "../types/common";
 
 interface ActivityEvent {
   c: Array<number> | Array<null>;
@@ -28,13 +29,7 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     );
   }
 
-  const [marker, setMarker] = React.useState({
-    t: null,
-    g: null,
-    e: null,
-    c: [null, null],
-    d: null,
-  });
+  const [marker, setMarker] = React.useState<ActivityItem | undefined>();
 
   const units = useUnits();
 
@@ -46,14 +41,14 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
               t: activityRow.t,
               c: activityRow.c,
               e:
-                units.unitOfMeasure === 'metric'
+                units.unitOfMeasure === "metric"
                   ? activityRow.e
                   : activityRow && activityRow.e
                   ? activityRow.e * 3.28084
                   : 0,
               g: activityRow.g,
               d:
-                units.unitOfMeasure === 'imperial'
+                units.unitOfMeasure === "imperial"
                   ? activityRow && activityRow.d
                     ? Number((activityRow.d * 0.00062137121212121).toFixed(1))
                     : 0
@@ -68,12 +63,15 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
   ) as any;
 
   const coordinates = React.useMemo(
-    () => (downSampledData ? downSampledData.map((a) => a.c) : undefined),
+    () =>
+      downSampledData
+        ? downSampledData.map((a: ActivityItem) => a.c)
+        : undefined,
     [downSampledData]
   ) as any;
 
   return (
-    <Box sx={{ marginTop: '60px', borderRadius: [0, '5px', '5px'] }}>
+    <Box sx={{ marginTop: "60px", borderRadius: [0, "5px", "5px"] }}>
       <Map
         coordinates={coordinates}
         markerCoordinates={marker as any}

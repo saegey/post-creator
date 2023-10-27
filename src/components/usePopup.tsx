@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
+import React from "react";
 
-function usePopup(popupRef) {
-  const [showPopup, setShowPopup] = useState<boolean>(false);
+function usePopup(popupRef: React.RefObject<HTMLDivElement>) {
+  const [showPopup, setShowPopup] = React.useState<boolean>(false);
 
-  useEffect(() => {
-    const handleDocumentClick = (e) => {
+  React.useEffect(() => {
+    const handleDocumentClick = (e: { target: any }) => {
       const clickedComponent = e.target;
       if (!popupRef?.current?.contains(clickedComponent)) {
         setShowPopup(false);
       }
     };
-    document.addEventListener('click', handleDocumentClick);
+    document.addEventListener("click", handleDocumentClick);
 
     return () => {
-      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener("click", handleDocumentClick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

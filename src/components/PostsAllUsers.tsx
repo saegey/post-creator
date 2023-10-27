@@ -1,10 +1,10 @@
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { Grid, Box } from 'theme-ui';
-import React from 'react';
+import { Grid, Box } from "theme-ui";
+import React from "react";
+import Router from "next/router";
 
-import PostCard from './PostCard';
-import Header from './Header';
-import { CloudinaryImage } from './AddImage';
+import PostCard from "./PostCard";
+import Header from "./Header";
+import { CloudinaryImage } from "./AddImage";
 
 export type PostType = Array<{
   id: string;
@@ -16,6 +16,7 @@ export type PostType = Array<{
     username: string;
     image: string;
   };
+  privacyStatus: string;
 }>;
 
 const PostsAllUsers = ({
@@ -27,24 +28,30 @@ const PostsAllUsers = ({
   user?: any;
   posts: PostType | undefined;
 }) => {
+  React.useEffect(() => {
+    if (!user) {
+      Router.push("/login");
+    }
+  }, [user]);
+
   return (
-    <Box as='main' sx={{ height: '100vw' }}>
+    <Box as="main" sx={{ height: "100vw" }}>
       <Header user={user} signOut={signOut} />
       <Box
         sx={{
-          maxWidth: '900px',
-          marginLeft: ['0px', 'auto', 'auto'],
-          marginRight: ['0px', 'auto', 'auto'],
-          padding: '20px',
+          maxWidth: "900px",
+          marginLeft: ["0px", "auto", "auto"],
+          marginRight: ["0px", "auto", "auto"],
+          padding: "20px",
         }}
       >
-        <Grid columns={[1, 2, 3]} sx={{ gridGap: '20px' }}>
+        <Grid columns={[1, 2, 3]} sx={{ gridGap: "20px" }}>
           {posts &&
             posts.map((post, i) => {
               return (
-                <div key={`postcard-${i}`}>
+                <Box key={`postcard-${i}`}>
                   <PostCard post={post} />
-                </div>
+                </Box>
               );
             })}
         </Grid>
@@ -53,4 +60,4 @@ const PostsAllUsers = ({
   );
 };
 
-export default withAuthenticator(PostsAllUsers);
+export default PostsAllUsers;

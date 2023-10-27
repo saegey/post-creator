@@ -1,25 +1,26 @@
-import React from 'react';
-import { Box, Text } from 'theme-ui';
+import React from "react";
+import { Box, Text } from "theme-ui";
 
-import PowerGraphElement from '../components/PowerGraphElement';
-import ImageElement from '../components/ImageElement';
-import VisualOverviewWrapper from '../components/VisualOverviewWrapper';
-import ActivityOverviewWrapper from '../components/ActivityOverviewWrapper';
-import TimePowerZonesWrapper from '../components/TimePowerZonesWrapper';
-import MatchesBurnedWrapper from '../components/MatchesBurnedWrapper';
-import StravaLink from '../components/StravaLink';
-import HeroBanner from '../components/HeroBanner';
-import EmbedElemnt from '../components/EmbedElement';
-import RaceResultsDotComListWrapper from '../components/RaceResultsDotComListWrapper';
-import Link from '../components/Link';
-import PostAuthor from '../components/PostAuthor';
-import PostAuthorWrapper from '../components/PostAuthorWrapper';
+import PowerGraphElement from "../components/PowerGraphElement";
+import ImageElement from "../components/ImageElement";
+import VisualOverviewWrapper from "../components/VisualOverviewWrapper";
+import ActivityOverviewWrapper from "../components/ActivityOverviewWrapper";
+import TimePowerZonesWrapper from "../components/TimePowerZonesWrapper";
+import MatchesBurnedWrapper from "../components/MatchesBurnedWrapper";
+import StravaLink from "../components/StravaLink";
+import HeroBanner from "../components/HeroBanner";
+import EmbedElemnt from "../components/EmbedElement";
+import RaceResultsDotComListWrapper from "../components/RaceResultsDotComListWrapper";
+import Link from "../components/Link";
+import PostAuthorWrapper from "../components/PostAuthorWrapper";
+import { CustomElement } from "../types/common";
+import { RenderLeafProps } from "slate-react";
 
-const Leaf = (props) => {
+const Leaf = (props: RenderLeafProps) => {
   return (
     <span
       {...props.attributes}
-      style={{ fontWeight: props.leaf.bold ? 'bold' : '' }}
+      style={{ fontWeight: props.leaf.bold ? "bold" : "" }}
     >
       {props.children}
     </span>
@@ -27,68 +28,70 @@ const Leaf = (props) => {
 };
 
 // Define a leaf rendering function that is memoized with `useCallback`.
-const renderLeaf = (props) => {
+const renderLeaf = (props: RenderLeafProps) => {
   return <Leaf {...props} />;
 };
 
-const renderElement = (props) => {
+const renderElement = (props: {
+  attributes: object;
+  children: JSX.Element;
+  element: CustomElement;
+}) => {
   const { attributes, children, element } = props;
 
   switch (element.type) {
-    case 'postAuthor':
+    case "postAuthor":
       return <PostAuthorWrapper />;
-    case 'embed':
+    case "embed":
       return <EmbedElemnt element={element} />;
-    case 'stravaEmbed':
+    case "stravaEmbed":
       return <StravaLink element={element} />;
-    case 'powergraph':
+    case "powergraph":
       return <PowerGraphElement element={element} />;
-    case 'timeInZones':
+    case "timeInZones":
       return <TimePowerZonesWrapper element={element} />;
-    case 'matchesBurned':
+    case "matchesBurned":
       return <MatchesBurnedWrapper element={element} />;
-    case 'activityOverview':
+    case "activityOverview":
       return <ActivityOverviewWrapper element={element} />;
-    case 'visualOverview':
+    case "visualOverview":
       return <VisualOverviewWrapper element={element} />;
-    case 'image':
+    case "image":
       return <ImageElement children={children} element={element} />;
-    case 'heroBanner':
+    case "heroBanner":
       return <HeroBanner element={element} />;
-    case 'link':
-      return <Link {...props} />;
+    case "link":
+      return <Link element={element} children={children} />;
 
-    case 'heading-two':
+    case "heading-two":
       return (
         <Text
-          as='h2'
+          as="h2"
           sx={{
             fontWeight: 700,
-            maxWidth: '690px',
-            width: ['100%', '690px', '690px'],
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            paddingX: ['10px', '0px', '0px'],
+            maxWidth: "690px",
+            width: ["100%", "690px", "690px"],
+            marginLeft: "auto",
+            marginRight: "auto",
+            paddingX: ["10px", "0px", "0px"],
           }}
-          {...attributes}
-          {...element.attr}
         >
           {children}
         </Text>
       );
-    case 'bulleted-list':
+    case "bulleted-list":
       return (
         <Box
-          as='ul'
+          as="ul"
           sx={{
-            paddingY: '40px',
-            paddingLeft: ['20px', '20px', '20px'],
-            marginX: 'auto',
-            maxWidth: '690px',
-            fontSize: '20px',
+            paddingY: "40px",
+            paddingLeft: ["20px", "20px", "20px"],
+            marginX: "auto",
+            maxWidth: "690px",
+            fontSize: "20px",
             li: {
-              paddingX: '5px',
-              paddingY: '5px',
+              paddingX: "5px",
+              paddingY: "5px",
             },
           }}
           {...attributes}
@@ -96,21 +99,21 @@ const renderElement = (props) => {
           {children}
         </Box>
       );
-    case 'list-item':
+    case "list-item":
       return <li {...attributes}>{children}</li>;
-    case 'raceResultsDotCom':
+    case "raceResultsDotCom":
       return <RaceResultsDotComListWrapper />;
     default:
       return (
         <Text
-          as='p'
+          as="p"
           sx={{
-            marginX: 'auto',
+            marginX: "auto",
             // marginRight: 'auto',
-            width: ['100%', '690px', '690px'],
-            fontSize: '20px',
-            marginY: '20px',
-            paddingX: ['10px', '0px', '0px'],
+            width: ["100%", "690px", "690px"],
+            fontSize: "20px",
+            marginY: "20px",
+            paddingX: ["10px", "0px", "0px"],
           }}
           {...attributes}
         >

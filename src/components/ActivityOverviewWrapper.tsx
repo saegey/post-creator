@@ -1,25 +1,33 @@
-import { Box } from 'theme-ui';
-import { Transforms } from 'slate';
-import React from 'react';
-import { useSlateStatic, ReactEditor } from 'slate-react';
+import { Box } from "theme-ui";
+import { Transforms } from "slate";
+import React from "react";
+import { useSlateStatic, ReactEditor } from "slate-react";
 
-import ActivityOverview from './posts/components/ActivityOverview';
-import { PostContext } from './PostContext';
-import { EditorContext } from './EditorContext';
-import OptionsButton from './OptionsButton';
-import Dropdown from './shared/Dropdown';
-import { useClickOutside } from '../utils/ux';
+import ActivityOverview from "./posts/components/ActivityOverview";
+import { PostContext } from "./PostContext";
+import { EditorContext } from "./EditorContext";
+import OptionsButton from "./OptionsButton";
+import Dropdown from "./shared/Dropdown";
+import { useClickOutside } from "../utils/ux";
+import { ActivityOverviewType } from "../types/common";
 
-const ActivityOverviewWrapper = ({ element }) => {
+const ActivityOverviewWrapper = ({
+  element,
+}: {
+  element: ActivityOverviewType;
+}) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const wrapperRef = React.useRef('menu');
-  useClickOutside(wrapperRef, (e) => {
-    setIsMenuOpen(false);
-    e.stopPropagation();
-  });
+  const wrapperRef = React.useRef();
+  useClickOutside(
+    wrapperRef,
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setIsMenuOpen(false);
+      e.stopPropagation();
+    }
+  );
 
-  const editor = useSlateStatic() as ReactEditor;
+  const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
   const {
     elevationTotal,
@@ -38,7 +46,7 @@ const ActivityOverviewWrapper = ({ element }) => {
   const { isFtpUpdating } = React.useContext(EditorContext);
 
   return (
-    <Box variant='boxes.componentCard' contentEditable={false}>
+    <Box variant="boxes.componentCard" contentEditable={false}>
       <ActivityOverview
         data={{
           elevationGain: elevationTotal ? elevationTotal : 0,
@@ -51,7 +59,7 @@ const ActivityOverviewWrapper = ({ element }) => {
           stoppedTime: stoppedTime ? stoppedTime : 0,
           elapsedTime: { seconds: elapsedTime ? elapsedTime : 0 },
           timeInRed: isFtpUpdating
-            ? '....'
+            ? "...."
             : timeInRed
             ? timeInRed
             : currentFtp !== undefined
@@ -59,20 +67,20 @@ const ActivityOverviewWrapper = ({ element }) => {
             : 0,
         }}
         selectedFields={[
-          'Normalized Power',
-          'Avg Heart Rate',
-          'Distance',
-          'Elevation Gain',
-          'Avg Temperature',
-          'Avg Speed',
-          'Elapsed Time',
-          'Stopped Time',
-          'Time in Red',
-          'Avg Cadence',
-          'Avg Power',
+          "Normalized Power",
+          "Avg Heart Rate",
+          "Distance",
+          "Elevation Gain",
+          "Avg Temperature",
+          "Avg Speed",
+          "Elapsed Time",
+          "Stopped Time",
+          "Time in Red",
+          "Avg Cadence",
+          "Avg Power",
         ]}
       />
-      <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
+      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
         <OptionsButton
           onClick={() => {
             if (isMenuOpen) {
@@ -90,7 +98,7 @@ const ActivityOverviewWrapper = ({ element }) => {
                 setIsMenuOpen(false);
               }}
               ref={wrapperRef}
-              variant='boxes.dropdownMenuItem'
+              variant="boxes.dropdownMenuItem"
             >
               Remove
             </Box>

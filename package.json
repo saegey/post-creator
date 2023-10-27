@@ -5,7 +5,8 @@
     "build": "next build",
     "start": "next start",
     "amplify:pull": "amplify pull --appId d15noiwtuwwref --envName dev",
-    "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -"
+    "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^5.1.0",

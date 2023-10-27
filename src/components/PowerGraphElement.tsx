@@ -1,26 +1,30 @@
-import { useSlateStatic, ReactEditor } from 'slate-react';
-import { Transforms } from 'slate';
-import { Box, Flex, Close } from 'theme-ui';
-import React from 'react';
+import { useSlateStatic, ReactEditor } from "slate-react";
+import { Transforms } from "slate";
+import { Box } from "theme-ui";
+import React from "react";
 
-import { PowerCurveGraph } from './PowerCurveGraph';
-import { PostContext } from './PostContext';
-import OptionsButton from './OptionsButton';
-import Dropdown from './shared/Dropdown';
-import { useClickOutside } from '../utils/ux';
+import { PowerCurveGraph } from "./PowerCurveGraph";
+import { PostContext } from "./PostContext";
+import OptionsButton from "./OptionsButton";
+import Dropdown from "./shared/Dropdown";
+import { useClickOutside } from "../utils/ux";
+import { PowerGraphType } from "../types/common";
 
-const PowerGraph = ({ element }) => {
+const PowerGraph = ({ element }: { element: PowerGraphType }) => {
   const { powerAnalysis, currentFtp } = React.useContext(PostContext);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const wrapperRef = React.useRef('menu');
+  const wrapperRef = React.useRef();
 
-  const editor = useSlateStatic() as ReactEditor;
+  const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 
-  useClickOutside(wrapperRef, (e) => {
-    setIsMenuOpen(false);
-    e.stopPropagation();
-  });
+  useClickOutside(
+    wrapperRef,
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setIsMenuOpen(false);
+      e.stopPropagation();
+    }
+  );
 
   if (!powerAnalysis) {
     return <></>;
@@ -29,20 +33,20 @@ const PowerGraph = ({ element }) => {
   const graphData = Object.keys(powerAnalysis)
     .map((k, i) => {
       if (Number(k) > 0) {
-        return { x: Number(k), y: powerAnalysis[k] };
+        return { x: Number(k), y: powerAnalysis[k as keyof Object] };
       }
     })
     .filter((p) => p !== undefined);
 
   return (
-    <Box variant='boxes.componentCard' contentEditable={false}>
-      <Box sx={{ width: '100%', height: ['250px', '450px', '450px'] }}>
+    <Box variant="boxes.componentCard" contentEditable={false}>
+      <Box sx={{ width: "100%", height: ["250px", "450px", "450px"] }}>
         <PowerCurveGraph
           ftp={currentFtp ? Number(currentFtp) : 0}
           data={graphData as any}
         />
       </Box>
-      <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
+      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
         <OptionsButton
           onClick={() => {
             if (isMenuOpen) {
@@ -59,7 +63,7 @@ const PowerGraph = ({ element }) => {
               setIsMenuOpen(false);
             }}
             ref={wrapperRef}
-            variant='boxes.dropdownMenuItem'
+            variant="boxes.dropdownMenuItem"
           >
             Remove
           </Box>

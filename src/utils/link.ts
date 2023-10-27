@@ -1,27 +1,37 @@
-import { Editor, Transforms, Path, Range, Element, BaseElement } from 'slate';
+import { Editor, Transforms, Path, Range, Element, BaseElement } from "slate";
+import { CustomEditor, CustomElement, LinkType } from "../types/common";
 
-export interface CustomNode extends BaseElement {
-  type: string;
-}
-
-export const createLinkNode = (href, showInNewTab, text) => ({
-  type: 'link',
+export const createLinkNode = (
+  href: string,
+  showInNewTab: boolean,
+  text: string
+): LinkType => ({
+  type: "link",
   href,
-  target: showInNewTab ? '_blank' : '_self',
+  target: showInNewTab ? "_blank" : "_self",
   children: [{ text }],
 });
 
-export const insertLink = (editor, { url, showInNewTab }) => {
+type InsertLinkParams = {
+  url: string;
+  showInNewTab: boolean;
+};
+
+export const insertLink = (
+  editor: CustomEditor,
+  { url, showInNewTab }: InsertLinkParams
+) => {
   if (!url) return;
 
   const { selection } = editor;
-  const link = createLinkNode(url, showInNewTab, 'Link');
+  const link = createLinkNode(url, showInNewTab, "Link");
+
   if (!!selection) {
     const [parent, parentPath] = Editor.parent(
       editor,
       selection.focus.path
-    ) as [CustomNode, any];
-    if (parent.type === 'link') {
+    ) as [CustomElement, any];
+    if (parent.type === "link") {
       removeLink(editor);
     }
 
@@ -29,7 +39,7 @@ export const insertLink = (editor, { url, showInNewTab }) => {
     if (editor.isVoid(parent)) {
       Transforms.insertNodes(
         editor,
-        { type: 'paragraph', children: [link] } as CustomNode,
+        { type: "paragraph", children: [link] },
         {
           at: Path.next(parentPath),
           select: true,
@@ -42,15 +52,15 @@ export const insertLink = (editor, { url, showInNewTab }) => {
     }
   } else {
     Transforms.insertNodes(editor, {
-      type: 'paragraph',
+      type: "paragraph",
       children: [link],
-    } as CustomNode);
+    });
   }
 };
 
-export const removeLink = (editor) => {
+export const removeLink = (editor: CustomEditor) => {
   Transforms.unwrapNodes(editor, {
-    match: (n: CustomNode) =>
-      !Editor.isEditor(n) && Element.isElement(n) && n.type === 'link',
+    match: (n) =>
+      !Editor.isEditor(n) && Element.isElement(n) && n.type === "link",
   });
 };

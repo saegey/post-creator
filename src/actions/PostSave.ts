@@ -1,10 +1,10 @@
-import { GraphQLResult } from '@aws-amplify/api';
-import { API } from 'aws-amplify';
+import { GraphQLResult } from "@aws-amplify/api";
+import { API } from "aws-amplify";
 
-import { updatePost } from '../../src/graphql/mutations';
-import { UpdatePostMutation } from '../../src/API';
-import { updatePostMinimal } from '../graphql/customMutations';
-// import { CloudinaryImage } from '../components/AddImage';
+import { updatePost } from "../../src/graphql/mutations";
+import { UpdatePostMutation } from "../../src/API";
+import { updatePostMinimal } from "../graphql/customMutations";
+import { CloudinaryImage } from "../components/AddImage";
 
 interface PostSaveProps {
   postId: string | undefined;
@@ -23,13 +23,10 @@ const PostSaveComponents = async ({
   components,
   postLocation,
   heroImage,
-}: // stravaUrl,
-// resultsUrl,
-// currentFtp,
-PostSaveProps) => {
+}: PostSaveProps) => {
   try {
     const response = (await API.graphql({
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
+      authMode: "AMAZON_COGNITO_USER_POOLS",
       query: updatePostMinimal,
       variables: {
         input: {
@@ -37,10 +34,7 @@ PostSaveProps) => {
           title: title,
           postLocation: postLocation,
           heroImage: heroImage ? heroImage : null,
-          // stravaUrl: stravaUrl,
-          // resultsUrl: resultsUrl,
           components: JSON.stringify(components),
-          // currentFtp: currentFtp,
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
@@ -49,10 +43,16 @@ PostSaveProps) => {
   }
 };
 
-const PostSaveImages = async ({ postId, images }) => {
+const PostSaveImages = async ({
+  postId,
+  images,
+}: {
+  postId: string;
+  images: CloudinaryImage[];
+}) => {
   try {
-    const results = await API.graphql({
-      authMode: 'AMAZON_COGNITO_USER_POOLS',
+    const results = (await API.graphql({
+      authMode: "AMAZON_COGNITO_USER_POOLS",
       query: updatePost,
       variables: {
         input: {
@@ -60,7 +60,7 @@ const PostSaveImages = async ({ postId, images }) => {
           images: JSON.stringify(images),
         },
       },
-    });
+    })) as GraphQLResult<UpdatePostMutation>;
   } catch (error) {
     console.error(error);
   }

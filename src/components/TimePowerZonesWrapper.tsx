@@ -1,36 +1,40 @@
-import { Box } from 'theme-ui';
-import { Transforms } from 'slate';
-import { useSlateStatic, ReactEditor } from 'slate-react';
-import React from 'react';
+import { Box } from "theme-ui";
+import { Transforms } from "slate";
+import { useSlateStatic, ReactEditor } from "slate-react";
+import React from "react";
 
-import TimePowerZones from './TimePowerZones';
-import { PostContext } from './PostContext';
-import Dropdown from './shared/Dropdown';
-import OptionsButton from './OptionsButton';
-import { useClickOutside } from '../utils/ux';
+import TimePowerZones from "./TimePowerZones";
+import { PostContext } from "./PostContext";
+import Dropdown from "./shared/Dropdown";
+import OptionsButton from "./OptionsButton";
+import { useClickOutside } from "../utils/ux";
+import { CustomEditor, TimeInZonesType } from "../types/common";
 
-const TimePowerZonesWrapper = ({ element }) => {
-  const editor = useSlateStatic() as ReactEditor;
+const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
+  const editor = useSlateStatic() as CustomEditor;
   const path = ReactEditor.findPath(editor, element);
   const { powerZones, powerZoneBuckets } = React.useContext(PostContext);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const wrapperRef = React.useRef('menu');
-  useClickOutside(wrapperRef, (e) => {
-    setIsMenuOpen(false);
-    e.stopPropagation();
-  });
+  const wrapperRef = React.useRef();
+  useClickOutside(
+    wrapperRef,
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      setIsMenuOpen(false);
+      e.stopPropagation();
+    }
+  );
 
   return (
     <Box
       sx={{
-        backgroundColor: 'activityOverviewBackgroundColor',
-        borderRadius: '5px',
-        padding: ['10px', '30px', '30px'],
-        position: 'relative',
-        marginY: ['20px', '60px', '60px'],
-        marginX: 'auto',
-        maxWidth: '690px',
+        backgroundColor: "activityOverviewBackgroundColor",
+        borderRadius: "5px",
+        padding: ["10px", "30px", "30px"],
+        position: "relative",
+        marginY: ["20px", "60px", "60px"],
+        marginX: "auto",
+        maxWidth: "690px",
       }}
       contentEditable={false}
     >
@@ -38,7 +42,7 @@ const TimePowerZonesWrapper = ({ element }) => {
         powerZoneBuckets={powerZoneBuckets}
         powerZones={powerZones}
       />
-      <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
+      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
         <OptionsButton
           onClick={() => {
             if (isMenuOpen) {
@@ -55,7 +59,7 @@ const TimePowerZonesWrapper = ({ element }) => {
                 Transforms.removeNodes(editor, { at: path });
                 setIsMenuOpen(false);
               }}
-              variant='boxes.dropdownMenuItem'
+              variant="boxes.dropdownMenuItem"
             >
               Remove
             </Box>

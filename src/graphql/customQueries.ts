@@ -72,31 +72,13 @@ export const getPostInitial = /* GraphQL */ `
       elapsedTime
       stoppedTime
       timeInRed
-      # powerAnalysis
       heartAnalysis
       cadenceAnalysis
       tempAnalysis
       powerZones
       powerZoneBuckets
       timeSeriesFile
-      # coordinates
-      # powers
-      # elevation
-      # elevationGrades
-      # distances
       heroImage
-      blog {
-        id
-        name
-        posts {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        owner
-        __typename
-      }
       author {
         id
         fullName
@@ -113,7 +95,6 @@ export const getPostInitial = /* GraphQL */ `
       shortUrl
       raceResults
       privacyStatus
-      # owner
       __typename
     }
   }
@@ -132,6 +113,7 @@ export const listPostsCustom = /* GraphQL */ `
         createdAt
         images
         author
+        # privacyStatus
         # postAuthorId
       }
     }

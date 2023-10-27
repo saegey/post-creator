@@ -1,10 +1,10 @@
-import { API, Amplify, Auth } from 'aws-amplify';
-import { AWSIoTProvider } from '@aws-amplify/pubsub';
-import AWS from 'aws-sdk';
+import { API, Amplify, Auth } from "aws-amplify";
+import { AWSIoTProvider } from "@aws-amplify/pubsub";
+import AWS from "aws-sdk";
 
-import awsExports from '../aws-exports';
+import awsExports from "../aws-exports";
 
-const configurePubSub = async (iotEndpoint) => {
+const configurePubSub = async (iotEndpoint: string) => {
   console.log(
     `Configuring Amplify PubSub, region = ${awsExports.aws_project_region}, endpoint = ${iotEndpoint}`
   );
@@ -17,14 +17,14 @@ const configurePubSub = async (iotEndpoint) => {
 };
 
 const getEndpoint = async () => {
-  console.log('Getting IoT Endpoint...');
+  console.log("Getting IoT Endpoint...");
   const credentials = await Auth.currentCredentials();
   const iot = new AWS.Iot({
     region: awsExports.aws_project_region,
     credentials: Auth.essentialCredentials(credentials),
   });
   const response = await iot
-    .describeEndpoint({ endpointType: 'iot:Data-ATS' })
+    .describeEndpoint({ endpointType: "iot:Data-ATS" })
     .promise();
   const endpoint = `wss://${response.endpointAddress}/mqtt`;
   // setIotEndpoint(endpoint);
@@ -35,15 +35,16 @@ const getEndpoint = async () => {
 const attachIoTPolicyToUser = async () => {
   // This should be the custom cognito attribute that tells us whether the user's
   // federated identity already has the necessary IoT policy attached:
-  const IOT_ATTRIBUTE_FLAG = 'custom:iotPolicyIsAttached';
+  const IOT_ATTRIBUTE_FLAG = "custom:iotPolicyIsAttached";
 
   // var userInfo = await Auth.currentUserInfo({ bypassCache: true });
-	const userInfo = await Auth.currentUserInfo()
-  const iotPolicyIsAttached = userInfo.attributes[IOT_ATTRIBUTE_FLAG] === 'true';
+  const userInfo = await Auth.currentUserInfo();
+  const iotPolicyIsAttached =
+    userInfo.attributes[IOT_ATTRIBUTE_FLAG] === "true";
 
   if (!iotPolicyIsAttached) {
-    const apiName = 'api12660653';
-    const path = '/attachIoTPolicyToFederatedUser';
+    const apiName = "api12660653";
+    const path = "/attachIoTPolicyToFederatedUser";
     const myInit = {
       response: true, // OPTIONAL (return the entire Axios response object instead of only response.data)
     };
@@ -65,4 +66,4 @@ const attachIoTPolicyToUser = async () => {
   }
 };
 
-export { configurePubSub, getEndpoint,  attachIoTPolicyToUser };
+export { configurePubSub, getEndpoint, attachIoTPolicyToUser };

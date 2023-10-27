@@ -40,8 +40,6 @@ const GradeGradient = ({ data, xMax }: GradeGradientProps): JSX.Element => {
     });
   }, [data]) as JSX.Element[];
 
-  // if (!gradients) return <></>;
-
   return <>{gradients}</>;
 };
 
