@@ -3,7 +3,6 @@ import Head from "next/head";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { CloudinaryImage } from "../../../src/components/AddImage";
-import Error from "next/error";
 
 import {
   PostContext,
