@@ -2,7 +2,7 @@ import { Grid, Box, Button, Flex, Text, NavLink } from "theme-ui";
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import React from "react";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { useSearchParams } from "next/navigation";
 
 import PostCard from "./PostCard";
@@ -48,7 +48,12 @@ interface ListPublishedPostsByCreatedAtTypes {
 }
 
 const PostsAll = ({ user }: { user: IUser }) => {
-  const router = useRouter();
+  // const router = useRouter();
+  React.useEffect(() => {
+    if (!user) {
+      Router.push("/login");
+    }
+  }, [user]);
 
   const [status, setStatus] = React.useState<string | undefined>();
   const [posts, setPosts] = React.useState<PostType>();
@@ -178,7 +183,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
               setStatus("draft");
               getDraftPosts();
 
-              router.push("/posts?status=draft");
+              Router.push("/posts?status=draft");
             }}
           >
             Drafts
@@ -199,7 +204,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
               setPosts(undefined);
               setStatus("published");
               getPublishedPost();
-              router.push("/posts?status=published");
+              Router.push("/posts?status=published");
             }}
           >
             Published

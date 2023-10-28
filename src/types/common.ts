@@ -9,7 +9,7 @@ import { Author, RaceResultRow } from "../components/PostContext";
 
 export interface GraphQLError {
   data: any;
-  errors: Array<{
+  errors?: Array<{
     path: Array<string>;
     data: null;
     errorType: string;

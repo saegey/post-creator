@@ -14,8 +14,8 @@ html {
   width: 100%;
   max-width: 100%;
   /* font-family: 'Public Sans', sans-serif; */
-  font-family: 'SF Pro Display', 'Public Sans', system-ui, -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  font-family: "SF Pro Display", "Public Sans", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   /* min-width: 700px; */
   /* background-color: #f8f8f8; */
   overflow-x: hidden;
@@ -87,7 +87,7 @@ button {
   padding-right: 20px;
   margin-top: 0px;
   cursor: pointer;
-  color: '#EEE';
+  color: "#EEE";
 }
 
 h1 {
@@ -243,5 +243,11 @@ svg.menu-button:hover {
 
   100% {
     background-color: var(--theme-ui-colors-skeletonLight);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    overflow-x: hidden;
   }
 }

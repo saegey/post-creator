@@ -67,12 +67,11 @@ const RegisterPage: React.FC = () => {
   const verifyAccount = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     verifyUser(event).then(() => console.log("done"));
-
   };
 
   return (
     <Flex sx={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}>
-      <Box sx={{ maxWidth: "400px", width: "400px" }}>
+      <Box sx={{ maxWidth: "400px", width: "400px", margin: "20px" }}>
         {!username && (
           <form onSubmit={handleSubmit}>
             <Flex sx={{ flexDirection: "column", gap: "15px" }}>

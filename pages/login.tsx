@@ -46,7 +46,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <Flex sx={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}>
-      <Box sx={{ maxWidth: "400px", width: "400px" }}>
+      <Box sx={{ maxWidth: "400px", width: "400px", margin: "20px" }}>
         <form onSubmit={handleSubmit}>
           <Flex sx={{ flexDirection: "column", gap: "15px" }}>
             <Flex
