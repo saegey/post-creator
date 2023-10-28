@@ -40,25 +40,27 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
         id: params.id,
       },
     })) as GraphQLResult<GetPostInitialQuery>;
+    // console.log(res);
   } catch (error: unknown) {
     const knownError = error as GraphQLError;
-    if (knownError.errors.find((e) => e.errorType === "Unauthorized")) {
+    console.log(error);
+    if (knownError.errors?.find((e) => e.errorType === "Unauthorized")) {
       return {
         props: { errorCode: 403 },
       };
     }
   }
 
-  if (!res || !res.data) {
-    return {
-      notFound: true,
-    };
-  }
+  // if (!res || !res.data) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 
-  const post = res.data?.getPost;
+  const post = res?.data?.getPost;
   if (!post) {
     return {
-      notFound: true,
+      props: { errorCode: 403 },
     };
   }
 
@@ -145,7 +147,7 @@ const Post = ({
   errorCode,
 }: PostType) => {
   if (errorCode) {
-    return <Error statusCode={errorCode} />;
+    return <></>;
   }
   const isNewPost = (postComponents: Array<CustomElement>) => {
     if (postComponents.length === 1 && postComponents[0].type === "text") {

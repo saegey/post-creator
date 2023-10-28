@@ -38,13 +38,14 @@ const EditUserPost = ({
   // const { push } = useRouter();
 
   React.useEffect(() => {
-    if (user?.attributes.sub !== author.id) {
+    if (user && user?.attributes.sub !== author.id) {
       Router.push(`/posts/${postId}`);
     }
-    if (!user) {
-      Router.push("/");
-      return;
-    }
+
+    // if (!user) {
+    //   Router.push("/");
+    //   return;
+    // }
   }, []);
 
   return (

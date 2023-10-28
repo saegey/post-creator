@@ -78,7 +78,7 @@ const PostMenu = () => {
           }}
         />
         <NewComponentButton />
-        <Link href={`/posts/${id}`} rel="noopener noreferrer" target="_blank">
+        <Link href={`/j/${id}`} rel="noopener noreferrer" target="_blank">
           <PreviewButton />
         </Link>
         <ShareButton />

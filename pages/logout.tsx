@@ -5,7 +5,7 @@ const Logout = () => {
   React.useEffect(() => {
     try {
       Auth.signOut();
-      window.location.href = `/login`;
+      // window.location.href = `/login`;
     } catch (error) {
       console.log(error);
     }

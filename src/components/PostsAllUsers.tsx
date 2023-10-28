@@ -5,6 +5,7 @@ import Router from "next/router";
 import PostCard from "./PostCard";
 import Header from "./Header";
 import { CloudinaryImage } from "./AddImage";
+import { IUser } from "../../pages/_app";
 
 export type PostType = Array<{
   id: string;
@@ -20,12 +21,10 @@ export type PostType = Array<{
 }>;
 
 const PostsAllUsers = ({
-  signOut,
   user,
   posts,
 }: {
-  signOut?: any;
-  user?: any;
+  user?: IUser;
   posts: PostType | undefined;
 }) => {
   React.useEffect(() => {
@@ -36,7 +35,7 @@ const PostsAllUsers = ({
 
   return (
     <Box as="main" sx={{ height: "100vw" }}>
-      <Header user={user} />
+      {user && <Header user={user} />}
       <Box
         sx={{
           maxWidth: "900px",

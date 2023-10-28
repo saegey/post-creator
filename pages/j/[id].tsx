@@ -4,7 +4,10 @@ import Head from "next/head";
 import { GraphQLResult } from "@aws-amplify/api";
 import dynamic from "next/dynamic";
 
-import { getPublishedPost } from "../../src/graphql/customQueries";
+import {
+  getPostInitial,
+  getPublishedPost,
+} from "../../src/graphql/customQueries";
 import { getActivity } from "../../src/actions/PostGet";
 import SlatePublish from "../../src/components/SlatePublish";
 import {
@@ -13,7 +16,7 @@ import {
   RaceResultRow,
 } from "../../src/components/PostContext";
 import { generate as generateMetaTags } from "../../src/utils/metaTags";
-import { GetPublishedPostQuery } from "../../src/API";
+import { GetPostInitialQuery, GetPublishedPostQuery } from "../../src/API";
 import {
   ActivityItem,
   CustomElement,
@@ -23,6 +26,7 @@ import {
 } from "../../src/types/common";
 import { CloudinaryImage } from "../../src/components/AddImage";
 import { UserContext } from "../../src/components/UserContext";
+import Error from "next/error";
 
 const PostView = dynamic(import("../../src/components/PostView"), {
   ssr: false,
@@ -38,19 +42,42 @@ type ServerSideProps = {
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const SSR = withSSRContext({ req });
 
-  const { data } = (await SSR.API.graphql({
-    query: getPublishedPost,
-    authMode: "API_KEY",
-    variables: {
-      id: params.id,
-    },
-  })) as GraphQLResult<GetPublishedPostQuery>;
+  let res:
+    | GraphQLResult<GetPublishedPostQuery>
+    | GraphQLResult<GetPostInitialQuery>;
+  let post;
 
-  if (!data || !data.getPublishedPost) {
-    console.error("faileed too get activity data");
-    return;
+  try {
+    res = (await SSR.API.graphql({
+      query: getPublishedPost,
+      authMode: "API_KEY",
+      variables: {
+        id: params.id,
+      },
+    })) as GraphQLResult<GetPublishedPostQuery>;
+    console.log("res", res);
+    if (!res.data || !res.data.getPublishedPost) {
+      res = (await SSR.API.graphql({
+        query: getPostInitial,
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+        variables: {
+          id: params.id,
+        },
+      })) as GraphQLResult<GetPostInitialQuery>;
+      post = res.data?.getPost;
+    } else {
+      post = res.data.getPublishedPost;
+    }
+  } catch (error) {
+    console.log(error);
   }
-  const post = data.getPublishedPost;
+
+  // console.log(post);
+  if (!post) {
+    return {
+      props: { errorCode: 403 },
+    };
+  }
 
   const author = (
     typeof post.author === "string" ? JSON.parse(post.author) : post.author
@@ -61,11 +88,22 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     props: {
       post: newPost,
       metaTags: generateMetaTags({ post: newPost }),
+      // errorCode: errorCode
     },
   };
 };
 
-const Publish = ({ post }: { post: PostViewType }): JSX.Element => {
+const Publish = ({
+  post,
+  errorCode,
+}: {
+  post: PostViewType;
+  errorCode?: number;
+}): JSX.Element => {
+  // if (errorCode) {
+  //   // return <></>;
+  //   return <Error statusCode={errorCode} />;
+  // }
   const config = SlatePublish();
   const components = (
     post.components ? JSON.parse(post.components) : []

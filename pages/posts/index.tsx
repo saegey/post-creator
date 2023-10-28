@@ -24,11 +24,6 @@ export type PostType = Array<{
 
 const MyPosts = () => {
   const { user } = React.useContext(UserContext);
-  React.useEffect(() => {
-    if (!user) {
-      Router.push("/login");
-    }
-  }, [user]);
 
   return (
     <>
