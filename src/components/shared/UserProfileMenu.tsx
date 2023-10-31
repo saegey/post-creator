@@ -15,7 +15,7 @@ import AvatarIcon from "../icons/AvatarIcon";
 import { useUnits } from "../UnitProvider";
 import BlackBox from "../layout/BlackBox";
 import { useViewport } from "../ViewportProvider";
-import { IUser } from "../types/common";
+import { IUser } from "../../types/common";
 
 interface UserProfileMenuType {
   setProfileOpen: (arg: boolean) => void;

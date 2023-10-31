@@ -58,19 +58,6 @@
           "delete"
         ]
       }
-    },
-    "/timeseries": {
-      "name": "/timeseries",
-      "lambdaFunction": "routeAccessPoint",
-      "permissions": {
-        "setting": "protected",
-        "auth": [
-          "read"
-        ],
-        "guest": [
-          "read"
-        ]
-      }
     }
   }
 }

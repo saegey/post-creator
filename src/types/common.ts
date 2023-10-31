@@ -267,8 +267,8 @@ export interface PostViewType {
   powerZoneBuckets?: string | null;
   shortUrl?: string | null;
   normalizedPower?: number | null;
-  owner: string;
-  originalPostId?: string;
+  owner?: string | null;
+  originalPostId?: string | null;
 }
 
 export interface PostType {

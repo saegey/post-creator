@@ -30,7 +30,7 @@ export interface GradeGradientActivty extends ActivityEvent {
 
 interface NewLineGraphProps {
   downSampledData: Array<GradeGradientActivty>;
-  setMarker?: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
+  setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
 }
 
 const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
@@ -81,11 +81,11 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
           data={downSampledData}
           onMouseMove={(e) => {
             if (!e || !e.activePayload) {
-              setMarker({ t: "" });
+              setMarker(undefined);
               return;
             }
 
-            setMarker(e.activePayload[0].payload as { t: string });
+            setMarker(e.activePayload[0].payload as ActivityItem);
           }}
           margin={{ top: 10, right: 0, left: hideAxes ? 0 : 20, bottom: 30 }}
         >

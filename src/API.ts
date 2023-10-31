@@ -115,16 +115,16 @@ export type ModelStringInput = {
 };
 
 export enum ModelAttributeTypes {
-  binary = 'binary',
-  binarySet = 'binarySet',
-  bool = 'bool',
-  list = 'list',
-  map = 'map',
-  number = 'number',
-  numberSet = 'numberSet',
-  string = 'string',
-  stringSet = 'stringSet',
-  _null = '_null',
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null",
 }
 
 export type ModelSizeInput = {
@@ -178,7 +178,7 @@ export type ModelIDInput = {
 };
 
 export type Post = {
-  __typename: 'Post';
+  __typename: "Post";
   type: string;
   id: string;
   title: string;
@@ -231,7 +231,7 @@ export type Post = {
 };
 
 export type Blog = {
-  __typename: 'Blog';
+  __typename: "Blog";
   id: string;
   name: string;
   posts?: ModelPostConnection | null;
@@ -241,13 +241,13 @@ export type Blog = {
 };
 
 export type ModelPostConnection = {
-  __typename: 'ModelPostConnection';
+  __typename: "ModelPostConnection";
   items: Array<Post | null>;
   nextToken?: string | null;
 };
 
 export type User = {
-  __typename: 'User';
+  __typename: "User";
   id: string;
   fullName: string;
   email: string;
@@ -259,13 +259,13 @@ export type User = {
 };
 
 export type ModelPublishedPostConnection = {
-  __typename: 'ModelPublishedPostConnection';
+  __typename: "ModelPublishedPostConnection";
   items: Array<PublishedPost | null>;
   nextToken?: string | null;
 };
 
 export type PublishedPost = {
-  __typename: 'PublishedPost';
+  __typename: "PublishedPost";
   id: string;
   title: string;
   gpxFile?: string | null;
@@ -671,7 +671,7 @@ export type ModelUserFilterInput = {
 };
 
 export type ModelUserConnection = {
-  __typename: 'ModelUserConnection';
+  __typename: "ModelUserConnection";
   items: Array<User | null>;
   nextToken?: string | null;
 };
@@ -685,7 +685,7 @@ export type ModelBlogFilterInput = {
 };
 
 export type ModelBlogConnection = {
-  __typename: 'ModelBlogConnection';
+  __typename: "ModelBlogConnection";
   items: Array<Blog | null>;
   nextToken?: string | null;
 };
@@ -701,8 +701,8 @@ export type ModelStringKeyConditionInput = {
 };
 
 export enum ModelSortDirection {
-  ASC = 'ASC',
-  DESC = 'DESC',
+  ASC = "ASC",
+  DESC = "DESC",
 }
 
 export type ModelSubscriptionUserFilterInput = {
@@ -876,7 +876,7 @@ export type UpdatePostMinimalMutationVariables = {
 
 export type UpdatePostMinimalMutation = {
   updatePost?: {
-    __typename: 'Post';
+    __typename: "Post";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -894,11 +894,11 @@ export type UpdatePostMinimalMutation = {
     currentFtp?: string | null;
     components?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -919,16 +919,16 @@ export type GetActivityQueryQueryVariables = {
 
 export type GetActivityQueryQuery = {
   getPost?: {
-    __typename: 'Post';
+    __typename: "Post";
     powerAnalysis?: string | null;
   } | null;
 };
 
 export type ListPublishedPostsCustomQuery = {
   listPublishedPosts?: {
-    __typename: 'ModelPublishedPostConnection';
+    __typename: "ModelPublishedPostConnection";
     items: Array<{
-      __typename: 'PublishedPost';
+      __typename: "PublishedPost";
       id: string;
       shortUrl?: string | null;
     } | null>;
@@ -941,7 +941,7 @@ export type GetPostInitialQueryVariables = {
 
 export type GetPostInitialQuery = {
   getPost?: {
-    __typename: 'Post';
+    __typename: "Post";
     id: string;
     title: string;
     subhead?: string | null;
@@ -979,11 +979,11 @@ export type GetPostInitialQuery = {
     distances?: string | null;
     heroImage?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -991,7 +991,7 @@ export type GetPostInitialQuery = {
       owner?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -1006,6 +1006,7 @@ export type GetPostInitialQuery = {
     shortUrl?: string | null;
     raceResults?: string | null;
     privacyStatus?: string | null;
+    owner: string | null;
   } | null;
 };
 
@@ -1015,9 +1016,9 @@ export type listPublishedPostsByCreatedAtQueryVariables = {
 
 export type listPublishedPostsByCreatedAtQuery = {
   listPublishedPostsByCreatedAt?: {
-    __typename: 'ModelPublishedPostConnection';
+    __typename: "ModelPublishedPostConnection";
     items: Array<{
-      __typename: 'PublishedPost';
+      __typename: "PublishedPost";
       id: string;
       title: string;
       createdAt: string;
@@ -1033,15 +1034,15 @@ export type listPostsByCreatedAtQueryVariables = {
 
 export type listPostsByCreatedAtQuery = {
   listPostsByCreatedAt?: {
-    __typename: 'ModelPostConnection';
+    __typename: "ModelPostConnection";
     items: Array<{
-      __typename: 'Post';
+      __typename: "Post";
       id: string;
       title: string;
       createdAt: string;
       images?: string | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         username?: string | null;
         fullName: string;
@@ -1058,7 +1059,7 @@ export type GetPublishedPostCustomQueryVariables = {
 
 export type GetPublishedPostCustomQuery = {
   getPublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -1112,7 +1113,7 @@ export type CreateUserMutationVariables = {
 
 export type CreateUserMutation = {
   createUser?: {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     fullName: string;
     email: string;
@@ -1131,7 +1132,7 @@ export type UpdateUserMutationVariables = {
 
 export type UpdateUserMutation = {
   updateUser?: {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     fullName: string;
     email: string;
@@ -1150,7 +1151,7 @@ export type DeleteUserMutationVariables = {
 
 export type DeleteUserMutation = {
   deleteUser?: {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     fullName: string;
     email: string;
@@ -1169,13 +1170,13 @@ export type CreateBlogMutationVariables = {
 
 export type CreateBlogMutation = {
   createBlog?: {
-    __typename: 'Blog';
+    __typename: "Blog";
     id: string;
     name: string;
     posts?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -1238,13 +1239,13 @@ export type UpdateBlogMutationVariables = {
 
 export type UpdateBlogMutation = {
   updateBlog?: {
-    __typename: 'Blog';
+    __typename: "Blog";
     id: string;
     name: string;
     posts?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -1307,13 +1308,13 @@ export type DeleteBlogMutationVariables = {
 
 export type DeleteBlogMutation = {
   deleteBlog?: {
-    __typename: 'Blog';
+    __typename: "Blog";
     id: string;
     name: string;
     posts?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -1376,7 +1377,7 @@ export type CreatePublishedPostMutationVariables = {
 
 export type CreatePublishedPostMutation = {
   createPublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -1420,7 +1421,7 @@ export type CreatePublishedPostMutation = {
     raceResultsProvider?: string | null;
     originalPostId?: string | null;
     originalPost?: {
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -1445,7 +1446,7 @@ export type CreatePublishedPostMutation = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -1453,11 +1454,11 @@ export type CreatePublishedPostMutation = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -1504,7 +1505,7 @@ export type UpdatePublishedPostMutationVariables = {
 
 export type UpdatePublishedPostMutation = {
   updatePublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -1548,7 +1549,7 @@ export type UpdatePublishedPostMutation = {
     raceResultsProvider?: string | null;
     originalPostId?: string | null;
     originalPost?: {
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -1573,7 +1574,7 @@ export type UpdatePublishedPostMutation = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -1581,11 +1582,11 @@ export type UpdatePublishedPostMutation = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -1632,7 +1633,7 @@ export type DeletePublishedPostMutationVariables = {
 
 export type DeletePublishedPostMutation = {
   deletePublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -1676,7 +1677,7 @@ export type DeletePublishedPostMutation = {
     raceResultsProvider?: string | null;
     originalPostId?: string | null;
     originalPost?: {
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -1701,7 +1702,7 @@ export type DeletePublishedPostMutation = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -1709,11 +1710,11 @@ export type DeletePublishedPostMutation = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -1760,7 +1761,7 @@ export type CreatePostMutationVariables = {
 
 export type CreatePostMutation = {
   createPost?: {
-    __typename: 'Post';
+    __typename: "Post";
     type: string;
     id: string;
     title: string;
@@ -1785,11 +1786,11 @@ export type CreatePostMutation = {
     elevationGrades?: string | null;
     distances?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -1797,9 +1798,9 @@ export type CreatePostMutation = {
       owner?: string | null;
     } | null;
     related?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -1850,7 +1851,7 @@ export type CreatePostMutation = {
       nextToken?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -1893,7 +1894,7 @@ export type UpdatePostMutationVariables = {
 
 export type UpdatePostMutation = {
   updatePost?: {
-    __typename: 'Post';
+    __typename: "Post";
     type: string;
     id: string;
     title: string;
@@ -1918,11 +1919,11 @@ export type UpdatePostMutation = {
     elevationGrades?: string | null;
     distances?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -1930,9 +1931,9 @@ export type UpdatePostMutation = {
       owner?: string | null;
     } | null;
     related?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -1983,7 +1984,7 @@ export type UpdatePostMutation = {
       nextToken?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -2026,7 +2027,7 @@ export type DeletePostMutationVariables = {
 
 export type DeletePostMutation = {
   deletePost?: {
-    __typename: 'Post';
+    __typename: "Post";
     type: string;
     id: string;
     title: string;
@@ -2051,11 +2052,11 @@ export type DeletePostMutation = {
     elevationGrades?: string | null;
     distances?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -2063,9 +2064,9 @@ export type DeletePostMutation = {
       owner?: string | null;
     } | null;
     related?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -2116,7 +2117,7 @@ export type DeletePostMutation = {
       nextToken?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -2158,7 +2159,7 @@ export type GetUserQueryVariables = {
 
 export type GetUserQuery = {
   getUser?: {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     fullName: string;
     email: string;
@@ -2178,9 +2179,9 @@ export type ListUsersQueryVariables = {
 
 export type ListUsersQuery = {
   listUsers?: {
-    __typename: 'ModelUserConnection';
+    __typename: "ModelUserConnection";
     items: Array<{
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -2200,13 +2201,13 @@ export type GetBlogQueryVariables = {
 
 export type GetBlogQuery = {
   getBlog?: {
-    __typename: 'Blog';
+    __typename: "Blog";
     id: string;
     name: string;
     posts?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -2270,13 +2271,13 @@ export type ListBlogsQueryVariables = {
 
 export type ListBlogsQuery = {
   listBlogs?: {
-    __typename: 'ModelBlogConnection';
+    __typename: "ModelBlogConnection";
     items: Array<{
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -2293,7 +2294,7 @@ export type GetPublishedPostQueryVariables = {
 
 export type GetPublishedPostQuery = {
   getPublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -2337,7 +2338,7 @@ export type GetPublishedPostQuery = {
     raceResultsProvider?: string | null;
     originalPostId?: string | null;
     originalPost?: {
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -2362,7 +2363,7 @@ export type GetPublishedPostQuery = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -2370,11 +2371,11 @@ export type GetPublishedPostQuery = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -2422,7 +2423,7 @@ export type ListPublishedPostsQueryVariables = {
 
 export type ListPostsCustom = {
   listPublishedPostsByCreatedAt?: {
-    __typename: 'ModelPublishedPostConnection';
+    __typename: "ModelPublishedPostConnection";
     items: Array<{
       id: string;
       title: string;
@@ -2435,9 +2436,9 @@ export type ListPostsCustom = {
 
 export type ListPublishedPostsQuery = {
   listPublishedPosts?: {
-    __typename: 'ModelPublishedPostConnection';
+    __typename: "ModelPublishedPostConnection";
     items: Array<{
-      __typename: 'PublishedPost';
+      __typename: "PublishedPost";
       id: string;
       title: string;
       gpxFile?: string | null;
@@ -2481,7 +2482,7 @@ export type ListPublishedPostsQuery = {
       raceResultsProvider?: string | null;
       originalPostId?: string | null;
       originalPost?: {
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -2548,9 +2549,9 @@ export type ListPublishedPostsByCreatedAtQueryVariables = {
 
 export type ListPublishedPostsByCreatedAtQuery = {
   listPublishedPostsByCreatedAt?: {
-    __typename: 'ModelPublishedPostConnection';
+    __typename: "ModelPublishedPostConnection";
     items: Array<{
-      __typename: 'PublishedPost';
+      __typename: "PublishedPost";
       id: string;
       title: string;
       gpxFile?: string | null;
@@ -2594,7 +2595,7 @@ export type ListPublishedPostsByCreatedAtQuery = {
       raceResultsProvider?: string | null;
       originalPostId?: string | null;
       originalPost?: {
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -2661,9 +2662,9 @@ export type PublishedPostByOriginalPostIdQueryVariables = {
 
 export type PublishedPostByOriginalPostIdQuery = {
   PublishedPostByOriginalPostId?: {
-    __typename: 'ModelPublishedPostConnection';
+    __typename: "ModelPublishedPostConnection";
     items: Array<{
-      __typename: 'PublishedPost';
+      __typename: "PublishedPost";
       id: string;
       title: string;
       gpxFile?: string | null;
@@ -2707,7 +2708,7 @@ export type PublishedPostByOriginalPostIdQuery = {
       raceResultsProvider?: string | null;
       originalPostId?: string | null;
       originalPost?: {
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -2769,7 +2770,7 @@ export type GetPostQueryVariables = {
 
 export type GetPostQuery = {
   getPost?: {
-    __typename: 'Post';
+    __typename: "Post";
     type: string;
     id: string;
     title: string;
@@ -2794,11 +2795,11 @@ export type GetPostQuery = {
     elevationGrades?: string | null;
     distances?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -2806,9 +2807,9 @@ export type GetPostQuery = {
       owner?: string | null;
     } | null;
     related?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -2859,7 +2860,7 @@ export type GetPostQuery = {
       nextToken?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -2903,9 +2904,9 @@ export type ListPostsQueryVariables = {
 
 export type ListPostsQuery = {
   listPosts?: {
-    __typename: 'ModelPostConnection';
+    __typename: "ModelPostConnection";
     items: Array<{
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -2930,7 +2931,7 @@ export type ListPostsQuery = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -2938,11 +2939,11 @@ export type ListPostsQuery = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -2991,9 +2992,9 @@ export type ListPostsByCreatedAtQueryVariables = {
 
 export type ListPostsByCreatedAtQuery = {
   listPostsByCreatedAt?: {
-    __typename: 'ModelPostConnection';
+    __typename: "ModelPostConnection";
     items: Array<{
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -3018,7 +3019,7 @@ export type ListPostsByCreatedAtQuery = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -3026,11 +3027,11 @@ export type ListPostsByCreatedAtQuery = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -3075,7 +3076,7 @@ export type OnCreateUserSubscriptionVariables = {
 
 export type OnCreateUserSubscription = {
   onCreateUser?: {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     fullName: string;
     email: string;
@@ -3094,7 +3095,7 @@ export type OnUpdateUserSubscriptionVariables = {
 
 export type OnUpdateUserSubscription = {
   onUpdateUser?: {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     fullName: string;
     email: string;
@@ -3113,7 +3114,7 @@ export type OnDeleteUserSubscriptionVariables = {
 
 export type OnDeleteUserSubscription = {
   onDeleteUser?: {
-    __typename: 'User';
+    __typename: "User";
     id: string;
     fullName: string;
     email: string;
@@ -3132,13 +3133,13 @@ export type OnCreateBlogSubscriptionVariables = {
 
 export type OnCreateBlogSubscription = {
   onCreateBlog?: {
-    __typename: 'Blog';
+    __typename: "Blog";
     id: string;
     name: string;
     posts?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -3201,13 +3202,13 @@ export type OnUpdateBlogSubscriptionVariables = {
 
 export type OnUpdateBlogSubscription = {
   onUpdateBlog?: {
-    __typename: 'Blog';
+    __typename: "Blog";
     id: string;
     name: string;
     posts?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -3270,13 +3271,13 @@ export type OnDeleteBlogSubscriptionVariables = {
 
 export type OnDeleteBlogSubscription = {
   onDeleteBlog?: {
-    __typename: 'Blog';
+    __typename: "Blog";
     id: string;
     name: string;
     posts?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -3339,7 +3340,7 @@ export type OnCreatePublishedPostSubscriptionVariables = {
 
 export type OnCreatePublishedPostSubscription = {
   onCreatePublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -3383,7 +3384,7 @@ export type OnCreatePublishedPostSubscription = {
     raceResultsProvider?: string | null;
     originalPostId?: string | null;
     originalPost?: {
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -3408,7 +3409,7 @@ export type OnCreatePublishedPostSubscription = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -3416,11 +3417,11 @@ export type OnCreatePublishedPostSubscription = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -3467,7 +3468,7 @@ export type OnUpdatePublishedPostSubscriptionVariables = {
 
 export type OnUpdatePublishedPostSubscription = {
   onUpdatePublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -3511,7 +3512,7 @@ export type OnUpdatePublishedPostSubscription = {
     raceResultsProvider?: string | null;
     originalPostId?: string | null;
     originalPost?: {
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -3536,7 +3537,7 @@ export type OnUpdatePublishedPostSubscription = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -3544,11 +3545,11 @@ export type OnUpdatePublishedPostSubscription = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -3595,7 +3596,7 @@ export type OnDeletePublishedPostSubscriptionVariables = {
 
 export type OnDeletePublishedPostSubscription = {
   onDeletePublishedPost?: {
-    __typename: 'PublishedPost';
+    __typename: "PublishedPost";
     id: string;
     title: string;
     gpxFile?: string | null;
@@ -3639,7 +3640,7 @@ export type OnDeletePublishedPostSubscription = {
     raceResultsProvider?: string | null;
     originalPostId?: string | null;
     originalPost?: {
-      __typename: 'Post';
+      __typename: "Post";
       type: string;
       id: string;
       title: string;
@@ -3664,7 +3665,7 @@ export type OnDeletePublishedPostSubscription = {
       elevationGrades?: string | null;
       distances?: string | null;
       blog?: {
-        __typename: 'Blog';
+        __typename: "Blog";
         id: string;
         name: string;
         createdAt: string;
@@ -3672,11 +3673,11 @@ export type OnDeletePublishedPostSubscription = {
         owner?: string | null;
       } | null;
       related?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       author?: {
-        __typename: 'User';
+        __typename: "User";
         id: string;
         fullName: string;
         email: string;
@@ -3723,7 +3724,7 @@ export type OnCreatePostSubscriptionVariables = {
 
 export type OnCreatePostSubscription = {
   onCreatePost?: {
-    __typename: 'Post';
+    __typename: "Post";
     type: string;
     id: string;
     title: string;
@@ -3748,11 +3749,11 @@ export type OnCreatePostSubscription = {
     elevationGrades?: string | null;
     distances?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -3760,9 +3761,9 @@ export type OnCreatePostSubscription = {
       owner?: string | null;
     } | null;
     related?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -3813,7 +3814,7 @@ export type OnCreatePostSubscription = {
       nextToken?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -3856,7 +3857,7 @@ export type OnUpdatePostSubscriptionVariables = {
 
 export type OnUpdatePostSubscription = {
   onUpdatePost?: {
-    __typename: 'Post';
+    __typename: "Post";
     type: string;
     id: string;
     title: string;
@@ -3881,11 +3882,11 @@ export type OnUpdatePostSubscription = {
     elevationGrades?: string | null;
     distances?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -3893,9 +3894,9 @@ export type OnUpdatePostSubscription = {
       owner?: string | null;
     } | null;
     related?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -3946,7 +3947,7 @@ export type OnUpdatePostSubscription = {
       nextToken?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
@@ -3989,7 +3990,7 @@ export type OnDeletePostSubscriptionVariables = {
 
 export type OnDeletePostSubscription = {
   onDeletePost?: {
-    __typename: 'Post';
+    __typename: "Post";
     type: string;
     id: string;
     title: string;
@@ -4014,11 +4015,11 @@ export type OnDeletePostSubscription = {
     elevationGrades?: string | null;
     distances?: string | null;
     blog?: {
-      __typename: 'Blog';
+      __typename: "Blog";
       id: string;
       name: string;
       posts?: {
-        __typename: 'ModelPostConnection';
+        __typename: "ModelPostConnection";
         nextToken?: string | null;
       } | null;
       createdAt: string;
@@ -4026,9 +4027,9 @@ export type OnDeletePostSubscription = {
       owner?: string | null;
     } | null;
     related?: {
-      __typename: 'ModelPostConnection';
+      __typename: "ModelPostConnection";
       items: Array<{
-        __typename: 'Post';
+        __typename: "Post";
         type: string;
         id: string;
         title: string;
@@ -4079,7 +4080,7 @@ export type OnDeletePostSubscription = {
       nextToken?: string | null;
     } | null;
     author?: {
-      __typename: 'User';
+      __typename: "User";
       id: string;
       fullName: string;
       email: string;
