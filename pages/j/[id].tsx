@@ -9,7 +9,7 @@ import {
   getPublishedPost,
 } from "../../src/graphql/customQueries";
 import { getActivity } from "../../src/actions/PostGet";
-import SlatePublish from "../../src/components/SlatePublish";
+import SlatePublish from "../../src/components/posts/View/SlatePublish";
 import {
   Author,
   PostContext,
@@ -24,11 +24,10 @@ import {
   TimeSeriesDataType,
   PowerZoneType,
 } from "../../src/types/common";
-import { CloudinaryImage } from "../../src/components/AddImage";
+import { CloudinaryImage } from "../../src/types/common";
 import { UserContext } from "../../src/components/UserContext";
-import Error from "next/error";
 
-const PostView = dynamic(import("../../src/components/PostView"), {
+const PostView = dynamic(import("../../src/components/posts/View/PostView"), {
   ssr: false,
 });
 
@@ -72,7 +71,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     console.log(error);
   }
 
-  // console.log(post);
   if (!post) {
     return {
       props: { errorCode: 403 },
@@ -190,6 +188,7 @@ const Publish = ({
       download: true,
       level: "public",
     });
+
     const timeSeriesData = (await new Response(
       result.Body
     ).json()) as TimeSeriesDataType;

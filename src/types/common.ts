@@ -1,11 +1,35 @@
 import { CognitoUser } from "@aws-amplify/auth";
-import { CloudinaryImage } from "../components/AddImage";
+// import { CloudinaryImage } from "../components/AddImage";
 import { BaseEditor, Element } from "slate";
 import { ReactEditor } from "slate-react";
 import { HistoryEditor } from "slate-history";
 import { BaseElement } from "slate";
 
 import { Author, RaceResultRow } from "../components/PostContext";
+
+export interface IUser {
+  userId: string;
+  email: string;
+  email_verified: boolean;
+  role: string;
+  attributes: {
+    picture: string;
+    name: string;
+    preferred_username: string;
+    sub: string;
+    profile: string;
+  };
+}
+
+export interface CloudinaryImage {
+  asset_id: string;
+  public_id: string;
+  secure_url: string;
+  format: "jpeg" | "jpg" | "png";
+  width: number;
+  height: number;
+  colors: Array<string>;
+}
 
 export interface GraphQLError {
   data: any;
@@ -243,6 +267,8 @@ export interface PostViewType {
   powerZoneBuckets?: string | null;
   shortUrl?: string | null;
   normalizedPower?: number | null;
+  owner: string;
+  originalPostId?: string;
 }
 
 export interface PostType {

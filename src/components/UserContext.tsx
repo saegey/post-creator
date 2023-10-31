@@ -1,5 +1,6 @@
 import React from "react";
-import { IUser } from "../../pages/_app";
+
+import { IUser } from "../types/common";
 
 export type UserContextType = {
   user: IUser | undefined;

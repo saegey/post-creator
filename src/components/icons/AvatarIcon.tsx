@@ -1,10 +1,10 @@
 import { Box } from 'theme-ui';
-import { MouseEventHandler } from 'react';
+import React from 'react';
 
 const AvatarIcon = ({
   onClick,
 }: {
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }) => {
   return (
     <Box

@@ -1,6 +1,6 @@
 import React from "react";
-import { CloudinaryImage } from "./AddImage";
-import { ActivityItem, CustomElement } from "../types/common";
+
+import { ActivityItem, CustomElement, CloudinaryImage } from "../types/common";
 
 export type RaceResultRow = {
   selected:

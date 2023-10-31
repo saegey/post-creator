@@ -5,10 +5,9 @@ import { NextApiRequest } from "next";
 import { GraphQLResult } from "@aws-amplify/api";
 
 import { listPostsCustom } from "../src/graphql/customQueries";
-import { CloudinaryImage } from "../src/components/AddImage";
-import PostsAllUsers from "../src/components/PostsAllUsers";
+import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
 import { ListPostsCustom } from "../src/API";
-import { CognitoUserExt } from "../src/types/common";
+import { CognitoUserExt, CloudinaryImage } from "../src/types/common";
 import { UserContext } from "../src/components/UserContext";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {

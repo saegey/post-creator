@@ -41,6 +41,14 @@
           ],
           "category": "function",
           "resourceName": "publishPost"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "routeAccessPoint"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -125,6 +133,58 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "custom": {
+    "s3accesspoint": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "Region",
+            "LambdaExecutionRole",
+            "LambdaExecutionRoleArn"
+          ],
+          "category": "function",
+          "resourceName": "routeAccessPoint"
+        },
+        {
+          "attributes": [
+            "BucketName",
+            "Region"
+          ],
+          "category": "storage",
+          "resourceName": "routeFiles"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "customCDK"
+    },
+    "s3objectlambda": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "Region",
+            "LambdaExecutionRole",
+            "LambdaExecutionRoleArn"
+          ],
+          "category": "function",
+          "resourceName": "raceresult"
+        },
+        {
+          "attributes": [
+            "BucketName",
+            "Region"
+          ],
+          "category": "storage",
+          "resourceName": "routeFiles"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "customCloudformation"
     }
   },
   "function": {
@@ -232,6 +292,20 @@
     },
     "raceresultgetResults": {
       "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "routeAccessPoint": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "routeFiles"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -351,6 +425,22 @@
         {
           "category": "function",
           "resourceName": "raceresultgetResults"
+        }
+      ]
+    },
+    "AMPLIFY_function_routeAccessPoint_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "routeAccessPoint"
+        }
+      ]
+    },
+    "AMPLIFY_function_routeAccessPoint_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "routeAccessPoint"
         }
       ]
     },
