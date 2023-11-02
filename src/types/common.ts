@@ -141,6 +141,12 @@ export type ActivityOverviewType = {
 
 export type VisualOverviewType = {
   type: "visualOverview";
+  selectionEnd?: number | undefined;
+  selectionStart?: number | undefined;
+  left?: number | undefined;
+  right?: number | undefined;
+  bottom?: number | undefined;
+  top?: number | undefined;
   children: CustomText[];
   void: true;
 };

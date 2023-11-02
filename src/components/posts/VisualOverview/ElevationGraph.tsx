@@ -51,7 +51,7 @@ const ElevationGraph = ({
   selection,
   setSelection,
   downsampleRate,
-  setDownsampleRate,
+  // setDownsampleRate,
   element,
 }: NewLineGraphProps) => {
   if (!downSampledData || downSampledData.length === 0) {
@@ -61,9 +61,10 @@ const ElevationGraph = ({
       </Box>
     );
   }
+  console.log(downSampledData);
 
-  const editor = useSlateStatic();
-  const path = ReactEditor.findPath(editor, element);
+  const editor = element && useSlateStatic();
+  const path = element && ReactEditor.findPath(editor, element);
   console.log("path", path);
   const themeContext = useThemeUI();
   // const { width, height } = useViewport();
@@ -81,16 +82,15 @@ const ElevationGraph = ({
 
   const initialState = {
     data: shrunkData,
-    left: "dataMin",
-    right: "dataMax",
+    left: element && element.left ? element.left : "dataMin",
+    right: element && element.right ? element.right : "dataMax",
     refAreaLeft: "",
     refAreaRight: "",
-    top: "dataMax+1",
-    bottom: "dataMin-1",
-    top2: "dataMax+20",
-    bottom2: "dataMin-20",
+    top2: element && element.top ? element.top : "dataMax+20",
+    bottom2: element && element.bottom ? element.bottom : "dataMin-20",
     animation: true,
   };
+  console.log(initialState, downsampleRate);
 
   const saveState = () => {
     Transforms.setNodes(
@@ -99,6 +99,10 @@ const ElevationGraph = ({
         ...element,
         selectionStart: selection[0],
         selectionEnd: selection[1],
+        left: zoomGraph.left,
+        right: zoomGraph.right,
+        top: zoomGraph.top2,
+        bottom: zoomGraph.bottom2,
       } as VisualOverviewType,
       {
         // This path references the editor, and is expanded to a range that
@@ -106,6 +110,38 @@ const ElevationGraph = ({
         at: path,
       }
     );
+  };
+
+  const clearSelection = () => {
+    Transforms.setNodes(
+      editor,
+      {
+        ...element,
+        selectionStart: undefined,
+        selectionEnd: undefined,
+        left: undefined,
+        right: undefined,
+        top: undefined,
+        bottom: undefined,
+      } as VisualOverviewType,
+      {
+        // This path references the editor, and is expanded to a range that
+        // will encompass all the content of the editor.
+        at: path,
+      }
+    );
+    setZoomGraph((prev) => ({
+      ...prev,
+      // data: data?.slice(),
+      data: shrunkData,
+      refAreaLeft: "",
+      refAreaRight: "",
+      left: "dataMin",
+      right: "dataMax",
+      top2: "dataMax+50",
+      bottom2: "dataMin",
+    }));
+    setSelection(undefined);
   };
 
   const zoomOut = () => {
@@ -118,10 +154,8 @@ const ElevationGraph = ({
       refAreaRight: "",
       left: "dataMin",
       right: "dataMax",
-      top: "dataMax+1",
-      bottom: "dataMin",
       top2: "dataMax+50",
-      bottom2: "dataMin+50",
+      bottom2: "dataMin",
     }));
     setSelection(undefined);
   };
@@ -230,10 +264,20 @@ const ElevationGraph = ({
     >
       <Flex sx={{ gap: "20px" }}>
         <Button
-          sx={{ visibility: selection ? "visible" : "hidden" }}
+          sx={{
+            visibility:
+              selection || (element && element.left) ? "visible" : "hidden",
+          }}
           onClick={() => zoomOut()}
         >
           Zoom Out
+        </Button>
+
+        <Button
+          sx={{ visibility: element && element.left ? "visible" : "hidden" }}
+          onClick={() => clearSelection()}
+        >
+          Clear Selection
         </Button>
         <Button
           sx={{ visibility: selection ? "visible" : "hidden" }}

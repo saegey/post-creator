@@ -23,7 +23,7 @@ const VisualOverview = ({ activity, token, element }: Vizprops) => {
     );
   }
 
-  console.log(element);
+  // console.log(element);
 
   const { selection, setSelection } = React.useContext(PostContext);
   // if (element.selectionStart && element.selectionEnd && !selection) {
@@ -83,7 +83,7 @@ const VisualOverview = ({ activity, token, element }: Vizprops) => {
         selection={selection}
         setSelection={setSelection}
         downsampleRate={downsampleRate}
-        setDownsampleRate={setDownsampleRate}
+        // setDownsampleRate={setDownsampleRate}
         element={element}
       />
     );
@@ -97,12 +97,14 @@ const VisualOverview = ({ activity, token, element }: Vizprops) => {
         token={token}
         selection={selection}
         downsampleRate={downsampleRate}
+        element={element}
       />
       <ElevationSlice
         marker={marker}
         selection={selection}
         downSampledData={downSampledData}
         downsampleRate={downsampleRate}
+        element={element}
       />
       {graph}
     </Box>

@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, Spinner } from "theme-ui";
 import mapboxgl, { GeoJSONSource, SkyLayer } from "mapbox-gl";
-import { ActivityItem } from "../../../types/common";
+import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { PostContext } from "../../PostContext";
+import { select } from "slate";
 
 // type ActivityEvent = {
 //   c: Array<number>;
@@ -18,6 +19,7 @@ interface MapProps {
   token: string;
   selection: [number, number];
   downsampleRate: number;
+  element: VisualOverviewType;
 }
 
 const routeLayerSettings = {
@@ -67,6 +69,7 @@ const Map = ({
   coordinates,
   markerCoordinates,
   token,
+  element,
   // selection,
   downsampleRate,
 }: MapProps): JSX.Element => {
@@ -84,25 +87,44 @@ const Map = ({
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    console.log("use");
+    console.log("use", element);
     if (!map || !map.current) {
+      console.log("nio map");
       return;
     }
     const geojsonSource = map.current?.getSource(
       "routeSelect"
     ) as GeoJSONSource;
 
-    console.log("seleectin", selection);
-    if (selection === undefined) {
+    if (selection === undefined && element.selectionStart === undefined) {
       console.log("removesource");
-      map.current?.removeSource("routeSelect");
-      map.current?.removeLayer("routeSelectlayer");
+      if (map.current?.getSource("routeSelect")) {
+        map.current?.removeSource("routeSelect");
+        map.current?.removeLayer("routeSelectlayer");
+      }
+
       return;
     }
 
+    const selectLow =
+      selection && selection[0]
+        ? selection[0]
+        : element.selectionStart
+        ? element.selectionStart
+        : undefined;
+
+    const selectHigh =
+      selection && selection[1]
+        ? selection[1]
+        : element.selectionEnd
+        ? element.selectionEnd
+        : undefined;
+
+    console.log("selectLow", coordinates.slice(selectLow, selectHigh));
+
     // console.log("useEffect selecttion", selection, geojsonSource);
-    if (!geojsonSource) {
-      console.log(coordinates.slice(selection[0], selection[1]));
+    if (!geojsonSource && selectLow && selectHigh) {
+      // console.log(coordinates.slice(selection[0], selection[1]));
       map.current?.addSource("routeSelect", {
         type: "geojson",
         data: {
@@ -110,7 +132,7 @@ const Map = ({
           properties: {},
           geometry: {
             type: "LineString",
-            coordinates: coordinates.slice(selection[0], selection[1]),
+            coordinates: coordinates.slice(selectLow, selectHigh),
           },
         },
       });
@@ -124,11 +146,7 @@ const Map = ({
               type: "Feature",
               geometry: {
                 type: "LineString",
-                coordinates:
-                  Math.abs(selection[1] - coordinates.length) < 80 &&
-                  selection[0] < 1
-                    ? []
-                    : coordinates.slice(selection[0], selection[1]),
+                coordinates: coordinates.slice(selectLow, selectHigh),
               },
             },
           ],
@@ -140,7 +158,7 @@ const Map = ({
         console.error(e);
       }
     }
-  }, [selection]);
+  }, [selection, element, isMapLoaded]);
 
   React.useEffect(() => {
     if (!map || !map.current) {
@@ -200,7 +218,10 @@ const Map = ({
         console.error(e);
       }
     }
-    if (selection && !map.current?.getLayer("routeSelectlayer")) {
+    if (
+      (selection || element.selectionStart) &&
+      !map.current?.getLayer("routeSelectlayer")
+    ) {
       try {
         map.current?.addLayer(routeSelectLayerSettings as SkyLayer);
       } catch (e) {

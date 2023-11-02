@@ -44,6 +44,8 @@ const ElevationSlice = ({
               5280)
         ).toFixed(4)
       : undefined;
+
+
   const distance =
     marker && marker.d
       ? marker.d.toFixed(2)
