@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import dynamic from "next/dynamic";
 import { Box, Spinner, Flex } from "theme-ui";
@@ -66,6 +66,7 @@ const VisualOverviewWrapper = ({
         token={
           "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
         }
+        element={element}
       />
       <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
         <OptionsButton

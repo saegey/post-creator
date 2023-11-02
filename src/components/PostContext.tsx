@@ -69,6 +69,8 @@ export type PostContextType = {
   privacyStatus?: string | undefined;
   createdAt?: string | undefined;
   selection: [number, number] | undefined;
+  powers: Array<number> | undefined;
+  hearts: Array<number> | undefined;
   setActivity?: React.Dispatch<
     React.SetStateAction<ActivityItem[] | undefined>
   >;
@@ -128,6 +130,8 @@ export type PostContextType = {
   setSelection: React.Dispatch<
     React.SetStateAction<[number, number] | undefined>
   >;
+  setPowers: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
+  setHearts: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -163,6 +167,8 @@ const PostContext = React.createContext<PostContextType>({
   privacyStatus: undefined,
   createdAt: undefined,
   selection: undefined,
+  powers: undefined,
+  hearts: undefined,
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},
@@ -195,6 +201,8 @@ const PostContext = React.createContext<PostContextType>({
   setPrivacyStatus: () => {},
   setCreatedAt: () => {},
   setSelection: () => {},
+  setPowers: () => {},
+  setHearts: () => {},
 });
 
 export { PostContext };

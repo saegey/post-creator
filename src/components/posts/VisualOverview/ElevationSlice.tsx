@@ -4,6 +4,8 @@ import React from "react";
 import { useUnits } from "../../UnitProvider";
 import { formatTime } from "../../../utils/time";
 import { ActivityItem } from "../../../types/common";
+import PostEditor from "../Editor/PostEditor";
+import { PostContext } from "../../PostContext";
 
 export const gradeToColor = (grade: number): string => {
   if (grade > 0 && grade < 4) return "green";
@@ -24,6 +26,8 @@ const ElevationSlice = ({
   downSampledData: any;
   downsampleRate: number;
 }) => {
+  const { powers, hearts } = React.useContext(PostContext);
+
   const units = useUnits();
   const grade =
     marker && marker.g
@@ -65,12 +69,35 @@ const ElevationSlice = ({
       ? downSampledData[selection[1]].t - downSampledData[selection[0]].t
       : undefined;
 
-  // console.log(elevation);
+  let selectPowers;
+  if (selection) {
+    selectPowers = powers?.slice(selection[0], selection[1]);
+    // console.log(selectPowers);
+  }
+
+  const power =
+    marker && marker.t && powers && time
+      ? powers[time]
+      : selection
+      ? selectPowers &&
+        selectPowers.reduce((a, b) => a + b) / selectPowers.length
+      : undefined;
+
+  const selectHearts =
+    hearts && selection && hearts.slice(selection[0], selection[1]);
+
+  const heartSummary =
+    marker && marker.t && hearts && time
+      ? hearts[time]
+      : selection
+      ? selectHearts &&
+        selectHearts.reduce((a, b) => a + b) / selectHearts.length
+      : undefined;
 
   return (
     <Grid
       gap={2}
-      columns={[2, 4, 4]}
+      columns={[2, 6, 6]}
       sx={{
         padding: "10px",
       }}
@@ -102,6 +129,18 @@ const ElevationSlice = ({
         <Text as="p">Time</Text>
         <Text sx={{ fontSize: "20px" }}>
           {time ? `${formatTime(time)}` : "-"}
+        </Text>
+      </Box>
+      <Box>
+        <Text as="p">Power</Text>
+        <Text sx={{ fontSize: "20px" }}>
+          {power ? `${power.toFixed(0)}` : "-"}
+        </Text>
+      </Box>
+      <Box>
+        <Text as="p">Heart Rate</Text>
+        <Text sx={{ fontSize: "20px" }}>
+          {heartSummary ? `${heartSummary.toFixed(0)}` : "-"}
         </Text>
       </Box>
     </Grid>

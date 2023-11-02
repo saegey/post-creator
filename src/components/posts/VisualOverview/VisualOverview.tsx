@@ -5,15 +5,16 @@ import Map from "./CustomMap";
 import ElevationGraph from "./ElevationGraph";
 import ElevationSlice, { gradeToColor } from "./ElevationSlice";
 import { useUnits } from "../../UnitProvider";
-import { ActivityItem } from "../../../types/common";
+import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { PostContext } from "../../PostContext";
 
 interface Vizprops {
   activity?: Array<ActivityItem> | undefined;
   token: string;
+  element: VisualOverviewType;
 }
 
-const VisualOverview = ({ activity, token }: Vizprops) => {
+const VisualOverview = ({ activity, token, element }: Vizprops) => {
   if (!activity || activity.length === 0) {
     return (
       <Box>
@@ -22,7 +23,12 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     );
   }
 
+  console.log(element);
+
   const { selection, setSelection } = React.useContext(PostContext);
+  // if (element.selectionStart && element.selectionEnd && !selection) {
+  //   setSelection([element.selectionStart, element.selectionEnd]);
+  // }
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
   // const [selection, setSelection] = React.useState();
   // console.log(selection);
@@ -78,6 +84,7 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
         setSelection={setSelection}
         downsampleRate={downsampleRate}
         setDownsampleRate={setDownsampleRate}
+        element={element}
       />
     );
   }, [downSampledData, downsampleRate, selection]) as React.ReactNode;

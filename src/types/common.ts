@@ -238,6 +238,8 @@ export interface TimeSeriesDataType {
   distances: number[] | undefined;
   elevationGrades: number[] | undefined;
   powerAnalysis: Array<Record<number | string, number>> | undefined;
+  powers: number[] | undefined;
+  hearts: number[] | undefined;
 }
 
 export interface PostViewType {

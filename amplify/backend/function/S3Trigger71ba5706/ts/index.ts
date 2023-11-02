@@ -1,11 +1,11 @@
-import { gpx } from '@tmcw/togeojson';
-import { DOMParser } from '@xmldom/xmldom';
-import length from '@turf/length';
-import { lineString } from '@turf/helpers';
-import AWS from 'aws-sdk';
-import AWSXRay from 'aws-xray-sdk';
-import zlib from 'zlib';
-import { v4 as uuidv4 } from 'uuid';
+import { gpx } from "@tmcw/togeojson";
+import { DOMParser } from "@xmldom/xmldom";
+import length from "@turf/length";
+import { lineString } from "@turf/helpers";
+import AWS from "aws-sdk";
+import AWSXRay from "aws-xray-sdk";
+import zlib from "zlib";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   calcElevationGain,
@@ -15,10 +15,10 @@ import {
   calcPowerZones,
   calcPowerZoneBuckets,
   timeInRed,
-} from './gpxHelper';
+} from "./gpxHelper";
 
 const iotdata = new AWS.IotData({
-  endpoint: 'a29ieb9zd32ips-ats.iot.us-east-1.amazonaws.com',
+  endpoint: "a29ieb9zd32ips-ats.iot.us-east-1.amazonaws.com",
 });
 
 // https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
@@ -49,7 +49,7 @@ export const calcDistances = (coordinates: Coordinate[]) => {
           [coordinates[index][0], coordinates[index][1]],
           [coordinates[index + 1][0], coordinates[index + 1][1]],
         ]),
-        { units: 'meters' }
+        { units: "meters" }
       );
       distances.push(Number(totalDistance.toFixed(5)));
     }
@@ -110,7 +110,7 @@ export const calcBestPowers = (
   const averagePower = Math.round(sum / filteredVals.length);
 
   const response: Record<number | string, number> = {};
-  response['entire'] = averagePower;
+  response["entire"] = averagePower;
 
   times.forEach((time) => {
     if (time > filteredVals.length) return;
@@ -166,64 +166,59 @@ const publishMessage = async ({
 };
 
 exports.handler = async function (event: TriggerEvent) {
-  console.log('Event => ' + JSON.stringify(event));
-  if (event.Records[0].s3.object.key.includes('timeseries')) {
+  console.log("Event => " + JSON.stringify(event));
+  if (event.Records[0].s3.object.key.includes("timeseries")) {
     return;
   }
 
   // await publishMessage({ phase: 'start' });
   const segment = AWSXRay.getSegment();
   const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
-  console.log('Dynamo Table: ', postTable);
+  console.log("Dynamo Table: ", postTable);
 
   const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
-  let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
+  let key = event.Records[0].s3.object.key.replace("%3A", ":"); //eslint-disable-line
   const fileParams = { Bucket: bucket, Key: key };
 
-  const s3getTimer = segment?.addNewSubsegment('s3get');
+  const s3getTimer = segment?.addNewSubsegment("s3get");
   const file = await S3.getObject({
     Bucket: bucket as string,
     Key: key,
   }).promise();
   s3getTimer.close();
 
-  const s3metaTimer = segment.addNewSubsegment('s3meta');
+  const s3metaTimer = segment.addNewSubsegment("s3meta");
   const metaData = await S3.headObject(fileParams).promise();
-  console.log('metadata', JSON.stringify(metaData));
+  console.log("metadata", JSON.stringify(metaData));
   s3metaTimer.close();
 
   const postId = metaData.Metadata.postid;
   const publishTopic = `post-${postId}`;
 
-  // await publishMessage({
-  //   payload: { phase: 'meta-downloaded' },
-  //   topic: publishTopic,
-  // });
-
   await publishMessage({
-    payload: { phase: 'file-downloaded' },
+    payload: { phase: "file-downloaded" },
     topic: publishTopic,
   });
 
-  const xmlParseTimer = segment?.addNewSubsegment('xmlParse');
-  const xmlDoc = new DOMParser().parseFromString(file.Body.toString('utf-8'));
+  const xmlParseTimer = segment?.addNewSubsegment("xmlParse");
+  const xmlDoc = new DOMParser().parseFromString(file.Body.toString("utf-8"));
   xmlParseTimer.close();
   await publishMessage({
-    payload: { phase: 'xml-parse' },
+    payload: { phase: "xml-parse" },
     topic: publishTopic,
   });
 
-  const gpxParseTimer = segment?.addNewSubsegment('gpxParse');
+  const gpxParseTimer = segment?.addNewSubsegment("gpxParse");
   const gpxData = gpx(xmlDoc);
   gpxParseTimer.close();
   await publishMessage({
-    payload: { phase: 'gpx-parse' },
+    payload: { phase: "gpx-parse" },
     topic: publishTopic,
   });
 
   const currentFtp = metaData.Metadata.currentftp;
   let coordinates: Array<any> = [];
-  let powers, powerAnalysis, elevation, distances, elevationGrades;
+  let powers, hearts, powerAnalysis, elevation, distances, elevationGrades;
   let elevationGain, stoppedTime, elapsedTime;
   let heartAnalysis, normalizedPower, cadenceAnalysis, tempAnalysis;
   let zones, powerZoneBuckets, timeInRedSecs;
@@ -231,15 +226,15 @@ exports.handler = async function (event: TriggerEvent) {
   const distance = length(gpxData);
 
   gpxData.features.map((feature: any) => {
-    const { heart, times, atemps, cads } =
-      feature.properties.coordinateProperties;
+    const { times, atemps, cads } = feature.properties.coordinateProperties;
     coordinates = feature.geometry.coordinates;
     powers = feature.properties.coordinateProperties.powers;
+    hearts = feature.properties.coordinateProperties.heart;
 
-    const powerAnalysisTimer = segment?.addNewSubsegment('powerAnalysis');
+    const powerAnalysisTimer = segment?.addNewSubsegment("powerAnalysis");
 
     powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
-    heartAnalysis = calcBestPowers(timeIntervals(heart.length), heart);
+    heartAnalysis = calcBestPowers(timeIntervals(hearts.length), hearts);
     cadenceAnalysis = calcBestPowers(timeIntervals(cads.length), cads, true);
     tempAnalysis = calcBestPowers(timeIntervals(atemps.length), atemps, true);
 
@@ -251,7 +246,7 @@ exports.handler = async function (event: TriggerEvent) {
     elapsedTime = dateDiff(new Date(times[0]), new Date(times.at(-1))).seconds;
 
     const downsampleElevationTimer =
-      segment?.addNewSubsegment('elevationAnalysis');
+      segment?.addNewSubsegment("elevationAnalysis");
     elevation = calcElevation(coordinates);
     distances = calcDistances(coordinates);
     elevationGrades = calcElevationGrades(coordinates, distances);
@@ -272,7 +267,7 @@ exports.handler = async function (event: TriggerEvent) {
   });
 
   await publishMessage({
-    payload: { phase: 'process-data' },
+    payload: { phase: "process-data" },
     topic: publishTopic,
   });
 
@@ -285,6 +280,7 @@ exports.handler = async function (event: TriggerEvent) {
       distances,
       elevationGrades,
       powerAnalysis,
+      hearts,
     }),
     Bucket: bucket,
     Key: `private/${metaData.Metadata.identityid}/${s3key}`,
@@ -296,7 +292,7 @@ exports.handler = async function (event: TriggerEvent) {
     console.error(JSON.stringify(e));
   }
 
-  const updateDynamoTimer = segment?.addNewSubsegment('updateDynamo');
+  const updateDynamoTimer = segment?.addNewSubsegment("updateDynamo");
   try {
     const res = await docClient
       .update({
@@ -305,20 +301,20 @@ exports.handler = async function (event: TriggerEvent) {
           id: postId,
         },
         UpdateExpression:
-          'SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf',
+          "SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf",
         ExpressionAttributeValues: {
-          ':ta': tempAnalysis,
-          ':ca': cadenceAnalysis,
-          ':dis': distance,
-          ':hr': heartAnalysis,
-          ':el': elevationGain,
-          ':st': stoppedTime,
-          ':et': elapsedTime,
-          ':np': normalizedPower,
-          ':pz': zones ? zones : [],
-          ':pzb': powerZoneBuckets ? powerZoneBuckets : [],
-          ':red': timeInRedSecs ? timeInRedSecs : 0,
-          ':tsf': s3key,
+          ":ta": tempAnalysis,
+          ":ca": cadenceAnalysis,
+          ":dis": distance,
+          ":hr": heartAnalysis,
+          ":el": elevationGain,
+          ":st": stoppedTime,
+          ":et": elapsedTime,
+          ":np": normalizedPower,
+          ":pz": zones ? zones : [],
+          ":pzb": powerZoneBuckets ? powerZoneBuckets : [],
+          ":red": timeInRedSecs ? timeInRedSecs : 0,
+          ":tsf": s3key,
         },
       })
       .promise();
@@ -328,7 +324,7 @@ exports.handler = async function (event: TriggerEvent) {
 
   updateDynamoTimer.close();
   await publishMessage({
-    payload: { phase: 'update-data' },
+    payload: { phase: "update-data" },
     topic: publishTopic,
   });
 };

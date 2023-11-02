@@ -248,6 +248,9 @@ const Post = ({
     postCreatedAt
   );
   const [selection, setSelection] = React.useState<[number, number]>();
+  const [powers, setPowers] = React.useState<Array<number> | undefined>();
+  const [hearts, setHearts] = React.useState<Array<number> | undefined>();
+
   const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
@@ -355,6 +358,10 @@ const Post = ({
         setCreatedAt,
         selection,
         setSelection,
+        powers,
+        setPowers,
+        hearts,
+        setHearts,
       }}
     >
       <>

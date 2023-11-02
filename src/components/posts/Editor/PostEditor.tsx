@@ -60,6 +60,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setPowerZones,
     setPowerZoneBuckets,
     setHeroImage,
+    setPowers,
+    setHearts,
   } = React.useContext(PostContext);
 
   const {
@@ -139,6 +141,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
     const activity = await getActivity(timeSeriesData);
     setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
+    setPowers && setPowers(timeSeriesData.powers);
+    setHearts && setHearts(timeSeriesData.hearts);
     return activity;
   };
 

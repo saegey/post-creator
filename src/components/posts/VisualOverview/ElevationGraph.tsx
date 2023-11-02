@@ -7,16 +7,20 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   ReferenceArea,
-  Brush,
 } from "recharts";
-import { Box, Button, Spinner, useThemeUI } from "theme-ui";
+import { Box, Button, Flex, Spinner, useThemeUI } from "theme-ui";
 import React from "react";
+import { useSlateStatic, ReactEditor } from "slate-react";
+import { Transforms } from "slate";
 
 import { useViewport } from "../../ViewportProvider";
 import GradeGradient from "./GradeGradient";
 import { useUnits } from "../../UnitProvider";
-import { ActivityItem } from "../../../types/common";
-import { isUndefined } from "lodash";
+import {
+  ActivityItem,
+  ActivityOverviewType,
+  VisualOverviewType,
+} from "../../../types/common";
 
 function isDefined<T>(argument: T | undefined): argument is T {
   return argument !== undefined;
@@ -38,6 +42,7 @@ export interface GradeGradientActivty extends ActivityEvent {
 interface NewLineGraphProps {
   downSampledData: Array<GradeGradientActivty>;
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
+  element: VisualOverviewType;
 }
 
 const ElevationGraph = ({
@@ -47,6 +52,7 @@ const ElevationGraph = ({
   setSelection,
   downsampleRate,
   setDownsampleRate,
+  element,
 }: NewLineGraphProps) => {
   if (!downSampledData || downSampledData.length === 0) {
     return (
@@ -55,6 +61,10 @@ const ElevationGraph = ({
       </Box>
     );
   }
+
+  const editor = useSlateStatic();
+  const path = ReactEditor.findPath(editor, element);
+  console.log("path", path);
   const themeContext = useThemeUI();
   // const { width, height } = useViewport();
   const units = useUnits();
@@ -80,6 +90,22 @@ const ElevationGraph = ({
     top2: "dataMax+20",
     bottom2: "dataMin-20",
     animation: true,
+  };
+
+  const saveState = () => {
+    Transforms.setNodes(
+      editor,
+      {
+        ...element,
+        selectionStart: selection[0],
+        selectionEnd: selection[1],
+      } as VisualOverviewType,
+      {
+        // This path references the editor, and is expanded to a range that
+        // will encompass all the content of the editor.
+        at: path,
+      }
+    );
   };
 
   const zoomOut = () => {
@@ -202,7 +228,20 @@ const ElevationGraph = ({
         // touchAction: "pan-x",
       }}
     >
-      <Button onClick={() => zoomOut()}>Zoom Out</Button>
+      <Flex sx={{ gap: "20px" }}>
+        <Button
+          sx={{ visibility: selection ? "visible" : "hidden" }}
+          onClick={() => zoomOut()}
+        >
+          Zoom Out
+        </Button>
+        <Button
+          sx={{ visibility: selection ? "visible" : "hidden" }}
+          onClick={() => saveState()}
+        >
+          Save State
+        </Button>
+      </Flex>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
@@ -272,6 +311,7 @@ const ElevationGraph = ({
               // tickFormatter={(t) => {
               //   return t;
               // }}
+              tickFormatter={(t) => t.toFixed(1)}
               tick={{
                 fill: themeContext?.theme?.colors?.text as string,
                 fontSize: "14px",
@@ -297,18 +337,20 @@ const ElevationGraph = ({
                 fill: themeContext?.theme?.colors?.text as string,
                 fontSize: "14px",
               }}
+              tickFormatter={(t) => t.toFixed(1)}
               stroke={themeContext?.theme?.colors?.chartAxes as string}
               hide={hideAxes}
             />
           )}
           <Area
-            type={"linear"}
+            type={"monotone"}
             dataKey="e"
             fill="black"
             fillOpacity={0.2}
             dot={false}
             stroke="black"
             strokeOpacity={0.2}
+            isAnimationActive={false}
             // yAxisId="1"
           />
           {refAreaLeft && refAreaRight ? (

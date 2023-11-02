@@ -14,7 +14,7 @@ const zlib_1 = __importDefault(require("zlib"));
 const uuid_1 = require("uuid");
 const gpxHelper_1 = require("./gpxHelper");
 const iotdata = new aws_sdk_1.default.IotData({
-    endpoint: 'a29ieb9zd32ips-ats.iot.us-east-1.amazonaws.com',
+    endpoint: "a29ieb9zd32ips-ats.iot.us-east-1.amazonaws.com",
 });
 // https://vdelacou.medium.com/how-to-use-typescript-with-aws-amplify-function-d3e271b11d01/
 // https://medium.com/develop-and-deploy-a-complex-serverless-web-app/use-s3-trigger-to-create-a-dynamodb-entry-when-uploading-images-to-s3-part-9-4d7489a4584b
@@ -37,7 +37,7 @@ const calcDistances = (coordinates) => {
             totalDistance += (0, length_1.default)((0, helpers_1.lineString)([
                 [coordinates[index][0], coordinates[index][1]],
                 [coordinates[index + 1][0], coordinates[index + 1][1]],
-            ]), { units: 'meters' });
+            ]), { units: "meters" });
             distances.push(Number(totalDistance.toFixed(5)));
         }
     });
@@ -85,7 +85,7 @@ const calcBestPowers = (times, powers, removeZeros = false) => {
     }, 0);
     const averagePower = Math.round(sum / filteredVals.length);
     const response = {};
-    response['entire'] = averagePower;
+    response["entire"] = averagePower;
     times.forEach((time) => {
         if (time > filteredVals.length)
             return;
@@ -118,65 +118,62 @@ const publishMessage = async ({ payload, topic, }) => {
     console.log(response, JSON.stringify(payload));
 };
 exports.handler = async function (event) {
-    console.log('Event => ' + JSON.stringify(event));
-    if (event.Records[0].s3.object.key.includes('timeseries')) {
+    console.log("Event => " + JSON.stringify(event));
+    if (event.Records[0].s3.object.key.includes("timeseries")) {
         return;
     }
     // await publishMessage({ phase: 'start' });
     const segment = aws_xray_sdk_1.default.getSegment();
     const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
-    console.log('Dynamo Table: ', postTable);
+    console.log("Dynamo Table: ", postTable);
     const bucket = event.Records[0].s3.bucket.name; //eslint-disable-line
-    let key = event.Records[0].s3.object.key.replace('%3A', ':'); //eslint-disable-line
+    let key = event.Records[0].s3.object.key.replace("%3A", ":"); //eslint-disable-line
     const fileParams = { Bucket: bucket, Key: key };
-    const s3getTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('s3get');
+    const s3getTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("s3get");
     const file = await S3.getObject({
         Bucket: bucket,
         Key: key,
     }).promise();
     s3getTimer.close();
-    const s3metaTimer = segment.addNewSubsegment('s3meta');
+    const s3metaTimer = segment.addNewSubsegment("s3meta");
     const metaData = await S3.headObject(fileParams).promise();
-    console.log('metadata', JSON.stringify(metaData));
+    console.log("metadata", JSON.stringify(metaData));
     s3metaTimer.close();
     const postId = metaData.Metadata.postid;
     const publishTopic = `post-${postId}`;
-    // await publishMessage({
-    //   payload: { phase: 'meta-downloaded' },
-    //   topic: publishTopic,
-    // });
     await publishMessage({
-        payload: { phase: 'file-downloaded' },
+        payload: { phase: "file-downloaded" },
         topic: publishTopic,
     });
-    const xmlParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('xmlParse');
-    const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString('utf-8'));
+    const xmlParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("xmlParse");
+    const xmlDoc = new xmldom_1.DOMParser().parseFromString(file.Body.toString("utf-8"));
     xmlParseTimer.close();
     await publishMessage({
-        payload: { phase: 'xml-parse' },
+        payload: { phase: "xml-parse" },
         topic: publishTopic,
     });
-    const gpxParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('gpxParse');
+    const gpxParseTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("gpxParse");
     const gpxData = (0, togeojson_1.gpx)(xmlDoc);
     gpxParseTimer.close();
     await publishMessage({
-        payload: { phase: 'gpx-parse' },
+        payload: { phase: "gpx-parse" },
         topic: publishTopic,
     });
     const currentFtp = metaData.Metadata.currentftp;
     let coordinates = [];
-    let powers, powerAnalysis, elevation, distances, elevationGrades;
+    let powers, hearts, powerAnalysis, elevation, distances, elevationGrades;
     let elevationGain, stoppedTime, elapsedTime;
     let heartAnalysis, normalizedPower, cadenceAnalysis, tempAnalysis;
     let zones, powerZoneBuckets, timeInRedSecs;
     const distance = (0, length_1.default)(gpxData);
     gpxData.features.map((feature) => {
-        const { heart, times, atemps, cads } = feature.properties.coordinateProperties;
+        const { times, atemps, cads } = feature.properties.coordinateProperties;
         coordinates = feature.geometry.coordinates;
         powers = feature.properties.coordinateProperties.powers;
-        const powerAnalysisTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('powerAnalysis');
+        hearts = feature.properties.coordinateProperties.heart;
+        const powerAnalysisTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("powerAnalysis");
         powerAnalysis = (0, exports.calcBestPowers)(timeIntervals(powers.length), powers);
-        heartAnalysis = (0, exports.calcBestPowers)(timeIntervals(heart.length), heart);
+        heartAnalysis = (0, exports.calcBestPowers)(timeIntervals(hearts.length), hearts);
         cadenceAnalysis = (0, exports.calcBestPowers)(timeIntervals(cads.length), cads, true);
         tempAnalysis = (0, exports.calcBestPowers)(timeIntervals(atemps.length), atemps, true);
         powerAnalysisTimer.close();
@@ -184,7 +181,7 @@ exports.handler = async function (event) {
         elevationGain = (0, gpxHelper_1.calcElevationGain)(coordinates);
         stoppedTime = (0, gpxHelper_1.calcStoppage)(coordinates, times);
         elapsedTime = (0, gpxHelper_1.dateDiff)(new Date(times[0]), new Date(times.at(-1))).seconds;
-        const downsampleElevationTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('elevationAnalysis');
+        const downsampleElevationTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("elevationAnalysis");
         elevation = (0, exports.calcElevation)(coordinates);
         distances = (0, exports.calcDistances)(coordinates);
         elevationGrades = (0, exports.calcElevationGrades)(coordinates, distances);
@@ -202,7 +199,7 @@ exports.handler = async function (event) {
         downsampleElevationTimer.close();
     });
     await publishMessage({
-        payload: { phase: 'process-data' },
+        payload: { phase: "process-data" },
         topic: publishTopic,
     });
     const s3key = `timeseries/${(0, uuid_1.v4)()}.json`;
@@ -214,6 +211,7 @@ exports.handler = async function (event) {
             distances,
             elevationGrades,
             powerAnalysis,
+            hearts,
         }),
         Bucket: bucket,
         Key: `private/${metaData.Metadata.identityid}/${s3key}`,
@@ -225,7 +223,7 @@ exports.handler = async function (event) {
     catch (e) {
         console.error(JSON.stringify(e));
     }
-    const updateDynamoTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment('updateDynamo');
+    const updateDynamoTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("updateDynamo");
     try {
         const res = await docClient
             .update({
@@ -233,20 +231,20 @@ exports.handler = async function (event) {
             Key: {
                 id: postId,
             },
-            UpdateExpression: 'SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf',
+            UpdateExpression: "SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf",
             ExpressionAttributeValues: {
-                ':ta': tempAnalysis,
-                ':ca': cadenceAnalysis,
-                ':dis': distance,
-                ':hr': heartAnalysis,
-                ':el': elevationGain,
-                ':st': stoppedTime,
-                ':et': elapsedTime,
-                ':np': normalizedPower,
-                ':pz': zones ? zones : [],
-                ':pzb': powerZoneBuckets ? powerZoneBuckets : [],
-                ':red': timeInRedSecs ? timeInRedSecs : 0,
-                ':tsf': s3key,
+                ":ta": tempAnalysis,
+                ":ca": cadenceAnalysis,
+                ":dis": distance,
+                ":hr": heartAnalysis,
+                ":el": elevationGain,
+                ":st": stoppedTime,
+                ":et": elapsedTime,
+                ":np": normalizedPower,
+                ":pz": zones ? zones : [],
+                ":pzb": powerZoneBuckets ? powerZoneBuckets : [],
+                ":red": timeInRedSecs ? timeInRedSecs : 0,
+                ":tsf": s3key,
             },
         })
             .promise();
@@ -256,7 +254,7 @@ exports.handler = async function (event) {
     }
     updateDynamoTimer.close();
     await publishMessage({
-        payload: { phase: 'update-data' },
+        payload: { phase: "update-data" },
         topic: publishTopic,
     });
 };
