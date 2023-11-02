@@ -13,8 +13,59 @@ export const gradeToColor = (grade: number): string => {
   return "gray";
 };
 
-const ElevationSlice = ({ marker }: { marker: ActivityItem | undefined }) => {
+const ElevationSlice = ({
+  marker,
+  selection,
+  downSampledData,
+  downsampleRate,
+}: {
+  marker: ActivityItem | undefined;
+  selection: [number, number];
+  downSampledData: any;
+  downsampleRate: number;
+}) => {
   const units = useUnits();
+  const grade =
+    marker && marker.g
+      ? marker.g
+      : selection
+      ? (
+          (downSampledData[selection[1]].e - downSampledData[selection[0]].e) /
+          (units.unitOfMeasure === "metric"
+            ? (downSampledData[selection[1]].d -
+                downSampledData[selection[0]].d) *
+              1000
+            : (downSampledData[selection[1]].d -
+                downSampledData[selection[0]].d) *
+              5280)
+        ).toFixed(4)
+      : undefined;
+  const distance =
+    marker && marker.d
+      ? marker.d.toFixed(2)
+      : selection
+      ? (
+          downSampledData[selection[1]].d - downSampledData[selection[0]].d
+        ).toFixed(2)
+      : undefined;
+
+  const elevation =
+    marker && marker.e
+      ? marker.e.toFixed(0)
+      : selection
+      ? (
+          downSampledData[selection[1]].e - downSampledData[selection[0]].e
+        ).toFixed(2)
+      : undefined;
+
+  const time =
+    marker && marker.t
+      ? marker.t
+      : selection
+      ? downSampledData[selection[1]].t - downSampledData[selection[0]].t
+      : undefined;
+
+  // console.log(elevation);
 
   return (
     <Grid
@@ -29,30 +80,28 @@ const ElevationSlice = ({ marker }: { marker: ActivityItem | undefined }) => {
         <Text
           sx={{
             fontSize: "20px",
-            color: marker && marker.g ? gradeToColor(marker.g * 100) : "black",
+            color: grade ? gradeToColor(grade * 100) : "black",
           }}
         >
-          {marker && marker.g ? `${(marker.g * 100).toFixed(1)}%` : "-"}
+          {grade ? `${(grade * 100).toFixed(1)}%` : "-"}
         </Text>
       </Box>
       <Box>
         <Text as="p">Distance</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {marker && marker.d ? `${marker.d} ${units.distanceUnit}` : "-"}
+          {distance ? `${distance} ${units.distanceUnit}` : "-"}
         </Text>
       </Box>
       <Box>
         <Text as="p">Elevation</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {marker && marker.e
-            ? `${marker.e.toFixed(0)} ${units.elevationUnit}`
-            : "-"}
+          {elevation ? `${elevation} ${units.elevationUnit}` : "-"}
         </Text>
       </Box>
       <Box>
         <Text as="p">Time</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {marker && marker.t ? `${formatTime(marker.t)}` : "-"}
+          {time ? `${formatTime(time)}` : "-"}
         </Text>
       </Box>
     </Grid>

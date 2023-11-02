@@ -6,6 +6,7 @@ import ElevationGraph from "./ElevationGraph";
 import ElevationSlice, { gradeToColor } from "./ElevationSlice";
 import { useUnits } from "../../UnitProvider";
 import { ActivityItem } from "../../../types/common";
+import { PostContext } from "../../PostContext";
 
 interface Vizprops {
   activity?: Array<ActivityItem> | undefined;
@@ -21,7 +22,13 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     );
   }
 
+  const { selection, setSelection } = React.useContext(PostContext);
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
+  // const [selection, setSelection] = React.useState();
+  // console.log(selection);
+  const [downsampleRate, setDownsampleRate] = React.useState<number>(20);
+
+  // console.log(selection);
 
   const units = useUnits();
 
@@ -42,10 +49,10 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
               d:
                 units.unitOfMeasure === "imperial"
                   ? activityRow && activityRow.d
-                    ? Number((activityRow.d * 0.00062137121212121).toFixed(1))
+                    ? Number((activityRow.d * 0.00062137121212121).toFixed(5))
                     : 0
                   : activityRow && activityRow.d
-                  ? Number((activityRow?.d / 1000).toFixed(1))
+                  ? Number((activityRow?.d / 1000).toFixed(5))
                   : 0,
               color: gradeToColor(activityRow.g ? activityRow.g * 100 : 0),
             };
@@ -62,11 +69,35 @@ const VisualOverview = ({ activity, token }: Vizprops) => {
     [downSampledData]
   ) as any;
 
+  const graph = React.useMemo(() => {
+    return (
+      <ElevationGraph
+        downSampledData={downSampledData}
+        setMarker={setMarker}
+        selection={selection}
+        setSelection={setSelection}
+        downsampleRate={downsampleRate}
+        setDownsampleRate={setDownsampleRate}
+      />
+    );
+  }, [downSampledData, downsampleRate, selection]) as React.ReactNode;
+
   return (
     <Box sx={{ marginTop: "60px", borderRadius: [0, "5px", "5px"] }}>
-      <Map coordinates={coordinates} markerCoordinates={marker} token={token} />
-      <ElevationSlice marker={marker} />
-      <ElevationGraph downSampledData={downSampledData} setMarker={setMarker} />
+      <Map
+        coordinates={coordinates}
+        markerCoordinates={marker}
+        token={token}
+        selection={selection}
+        downsampleRate={downsampleRate}
+      />
+      <ElevationSlice
+        marker={marker}
+        selection={selection}
+        downSampledData={downSampledData}
+        downsampleRate={downsampleRate}
+      />
+      {graph}
     </Box>
   );
 };

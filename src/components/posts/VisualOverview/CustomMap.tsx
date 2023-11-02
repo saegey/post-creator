@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Spinner } from "theme-ui";
 import mapboxgl, { GeoJSONSource, SkyLayer } from "mapbox-gl";
 import { ActivityItem } from "../../../types/common";
+import { PostContext } from "../../PostContext";
 
 // type ActivityEvent = {
 //   c: Array<number>;
@@ -15,6 +16,8 @@ interface MapProps {
   coordinates: Array<any>;
   markerCoordinates: ActivityItem | undefined;
   token: string;
+  selection: [number, number];
+  downsampleRate: number;
 }
 
 const routeLayerSettings = {
@@ -27,6 +30,20 @@ const routeLayerSettings = {
   },
   paint: {
     "line-color": "blue",
+    "line-width": 2,
+  },
+};
+
+const routeSelectLayerSettings = {
+  id: "routeSelectlayer",
+  type: "line",
+  source: "routeSelect",
+  layout: {
+    "line-join": "round",
+    "line-cap": "round",
+  },
+  paint: {
+    "line-color": "red",
     "line-width": 2,
   },
 };
@@ -50,6 +67,8 @@ const Map = ({
   coordinates,
   markerCoordinates,
   token,
+  // selection,
+  downsampleRate,
 }: MapProps): JSX.Element => {
   if (!coordinates || coordinates.length === 0) {
     return (
@@ -58,9 +77,70 @@ const Map = ({
       </Box>
     );
   }
+  // console.log(selection);
+  const { selection } = React.useContext(PostContext);
   const mapContainerRef = React.useRef();
   const map = React.useRef<mapboxgl.Map>();
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log("use");
+    if (!map || !map.current) {
+      return;
+    }
+    const geojsonSource = map.current?.getSource(
+      "routeSelect"
+    ) as GeoJSONSource;
+
+    console.log("seleectin", selection);
+    if (selection === undefined) {
+      console.log("removesource");
+      map.current?.removeSource("routeSelect");
+      map.current?.removeLayer("routeSelectlayer");
+      return;
+    }
+
+    // console.log("useEffect selecttion", selection, geojsonSource);
+    if (!geojsonSource) {
+      console.log(coordinates.slice(selection[0], selection[1]));
+      map.current?.addSource("routeSelect", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: {
+            type: "LineString",
+            coordinates: coordinates.slice(selection[0], selection[1]),
+          },
+        },
+      });
+    } else {
+      // console.log(selection[0] * 20, coordinates[0]);
+      try {
+        const data = {
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              geometry: {
+                type: "LineString",
+                coordinates:
+                  Math.abs(selection[1] - coordinates.length) < 80 &&
+                  selection[0] < 1
+                    ? []
+                    : coordinates.slice(selection[0], selection[1]),
+              },
+            },
+          ],
+        } as any;
+
+        // console.log(data);
+        geojsonSource.setData(data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, [selection]);
 
   React.useEffect(() => {
     if (!map || !map.current) {
@@ -120,6 +200,13 @@ const Map = ({
         console.error(e);
       }
     }
+    if (selection && !map.current?.getLayer("routeSelectlayer")) {
+      try {
+        map.current?.addLayer(routeSelectLayerSettings as SkyLayer);
+      } catch (e) {
+        console.error(e);
+      }
+    }
     if (!map.current?.getLayer("currentPosition")) {
       try {
         map.current?.addLayer(currenPositionLayerSettings as SkyLayer);
@@ -137,7 +224,7 @@ const Map = ({
     });
 
     map.current.resize();
-  }, [coordinates, isMapLoaded]);
+  }, [coordinates, isMapLoaded, selection]);
 
   React.useEffect(() => {
     if (!map || !map.current) {
@@ -205,12 +292,9 @@ const Map = ({
     if (map.current) {
       return () => {
         map.current?.remove();
-        // console.log('map destroy');
       };
     } else {
-      return () => {
-        // console.log('map destroy empty');
-      };
+      return () => {};
     }
   }, []);
 

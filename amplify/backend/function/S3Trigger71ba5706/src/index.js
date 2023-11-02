@@ -38,7 +38,7 @@ const calcDistances = (coordinates) => {
                 [coordinates[index][0], coordinates[index][1]],
                 [coordinates[index + 1][0], coordinates[index + 1][1]],
             ]), { units: 'meters' });
-            distances.push(Number(totalDistance.toFixed(2)));
+            distances.push(Number(totalDistance.toFixed(5)));
         }
     });
     return distances;

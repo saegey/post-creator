@@ -13,9 +13,13 @@ const getActivity = async (post: TimeSeriesDataType) => {
     return undefined;
   }
 
+  // const downsampleRate =
+  console.log("coordinates", coordinates);
+
+
   return coordinates
     .map((_: [number, number, number], i: number) => {
-      if (i % 28 === 0) {
+      if (i % 1 === 0) {
         return {
           t: i,
           e: elevation[i] ? Number(elevation[i]) : 0,

@@ -247,6 +247,7 @@ const Post = ({
   const [createdAt, setCreatedAt] = React.useState<string | undefined>(
     postCreatedAt
   );
+  const [selection, setSelection] = React.useState<[number, number]>();
   const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
@@ -352,6 +353,8 @@ const Post = ({
         setPrivacyStatus,
         createdAt,
         setCreatedAt,
+        selection,
+        setSelection,
       }}
     >
       <>

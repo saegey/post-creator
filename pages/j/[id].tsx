@@ -183,6 +183,8 @@ const Publish = ({
     post.postLocation ? post.postLocation : undefined
   );
 
+  const [selection, setSelection] = React.useState<[number, number]>();
+
   const getTimeSeriesFile = async (timeSeriesFile: string) => {
     const result = await Storage.get(timeSeriesFile, {
       download: true,
@@ -276,6 +278,8 @@ const Publish = ({
           setAuthor,
           powerZoneBuckets,
           setPowerZoneBuckets,
+          selection,
+          setSelection,
         }}
       >
         <Head>

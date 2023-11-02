@@ -13,12 +13,7 @@ const fetch = require("node-fetch");
 const s3 = new S3({ region: process.env.AWS_REGION });
 
 exports.handler = async (event) => {
-	console.log(`EVENT: ${JSON.stringify(event)}`);
-
-	const = event.requestContext.identity.cognitoIdentityId.;
-	const cognitoAuthenticationProvider =
-      event.requestContext.identity.cognitoAuthenticationProvider;
-
+  console.log(`EVENT: ${JSON.stringify(event)}`);
   // let response;
   // try {
   //   response = await fetch(event.getObjectContext.inputS3Url);

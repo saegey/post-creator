@@ -51,7 +51,7 @@ export const calcDistances = (coordinates: Coordinate[]) => {
         ]),
         { units: 'meters' }
       );
-      distances.push(Number(totalDistance.toFixed(2)));
+      distances.push(Number(totalDistance.toFixed(5)));
     }
   });
   return distances;

@@ -6,14 +6,21 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  ReferenceArea,
+  Brush,
 } from "recharts";
-import { Box, Spinner, useThemeUI } from "theme-ui";
+import { Box, Button, Spinner, useThemeUI } from "theme-ui";
 import React from "react";
 
 import { useViewport } from "../../ViewportProvider";
 import GradeGradient from "./GradeGradient";
 import { useUnits } from "../../UnitProvider";
 import { ActivityItem } from "../../../types/common";
+import { isUndefined } from "lodash";
+
+function isDefined<T>(argument: T | undefined): argument is T {
+  return argument !== undefined;
+}
 
 type ActivityEvent = {
   c: Array<number> | Array<null>;
@@ -33,7 +40,14 @@ interface NewLineGraphProps {
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
 }
 
-const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
+const ElevationGraph = ({
+  downSampledData,
+  setMarker,
+  selection,
+  setSelection,
+  downsampleRate,
+  setDownsampleRate,
+}: NewLineGraphProps) => {
   if (!downSampledData || downSampledData.length === 0) {
     return (
       <Box>
@@ -44,26 +58,137 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
   const themeContext = useThemeUI();
   // const { width, height } = useViewport();
   const units = useUnits();
-  const xMax = Number(downSampledData[downSampledData.length - 1].d);
-  const divisor = Number(xMax) <= 30 ? 5 : 10;
 
-  const calcTicks = (): Array<number> => {
-    const preTickLen = xMax / 5;
-    const calcVal = preTickLen / divisor;
-    const interval = Math.trunc(calcVal > 1 ? calcVal : 1) * divisor;
+  const hideAxes = false;
 
-    let ticks = Array.from({ length: 6 }, (_value, index) => {
-      if (index === 0 || index * interval > xMax) {
-        return;
+  const shrunkData = downSampledData
+    .map((_, i) => {
+      if (i % downsampleRate === 0) {
+        return _;
       }
-      return index * interval;
-    }).filter((f) => f !== undefined) as Array<number>;
+    })
+    .filter(isDefined);
 
-    return ticks;
+  const initialState = {
+    data: shrunkData,
+    left: "dataMin",
+    right: "dataMax",
+    refAreaLeft: "",
+    refAreaRight: "",
+    top: "dataMax+1",
+    bottom: "dataMin-1",
+    top2: "dataMax+20",
+    bottom2: "dataMin-20",
+    animation: true,
   };
 
-  const { width } = useViewport();
-  const hideAxes = width < 400;
+  const zoomOut = () => {
+    // const { data } = zoomGraph;
+    setZoomGraph((prev) => ({
+      ...prev,
+      // data: data?.slice(),
+      data: shrunkData,
+      refAreaLeft: "",
+      refAreaRight: "",
+      left: "dataMin",
+      right: "dataMax",
+      top: "dataMax+1",
+      bottom: "dataMin",
+      top2: "dataMax+50",
+      bottom2: "dataMin+50",
+    }));
+    setSelection(undefined);
+  };
+
+  const getAxisYDomain = (
+    from: string | undefined,
+    to: string | undefined,
+    ref: keyof any,
+    offset: number
+  ): (number | string)[] => {
+    if (from && to) {
+      const lower = shrunkData.findIndex((s) => s.d === Number(from));
+      const upper = shrunkData.findIndex((s) => s.d === Number(to));
+      const refData = shrunkData.slice(lower, upper);
+      console.log(shrunkData, refData, from, to);
+      let [bottom, top] = [refData[0][ref], refData[0][ref]];
+      refData.forEach((d) => {
+        if (d[ref] > top) top = d[ref];
+        if (d[ref] < bottom) bottom = d[ref];
+      });
+      return [(bottom | 0) - offset, (top | 0) + offset];
+    }
+
+    return [initialState.bottom, initialState.top];
+  };
+
+  const [zoomGraph, setZoomGraph] = React.useState(initialState);
+
+  const zoom = () => {
+    let { refAreaLeft, refAreaRight } = zoomGraph;
+
+    // const { data } = zoomGraph;
+    // console.log(refAreaLeft, refAreaRight, data);
+
+    if (refAreaLeft === refAreaRight || refAreaRight === "") {
+      setZoomGraph((prev) => ({
+        ...prev,
+        refAreaLeft: "",
+        refAreaRight: "",
+      }));
+      return;
+    }
+
+    // xAxis domain
+    if (refAreaLeft && refAreaRight && refAreaLeft > refAreaRight)
+      [refAreaLeft, refAreaRight] = [refAreaRight, refAreaLeft];
+
+    // yAxis domain
+    // const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, "d", 1);
+    const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, "e", 50);
+    console.log(refAreaLeft, refAreaRight);
+    setZoomGraph(
+      (prev) =>
+        ({
+          ...prev,
+          refAreaLeft: "",
+          refAreaRight: "",
+          // data: data?.slice(),
+          data: downSampledData
+            .map((_, i) => {
+              if (i % 1 === 0) {
+                return _;
+              }
+            })
+            .filter(isDefined),
+          left: refAreaLeft,
+          right: refAreaRight,
+          bottom2,
+          top2,
+        } as any)
+    );
+    const lowBound = downSampledData.findIndex(
+      (d) => Number(d.d) === Number(refAreaLeft)
+    );
+    const highBound = downSampledData.findIndex((d) => {
+      // console.log(d.d, top2);
+      return Number(d.d) === Number(refAreaRight);
+    });
+    setSelection([lowBound, highBound]);
+    console.log(downSampledData[100], lowBound, highBound);
+  };
+
+  const {
+    data,
+    left,
+    right,
+    refAreaLeft,
+    refAreaRight,
+    // top,
+    // bottom,
+    top2,
+    bottom2,
+  } = zoomGraph;
 
   return (
     <Box
@@ -73,12 +198,21 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
         borderWidth: "1px",
         // paddingY: [0, '20px', '20px'],
         paddingX: 0,
-        touchAction: "pan-x",
+        userSelect: "none",
+        // touchAction: "pan-x",
       }}
     >
+      <Button onClick={() => zoomOut()}>Zoom Out</Button>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
-          data={downSampledData}
+          data={data}
+          onMouseDown={(e) => {
+            setZoomGraph((prev) => ({
+              ...prev,
+              refAreaLeft: e && e.activeLabel,
+            }));
+            // console.log(zoomGraph);
+          }}
           onMouseMove={(e) => {
             if (!e || !e.activePayload) {
               setMarker(undefined);
@@ -86,11 +220,20 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
             }
 
             setMarker(e.activePayload[0].payload as ActivityItem);
+            zoomGraph.refAreaLeft &&
+              setZoomGraph((prev) => ({
+                ...prev,
+                refAreaRight: e.activeLabel,
+              }));
+            // console.log(zoomGraph);
           }}
+          onMouseUp={() => zoom()}
           margin={{ top: 10, right: 0, left: hideAxes ? 0 : 20, bottom: 30 }}
         >
           {!hideAxes && (
-            <CartesianGrid stroke={String(themeContext.theme.colors?.muted)} />
+            <CartesianGrid
+              stroke={String(themeContext.theme.colors?.divider)}
+            />
           )}
 
           <Tooltip
@@ -112,21 +255,23 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
           </defs> */}
           {!hideAxes && (
             <XAxis
+              allowDataOverflow
               dataKey="d"
               type="number"
-              ticks={calcTicks()}
-              domain={[0, xMax]}
+              domain={left && right ? [left, right] : undefined}
+              // ticks={calcTicks()}
+              // domain={[0, xMax]}
               tickCount={5}
-              interval={0}
+              // interval={0}
               label={{
                 value: `Distance (${units.distanceUnit})`,
                 position: "bottom",
                 fontSize: "14px",
               }}
-              allowDecimals={true}
-              tickFormatter={(t) => {
-                return t;
-              }}
+              allowDecimals={false}
+              // tickFormatter={(t) => {
+              //   return t;
+              // }}
               tick={{
                 fill: themeContext?.theme?.colors?.text as string,
                 fontSize: "14px",
@@ -137,6 +282,8 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
           )}
           {!hideAxes && (
             <YAxis
+              allowDataOverflow
+              domain={[bottom2, top2]}
               type="number"
               label={{
                 value: `Elevation (${units.elevationUnit})`,
@@ -144,6 +291,7 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
                 position: "left",
                 fontSize: "14px",
               }}
+              allowDecimals={false}
               dataKey="e"
               tick={{
                 fill: themeContext?.theme?.colors?.text as string,
@@ -154,15 +302,24 @@ const ElevationGraph = ({ downSampledData, setMarker }: NewLineGraphProps) => {
             />
           )}
           <Area
-            type="basisOpen"
+            type={"linear"}
             dataKey="e"
-            // stroke="url(#splitColor)"
-            stroke="black"
-            strokeWidth={0}
             fill="black"
             fillOpacity={0.2}
             dot={false}
+            stroke="black"
+            strokeOpacity={0.2}
+            // yAxisId="1"
           />
+          {refAreaLeft && refAreaRight ? (
+            <ReferenceArea
+              // yAxisId="1"
+              x1={refAreaLeft}
+              x2={refAreaRight}
+              strokeOpacity={1}
+              fill="black"
+            />
+          ) : null}
         </AreaChart>
       </ResponsiveContainer>
     </Box>
