@@ -280,14 +280,15 @@ const ElevationGraph = ({
         width: "100%",
         height: ["150px", "200px", "300px"],
         borderWidth: "1px",
-        // paddingY: [0, '20px', '20px'],
+        paddingBottom: [0, "20px", "40px"],
         paddingX: 0,
         userSelect: "none",
         // touchAction: "pan-x",
       }}
     >
-      <Flex sx={{ gap: "20px" }}>
+      <Flex sx={{ gap: "10px", marginBottom: "10px" }}>
         <Button
+          variant="primaryButton"
           sx={{
             display: zoomGraph.bottom2 !== "dataMin" ? "inherit" : "none",
           }}
@@ -297,6 +298,7 @@ const ElevationGraph = ({
         </Button>
 
         <Button
+          variant="primaryButton"
           sx={{
             display:
               isSaved && zoomGraph.bottom2 === "dataMin" ? "inherit" : "none",
@@ -307,6 +309,7 @@ const ElevationGraph = ({
         </Button>
 
         <Button
+          variant="primaryButton"
           sx={{
             display: !view && element && element.left ? "inherit" : "none",
           }}
@@ -315,6 +318,7 @@ const ElevationGraph = ({
           Clear Selection
         </Button>
         <Button
+          variant="primaryButton"
           sx={{ visibility: selection && !view ? "visible" : "hidden" }}
           onClick={() => saveState()}
         >
@@ -329,7 +333,6 @@ const ElevationGraph = ({
               ...prev,
               refAreaLeft: e && e.activeLabel ? e.activeLabel : "",
             }));
-            // console.log(e && e.activeLabel, e.activeLabel);
           }}
           onMouseMove={(e) => {
             if (!e || !e.activePayload) {
