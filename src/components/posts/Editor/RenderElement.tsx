@@ -55,7 +55,7 @@ const renderElement = (props: {
     case "activityOverview":
       return <ActivityOverviewWrapper element={element} />;
     case "visualOverview":
-      return <VisualOverviewWrapper element={element} />;
+      return <VisualOverviewWrapper element={element} view={false} />;
     case "image":
       return <ImageElement children={children} element={element} />;
     case "heroBanner":

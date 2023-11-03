@@ -45,6 +45,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     | GraphQLResult<GetPublishedPostQuery>
     | GraphQLResult<GetPostInitialQuery>;
   let post;
+  let isPublished = true;
 
   try {
     res = (await SSR.API.graphql({
@@ -54,6 +55,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
         id: params.id,
       },
     })) as GraphQLResult<GetPublishedPostQuery>;
+
     console.log("res", res);
     if (!res.data || !res.data.getPublishedPost) {
       res = (await SSR.API.graphql({
@@ -64,6 +66,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
         },
       })) as GraphQLResult<GetPostInitialQuery>;
       post = res.data?.getPost;
+      isPublished = false;
     } else {
       post = res.data.getPublishedPost;
     }
@@ -86,6 +89,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     props: {
       post: newPost,
       metaTags: generateMetaTags({ post: newPost }),
+      isPublished,
       // errorCode: errorCode
     },
   };
@@ -93,10 +97,12 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 
 const Publish = ({
   post,
+  isPublished,
   errorCode,
 }: {
   post: PostViewType;
   errorCode?: number;
+  isPublished: boolean;
 }): JSX.Element => {
   // if (errorCode) {
   //   // return <></>;
@@ -183,12 +189,17 @@ const Publish = ({
     post.postLocation ? post.postLocation : undefined
   );
 
-  const [selection, setSelection] = React.useState<[number, number]>();
+  const [selection, setSelection] = React.useState<
+    [number, number] | undefined
+  >();
+
+  const [powers, setPowers] = React.useState<Array<number> | undefined>();
+  const [hearts, setHearts] = React.useState<Array<number> | undefined>();
 
   const getTimeSeriesFile = async (timeSeriesFile: string) => {
     const result = await Storage.get(timeSeriesFile, {
       download: true,
-      level: "public",
+      level: isPublished === true ? "public" : "private",
     });
 
     const timeSeriesData = (await new Response(
@@ -196,6 +207,8 @@ const Publish = ({
     ).json()) as TimeSeriesDataType;
 
     setPowerAnalysis(timeSeriesData.powerAnalysis);
+    setPowers && setPowers(timeSeriesData.powers);
+    setHearts && setHearts(timeSeriesData.hearts);
 
     const activityString = await getActivity(timeSeriesData);
 
@@ -280,6 +293,10 @@ const Publish = ({
           setPowerZoneBuckets,
           selection,
           setSelection,
+          powers,
+          setPowers,
+          hearts,
+          setHearts,
         }}
       >
         <Head>

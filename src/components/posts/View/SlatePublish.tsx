@@ -45,8 +45,8 @@ const SlatePublish = () => {
         stravaEmbed: ({ node }) => {
           return <StravaLink element={node} />;
         },
-        visualOverview: () => {
-          return <VisualOverviewViewWrapper />;
+        visualOverview: ({ node }) => {
+          return <VisualOverviewViewWrapper element={node} view={true} />;
         },
         timeInZones: () => {
           return <TimeInZonesViewWrapper />;

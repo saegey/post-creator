@@ -17,7 +17,7 @@ interface MapProps {
   coordinates: Array<any>;
   markerCoordinates: ActivityItem | undefined;
   token: string;
-  selection: [number, number];
+  // selection: [number, number];
   downsampleRate: number;
   element: VisualOverviewType;
 }
@@ -87,7 +87,11 @@ const Map = ({
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    console.log("use", element);
+    console.log("selection", selection);
+  }, [selection]);
+
+  React.useEffect(() => {
+    console.log("seleection use", element);
     if (!map || !map.current) {
       console.log("nio map");
       return;
@@ -96,7 +100,7 @@ const Map = ({
       "routeSelect"
     ) as GeoJSONSource;
 
-    if (selection === undefined && element.selectionStart === undefined) {
+    if (selection === undefined || selection === null) {
       console.log("removesource");
       if (map.current?.getSource("routeSelect")) {
         map.current?.removeSource("routeSelect");
@@ -109,14 +113,14 @@ const Map = ({
     const selectLow =
       selection && selection[0]
         ? selection[0]
-        : element.selectionStart
+        : element && element.selectionStart
         ? element.selectionStart
         : undefined;
 
     const selectHigh =
       selection && selection[1]
         ? selection[1]
-        : element.selectionEnd
+        : element && element.selectionEnd
         ? element.selectionEnd
         : undefined;
 
@@ -219,7 +223,7 @@ const Map = ({
       }
     }
     if (
-      (selection || element.selectionStart) &&
+      (selection || (element && element.selectionStart)) &&
       !map.current?.getLayer("routeSelectlayer")
     ) {
       try {

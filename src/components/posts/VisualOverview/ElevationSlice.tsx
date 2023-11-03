@@ -103,7 +103,7 @@ const ElevationSlice = ({
   if (selection) {
     selectPowers = powers?.slice(selection[0], selection[1]);
     // console.log(selectPowers);
-  } else if (element.selectionStart && element.selectionEnd) {
+  } else if (element && element.selectionStart && element.selectionEnd) {
     selectPowers = powers?.slice(element.selectionStart, element.selectionEnd);
   }
 
@@ -117,7 +117,7 @@ const ElevationSlice = ({
   const selectHearts =
     hearts && selection
       ? hearts.slice(selection[0], selection[1])
-      : element.selectionStart && element.selectionEnd
+      : element && element.selectionStart && element.selectionEnd
       ? hearts?.slice(element.selectionStart, element.selectionEnd)
       : undefined;
 

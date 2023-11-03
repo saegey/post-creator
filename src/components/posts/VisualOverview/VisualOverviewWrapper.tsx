@@ -16,8 +16,10 @@ const VisualOverview = dynamic(import("./VisualOverview"), {
 
 const VisualOverviewWrapper = ({
   element,
+  view,
 }: {
   element: VisualOverviewType;
+  view: boolean;
 }) => {
   const { activity } = React.useContext(PostContext);
   const editor = useSlateStatic();
@@ -67,6 +69,7 @@ const VisualOverviewWrapper = ({
           "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
         }
         element={element}
+        view={view}
       />
       <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
         <OptionsButton

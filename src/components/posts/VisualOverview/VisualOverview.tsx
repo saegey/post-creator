@@ -12,9 +12,10 @@ interface Vizprops {
   activity?: Array<ActivityItem> | undefined;
   token: string;
   element: VisualOverviewType;
+  view: boolean;
 }
 
-const VisualOverview = ({ activity, token, element }: Vizprops) => {
+const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
   if (!activity || activity.length === 0) {
     return (
       <Box>
@@ -33,6 +34,12 @@ const VisualOverview = ({ activity, token, element }: Vizprops) => {
   // const [selection, setSelection] = React.useState();
   // console.log(selection);
   const [downsampleRate, setDownsampleRate] = React.useState<number>(20);
+
+  React.useEffect(() => {
+    if (element.selectionStart && element.selectionEnd) {
+      // setSelection([element.selectionStart, element.selectionEnd]);
+    }
+  }, [selection]);
 
   // console.log(selection);
 
@@ -85,6 +92,7 @@ const VisualOverview = ({ activity, token, element }: Vizprops) => {
         downsampleRate={downsampleRate}
         // setDownsampleRate={setDownsampleRate}
         element={element}
+        view={view}
       />
     );
   }, [downSampledData, downsampleRate, selection]) as React.ReactNode;
@@ -95,7 +103,7 @@ const VisualOverview = ({ activity, token, element }: Vizprops) => {
         coordinates={coordinates}
         markerCoordinates={marker}
         token={token}
-        selection={selection}
+        // selection={selection}
         downsampleRate={downsampleRate}
         element={element}
       />

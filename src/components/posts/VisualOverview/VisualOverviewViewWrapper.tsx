@@ -2,8 +2,15 @@ import React from "react";
 import { Box, Flex } from "theme-ui";
 import VisualOverview from "./VisualOverview";
 import { PostContext } from "../../PostContext";
+import { VisualOverviewType } from "../../../types/common";
 
-const VisualOverviewViewWrapper = () => {
+const VisualOverviewViewWrapper = ({
+  element,
+  view,
+}: {
+  element: VisualOverviewType;
+  view?: boolean;
+}) => {
   const { activity, id } = React.useContext(PostContext);
 
   return (
@@ -13,10 +20,12 @@ const VisualOverviewViewWrapper = () => {
     >
       <Box sx={{ width: "900px", maxWidth: "900px", marginX: "auto" }}>
         <VisualOverview
+          element={element}
           activity={activity ? activity : undefined}
           token={
             "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
           }
+          view={view}
         />
       </Box>
     </Flex>

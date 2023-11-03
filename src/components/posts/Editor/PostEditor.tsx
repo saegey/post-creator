@@ -118,15 +118,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, []);
 
   const getData = async () => {
-    // if (timeSeriesFile) {
-    //   const response = await API.get("api12660653", "/timeseries", {
-    //     response: true,
-    //     // body: {
-    //     //   timeSeriesFile,
-    //     // },
-    //   });
-    //   return response;
-    // }
     if (!timeSeriesFile) {
       return;
     }
