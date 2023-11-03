@@ -25,67 +25,67 @@ export class cdkStack extends cdk.Stack {
       description: "Current Amplify CLI env name",
     });
 
-    const dependencies: AmplifyDependentResourcesAttributes =
-      AmplifyHelpers.addResourceDependency(
-        this,
-        amplifyResourceProps.category,
-        amplifyResourceProps.resourceName,
-        [
-          {
-            category: "function", // api, auth, storage, function, etc.
-            resourceName: "routeAccessPoint", // find the resource at "amplify/backend/<category>/<resourceName>"
-          } /* add more dependencies as needed */,
-          {
-            category: "storage", // api, auth, storage, function, etc.
-            resourceName: "routeFiles", // find the resource at "amplify/backend/<category>/<resourceName>"
-          } /* add more dependencies as needed */,
-        ]
-      );
+    // const dependencies: AmplifyDependentResourcesAttributes =
+    //   AmplifyHelpers.addResourceDependency(
+    //     this,
+    //     amplifyResourceProps.category,
+    //     amplifyResourceProps.resourceName,
+    //     [
+    //       {
+    //         category: "function", // api, auth, storage, function, etc.
+    //         resourceName: "routeAccessPoint", // find the resource at "amplify/backend/<category>/<resourceName>"
+    //       } /* add more dependencies as needed */,
+    //       {
+    //         category: "storage", // api, auth, storage, function, etc.
+    //         resourceName: "routeFiles", // find the resource at "amplify/backend/<category>/<resourceName>"
+    //       } /* add more dependencies as needed */,
+    //     ]
+    //   );
 
-    const bucketName = cdk.Fn.ref(dependencies.storage.routeFiles.BucketName);
-    const functionArn = cdk.Fn.ref(dependencies.function.routeAccessPoint.Arn);
+    // const bucketName = cdk.Fn.ref(dependencies.storage.routeFiles.BucketName);
+    // const functionArn = cdk.Fn.ref(dependencies.function.routeAccessPoint.Arn);
 
-    const hello = Function.fromFunctionArn(
-      this,
-      "routeAccessPoint",
-      functionArn
-    );
+    // const hello = Function.fromFunctionArn(
+    //   this,
+    //   "routeAccessPoint",
+    //   functionArn
+    // );
 
-    const s3AccessPoint = new S3AccessPoint(
-      this,
-      "s3-object-lambda-sample-access-point",
-      {
-        bucket: bucketName,
-        name: "access-point",
-      }
-    );
+    // const s3AccessPoint = new S3AccessPoint(
+    //   this,
+    //   "s3-object-lambda-sample-access-point",
+    //   {
+    //     bucket: bucketName,
+    //     name: "access-point",
+    //   }
+    // );
 
-    const accessPointName = "s3-object-lambda-access-point";
-    new S3ObjectLambdaAccessPoint(this, "s3-object-lambda-access-point", {
-      name: accessPointName,
-      objectLambdaConfiguration: {
-        supportingAccessPoint: `arn:aws:s3:${this.region}:${this.account}:accesspoint/${s3AccessPoint.name}`,
-        transformationConfigurations: [
-          {
-            actions: ["GetObject"],
-            contentTransformation: {
-              AwsLambda: {
-                FunctionArn: functionArn,
-              },
-            },
-          },
-        ],
-      },
-    });
+    // const accessPointName = "s3-object-lambda-access-point";
+    // new S3ObjectLambdaAccessPoint(this, "s3-object-lambda-access-point", {
+    //   name: accessPointName,
+    //   objectLambdaConfiguration: {
+    //     supportingAccessPoint: `arn:aws:s3:${this.region}:${this.account}:accesspoint/${s3AccessPoint.name}`,
+    //     transformationConfigurations: [
+    //       {
+    //         actions: ["GetObject"],
+    //         contentTransformation: {
+    //           AwsLambda: {
+    //             FunctionArn: functionArn,
+    //           },
+    //         },
+    //       },
+    //     ],
+    //   },
+    // });
 
-    hello.addToRolePolicy(
-      new PolicyStatement({
-        effect: Effect.ALLOW,
-        actions: ["s3-object-lambda:WriteGetObjectResponse"],
-        resources: [
-          `arn:aws:s3-object-lambda:${this.region}:${this.account}:accesspoint/${accessPointName}`,
-        ],
-      })
-    );
+    // hello.addToRolePolicy(
+    //   new PolicyStatement({
+    //     effect: Effect.ALLOW,
+    //     actions: ["s3-object-lambda:WriteGetObjectResponse"],
+    //     resources: [
+    //       `arn:aws:s3-object-lambda:${this.region}:${this.account}:accesspoint/${accessPointName}`,
+    //     ],
+    //   })
+    // );
   }
 }
