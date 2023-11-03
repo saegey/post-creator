@@ -48,6 +48,7 @@ interface NewLineGraphProps {
     React.SetStateAction<[number, number] | undefined>
   >;
   selection: [number, number] | undefined;
+  isSaved: boolean;
 }
 
 const ElevationGraph = ({
@@ -55,6 +56,7 @@ const ElevationGraph = ({
   setMarker,
   selection,
   setSelection,
+  isSaved,
   downsampleRate,
   // setDownsampleRate,
   element,
@@ -164,7 +166,7 @@ const ElevationGraph = ({
       top2: "dataMax+50",
       bottom2: "dataMin",
     }));
-    setSelection(null);
+    setSelection(undefined);
   };
 
   const getAxisYDomain = (
@@ -225,7 +227,7 @@ const ElevationGraph = ({
     // yAxis domain
     // const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, "d", 1);
     const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, "e", 50);
-    console.log(refAreaLeft, refAreaRight);
+    // console.log(refAreaLeft, refAreaRight);
     setZoomGraph(
       (prev) =>
         ({
@@ -256,6 +258,7 @@ const ElevationGraph = ({
     setSelection([lowBound, highBound]);
     console.log(downSampledData[100], lowBound, highBound);
   };
+  console.log(isSaved);
 
   const {
     data,
@@ -293,7 +296,8 @@ const ElevationGraph = ({
 
         <Button
           sx={{
-            display: zoomGraph.bottom2 === "dataMin" ? "inherit" : "none",
+            display:
+              isSaved && zoomGraph.bottom2 === "dataMin" ? "inherit" : "none",
           }}
           onClick={() => backToSegment()}
         >

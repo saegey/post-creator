@@ -23,7 +23,7 @@ const ElevationSlice = ({
   element,
 }: {
   marker: ActivityItem | undefined;
-  selection: [number, number];
+  selection: [number, number] | undefined;
   downSampledData: any;
   downsampleRate: number;
   element: VisualOverviewType;

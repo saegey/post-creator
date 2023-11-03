@@ -68,7 +68,7 @@ export type PostContextType = {
   timeSeriesFile?: string | undefined;
   privacyStatus?: string | undefined;
   createdAt?: string | undefined;
-  selection: [number, number] | undefined;
+  // selection: [number, number] | undefined;
   powers: Array<number> | undefined;
   hearts: Array<number> | undefined;
   setActivity?: React.Dispatch<
@@ -127,9 +127,9 @@ export type PostContextType = {
   setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPrivacyStatus?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setCreatedAt?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setSelection: React.Dispatch<
-    React.SetStateAction<[number, number] | undefined>
-  >;
+  // setSelection: React.Dispatch<
+  //   React.SetStateAction<[number, number] | undefined>
+  // >;
   setPowers: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
   setHearts: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
 };
@@ -166,7 +166,7 @@ const PostContext = React.createContext<PostContextType>({
   timeSeriesFile: undefined,
   privacyStatus: undefined,
   createdAt: undefined,
-  selection: undefined,
+  // selection: undefined,
   powers: undefined,
   hearts: undefined,
   setActivity: () => {},
@@ -200,7 +200,7 @@ const PostContext = React.createContext<PostContextType>({
   setTimeSeriesFile: () => {},
   setPrivacyStatus: () => {},
   setCreatedAt: () => {},
-  setSelection: () => {},
+  // setSelection: () => {},
   setPowers: () => {},
   setHearts: () => {},
 });

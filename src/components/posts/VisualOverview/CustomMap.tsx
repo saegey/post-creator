@@ -4,6 +4,7 @@ import mapboxgl, { GeoJSONSource, SkyLayer } from "mapbox-gl";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { PostContext } from "../../PostContext";
 import { select } from "slate";
+import { VisualOverviewContext } from "./VisualOverviewContext";
 
 // type ActivityEvent = {
 //   c: Array<number>;
@@ -81,48 +82,38 @@ const Map = ({
     );
   }
   // console.log(selection);
-  const { selection } = React.useContext(PostContext);
+  const { selection } = React.useContext(VisualOverviewContext);
   const mapContainerRef = React.useRef();
   const map = React.useRef<mapboxgl.Map>();
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    console.log("selection", selection);
-  }, [selection]);
-
-  React.useEffect(() => {
-    console.log("seleection use", element);
+    // console.log("seleection use", element);
     if (!map || !map.current) {
-      console.log("nio map");
+      // console.log("nio map");
       return;
     }
     const geojsonSource = map.current?.getSource(
       "routeSelect"
     ) as GeoJSONSource;
 
-    if (selection === undefined || selection === null) {
-      console.log("removesource");
+    if (selection === undefined) {
+      console.log(
+        "removesource",
+        selection,
+        map.current?.getSource("routeSelect")
+      );
       if (map.current?.getSource("routeSelect")) {
-        map.current?.removeSource("routeSelect");
         map.current?.removeLayer("routeSelectlayer");
+        map.current?.removeSource("routeSelect");
       }
 
       return;
     }
 
-    const selectLow =
-      selection && selection[0]
-        ? selection[0]
-        : element && element.selectionStart
-        ? element.selectionStart
-        : undefined;
+    const selectLow = selection && selection[0] ? selection[0] : undefined;
 
-    const selectHigh =
-      selection && selection[1]
-        ? selection[1]
-        : element && element.selectionEnd
-        ? element.selectionEnd
-        : undefined;
+    const selectHigh = selection && selection[1] ? selection[1] : undefined;
 
     console.log("selectLow", coordinates.slice(selectLow, selectHigh));
 

@@ -9,6 +9,7 @@ import OptionsButton from "../../buttons/OptionsButton";
 import Dropdown from "../../shared/Dropdown";
 import { useClickOutside } from "../../../utils/ux";
 import { VisualOverviewType } from "../../../types/common";
+import { VisualOverviewContext } from "./VisualOverviewContext";
 
 const VisualOverview = dynamic(import("./VisualOverview"), {
   ssr: false,
@@ -26,6 +27,13 @@ const VisualOverviewWrapper = ({
   const path = ReactEditor.findPath(editor, element);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const wrapperRef = React.useRef();
+  const [selection, setSelection] = React.useState<
+    [number, number] | undefined
+  >(
+    element && element.selectionStart && element.selectionEnd
+      ? [element.selectionStart, element.selectionEnd]
+      : undefined
+  );
 
   useClickOutside(
     wrapperRef,
@@ -63,14 +71,16 @@ const VisualOverviewWrapper = ({
       sx={{ position: "relative", maxWidth: "900px", marginX: "auto" }}
       contentEditable={false}
     >
-      <VisualOverview
-        activity={fixedData}
-        token={
-          "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
-        }
-        element={element}
-        view={view}
-      />
+      <VisualOverviewContext.Provider value={{ selection, setSelection }}>
+        <VisualOverview
+          activity={fixedData}
+          token={
+            "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
+          }
+          element={element}
+          view={view}
+        />
+      </VisualOverviewContext.Provider>
       <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
         <OptionsButton
           onClick={() => {

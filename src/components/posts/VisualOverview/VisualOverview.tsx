@@ -7,6 +7,7 @@ import ElevationSlice, { gradeToColor } from "./ElevationSlice";
 import { useUnits } from "../../UnitProvider";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { PostContext } from "../../PostContext";
+import { VisualOverviewContext } from "./VisualOverviewContext";
 
 interface Vizprops {
   activity?: Array<ActivityItem> | undefined;
@@ -26,7 +27,9 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
 
   // console.log(element);
 
-  const { selection, setSelection } = React.useContext(PostContext);
+  const { selection, setSelection, isSaved } = React.useContext(
+    VisualOverviewContext
+  );
   // if (element.selectionStart && element.selectionEnd && !selection) {
   //   setSelection([element.selectionStart, element.selectionEnd]);
   // }
@@ -89,6 +92,7 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
         setMarker={setMarker}
         selection={selection}
         setSelection={setSelection}
+        isSaved={isSaved}
         downsampleRate={downsampleRate}
         // setDownsampleRate={setDownsampleRate}
         element={element}
@@ -113,6 +117,7 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
         downSampledData={downSampledData}
         downsampleRate={downsampleRate}
         element={element}
+        isSaved={isSaved}
       />
       {graph}
     </Box>

@@ -3,6 +3,7 @@ import { Box, Flex } from "theme-ui";
 import VisualOverview from "./VisualOverview";
 import { PostContext } from "../../PostContext";
 import { VisualOverviewType } from "../../../types/common";
+import { VisualOverviewContext } from "./VisualOverviewContext";
 
 const VisualOverviewViewWrapper = ({
   element,
@@ -12,6 +13,17 @@ const VisualOverviewViewWrapper = ({
   view?: boolean;
 }) => {
   const { activity, id } = React.useContext(PostContext);
+  const [selection, setSelection] = React.useState<
+    [number, number] | undefined
+  >(
+    element && element.selectionStart && element.selectionEnd
+      ? [element.selectionStart, element.selectionEnd]
+      : undefined
+  );
+  const [isSaved, setIsSaved] = React.useState<boolean>(
+    element && element.selectionStart ? true : false
+  );
+  console.log("isSaved", isSaved);
 
   return (
     <Flex
@@ -19,14 +31,18 @@ const VisualOverviewViewWrapper = ({
       key={`{visualoverview-${id}}`}
     >
       <Box sx={{ width: "900px", maxWidth: "900px", marginX: "auto" }}>
-        <VisualOverview
-          element={element}
-          activity={activity ? activity : undefined}
-          token={
-            "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
-          }
-          view={view}
-        />
+        <VisualOverviewContext.Provider
+          value={{ selection, setSelection, isSaved, setIsSaved }}
+        >
+          <VisualOverview
+            element={element}
+            activity={activity ? activity : undefined}
+            token={
+              "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
+            }
+            view={view}
+          />
+        </VisualOverviewContext.Provider>
       </Box>
     </Flex>
   );
