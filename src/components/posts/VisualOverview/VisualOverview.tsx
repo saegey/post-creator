@@ -107,7 +107,6 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
         coordinates={coordinates}
         markerCoordinates={marker}
         token={token}
-        // selection={selection}
         downsampleRate={downsampleRate}
         element={element}
       />
@@ -117,7 +116,6 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
         downSampledData={downSampledData}
         downsampleRate={downsampleRate}
         element={element}
-        isSaved={isSaved}
       />
       {graph}
     </Box>

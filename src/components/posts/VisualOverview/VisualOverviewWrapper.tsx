@@ -35,6 +35,10 @@ const VisualOverviewWrapper = ({
       : undefined
   );
 
+  const [isSaved, setIsSaved] = React.useState<boolean>(
+    element && element.selectionStart ? true : false
+  );
+
   useClickOutside(
     wrapperRef,
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -71,7 +75,9 @@ const VisualOverviewWrapper = ({
       sx={{ position: "relative", maxWidth: "900px", marginX: "auto" }}
       contentEditable={false}
     >
-      <VisualOverviewContext.Provider value={{ selection, setSelection }}>
+      <VisualOverviewContext.Provider
+        value={{ selection, setSelection, isSaved, setIsSaved }}
+      >
         <VisualOverview
           activity={fixedData}
           token={

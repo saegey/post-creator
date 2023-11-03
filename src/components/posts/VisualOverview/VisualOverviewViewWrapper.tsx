@@ -23,7 +23,6 @@ const VisualOverviewViewWrapper = ({
   const [isSaved, setIsSaved] = React.useState<boolean>(
     element && element.selectionStart ? true : false
   );
-  console.log("isSaved", isSaved);
 
   return (
     <Flex
@@ -40,7 +39,7 @@ const VisualOverviewViewWrapper = ({
             token={
               "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
             }
-            view={view}
+            view={view ? view : false}
           />
         </VisualOverviewContext.Provider>
       </Box>

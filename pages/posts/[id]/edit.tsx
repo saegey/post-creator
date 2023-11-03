@@ -356,8 +356,6 @@ const Post = ({
         setPrivacyStatus,
         createdAt,
         setCreatedAt,
-        selection,
-        setSelection,
         powers,
         setPowers,
         hearts,

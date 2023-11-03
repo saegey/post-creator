@@ -13,14 +13,8 @@ import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import { Transforms } from "slate";
 
-import { useViewport } from "../../ViewportProvider";
-import GradeGradient from "./GradeGradient";
 import { useUnits } from "../../UnitProvider";
-import {
-  ActivityItem,
-  ActivityOverviewType,
-  VisualOverviewType,
-} from "../../../types/common";
+import { ActivityItem, VisualOverviewType } from "../../../types/common";
 
 function isDefined<T>(argument: T | undefined): argument is T {
   return argument !== undefined;
@@ -36,7 +30,6 @@ type ActivityEvent = {
 
 export interface GradeGradientActivty extends ActivityEvent {
   color: string;
-  // grade: number;
 }
 
 interface NewLineGraphProps {
@@ -49,6 +42,7 @@ interface NewLineGraphProps {
   >;
   selection: [number, number] | undefined;
   isSaved: boolean;
+  downsampleRate: number;
 }
 
 const ElevationGraph = ({
@@ -72,12 +66,12 @@ const ElevationGraph = ({
   console.log("view", view);
 
   const editor = element && !view && useSlateStatic();
-  const path = element && !view && ReactEditor.findPath(editor, element);
-  console.log("path", path);
+  const path =
+    element && !view && editor
+      ? ReactEditor.findPath(editor, element)
+      : undefined;
   const themeContext = useThemeUI();
-  // const { width, height } = useViewport();
   const units = useUnits();
-
   const hideAxes = false;
 
   const shrunkData = downSampledData
@@ -98,11 +92,10 @@ const ElevationGraph = ({
     bottom2: element && element.bottom ? element.bottom : "dataMin",
     animation: true,
   };
-  console.log(initialState, downsampleRate);
   const [zoomGraph, setZoomGraph] = React.useState(initialState);
 
   const saveState = () => {
-    if (editor) {
+    if (editor && selection && path) {
       Transforms.setNodes(
         editor,
         {
@@ -115,8 +108,6 @@ const ElevationGraph = ({
           bottom: zoomGraph.bottom2,
         } as VisualOverviewType,
         {
-          // This path references the editor, and is expanded to a range that
-          // will encompass all the content of the editor.
           at: path,
         }
       );
@@ -124,23 +115,24 @@ const ElevationGraph = ({
   };
 
   const clearSelection = () => {
-    Transforms.setNodes(
-      editor,
-      {
-        ...element,
-        selectionStart: undefined,
-        selectionEnd: undefined,
-        left: undefined,
-        right: undefined,
-        top: undefined,
-        bottom: undefined,
-      } as VisualOverviewType,
-      {
-        // This path references the editor, and is expanded to a range that
-        // will encompass all the content of the editor.
-        at: path,
-      }
-    );
+    if (editor && path) {
+      Transforms.setNodes(
+        editor,
+        {
+          ...element,
+          selectionStart: undefined,
+          selectionEnd: undefined,
+          left: undefined,
+          right: undefined,
+          top: undefined,
+          bottom: undefined,
+        } as VisualOverviewType,
+        {
+          at: path,
+        }
+      );
+    }
+
     setZoomGraph((prev) => ({
       ...prev,
       // data: data?.slice(),
@@ -172,7 +164,7 @@ const ElevationGraph = ({
   const getAxisYDomain = (
     from: string | undefined,
     to: string | undefined,
-    ref: keyof any,
+    ref: keyof GradeGradientActivty,
     offset: number
   ): (number | string)[] => {
     if (from && to) {
@@ -180,15 +172,23 @@ const ElevationGraph = ({
       const upper = shrunkData.findIndex((s) => s.d === Number(to));
       const refData = shrunkData.slice(lower, upper);
       console.log(shrunkData, refData, from, to);
-      let [bottom, top] = [refData[0][ref], refData[0][ref]];
+      let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
+        number,
+        number
+      ];
+
       refData.forEach((d) => {
-        if (d[ref] > top) top = d[ref];
-        if (d[ref] < bottom) bottom = d[ref];
+        if (Number(d[ref]) > top) {
+          top = Number(d[ref]);
+        }
+        if (Number(d[ref]) < bottom) {
+          bottom = Number(d[ref]);
+        }
       });
       return [bottom | 0, (top | 0) + offset];
     }
 
-    return [initialState.bottom, initialState.top];
+    return [initialState.bottom2, initialState.top2];
   };
 
   const backToSegment = () => {
@@ -202,7 +202,9 @@ const ElevationGraph = ({
       top2: element && element.top ? element.top : "dataMax+20",
       bottom2: element && element.bottom ? element.bottom : "dataMin",
     }));
-    setSelection([element.selectionStart, element.selectionEnd]);
+    if (element.selectionStart && element.selectionEnd) {
+      setSelection([element.selectionStart, element.selectionEnd]);
+    }
   };
 
   const zoom = () => {
@@ -325,9 +327,9 @@ const ElevationGraph = ({
           onMouseDown={(e) => {
             setZoomGraph((prev) => ({
               ...prev,
-              refAreaLeft: e && e.activeLabel,
+              refAreaLeft: e && e.activeLabel ? e.activeLabel : "",
             }));
-            // console.log(zoomGraph);
+            // console.log(e && e.activeLabel, e.activeLabel);
           }}
           onMouseMove={(e) => {
             if (!e || !e.activePayload) {
@@ -339,7 +341,7 @@ const ElevationGraph = ({
             zoomGraph.refAreaLeft &&
               setZoomGraph((prev) => ({
                 ...prev,
-                refAreaRight: e.activeLabel,
+                refAreaRight: e.activeLabel ? e.activeLabel : "",
               }));
           }}
           onMouseUp={() => zoom()}
