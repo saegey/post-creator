@@ -3,7 +3,7 @@ import React from "react";
 
 import { useUnits } from "../../UnitProvider";
 import { formatTime } from "../../../utils/time";
-import { ActivityItem } from "../../../types/common";
+import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import PostEditor from "../Editor/PostEditor";
 import { PostContext } from "../../PostContext";
 
@@ -20,11 +20,13 @@ const ElevationSlice = ({
   selection,
   downSampledData,
   downsampleRate,
+  element,
 }: {
   marker: ActivityItem | undefined;
   selection: [number, number];
   downSampledData: any;
   downsampleRate: number;
+  element: VisualOverviewType;
 }) => {
   const { powers, hearts } = React.useContext(PostContext);
 
@@ -43,8 +45,19 @@ const ElevationSlice = ({
                 downSampledData[selection[0]].d) *
               5280)
         ).toFixed(4)
-      : undefined;
-
+      : element && element.selectionEnd && element.selectionStart
+      ? (
+          (downSampledData[element.selectionEnd].e -
+            downSampledData[element.selectionStart].e) /
+          (units.unitOfMeasure === "metric"
+            ? (downSampledData[element.selectionEnd].d -
+                downSampledData[element.selectionStart].d) *
+              1000
+            : (downSampledData[element.selectionEnd].d -
+                downSampledData[element.selectionStart].d) *
+              5280)
+        ).toFixed(4)
+      : "";
 
   const distance =
     marker && marker.d
@@ -53,7 +66,12 @@ const ElevationSlice = ({
       ? (
           downSampledData[selection[1]].d - downSampledData[selection[0]].d
         ).toFixed(2)
-      : undefined;
+      : element && element.selectionEnd && element.selectionStart
+      ? (
+          downSampledData[element.selectionEnd].d -
+          downSampledData[element.selectionStart].d
+        ).toFixed(2)
+      : "";
 
   const elevation =
     marker && marker.e
@@ -62,38 +80,52 @@ const ElevationSlice = ({
       ? (
           downSampledData[selection[1]].e - downSampledData[selection[0]].e
         ).toFixed(2)
-      : undefined;
+      : element && element.selectionEnd && element.selectionStart
+      ? (
+          downSampledData[element.selectionEnd].e -
+          downSampledData[element.selectionStart].e
+        ).toFixed(2)
+      : "";
 
   const time =
     marker && marker.t
       ? marker.t
       : selection
       ? downSampledData[selection[1]].t - downSampledData[selection[0]].t
-      : undefined;
+      : element && element.selectionEnd && element.selectionStart
+      ? (
+          downSampledData[element.selectionEnd].t -
+          downSampledData[element.selectionStart].t
+        ).toFixed(2)
+      : "";
 
   let selectPowers;
   if (selection) {
     selectPowers = powers?.slice(selection[0], selection[1]);
     // console.log(selectPowers);
+  } else if (element.selectionStart && element.selectionEnd) {
+    selectPowers = powers?.slice(element.selectionStart, element.selectionEnd);
   }
 
   const power =
     marker && marker.t && powers && time
       ? powers[time]
-      : selection
-      ? selectPowers &&
-        selectPowers.reduce((a, b) => a + b) / selectPowers.length
+      : selectPowers
+      ? selectPowers.reduce((a, b) => a + b) / selectPowers.length
       : undefined;
 
   const selectHearts =
-    hearts && selection && hearts.slice(selection[0], selection[1]);
+    hearts && selection
+      ? hearts.slice(selection[0], selection[1])
+      : element.selectionStart && element.selectionEnd
+      ? hearts?.slice(element.selectionStart, element.selectionEnd)
+      : undefined;
 
   const heartSummary =
     marker && marker.t && hearts && time
       ? hearts[time]
-      : selection
-      ? selectHearts &&
-        selectHearts.reduce((a, b) => a + b) / selectHearts.length
+      : selectHearts
+      ? selectHearts.reduce((a, b) => a + b) / selectHearts.length
       : undefined;
 
   return (
@@ -118,7 +150,7 @@ const ElevationSlice = ({
       <Box>
         <Text as="p">Distance</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {distance ? `${distance} ${units.distanceUnit}` : "-"}
+          {distance ? `${distance} ${units.distanceUnit}` : ""}
         </Text>
       </Box>
       <Box>

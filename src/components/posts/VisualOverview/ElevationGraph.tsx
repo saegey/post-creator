@@ -81,13 +81,13 @@ const ElevationGraph = ({
     .filter(isDefined);
 
   const initialState = {
-    data: shrunkData,
+    data: element.selectionStart ? downSampledData : shrunkData,
     left: element && element.left ? element.left : "dataMin",
     right: element && element.right ? element.right : "dataMax",
     refAreaLeft: "",
     refAreaRight: "",
     top2: element && element.top ? element.top : "dataMax+20",
-    bottom2: element && element.bottom ? element.bottom : "dataMin-20",
+    bottom2: element && element.bottom ? element.bottom : "dataMin",
     animation: true,
   };
   console.log(initialState, downsampleRate);
@@ -176,7 +176,7 @@ const ElevationGraph = ({
         if (d[ref] > top) top = d[ref];
         if (d[ref] < bottom) bottom = d[ref];
       });
-      return [(bottom | 0) - offset, (top | 0) + offset];
+      return [bottom | 0, (top | 0) + offset];
     }
 
     return [initialState.bottom, initialState.top];
@@ -308,7 +308,6 @@ const ElevationGraph = ({
                 ...prev,
                 refAreaRight: e.activeLabel,
               }));
-            // console.log(zoomGraph);
           }}
           onMouseUp={() => zoom()}
           margin={{ top: 10, right: 0, left: hideAxes ? 0 : 20, bottom: 30 }}
