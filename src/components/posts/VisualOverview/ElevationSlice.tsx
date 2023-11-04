@@ -109,7 +109,7 @@ const ElevationSlice = ({
 
   const power =
     marker && marker.t && powers && time
-      ? powers[time]
+      ? powers[time as keyof object]
       : selectPowers
       ? selectPowers.reduce((a, b) => a + b) / selectPowers.length
       : undefined;
@@ -123,7 +123,7 @@ const ElevationSlice = ({
 
   const heartSummary =
     marker && marker.t && hearts && time
-      ? hearts[time]
+      ? hearts[time as keyof object]
       : selectHearts
       ? selectHearts.reduce((a, b) => a + b) / selectHearts.length
       : undefined;
@@ -141,10 +141,10 @@ const ElevationSlice = ({
         <Text
           sx={{
             fontSize: "20px",
-            color: grade ? gradeToColor(grade * 100) : "black",
+            color: grade ? gradeToColor(Number(grade) * 100) : "black",
           }}
         >
-          {grade ? `${(grade * 100).toFixed(1)}%` : "-"}
+          {grade ? `${(Number(grade) * 100).toFixed(1)}%` : "-"}
         </Text>
       </Box>
       <Box>
@@ -162,7 +162,7 @@ const ElevationSlice = ({
       <Box>
         <Text as="p">Time</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {time ? `${formatTime(time)}` : "-"}
+          {time ? `${formatTime(Number(time))}` : "-"}
         </Text>
       </Box>
       <Box>
