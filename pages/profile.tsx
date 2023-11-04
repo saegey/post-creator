@@ -3,7 +3,7 @@ import { Box } from "theme-ui";
 import React from "react";
 
 import { UserContext } from "../src/components/UserContext";
-import EditProfile from "../src/components/EditProfile";
+import EditProfile from "../src/components/user/EditProfile";
 
 const Profile = () => {
   const { user } = React.useContext(UserContext);

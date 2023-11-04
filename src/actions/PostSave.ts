@@ -4,7 +4,7 @@ import { API } from "aws-amplify";
 import { updatePost } from "../../src/graphql/mutations";
 import { UpdatePostMutation } from "../../src/API";
 import { updatePostMinimal } from "../graphql/customMutations";
-import { CloudinaryImage } from "../components/AddImage";
+import { CloudinaryImage } from "../types/common";
 
 interface PostSaveProps {
   postId: string | undefined;

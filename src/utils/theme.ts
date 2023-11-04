@@ -236,6 +236,7 @@ export default {
     },
     defaultLabel: {
       fontSize: "15px",
+      marginBottom: "2px",
     },
   },
   fonts: {

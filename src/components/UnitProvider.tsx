@@ -39,8 +39,8 @@ class UnitProvider extends React.Component<MyProps, MyState> {
   changeToImperial = () => {
     this.setState(() => ({
       unitOfMeasure: 'imperial',
-      distanceUnit: 'miles',
-      elevationUnit: 'feet',
+      distanceUnit: 'mi',
+      elevationUnit: 'ft',
     }));
   };
 
@@ -48,7 +48,7 @@ class UnitProvider extends React.Component<MyProps, MyState> {
     this.setState(() => ({
       unitOfMeasure: 'metric',
       distanceUnit: 'km',
-      elevationUnit: 'meters',
+      elevationUnit: 'm',
     }));
   };
 

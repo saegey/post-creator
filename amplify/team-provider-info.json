@@ -24,7 +24,7 @@
         },
         "S3Trigger71ba5706": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/S3Trigger71ba5706-5064424c356a374e7639-build.zip"
+          "s3Key": "amplify-builds/S3Trigger71ba5706-4936654a6f5a33666d4a-build.zip"
         },
         "UserPostConfirmation": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
@@ -49,6 +49,10 @@
         "publishPost": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/publishPost-66706f765a3034646a56-build.zip"
+        },
+        "routeAccessPoint": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/routeAccessPoint-5979646741653731376a-build.zip"
         }
       },
       "api": {
@@ -58,6 +62,10 @@
       "storage": {
         "routeFiles": {},
         "dynamo1a552de1": {}
+      },
+      "custom": {
+        "s3objectlambda": {},
+        "s3accesspoint": {}
       }
     }
   }

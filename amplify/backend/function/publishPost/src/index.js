@@ -11,19 +11,19 @@ Amplify Params - DO NOT EDIT */
 //  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
 //  */
 
-const AWS = require('aws-sdk');
-const uuid = require('uuid');
-const zlib = require('zlib');
-const crypto = require('@aws-crypto/sha256-js');
-const { defaultProvider } = require('@aws-sdk/credential-provider-node');
-const { SignatureV4 } = require('@aws-sdk/signature-v4');
-const { HttpRequest } = require('@aws-sdk/protocol-http');
+const AWS = require("aws-sdk");
+const uuid = require("uuid");
+const zlib = require("zlib");
+const crypto = require("@aws-crypto/sha256-js");
+const { defaultProvider } = require("@aws-sdk/credential-provider-node");
+const { SignatureV4 } = require("@aws-sdk/signature-v4");
+const { HttpRequest } = require("@aws-sdk/protocol-http");
 const { Sha256 } = crypto;
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 const S3 = new AWS.S3();
 
-const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
+const AWS_REGION = process.env.AWS_REGION || "us-east-1";
 const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
 const publishedPostTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
@@ -33,8 +33,8 @@ const generateUID = () => {
   // to ensure the random number provide enough bits.
   var firstPart = (Math.random() * 46656) | 0;
   var secondPart = (Math.random() * 46656) | 0;
-  firstPart = ('000' + firstPart.toString(36)).slice(-3);
-  secondPart = ('000' + secondPart.toString(36)).slice(-3);
+  firstPart = ("000" + firstPart.toString(36)).slice(-3);
+  secondPart = ("000" + secondPart.toString(36)).slice(-3);
   return firstPart + secondPart;
 };
 
@@ -121,7 +121,7 @@ exports.handler = async (event) => {
   const signer = new SignatureV4({
     credentials: defaultProvider(),
     region: AWS_REGION,
-    service: 'appsync',
+    service: "appsync",
     sha256: Sha256,
   });
 
@@ -130,9 +130,9 @@ exports.handler = async (event) => {
   };
 
   const requestToBeSigned = new HttpRequest({
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       host: endpoint.host,
     },
     hostname: endpoint.host,
@@ -150,7 +150,7 @@ exports.handler = async (event) => {
   try {
     response = await fetch(request);
     resBody = await response.json();
-    console.log('resBody', resBody);
+    console.log("resBody", resBody);
     if (resBody.errors) statusCode = 400;
   } catch (error) {
     statusCode = 500;
@@ -167,19 +167,19 @@ exports.handler = async (event) => {
   // 	event.requestContext.identity.cognitoIdentityId.split(':')[1];
 
   const identityId = event.requestContext.identity.cognitoAuthenticationProvider
-    .split(':')
+    .split(":")
     .pop();
 
   // console.log(JSON.stringify(event.requestContext.identity));
   const getParams = {
     TableName: publishedPostTable,
-    IndexName: 'PublishedPostByOriginalPostId',
-    KeyConditionExpression: '#originalPostId = :originalPostId',
+    IndexName: "PublishedPostByOriginalPostId",
+    KeyConditionExpression: "#originalPostId = :originalPostId",
     ExpressionAttributeNames: {
-      '#originalPostId': 'originalPostId',
+      "#originalPostId": "originalPostId",
     },
     ExpressionAttributeValues: {
-      ':originalPostId': postId,
+      ":originalPostId": postId,
     },
     // ProjectionExpression: 'ATTRIBUTE_NAME',
   };
@@ -193,13 +193,13 @@ exports.handler = async (event) => {
     await docClient
       .query(getParams, function (err, data) {
         if (err) {
-          console.log('Error', err);
+          console.log("Error", err);
         } else {
           if (data.Items && data.Items.length > 0) {
             existingId = data.Items[0].id;
             shortUrl = data.Items[0].shortUrl;
           }
-          console.log('Success', data, existingId);
+          console.log("Success", data, existingId);
         }
       })
       .promise();
@@ -213,20 +213,20 @@ exports.handler = async (event) => {
     let resShort;
     try {
       const shortUrlParams = {
-        TableName: 'url-short-LinkTable-1GWGF5F1ZD65K',
+        TableName: "url-short-LinkTable-1GWGF5F1ZD65K",
         Key: {
           id: generateUID(),
         },
-        UpdateExpression: 'SET #url = :u, #owner = :o',
+        UpdateExpression: "SET #url = :u, #owner = :o",
         ExpressionAttributeValues: {
-          ':u': `${origin}j/${publishedPostId}`,
-          ':o': `${identityId}::${identityId}`,
+          ":u": `${origin}j/${publishedPostId}`,
+          ":o": `${identityId}::${identityId}`,
         },
         ExpressionAttributeNames: {
-          '#url': 'url',
-          '#owner': 'owner',
+          "#url": "url",
+          "#owner": "owner",
         },
-        ReturnValues: 'ALL_NEW',
+        ReturnValues: "ALL_NEW",
       };
 
       resShort = await docClient.update(shortUrlParams).promise();
@@ -234,7 +234,7 @@ exports.handler = async (event) => {
       console.error(e);
     }
 
-    console.log('shorturlres', resShort);
+    console.log("shorturlres", resShort);
     shortUrl = resShort.Attributes.id;
     // shortUrl = 't';
   }
@@ -251,7 +251,8 @@ exports.handler = async (event) => {
     distances,
     elevationGrades,
     powerAnalysis,
-  } = JSON.parse(privateTimeSeriesFile.Body.toString('utf-8'));
+    hearts,
+  } = JSON.parse(privateTimeSeriesFile.Body.toString("utf-8"));
 
   const s3key = `timeseries/${uuid.v1()}.json`;
   const s3Putparams = {
@@ -262,6 +263,7 @@ exports.handler = async (event) => {
       distances,
       elevationGrades,
       powerAnalysis,
+      hearts,
     }),
     Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
     Key: `public/${s3key}`,
@@ -279,93 +281,93 @@ exports.handler = async (event) => {
     TableName: publishedPostTable,
     Key: { id: publishedPostId },
     UpdateExpression:
-      'SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile',
+      "SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile",
     ExpressionAttributeNames: {
       // '#id': 'id',
-      '#typename': '__typename',
-      '#ownername': 'owner',
-      '#typelabel': 'type',
-      '#datelabel': 'date',
+      "#typename": "__typename",
+      "#ownername": "owner",
+      "#typelabel": "type",
+      "#datelabel": "date",
     },
     ExpressionAttributeValues: {
-      ':typename': 'PublishedPost',
-      ':owner': `${identityId}::${identityId}`,
-      ':originalPostId': resBody.data.getPost.id,
-      ':title': resBody.data.getPost.title,
-      ':gpxFile': resBody.data.getPost.gpxFile
+      ":typename": "PublishedPost",
+      ":owner": `${identityId}::${identityId}`,
+      ":originalPostId": resBody.data.getPost.id,
+      ":title": resBody.data.getPost.title,
+      ":gpxFile": resBody.data.getPost.gpxFile
         ? resBody.data.getPost.gpxFile
-        : '',
-      ':images': resBody.data.getPost.images
+        : "",
+      ":images": resBody.data.getPost.images
         ? JSON.parse(resBody.data.getPost.images)
-        : '[]',
-      ':postLocation': resBody.data.getPost.postLocation
+        : "[]",
+      ":postLocation": resBody.data.getPost.postLocation
         ? resBody.data.getPost.postLocation
-        : '',
-      ':createdAt': date.toISOString(),
-      ':updatedAt': date.toISOString(),
-      ':currentFtp': resBody.data.getPost.currentFtp
+        : "",
+      ":createdAt": date.toISOString(),
+      ":updatedAt": date.toISOString(),
+      ":currentFtp": resBody.data.getPost.currentFtp
         ? resBody.data.getPost.currentFtp
         : 0,
-      ':components': resBody.data.getPost.components
+      ":components": resBody.data.getPost.components
         ? JSON.parse(resBody.data.getPost.components)
-        : '[]',
-      ':author': resBody.data.getPost.author
+        : "[]",
+      ":author": resBody.data.getPost.author
         ? resBody.data.getPost.author
-        : '{}',
-      ':elevationTotal': resBody.data.getPost.elevationTotal
+        : "{}",
+      ":elevationTotal": resBody.data.getPost.elevationTotal
         ? resBody.data.getPost.elevationTotal
         : 0,
-      ':normalizedPower': resBody.data.getPost.normalizedPower
+      ":normalizedPower": resBody.data.getPost.normalizedPower
         ? resBody.data.getPost.normalizedPower
         : 0,
-      ':heartAnalysis': resBody.data.getPost.heartAnalysis
+      ":heartAnalysis": resBody.data.getPost.heartAnalysis
         ? JSON.parse(resBody.data.getPost.heartAnalysis)
-        : '{}',
-      ':cadenceAnalysis': resBody.data.getPost.cadenceAnalysis
+        : "{}",
+      ":cadenceAnalysis": resBody.data.getPost.cadenceAnalysis
         ? JSON.parse(resBody.data.getPost.cadenceAnalysis)
-        : '{}',
-      ':tempAnalysis': resBody.data.getPost.tempAnalysis
+        : "{}",
+      ":tempAnalysis": resBody.data.getPost.tempAnalysis
         ? JSON.parse(resBody.data.getPost.tempAnalysis)
-        : '{}',
-      ':elapsedTime': resBody.data.getPost.elapsedTime
+        : "{}",
+      ":elapsedTime": resBody.data.getPost.elapsedTime
         ? resBody.data.getPost.elapsedTime
         : 0,
-      ':stoppedTime': resBody.data.getPost.stoppedTime
+      ":stoppedTime": resBody.data.getPost.stoppedTime
         ? resBody.data.getPost.stoppedTime
         : 0,
-      ':timeInRed': resBody.data.getPost.timeInRed
+      ":timeInRed": resBody.data.getPost.timeInRed
         ? resBody.data.getPost.timeInRed
         : 0,
-      ':powerZones': resBody.data.getPost.powerZones
+      ":powerZones": resBody.data.getPost.powerZones
         ? JSON.parse(resBody.data.getPost.powerZones)
-        : '{}',
-      ':powerZoneBuckets': resBody.data.getPost.powerZoneBuckets
+        : "{}",
+      ":powerZoneBuckets": resBody.data.getPost.powerZoneBuckets
         ? JSON.parse(resBody.data.getPost.powerZoneBuckets)
-        : '{}',
-      ':heroImage': resBody.data.getPost.heroImage
+        : "{}",
+      ":heroImage": resBody.data.getPost.heroImage
         ? JSON.parse(resBody.data.getPost.heroImage)
-        : '{}',
-      ':subhead': resBody.data.getPost.subhead
+        : "{}",
+      ":subhead": resBody.data.getPost.subhead
         ? resBody.data.getPost.subhead
-        : '',
-      ':raceResults': resBody.data.getPost.raceResults
+        : "",
+      ":raceResults": resBody.data.getPost.raceResults
         ? JSON.parse(resBody.data.getPost.raceResults)
-        : '{}',
-      ':raceResultsProvider': resBody.data.getPost.raceResults
+        : "{}",
+      ":raceResultsProvider": resBody.data.getPost.raceResults
         ? resBody.data.getPost.raceResultsProvider
-        : '',
-      ':shortUrl': shortUrl ? shortUrl : '',
-      ':type': 'PublishedPost',
-      ':date': resBody.data.getPost.date ? resBody.data.getPost.date : '',
-      ':stravaUrl': resBody.data.getPost.stravaUrl
+        : "",
+      ":shortUrl": shortUrl ? shortUrl : "",
+      ":type": "PublishedPost",
+      ":date": resBody.data.getPost.date ? resBody.data.getPost.date : "",
+      ":stravaUrl": resBody.data.getPost.stravaUrl
         ? resBody.data.getPost.stravaUrl
-        : '',
-      ':timeSeriesFile': s3key,
-      ':distance': resBody.data.getPost.distance
+        : "",
+      ":timeSeriesFile": s3key,
+      ":distance": resBody.data.getPost.distance
         ? resBody.data.getPost.distance
-        : '',
+        : "",
     },
-    ReturnValues: 'ALL_NEW',
+    ReturnValues: "ALL_NEW",
   };
   console.log(docParams);
 
@@ -375,20 +377,20 @@ exports.handler = async (event) => {
     res = await docClient.update(docParams).promise();
     console.log(res);
   } catch (err) {
-    console.log('Error', err);
+    console.log("Error", err);
     // console.log(JSON.stringify(err.__type));
   }
 
   const postUpdateParams = {
     Key: { id: postId },
-    UpdateExpression: 'SET privacyStatus = :privacyStatus',
+    UpdateExpression: "SET privacyStatus = :privacyStatus",
     TableName: postTable,
     // IndexName: 'PublishedPostByOriginalPostId',
     // KeyConditionExpression: '#originalPostId = :originalPostId',
     ExpressionAttributeValues: {
-      ':privacyStatus': 'published',
+      ":privacyStatus": "published",
     },
-    ReturnValues: 'ALL_NEW',
+    ReturnValues: "ALL_NEW",
   };
   console.log(postUpdateParams);
 
@@ -396,9 +398,9 @@ exports.handler = async (event) => {
     await docClient
       .update(postUpdateParams, function (err, data) {
         if (err) {
-          console.log('Error', err);
+          console.log("Error", err);
         } else {
-          console.log('Success', data);
+          console.log("Success", data);
         }
       })
       .promise();
@@ -409,8 +411,8 @@ exports.handler = async (event) => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': '*',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
     },
     body: JSON.stringify(res),
   };

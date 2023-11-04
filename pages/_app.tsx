@@ -10,28 +10,14 @@ import theme from "../src/utils/theme";
 import ViewportProvider from "../src/components/ViewportProvider";
 import UnitProvider from "../src/components/UnitProvider";
 import awsconfig from "../src/aws-exports";
-import ErrorBoundary from "../src/components/ErrorBoundary";
+import ErrorBoundary from "../src/components/shared/ErrorBoundary";
 
-// import "@aws-amplify/ui-react/styles.css";
 import "../styles/globals.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { UserContext } from "../src/components/UserContext";
+import {IUser} from '../src/types/common';
 
 Amplify.configure({ ...awsconfig, ssr: true });
-
-export interface IUser {
-  userId: string;
-  email: string;
-  email_verified: boolean;
-  role: string;
-  attributes: {
-    picture: string;
-    name: string;
-    preferred_username: string;
-    sub: string;
-    profile: string;
-  };
-}
 
 const app = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = React.useState<IUser>();
@@ -59,7 +45,6 @@ const app = ({ Component, pageProps }: AppProps) => {
               picture: data?.attributes?.picture,
               name: data?.attributes?.name,
               preferred_username: data?.attributes?.preferred_username,
-              // sub: data?.attribut
               sub: data?.attributes?.sub,
               profile: data?.attributes?.profile,
             },
@@ -113,7 +98,6 @@ const app = ({ Component, pageProps }: AppProps) => {
             profile,
           },
         };
-        // console.log("user", user);
         setUser(user);
       }
     } catch (e) {

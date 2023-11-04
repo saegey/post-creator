@@ -1,6 +1,6 @@
 import React from "react";
-import { CloudinaryImage } from "./AddImage";
-import { ActivityItem, CustomElement } from "../types/common";
+
+import { ActivityItem, CustomElement, CloudinaryImage } from "../types/common";
 
 export type RaceResultRow = {
   selected:
@@ -68,6 +68,9 @@ export type PostContextType = {
   timeSeriesFile?: string | undefined;
   privacyStatus?: string | undefined;
   createdAt?: string | undefined;
+  // selection: [number, number] | undefined;
+  powers: Array<number> | undefined;
+  hearts: Array<number> | undefined;
   setActivity?: React.Dispatch<
     React.SetStateAction<ActivityItem[] | undefined>
   >;
@@ -124,6 +127,11 @@ export type PostContextType = {
   setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPrivacyStatus?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setCreatedAt?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  // setSelection: React.Dispatch<
+  //   React.SetStateAction<[number, number] | undefined>
+  // >;
+  setPowers: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
+  setHearts: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
 };
 
 const PostContext = React.createContext<PostContextType>({
@@ -158,6 +166,9 @@ const PostContext = React.createContext<PostContextType>({
   timeSeriesFile: undefined,
   privacyStatus: undefined,
   createdAt: undefined,
+  // selection: undefined,
+  powers: undefined,
+  hearts: undefined,
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},
@@ -189,6 +200,9 @@ const PostContext = React.createContext<PostContextType>({
   setTimeSeriesFile: () => {},
   setPrivacyStatus: () => {},
   setCreatedAt: () => {},
+  // setSelection: () => {},
+  setPowers: () => {},
+  setHearts: () => {},
 });
 
 export { PostContext };

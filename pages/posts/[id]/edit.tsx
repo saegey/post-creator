@@ -2,14 +2,13 @@ import { withSSRContext } from "aws-amplify";
 import Head from "next/head";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
-import { CloudinaryImage } from "../../../src/components/AddImage";
 
 import {
   PostContext,
   RaceResultRow,
 } from "../../../src/components/PostContext";
 import { getPostInitial } from "../../../src/graphql/customQueries";
-import EditUserPost from "../../../src/components/EditUserPost";
+import EditUserPost from "../../../src/components/posts/Editor/EditUserPost";
 import { GetPostInitialQuery } from "../../../src/API";
 import {
   ActivityItem,
@@ -18,6 +17,7 @@ import {
   PostType,
 } from "../../../src/types/common";
 import { UserContext } from "../../../src/components/UserContext";
+import { CloudinaryImage } from "../../../src/types/common";
 
 type ServerSideProps = {
   req: object;
@@ -247,6 +247,10 @@ const Post = ({
   const [createdAt, setCreatedAt] = React.useState<string | undefined>(
     postCreatedAt
   );
+  const [selection, setSelection] = React.useState<[number, number]>();
+  const [powers, setPowers] = React.useState<Array<number> | undefined>();
+  const [hearts, setHearts] = React.useState<Array<number> | undefined>();
+
   const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
@@ -352,6 +356,10 @@ const Post = ({
         setPrivacyStatus,
         createdAt,
         setCreatedAt,
+        powers,
+        setPowers,
+        hearts,
+        setHearts,
       }}
     >
       <>
