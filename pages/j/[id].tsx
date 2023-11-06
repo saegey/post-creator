@@ -46,22 +46,11 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     | GraphQLResult<GetPostInitialQuery>;
   let post;
   let isPublished = true;
+  let user: IUser | null = null;
 
   let session;
   try {
     session = await SSR.Auth.currentSession();
-  } catch (e) {
-    console.log(e);
-    // return {
-    //   redirect: {
-    //     destination: "/login",
-    //     permanent: false,
-    //   },
-    // };
-  }
-
-  let user: IUser | null = null;
-  if (session) {
     const sessionData = session.getIdToken();
     const { payload } = sessionData;
     //"custom:role": role if custom attribute is added
@@ -89,6 +78,8 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
         profile,
       },
     };
+  } catch (e) {
+    console.log(e);
   }
 
   try {

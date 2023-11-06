@@ -24,8 +24,40 @@ export type PostType = Array<{
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
   let session;
+
+  let user: IUser | null = null;
+
   try {
     session = await SSR.Auth.currentSession();
+
+    const sessionData = session.getIdToken();
+    const { payload } = sessionData;
+    //"custom:role": role if custom attribute is added
+    const {
+      email,
+      sub,
+      email_verified,
+      "custom:role": role,
+      picture,
+      name,
+      preferred_username,
+      profile,
+    } = payload;
+
+    user = {
+      userId: sub,
+      email: email,
+      email_verified: email_verified,
+      // role: role,
+      attributes: {
+        picture,
+        name,
+        preferred_username,
+        sub,
+        profile,
+      },
+    };
+
   } catch (e) {
     console.log(e);
     return {
@@ -35,34 +67,6 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
       },
     };
   }
-
-  const sessionData = session.getIdToken();
-  const { payload } = sessionData;
-  //"custom:role": role if custom attribute is added
-  const {
-    email,
-    sub,
-    email_verified,
-    "custom:role": role,
-    picture,
-    name,
-    preferred_username,
-    profile,
-  } = payload;
-
-  const user: IUser = {
-    userId: sub,
-    email: email,
-    email_verified: email_verified,
-    // role: role,
-    attributes: {
-      picture,
-      name,
-      preferred_username,
-      sub,
-      profile,
-    },
-  };
 
   return {
     props: {
