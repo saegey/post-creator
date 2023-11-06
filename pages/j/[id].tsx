@@ -26,7 +26,6 @@ import {
   IUser,
 } from "../../src/types/common";
 import { CloudinaryImage } from "../../src/types/common";
-import { UserContext } from "../../src/components/UserContext";
 
 const PostView = dynamic(import("../../src/components/posts/View/PostView"), {
   ssr: false,
@@ -154,7 +153,6 @@ const Publish = ({
     post.components ? JSON.parse(post.components) : []
   ) as CustomElement[];
 
-  // const { user } = React.useContext(UserContext);
   const [activity, setActivity] = React.useState<ActivityItem[] | undefined>(
     undefined
   );

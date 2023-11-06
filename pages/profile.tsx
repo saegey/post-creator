@@ -4,7 +4,6 @@ import React from "react";
 import { withSSRContext } from "aws-amplify";
 import { NextApiRequest } from "next";
 
-// import { UserContext } from "../src/components/UserContext";
 import EditProfile from "../src/components/user/EditProfile";
 import { IUser } from "../src/types/common";
 
@@ -55,8 +54,6 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
 };
 
 const Profile = ({ user }: { user: IUser }) => {
-  // const { user } = React.useContext(UserContext);
-
   return (
     <>
       <Box

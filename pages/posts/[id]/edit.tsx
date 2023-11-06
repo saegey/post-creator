@@ -17,7 +17,6 @@ import {
   IUser,
   PostType,
 } from "../../../src/types/common";
-import { UserContext } from "../../../src/components/UserContext";
 import { CloudinaryImage } from "../../../src/types/common";
 
 type ServerSideProps = {
@@ -286,8 +285,6 @@ const Post = ({
   const [selection, setSelection] = React.useState<[number, number]>();
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
-
-  // const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     if (!initialLoad) {

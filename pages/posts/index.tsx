@@ -6,7 +6,6 @@ import { NextApiRequest } from "next";
 import awsconfig from "../../src/aws-exports";
 import PostsAll from "../../src/components/posts/View/PostsAll";
 import { CloudinaryImage, IUser } from "../../src/types/common";
-import { UserContext } from "../../src/components/UserContext";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 
@@ -73,8 +72,6 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
 };
 
 const MyPosts = ({ user }: { user: IUser }) => {
-  // const { user } = React.useContext(UserContext);
-
   return (
     <>
       <Head>

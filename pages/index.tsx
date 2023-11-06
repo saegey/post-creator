@@ -9,7 +9,6 @@ import { listPostsCustom } from "../src/graphql/customQueries";
 import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
 import { ListPostsCustom } from "../src/API";
 import { CognitoUserExt, CloudinaryImage, IUser } from "../src/types/common";
-import { UserContext } from "../src/components/UserContext";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
@@ -108,12 +107,6 @@ type HomeProps = {
 };
 
 const Home = ({ posts = [], user }: HomeProps) => {
-  // const { user } = React.useContext(UserContext);
-
-  React.useEffect(() => {
-    console.log(user);
-  }, []);
-
   return (
     <>
       <Head>
