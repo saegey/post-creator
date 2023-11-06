@@ -11,7 +11,7 @@ export interface IUser {
   userId: string;
   email: string;
   email_verified: boolean;
-  role: string;
+  role?: string;
   attributes: {
     picture: string;
     name: string;
@@ -316,4 +316,5 @@ export interface PostType {
   postPrivacyStatus: string | undefined;
   postCreatedAt: string | undefined;
   errorCode?: number;
+  user: IUser;
 }

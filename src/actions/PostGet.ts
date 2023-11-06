@@ -13,10 +13,6 @@ const getActivity = async (post: TimeSeriesDataType) => {
     return undefined;
   }
 
-  // const downsampleRate =
-  console.log("coordinates", coordinates);
-
-
   return coordinates
     .map((_: [number, number, number], i: number) => {
       if (i % 1 === 0) {

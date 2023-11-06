@@ -4,7 +4,6 @@ import React from "react";
 import { useUnits } from "../../UnitProvider";
 import { formatTime } from "../../../utils/time";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
-import PostEditor from "../Editor/PostEditor";
 import { PostContext } from "../../PostContext";
 
 export const gradeToColor = (grade: number): string => {
@@ -19,13 +18,11 @@ const ElevationSlice = ({
   marker,
   selection,
   downSampledData,
-  downsampleRate,
   element,
 }: {
   marker: ActivityItem | undefined;
   selection: [number, number] | undefined;
   downSampledData: any;
-  downsampleRate: number;
   element: VisualOverviewType;
 }) => {
   const { powers, hearts } = React.useContext(PostContext);
@@ -102,7 +99,6 @@ const ElevationSlice = ({
   let selectPowers;
   if (selection) {
     selectPowers = powers?.slice(selection[0], selection[1]);
-    // console.log(selectPowers);
   } else if (element && element.selectionStart && element.selectionEnd) {
     selectPowers = powers?.slice(element.selectionStart, element.selectionEnd);
   }

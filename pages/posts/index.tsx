@@ -1,11 +1,11 @@
 import Head from "next/head";
-import { Amplify } from "aws-amplify";
+import { Amplify, withSSRContext } from "aws-amplify";
 import React from "react";
+import { NextApiRequest } from "next";
 
 import awsconfig from "../../src/aws-exports";
 import PostsAll from "../../src/components/posts/View/PostsAll";
-import { CloudinaryImage } from "../../src/types/common";
-import { UserContext } from "../../src/components/UserContext";
+import { CloudinaryImage, IUser } from "../../src/types/common";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 
@@ -21,9 +21,57 @@ export type PostType = Array<{
   imagesObj: Array<CloudinaryImage>;
 }>;
 
-const MyPosts = () => {
-  const { user } = React.useContext(UserContext);
+export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
+  const SSR = withSSRContext({ req });
+  let session;
+  try {
+    session = await SSR.Auth.currentSession();
+  } catch (e) {
+    console.log(e);
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
 
+  const sessionData = session.getIdToken();
+  const { payload } = sessionData;
+  //"custom:role": role if custom attribute is added
+  const {
+    email,
+    sub,
+    email_verified,
+    "custom:role": role,
+    picture,
+    name,
+    preferred_username,
+    profile,
+  } = payload;
+
+  const user: IUser = {
+    userId: sub,
+    email: email,
+    email_verified: email_verified,
+    // role: role,
+    attributes: {
+      picture,
+      name,
+      preferred_username,
+      sub,
+      profile,
+    },
+  };
+
+  return {
+    props: {
+      user,
+    },
+  };
+};
+
+const MyPosts = ({ user }: { user: IUser }) => {
   return (
     <>
       <Head>

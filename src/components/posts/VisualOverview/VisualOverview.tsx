@@ -6,7 +6,6 @@ import ElevationGraph from "./ElevationGraph";
 import ElevationSlice, { gradeToColor } from "./ElevationSlice";
 import { useUnits } from "../../UnitProvider";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
-import { PostContext } from "../../PostContext";
 import { VisualOverviewContext } from "./VisualOverviewContext";
 
 interface Vizprops {
@@ -25,17 +24,10 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
     );
   }
 
-  // console.log(element);
-
   const { selection, setSelection, isSaved } = React.useContext(
     VisualOverviewContext
   );
-  // if (element.selectionStart && element.selectionEnd && !selection) {
-  //   setSelection([element.selectionStart, element.selectionEnd]);
-  // }
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
-  // const [selection, setSelection] = React.useState();
-  // console.log(selection);
   const [downsampleRate, setDownsampleRate] = React.useState<number>(20);
 
   React.useEffect(() => {
@@ -43,8 +35,6 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
       // setSelection([element.selectionStart, element.selectionEnd]);
     }
   }, [selection]);
-
-  // console.log(selection);
 
   const units = useUnits();
 
@@ -94,7 +84,6 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
         setSelection={setSelection}
         isSaved={isSaved}
         downsampleRate={downsampleRate}
-        // setDownsampleRate={setDownsampleRate}
         element={element}
         view={view}
       />
@@ -114,7 +103,6 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
         marker={marker}
         selection={selection}
         downSampledData={downSampledData}
-        downsampleRate={downsampleRate}
         element={element}
       />
       {graph}

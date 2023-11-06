@@ -81,16 +81,13 @@ const Map = ({
       </Box>
     );
   }
-  // console.log(selection);
   const { selection } = React.useContext(VisualOverviewContext);
   const mapContainerRef = React.useRef();
   const map = React.useRef<mapboxgl.Map>();
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    // console.log("seleection use", element);
     if (!map || !map.current) {
-      // console.log("nio map");
       return;
     }
     const geojsonSource = map.current?.getSource(
@@ -98,11 +95,6 @@ const Map = ({
     ) as GeoJSONSource;
 
     if (selection === undefined) {
-      console.log(
-        "removesource",
-        selection,
-        map.current?.getSource("routeSelect")
-      );
       if (map.current?.getSource("routeSelect")) {
         map.current?.removeLayer("routeSelectlayer");
         map.current?.removeSource("routeSelect");
@@ -115,11 +107,7 @@ const Map = ({
 
     const selectHigh = selection && selection[1] ? selection[1] : undefined;
 
-    console.log("selectLow", coordinates.slice(selectLow, selectHigh));
-
-    // console.log("useEffect selecttion", selection, geojsonSource);
     if (!geojsonSource && selectLow && selectHigh) {
-      // console.log(coordinates.slice(selection[0], selection[1]));
       map.current?.addSource("routeSelect", {
         type: "geojson",
         data: {
@@ -132,7 +120,6 @@ const Map = ({
         },
       });
     } else {
-      // console.log(selection[0] * 20, coordinates[0]);
       try {
         const data = {
           type: "FeatureCollection",
@@ -147,7 +134,6 @@ const Map = ({
           ],
         } as any;
 
-        // console.log(data);
         geojsonSource.setData(data);
       } catch (e) {
         console.error(e);
@@ -173,7 +159,6 @@ const Map = ({
         },
       });
     } else {
-      // console.log('customMap - updatee source');
       try {
         const data = {
           type: "FeatureCollection",
@@ -188,7 +173,6 @@ const Map = ({
           ],
         } as any;
 
-        // console.log(data);
         geojsonSource.setData(data);
       } catch (e) {
         console.error(e);
@@ -292,7 +276,6 @@ const Map = ({
 
     map.current.once("load", () => {
       setIsMapLoaded(true);
-      // console.log('customMap - once load hook');
     });
 
     // Create a 'LngLatBounds' with both corners at the first coordinate.

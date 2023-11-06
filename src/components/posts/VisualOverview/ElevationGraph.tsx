@@ -63,7 +63,6 @@ const ElevationGraph = ({
       </Box>
     );
   }
-  console.log("view", view);
 
   const editor = element && !view && useSlateStatic();
   const path =
@@ -135,7 +134,6 @@ const ElevationGraph = ({
 
     setZoomGraph((prev) => ({
       ...prev,
-      // data: data?.slice(),
       data: shrunkData,
       refAreaLeft: "",
       refAreaRight: "",
@@ -171,7 +169,6 @@ const ElevationGraph = ({
       const lower = shrunkData.findIndex((s) => s.d === Number(from));
       const upper = shrunkData.findIndex((s) => s.d === Number(to));
       const refData = shrunkData.slice(lower, upper);
-      console.log(shrunkData, refData, from, to);
       let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
         number,
         number
@@ -210,9 +207,6 @@ const ElevationGraph = ({
   const zoom = () => {
     let { refAreaLeft, refAreaRight } = zoomGraph;
 
-    // const { data } = zoomGraph;
-    // console.log(refAreaLeft, refAreaRight, data);
-
     if (refAreaLeft === refAreaRight || refAreaRight === "") {
       setZoomGraph((prev) => ({
         ...prev,
@@ -222,14 +216,11 @@ const ElevationGraph = ({
       return;
     }
 
-    // xAxis domain
     if (refAreaLeft && refAreaRight && refAreaLeft > refAreaRight)
       [refAreaLeft, refAreaRight] = [refAreaRight, refAreaLeft];
 
-    // yAxis domain
-    // const [bottom, top] = getAxisYDomain(refAreaLeft, refAreaRight, "d", 1);
     const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, "e", 50);
-    // console.log(refAreaLeft, refAreaRight);
+
     setZoomGraph(
       (prev) =>
         ({
@@ -254,13 +245,10 @@ const ElevationGraph = ({
       (d) => Number(d.d) === Number(refAreaLeft)
     );
     const highBound = downSampledData.findIndex((d) => {
-      // console.log(d.d, top2);
       return Number(d.d) === Number(refAreaRight);
     });
     setSelection([lowBound, highBound]);
-    console.log(downSampledData[100], lowBound, highBound);
   };
-  console.log(isSaved);
 
   const {
     data,
@@ -283,7 +271,6 @@ const ElevationGraph = ({
         paddingBottom: [0, "20px", "40px"],
         paddingX: 0,
         userSelect: "none",
-        // touchAction: "pan-x",
       }}
     >
       <Flex sx={{ gap: "10px", marginBottom: "10px" }}>
@@ -357,15 +344,17 @@ const ElevationGraph = ({
           )}
 
           <Tooltip
+            // active={"false"}
             content={
-              <Box
-                sx={{
-                  display: "flex",
-                  backgroundColor: "transparent",
-                  width: "100vw",
-                  height: "100px",
-                }}
-              ></Box>
+              <></>
+              // <Box
+              //   sx={{
+              //     display: "flex",
+              //     backgroundColor: "transparent",
+              //     width: "100vw",
+              //     height: "100px",
+              //   }}
+              // ></Box>
             }
           />
           {/* <defs>

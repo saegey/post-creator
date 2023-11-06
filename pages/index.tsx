@@ -3,15 +3,55 @@ import Head from "next/head";
 import React from "react";
 import { NextApiRequest } from "next";
 import { GraphQLResult } from "@aws-amplify/api";
+import Router from "next/router";
 
 import { listPostsCustom } from "../src/graphql/customQueries";
 import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
 import { ListPostsCustom } from "../src/API";
-import { CognitoUserExt, CloudinaryImage } from "../src/types/common";
-import { UserContext } from "../src/components/UserContext";
+import { CognitoUserExt, CloudinaryImage, IUser } from "../src/types/common";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
+  let session;
+  try {
+    session = await SSR.Auth.currentSession();
+  } catch (e) {
+    console.log(e);
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const sessionData = session.getIdToken();
+  const { payload } = sessionData;
+  //"custom:role": role if custom attribute is added
+  const {
+    email,
+    sub,
+    email_verified,
+    "custom:role": role,
+    picture,
+    name,
+    preferred_username,
+    profile,
+  } = payload;
+
+  const user: IUser = {
+    userId: sub,
+    email: email,
+    email_verified: email_verified,
+    // role: role,
+    attributes: {
+      picture,
+      name,
+      preferred_username,
+      sub,
+      profile,
+    },
+  };
 
   try {
     const response = (await SSR.API.graphql({
@@ -21,6 +61,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
 
     return {
       props: {
+        user,
         posts: response?.data?.listPublishedPostsByCreatedAt?.items.map((d) => {
           return {
             ...d,
@@ -50,7 +91,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
 
 type HomeProps = {
   signOut: () => void;
-  user: CognitoUserExt;
+  user: IUser;
   posts: Array<{
     id: string;
     title: string;
@@ -65,16 +106,14 @@ type HomeProps = {
   }>;
 };
 
-const Home = ({ posts = [] }: HomeProps) => {
-  const { user } = React.useContext(UserContext);
-
+const Home = ({ posts = [], user }: HomeProps) => {
   return (
     <>
       <Head>
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {user && <PostsAllUsers posts={posts} user={user} />}
+      <PostsAllUsers posts={posts} user={user} />
     </>
   );
 };

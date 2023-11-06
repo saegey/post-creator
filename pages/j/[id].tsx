@@ -23,9 +23,9 @@ import {
   PostViewType,
   TimeSeriesDataType,
   PowerZoneType,
+  IUser,
 } from "../../src/types/common";
 import { CloudinaryImage } from "../../src/types/common";
-import { UserContext } from "../../src/components/UserContext";
 
 const PostView = dynamic(import("../../src/components/posts/View/PostView"), {
   ssr: false,
@@ -47,6 +47,50 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   let post;
   let isPublished = true;
 
+  let session;
+  try {
+    session = await SSR.Auth.currentSession();
+  } catch (e) {
+    console.log(e);
+    // return {
+    //   redirect: {
+    //     destination: "/login",
+    //     permanent: false,
+    //   },
+    // };
+  }
+
+  let user: IUser | null = null;
+  if (session) {
+    const sessionData = session.getIdToken();
+    const { payload } = sessionData;
+    //"custom:role": role if custom attribute is added
+    const {
+      email,
+      sub,
+      email_verified,
+      "custom:role": role,
+      picture,
+      name,
+      preferred_username,
+      profile,
+    } = payload;
+
+    user = {
+      userId: sub,
+      email: email,
+      email_verified: email_verified,
+      // role: role,
+      attributes: {
+        picture,
+        name,
+        preferred_username,
+        sub,
+        profile,
+      },
+    };
+  }
+
   try {
     res = (await SSR.API.graphql({
       query: getPublishedPost,
@@ -56,7 +100,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       },
     })) as GraphQLResult<GetPublishedPostQuery>;
 
-    console.log("res", res);
     if (!res.data || !res.data.getPublishedPost) {
       res = (await SSR.API.graphql({
         query: getPostInitial,
@@ -90,6 +133,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       post: newPost,
       metaTags: generateMetaTags({ post: newPost }),
       isPublished,
+      user: user,
       // errorCode: errorCode
     },
   };
@@ -98,22 +142,17 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 const Publish = ({
   post,
   isPublished,
-  errorCode,
+  user,
 }: {
   post: PostViewType;
-  errorCode?: number;
   isPublished: boolean;
+  user: IUser;
 }): JSX.Element => {
-  // if (errorCode) {
-  //   // return <></>;
-  //   return <Error statusCode={errorCode} />;
-  // }
   const config = SlatePublish();
   const components = (
     post.components ? JSON.parse(post.components) : []
   ) as CustomElement[];
 
-  const { user } = React.useContext(UserContext);
   const [activity, setActivity] = React.useState<ActivityItem[] | undefined>(
     undefined
   );
@@ -188,11 +227,6 @@ const Publish = ({
   const [postLocation, setPostLocation] = React.useState<string | undefined>(
     post.postLocation ? post.postLocation : undefined
   );
-
-  const [selection, setSelection] = React.useState<
-    [number, number] | undefined
-  >();
-
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
 
@@ -291,8 +325,6 @@ const Publish = ({
           setAuthor,
           powerZoneBuckets,
           setPowerZoneBuckets,
-          // selection,
-          // setSelection,
           powers,
           setPowers,
           hearts,
