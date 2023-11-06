@@ -1,4 +1,4 @@
-import { Box, Spinner } from "theme-ui";
+import { Box, Flex, Spinner } from "theme-ui";
 import React from "react";
 
 import Map from "./CustomMap";
@@ -18,9 +18,21 @@ interface Vizprops {
 const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
   if (!activity || activity.length === 0) {
     return (
-      <Box>
-        <Spinner />
-      </Box>
+      <Flex
+        sx={{
+          width: "100%",
+          backgroundColor: "divider",
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: "5px",
+          margin: "60px",
+          // width: "500px",
+          height: "820px",
+        }}
+        className="skeleton"
+      >
+        {/* <Spinner /> */}
+      </Flex>
     );
   }
 
