@@ -69,7 +69,7 @@ const Header = ({ user }: { user: IUser }) => {
               justifyContent: "end",
               backgroundColor: ["none", "divider", "divider"],
               borderRadius: "100px",
-              padding: "2px 10px 2px 10px",
+              padding: "3px 10px 3px 10px",
             }}
             onClick={() => setProfileOpen(true)}
           >
@@ -80,8 +80,8 @@ const Header = ({ user }: { user: IUser }) => {
             {user && user.attributes && user.attributes.picture && (
               <Box
                 sx={{
-                  height: "38px",
-                  width: "38px",
+                  height: "35px",
+                  width: "35px",
                   cursor: "pointer",
                   display: ["none", "inherit", "inherit"],
                 }}

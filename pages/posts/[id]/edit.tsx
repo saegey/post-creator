@@ -14,6 +14,7 @@ import {
   ActivityItem,
   CustomElement,
   GraphQLError,
+  IUser,
   PostType,
 } from "../../../src/types/common";
 import { UserContext } from "../../../src/components/UserContext";
@@ -27,19 +28,58 @@ type ServerSideProps = {
 };
 
 export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
-  const { API } = withSSRContext({ req });
+  const SSR = withSSRContext({ req });
+  let session;
+  try {
+    session = await SSR.Auth.currentSession();
+  } catch (e) {
+    console.log(e);
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  const sessionData = session.getIdToken();
+  const { payload } = sessionData;
+  //"custom:role": role if custom attribute is added
+  const {
+    email,
+    sub,
+    email_verified,
+    "custom:role": role,
+    picture,
+    name,
+    preferred_username,
+    profile,
+  } = payload;
+
+  const user: IUser = {
+    userId: sub,
+    email: email,
+    email_verified: email_verified,
+    // role: role,
+    attributes: {
+      picture,
+      name,
+      preferred_username,
+      sub,
+      profile,
+    },
+  };
 
   let res;
 
   try {
-    res = (await API.graphql({
+    res = (await SSR.API.graphql({
       query: getPostInitial,
       authMode: "AMAZON_COGNITO_USER_POOLS",
       variables: {
         id: params.id,
       },
     })) as GraphQLResult<GetPostInitialQuery>;
-    // console.log(res);
   } catch (error: unknown) {
     const knownError = error as GraphQLError;
     console.log(error);
@@ -50,12 +90,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     }
   }
 
-  // if (!res || !res.data) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
-
   const post = res?.data?.getPost;
   if (!post) {
     return {
@@ -65,6 +99,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 
   return {
     props: {
+      user,
       postId: post.id,
       postComponents: post.components
         ? (JSON.parse(post.components) as Array<CustomElement>)
@@ -113,6 +148,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 };
 
 const Post = ({
+  user,
   postComponents,
   postTitle,
   postSubhead,
@@ -251,7 +287,7 @@ const Post = ({
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
 
-  const { user } = React.useContext(UserContext);
+  // const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
     if (!initialLoad) {

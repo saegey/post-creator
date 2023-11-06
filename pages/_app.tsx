@@ -4,18 +4,16 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import { ThemeUIProvider } from "theme-ui";
 import { Amplify, Hub, Auth } from "aws-amplify";
-import Router from "next/router";
 
 import theme from "../src/utils/theme";
 import ViewportProvider from "../src/components/ViewportProvider";
 import UnitProvider from "../src/components/UnitProvider";
 import awsconfig from "../src/aws-exports";
 import ErrorBoundary from "../src/components/shared/ErrorBoundary";
-
 import "../styles/globals.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { UserContext } from "../src/components/UserContext";
-import {IUser} from '../src/types/common';
+import { IUser } from "../src/types/common";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 
@@ -23,6 +21,36 @@ const app = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = React.useState<IUser>();
 
   const initialLoad = React.useCallback(async () => {
+		// import { Hub } from 'aws-amplify/utils';
+
+// Hub.listen('auth', ({ payload }) => {
+//   switch (payload.event) {
+//     case 'signedIn':
+//       console.log('user have been signedIn successfully.');
+//       break;
+//     case 'signedOut':
+//       console.log('user have been signedOut successfully.');
+//       break;
+//     case 'tokenRefresh':
+//       console.log('auth tokens have been refreshed.');
+//       break;
+//     case 'tokenRefresh_failure':
+//       console.log('failure while refreshing auth tokens.');
+//       break;
+//     case 'signInWithRedirect':
+//       console.log('signInWithRedirect API has successfully been resolved.');
+//       break;
+//     case 'signInWithRedirect_failure':
+//       console.log('failure while trying to resolve signInWithRedirect API.');
+//       break;
+//     case 'customOAuthState':
+//       logger.info('custom state returned from CognitoHosted UI');
+//       break;
+//   }
+// });
+// copy
+// Was this page helpful?
+
     Hub.listen("auth", async ({ payload: { event, data } }) => {
       switch (event) {
         case "signIn": {
@@ -102,13 +130,14 @@ const app = ({ Component, pageProps }: AppProps) => {
       }
     } catch (e) {
       console.log(e);
-      Router.push("/login");
+      setUser(undefined);
+      // Router.push("/login");
     }
   };
 
   React.useEffect(() => {
     initialLoad();
-    getCurrentSession();
+    // getCurrentSession();
   }, []);
 
   const { metaTags } = pageProps as {

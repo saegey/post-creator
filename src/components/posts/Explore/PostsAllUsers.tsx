@@ -26,11 +26,16 @@ const PostsAllUsers = ({
   user?: IUser;
   posts: PostType | undefined;
 }) => {
-  React.useEffect(() => {
-    if (!user) {
-      Router.push("/login");
-    }
-  }, [user]);
+  // React.useEffect(() => {
+  //   console.log(user);
+  //   if (!user) {
+  //     Router.push("/login");
+  //   }
+  // }, [user]);
+
+  if (!user) {
+    return <></>;
+  }
 
   return (
     <Box as="main" sx={{ height: "100vw" }}>
