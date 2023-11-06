@@ -8,6 +8,7 @@ import Header from "../shared/Header";
 import EditAvatar from "./EditAvatar";
 import { IUser } from "../../types/common";
 import { updateUser } from "../../graphql/mutations";
+import { cloudUrl } from "../../utils/cloudinary";
 
 const EditProfile = ({ user }: { user?: IUser }) => {
   const [isSaving, setIsSaving] = React.useState(false);
@@ -167,6 +168,11 @@ const EditProfile = ({ user }: { user?: IUser }) => {
                   quality={90}
                   sizes="100vw"
                   alt="Description of my image"
+                  config={{
+                    cloud: {
+                      cloudName: cloudUrl,
+                    },
+                  }}
                 />
               )}
               {!user.attributes.picture && (

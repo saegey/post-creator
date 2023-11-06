@@ -16,6 +16,7 @@ import { useUnits } from "../UnitProvider";
 import BlackBox from "../layout/BlackBox";
 import { useViewport } from "../ViewportProvider";
 import { IUser } from "../../types/common";
+import { cloudUrl } from "../../utils/cloudinary";
 
 interface UserProfileMenuType {
   setProfileOpen: (arg: boolean) => void;
@@ -118,6 +119,11 @@ const UserProfileMenu = ({
                         quality={90}
                         sizes="(max-width: 480px) 100vw, 50vw"
                         alt="Description of my image"
+                        config={{
+                          cloud: {
+                            cloudName: cloudUrl,
+                          },
+                        }}
                       />
                     </Box>
                   )}
