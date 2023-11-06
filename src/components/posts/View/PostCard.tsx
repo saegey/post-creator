@@ -4,6 +4,7 @@ import Link from "next/link";
 import { CldImage } from "next-cloudinary";
 
 import { CloudinaryImage } from "../../../types/common";
+import { cloudUrl } from "../../../utils/cloudinary";
 
 interface PostCardProps {
   post: {
@@ -65,6 +66,11 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
               quality={90}
               sizes="100vw"
               alt="Description of my image"
+              config={{
+                cloud: {
+                  cloudName: cloudUrl,
+                },
+              }}
             />
           )}
           {!post.imagesObj && (
@@ -119,6 +125,11 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
                     quality={90}
                     sizes="100vw"
                     alt="Description of my image"
+                    config={{
+                      cloud: {
+                        cloudName: cloudUrl,
+                      },
+                    }}
                   />
                 )}
                 {!post.author?.image && (

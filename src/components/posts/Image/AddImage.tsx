@@ -9,6 +9,7 @@ import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
 import SidebarLeft from "../../shared/SidebarLeft";
 import { CloudinaryImage } from "../../../types/common";
+import { cloudUrl } from "../../../utils/cloudinary";
 
 interface AddImageProps {
   callback: ({
@@ -123,6 +124,11 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
                             style={{
                               height: "auto",
                               maxWidth: "100%",
+                            }}
+                            config={{
+                              cloud: {
+                                cloudName: cloudUrl,
+                              },
                             }}
                           />
                         </Box>

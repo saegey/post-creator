@@ -5,6 +5,7 @@ import { CldImage } from "next-cloudinary";
 import AvatarIcon from "../icons/AvatarIcon";
 import UserProfileMenu from "./UserProfileMenu";
 import { IUser } from "../../types/common";
+import { cloudUrl } from "../../utils/cloudinary";
 
 const Header = ({ user }: { user: IUser }) => {
   const [profileOpen, setProfileOpen] = React.useState(false);
@@ -102,6 +103,11 @@ const Header = ({ user }: { user: IUser }) => {
                   sizes="100vw"
                   alt="Description of my image"
                   onClick={() => setProfileOpen(true)}
+                  config={{
+                    cloud: {
+                      cloudName: cloudUrl,
+                    },
+                  }}
                 />
               </Box>
             )}
