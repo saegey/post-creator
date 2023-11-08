@@ -166,16 +166,21 @@ const ElevationGraph = ({
     setSelection(undefined);
   };
 
-  const CustomCursor = (props) => {
-    // console.log(props);
-    const { left, right, width, height, stroke } = props;
+  const CustomCursor = (props: {
+    height?: number;
+    points?: Array<{ x: number; y: number }>;
+  }) => {
+    const { height, points } = props;
+    if (!points) {
+      return;
+    }
     return (
       <Rectangle
         fill={themeContext?.theme?.colors?.background as string}
         stroke={themeContext?.theme?.colors?.text as string}
         strokeWidth={1}
-        x={props.points[0].x}
-        y={props.points[0].y}
+        x={points[0].x}
+        y={points[0].y}
         width={1}
         height={height}
         style={{ cursor: "crosshair" }}

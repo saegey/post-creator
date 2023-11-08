@@ -151,9 +151,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                   <Link href="https://www.raceresult.com/" target="_blank">
                     Race Result
                   </Link>
-                  <Link href="https://www.webscorer.com/" target="_blank">
+                  {/* <Link href="https://www.webscorer.com/" target="_blank">
                     webscorer
-                  </Link>
+                  </Link> */}
                 </Flex>
                 {categories && (
                   <>
