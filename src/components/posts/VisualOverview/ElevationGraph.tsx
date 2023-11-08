@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   ReferenceArea,
+  Rectangle,
 } from "recharts";
 import { Box, Button, Flex, Spinner, useThemeUI } from "theme-ui";
 import React from "react";
@@ -32,7 +33,16 @@ export interface GradeGradientActivty extends ActivityEvent {
   color: string;
 }
 
-interface NewLineGraphProps {
+const ElevationGraph = ({
+  downSampledData,
+  setMarker,
+  selection,
+  setSelection,
+  isSaved,
+  downsampleRate,
+  element,
+  view = true,
+}: {
   downSampledData: Array<GradeGradientActivty>;
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
   element: VisualOverviewType;
@@ -43,19 +53,7 @@ interface NewLineGraphProps {
   selection: [number, number] | undefined;
   isSaved: boolean;
   downsampleRate: number;
-}
-
-const ElevationGraph = ({
-  downSampledData,
-  setMarker,
-  selection,
-  setSelection,
-  isSaved,
-  downsampleRate,
-  // setDownsampleRate,
-  element,
-  view = true,
-}: NewLineGraphProps) => {
+}) => {
   if (!downSampledData || downSampledData.length === 0) {
     return (
       <Box>
@@ -63,6 +61,8 @@ const ElevationGraph = ({
       </Box>
     );
   }
+
+  // const [showSaveButton, setShowSaveButton] = React.useState(false);
 
   const editor = element && !view && useSlateStatic();
   const path =
@@ -90,6 +90,8 @@ const ElevationGraph = ({
     top2: element && element.top ? element.top : "dataMax+20",
     bottom2: element && element.bottom ? element.bottom : "dataMin",
     animation: true,
+    showSaveButton: false,
+    isZoomed: element && element.selectionStart ? true : false,
   };
   const [zoomGraph, setZoomGraph] = React.useState(initialState);
 
@@ -110,6 +112,10 @@ const ElevationGraph = ({
           at: path,
         }
       );
+      setZoomGraph((prev) => ({
+        ...prev,
+        showSaveButton: false,
+      }));
     }
   };
 
@@ -155,8 +161,31 @@ const ElevationGraph = ({
       right: "dataMax",
       top2: "dataMax+50",
       bottom2: "dataMin",
+      isZoomed: false,
     }));
     setSelection(undefined);
+  };
+
+  const CustomCursor = (props: {
+    height?: number;
+    points?: Array<{ x: number; y: number }>;
+  }) => {
+    const { height, points } = props;
+    if (!points) {
+      return;
+    }
+    return (
+      <Rectangle
+        fill={themeContext?.theme?.colors?.background as string}
+        stroke={themeContext?.theme?.colors?.text as string}
+        strokeWidth={1}
+        x={points[0].x}
+        y={points[0].y}
+        width={1}
+        height={height}
+        style={{ cursor: "crosshair" }}
+      />
+    );
   };
 
   const getAxisYDomain = (
@@ -169,6 +198,7 @@ const ElevationGraph = ({
       const lower = shrunkData.findIndex((s) => s.d === Number(from));
       const upper = shrunkData.findIndex((s) => s.d === Number(to));
       const refData = shrunkData.slice(lower, upper);
+
       let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
         number,
         number
@@ -191,6 +221,7 @@ const ElevationGraph = ({
   const backToSegment = () => {
     setZoomGraph((prev) => ({
       ...prev,
+      isZoomed: true,
       data: element && element.selectionStart ? downSampledData : shrunkData,
       left: element && element.left ? element.left : "dataMin",
       right: element && element.right ? element.right : "dataMax",
@@ -227,7 +258,6 @@ const ElevationGraph = ({
           ...prev,
           refAreaLeft: "",
           refAreaRight: "",
-          // data: data?.slice(),
           data: downSampledData
             .map((_, i) => {
               if (i % 1 === 0) {
@@ -239,6 +269,8 @@ const ElevationGraph = ({
           right: refAreaRight,
           bottom2,
           top2,
+          showSaveButton: true,
+          isZoomed: true,
         } as any)
     );
     const lowBound = downSampledData.findIndex(
@@ -256,10 +288,10 @@ const ElevationGraph = ({
     right,
     refAreaLeft,
     refAreaRight,
-    // top,
-    // bottom,
     top2,
     bottom2,
+    showSaveButton,
+    isZoomed,
   } = zoomGraph;
 
   return (
@@ -306,35 +338,50 @@ const ElevationGraph = ({
         </Button>
         <Button
           variant="primaryButton"
-          sx={{ visibility: selection && !view ? "visible" : "hidden" }}
+          sx={{
+            visibility:
+              selection && !view && showSaveButton ? "visible" : "hidden",
+          }}
           onClick={() => saveState()}
         >
-          Save State
+          Save Selection
         </Button>
       </Flex>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
           onMouseDown={(e) => {
+            if (isZoomed) {
+              return;
+            }
             setZoomGraph((prev) => ({
               ...prev,
               refAreaLeft: e && e.activeLabel ? e.activeLabel : "",
             }));
           }}
           onMouseMove={(e) => {
+            // console.log(e);
             if (!e || !e.activePayload) {
               setMarker(undefined);
               return;
             }
 
             setMarker(e.activePayload[0].payload as ActivityItem);
-            zoomGraph.refAreaLeft &&
-              setZoomGraph((prev) => ({
-                ...prev,
-                refAreaRight: e.activeLabel ? e.activeLabel : "",
-              }));
+
+            if (!isZoomed) {
+              zoomGraph.refAreaLeft &&
+                setZoomGraph((prev) => ({
+                  ...prev,
+                  refAreaRight: e.activeLabel ? e.activeLabel : "",
+                }));
+            }
           }}
-          onMouseUp={() => zoom()}
+          onMouseUp={() => {
+            if (isZoomed) {
+              return;
+            }
+            zoom();
+          }}
           margin={{ top: 10, right: 0, left: hideAxes ? 0 : 20, bottom: 30 }}
         >
           {!hideAxes && (
@@ -344,7 +391,8 @@ const ElevationGraph = ({
           )}
 
           <Tooltip
-            // active={"false"}
+            active={false}
+            cursor={<CustomCursor />}
             content={
               <></>
               // <Box
@@ -415,21 +463,19 @@ const ElevationGraph = ({
           <Area
             type={"monotone"}
             dataKey="e"
-            fill="black"
+            fill={themeContext?.theme?.colors?.text as string}
             fillOpacity={0.2}
             dot={false}
-            stroke="black"
+            stroke={themeContext?.theme?.colors?.text as string}
             strokeOpacity={0.2}
             isAnimationActive={false}
-            // yAxisId="1"
           />
           {refAreaLeft && refAreaRight ? (
             <ReferenceArea
-              // yAxisId="1"
               x1={refAreaLeft}
               x2={refAreaRight}
               strokeOpacity={1}
-              fill="black"
+              fill={themeContext?.theme?.colors?.text as string}
             />
           ) : null}
         </AreaChart>

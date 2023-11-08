@@ -26,8 +26,8 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
   const [isEmbedModalOpen, setIsEmbedModalOpen] = React.useState(false);
   const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
 
-  const hero = components?.filter((c) => c.type === "heroBanner");
-  const heroBannerNotAdded = hero && hero.length > 0 ? false : true;
+  // const hero = components?.filter((c) => c.type === "heroBanner");
+  // const heroBannerNotAdded = hero && hero.length > 0 ? false : true;
   const shouldCloseMenu = width < 400;
 
   const closeMenu = () => {
@@ -153,14 +153,13 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
               cursor: gpxFile ? "pointer" : "not-allowed",
             }}
           >
-            <Flex>
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
                 sx={{
                   width: "25px",
-                  height: "25px",
-                  marginRight: "10px",
+                  height: "auto",
+                  // marginRight: "10px",
                 }}
-                // onMouseEnter={() => {}}
               >
                 <PowerGraphIcon color={color} />
               </Box>
@@ -177,12 +176,12 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
               cursor: gpxFile ? "pointer" : "not-allowed",
             }}
           >
-            <Flex>
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
                 sx={{
                   width: "25px",
-                  height: "25px",
-                  marginRight: "10px",
+                  height: "auto",
+                  // marginRight: "10px",
                 }}
               >
                 <ActivityOverviewIcon color={color} />
@@ -199,12 +198,12 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
               cursor: gpxFile ? "pointer" : "not-allowed",
             }}
           >
-            <Flex>
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
                 sx={{
                   width: "25px",
-                  height: "25px",
-                  marginRight: "10px",
+                  height: "auto",
+                  // marginRight: "10px",
                 }}
               >
                 <TimePowerZonesIcon color={color} />
@@ -221,18 +220,18 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
             }}
             variant="boxes.sidebarMenuItem"
           >
-            <Flex>
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
                 sx={{
                   width: "25px",
-                  height: "25px",
-                  marginRight: "10px",
+                  height: "auto",
+                  // marginRight: "10px",
                 }}
               >
                 <svg
                   className="childButton"
-                  width="24px"
-                  height="24px"
+                  width="100%"
+                  height="100%"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -280,12 +279,12 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
               cursor: "pointer",
             }}
           >
-            <Flex>
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
                 sx={{
                   width: "25px",
-                  height: "25px",
-                  marginRight: "10px",
+                  height: "auto",
+                  // marginRight: "10px",
                 }}
               >
                 <StravaIcon color={"var(--theme-ui-colors-text)"} />
@@ -300,12 +299,12 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
               cursor: "pointer",
             }}
           >
-            <Flex>
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
                 sx={{
                   width: "25px",
-                  height: "25px",
-                  marginRight: "10px",
+                  height: "auto",
+                  // marginRight: "10px",
                 }}
               >
                 <EmbedIcon />
@@ -327,12 +326,12 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
               cursor: "pointer",
             }}
           >
-            <Flex>
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
                 sx={{
                   width: "25px",
-                  height: "25px",
-                  marginRight: "10px",
+                  height: "auto",
+                  // marginRight: "10px",
                 }}
               >
                 <ResultsIcon />

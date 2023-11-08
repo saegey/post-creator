@@ -3,9 +3,9 @@ import React from "react";
 import Router from "next/router";
 
 import PostEditor from "./PostEditor";
-import Header from '../../shared/Header';
+import Header from "../../shared/Header";
 import { EditorContext } from "../Editor/EditorContext";
-import { IUser } from '../../../types/common';
+import { IUser } from "../../../types/common";
 
 type EditUserPostProps = {
   user?: IUser;
