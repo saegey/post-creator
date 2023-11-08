@@ -129,7 +129,8 @@ export default {
     },
     sidebarMenuItem: {
       fontSize: "15px",
-      padding: "15px",
+      paddingLeft: "15px",
+      paddingY: "10px",
       borderRadius: "5px",
       width: "100%",
       "&:hover": {

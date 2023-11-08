@@ -7,6 +7,7 @@ import {
   Text,
   Select,
   Spinner,
+  Link,
 } from "theme-ui";
 import { API } from "aws-amplify";
 import React from "react";
@@ -134,9 +135,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
               style={{ width: "100%" }}
             >
               <Flex sx={{ gap: "20px", flexDirection: "column" }}>
-                <Box>
+                <Box sx={{ marginTop: "20px" }}>
                   <Label htmlFor="url" variant="defaultLabel">
-                    Url
+                    Results Url
                   </Label>
                   <Input
                     id="url"
@@ -145,6 +146,15 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                     readOnly={raceId ? true : false}
                   />
                 </Box>
+                <Flex sx={{ flexDirection: "column", gap: "10px" }}>
+                  <Text>Supported Providers:</Text>
+                  <Link href="https://www.raceresult.com/" target="_blank">
+                    Race Result
+                  </Link>
+                  <Link href="https://www.webscorer.com/" target="_blank">
+                    webscorer
+                  </Link>
+                </Flex>
                 {categories && (
                   <>
                     <Box>

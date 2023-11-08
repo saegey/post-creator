@@ -47,7 +47,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       profile,
     } = payload;
 
-    const user: IUser = {
+    user = {
       userId: sub,
       email: email,
       email_verified: email_verified,
