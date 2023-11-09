@@ -42,9 +42,9 @@ const ImageFullScreen = ({
     />
   );
   const [currentIndex, setCurrentIndex] = React.useState(index);
-  // console.log(currentIndex);
-
   const { images } = React.useContext(PostContext);
+
+  console.log(images);
   if (!images) {
     throw Error("musts have images");
   }
@@ -169,15 +169,15 @@ const ImageFullScreen = ({
         >
           <Box
             sx={{
-              padding: "10px",
-              backgroundColor: "text",
+              padding: ["5px", "5px", "5px"],
+              backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.4})`,
               cursor: "pointer",
             }}
             onClick={() => {
               nextImage();
             }}
           >
-            <Box sx={{ width: "40px", height: "auto" }}>
+            <Box sx={{ width: ["20px", "20px", "30px"], height: "auto" }}>
               <svg
                 width="100%"
                 height="100%"
@@ -212,15 +212,15 @@ const ImageFullScreen = ({
         >
           <Box
             sx={{
-              padding: "10px",
-              backgroundColor: "text",
+              padding: ["5px", "5px", "5px"],
+              backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.6})`,
               cursor: "pointer",
             }}
             onClick={() => {
               previousImage();
             }}
           >
-            <Box sx={{ width: "40px", height: "auto" }}>
+            <Box sx={{ width: ["20px", "20px", "30px"], height: "auto" }}>
               <svg
                 width="100%"
                 height="100%"
