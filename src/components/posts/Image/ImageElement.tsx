@@ -16,6 +16,8 @@ import OptionsButton from "../../buttons/OptionsButton";
 import { useClickOutside } from "../../../utils/ux";
 import { cloudUrl } from "../../../utils/cloudinary";
 import { ImageElementType } from "../../../types/common";
+import MaximizeIcon from "../../icons/MaximizeIcon";
+import ImageFullScreen from "./ImageFullScreen";
 
 type SlateImageType = {
   type: "image";
@@ -39,12 +41,19 @@ const ImageElement = ({
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [addCaption, setAddCaption] = React.useState(false);
+  const [isMaximized, setIsMaximized] = React.useState(false);
 
   const { id, title, postLocation, images } = React.useContext(PostContext);
   const selected = useSelected();
   const focused = useFocused();
 
-  const imageMeta = images?.find((i) => i.public_id === element.public_id);
+  const imageMetaIndex: number | undefined = images?.findIndex(
+    (i) => i.public_id === element.public_id
+  );
+  if (imageMetaIndex === undefined) {
+    return;
+  }
+  const imageMeta = images ? images[imageMetaIndex] : undefined;
 
   const wrapperRef = React.useRef();
 
@@ -79,6 +88,15 @@ const ImageElement = ({
 
   return (
     <Box contentEditable={false}>
+      {isMaximized && imageMeta && (
+        <ImageFullScreen
+          setIsMaximized={setIsMaximized}
+          width={imageMeta.width}
+          height={imageMeta.height}
+          index={imageMetaIndex}
+          publicId={imageMeta.public_id}
+        />
+      )}
       <Box
         sx={{
           position: "relative",
@@ -184,47 +202,68 @@ const ImageElement = ({
             </Box>
           </>
         )}
+
         {!addCaption && (
-          <Box
-            sx={{
-              position: "absolute",
-              right: "10px",
-              top: "10px",
-            }}
-            ref={wrapperRef}
-          >
-            <OptionsButton
-              onClick={() => {
-                if (isMenuOpen) {
-                  setIsMenuOpen(false);
-                } else {
-                  setIsMenuOpen(true);
-                }
+          <>
+            <Box
+              sx={{
+                position: "absolute",
+                right: "10px",
+                bottom: "10px",
               }}
-            />
-            <Dropdown isOpen={isMenuOpen}>
-              <Flex sx={{ gap: "10px", flexDirection: "column" }}>
-                <Box
-                  onClick={() => {
-                    setAddCaption(true);
+              ref={wrapperRef}
+            >
+              <Box
+                sx={{ width: "30px", height: "auto", cursor: "pointer" }}
+                onClick={() => {
+                  setIsMaximized(true);
+                  console.log(isMaximized);
+                }}
+              >
+                <MaximizeIcon />
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                position: "absolute",
+                right: "10px",
+                top: "10px",
+              }}
+              ref={wrapperRef}
+            >
+              <OptionsButton
+                onClick={() => {
+                  if (isMenuOpen) {
                     setIsMenuOpen(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  {element.caption ? "Edit" : "Add"} Caption
-                </Box>
-                <Box
-                  onClick={(e) => {
-                    Transforms.removeNodes(editor, { at: path });
-                    setIsMenuOpen(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  Delete
-                </Box>
-              </Flex>
-            </Dropdown>
-          </Box>
+                  } else {
+                    setIsMenuOpen(true);
+                  }
+                }}
+              />
+              <Dropdown isOpen={isMenuOpen}>
+                <Flex sx={{ gap: "10px", flexDirection: "column" }}>
+                  <Box
+                    onClick={() => {
+                      setAddCaption(true);
+                      setIsMenuOpen(false);
+                    }}
+                    variant="boxes.dropdownMenuItem"
+                  >
+                    {element.caption ? "Edit" : "Add"} Caption
+                  </Box>
+                  <Box
+                    onClick={(e) => {
+                      Transforms.removeNodes(editor, { at: path });
+                      setIsMenuOpen(false);
+                    }}
+                    variant="boxes.dropdownMenuItem"
+                  >
+                    Delete
+                  </Box>
+                </Flex>
+              </Dropdown>
+            </Box>
+          </>
         )}
       </Box>
       {children}

@@ -82,7 +82,7 @@ const ElevationGraph = ({
     .filter(isDefined);
 
   const initialState = {
-    data: element && element.selectionStart ? downSampledData : shrunkData,
+    data: element && element.selectionStart ? shrunkData : shrunkData,
     left: element && element.left ? element.left : "dataMin",
     right: element && element.right ? element.right : "dataMax",
     refAreaLeft: "",
