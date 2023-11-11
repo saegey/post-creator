@@ -190,34 +190,6 @@ input {
   }
 }
 
-[data-amplify-authenticator] {
-  /* height: calc(100vw); */
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  --amplify-colors-background-primary: var(--theme-ui-colors-background);
-  --amplify-colors-brand-primary-100: var(--theme-ui-colors-primary);
-  --amplify-colors-brand-primary-10: var(--theme-ui-colors-primary);
-  --amplify-colors-brand-primary-90: var(--theme-ui-colors-primary);
-  --amplify-colors-brand-primary-80: var(--theme-ui-colors-primary);
-  --amplify-components-button-primary-background-color: var(
-    --theme-ui-colors-primary
-  );
-  --amplify-components-tabs-item-active-color: var(--theme-ui-colors-primary);
-  --amplify-components-tabs-item-active-border-color: var(
-    --theme-ui-colors-primary
-  );
-  --amplify-components-tabs-item-hover-color: var(--theme-ui-colors-primary);
-  --amplify-components-button-primary-hover-background-color: var(
-    --theme-ui-colors-primary
-  );
-  --amplify-components-authenticator-router-background-color: var(
-    --theme-ui-colors-background
-  );
-  --amplify-components-field-label-color: var(--theme-ui-colors-text);
-}
-
 #__next {
   background-color: var(--theme-ui-colors-background);
   width: 100vw;
@@ -246,70 +218,10 @@ svg.menu-button:hover {
   }
 }
 
-/* .slide-in {
-  animation: slide-in 1s;
-}
-.slide-out {
-  animation: slide-out 1s;
-}
-
-.slide-out-old {
-  animation: slide-out-old 1s;
-}
-
-@keyframes slide-in {
-  0% {
-    opacity: 1;
-    transform: translateX(-200%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-}
-@keyframes slide-out {
-  0% {
-    opacity: 1;
-    transform: translateX(200%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slide-out-old {
-  0% {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(-100%);
-  }
-} */
-
 @media screen and (max-width: 480px) {
   body {
     overflow-x: hidden;
   }
-}
-
-.each-slide-effect > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-size: cover;
-  height: 350px;
-}
-
-.each-slide-effect span {
-  padding: 20px;
-  font-size: 20px;
-  background: #efefef;
-  text-align: center;
 }
 
 .react-slideshow-container {
