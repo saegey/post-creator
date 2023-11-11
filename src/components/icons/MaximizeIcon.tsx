@@ -1,27 +1,35 @@
+import { Box, IconButton } from "theme-ui";
+
 const MaximizeIcon = () => {
   return (
-    <svg viewBox="0 0 14 14">
-      <g
-        fill="none"
-        fill-rule="evenodd"
-        id="Page-1"
-        stroke="none"
-        stroke-width="1"
-      >
+    <IconButton
+      sx={{
+        backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.4})`,
+      }}
+    >
+      <svg viewBox="0 0 14 14" width="25px" height="25px">
         <g
-          fill="var(--theme-ui-colors-background)"
-          id="Core"
-          transform="translate(-215.000000, -257.000000)"
+          fill="none"
+          fillRule="evenodd"
+          id="Page-1"
+          stroke="none"
+          strokeWidth="1"
         >
-          <g id="fullscreen" transform="translate(215.000000, 257.000000)">
-            <path
-              d="M2,9 L0,9 L0,14 L5,14 L5,12 L2,12 L2,9 L2,9 Z M0,5 L2,5 L2,2 L5,2 L5,0 L0,0 L0,5 L0,5 Z M12,12 L9,12 L9,14 L14,14 L14,9 L12,9 L12,12 L12,12 Z M9,0 L9,2 L12,2 L12,5 L14,5 L14,0 L9,0 L9,0 Z"
-              id="Shape"
-            ></path>
+          <g
+            fill="var(--theme-ui-colors-background)"
+            id="Core"
+            transform="translate(-215.000000, -257.000000)"
+          >
+            <g id="fullscreen" transform="translate(215.000000, 257.000000)">
+              <path
+                d="M2,9 L0,9 L0,14 L5,14 L5,12 L2,12 L2,9 L2,9 Z M0,5 L2,5 L2,2 L5,2 L5,0 L0,0 L0,5 L0,5 Z M12,12 L9,12 L9,14 L14,14 L14,9 L12,9 L12,12 L12,12 Z M9,0 L9,2 L12,2 L12,5 L14,5 L14,0 L9,0 L9,0 Z"
+                id="Shape"
+              ></path>
+            </g>
           </g>
         </g>
-      </g>
-    </svg>
+      </svg>
+    </IconButton>
   );
 };
 

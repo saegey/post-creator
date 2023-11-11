@@ -30,9 +30,7 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
           height: "820px",
         }}
         className="skeleton"
-      >
-        {/* <Spinner /> */}
-      </Flex>
+      />
     );
   }
 
