@@ -94,7 +94,7 @@ const ImageElement = ({
           width={imageMeta.width}
           height={imageMeta.height}
           index={imageMetaIndex}
-          publicId={imageMeta.public_id}
+          public_id={imageMeta.public_id}
         />
       )}
       <Box

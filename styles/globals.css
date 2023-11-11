@@ -190,34 +190,6 @@ input {
   }
 }
 
-[data-amplify-authenticator] {
-  /* height: calc(100vw); */
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  --amplify-colors-background-primary: var(--theme-ui-colors-background);
-  --amplify-colors-brand-primary-100: var(--theme-ui-colors-primary);
-  --amplify-colors-brand-primary-10: var(--theme-ui-colors-primary);
-  --amplify-colors-brand-primary-90: var(--theme-ui-colors-primary);
-  --amplify-colors-brand-primary-80: var(--theme-ui-colors-primary);
-  --amplify-components-button-primary-background-color: var(
-    --theme-ui-colors-primary
-  );
-  --amplify-components-tabs-item-active-color: var(--theme-ui-colors-primary);
-  --amplify-components-tabs-item-active-border-color: var(
-    --theme-ui-colors-primary
-  );
-  --amplify-components-tabs-item-hover-color: var(--theme-ui-colors-primary);
-  --amplify-components-button-primary-hover-background-color: var(
-    --theme-ui-colors-primary
-  );
-  --amplify-components-authenticator-router-background-color: var(
-    --theme-ui-colors-background
-  );
-  --amplify-components-field-label-color: var(--theme-ui-colors-text);
-}
-
 #__next {
   background-color: var(--theme-ui-colors-background);
   width: 100vw;
@@ -250,4 +222,9 @@ svg.menu-button:hover {
   body {
     overflow-x: hidden;
   }
+}
+
+.react-slideshow-container {
+  height: 100vh;
+  width: 100%;
 }
