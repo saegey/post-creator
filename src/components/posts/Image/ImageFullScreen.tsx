@@ -28,11 +28,8 @@ const ImageFullScreen = ({
     public_id,
     index,
   });
-  const [showMessage, setShowMessage] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(index);
-  const [pastIndex, setPastIndex] = React.useState();
   const { images } = React.useContext(PostContext);
-  const nodeRef = React.useRef(null);
 
   if (!images) {
     throw Error("musts have images");
