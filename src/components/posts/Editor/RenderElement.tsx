@@ -84,14 +84,22 @@ const renderElement = (props: {
         <Box
           as="ul"
           sx={{
-            paddingY: "40px",
-            paddingLeft: ["20px", "20px", "20px"],
+            lineHeight: "30px",
+            paddingTop: ["0px", "0px", "0px"],
+            paddingBottom: ["0px", "20px", "20px"],
+            paddingLeft: ["40px", "25px", "28px"],
+            paddingRight: ["20px", "20px", "20px"],
+            borderLeftColor: "postBorderLeft",
+            borderLeftStyle: "solid",
+            borderLeftWidth: ["0px", "1px", "1px"],
             marginX: "auto",
+            marginTop: "10px",
             maxWidth: "690px",
             fontSize: "19px",
-            lineHeight: "30px",
             li: {
-              paddingX: "5px",
+              paddingRight: "5px",
+              paddingLeft: "15px",
+              marginBottom: "10px",
               paddingY: "5px",
             },
           }}

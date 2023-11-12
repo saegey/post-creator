@@ -25,7 +25,7 @@ const PostHeaderTextBlock = ({
   return (
     <Flex
       sx={{
-        width: "100%",
+        // width: "100%",
         marginX: ["10px", "0", "0"],
         bg: ["", "muted", "muted"],
         paddingY: ["10px", "20px", "20px"],
@@ -40,6 +40,7 @@ const PostHeaderTextBlock = ({
         borderBottomStyle: "solid",
         height: height,
         cursor: "text",
+        width: "fit-content",
       }}
       onClick={() => setIsSettingsModalOpen(true)}
       contentEditable={false}
@@ -48,12 +49,12 @@ const PostHeaderTextBlock = ({
         variant="postType"
         sx={{
           marginTop: "auto",
+          width: "fit-content",
           backgroundColor: "text",
           color: "background",
           fontSize: "14px",
           fontWeight: "600",
           padding: "2px 10px 2px 10px",
-          width: "fit-content",
         }}
       >
         {type}

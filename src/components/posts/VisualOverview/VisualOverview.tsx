@@ -101,7 +101,7 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
   }, [downSampledData, downsampleRate, selection]) as React.ReactNode;
 
   return (
-    <Box sx={{ marginTop: "60px", borderRadius: [0, "5px", "5px"] }}>
+    <Box sx={{ marginY: "60px", borderRadius: [0, "5px", "5px"] }}>
       <Map
         coordinates={coordinates}
         markerCoordinates={marker}

@@ -1,4 +1,4 @@
-import { withSSRContext } from "aws-amplify";
+import { withSSRContext, Amplify } from "aws-amplify";
 import Head from "next/head";
 import React from "react";
 import { NextApiRequest } from "next";
@@ -10,13 +10,20 @@ import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
 import { ListPostsCustom } from "../src/API";
 import { CognitoUserExt, CloudinaryImage, IUser } from "../src/types/common";
 
+import awsconfig from "../src/aws-exports";
+
+Amplify.configure({ ...awsconfig, ssr: true });
+
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
   let session;
   let user: IUser | null = null;
 
   try {
+    console.log((await SSR.Auth.currentSession()).idToken.jwtToken);
+    const currentUser = await SSR.Auth.currentAuthenticatedUser();
     session = await SSR.Auth.currentSession();
+    console.log(JSON.stringify(currentUser), JSON.stringify(session));
 
     const sessionData = session.getIdToken();
     const { payload } = sessionData;
@@ -47,6 +54,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
     };
   } catch (e) {
     console.log(e);
+    console.log("error");
     return {
       redirect: {
         destination: "/login",

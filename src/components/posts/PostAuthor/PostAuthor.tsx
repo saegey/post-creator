@@ -18,14 +18,14 @@ const PostAuthor = () => {
         sx={{
           position: width < 1015 ? "relative" : "absolute",
           marginTop: ["20px", "0px", "0px"],
-          maxWidth: "690px",
+          // maxWidth: "690px",
 
           "@media only screen and (max-width: 1315px) and (min-width: 1015px)":
             {
               marginX: "60px",
             },
           marginX: width < 1015 ? "auto" : "200px",
-          width: width < 1015 ? "690px" : "150px",
+          // width: width < 1015 ? "690px" : "150px",
           height: "100%",
           marginBottom: ["20px", "30px", "60px"],
         }}

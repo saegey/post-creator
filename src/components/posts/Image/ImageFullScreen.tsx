@@ -43,7 +43,12 @@ const ImageFullScreen = ({
         cursor: "pointer",
       }}
     >
-      <Box sx={{ width: ["20px", "20px", "30px"], height: "auto" }}>
+      <Box
+        sx={{
+          width: ["20px", "20px", "30px"],
+          height: ["20px", "20px", "30px"],
+        }}
+      >
         <svg
           width="100%"
           height="100%"

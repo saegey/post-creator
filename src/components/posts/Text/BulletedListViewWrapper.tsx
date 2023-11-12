@@ -11,18 +11,21 @@ const BullettedListViewWrapper = ({ node }: { node?: BulletedListType }) => {
     <Box
       as="ul"
       sx={{
+        lineHeight: "30px",
         paddingTop: ["0px", "0px", "0px"],
         paddingBottom: ["0px", "20px", "20px"],
-        paddingLeft: ["40px", "25px", "25px"],
+        paddingLeft: ["40px", "25px", "28px"],
         paddingRight: ["20px", "20px", "20px"],
         borderLeftColor: "postBorderLeft",
         borderLeftStyle: "solid",
         borderLeftWidth: ["0px", "1px", "1px"],
         marginX: "auto",
         maxWidth: "690px",
-        fontSize: "20px",
+        fontSize: "19px",
         li: {
-          paddingX: "5px",
+          paddingRight: "5px",
+          paddingLeft: "15px",
+          marginBottom: "10px",
           paddingY: "5px",
         },
       }}

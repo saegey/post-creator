@@ -21,35 +21,35 @@ const app = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = React.useState<IUser>();
 
   const initialLoad = React.useCallback(async () => {
-		// import { Hub } from 'aws-amplify/utils';
+    // import { Hub } from 'aws-amplify/utils';
 
-// Hub.listen('auth', ({ payload }) => {
-//   switch (payload.event) {
-//     case 'signedIn':
-//       console.log('user have been signedIn successfully.');
-//       break;
-//     case 'signedOut':
-//       console.log('user have been signedOut successfully.');
-//       break;
-//     case 'tokenRefresh':
-//       console.log('auth tokens have been refreshed.');
-//       break;
-//     case 'tokenRefresh_failure':
-//       console.log('failure while refreshing auth tokens.');
-//       break;
-//     case 'signInWithRedirect':
-//       console.log('signInWithRedirect API has successfully been resolved.');
-//       break;
-//     case 'signInWithRedirect_failure':
-//       console.log('failure while trying to resolve signInWithRedirect API.');
-//       break;
-//     case 'customOAuthState':
-//       logger.info('custom state returned from CognitoHosted UI');
-//       break;
-//   }
-// });
-// copy
-// Was this page helpful?
+    // Hub.listen('auth', ({ payload }) => {
+    //   switch (payload.event) {
+    //     case 'signedIn':
+    //       console.log('user have been signedIn successfully.');
+    //       break;
+    //     case 'signedOut':
+    //       console.log('user have been signedOut successfully.');
+    //       break;
+    //     case 'tokenRefresh':
+    //       console.log('auth tokens have been refreshed.');
+    //       break;
+    //     case 'tokenRefresh_failure':
+    //       console.log('failure while refreshing auth tokens.');
+    //       break;
+    //     case 'signInWithRedirect':
+    //       console.log('signInWithRedirect API has successfully been resolved.');
+    //       break;
+    //     case 'signInWithRedirect_failure':
+    //       console.log('failure while trying to resolve signInWithRedirect API.');
+    //       break;
+    //     case 'customOAuthState':
+    //       logger.info('custom state returned from CognitoHosted UI');
+    //       break;
+    //   }
+    // });
+    // copy
+    // Was this page helpful?
 
     Hub.listen("auth", async ({ payload: { event, data } }) => {
       switch (event) {
@@ -77,6 +77,7 @@ const app = ({ Component, pageProps }: AppProps) => {
               profile: data?.attributes?.profile,
             },
           };
+          console.log(JSON.stringify(user));
           setUser(user);
           //set user data to redux/context
           break;

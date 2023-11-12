@@ -17,7 +17,7 @@ const TimeInZonesViewWrapper = () => {
           "activityOverviewBackgroundColor",
           "activityOverviewBackgroundColor",
         ],
-        padding: ["20px", "30px", "30px"],
+        padding: ["10px", "30px", "30px"],
         borderRadius: "5px",
       }}
       key={`{timeInZones-${id}}`}
