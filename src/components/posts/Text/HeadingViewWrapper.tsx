@@ -13,7 +13,7 @@ const HeadingViewWrapper = ({ node }: { node?: HeadingElement }) => {
             <Flex
               sx={{
                 maxWidth: "690px",
-                width: "690px",
+                width: ["100vw", "690px", "690px"],
                 marginX: "auto",
               }}
               key={`heading-two-${i}`}

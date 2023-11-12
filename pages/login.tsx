@@ -10,21 +10,9 @@ import {
   Link as ThemeLink,
 } from "theme-ui";
 import Link from "next/link";
+import Router from "next/router";
 
-// type User = {
-//   email: string;
-//   password: string;
-// };
 const LoginPage: React.FC = () => {
-  // const [user, setUser] = React.useState<User>({
-  //   email: "",
-  //   password: "",
-  // });
-
-  // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setUser({ ...user, [event.target.name]: event.target.value });
-  // };
-
   const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
     const form = new FormData(event.target as HTMLFormElement);
     const email = form.get("email") as string;
@@ -32,8 +20,10 @@ const LoginPage: React.FC = () => {
 
     try {
       const authUser = await Auth.signIn(email, password);
-      console.log("User logged in:", authUser);
-      window.location.href = `/`;
+      console.log("User logged in:", JSON.stringify(authUser));
+      // window.location.href = `/`;
+      Router.push("/");
+			console.log('aferpyus')
     } catch (e) {
       console.log(e);
     }
