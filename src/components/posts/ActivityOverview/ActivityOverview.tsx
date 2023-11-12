@@ -41,9 +41,9 @@ const RaceStats = ({ items }: RaceStatsProps) => {
             <>
               <Text
                 sx={{
-                  fontWeight: "400",
-                  // textTransform: 'uppercase',
-                  fontSize: ["12px", "14px", "14px"],
+                  fontWeight: "500",
+                  textTransform: 'uppercase',
+                  fontSize: ["12px", "13px", "13px"],
                   color: "text",
                   marginBottom: "3px",
                 }}

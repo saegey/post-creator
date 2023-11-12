@@ -300,7 +300,7 @@ const ElevationGraph = ({
         width: "100%",
         height: ["150px", "200px", "300px"],
         borderWidth: "1px",
-        paddingBottom: [0, "20px", "40px"],
+        // paddingBottom: [0, "20px", "40px"],
         paddingX: 0,
         userSelect: "none",
       }}

@@ -31,7 +31,7 @@ const ActivityOverviewViewWrapper = () => {
           "activityOverviewBackgroundColor",
         ],
         borderRadius: "5px",
-        padding: ["20px", "30px", "30px"],
+        padding: ["10px", "30px", "30px"],
       }}
       key={`{activityOverview-${id}}`}
     >

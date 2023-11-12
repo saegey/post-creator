@@ -38,7 +38,7 @@ const RaceResultsDotComList = ({
                       ? 'selectedBackgroundText'
                       : null,
                   borderRadius: '5px',
-                  fontSize: ['15px', '16px', '17px'],
+                  fontSize: ['15px', '16px', '16px'],
                 }}
               >
                 <Text as='span' sx={{ width: ['30px', '60px', '60px'] }}>

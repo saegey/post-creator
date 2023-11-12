@@ -31,7 +31,7 @@ const ParagraphViewWrapper = ({ node }: { node?: ParagraphElement }) => {
         borderLeftWidth: ["0px", "1px", "1px"],
         borderLeftStyle: "solid",
         borderLeftColor: "postBorderLeft",
-        paddingX: ["20px", "8px", "8px"],
+        paddingLeft: ["10px", "8px", "8px"],
       }}
     >
       {node &&

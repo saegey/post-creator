@@ -40,66 +40,76 @@ const ImageViewWrapper = ({ node }: { node: ImageElementType }) => {
             maxWidth: "900px",
             marginX: "auto",
             marginY: ["20px", "60px", "60px"],
-            height: "600px",
+            // height: "600px",
+            height: "fit-content",
             // maxHeight: '600px',
             marginBottom: "20px",
           }}
         >
-          <Flex
-            sx={{
-              width: "100%",
-              height: "600px",
-              backgroundColor: imageMeta?.colors[0],
-              borderRadius: [0, "5px", "5px"],
-            }}
-          >
-            <CldImage
-              width="1200"
-              height="1200"
-              src={node.public_id}
-              sizes="100vw"
-              alt="race pic"
-              quality={90}
-              style={{
-                objectFit: "contain",
-                // height: '100%',
+          <figure>
+            <Flex
+              sx={{
                 width: "100%",
-                maxHeight: "100%",
-                borderRadius:
-                  imageMeta &&
-                  imageMeta.width &&
-                  imageMeta.height &&
-                  imageMeta?.width > imageMeta?.height
-                    ? "5px"
-                    : "0px",
-              }}
-              config={{
-                cloud: {
-                  cloudName: cloudUrl,
-                },
-              }}
-            />
-          </Flex>
-          <Text as="p" sx={{ paddingX: ["10px", null, null] }}>
-            {node.caption}
-          </Text>
-          <Box
-            sx={{
-              position: "absolute",
-              right: "10px",
-              bottom: "10px",
-            }}
-            ref={wrapperRef}
-          >
-            <Box
-              sx={{ width: "30px", height: "auto", cursor: "pointer" }}
-              onClick={() => {
-                setIsMaximized(true);
+                height: "600px",
+                backgroundColor: imageMeta?.colors[0],
+                borderRadius: [0, "5px", "5px"],
               }}
             >
-              <MaximizeIcon />
+              <CldImage
+                width="1200"
+                height="1200"
+                src={node.public_id}
+                sizes="100vw"
+                alt="race pic"
+                quality={90}
+                style={{
+                  objectFit: "contain",
+                  // height: '100%',
+                  width: "100%",
+                  maxHeight: "100%",
+                  borderRadius:
+                    imageMeta &&
+                    imageMeta.width &&
+                    imageMeta.height &&
+                    imageMeta?.width > imageMeta?.height
+                      ? "5px"
+                      : "0px",
+                }}
+                config={{
+                  cloud: {
+                    cloudName: cloudUrl,
+                  },
+                }}
+              />
+            </Flex>
+            <Box
+              sx={{
+                position: "absolute",
+                right: "10px",
+                top: "10px",
+              }}
+              ref={wrapperRef}
+            >
+              <Box
+                sx={{ width: "30px", height: "auto", cursor: "pointer" }}
+                onClick={() => {
+                  setIsMaximized(true);
+                }}
+              >
+                <MaximizeIcon />
+              </Box>
             </Box>
-          </Box>
+            <Text
+              as="figcaption"
+              sx={{
+                fontSize: "14px",
+                paddingX: ["10px", "0", "0"],
+                marginTop: "5px",
+              }}
+            >
+              {node.caption}
+            </Text>
+          </figure>
         </Box>
       </Flex>
     </>

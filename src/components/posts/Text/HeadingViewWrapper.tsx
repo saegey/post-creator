@@ -22,10 +22,12 @@ const HeadingViewWrapper = ({ node }: { node?: HeadingElement }) => {
                 as="h2"
                 sx={{
                   paddingY: "15px",
-                  borderLeft: "1px solid postBorderLeft",
+                  borderLeftWidth: "1px",
+                  borderLeftStyle: "solid",
+                  borderLeftColor: "postBorderLeft",
                   width: ["100vw", null, null],
                   maxWidth: "690px",
-                  paddingX: ["20px", "8px", "8px"],
+                  paddingX: ["10px", "8px", "8px"],
                 }}
               >
                 {c.text}

@@ -28,7 +28,11 @@ const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "activityOverviewBackgroundColor",
+        backgroundColor: [
+          "transparent",
+          "activityOverviewBackgroundColor",
+          "activityOverviewBackgroundColor",
+        ],
         borderRadius: "5px",
         padding: ["10px", "30px", "30px"],
         position: "relative",
