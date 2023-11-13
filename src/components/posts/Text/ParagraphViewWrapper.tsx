@@ -5,16 +5,15 @@ const renderLink = (node: LinkType) => {
   const attrs: any = {};
 
   return (
-    <>
-      <Link
-        href={node.href}
-        {...attrs}
-        target={node.target}
-        sx={{ textDecorationColor: "text", color: "text" }}
-      >
-        {node.children.map((c) => c.text)}
-      </Link>
-    </>
+    <Link
+      href={node.href}
+      {...attrs}
+      target={node.target}
+      sx={{ textDecorationColor: "text", color: "text" }}
+      key={`link-${Math.random()}`}
+    >
+      {node.children.map((c) => c.text)}
+    </Link>
   );
 };
 
@@ -33,6 +32,7 @@ const ParagraphViewWrapper = ({ node }: { node?: ParagraphElement }) => {
         borderLeftColor: "postBorderLeft",
         paddingLeft: ["10px", "8px", "8px"],
       }}
+      // key={Math.random()}
     >
       {node &&
         node.children.map((c, i) => {
@@ -51,7 +51,6 @@ const ParagraphViewWrapper = ({ node }: { node?: ParagraphElement }) => {
               {c.text}
             </Text>
           );
-          // }
         })}
     </Text>
   );

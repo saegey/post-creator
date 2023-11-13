@@ -1,4 +1,4 @@
-import { Flex, Text } from "theme-ui";
+import { Box, Flex, Text } from "theme-ui";
 import { HeadingElement } from "../../../types/common";
 
 const HeadingViewWrapper = ({ node }: { node?: HeadingElement }) => {
@@ -7,7 +7,7 @@ const HeadingViewWrapper = ({ node }: { node?: HeadingElement }) => {
       {node &&
         node.children.map((c, i) => {
           if (!c.text) {
-            return;
+            return <Box key={`heading-two-${i}`} />;
           }
           return (
             <Flex

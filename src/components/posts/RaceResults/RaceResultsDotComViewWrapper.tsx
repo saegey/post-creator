@@ -8,7 +8,7 @@ const RaceResultsDotComViewWrapper = () => {
   const { raceResults } = React.useContext(PostContext);
 
   return (
-    <Box variant="boxes.componentCard">
+    <Box variant="boxes.componentCard" key="race-results">
       <RaceResultsDotComList raceResults={raceResults} />
     </Box>
   );

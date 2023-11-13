@@ -33,14 +33,30 @@ const VisualOverviewViewWrapper = ({
         <VisualOverviewContext.Provider
           value={{ selection, setSelection, isSaved, setIsSaved }}
         >
-          <VisualOverview
-            element={element}
-            activity={activity ? activity : undefined}
-            token={
-              "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
-            }
-            view={view ? view : false}
-          />
+          {activity === undefined || activity.length === 0 ? (
+            <Flex
+              sx={{
+                width: "100%",
+                backgroundColor: "divider",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "5px",
+                margin: "60px",
+                // width: "500px",
+                height: "820px",
+              }}
+              className="skeleton"
+            />
+          ) : (
+            <VisualOverview
+              element={element}
+              activity={activity}
+              token={
+                "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
+              }
+              view={view ? view : false}
+            />
+          )}
         </VisualOverviewContext.Provider>
       </Box>
     </Flex>
