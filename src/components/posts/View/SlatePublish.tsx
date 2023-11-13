@@ -105,7 +105,7 @@ const SlatePublish = () => {
         },
         postAuthor: () => {
           return (
-            <PostAuthor key={"postauthor"} key={`postauth-${Math.random()}`} />
+            <PostAuthor key={`postauth-${Math.random()}`} />
           );
         },
         image: ({ node }) => {

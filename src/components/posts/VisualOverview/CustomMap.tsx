@@ -137,7 +137,7 @@ const Map = ({
           ],
         } as any;
 
-        geojsonSource.setData(data);
+        geojsonSource?.setData(data);
       } catch (e) {
         console.error(e);
       }
