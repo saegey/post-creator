@@ -24,6 +24,7 @@ import ParagraphViewWrapper from "../Text/ParagraphViewWrapper";
 import HeadingViewWrapper from "../Text/HeadingViewWrapper";
 import RaceResultsDotComViewWrapper from "../RaceResults/RaceResultsDotComViewWrapper";
 import ImageViewWrapper from "../Image/ImageViewWrapper";
+import {Box} from 'theme-ui';
 
 const SlatePublish = () => {
   const config: SlateToReactConfig = {
@@ -32,7 +33,7 @@ const SlatePublish = () => {
       elementTransforms: {
         ...slateToReactConfig.react.elementTransforms,
         powergraph: () => {
-          return <PowerGraphViewWrapper />;
+          return <PowerGraphViewWrapper key={`pow-${Math.random()}`} />;
         },
         embed: ({ node }) => {
           const { id } = React.useContext(PostContext);
@@ -43,41 +44,79 @@ const SlatePublish = () => {
           );
         },
         stravaEmbed: ({ node }) => {
-          return <StravaLink element={node} />;
+          return <StravaLink element={node} key={`embed-${Math.random()}`} />;
         },
         visualOverview: ({ node }) => {
-          return <VisualOverviewViewWrapper element={node} view={true} />;
+          // return <Box key={`viz-${Math.random()}`}></Box>;
+          return (
+            <VisualOverviewViewWrapper
+              element={node}
+              view={true}
+              key={`viz-${Math.random()}`}
+            />
+          );
         },
         timeInZones: () => {
-          return <TimeInZonesViewWrapper />;
+          return (
+            <TimeInZonesViewWrapper key={`timeInZones-${Math.random()}`} />
+          );
         },
         heroBanner: ({ node }: { node?: HeroBannerType }) => {
-          return <HeroBannerViewWrapper node={node} />;
+          return (
+            <HeroBannerViewWrapper node={node} key={`hero-${Math.random()}`} />
+          );
         },
         activityOverview: () => {
-          return <ActivityOverviewViewWrapper />;
+          return (
+            <ActivityOverviewViewWrapper key={`activity-${Math.random()}`} />
+          );
         },
         "bulleted-list": ({ node }: { node?: BulletedListType }) => {
-          return <BullettedListViewWrapper node={node} />;
+          return (
+            <BullettedListViewWrapper
+              node={node}
+              key={`bullet-${Math.random()}`}
+            />
+          );
         },
         paragraph: ({ node }: { node?: ParagraphElement }) => {
-          return <ParagraphViewWrapper node={node} />;
+          return (
+            <ParagraphViewWrapper
+              node={node}
+              key={`paragraph-${Math.random()}`}
+            />
+          );
         },
         text: ({ node }: { node?: ParagraphElement }) => {
-          return <ParagraphViewWrapper node={node} />;
+          // console.log("teext", node);
+          return (
+            <ParagraphViewWrapper node={node} key={`text-${Math.random()}`} />
+          );
         },
         "heading-two": ({ node }: { node?: HeadingElement }) => {
-          return <HeadingViewWrapper node={node} />;
+          return (
+            <HeadingViewWrapper node={node} key={`head-${Math.random()}`} />
+          );
         },
         raceResultsDotCom: () => {
-          return <RaceResultsDotComViewWrapper />;
+          return (
+            <RaceResultsDotComViewWrapper key={`racerez-${Math.random()}`} />
+          );
         },
         postAuthor: () => {
-          return <PostAuthor />;
+          return (
+            <PostAuthor key={"postauthor"} key={`postauth-${Math.random()}`} />
+          );
         },
         image: ({ node }) => {
-          return <ImageViewWrapper node={node} />;
+          return (
+            <ImageViewWrapper node={node} key={`image-${Math.random()}`} />
+          );
         },
+        // 'list-item': ({ node }) => {
+        //   console.log("blah");
+        //   return <></>;
+        // },
       },
     },
   };

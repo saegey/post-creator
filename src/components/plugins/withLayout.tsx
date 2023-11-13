@@ -12,6 +12,7 @@ const withLayout = (editor: CustomEditor) => {
   const { normalizeNode } = editor;
 
   editor.normalizeNode = ([node, path]) => {
+		// console.log(node, path, editor.children.length);
     if (path.length === 0) {
       if (editor.children.length <= 1 && Editor.string(editor, [0, 0]) === "") {
         const title: HeroBannerType = {

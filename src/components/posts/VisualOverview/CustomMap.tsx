@@ -87,12 +87,15 @@ const Map = ({
   const [isMapLoaded, setIsMapLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    if (!map || !map.current) {
+    if (!map || !map.current || map.current === undefined) {
       return;
     }
-    const geojsonSource = map.current?.getSource(
-      "routeSelect"
-    ) as GeoJSONSource;
+    let geojsonSource;
+    try {
+      geojsonSource = map.current?.getSource("routeSelect") as GeoJSONSource;
+    } catch (e) {
+      console.log(e);
+    }
 
     if (selection === undefined) {
       if (map.current?.getSource("routeSelect")) {

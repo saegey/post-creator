@@ -9,13 +9,14 @@ import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
 
 interface Vizprops {
-  activity?: Array<ActivityItem> | undefined;
+  activity: Array<ActivityItem>;
   token: string;
   element: VisualOverviewType;
   view: boolean;
 }
 
 const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
+  // console.log(activity);
   if (!activity || activity.length === 0) {
     return (
       <Flex

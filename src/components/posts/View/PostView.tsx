@@ -49,6 +49,7 @@ const PostView = ({
           position: "relative",
           paddingBottom: ["100px", 0, 0],
         }}
+        key="container-article"
       >
         {components && <SlateToReact node={components} config={config} />}
 

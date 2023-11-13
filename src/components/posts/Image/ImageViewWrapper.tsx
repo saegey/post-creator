@@ -21,7 +21,7 @@ const ImageViewWrapper = ({ node }: { node: ImageElementType }) => {
   const wrapperRef = React.useRef();
 
   return (
-    <>
+    <Box key={`imageview-${node.public_id}`}>
       {isMaximized && imageMeta?.height && imageMeta?.width && (
         <ImageFullScreen
           setIsMaximized={setIsMaximized}
@@ -112,7 +112,7 @@ const ImageViewWrapper = ({ node }: { node: ImageElementType }) => {
           </figure>
         </Box>
       </Flex>
-    </>
+    </Box>
   );
 };
 

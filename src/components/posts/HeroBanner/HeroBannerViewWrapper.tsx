@@ -12,7 +12,7 @@ const HeroBannerViewWrapper = ({ node }: { node?: HeroBannerType }) => {
     React.useContext(PostContext);
 
   if (!heroImage) {
-    return <></>;
+    return <Box key={`{herobanner-${id}}`} />;
   }
 
   return (

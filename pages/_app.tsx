@@ -177,15 +177,17 @@ const app = ({ Component, pageProps }: AppProps) => {
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
           />
         </Head>
-        <UnitProvider>
-          <ViewportProvider>
-            <ThemeUIProvider theme={theme}>
-              <UserContext.Provider value={{ user, setUser }}>
-                <Component {...pageProps} />
-              </UserContext.Provider>
-            </ThemeUIProvider>
-          </ViewportProvider>
-        </UnitProvider>
+        {/* <React.StrictMode> */}
+          <UnitProvider>
+            <ViewportProvider>
+              <ThemeUIProvider theme={theme}>
+                <UserContext.Provider value={{ user, setUser }}>
+                  <Component {...pageProps} />
+                </UserContext.Provider>
+              </ThemeUIProvider>
+            </ViewportProvider>
+          </UnitProvider>
+        {/* </React.StrictMode> */}
       </>
     </ErrorBoundary>
   );

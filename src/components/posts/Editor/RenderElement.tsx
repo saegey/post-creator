@@ -112,7 +112,7 @@ const renderElement = (props: {
       return <li {...attributes}>{children}</li>;
     case "raceResultsDotCom":
       return <RaceResultsDotComListWrapper />;
-    default:
+    case "paragraph":
       return (
         <Text
           as="div"
@@ -128,6 +128,24 @@ const renderElement = (props: {
           {...attributes}
         >
           {children}
+        </Text>
+      );
+    default:
+      return (
+        <Text
+          as="div"
+          sx={{
+            marginX: "auto",
+            // marginRight: 'auto',
+            width: ["100%", "690px", "690px"],
+            fontSize: "19px",
+            lineHeight: "30px",
+            marginY: "20px",
+            paddingX: ["10px", "0px", "0px"],
+          }}
+          {...attributes}
+        >
+          {children} OH NOOOOOOOO
         </Text>
       );
   }

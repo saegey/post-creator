@@ -9,7 +9,7 @@ const StravaLink = ({ element }: { element: StravaEmbed }) => {
   }
 
   return (
-    <Flex contentEditable={false}>
+    <Flex contentEditable={false} key="strava-link">
       <Box
         sx={{
           marginX: "auto",
