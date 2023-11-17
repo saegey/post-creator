@@ -24,7 +24,6 @@ import ParagraphViewWrapper from "../Text/ParagraphViewWrapper";
 import HeadingViewWrapper from "../Text/HeadingViewWrapper";
 import RaceResultsDotComViewWrapper from "../RaceResults/RaceResultsDotComViewWrapper";
 import ImageViewWrapper from "../Image/ImageViewWrapper";
-import {Box} from 'theme-ui';
 
 const SlatePublish = () => {
   const config: SlateToReactConfig = {
@@ -113,10 +112,6 @@ const SlatePublish = () => {
             <ImageViewWrapper node={node} key={`image-${Math.random()}`} />
           );
         },
-        // 'list-item': ({ node }) => {
-        //   console.log("blah");
-        //   return <></>;
-        // },
       },
     },
   };

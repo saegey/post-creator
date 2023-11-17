@@ -1,9 +1,11 @@
 import React from "react";
 import { Box, Flex } from "theme-ui";
+
 import VisualOverview from "./VisualOverview";
 import { PostContext } from "../../PostContext";
 import { VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
+import { useUnits } from "../../UnitProvider";
 
 const VisualOverviewViewWrapper = ({
   element,
@@ -23,6 +25,7 @@ const VisualOverviewViewWrapper = ({
   const [isSaved, setIsSaved] = React.useState<boolean>(
     element && element.selectionStart ? true : false
   );
+  const units = useUnits();
 
   return (
     <Flex
@@ -49,6 +52,7 @@ const VisualOverviewViewWrapper = ({
             />
           ) : (
             <VisualOverview
+              units={units}
               element={element}
               activity={activity}
               token={

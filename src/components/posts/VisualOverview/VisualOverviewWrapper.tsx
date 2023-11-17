@@ -10,6 +10,7 @@ import Dropdown from "../../shared/Dropdown";
 import { useClickOutside } from "../../../utils/ux";
 import { VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
+import { useUnits } from "../../UnitProvider";
 
 const VisualOverview = dynamic(import("./VisualOverview"), {
   ssr: false,
@@ -18,9 +19,11 @@ const VisualOverview = dynamic(import("./VisualOverview"), {
 const VisualOverviewWrapper = ({
   element,
   view,
+  units,
 }: {
   element: VisualOverviewType;
   view: boolean;
+  units: any;
 }) => {
   const { activity } = React.useContext(PostContext);
   const editor = useSlateStatic();
@@ -38,6 +41,7 @@ const VisualOverviewWrapper = ({
   const [isSaved, setIsSaved] = React.useState<boolean>(
     element && element.selectionStart ? true : false
   );
+  // const units = useUnits();
 
   useClickOutside(
     wrapperRef,
@@ -66,9 +70,18 @@ const VisualOverviewWrapper = ({
     return {
       ...a,
       g: a.g !== null ? a.g : 0,
-      d: a.d === 0 ? (a.d = activity[i - 1] ? activity[i - 1]?.d : 0) : a.d,
+      d:
+        units.unitOfMeasure === "imperial"
+          ? a && a.d
+            ? Number((a.d * 0.00062137121212121).toFixed(5))
+            : 0
+          : a && a.d
+          ? Number((a?.d / 1000).toFixed(5))
+          : 0,
+      e: units.unitOfMeasure === "metric" ? a.e : a && a.e ? a.e * 3.28084 : 0,
     };
   });
+	console.log(fixedData);
 
   return (
     <Box
@@ -85,6 +98,7 @@ const VisualOverviewWrapper = ({
           }
           element={element}
           view={view}
+          units={units}
         />
       </VisualOverviewContext.Provider>
       <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
