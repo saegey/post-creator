@@ -23,7 +23,6 @@ const LoginPage: React.FC = () => {
       console.log("User logged in:", JSON.stringify(authUser));
       // window.location.href = `/`;
       Router.push("/");
-			console.log('aferpyus')
     } catch (e) {
       console.log(e);
     }

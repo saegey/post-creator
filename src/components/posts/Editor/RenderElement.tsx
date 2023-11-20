@@ -15,6 +15,7 @@ import RaceResultsDotComListWrapper from "../RaceResults/RaceResultsDotComListWr
 import Link from "../Text/Link";
 import PostAuthorWrapper from "../PostAuthor/PostAuthorWrapper";
 import { CustomElement } from "../../../types/common";
+import { useUnits } from "../../UnitProvider";
 
 const Leaf = (props: RenderLeafProps) => {
   return (
@@ -38,6 +39,7 @@ const renderElement = (props: {
   element: CustomElement;
 }) => {
   const { attributes, children, element } = props;
+  const units = useUnits();
 
   switch (element.type) {
     case "postAuthor":
@@ -55,7 +57,9 @@ const renderElement = (props: {
     case "activityOverview":
       return <ActivityOverviewWrapper element={element} />;
     case "visualOverview":
-      return <VisualOverviewWrapper element={element} view={false} />;
+      return (
+        <VisualOverviewWrapper element={element} view={false} units={units} />
+      );
     case "image":
       return <ImageElement children={children} element={element} />;
     case "heroBanner":

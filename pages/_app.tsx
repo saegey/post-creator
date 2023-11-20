@@ -77,7 +77,6 @@ const app = ({ Component, pageProps }: AppProps) => {
               profile: data?.attributes?.profile,
             },
           };
-          console.log(JSON.stringify(user));
           setUser(user);
           //set user data to redux/context
           break;

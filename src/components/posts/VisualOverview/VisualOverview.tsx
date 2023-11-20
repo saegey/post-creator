@@ -1,10 +1,9 @@
-import { Box, Flex, Spinner } from "theme-ui";
+import { Box, Flex } from "theme-ui";
 import React from "react";
 
 import Map from "./CustomMap";
 import ElevationGraph from "./ElevationGraph";
-import ElevationSlice, { gradeToColor } from "./ElevationSlice";
-import { useUnits } from "../../UnitProvider";
+import ElevationSlice from "./ElevationSlice";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
 
@@ -13,10 +12,21 @@ interface Vizprops {
   token: string;
   element: VisualOverviewType;
   view: boolean;
+  units: {
+    unitOfMeasure: string;
+    distanceUnit: string;
+    elevationUnit: string;
+    toggleUnit: () => void;
+  };
 }
 
-const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
-  // console.log(activity);
+const VisualOverview = ({
+  activity,
+  token,
+  element,
+  view,
+  units,
+}: Vizprops) => {
   if (!activity || activity.length === 0) {
     return (
       <Flex
@@ -39,82 +49,96 @@ const VisualOverview = ({ activity, token, element, view }: Vizprops) => {
     VisualOverviewContext
   );
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
-  const [downsampleRate, setDownsampleRate] = React.useState<number>(20);
+  const [downsampleRate] = React.useState<number>(20);
+  const [isZoomedOut, setIsZoomedOut] = React.useState(false);
 
-  React.useEffect(() => {
-    if (element.selectionStart && element.selectionEnd) {
-      // setSelection([element.selectionStart, element.selectionEnd]);
-    }
-  }, [selection]);
-
-  const units = useUnits();
-
-  const downSampledData = React.useMemo(
-    () =>
-      activity
-        ? activity.map((activityRow, i) => {
-            return {
-              t: activityRow.t,
-              c: activityRow.c,
-              e:
-                units.unitOfMeasure === "metric"
-                  ? activityRow.e
-                  : activityRow && activityRow.e
-                  ? activityRow.e * 3.28084
-                  : 0,
-              g: activityRow.g,
-              d:
-                units.unitOfMeasure === "imperial"
-                  ? activityRow && activityRow.d
-                    ? Number((activityRow.d * 0.00062137121212121).toFixed(5))
-                    : 0
-                  : activityRow && activityRow.d
-                  ? Number((activityRow?.d / 1000).toFixed(5))
-                  : 0,
-              color: gradeToColor(activityRow.g ? activityRow.g * 100 : 0),
-            };
-          })
-        : undefined,
-    [activity, units.unitOfMeasure]
-  ) as any;
+  // React.useEffect(() => {
+  //   if (element.selectionStart && element.selectionEnd) {
+  //     // setSelection([element.selectionStart, element.selectionEnd]);
+  //   }
+  // }, [selection]);
 
   const coordinates = React.useMemo(
-    () =>
-      downSampledData
-        ? downSampledData.map((a: ActivityItem) => a.c)
-        : undefined,
-    [downSampledData]
-  ) as any;
+    () => (activity !== undefined ? activity.map((a) => a.c) : undefined),
+    [activity]
+  );
 
   const graph = React.useMemo(() => {
+    if (activity === undefined) {
+      return <Box>Error loading graph</Box>;
+    }
+    const fixedActivity = activity.slice(0, activity.length - 1);
+    // console.log(selection);
+
+    const selectionStart = isZoomedOut
+      ? 0
+      : selection
+      ? selection[0]
+      : element.selectionStart
+      ? element.selectionStart
+      : undefined;
+
+    const selectionEnd = isZoomedOut
+      ? activity.length - 2
+      : selection
+      ? selection[1]
+      : element.selectionEnd
+      ? element.selectionEnd
+      : undefined;
+
     return (
       <ElevationGraph
-        downSampledData={downSampledData}
+        data={fixedActivity}
+        left={selectionStart ? activity[selectionStart].d : "dataMin"}
+        right={selectionEnd ? activity[selectionEnd].d : "dataMax"}
+        bottom={
+          (element && element.selectionEnd) || selection !== undefined
+            ? Math.min(
+                ...activity.slice(selectionStart, selectionEnd).map((d) => d.e)
+              )
+            : "dataMin"
+        }
+        top={
+          (element && element.selectionStart) || selection !== undefined
+            ? Math.max(
+                ...activity.slice(selectionStart, selectionEnd).map((d) => d.e)
+              ) + 100
+            : "dataMax"
+        }
         setMarker={setMarker}
         selection={selection}
         setSelection={setSelection}
         isSaved={isSaved}
-        downsampleRate={downsampleRate}
         element={element}
         view={view}
+        showZoom={selection === undefined}
+        showZoomOut={selection !== undefined}
+        showSaveButton={selection ? true : false}
+        setIsZoomedOut={setIsZoomedOut}
       />
     );
-  }, [downSampledData, downsampleRate, selection]) as React.ReactNode;
+  }, [activity, selection, units]);
 
   return (
     <Box sx={{ marginY: "60px", borderRadius: [0, "5px", "5px"] }}>
-      <Map
-        coordinates={coordinates}
-        markerCoordinates={marker}
-        token={token}
-        downsampleRate={downsampleRate}
-        element={element}
-      />
+      {coordinates !== undefined ? (
+        <Map
+          coordinates={coordinates}
+          markerCoordinates={marker}
+          token={token}
+          downsampleRate={downsampleRate}
+          element={element}
+        />
+      ) : (
+        <Box>Error</Box>
+      )}
+
       <ElevationSlice
         marker={marker}
         selection={selection}
-        downSampledData={downSampledData}
+        downSampledData={activity}
         element={element}
+        units={units}
       />
       {graph}
     </Box>

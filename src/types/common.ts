@@ -143,10 +143,10 @@ export type VisualOverviewType = {
   type: "visualOverview";
   selectionEnd?: number | undefined;
   selectionStart?: number | undefined;
-  left?: number | undefined;
-  right?: number | undefined;
-  bottom?: number | undefined;
-  top?: number | undefined;
+  left?: string | undefined;
+  right?: string | undefined;
+  bottom?: string | undefined;
+  top?: string | undefined;
   children: CustomText[];
   void: true;
 };

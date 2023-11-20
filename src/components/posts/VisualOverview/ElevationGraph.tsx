@@ -14,36 +14,23 @@ import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import { Transforms } from "slate";
 
-import { useUnits } from "../../UnitProvider";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
+import { useUnits } from "../../UnitProvider";
 
-function isDefined<T>(argument: T | undefined): argument is T {
-  return argument !== undefined;
-}
+// type ActivityEvent = {
+//   c: Array<number> | Array<null>;
+//   g: number;
+//   d: number;
+//   t: number | null;
+//   e: number | null;
+// };
 
-type ActivityEvent = {
-  c: Array<number> | Array<null>;
-  g: number;
-  d: number;
-  t: number | null;
-  e: number | null;
-};
+// export interface GradeGradientActivty extends ActivityEvent {
+//   color: string;
+// }
 
-export interface GradeGradientActivty extends ActivityEvent {
-  color: string;
-}
-
-const ElevationGraph = ({
-  downSampledData,
-  setMarker,
-  selection,
-  setSelection,
-  isSaved,
-  downsampleRate,
-  element,
-  view = true,
-}: {
-  downSampledData: Array<GradeGradientActivty>;
+export interface ElevationGraphProps {
+  data: Array<ActivityItem>;
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
   element: VisualOverviewType;
   view: boolean;
@@ -52,9 +39,34 @@ const ElevationGraph = ({
   >;
   selection: [number, number] | undefined;
   isSaved: boolean;
-  downsampleRate: number;
-}) => {
-  if (!downSampledData || downSampledData.length === 0) {
+  left: number | string;
+  right: number | string;
+  top: number | string;
+  bottom: number | string;
+  showZoom: boolean;
+  showSaveButton: boolean;
+  showZoomOut: boolean;
+  setIsZoomedOut: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ElevationGraph = ({
+  data,
+  setMarker,
+  selection,
+  setSelection,
+  isSaved,
+  element,
+  view = true,
+  left,
+  right,
+  top,
+  bottom,
+  showZoom = false,
+  showSaveButton = false,
+  showZoomOut = false,
+  setIsZoomedOut,
+}: ElevationGraphProps) => {
+  if (!data || data.length === 0) {
     return (
       <Box>
         <Spinner />
@@ -62,7 +74,37 @@ const ElevationGraph = ({
     );
   }
 
-  // const [showSaveButton, setShowSaveButton] = React.useState(false);
+  console.log(top, bottom);
+
+  const getAxisYDomain = (
+    from: string | undefined,
+    to: string | undefined,
+    ref: keyof ActivityItem,
+    offset: number
+  ): (number | string)[] => {
+    if (from && to) {
+      const lower = data.findIndex((s) => s.d === Number(from));
+      const upper = data.findIndex((s) => s.d === Number(to));
+      const refData = data.slice(lower, upper);
+
+      let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
+        number,
+        number
+      ];
+
+      refData.forEach((d) => {
+        if (Number(d[ref]) > top) {
+          top = Number(d[ref]);
+        }
+        if (Number(d[ref]) < bottom) {
+          bottom = Number(d[ref]);
+        }
+      });
+      return [bottom, top + offset];
+    }
+
+    return [bottom, top];
+  };
 
   const editor = element && !view && useSlateStatic();
   const path =
@@ -73,27 +115,15 @@ const ElevationGraph = ({
   const units = useUnits();
   const hideAxes = false;
 
-  const shrunkData = downSampledData
-    .map((_, i) => {
-      if (i % downsampleRate === 0) {
-        return _;
-      }
-    })
-    .filter(isDefined);
+  // console.log(left.d);
 
   const initialState = {
-    data: element && element.selectionStart ? shrunkData : shrunkData,
-    left: element && element.left ? element.left : "dataMin",
-    right: element && element.right ? element.right : "dataMax",
     refAreaLeft: "",
     refAreaRight: "",
-    top2: element && element.top ? element.top : "dataMax+20",
-    bottom2: element && element.bottom ? element.bottom : "dataMin",
-    animation: true,
-    showSaveButton: false,
-    isZoomed: element && element.selectionStart ? true : false,
   };
+
   const [zoomGraph, setZoomGraph] = React.useState(initialState);
+  console.log(zoomGraph);
 
   const saveState = () => {
     if (editor && selection && path) {
@@ -103,19 +133,15 @@ const ElevationGraph = ({
           ...element,
           selectionStart: selection[0],
           selectionEnd: selection[1],
-          left: zoomGraph.left,
-          right: zoomGraph.right,
-          top: zoomGraph.top2,
-          bottom: zoomGraph.bottom2,
         } as VisualOverviewType,
         {
           at: path,
         }
       );
-      setZoomGraph((prev) => ({
-        ...prev,
-        showSaveButton: false,
-      }));
+      // setZoomGraph((prev) => ({
+      //   ...prev,
+      //   showSaveButton: false,
+      // }));
     }
   };
 
@@ -137,33 +163,13 @@ const ElevationGraph = ({
         }
       );
     }
-
-    setZoomGraph((prev) => ({
-      ...prev,
-      data: shrunkData,
-      refAreaLeft: "",
-      refAreaRight: "",
-      left: "dataMin",
-      right: "dataMax",
-      top2: "dataMax+50",
-      bottom2: "dataMin",
-    }));
     setSelection(undefined);
+    setIsZoomedOut(true);
   };
 
   const zoomOut = () => {
-    setZoomGraph((prev) => ({
-      ...prev,
-      data: shrunkData,
-      refAreaLeft: "",
-      refAreaRight: "",
-      left: "dataMin",
-      right: "dataMax",
-      top2: "dataMax+50",
-      bottom2: "dataMin",
-      isZoomed: false,
-    }));
     setSelection(undefined);
+    setIsZoomedOut(true);
   };
 
   const CustomCursor = (props: {
@@ -188,50 +194,10 @@ const ElevationGraph = ({
     );
   };
 
-  const getAxisYDomain = (
-    from: string | undefined,
-    to: string | undefined,
-    ref: keyof GradeGradientActivty,
-    offset: number
-  ): (number | string)[] => {
-    if (from && to) {
-      const lower = shrunkData.findIndex((s) => s.d === Number(from));
-      const upper = shrunkData.findIndex((s) => s.d === Number(to));
-      const refData = shrunkData.slice(lower, upper);
-
-      let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
-        number,
-        number
-      ];
-
-      refData.forEach((d) => {
-        if (Number(d[ref]) > top) {
-          top = Number(d[ref]);
-        }
-        if (Number(d[ref]) < bottom) {
-          bottom = Number(d[ref]);
-        }
-      });
-      return [bottom | 0, (top | 0) + offset];
-    }
-
-    return [initialState.bottom2, initialState.top2];
-  };
-
   const backToSegment = () => {
-    setZoomGraph((prev) => ({
-      ...prev,
-      isZoomed: true,
-      data: element && element.selectionStart ? downSampledData : shrunkData,
-      left: element && element.left ? element.left : "dataMin",
-      right: element && element.right ? element.right : "dataMax",
-      refAreaLeft: "",
-      refAreaRight: "",
-      top2: element && element.top ? element.top : "dataMax+20",
-      bottom2: element && element.bottom ? element.bottom : "dataMin",
-    }));
     if (element.selectionStart && element.selectionEnd) {
       setSelection([element.selectionStart, element.selectionEnd]);
+      setIsZoomedOut(false);
     }
   };
 
@@ -250,49 +216,22 @@ const ElevationGraph = ({
     if (refAreaLeft && refAreaRight && refAreaLeft > refAreaRight)
       [refAreaLeft, refAreaRight] = [refAreaRight, refAreaLeft];
 
-    const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, "e", 50);
+    // const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, "e", 50);
 
-    setZoomGraph(
-      (prev) =>
-        ({
-          ...prev,
-          refAreaLeft: "",
-          refAreaRight: "",
-          data: downSampledData
-            .map((_, i) => {
-              if (i % 1 === 0) {
-                return _;
-              }
-            })
-            .filter(isDefined),
-          left: refAreaLeft,
-          right: refAreaRight,
-          bottom2,
-          top2,
-          showSaveButton: true,
-          isZoomed: true,
-        } as any)
-    );
-    const lowBound = downSampledData.findIndex(
-      (d) => Number(d.d) === Number(refAreaLeft)
-    );
-    const highBound = downSampledData.findIndex((d) => {
+    setZoomGraph((prev) => ({
+      ...prev,
+      refAreaLeft: "",
+      refAreaRight: "",
+    }));
+    const lowBound = data.findIndex((d) => Number(d.d) === Number(refAreaLeft));
+    const highBound = data.findIndex((d) => {
       return Number(d.d) === Number(refAreaRight);
     });
     setSelection([lowBound, highBound]);
+    setIsZoomedOut(false);
   };
 
-  const {
-    data,
-    left,
-    right,
-    refAreaLeft,
-    refAreaRight,
-    top2,
-    bottom2,
-    showSaveButton,
-    isZoomed,
-  } = zoomGraph;
+  const { refAreaLeft, refAreaRight } = zoomGraph;
 
   return (
     <Box
@@ -309,7 +248,7 @@ const ElevationGraph = ({
         <Button
           variant="primaryButton"
           sx={{
-            display: zoomGraph.bottom2 !== "dataMin" ? "inherit" : "none",
+            display: showZoomOut ? "inherit" : "none",
           }}
           onClick={() => zoomOut()}
         >
@@ -319,8 +258,7 @@ const ElevationGraph = ({
         <Button
           variant="primaryButton"
           sx={{
-            display:
-              isSaved && zoomGraph.bottom2 === "dataMin" ? "inherit" : "none",
+            display: isSaved && !showSaveButton ? "inherit" : "none",
           }}
           onClick={() => backToSegment()}
         >
@@ -349,9 +287,10 @@ const ElevationGraph = ({
       </Flex>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
+          // key={data[0].e}
           data={data}
           onMouseDown={(e) => {
-            if (isZoomed) {
+            if (selection) {
               return;
             }
             setZoomGraph((prev) => ({
@@ -368,7 +307,7 @@ const ElevationGraph = ({
 
             setMarker(e.activePayload[0].payload as ActivityItem);
 
-            if (!isZoomed) {
+            if (!selection) {
               zoomGraph.refAreaLeft &&
                 setZoomGraph((prev) => ({
                   ...prev,
@@ -377,7 +316,7 @@ const ElevationGraph = ({
             }
           }}
           onMouseUp={() => {
-            if (isZoomed) {
+            if (selection) {
               return;
             }
             zoom();
@@ -390,21 +329,7 @@ const ElevationGraph = ({
             />
           )}
 
-          <Tooltip
-            active={false}
-            cursor={<CustomCursor />}
-            content={
-              <></>
-              // <Box
-              //   sx={{
-              //     display: "flex",
-              //     backgroundColor: "transparent",
-              //     width: "100vw",
-              //     height: "100px",
-              //   }}
-              // ></Box>
-            }
-          />
+          <Tooltip active={false} cursor={<CustomCursor />} content={<></>} />
           {/* <defs>
             <linearGradient id="splitColor" x1="0" y1="0" x2="1" y2="0">
               <GradeGradient data={downSampledData} xMax={xMax} />
@@ -416,19 +341,13 @@ const ElevationGraph = ({
               dataKey="d"
               type="number"
               domain={left && right ? [left, right] : undefined}
-              // ticks={calcTicks()}
-              // domain={[0, xMax]}
               tickCount={5}
-              // interval={0}
               label={{
                 value: `Distance (${units.distanceUnit})`,
                 position: "bottom",
                 fontSize: "14px",
               }}
               allowDecimals={false}
-              // tickFormatter={(t) => {
-              //   return t;
-              // }}
               tickFormatter={(t) => t.toFixed(1)}
               tick={{
                 fill: themeContext?.theme?.colors?.text as string,
@@ -441,7 +360,7 @@ const ElevationGraph = ({
           {!hideAxes && (
             <YAxis
               allowDataOverflow
-              domain={[bottom2, top2]}
+              domain={[bottom, top]}
               type="number"
               label={{
                 value: `Elevation (${units.elevationUnit})`,
@@ -455,13 +374,13 @@ const ElevationGraph = ({
                 fill: themeContext?.theme?.colors?.text as string,
                 fontSize: "14px",
               }}
-              tickFormatter={(t) => t.toFixed(1)}
+              tickFormatter={(t) => t.toFixed(0)}
               stroke={themeContext?.theme?.colors?.chartAxes as string}
               hide={hideAxes}
             />
           )}
           <Area
-            type={"monotone"}
+            type={"linear"}
             dataKey="e"
             fill={themeContext?.theme?.colors?.text as string}
             fillOpacity={0.2}

@@ -19,15 +19,17 @@ const ElevationSlice = ({
   selection,
   downSampledData,
   element,
+  units,
 }: {
   marker: ActivityItem | undefined;
   selection: [number, number] | undefined;
   downSampledData: any;
   element: VisualOverviewType;
+  units: any;
 }) => {
   const { powers, hearts } = React.useContext(PostContext);
 
-  const units = useUnits();
+  // const units = useUnits();
   const grade =
     marker && marker.g
       ? marker.g
