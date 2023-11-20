@@ -17,20 +17,20 @@ import { Transforms } from "slate";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 
-type ActivityEvent = {
-  c: Array<number> | Array<null>;
-  g: number;
-  d: number;
-  t: number | null;
-  e: number | null;
-};
+// type ActivityEvent = {
+//   c: Array<number> | Array<null>;
+//   g: number;
+//   d: number;
+//   t: number | null;
+//   e: number | null;
+// };
 
-export interface GradeGradientActivty extends ActivityEvent {
-  color: string;
-}
+// export interface GradeGradientActivty extends ActivityEvent {
+//   color: string;
+// }
 
 export interface ElevationGraphProps {
-  data: Array<GradeGradientActivty>;
+  data: Array<ActivityItem>;
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
   element: VisualOverviewType;
   view: boolean;
@@ -79,7 +79,7 @@ const ElevationGraph = ({
   const getAxisYDomain = (
     from: string | undefined,
     to: string | undefined,
-    ref: keyof GradeGradientActivty,
+    ref: keyof ActivityItem,
     offset: number
   ): (number | string)[] => {
     if (from && to) {

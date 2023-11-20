@@ -1,10 +1,9 @@
-import { Box, Flex, Spinner } from "theme-ui";
+import { Box, Flex } from "theme-ui";
 import React from "react";
 
 import Map from "./CustomMap";
-import ElevationGraph, { GradeGradientActivty } from "./ElevationGraph";
-import ElevationSlice, { gradeToColor } from "./ElevationSlice";
-import { useUnits } from "../../UnitProvider";
+import ElevationGraph from "./ElevationGraph";
+import ElevationSlice from "./ElevationSlice";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
 
@@ -69,7 +68,7 @@ const VisualOverview = ({
       return <Box>Error loading graph</Box>;
     }
     const fixedActivity = activity.slice(0, activity.length - 1);
-    console.log(selection);
+    // console.log(selection);
 
     const selectionStart = isZoomedOut
       ? 0
@@ -110,7 +109,6 @@ const VisualOverview = ({
         selection={selection}
         setSelection={setSelection}
         isSaved={isSaved}
-        downsampleRate={downsampleRate}
         element={element}
         view={view}
         showZoom={selection === undefined}
