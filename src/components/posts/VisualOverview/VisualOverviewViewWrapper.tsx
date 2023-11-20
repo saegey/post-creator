@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex } from "theme-ui";
+import { Box, Flex, Spinner } from "theme-ui";
 
 import VisualOverview from "./VisualOverview";
 import { PostContext } from "../../PostContext";
@@ -26,6 +26,37 @@ const VisualOverviewViewWrapper = ({
     element && element.selectionStart ? true : false
   );
   const units = useUnits();
+
+  if (!activity || activity.length === 0) {
+    return (
+      <Flex
+        sx={{
+          width: "900px",
+          marginX: "auto",
+          backgroundColor: "divider",
+          borderRadius: "5px",
+        }}
+      >
+        <Spinner sx={{ margin: "auto" }} />
+      </Flex>
+    );
+  }
+
+  const fixedData = activity.map((a, i) => {
+    return {
+      ...a,
+      g: a.g !== null ? a.g : 0,
+      d:
+        units.unitOfMeasure === "imperial"
+          ? a && a.d
+            ? Number((a.d * 0.00062137121212121).toFixed(5))
+            : 0
+          : a && a.d
+          ? Number((a?.d / 1000).toFixed(5))
+          : 0,
+      e: units.unitOfMeasure === "metric" ? a.e : a && a.e ? a.e * 3.28084 : 0,
+    };
+  });
 
   return (
     <Flex
@@ -54,7 +85,7 @@ const VisualOverviewViewWrapper = ({
             <VisualOverview
               units={units}
               element={element}
-              activity={activity}
+              activity={fixedData}
               token={
                 "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
               }
