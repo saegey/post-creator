@@ -6,6 +6,7 @@ import { GraphQLResult } from "@aws-amplify/api";
 import {
   PostContext,
   RaceResultRow,
+  WebscorerResultPreview,
 } from "../../../src/components/PostContext";
 import { getPostInitial } from "../../../src/graphql/customQueries";
 import EditUserPost from "../../../src/components/posts/Editor/EditUserPost";
@@ -140,6 +141,9 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
       postRaceResults: post.raceResults ? JSON.parse(post.raceResults) : null,
+      postWebscorerResults: post.webscorerResults
+        ? JSON.parse(post.webscorerResults)
+        : null,
       postTimeSeriesFile: post.timeSeriesFile,
       postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
       postCreatedAt: post.createdAt,
@@ -176,6 +180,7 @@ const Post = ({
   postAuthor,
   postShortUrl,
   postRaceResults,
+  postWebscorerResults,
   postTimeSeriesFile,
   postPrivacyStatus,
   postCreatedAt,
@@ -272,9 +277,14 @@ const Post = ({
   const [shortUrl, setShortUrl] = React.useState<string | undefined>(
     postShortUrl
   );
+
   const [raceResults, setRaceResults] = React.useState<
     RaceResultRow | undefined
   >(postRaceResults);
+  const [webscorerResults, setWebscorerResults] = React.useState<
+    WebscorerResultPreview | undefined
+  >(postWebscorerResults);
+
   const [timeSeriesFile, setTimeSeriesFile] =
     React.useState(postTimeSeriesFile);
   const [privacyStatus, setPrivacyStatus] = React.useState<string | undefined>(
@@ -315,6 +325,7 @@ const Post = ({
       setAuthor(postAuthor);
       setShortUrl(postShortUrl);
       setRaceResults(postRaceResults);
+      setWebscorerResults(postWebscorerResults);
       setTimeSeriesFile(postTimeSeriesFile);
       setPrivacyStatus(postPrivacyStatus);
       setCreatedAt(postCreatedAt);
@@ -382,6 +393,8 @@ const Post = ({
         setShortUrl,
         raceResults,
         setRaceResults,
+        webscorerResultPreview: webscorerResults,
+        setWebscorerResultPreview: setWebscorerResults,
         author,
         setAuthor,
         timeSeriesFile,

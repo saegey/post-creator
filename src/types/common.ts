@@ -5,7 +5,11 @@ import { ReactEditor } from "slate-react";
 import { HistoryEditor } from "slate-history";
 import { BaseElement } from "slate";
 
-import { Author, RaceResultRow } from "../components/PostContext";
+import {
+  Author,
+  RaceResultRow,
+  WebscorerResultPreview,
+} from "../components/PostContext";
 
 export interface IUser {
   userId: string;
@@ -184,6 +188,11 @@ export type RaceResultsDotComType = {
   children: CustomText[];
 };
 
+export type WebscorerResultsType = {
+  type: "webscorerResults";
+  children: CustomText[];
+};
+
 export type CustomElement =
   | ParagraphElement
   | HeadingElement
@@ -201,7 +210,8 @@ export type CustomElement =
   | LinkType
   | BulletedListType
   | ListItemType
-  | RaceResultsDotComType;
+  | RaceResultsDotComType
+  | WebscorerResultsType;
 
 export type FormattedText = {
   text: string;
@@ -267,6 +277,7 @@ export interface PostViewType {
   heroImage?: string | null;
   powerZones?: string | null;
   raceResults?: string | null;
+  webscorerResults?: string | null;
   images?: string | null;
   currentFtp?: string | null;
   date?: string | null;
@@ -312,6 +323,7 @@ export interface PostType {
     | undefined;
   postShortUrl: string | undefined;
   postRaceResults: RaceResultRow | undefined;
+  postWebscorerResults: WebscorerResultPreview | undefined;
   postTimeSeriesFile: string | undefined;
   postPrivacyStatus: string | undefined;
   postCreatedAt: string | undefined;

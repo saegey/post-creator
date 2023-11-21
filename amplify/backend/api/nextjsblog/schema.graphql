@@ -89,6 +89,7 @@ type PublishedPost
   subhead: String
   shortUrl: String
   raceResults: AWSJSON
+  webscorerResults: AWSJSON
   raceResultsProvider: String
   originalPostId: String
     @index(
@@ -156,6 +157,7 @@ type Post
   subhead: String
   shortUrl: String
   raceResults: AWSJSON
+	webscorerResults: AWSJSON
   raceResultsProvider: String
   privacyStatus: String
   # user: User @belongsTo(fields: ["userId"])

@@ -16,6 +16,7 @@ import Link from "../Text/Link";
 import PostAuthorWrapper from "../PostAuthor/PostAuthorWrapper";
 import { CustomElement } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
+import WebscorerListWrapper from "../RaceResults/WebscorerListWrapper";
 
 const Leaf = (props: RenderLeafProps) => {
   return (
@@ -116,6 +117,8 @@ const renderElement = (props: {
       return <li {...attributes}>{children}</li>;
     case "raceResultsDotCom":
       return <RaceResultsDotComListWrapper />;
+    case "webscorerResults":
+      return <WebscorerListWrapper />;
     case "paragraph":
       return (
         <Text

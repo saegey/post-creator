@@ -49,6 +49,22 @@
           ],
           "category": "function",
           "resourceName": "routeAccessPoint"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "webscorer"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "webscorerResults"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -262,6 +278,17 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "webscorer": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "webscorerResults": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -406,6 +433,38 @@
         {
           "category": "function",
           "resourceName": "shorturl"
+        }
+      ]
+    },
+    "AMPLIFY_function_webscorerResults_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "webscorerResults"
+        }
+      ]
+    },
+    "AMPLIFY_function_webscorerResults_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "webscorerResults"
+        }
+      ]
+    },
+    "AMPLIFY_function_webscorer_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "webscorer"
+        }
+      ]
+    },
+    "AMPLIFY_function_webscorer_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "webscorer"
         }
       ]
     }
