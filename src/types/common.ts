@@ -290,6 +290,19 @@ export interface PostViewType {
   originalPostId?: string | null;
 }
 
+export type ListPostsCustom = {
+  listPublishedPostsByCreatedAt?: {
+    __typename: "ModelPublishedPostConnection";
+    items: Array<{
+      id: string;
+      title: string;
+      createdAt: string;
+      images: string | null;
+      author?: string | null;
+    }>;
+  };
+};
+
 export interface PostType {
   postId: string;
   postTitle: string;

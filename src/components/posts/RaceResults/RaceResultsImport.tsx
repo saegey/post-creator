@@ -63,7 +63,7 @@ type ResultsRow = [
 ];
 
 type ApiRes = {
-  data: ResultsRow[];
+  data: { data: ResultsRow[]; list: { Fields: Array<{ Label: string }> } };
 };
 
 type WebscorerRes = {
@@ -77,8 +77,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
   const [category, setCategory] = React.useState("");
   const [webscorerCategory, setWebscorerCategory] = React.useState("");
   const [division, setDivision] = React.useState("");
-  const [webscorerCategories, setWebscorerCategeries] = React.useState("");
-  const [raceId, setRaceId] = React.useState("");
+  const [webscorerCategories, setWebscorerCategeries] =
+    React.useState<Array<string> | null>(null);
+  const [raceId, setRaceId] = React.useState<string | null>();
   const [key, setKey] = React.useState();
   const [server, setServer] = React.useState();
   const [previewResults, setPreviewResults] = React.useState(false);
@@ -172,7 +173,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     const searchParams = new URLSearchParams(paramsRaw);
     const apiName = "api12660653";
     const path = `/results/webscorer?raceId=${searchParams.get("raceid")}`;
+
     setRaceId(searchParams.get("raceid"));
+
     const response = await API.get(apiName, path, { response: true });
     setWebscorerCategeries(response.data);
     return response;
