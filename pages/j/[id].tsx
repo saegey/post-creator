@@ -14,6 +14,7 @@ import {
   Author,
   PostContext,
   RaceResultRow,
+  WebscorerResultPreview,
 } from "../../src/components/PostContext";
 import { generate as generateMetaTags } from "../../src/utils/metaTags";
 import { GetPostInitialQuery, GetPublishedPostQuery } from "../../src/API";
@@ -26,6 +27,7 @@ import {
   IUser,
 } from "../../src/types/common";
 import { CloudinaryImage } from "../../src/types/common";
+import { WebscorerResultsRow } from "../../src/components/posts/RaceResults/RaceResultsImport";
 
 const PostView = dynamic(import("../../src/components/posts/View/PostView"), {
   ssr: false,
@@ -198,6 +200,10 @@ const Publish = ({
     RaceResultRow | undefined
   >(post.raceResults ? JSON.parse(post.raceResults) : undefined);
 
+  const [webscorerResultPreview, setWebscorerResultPreview] = React.useState<
+    WebscorerResultPreview | undefined
+  >(post.webscorerResults ? JSON.parse(post.webscorerResults) : undefined);
+
   const [images, setImages] = React.useState<CloudinaryImage[] | undefined>(
     post.images ? JSON.parse(post.images) : undefined
   );
@@ -302,6 +308,8 @@ const Publish = ({
           setImages,
           raceResults,
           setRaceResults,
+          webscorerResultPreview,
+          setWebscorerResultPreview,
           title,
           setTitle,
           currentFtp,

@@ -1,28 +1,39 @@
-import React from 'react';
+import React from "react";
 
 export type EditorContextType = {
   isGraphMenuOpen: boolean;
   setIsGraphMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isFtpUpdating: boolean;
   setIsFtpUpdating: React.Dispatch<React.SetStateAction<boolean>>;
+
   isGpxUploadOpen: boolean;
   setIsGpxUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isImageModalOpen: boolean;
   setIsImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isPhotoCaptionOpen: boolean;
   setIsPhotoCaptionOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isHeroImageModalOpen: boolean;
   setIsHeroImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isShareModalOpen: boolean;
   setIsShareModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isRaceResultsModalOpen: boolean;
   setIsRaceResultsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isSettingsModalOpen: boolean;
   setIsSettingsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isSavingPost: boolean;
   setIsSavingPost: React.Dispatch<React.SetStateAction<boolean>>;
+
   savingStatus: string;
   setSavingStatus: React.Dispatch<React.SetStateAction<string>>;
+
   isPublishedConfirmationOpen: boolean;
   setIsPublishedConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -48,7 +59,7 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsSettingsModalOpen: () => {},
   isSavingPost: false,
   setIsSavingPost: () => {},
-  savingStatus: '',
+  savingStatus: "",
   setSavingStatus: () => {},
   isPublishedConfirmationOpen: false,
   setIsPublishedConfirmationOpen: () => {},

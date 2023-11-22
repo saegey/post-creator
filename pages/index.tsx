@@ -3,12 +3,10 @@ import Head from "next/head";
 import React from "react";
 import { NextApiRequest } from "next";
 import { GraphQLResult } from "@aws-amplify/api";
-import Router from "next/router";
 
 import { listPostsCustom } from "../src/graphql/customQueries";
 import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
-import { ListPostsCustom } from "../src/API";
-import { CognitoUserExt, CloudinaryImage, IUser } from "../src/types/common";
+import { CloudinaryImage, IUser, ListPostsCustom } from "../src/types/common";
 
 import awsconfig from "../src/aws-exports";
 

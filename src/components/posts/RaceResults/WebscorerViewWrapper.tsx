@@ -1,0 +1,17 @@
+import { Box } from "theme-ui";
+import React from "react";
+
+import { PostContext } from "../../PostContext";
+import WebscorerList from "./WebscorerList";
+
+const WebscorerViewWrapper = () => {
+  const { webscorerResultPreview } = React.useContext(PostContext);
+
+  return (
+    <Box variant="boxes.componentCard" key="race-results">
+      <WebscorerList raceResults={webscorerResultPreview} />
+    </Box>
+  );
+};
+
+export default WebscorerViewWrapper;

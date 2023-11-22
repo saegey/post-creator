@@ -1,6 +1,7 @@
 import React from "react";
 
 import { ActivityItem, CustomElement, CloudinaryImage } from "../types/common";
+import { WebscorerResultsRow } from "./posts/RaceResults/RaceResultsImport";
 
 export type RaceResultRow = {
   selected:
@@ -27,6 +28,11 @@ export type RaceResultRow = {
         Bib: string;
       }>
     | undefined;
+};
+
+export type WebscorerResultPreview = {
+  selected: WebscorerResultsRow | undefined;
+  results: Array<WebscorerResultsRow> | undefined;
 };
 
 export type Author = { fullName: string; image: string };
@@ -65,6 +71,7 @@ export type PostContextType = {
   date?: string | undefined;
   shortUrl?: string | undefined;
   raceResults?: RaceResultRow | undefined;
+  webscorerResultPreview?: WebscorerResultPreview | undefined;
   timeSeriesFile?: string | undefined;
   privacyStatus?: string | undefined;
   createdAt?: string | undefined;
@@ -123,6 +130,9 @@ export type PostContextType = {
   setRaceResults?: React.Dispatch<
     React.SetStateAction<RaceResultRow | undefined>
   >;
+  setWebscorerResultPreview?: React.Dispatch<
+    React.SetStateAction<WebscorerResultPreview | undefined>
+  >;
   setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined>>;
   setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPrivacyStatus?: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -163,6 +173,7 @@ const PostContext = React.createContext<PostContextType>({
   heroImage: undefined,
   shortUrl: undefined,
   raceResults: undefined,
+  webscorerResultPreview: undefined,
   timeSeriesFile: undefined,
   privacyStatus: undefined,
   createdAt: undefined,
@@ -196,6 +207,7 @@ const PostContext = React.createContext<PostContextType>({
   setDate: () => {},
   setShortUrl: () => {},
   setRaceResults: () => {},
+  setWebscorerResultPreview: () => {},
   setAuthor: () => {},
   setTimeSeriesFile: () => {},
   setPrivacyStatus: () => {},

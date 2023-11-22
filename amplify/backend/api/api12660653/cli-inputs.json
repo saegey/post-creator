@@ -71,6 +71,26 @@
           "read"
         ]
       }
+    },
+    "/results/webscorer": {
+      "name": "/results/webscorer",
+      "lambdaFunction": "webscorer",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    },
+    "/results/webscorer/cat-results": {
+      "name": "/results/webscorer/cat-results",
+      "lambdaFunction": "webscorerResults",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
     }
   }
 }

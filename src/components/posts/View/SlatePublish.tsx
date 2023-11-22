@@ -24,6 +24,7 @@ import ParagraphViewWrapper from "../Text/ParagraphViewWrapper";
 import HeadingViewWrapper from "../Text/HeadingViewWrapper";
 import RaceResultsDotComViewWrapper from "../RaceResults/RaceResultsDotComViewWrapper";
 import ImageViewWrapper from "../Image/ImageViewWrapper";
+import WebscorerViewWrapper from "../RaceResults/WebscorerViewWrapper";
 
 const SlatePublish = () => {
   const config: SlateToReactConfig = {
@@ -102,10 +103,11 @@ const SlatePublish = () => {
             <RaceResultsDotComViewWrapper key={`racerez-${Math.random()}`} />
           );
         },
+        webscorerResults: () => {
+          return <WebscorerViewWrapper key={`racerez-${Math.random()}`} />;
+        },
         postAuthor: () => {
-          return (
-            <PostAuthor key={`postauth-${Math.random()}`} />
-          );
+          return <PostAuthor key={`postauth-${Math.random()}`} />;
         },
         image: ({ node }) => {
           return (

@@ -1,4 +1,4 @@
-import * as APITypes from '../API';
+import * as APITypes from "../API";
 type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryInput: InputType;
   __generatedQueryOutput: OutputType;
@@ -42,7 +42,7 @@ export type getActivityQueryProps = {
     // elevationGrades?: string | null;
     // distances?: string | null;
     owner?: string | null;
-    __typename: 'Post';
+    __typename: "Post";
   } | null;
 };
 
@@ -94,6 +94,7 @@ export const getPostInitial = /* GraphQL */ `
       postRelatedId
       shortUrl
       raceResults
+      webscorerResults
       privacyStatus
       __typename
     }
