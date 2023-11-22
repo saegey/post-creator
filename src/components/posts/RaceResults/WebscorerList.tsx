@@ -40,16 +40,32 @@ const WebscorerList = ({
                       : null,
                   borderRadius: "5px",
                   fontSize: ["15px", "16px", "16px"],
+                  // justifyContent: "space-around",
+                  flexFlow: "row wrap",
+                  // alignItems: "stretch",
                 }}
               >
-                <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
+                <Text as="span" sx={{ width: "60px" }}>
                   {row.Place}
                 </Text>
-                <Text as="span" sx={{ width: ["150px", "300px", "300px"] }}>
-                  {row.Name}
+                <Box sx={{ flexGrow: 2 }}>
+                  <Text as="span">{row.Name}</Text>
+                  <Text
+                    as="span"
+                    sx={{
+                      display: "block",
+                      fontSize: "12px",
+                      height: "15px",
+                      flexGrow: 2,
+                    }}
+                  >
+                    {row.TeamName ? row.TeamName : " "}
+                  </Text>
+                </Box>
+                <Text as="span" sx={{ marginLeft: "15px" }}>
+                  {row.Difference}
                 </Text>
-                <Text as="span">{row.Difference}</Text>
-                <Text as="span" sx={{ marginLeft: "auto" }}>
+                <Text as="span" sx={{ marginLeft: "15px" }}>
                   {row.Time}
                 </Text>
               </Flex>
