@@ -20,12 +20,12 @@ const PostHeaderTextBlock = ({
   location: string;
   height?: string | null;
 }) => {
-  const { isSettingsModalOpen, setIsSettingsModalOpen } =
-    React.useContext(EditorContext);
+  const { setIsSettingsModalOpen } = React.useContext(EditorContext);
+
   return (
     <Flex
       sx={{
-        // width: "100%",
+        width: ["fit-content", "100%", "100%"],
         marginX: ["10px", "0", "0"],
         bg: ["", "muted", "muted"],
         paddingY: ["10px", "20px", "20px"],
@@ -40,7 +40,7 @@ const PostHeaderTextBlock = ({
         borderBottomStyle: "solid",
         height: height,
         cursor: "text",
-        width: "fit-content",
+        // width: ,
       }}
       onClick={() => setIsSettingsModalOpen(true)}
       contentEditable={false}

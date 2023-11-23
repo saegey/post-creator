@@ -38,16 +38,35 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   return (
     <>
-      <Box sx={{ overflowY: "auto", height: "500px" }}>
+      <Box
+        sx={{
+          overflowY: "auto",
+          height: ["80%", "300px", "300px"],
+          backgroundColor: "activityOverviewBackgroundColor",
+          padding: "5px",
+          borderRadius: "5px",
+        }}
+      >
         <Flex sx={{ width: "100%", paddingX: "5px" }}>
-          <Text as="span" sx={{ width: "60px" }}>
+          <Text
+            as="span"
+            sx={{
+              width: ["30px", "60px", "60px"],
+              visibility: ["hidden", "visible", "visible"],
+            }}
+          >
             Place
           </Text>
           <Text as="span" sx={{ width: "300px" }}>
             Name
           </Text>
-          <Text as="span">Speed</Text>
-          <Text as="span" sx={{ marginLeft: "auto" }}>
+          <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
+            Speed
+          </Text>
+          <Text
+            as="span"
+            sx={{ width: "100px", display: "flex", justifyContent: "right" }}
+          >
             Time
           </Text>
         </Flex>
@@ -93,15 +112,27 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   }
                 }}
               >
-                <Text as="span" sx={{ width: "60px" }}>
+                <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
                   {row.CatPlace}
                 </Text>
-                <Text as="span" sx={{ width: "300px" }}>
+                <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
                   {row.Name}
                 </Text>
-                <Text as="span">{row.Speed}</Text>
-                <Text as="span" sx={{ marginLeft: "auto" }}>
-                  {row.Time}
+                <Text
+                  as="span"
+                  sx={{ display: ["none", "inherit", "inherit"] }}
+                >
+                  {row.Speed}
+                </Text>
+                <Text
+                  as="span"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "right",
+                    width: "100px",
+                  }}
+                >
+                  {row.FinishTime}
                 </Text>
               </Flex>
             );
