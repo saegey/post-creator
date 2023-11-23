@@ -49,7 +49,7 @@ const RaceResultsDotComList = ({
                 </Text>
                 <Text as='span'>{row.Speed}</Text>
                 <Text as='span' sx={{ marginLeft: 'auto' }}>
-                  {row.Time}
+                  {row.FinishTime}
                 </Text>
               </Flex>
             );

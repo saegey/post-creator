@@ -39,16 +39,35 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   return (
     <>
-      <Box sx={{ overflowY: "auto", height: "300px" }}>
-        <Flex sx={{ width: "100%", paddingX: "5px" }}>
-          <Text as="span" sx={{ width: "60px" }}>
+      <Box
+        sx={{
+          overflowY: "auto",
+          height: ["80%", "300px", "300px"],
+          backgroundColor: "activityOverviewBackgroundColor",
+          padding: "5px",
+          borderRadius: "5px",
+        }}
+      >
+        <Flex sx={{ width: "100%" }}>
+          <Text
+            as="span"
+            sx={{
+              width: ["30px", "60px", "60px"],
+              visibility: ["hidden", "visible", "visible"],
+            }}
+          >
             Place
           </Text>
           <Text as="span" sx={{ width: "300px" }}>
             Name
           </Text>
-          <Text as="span">Speed</Text>
-          <Text as="span" sx={{ marginLeft: "auto" }}>
+          <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
+            Time Behind
+          </Text>
+          <Text
+            as="span"
+            sx={{ width: "100px", display: "flex", justifyContent: "right" }}
+          >
             Time
           </Text>
         </Flex>
@@ -70,7 +89,7 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                       selectedRow === i ? "selectedBackground" : "muted",
                     borderRadius: "5px",
                   },
-                  paddingX: "5px",
+                  // paddingX: "5px",
                   paddingY: "2px",
                 }}
                 onClick={() => {
@@ -95,14 +114,26 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   }
                 }}
               >
-                <Text as="span" sx={{ width: "60px" }}>
+                <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
                   {i + 1}
                 </Text>
-                <Text as="span" sx={{ width: "300px" }}>
+                <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
                   {row.Name}
                 </Text>
-                <Text as="span">{row.Difference}</Text>
-                <Text as="span" sx={{ marginLeft: "auto" }}>
+                <Text
+                  as="span"
+                  sx={{ display: ["none", "inherit", "inherit"] }}
+                >
+                  {row.Difference}
+                </Text>
+                <Text
+                  as="span"
+                  sx={{
+                    display: "flex",
+                    justifyContent: "right",
+                    width: "100px",
+                  }}
+                >
                   {row.Time}
                 </Text>
               </Flex>

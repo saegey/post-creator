@@ -109,7 +109,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
 
     const fields = res.data.list.Fields.map((f: { Label: string }) => f.Label);
 
-    const data = res.data.data.map((d) => {
+    return res.data.data.map((d) => {
       // console.log(d);
       // [
       //   "150",
@@ -131,10 +131,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
         ) as string;
         temp[key] = column;
       });
+      console.log(temp);
       return temp;
     });
-
-    return data;
   };
 
   const getWebscorerResults = async () => {
@@ -188,9 +187,14 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
         setIsOpen={setIsRaceResultsModalOpen}
         isOpen={isRaceResultsModalOpen}
       >
+        {(previewResults || previewWebscorerResults) && (
+          <Text as="div" sx={{ marginY: "5px" }}>
+            Select your result below:
+          </Text>
+        )}
         {previewResults && <RaceResultsPreview editor={editor} />}
         {previewWebscorerResults && <WebscorerResultsPreview editor={editor} />}
-        {!previewResults && (
+        {!previewResults && !previewWebscorerResults && (
           <Flex sx={{ gap: "10px", flexDirection: "row" }}>
             <form
               onSubmit={(event: any) => {
@@ -201,31 +205,26 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                 const form = new FormData(event.target);
                 const url = form.get("url") as string;
                 const domain = new URL(url);
-                console.log(domain);
+
                 switch (domain.hostname) {
                   case "www.webscorer.com":
-                    console.log("Oranges are $0.59 a pound.");
                     getWebScorerCategories({ url }).then(() => {
                       setIsLoading(false);
                     });
                     break;
                   case "my.raceresult.com":
-                    console.log("Mangoes and papayas are $2.79 a pound.");
                     getCategories({ url }).then(() => setIsLoading(false));
-                    // Expected output: "Mangoes and papayas are $2.79 a pound."
                     break;
-                  default:
-                    console.log(`Sorry, we are out of shit.`);
+                  // default:
+                  //   console.log(`Sorry, we are out of shit.`);
                 }
-
-                // getCategories({ url }).then(() => setIsLoading(false));
               }}
               style={{ width: "100%" }}
             >
               <Flex sx={{ gap: "20px", flexDirection: "column" }}>
                 <Box sx={{ marginTop: "20px" }}>
                   <Label htmlFor="url" variant="defaultLabel">
-                    Results Url
+                    Link to results
                   </Label>
                   <Input
                     id="url"
@@ -234,15 +233,6 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                     readOnly={raceId ? true : false}
                   />
                 </Box>
-                {/* <Flex sx={{ flexDirection: "column", gap: "10px" }}>
-                  <Text>Supported Providers:</Text>
-                  <Link href="https://www.raceresult.com/" target="_blank">
-                    Race Result
-                  </Link>
-                  <Link href="https://www.webscorer.com/" target="_blank">
-                    webscorer
-                  </Link>
-                </Flex> */}
                 {webscorerCategories && (
                   <>
                     <Box>
@@ -253,8 +243,6 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                         id="category"
                         variant={"defaultInput"}
                         onChange={(e) => {
-                          // setCategory(e.target.value);
-                          // console.log(e.target.value);
                           setWebscorerCategory(e.target.value);
                         }}
                       >
@@ -332,7 +320,6 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                       onClick={() => {
                         setIsLoading(true);
                         getWebscorerResults().then((results) => {
-                          // console.log(r);
                           setWebscorerResultPreview &&
                             setWebscorerResultPreview({
                               results,

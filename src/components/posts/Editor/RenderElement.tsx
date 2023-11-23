@@ -152,7 +152,7 @@ const renderElement = (props: {
           }}
           {...attributes}
         >
-          {children} OH NOOOOOOOO
+          {children}
         </Text>
       );
   }
