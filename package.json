@@ -11,6 +11,8 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^5.1.0",
     "@cloudinary-util/url-loader": "^3.10.0",
+    "@mux/mux-player-react": "^2.2.0",
+    "@mux/mux-uploader-react": "^1.0.0-beta.13",
     "@slate-serializers/react": "^2.0.0",
     "@tmcw/togeojson": "^5.8.1",
     "@turf/helpers": "^6.5.0",

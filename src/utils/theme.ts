@@ -53,6 +53,7 @@ export default {
     chartTooltipBackground: "#dadada",
     chartAxes: "black",
     spinnerButton: "white",
+    videoAccent: "#3096f0",
     modes: {
       dark: {
         spinnerButton: "black",

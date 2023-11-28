@@ -193,6 +193,14 @@ export type WebscorerResultsType = {
   children: CustomText[];
 };
 
+export type VideoEmbedType = {
+  type: "videoEmbed";
+  children: CustomText[];
+  void: true;
+  assetId: string;
+  playbackId: string;
+};
+
 export type CustomElement =
   | ParagraphElement
   | HeadingElement
@@ -211,7 +219,8 @@ export type CustomElement =
   | BulletedListType
   | ListItemType
   | RaceResultsDotComType
-  | WebscorerResultsType;
+  | WebscorerResultsType
+  | VideoEmbedType;
 
 export type FormattedText = {
   text: string;

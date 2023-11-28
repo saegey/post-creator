@@ -65,6 +65,22 @@
           ],
           "category": "function",
           "resourceName": "webscorerResults"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "videoUploadUrl"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "videoUploadToAsset"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -279,6 +295,18 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "videoUploadToAsset": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "videoUploadUrl": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "webscorer": {
       "build": true,
       "dependsOn": [],
@@ -433,6 +461,38 @@
         {
           "category": "function",
           "resourceName": "shorturl"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoUploadToAsset_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadToAsset"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoUploadToAsset_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadToAsset"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoUploadUrl_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadUrl"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoUploadUrl_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadUrl"
         }
       ]
     },

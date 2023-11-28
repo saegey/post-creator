@@ -34,6 +34,7 @@ const EditUserPost = ({
   const [savingStatus, setSavingStatus] = React.useState("");
   const [isPublishedConfirmationOpen, setIsPublishedConfirmationOpen] =
     React.useState(false);
+  const [isVideoUploadOpen, setIsVideoUploadOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (user && user?.attributes.sub !== author.id) {
@@ -77,6 +78,8 @@ const EditUserPost = ({
             setSavingStatus,
             isPublishedConfirmationOpen,
             setIsPublishedConfirmationOpen,
+            isVideoUploadOpen,
+            setIsVideoUploadOpen,
           }}
         >
           <PostEditor initialState={postComponents} />

@@ -52,3 +52,4 @@ amplifytools.xcconfig
 src/ui-components/
 #amplify-do-not-edit-end
 *.tsbuildinfo
+**.env
