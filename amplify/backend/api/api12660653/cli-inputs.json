@@ -91,6 +91,30 @@
           "read"
         ]
       }
+    },
+    "/video/upload": {
+      "name": "/video/upload",
+      "lambdaFunction": "videoUploadUrl",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update"
+        ]
+      }
+    },
+    "/video/upload/asset": {
+      "name": "/video/upload/asset",
+      "lambdaFunction": "videoUploadToAsset",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update"
+        ]
+      }
     }
   }
 }

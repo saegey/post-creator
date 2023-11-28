@@ -3,6 +3,8 @@ import {
   slateToReactConfig,
   type SlateToReactConfig,
 } from "@slate-serializers/react";
+import { Box, Flex, Text } from "theme-ui";
+import MuxPlayer from "@mux/mux-player-react";
 
 import EmbedElemnt from "../Embed/EmbedElement";
 import PostAuthor from "../PostAuthor/PostAuthor";
@@ -112,6 +114,23 @@ const SlatePublish = () => {
         image: ({ node }) => {
           return (
             <ImageViewWrapper node={node} key={`image-${Math.random()}`} />
+          );
+        },
+        videoEmbed: ({ node }) => {
+          return (
+            <Flex sx={{ width: "100%", justifyContent: "center" }}>
+              <Box sx={{ width: "600px", height: "auto" }}>
+                <MuxPlayer
+                  playbackId={node.playbackId}
+                  metadata={{
+                    video_id: "video-id-123456",
+                    video_title: "Bick Buck Bunny",
+                    viewer_user_id: "user-id-bc-789",
+                  }}
+                  streamType="on-demand"
+                />
+              </Box>
+            </Flex>
           );
         },
       },

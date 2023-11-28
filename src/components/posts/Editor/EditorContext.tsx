@@ -36,6 +36,9 @@ export type EditorContextType = {
 
   isPublishedConfirmationOpen: boolean;
   setIsPublishedConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isVideoUploadOpen: boolean;
+  setIsVideoUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -63,6 +66,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setSavingStatus: () => {},
   isPublishedConfirmationOpen: false,
   setIsPublishedConfirmationOpen: () => {},
+  isVideoUploadOpen: false,
+  setIsVideoUploadOpen: () => {},
 });
 
 export { EditorContext };

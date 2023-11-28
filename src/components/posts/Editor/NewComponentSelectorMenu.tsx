@@ -15,11 +15,18 @@ import { useViewport } from "../../ViewportProvider";
 import ResultsIcon from "../../icons/ResultsIcon";
 import SidebarLeft from "../../shared/SidebarLeft";
 import StravaEmbed from "../Embed/StravaEmbed";
+import VideoUploader from "../VideoEmbed/VideoUploader";
 import { CustomEditor, TextElement } from "../../../types/common";
+import VideoIcon from "../../icons/VideoIcon";
 
 const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
-  const { setIsGraphMenuOpen, setIsGpxUploadOpen, setIsRaceResultsModalOpen } =
-    React.useContext(EditorContext);
+  const {
+    setIsGraphMenuOpen,
+    setIsGpxUploadOpen,
+    setIsRaceResultsModalOpen,
+    setIsVideoUploadOpen,
+    isVideoUploadOpen,
+  } = React.useContext(EditorContext);
   const { width } = useViewport();
   const { gpxFile, currentFtp, components } = React.useContext(PostContext);
 
@@ -73,6 +80,10 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
       ]);
       closeMenu();
     }
+  };
+
+  const embedVideo = () => {
+    setIsVideoUploadOpen(true);
   };
 
   const addMap = () => {
@@ -135,6 +146,16 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
           isOpen={isStravaModalOpen}
         >
           <StravaEmbed editor={editor} isModalOpen={setIsStravaModalOpen} />
+        </StandardModal>
+      )}
+
+      {isVideoUploadOpen && (
+        <StandardModal
+          title={"Upload Video"}
+          setIsOpen={setIsVideoUploadOpen}
+          isOpen={isVideoUploadOpen}
+        >
+          <VideoUploader editor={editor} />
         </StandardModal>
       )}
       <SidebarLeft
@@ -343,6 +364,33 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
                 }}
               >
                 Race Results
+              </Text>
+            </Flex>
+          </Box>
+          <Box
+            onClick={() => embedVideo()}
+            variant="boxes.sidebarMenuItem"
+            sx={{
+              cursor: "pointer",
+            }}
+          >
+            <Flex sx={{ alignItems: "center", gap: "20px" }}>
+              <Box
+                sx={{
+                  width: "25px",
+                  height: "auto",
+                  // marginRight: "10px",
+                }}
+              >
+                <VideoIcon />
+              </Box>
+              <Text
+                as="span"
+                sx={{
+                  color: "text",
+                }}
+              >
+                Embed Video
               </Text>
             </Flex>
           </Box>
