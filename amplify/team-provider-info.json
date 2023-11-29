@@ -63,7 +63,8 @@
         "raceresult": {},
         "videoUploadToAsset": {
           "secretsPathAmplifyAppId": "d15noiwtuwwref"
-        }
+        },
+        "videoWebhook": {}
       },
       "storage": {
         "dynamo1a552de1": {},
@@ -104,7 +105,7 @@
         },
         "postUpdateCalc": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/postUpdateCalc-4242567758417a636763-build.zip"
+          "s3Key": "amplify-builds/postUpdateCalc-332b6a3078314f2f624e-build.zip"
         },
         "shorturl": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
@@ -136,13 +137,17 @@
         },
         "videoUploadUrl": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/videoUploadUrl-4454436c7a3432674963-build.zip",
+          "s3Key": "amplify-builds/videoUploadUrl-6a4b6b777a486b394356-build.zip",
           "secretsPathAmplifyAppId": "d15noiwtuwwref"
         },
         "videoUploadToAsset": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/videoUploadToAsset-6d775565537170436d4f-build.zip",
           "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        },
+        "videoWebhook": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/videoWebhook-2b7341597a4761665748-build.zip"
         }
       },
       "api": {

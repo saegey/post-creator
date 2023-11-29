@@ -67,6 +67,7 @@ exports.handler = async (event) => {
     body: JSON.stringify({
       cors_origin: "*",
       new_asset_settings: {
+        passthrough: event.queryStringParameters.postId,
         playback_policy: ["public"],
       },
     }),

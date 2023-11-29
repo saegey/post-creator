@@ -1,8 +1,6 @@
 import React from "react";
-import { Box, Flex, Text } from "theme-ui";
+import { Box, Text } from "theme-ui";
 import { RenderLeafProps } from "slate-react";
-import MuxPlayer from "@mux/mux-player-react";
-import { useThemeUI } from "theme-ui";
 
 import PowerGraphElement from "../PowerGraph/PowerGraphElement";
 import ImageElement from "../Image/ImageElement";
@@ -19,6 +17,7 @@ import PostAuthorWrapper from "../PostAuthor/PostAuthorWrapper";
 import { CustomElement } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import WebscorerListWrapper from "../RaceResults/WebscorerListWrapper";
+import VideoPlayer from "../VideoEmbed/VideoPlayer";
 
 const Leaf = (props: RenderLeafProps) => {
   return (
@@ -43,7 +42,6 @@ const renderElement = (props: {
 }) => {
   const { attributes, children, element } = props;
   const units = useUnits();
-  const { theme } = useThemeUI();
 
   switch (element.type) {
     case "postAuthor":
@@ -71,22 +69,23 @@ const renderElement = (props: {
     case "link":
       return <Link element={element} children={children} />;
     case "videoEmbed":
-      return (
-        <Flex sx={{ width: "100%", justifyContent: "center" }}>
-          <Box sx={{ width: "600px", height: "auto" }}>
-            <MuxPlayer
-              playbackId={element.playbackId}
-              metadata={{
-                video_id: "video-id-123456",
-                video_title: "Bick Buck Bunny",
-                viewer_user_id: "user-id-bc-789",
-              }}
-              accentColor={theme?.colors?.videoAccent as string}
-              streamType="on-demand"
-            />
-          </Box>
-        </Flex>
-      );
+      return <VideoPlayer element={element} />;
+    // return (
+    //   <Flex sx={{ width: "100%", justifyContent: "center" }}>
+    //     <Box sx={{ width: "600px", height: "auto" }}>
+    //       <MuxPlayer
+    //         playbackId={element.playbackId}
+    //         metadata={{
+    //           video_id: "video-id-123456",
+    //           video_title: "Bick Buck Bunny",
+    //           viewer_user_id: "user-id-bc-789",
+    //         }}
+    //         accentColor={theme?.colors?.videoAccent as string}
+    //         streamType="on-demand"
+    //       />
+    //     </Box>
+    //   </Flex>
+    // );
 
     case "heading-two":
       return (

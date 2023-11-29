@@ -45,7 +45,6 @@ const UploadGpxModal = () => {
     setPowerZoneBuckets,
     setPowerZones,
     setTimeSeriesFile,
-    timeSeriesFile,
   }: PostContextType = React.useContext(PostContext);
 
   const { setIsGpxUploadOpen } = React.useContext(EditorContext);

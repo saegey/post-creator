@@ -115,6 +115,13 @@
           "update"
         ]
       }
+    },
+    "/video/webhook": {
+      "name": "/video/webhook",
+      "lambdaFunction": "videoWebhook",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }

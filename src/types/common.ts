@@ -198,6 +198,7 @@ export type VideoEmbedType = {
   children: CustomText[];
   void: true;
   assetId: string;
+  isReady: boolean;
   playbackId: string;
 };
 

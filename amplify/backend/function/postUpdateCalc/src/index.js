@@ -15,17 +15,12 @@ Amplify Params - DO NOT EDIT */ /**
  */
 
 const zlib = require('zlib');
-// const AWS = require('aws-sdk');
-
-// const fetch = require('node-fetch');
 const crypto = require('@aws-crypto/sha256-js');
 const { defaultProvider } = require('@aws-sdk/credential-provider-node');
 const { SignatureV4 } = require('@aws-sdk/signature-v4');
 const { HttpRequest } = require('@aws-sdk/protocol-http');
-// const fetch = require('node-fetch');
 
 const { Sha256 } = crypto;
-// const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT;
 const AWS_REGION = process.env.AWS_REGION || 'us-east-1';
 
 const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
