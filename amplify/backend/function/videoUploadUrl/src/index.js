@@ -1,15 +1,48 @@
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["MUX_TOKEN_ID","MUX_TOKEN_SECRET"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
 /* Amplify Params - DO NOT EDIT
 	ENV
 	REGION
-	MUX_TOKEN_ID
-	MUX_TOKEN_SECRET
 Amplify Params - DO NOT EDIT */
 
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
+
+const aws = require("aws-sdk");
+
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
+  let result;
+  try {
+    result = await new aws.SSM()
+      .getParameters({
+        Names: ["MUX_TOKEN_ID", "MUX_TOKEN_SECRET"].map(
+          (secretName) => process.env[secretName]
+        ),
+        WithDecryption: true,
+      })
+      .promise();
+  } catch (e) {
+    console.log("error", JSON.stringify(e));
+  }
+
+  console.log(JSON.stringify(process.env), result);
+
+  TOKEN_ID = result.Parameters[0].Value;
+  TOKEN_SECRET = result.Parameters[1].Value;
 
   const baseUrl = "https://api.mux.com";
   const url = `${baseUrl}/video/v1/uploads`;
@@ -27,9 +60,7 @@ exports.handler = async (event) => {
       Accept: "application/json",
       Authorization:
         "Basic " +
-        Buffer.from(
-          process.env.MUX_TOKEN_ID + ":" + process.env.MUX_TOKEN_SECRET
-        ).toString("base64"),
+        Buffer.from(TOKEN_ID + ":" + TOKEN_SECRET).toString("base64"),
     },
     hostname: endpoint.host,
     path: endpoint.pathname,

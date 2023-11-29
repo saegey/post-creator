@@ -11,6 +11,7 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
     const res = (await API.get("api12660653", "/video/upload", {
       response: true,
     })) as any;
+    console.log(res);
     setUploadId(res.data.id);
     return res.data.url;
   };
