@@ -480,6 +480,14 @@
         }
       ]
     },
+    "AMPLIFY_function_videoUploadToAsset_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadToAsset"
+        }
+      ]
+    },
     "AMPLIFY_function_videoUploadUrl_deploymentBucketName": {
       "usedBy": [
         {
@@ -489,6 +497,14 @@
       ]
     },
     "AMPLIFY_function_videoUploadUrl_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadUrl"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoUploadUrl_secretsPathAmplifyAppId": {
       "usedBy": [
         {
           "category": "function",

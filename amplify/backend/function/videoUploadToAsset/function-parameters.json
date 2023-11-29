@@ -1,4 +1,8 @@
 {
   "lambdaLayers": [],
-  "environmentVariableList": []
+  "environmentVariableList": [],
+  "secretNames": [
+    "MUX_TOKEN_ID",
+    "MUX_TOKEN_SECRET"
+  ]
 }

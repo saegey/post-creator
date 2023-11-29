@@ -1,4 +1,73 @@
 {
+  "prod": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nextjsblog-prod-201134-authRole",
+      "UnauthRoleArn": "arn:aws:iam::373376418880:role/amplify-nextjsblog-prod-201134-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::373376418880:role/amplify-nextjsblog-prod-201134-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+      "UnauthRoleName": "amplify-nextjsblog-prod-201134-unauthRole",
+      "StackName": "amplify-nextjsblog-prod-201134",
+      "StackId": "arn:aws:cloudformation:us-east-1:373376418880:stack/amplify-nextjsblog-prod-201134/1aa01e90-37ba-11ee-842e-0a00e05726b5",
+      "AmplifyAppId": "d15noiwtuwwref",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "auth": {
+        "nextjsbloga585e058": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "S3Trigger71ba5706": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/S3Trigger71ba5706-4936654a6f5a33666d4a-build.zip"
+        },
+        "nextjsblog24b60079": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/nextjsblog24b60079-5648696f654e794e6259-build.zip"
+        },
+        "postUpdateCalc": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/postUpdateCalc-4242567758417a636763-build.zip"
+        },
+        "publishPost": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/publishPost-70752b4a614838624d4b-build.zip"
+        },
+        "raceresultgetResults": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/raceresultgetResults-43357a2b684c2f2f5339-build.zip"
+        },
+        "routeAccessPoint": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/routeAccessPoint-5979646741653731376a-build.zip"
+        },
+        "shorturl": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/shorturl-35576453534556415a4e-build.zip"
+        },
+        "videoUploadUrl": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/videoUploadUrl-5649764f6938736a7955-build.zip"
+        },
+        "webscorer": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/webscorer-4352724b51712b715431-build.zip"
+        },
+        "webscorerResults": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/webscorerResults-48573252436764565072-build.zip"
+        },
+        "UserPostConfirmation": {},
+        "raceresult": {},
+        "videoUploadToAsset": {}
+      },
+      "storage": {
+        "dynamo1a552de1": {},
+        "routeFiles": {}
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-nextjsblog-dev-233823-authRole",
@@ -64,11 +133,13 @@
         },
         "videoUploadUrl": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/videoUploadUrl-5649764f6938736a7955-build.zip"
+          "s3Key": "amplify-builds/videoUploadUrl-4454436c7a3432674963-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
         },
         "videoUploadToAsset": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/videoUploadToAsset-6e523458347747727453-build.zip"
+          "s3Key": "amplify-builds/videoUploadToAsset-6d775565537170436d4f-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
         }
       },
       "api": {

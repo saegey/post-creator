@@ -1,3 +1,17 @@
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["MUX_TOKEN_ID","MUX_TOKEN_SECRET"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
 /* Amplify Params - DO NOT EDIT
 	ENV
 	REGION
@@ -8,8 +22,24 @@ Amplify Params - DO NOT EDIT */
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
+
+const aws = require("aws-sdk");
+
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
+
+  const { Parameters } = await new aws.SSM()
+    .getParameters({
+      Names: ["MUX_TOKEN_ID", "MUX_TOKEN_SECRET"].map(
+        (secretName) => process.env[secretName]
+      ),
+      WithDecryption: true,
+    })
+    .promise();
+  console.log(JSON.stringify(process.env), Parameters);
+
+  MUX_TOKEN_ID = Parameters[0].Value;
+  MUX_TOKEN_SECRET = Parameters[1].Value;
 
   const { uploadId } = event.queryStringParameters;
 
@@ -28,9 +58,7 @@ exports.handler = async (event) => {
       "Content-Type": "application/json",
       Authorization:
         "Basic " +
-        Buffer.from(
-          process.env.MUX_TOKEN_ID + ":" + process.env.MUX_TOKEN_SECRET
-        ).toString("base64"),
+        Buffer.from(MUX_TOKEN_ID + ":" + MUX_TOKEN_SECRET).toString("base64"),
     },
     hostname: endpoint.host,
     path: endpoint.pathname,
@@ -61,9 +89,7 @@ exports.handler = async (event) => {
       "Content-Type": "application/json",
       Authorization:
         "Basic " +
-        Buffer.from(
-          process.env.MUX_TOKEN_ID + ":" + process.env.MUX_TOKEN_SECRET
-        ).toString("base64"),
+        Buffer.from(MUX_TOKEN_ID + ":" + MUX_TOKEN_SECRET).toString("base64"),
     },
     body: JSON.stringify({
       policy: "public",
