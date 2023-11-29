@@ -3,12 +3,14 @@ import { API } from "aws-amplify";
 import React from "react";
 import { CustomEditor, ParagraphElement } from "../../../types/common";
 import { Transforms, Element as SlateElement } from "slate";
+import { PostContext } from "../../PostContext";
 
 const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
   const [uploadId, setUploadId] = React.useState<string | undefined>();
+  const { id } = React.useContext(PostContext);
 
   const getEndpoint = async () => {
-    const res = (await API.get("api12660653", "/video/upload", {
+    const res = (await API.get("api12660653", `/video/upload?postId=${id}`, {
       response: true,
     })) as any;
     console.log(res);
@@ -30,6 +32,7 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
 
   return (
     <MuxUploader
+      id="this-is-a-test"
       endpoint={getEndpoint}
       onSuccess={(e) => {
         getAssetId().then((res) => {
@@ -40,6 +43,7 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
               void: true,
               assetId: res.data.assetId,
               playbackId: res.data.playbackId,
+              isReady: false,
               children: [{ text: "" }],
             },
             { type: "paragraph", children: [{ text: "" }] } as ParagraphElement,

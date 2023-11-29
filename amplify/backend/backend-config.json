@@ -81,6 +81,14 @@
           ],
           "category": "function",
           "resourceName": "videoUploadToAsset"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "videoWebhook"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -307,6 +315,22 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "videoWebhook": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "webscorer": {
       "build": true,
       "dependsOn": [],
@@ -333,6 +357,22 @@
         {
           "category": "function",
           "resourceName": "S3Trigger71ba5706"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserPostConfirmation"
         }
       ]
     },
@@ -384,6 +424,22 @@
         }
       ]
     },
+    "AMPLIFY_function_raceresult_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "raceresult"
+        }
+      ]
+    },
+    "AMPLIFY_function_raceresult_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "raceresult"
+        }
+      ]
+    },
     "AMPLIFY_function_raceresultgetResults_deploymentBucketName": {
       "usedBy": [
         {
@@ -432,6 +488,22 @@
         }
       ]
     },
+    "AMPLIFY_function_videoUploadToAsset_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadToAsset"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoUploadToAsset_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoUploadToAsset"
+        }
+      ]
+    },
     "AMPLIFY_function_videoUploadToAsset_secretsPathAmplifyAppId": {
       "usedBy": [
         {
@@ -461,6 +533,22 @@
         {
           "category": "function",
           "resourceName": "videoUploadUrl"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoWebhook_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoWebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_videoWebhook_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "videoWebhook"
         }
       ]
     },
