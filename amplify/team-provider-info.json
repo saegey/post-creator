@@ -48,7 +48,8 @@
         },
         "videoUploadUrl": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/videoUploadUrl-5649764f6938736a7955-build.zip"
+          "s3Key": "amplify-builds/videoUploadUrl-5649764f6938736a7955-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
         },
         "webscorer": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
@@ -60,7 +61,9 @@
         },
         "UserPostConfirmation": {},
         "raceresult": {},
-        "videoUploadToAsset": {}
+        "videoUploadToAsset": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        }
       },
       "storage": {
         "dynamo1a552de1": {},

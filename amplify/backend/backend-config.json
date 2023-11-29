@@ -336,22 +336,6 @@
         }
       ]
     },
-    "AMPLIFY_function_UserPostConfirmation_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserPostConfirmation"
-        }
-      ]
-    },
-    "AMPLIFY_function_UserPostConfirmation_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserPostConfirmation"
-        }
-      ]
-    },
     "AMPLIFY_function_nextjsblog24b60079_deploymentBucketName": {
       "usedBy": [
         {
@@ -400,22 +384,6 @@
         }
       ]
     },
-    "AMPLIFY_function_raceresult_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "raceresult"
-        }
-      ]
-    },
-    "AMPLIFY_function_raceresult_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "raceresult"
-        }
-      ]
-    },
     "AMPLIFY_function_raceresultgetResults_deploymentBucketName": {
       "usedBy": [
         {
@@ -461,22 +429,6 @@
         {
           "category": "function",
           "resourceName": "shorturl"
-        }
-      ]
-    },
-    "AMPLIFY_function_videoUploadToAsset_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "videoUploadToAsset"
-        }
-      ]
-    },
-    "AMPLIFY_function_videoUploadToAsset_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "videoUploadToAsset"
         }
       ]
     },
