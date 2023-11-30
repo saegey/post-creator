@@ -37,6 +37,11 @@ import {
   configurePubSub,
   getEndpoint,
 } from "../../../actions/PubSub";
+// import { CustomElement } from '../../../types/common';
+
+type MatchType = {
+  node: CustomElement;
+};
 
 // Amplify.configure({
 //   // aws_user_files_s3_bucket_region: "us-east-1", // (required) - Amazon S3 bucket region
@@ -204,15 +209,17 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         console.log(data);
         if (data.value.type === "video.asset.ready") {
           console.log("asseet reead");
-          Transforms.setNodes(
+          Transforms.setNodes<CustomElement>(
             editor,
             {
               isReady: true,
             } as VideoEmbedType,
             {
               at: [],
-              match: (node, path) =>
-                node.type === "videoEmbed" && node.isReady === false,
+              match: (node) => {
+                const custom = node as CustomElement;
+                return custom.type === "videoEmbed" && custom.isReady === false;
+              },
             }
           );
 
