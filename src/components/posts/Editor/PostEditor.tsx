@@ -1,11 +1,12 @@
 import { Slate, Editable, withReact } from "slate-react";
-import { API, graphqlOperation, Storage, Amplify } from "aws-amplify";
+import { API, graphqlOperation, Storage, Amplify, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
 import { Element as SlateElement, createEditor } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
 import { Descendant, Transforms } from "slate";
+import { ZenObservable } from "zen-observable-ts";
 
 import renderElement, { renderLeaf } from "./RenderElement";
 import PostMenu from "./PostMenu/PostMenu";
@@ -29,7 +30,13 @@ import {
   CustomElement,
   CloudinaryImage,
   TimeSeriesDataType,
+  VideoEmbedType,
 } from "../../../types/common";
+import {
+  attachIoTPolicyToUser,
+  configurePubSub,
+  getEndpoint,
+} from "../../../actions/PubSub";
 
 // Amplify.configure({
 //   // aws_user_files_s3_bucket_region: "us-east-1", // (required) - Amazon S3 bucket region
@@ -46,6 +53,21 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
   const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
+  const [subPubConfigured, setSubPubConfigured] = React.useState(false);
+
+  React.useEffect(() => {
+    let subUpdates: ZenObservable.Subscription;
+
+    setUpSub().then((sub) => {
+      subUpdates = sub;
+    });
+
+    return () => {
+      if (subUpdates) {
+        subUpdates.unsubscribe();
+      }
+    };
+  }, [subPubConfigured]);
 
   const {
     id,
@@ -167,6 +189,44 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }) => {
     setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
+  };
+
+  const setUpSub = async () => {
+    if (!subPubConfigured) {
+      const endpoint = await getEndpoint();
+      await configurePubSub(endpoint);
+      await attachIoTPolicyToUser();
+      setSubPubConfigured(true);
+    }
+
+    return PubSub.subscribe(`post-${id}`).subscribe({
+      next: async (data: any) => {
+        console.log(data);
+        if (data.value.type === "video.asset.ready") {
+          console.log("asseet reead");
+          Transforms.setNodes(
+            editor,
+            {
+              isReady: true,
+            } as VideoEmbedType,
+            {
+              at: [],
+              match: (node, path) =>
+                node.type === "videoEmbed" && node.isReady === false,
+            }
+          );
+
+          await PostSaveComponents({
+            postId: id,
+            title: title,
+            postLocation: postLocation,
+            components: editor.children,
+            heroImage: heroImage ? JSON.stringify(heroImage) : "",
+          });
+        }
+      },
+      error: (error: any) => console.error(error),
+    });
   };
 
   let timeoutHandle: NodeJS.Timeout;
