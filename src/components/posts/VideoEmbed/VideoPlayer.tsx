@@ -1,86 +1,31 @@
 import React from "react";
-import { Box, Flex, Text } from "theme-ui";
+import { AspectRatio, Box, Flex, Heading, Text } from "theme-ui";
 import MuxPlayer from "@mux/mux-player-react";
 import { useThemeUI } from "theme-ui";
-import { PubSub } from "aws-amplify";
-import { ZenObservable } from "zen-observable-ts";
-import { Transforms, Element as SlateElement } from "slate";
-import {
-  useSlateStatic,
-  ReactEditor,
-  useSelected,
-  useFocused,
-} from "slate-react";
 
 import { VideoEmbedType } from "../../../types/common";
-import {
-  attachIoTPolicyToUser,
-  configurePubSub,
-  getEndpoint,
-} from "../../../actions/PubSub";
-import { PostContext } from "../../PostContext";
-import { PostSaveComponents } from "../../../actions/PostSave";
 
 const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
   const { theme } = useThemeUI();
-  const [subPubConfigured, setSubPubConfigured] = React.useState(false);
-  const editor = useSlateStatic();
-  const path = ReactEditor.findPath(editor, element);
-
-  const { id, title, postLocation, heroImage } = React.useContext(PostContext);
-
-  const setUpSub = async () => {
-    if (!subPubConfigured && !element.isReady) {
-      const endpoint = await getEndpoint();
-      await configurePubSub(endpoint);
-      await attachIoTPolicyToUser();
-      setSubPubConfigured(true);
-    }
-
-    return PubSub.subscribe(`post-${id}`).subscribe({
-      next: async (data: any) => {
-        // console.log(data);
-        if (data.value.type === "video.asset.ready") {
-          console.log("asseet reead");
-          Transforms.setNodes(
-            editor,
-            {
-              isReady: true,
-            } as VideoEmbedType,
-            { at: [path as any] }
-          );
-
-          await PostSaveComponents({
-            postId: id,
-            title: title,
-            postLocation: postLocation,
-            components: editor.children,
-            heroImage: heroImage ? JSON.stringify(heroImage) : "",
-          });
-        }
-      },
-      error: (error: any) => console.error(error),
-    });
-  };
-
-  React.useEffect(() => {
-    let subUpdates: ZenObservable.Subscription;
-
-    setUpSub().then((sub) => {
-      subUpdates = sub;
-    });
-
-    return () => {
-      if (subUpdates) {
-        subUpdates.unsubscribe();
-      }
-    };
-  }, [subPubConfigured]);
 
   return (
     <Flex sx={{ width: "100%", justifyContent: "center" }}>
-      <Box sx={{ width: "600px", height: "auto" }}>
-        {!element.isReady && <Text>Loading</Text>}
+      <Box sx={{ width: "690px", height: "auto" }}>
+        {!element.isReady && (
+          <AspectRatio
+            ratio={16 / 9}
+            sx={{
+              p: 4,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "text",
+            }}
+            className="skeleton"
+          >
+            <Heading>Processing video</Heading>
+          </AspectRatio>
+        )}
         {element.isReady && (
           <MuxPlayer
             playbackId={element.playbackId}

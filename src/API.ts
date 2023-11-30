@@ -931,7 +931,7 @@ export type GetPostInitialQuery = {
     postRelatedId?: string | null,
     shortUrl?: string | null,
     raceResults?: string | null,
-		webscorerResults?: string | null,
+    webscorerResults?: string | null,
     privacyStatus?: string | null,
   } | null,
 };
