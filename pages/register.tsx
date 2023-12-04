@@ -2,6 +2,8 @@ import React from "react";
 import { Auth } from "aws-amplify";
 import { Box, Button, Flex, Input, Label, Text } from "theme-ui";
 import Router from "next/router";
+import ReCAPTCHA from "react-google-recaptcha";
+import { useThemeUI } from "theme-ui";
 
 type User = {
   email: string;
@@ -11,6 +13,10 @@ type User = {
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = React.useState<string>();
+  const [isRobot, setIsRobot] = React.useState<boolean>(true);
+  const { colorMode } = useThemeUI();
+  // console.log(context.colorMode);
+
   // const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   setUser({ ...user, [event.target.name]: event.target.value });
   // };
@@ -146,7 +152,13 @@ const RegisterPage: React.FC = () => {
                   required
                 />
               </Flex>
-              <Button type="submit" variant="primaryButton">
+              <ReCAPTCHA
+                sitekey="6LdW_CUpAAAAAOC--lA01wOnW1UA3RlZyc_LgX_0"
+                onChange={() => setIsRobot(false)}
+                theme={colorMode === "dark" ? "dark" : "light"}
+              />
+
+              <Button type="submit" variant="primaryButton" disabled={isRobot}>
                 Register
               </Button>
             </Flex>
