@@ -22,6 +22,7 @@ export interface IUser {
     preferred_username: string;
     sub: string;
     profile: string;
+    zoneinfo: "metric" | "imperial";
   };
 }
 

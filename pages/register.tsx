@@ -53,6 +53,7 @@ const RegisterPage: React.FC = () => {
           // "custom:role": "user",
           name: name,
           preferred_username: username,
+          zoneinfo: "imperial",
         },
       });
 

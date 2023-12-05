@@ -14,8 +14,6 @@ interface Vizprops {
   view: boolean;
   units: {
     unitOfMeasure: string;
-    distanceUnit: string;
-    elevationUnit: string;
     toggleUnit: () => void;
   };
 }
@@ -51,13 +49,6 @@ const VisualOverview = ({
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
   const [downsampleRate] = React.useState<number>(20);
   const [isZoomedOut, setIsZoomedOut] = React.useState(false);
-
-  // React.useEffect(() => {
-  //   if (element.selectionStart && element.selectionEnd) {
-  //     // setSelection([element.selectionStart, element.selectionEnd]);
-  //   }
-  // }, [selection]);
-
   const coordinates = React.useMemo(
     () => (activity !== undefined ? activity.map((a) => a.c) : undefined),
     [activity]

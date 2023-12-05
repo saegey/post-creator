@@ -35,6 +35,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
       name,
       preferred_username,
       profile,
+      zoneinfo,
     } = payload;
 
     user = {
@@ -48,6 +49,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
         preferred_username,
         sub,
         profile,
+        zoneinfo,
       },
     };
   } catch (e) {
