@@ -59,8 +59,6 @@ const VisualOverview = ({
       return <Box>Error loading graph</Box>;
     }
     const fixedActivity = activity.slice(0, activity.length - 1);
-    // console.log(selection);
-
     const selectionStart = isZoomedOut
       ? 0
       : selection

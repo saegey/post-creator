@@ -81,7 +81,6 @@ const VisualOverviewWrapper = ({
       e: units.unitOfMeasure === "metric" ? a.e : a && a.e ? a.e * 3.28084 : 0,
     };
   });
-	console.log(fixedData);
 
   return (
     <Box
