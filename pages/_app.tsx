@@ -21,7 +21,7 @@ const app = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = React.useState<IUser>();
   const [unitOfMeasure, setUnitOfMeasure] = React.useState<
     "imperial" | "metric"
-  >();
+  >("imperial");
 
   const initialLoad = React.useCallback(async () => {
     Hub.listen("auth", async ({ payload: { event, data } }) => {
