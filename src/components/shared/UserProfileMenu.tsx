@@ -32,7 +32,6 @@ const UserProfileMenu = ({
   const [mode, setMode] = useColorMode();
   const { toggleUnit, unitOfMeasure } = useUnits();
   const { width } = useViewport();
-  console.log(unitOfMeasure);
 
   React.useEffect(() => {
     if (profileOpen) {
