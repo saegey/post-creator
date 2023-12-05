@@ -148,13 +148,17 @@ const ElevationSlice = ({
       <Box>
         <Text as="p">Distance</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {distance ? `${distance} ${units.distanceUnit}` : ""}
+          {distance
+            ? `${distance} ${units.unitOfMeasure === "metric" ? "km" : "mi"}`
+            : ""}
         </Text>
       </Box>
       <Box>
         <Text as="p">Elevation</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {elevation ? `${elevation} ${units.elevationUnit}` : "-"}
+          {elevation
+            ? `${elevation} ${units.unitOfMeasure === "metric" ? "m" : "ft"}`
+            : "-"}
         </Text>
       </Box>
       <Box>

@@ -343,7 +343,9 @@ const ElevationGraph = ({
               domain={left && right ? [left, right] : undefined}
               tickCount={5}
               label={{
-                value: `Distance (${units.distanceUnit})`,
+                value: `Distance (${
+                  units.unitOfMeasure === "metric" ? "km" : "mi"
+                })`,
                 position: "bottom",
                 fontSize: "14px",
               }}
@@ -363,7 +365,9 @@ const ElevationGraph = ({
               domain={[bottom, top]}
               type="number"
               label={{
-                value: `Elevation (${units.elevationUnit})`,
+                value: `Elevation (${
+                  units.unitOfMeasure === "metric" ? "m" : "ft"
+                })`,
                 angle: -90,
                 position: "left",
                 fontSize: "14px",

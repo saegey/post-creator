@@ -19,51 +19,15 @@ Amplify.configure({ ...awsconfig, ssr: true });
 
 const app = ({ Component, pageProps }: AppProps) => {
   const [user, setUser] = React.useState<IUser>();
+  const [unitOfMeasure, setUnitOfMeasure] = React.useState<
+    "imperial" | "metric"
+  >();
 
   const initialLoad = React.useCallback(async () => {
-    // import { Hub } from 'aws-amplify/utils';
-
-    // Hub.listen('auth', ({ payload }) => {
-    //   switch (payload.event) {
-    //     case 'signedIn':
-    //       console.log('user have been signedIn successfully.');
-    //       break;
-    //     case 'signedOut':
-    //       console.log('user have been signedOut successfully.');
-    //       break;
-    //     case 'tokenRefresh':
-    //       console.log('auth tokens have been refreshed.');
-    //       break;
-    //     case 'tokenRefresh_failure':
-    //       console.log('failure while refreshing auth tokens.');
-    //       break;
-    //     case 'signInWithRedirect':
-    //       console.log('signInWithRedirect API has successfully been resolved.');
-    //       break;
-    //     case 'signInWithRedirect_failure':
-    //       console.log('failure while trying to resolve signInWithRedirect API.');
-    //       break;
-    //     case 'customOAuthState':
-    //       logger.info('custom state returned from CognitoHosted UI');
-    //       break;
-    //   }
-    // });
-    // copy
-    // Was this page helpful?
-
     Hub.listen("auth", async ({ payload: { event, data } }) => {
       switch (event) {
         case "signIn": {
           const role = data?.attributes["custom:role"];
-          //if role doesn't match as defined logout
-          // if (role === "admin") {
-          //   console.error({
-          //     content: "Not authenticated",
-          //   });
-          //   await Auth.signOut();
-          //   break;
-          // }
-
           const user: IUser = {
             userId: data?.username,
             email: data?.attributes?.email,
@@ -75,9 +39,11 @@ const app = ({ Component, pageProps }: AppProps) => {
               preferred_username: data?.attributes?.preferred_username,
               sub: data?.attributes?.sub,
               profile: data?.attributes?.profile,
+              zoneinfo: data?.attributes?.zoneinfo,
             },
           };
           setUser(user);
+          setUnitOfMeasure(user.attributes.zoneinfo);
           //set user data to redux/context
           break;
         }
@@ -101,6 +67,7 @@ const app = ({ Component, pageProps }: AppProps) => {
 
       if (sessionData) {
         const { payload } = sessionData;
+        console.log("app", payload.zoneinfo);
         //"custom:role": role if custom attribute is added
         const {
           email,
@@ -111,6 +78,7 @@ const app = ({ Component, pageProps }: AppProps) => {
           name,
           preferred_username,
           profile,
+          zoneinfo,
         } = payload;
 
         const user: IUser = {
@@ -124,9 +92,11 @@ const app = ({ Component, pageProps }: AppProps) => {
             preferred_username,
             sub,
             profile,
+            zoneinfo,
           },
         };
         setUser(user);
+        setUnitOfMeasure(user.attributes.zoneinfo);
       }
     } catch (e) {
       console.log(e);
@@ -137,7 +107,7 @@ const app = ({ Component, pageProps }: AppProps) => {
 
   React.useEffect(() => {
     initialLoad();
-    // getCurrentSession();
+    getCurrentSession();
   }, []);
 
   const { metaTags } = pageProps as {
@@ -177,15 +147,28 @@ const app = ({ Component, pageProps }: AppProps) => {
           />
         </Head>
         {/* <React.StrictMode> */}
-          <UnitProvider>
-            <ViewportProvider>
-              <ThemeUIProvider theme={theme}>
-                <UserContext.Provider value={{ user, setUser }}>
-                  <Component {...pageProps} />
-                </UserContext.Provider>
-              </ThemeUIProvider>
-            </ViewportProvider>
-          </UnitProvider>
+        <UnitProvider.Provider
+          value={{
+            unitOfMeasure,
+            toggleUnit: async () => {
+              const newUnit =
+                unitOfMeasure === "imperial" ? "metric" : "imperial";
+              setUnitOfMeasure(newUnit);
+              const cUser: IUser = await Auth.currentAuthenticatedUser();
+              await Auth.updateUserAttributes(cUser, {
+                zoneinfo: newUnit,
+              });
+            },
+          }}
+        >
+          <ViewportProvider>
+            <ThemeUIProvider theme={theme}>
+              <UserContext.Provider value={{ user, setUser }}>
+                <Component {...pageProps} />
+              </UserContext.Provider>
+            </ThemeUIProvider>
+          </ViewportProvider>
+        </UnitProvider.Provider>
         {/* </React.StrictMode> */}
       </>
     </ErrorBoundary>

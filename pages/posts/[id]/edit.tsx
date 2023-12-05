@@ -46,6 +46,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       name,
       preferred_username,
       profile,
+      zoneinfo,
     } = payload;
 
     user = {
@@ -59,6 +60,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
         preferred_username,
         sub,
         profile,
+        zoneinfo,
       },
     };
   } catch (e) {
