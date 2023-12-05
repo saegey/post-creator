@@ -70,23 +70,6 @@ const renderElement = (props: {
       return <Link element={element} children={children} />;
     case "videoEmbed":
       return <VideoPlayer element={element} />;
-    // return (
-    //   <Flex sx={{ width: "100%", justifyContent: "center" }}>
-    //     <Box sx={{ width: "600px", height: "auto" }}>
-    //       <MuxPlayer
-    //         playbackId={element.playbackId}
-    //         metadata={{
-    //           video_id: "video-id-123456",
-    //           video_title: "Bick Buck Bunny",
-    //           viewer_user_id: "user-id-bc-789",
-    //         }}
-    //         accentColor={theme?.colors?.videoAccent as string}
-    //         streamType="on-demand"
-    //       />
-    //     </Box>
-    //   </Flex>
-    // );
-
     case "heading-two":
       return (
         <Text

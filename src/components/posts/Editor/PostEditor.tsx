@@ -37,18 +37,6 @@ import {
   configurePubSub,
   getEndpoint,
 } from "../../../actions/PubSub";
-// import { CustomElement } from '../../../types/common';
-
-type MatchType = {
-  node: CustomElement;
-};
-
-// Amplify.configure({
-//   // aws_user_files_s3_bucket_region: "us-east-1", // (required) - Amazon S3 bucket region
-//   aws_user_files_s3_bucket:
-//     "s3-object-lambda-acc-w69hfsywux9wwrxffacbyfdsuse1a--ol-s3", // (required) - Amazon S3 bucket URI
-//   // aws_user_files
-// });
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -187,13 +175,21 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     ]);
   };
 
-  const addImage = ({
+  const addImage = async ({
     selectedImage,
   }: {
     selectedImage: CloudinaryImage | undefined;
   }) => {
     setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
+
+    await PostSaveComponents({
+      postId: id,
+      title: title,
+      postLocation: postLocation,
+      components: editor.children,
+      heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
+    });
   };
 
   const setUpSub = async () => {
