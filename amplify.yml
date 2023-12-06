@@ -41,8 +41,8 @@ test:
         # - npx mochawesome-merge cypress/report/mochawesome-report/mochawesome*.json > cypress/report/mochawesome.json
         # - pm2 kill
   artifacts:
-    baseDirectory: cypress
-    configFilePath: '**/mochawesome.json'
-    files:
-      - '**/*.png'
-      - '**/*.mp4'
+    baseDirectory: playwright
+    configFilePath: 'playright-results.json'
+    # files:
+    #   - '**/*.png'
+    #   - '**/*.mp4'
