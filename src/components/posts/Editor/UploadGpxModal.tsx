@@ -17,7 +17,6 @@ import {
 import { EditorContext } from "./EditorContext";
 import { getPostInitial } from "../../../graphql/customQueries";
 
-
 const UploadGpxModal = () => {
   const [fileData, setFileData] = React.useState<File>();
   const [isUploading, setIsUploading] = React.useState(false);
@@ -57,21 +56,25 @@ const UploadGpxModal = () => {
 
     const user = await Auth.currentUserCredentials();
 
-    const result = await Storage.put(`uploads/${fileData.name}`, fileData, {
-      progressCallback(progress) {
-        setProgress({ loaded: progress.loaded, total: progress.total });
-        if (progress.total === progress.loaded) {
-          setProcessingGpxStatus("File successfully uploaded");
-        }
-      },
-      metadata: {
-        postId: id ? id : "",
-        currentFtp: (currentFtp ? currentFtp : 0).toString(),
-        identityId: user.identityId,
-      },
-      contentType: fileData.type,
-      level: "private",
-    });
+    const result = await Storage.put(
+      `uploads/${fileData.name.replace(" ", "_")}`,
+      fileData,
+      {
+        progressCallback(progress) {
+          setProgress({ loaded: progress.loaded, total: progress.total });
+          if (progress.total === progress.loaded) {
+            setProcessingGpxStatus("File successfully uploaded");
+          }
+        },
+        metadata: {
+          postId: id ? id : "",
+          currentFtp: (currentFtp ? currentFtp : 0).toString(),
+          identityId: user.identityId,
+        },
+        contentType: fileData.type,
+        level: "private",
+      }
+    );
 
     try {
       (await API.graphql({
@@ -247,7 +250,6 @@ const UploadGpxModal = () => {
               type="file"
               variant="defaultInput"
               disabled={isUploading}
-              // sx={{ marginY: '20px', border: '1px solid #cdcdcd' }}
               onChange={(e) => {
                 if (e.target && e.target.files && e.target.files.length > 0) {
                   setFileData(e.target?.files[0]);
