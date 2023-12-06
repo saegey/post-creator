@@ -43,7 +43,7 @@ jobs:
       - name: Configure Amplify CLI
         run: npm install -g @aws-amplify/cli
       - name: Initialize Amplify Environment
-        run: amplify pull --appId d15noiwtuwwref --envName dev
+        run: amplify pull --appId d15noiwtuwwref --envName dev --yes
       - run: npm ci
       - run: npx next build
 
