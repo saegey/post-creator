@@ -58,8 +58,7 @@ const EditProfile = ({ user }: { user?: IUser }) => {
   }
 
   return (
-    <main>
-      <Header user={user} />
+    <>
       <div
         style={{
           paddingTop: "40px",
@@ -193,7 +192,8 @@ const EditProfile = ({ user }: { user?: IUser }) => {
           </Box>
         </Flex>
       </div>
-    </main>
+    </>
+    // </main>
   );
 };
 

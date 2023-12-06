@@ -7,7 +7,8 @@
     "amplify:pull": "amplify pull --appId d15noiwtuwwref --envName dev",
     "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -",
     "check-types": "tsc --noEmit",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@cloudinary-util/url-loader": "^3.10.0",
@@ -42,6 +43,7 @@
     "@types/node": "^20.4.9",
     "@types/react": "^18.2.19",
     "@types/react-google-recaptcha": "^2.1.8",
+    "cypress": "^13.6.1",
     "theme-ui": "^0.16.0",
     "typescript": "^5.1.6"
   }
