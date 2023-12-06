@@ -41,7 +41,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Configure Amplify CLI
-        run: npm install -g u/aws-amplify/cli
+        run: npm install -g @aws-amplify/cli
       - name: Initialize Amplify Environment
         run: amplify pull --appId d15noiwtuwwref --envName dev
       - run: npm ci
