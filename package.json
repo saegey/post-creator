@@ -6,10 +6,10 @@
     "start": "next start",
     "amplify:pull": "amplify pull --appId d15noiwtuwwref --envName dev",
     "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "^5.1.0",
     "@cloudinary-util/url-loader": "^3.10.0",
     "@mux/mux-player-react": "^2.2.0",
     "@mux/mux-uploader-react": "^1.0.0-beta.13",
@@ -21,7 +21,6 @@
     "aws-amplify": "^5.3.12",
     "aws-sdk": "^2.1450.0",
     "aws-xray-sdk": "^3.5.1",
-    "formidable": "^3.5.0",
     "mapbox-gl": "^2.15.0",
     "moment": "^2.29.4",
     "next": "^13.5.4",
@@ -37,6 +36,7 @@
     "slate-react": "^0.98.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
     "@types/formidable": "^3.4.0",
     "@types/mapbox-gl": "^2.7.13",
     "@types/node": "^20.4.9",
