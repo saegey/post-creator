@@ -14,7 +14,23 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+beforeEach(() => {
+  cy.session(
+    "loginTestingUser",
+    () => {
+      cy.visit("http://localhost:3000/login");
+      cy.get("#email").type("adam.saegebarth@gmail.com");
+      cy.get("#password").type(`mec4czd8YGE@gut@feh`);
+      cy.get("#submit-login").click();
+      cy.location("pathname").should("eq", "/");
+    },
+    {
+      cacheAcrossSpecs: true,
+    }
+  );
+});

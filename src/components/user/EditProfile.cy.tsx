@@ -9,7 +9,15 @@ describe("<EditProfile />", () => {
         user={{
           userId: "fsdafs",
           email: "sfdf",
-          attributes: { name: "bob doe" },
+          email_verified: true,
+          attributes: {
+            name: "bob doe",
+            zoneinfo: "metric",
+            preferred_username: "bobjoe",
+            picture: "fasfds",
+            sub: "sfsd32432434",
+            profile: "safsdfsdfsd",
+          },
         }}
       />
     );

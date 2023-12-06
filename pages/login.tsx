@@ -83,7 +83,7 @@ const LoginPage: React.FC = () => {
                 required
               />
             </Flex>
-            <Button type="submit" variant="primaryButton">
+            <Button id="submit-login" type="submit" variant="primaryButton">
               Login
             </Button>
             <ThemeLink
