@@ -1,10 +1,10 @@
 /* Amplify Params - DO NOT EDIT
-	API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT
-	API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT
-	API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT
-	ENV
-	REGION
-	STORAGE_ROUTEFILES_BUCKETNAME
+  API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT
+  API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT
+  API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT
+  ENV
+  REGION
+  STORAGE_ROUTEFILES_BUCKETNAME
 Amplify Params - DO NOT EDIT */
 
 // /**
@@ -158,14 +158,16 @@ exports.handler = async (event) => {
     // console.log("resBody", resBody);
     if (resBody.errors) statusCode = 400;
   } catch (error) {
-    statusCode = 500;
-    body = {
-      errors: [
-        {
-          message: error.message,
-        },
-      ],
-    };
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        errors: [
+          {
+            message: error.message,
+          },
+        ],
+      })
+    }
   }
 
   // const identityId =
