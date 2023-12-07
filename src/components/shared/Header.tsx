@@ -105,7 +105,7 @@ const Header = ({ user }: { user: IUser }) => {
                   onClick={() => setProfileOpen(true)}
                   config={{
                     cloud: {
-                      cloudName: cloudUrl,
+                      cloudName: cloudUrl ? cloudUrl : "dprifih4o",
                     },
                   }}
                 />
