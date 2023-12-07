@@ -2,7 +2,7 @@ const awsmobile = {
   aws_project_region: "mock-region",
   aws_cognito_identity_pool_id: "mock-cognito-identity-pool-id",
   aws_cognito_region: "mock-cognito-region",
-  aws_user_pools_id: "mock-user-pools-id",
+  aws_user_pools_id: "us-east-1_X51fuiSEw",
   aws_user_pools_web_client_id: "mock-user-pools-web-client-id",
   aws_appsync_graphqlEndpoint: "mock-appsync-endpoint",
   aws_appsync_region: "mock-appsync-region",
