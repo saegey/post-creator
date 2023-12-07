@@ -19,6 +19,7 @@ const { defaultProvider } = require("@aws-sdk/credential-provider-node");
 const { SignatureV4 } = require("@aws-sdk/signature-v4");
 const { HttpRequest } = require("@aws-sdk/protocol-http");
 const { Sha256 } = crypto;
+const fetch = require("node-fetch");
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 const S3 = new AWS.S3();
@@ -115,8 +116,8 @@ exports.handler = async (event) => {
   );
 
   let date = new Date();
-
-  const endpoint = new URL(GRAPHQL_ENDPOINT);
+  console.log(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
+  const endpoint = new URL(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
 
   const signer = new SignatureV4({
     credentials: defaultProvider(),
@@ -141,7 +142,10 @@ exports.handler = async (event) => {
   });
 
   const signed = await signer.sign(requestToBeSigned);
-  const request = new Request(GRAPHQL_ENDPOINT, signed);
+  const request = new Request(
+    process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT,
+    signed
+  );
 
   let statusCode = 200;
   let resBody;
@@ -149,8 +153,9 @@ exports.handler = async (event) => {
 
   try {
     response = await fetch(request);
+    // console.log("response", response);
     resBody = await response.json();
-    console.log("resBody", resBody);
+    // console.log("resBody", resBody);
     if (resBody.errors) statusCode = 400;
   } catch (error) {
     statusCode = 500;
@@ -239,6 +244,7 @@ exports.handler = async (event) => {
     // shortUrl = 't';
   }
 
+  console.log(resBody);
   const privateTimeSeriesFile = await S3.getObject({
     Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
     Key: `private/${event.requestContext.identity.cognitoIdentityId}/${resBody.data.getPost.timeSeriesFile}`,
