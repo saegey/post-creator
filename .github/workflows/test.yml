@@ -2,6 +2,8 @@ name: CI
 on: push
 jobs:
   build:
+    env:
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,3 +18,5 @@ jobs:
           npx jest --coverage --coverageReporters json-summary
       - name: Jest Coverage Comment
         uses: MishaKav/jest-coverage-comment@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
