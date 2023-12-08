@@ -1,13 +1,22 @@
 const AWS = require("aws-sdk-mock");
+const { defaultProvider } = require("@aws-sdk/credential-provider-node");
+const { SignatureV4 } = require("@aws-sdk/signature-v4");
 
 const { handler } = require("../index");
 const event = require("../event.json");
 
 const fetch = require("node-fetch");
 // const AWS = require("aws-sdk");
-const { isJSDocImplementsTag } = require("typescript");
 
 jest.mock("node-fetch", () => jest.fn());
+
+jest.mock("@aws-sdk/credential-provider-node", () => {
+  return {
+    defaultProvider: jest.fn().mockReturnValue("blah blah"),
+  };
+});
+
+jest.mock("@aws-sdk/signature-v4");
 
 AWS.mock("DynamoDB.DocumentClient", "query", function (params, callback) {
   callback(null, {
@@ -16,6 +25,7 @@ AWS.mock("DynamoDB.DocumentClient", "query", function (params, callback) {
     },
   });
 });
+// AWS.mock("credential-provider-node")
 
 AWS.mock("DynamoDB.DocumentClient", "update", function (params, callback) {
   callback(null, { Attributes: { id: "1234" } });
