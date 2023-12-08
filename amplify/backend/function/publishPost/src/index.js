@@ -152,7 +152,7 @@ exports.handler = async (event) => {
 
   try {
     response = await fetch(request);
-    // console.log("response", response);
+    console.log("response", response);
     resBody = await response.json();
     // console.log("resBody", resBody);
     if (resBody.errors) statusCode = 400;
@@ -176,7 +176,8 @@ exports.handler = async (event) => {
     .split(":")
     .pop();
 
-  // console.log(JSON.stringify(event.requestContext.identity));
+  console.log("identityId", identityId);
+
   const getParams = {
     TableName: publishedPostTable,
     IndexName: "PublishedPostByOriginalPostId",
@@ -189,6 +190,8 @@ exports.handler = async (event) => {
     },
     // ProjectionExpression: 'ATTRIBUTE_NAME',
   };
+
+  console.log(getParams);
 
   // Call DynamoDB to read the item from the table
 
