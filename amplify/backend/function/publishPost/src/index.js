@@ -13,21 +13,7 @@ Amplify Params - DO NOT EDIT */
 
 const AWS = require("aws-sdk");
 const uuid = require("uuid");
-const zlib = require("zlib");
-const crypto = require("@aws-crypto/sha256-js");
-const { defaultProvider } = require("@aws-sdk/credential-provider-node");
-const { SignatureV4 } = require("@aws-sdk/signature-v4");
-const { HttpRequest } = require("@aws-sdk/protocol-http");
-const { Sha256 } = crypto;
 const fetch = require("node-fetch");
-
-const docClient = new AWS.DynamoDB.DocumentClient();
-const S3 = new AWS.S3();
-
-const AWS_REGION = process.env.AWS_REGION || "us-east-1";
-const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
-const publishedPostTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
-const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 
 const generateUID = () => {
   // I generate the UID from two parts here
@@ -105,6 +91,19 @@ const query = /* GraphQL */ `
 
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
+  const crypto = require("@aws-crypto/sha256-js");
+  const { defaultProvider } = require("@aws-sdk/credential-provider-node");
+  const { SignatureV4 } = require("@aws-sdk/signature-v4");
+  const { HttpRequest } = require("@aws-sdk/protocol-http");
+  const { Sha256 } = crypto;
+
+  const docClient = new AWS.DynamoDB.DocumentClient();
+  const S3 = new AWS.S3();
+
+  const AWS_REGION = process.env.AWS_REGION || "us-east-1";
+  const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
+  const publishedPostTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
+  const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 
   const { body } = event;
   const { postId, origin } = JSON.parse(body);
@@ -166,8 +165,8 @@ exports.handler = async (event) => {
             message: error.message,
           },
         ],
-      })
-    }
+      }),
+    };
   }
 
   // const identityId =
