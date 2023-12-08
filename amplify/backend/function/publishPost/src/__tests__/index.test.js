@@ -24,15 +24,11 @@ jest.mock("aws-sdk", () => {
     },
     S3: jest.fn(() => ({
       // Simulate the S3 methods you want to mock
-      getObject: jest
-        .fn()
-        .mockReturnValue({
-          promise: jest
-            .fn()
-            .mockResolvedValue({
-              Body: Buffer.from(JSON.stringify({ hello: "world" }), "utf8"),
-            }),
+      getObject: jest.fn().mockReturnValue({
+        promise: jest.fn().mockResolvedValue({
+          Body: Buffer.from(JSON.stringify({ hello: "world" }), "utf8"),
         }),
+      }),
       putObject: jest.fn().mockReturnThis(),
       // Add more mocked S3 methods as needed for your tests
     })),
@@ -58,6 +54,13 @@ describe("functions executes", () => {
       },
     });
     fetch.mockImplementation(() => response);
-    expect(await handler(event)).toBe({});
+    expect(await handler(event)).toEqual({
+      body: '{"Attributes":{"id":"1234"}}',
+      headers: {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Origin": "*",
+      },
+      statusCode: 200,
+    });
   });
 });
