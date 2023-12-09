@@ -156,11 +156,15 @@ exports.handler = async (event) => {
     response = await fetch(request);
     console.log("response", response);
     resBody = await response.json();
-    // console.log("resBody", resBody);
     if (resBody.errors) statusCode = 400;
   } catch (error) {
+    console.log("error", error);
     return {
       statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Origin": "*",
+      },
       body: JSON.stringify({
         errors: [
           {
@@ -202,15 +206,12 @@ exports.handler = async (event) => {
 
   try {
     await docClient
-      .query(getParams, function (err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          if (data.Items && data.Items.length > 0) {
-            existingId = data.Items[0].id;
-            shortUrl = data.Items[0].shortUrl;
-          }
-          console.log("Success", data, existingId);
+      .query(getParams, function (err, res) {
+        console.log(res.data.Items.length);
+        if (res.data.Items && res.data.Items.length > 0) {
+          // console.log(res.data.Items[0]);
+          existingId = res.data.Items[0].id;
+          shortUrl = res.data.Items[0].shortUrl;
         }
       })
       .promise();
