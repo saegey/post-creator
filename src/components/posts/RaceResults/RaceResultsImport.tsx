@@ -72,7 +72,7 @@ type WebscorerRes = {
 
 const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
   const [categories, setCategories] = React.useState<{
-    data: { filterValues: Array<Array<string>> };
+    data: { filterValues: Array<{ Values: Array<string> }> };
   }>();
   const [category, setCategory] = React.useState("");
   const [webscorerCategory, setWebscorerCategory] = React.useState("");
@@ -163,6 +163,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     const response = await API.get(apiName, path, myInit);
     setKey(response.data.key);
     setServer(response.data.server);
+    console.log(response);
     setCategories(response);
     return response;
   };
@@ -268,7 +269,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                         }}
                       >
                         <option></option>
-                        {categories.data?.filterValues[0].map(
+                        {categories.data?.filterValues[0]["Values"].map(
                           (c: string, i: number) => (
                             <option key={`category-${i}`}>{c}</option>
                           )
@@ -286,7 +287,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                         }}
                       >
                         <option></option>
-                        {categories.data?.filterValues[1].map(
+                        {categories.data?.filterValues[1]["Values"].map(
                           (c: string, i: number) => (
                             <option key={`category-${i}`}>{c}</option>
                           )

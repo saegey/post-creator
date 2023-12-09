@@ -57,7 +57,7 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           >
             Place
           </Text>
-          <Text as="span" sx={{ width: "300px" }}>
+          <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
             Name
           </Text>
           <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
@@ -132,7 +132,7 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     width: "100px",
                   }}
                 >
-                  {row.FinishTime}
+                  {row.Time}
                 </Text>
               </Flex>
             );

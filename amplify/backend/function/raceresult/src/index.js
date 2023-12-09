@@ -1,17 +1,17 @@
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
 
   const raceId = event.queryStringParameters.raceId;
   const url = `https://my.raceresult.com/${raceId}/RRPublish/data/config?page=results&noVisitor=1`;
-  console.log('URL:', url);
+  console.log("URL:", url);
   const endpoint = new URL(url);
 
   const requestToBeSigned = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       host: endpoint.host,
     },
     hostname: endpoint.host,
@@ -28,7 +28,7 @@ exports.handler = async (event) => {
   try {
     response = await fetch(endpoint, requestToBeSigned);
     body = await response.json();
-    console.log('BODY:', JSON.stringify(body));
+    console.log("BODY:", JSON.stringify(body));
 
     key = body.key;
     server = body.server;
@@ -36,12 +36,16 @@ exports.handler = async (event) => {
     results = await fetch(
       `https://${server}/${raceId}/RRPublish/data/list?key=${key}&listname=Online%7CCategory&page=results&contest=0&r=leaders&l=3`
     );
+    console.log(
+      "url",
+      `https://${server}/${raceId}/RRPublish/data/list?key=${key}&listname=Online%7CCategory&page=results&contest=0&r=leaders&l=3`
+    );
     resultsBody = await results.json();
-    console.log('BODY1:', JSON.stringify(resultsBody));
+    console.log("BODY1:", JSON.stringify(resultsBody));
 
     if (body.errors) statusCode = 400;
   } catch (error) {
-    console.log('ERROR', JSON.stringify(error));
+    console.log("ERROR", JSON.stringify(error));
     statusCode = 500;
     body = {
       errors: [
@@ -56,13 +60,13 @@ exports.handler = async (event) => {
     statusCode,
     //  Uncomment below to enable CORS requests
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': '*',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
     },
     body: JSON.stringify({
       key,
       server,
-      filterValues: resultsBody.filterValues,
+      filterValues: resultsBody.groupFilters,
     }),
   };
 };

@@ -9,7 +9,7 @@ export type RaceResultRow = {
         CatPlace: string;
         Name: string;
         Age: string;
-        FinishTime: string;
+        Time: string;
         Speed: string;
         GenderPlace: string;
         OverallPlace: string;
@@ -21,7 +21,7 @@ export type RaceResultRow = {
         CatPlace: string;
         Name: string;
         Age: string;
-        FinishTime: string;
+        Time: string;
         Speed: string;
         GenderPlace: string;
         OverallPlace: string;
