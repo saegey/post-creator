@@ -6,6 +6,7 @@ import { NextApiRequest } from "next";
 
 import EditProfile from "../src/components/user/EditProfile";
 import { IUser } from "../src/types/common";
+import Header from "../src/components/shared/Header";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
@@ -65,7 +66,12 @@ const Profile = ({ user }: { user: IUser }) => {
           <title>Profile</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        {user && <EditProfile user={user} />}
+        {user && (
+          <main>
+            <Header user={user} />
+            <EditProfile user={user} />
+          </main>
+        )}
       </Box>
     </>
   );

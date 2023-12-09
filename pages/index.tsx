@@ -1,60 +1,15 @@
-import { withSSRContext, Amplify } from "aws-amplify";
 import Head from "next/head";
 import React from "react";
 import { NextApiRequest } from "next";
-import { GraphQLResult } from "@aws-amplify/api";
 
-import { listPostsCustom } from "../src/graphql/customQueries";
 import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
 import { CloudinaryImage, IUser, ListPostsCustom } from "../src/types/common";
-
-import awsconfig from "../src/aws-exports";
-
-Amplify.configure({ ...awsconfig, ssr: true });
+import User from "../src/actions/User";
+import Post from "../src/actions/PostExplore";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
-  const SSR = withSSRContext({ req });
-  let session;
-  let user: IUser | null = null;
-
-  try {
-    console.log((await SSR.Auth.currentSession()).idToken.jwtToken);
-    const currentUser = await SSR.Auth.currentAuthenticatedUser();
-    session = await SSR.Auth.currentSession();
-    console.log(JSON.stringify(currentUser), JSON.stringify(session));
-
-    const sessionData = session.getIdToken();
-    const { payload } = sessionData;
-    //"custom:role": role if custom attribute is added
-    const {
-      email,
-      sub,
-      email_verified,
-      "custom:role": role,
-      picture,
-      name,
-      preferred_username,
-      profile,
-      zoneinfo,
-    } = payload;
-
-    user = {
-      userId: sub,
-      email: email,
-      email_verified: email_verified,
-      // role: role,
-      attributes: {
-        picture,
-        name,
-        preferred_username,
-        sub,
-        profile,
-        zoneinfo,
-      },
-    };
-  } catch (e) {
-    console.log(e);
-    console.log("error");
+  const user = await User.getUser({ req });
+  if (!user) {
     return {
       redirect: {
         destination: "/login",
@@ -63,40 +18,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
     };
   }
 
-  try {
-    const response = (await SSR.API.graphql({
-      query: listPostsCustom,
-      authMode: "API_KEY",
-    })) as GraphQLResult<ListPostsCustom>;
-
-    return {
-      props: {
-        user,
-        posts: response?.data?.listPublishedPostsByCreatedAt?.items.map((d) => {
-          return {
-            ...d,
-            imagesObj: JSON.parse(d.images ? d.images : ""),
-            author: JSON.parse(d.author ? d.author : "") as {
-              __typename: "User";
-              id: string;
-              fullName: string;
-              email: string;
-              image?: string | null;
-              username?: string | null;
-              createdAt: string;
-              updatedAt: string;
-              owner?: string | null;
-            },
-          };
-        }),
-      },
-    };
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {},
-    };
-  }
+  return await Post.explore({ req, user });
 };
 
 type HomeProps = {

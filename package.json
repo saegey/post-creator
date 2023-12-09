@@ -6,10 +6,13 @@
     "start": "next start",
     "amplify:pull": "amplify pull --appId d15noiwtuwwref --envName dev",
     "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "cypress:open": "cypress open",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --collect-coverage --ci"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "^5.1.0",
     "@cloudinary-util/url-loader": "^3.10.0",
     "@mux/mux-player-react": "^2.2.0",
     "@mux/mux-uploader-react": "^1.0.0-beta.13",
@@ -21,7 +24,6 @@
     "aws-amplify": "^5.3.12",
     "aws-sdk": "^2.1450.0",
     "aws-xray-sdk": "^3.5.1",
-    "formidable": "^3.5.0",
     "mapbox-gl": "^2.15.0",
     "moment": "^2.29.4",
     "next": "^13.5.4",
@@ -37,12 +39,30 @@
     "slate-react": "^0.98.1"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@playwright/test": "^1.40.1",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
     "@types/formidable": "^3.4.0",
+    "@types/jest": "^29.5.11",
     "@types/mapbox-gl": "^2.7.13",
     "@types/node": "^20.4.9",
     "@types/react": "^18.2.19",
     "@types/react-google-recaptcha": "^2.1.8",
+    "@types/react-test-renderer": "^18.0.7",
+    "aws-sdk-mock": "^5.8.0",
+    "babel-jest": "^29.7.0",
+    "cypress": "^13.6.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "mocha": "^10.2.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0",
+    "react-test-renderer": "^18.2.0",
     "theme-ui": "^0.16.0",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.1.6"
   }
 }

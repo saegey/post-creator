@@ -4,6 +4,7 @@ import { Box, Button, Flex, Input, Label, Text } from "theme-ui";
 import Router from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useThemeUI } from "theme-ui";
+import Head from "next/head";
 
 type User = {
   email: string;
@@ -77,120 +78,135 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <Flex sx={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}>
-      <Box sx={{ maxWidth: "400px", width: "400px", margin: "20px" }}>
-        {!username && (
-          <form onSubmit={handleSubmit}>
-            <Flex sx={{ flexDirection: "column", gap: "15px" }}>
-              <Flex
-                sx={{
-                  justifyContent: "center",
-                }}
-              >
-                <Text
-                  as="div"
+    <>
+      <Head>
+        <title>Register</title>
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
+        />
+      </Head>
+      <Flex
+        sx={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <Box sx={{ maxWidth: "400px", width: "400px", margin: "20px" }}>
+          {!username && (
+            <form onSubmit={handleSubmit}>
+              <Flex sx={{ flexDirection: "column", gap: "15px" }}>
+                <Flex
                   sx={{
-                    // justifyContent: "center",
-                    fontSize: "30px",
-                    fontWeight: 500,
+                    justifyContent: "center",
                   }}
                 >
-                  monopad
-                </Text>
-              </Flex>
-              <Flex sx={{ flexDirection: "column" }}>
-                <Label htmlFor="email" variant="defaultLabel">
-                  Email
-                </Label>
+                  <Text
+                    as="div"
+                    sx={{
+                      // justifyContent: "center",
+                      fontSize: "30px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    monopad
+                  </Text>
+                </Flex>
+                <Flex sx={{ flexDirection: "column" }}>
+                  <Label htmlFor="email" variant="defaultLabel">
+                    Email
+                  </Label>
 
-                <Input
-                  id="email"
-                  variant="defaultInput"
-                  type="email"
-                  name="email"
-                  // value={user.email}
-                  // onChange={handleInputChange}
-                  required
+                  <Input
+                    id="email"
+                    variant="defaultInput"
+                    type="email"
+                    name="email"
+                    // value={user.email}
+                    // onChange={handleInputChange}
+                    required
+                  />
+                </Flex>
+                <Flex sx={{ flexDirection: "column" }}>
+                  <Label htmlFor="password" variant="defaultLabel">
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    variant="defaultInput"
+                    name="password"
+                    // value={user.password}
+                    // onChange={handleInputChange}
+                    required
+                  />
+                </Flex>
+                <Flex sx={{ flexDirection: "column" }}>
+                  <Label htmlFor="name" variant="defaultLabel">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    variant="defaultInput"
+                    name="name"
+                    // value={user.name}
+                    // onChange={handleInputChange}
+                    required
+                  />
+                </Flex>
+                <Flex sx={{ flexDirection: "column" }}>
+                  <Label htmlFor="username" variant="defaultLabel">
+                    Username
+                  </Label>
+                  <Input
+                    id="username"
+                    variant="defaultInput"
+                    name="username"
+                    // value={user.name}
+                    // onChange={handleInputChange}
+                    required
+                  />
+                </Flex>
+                <ReCAPTCHA
+                  sitekey="6LdW_CUpAAAAAOC--lA01wOnW1UA3RlZyc_LgX_0"
+                  onChange={() => setIsRobot(false)}
+                  theme={colorMode === "dark" ? "dark" : "light"}
                 />
-              </Flex>
-              <Flex sx={{ flexDirection: "column" }}>
-                <Label htmlFor="password" variant="defaultLabel">
-                  Password
-                </Label>
-                <Input
-                  id="password"
-                  type="password"
-                  variant="defaultInput"
-                  name="password"
-                  // value={user.password}
-                  // onChange={handleInputChange}
-                  required
-                />
-              </Flex>
-              <Flex sx={{ flexDirection: "column" }}>
-                <Label htmlFor="name" variant="defaultLabel">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  variant="defaultInput"
-                  name="name"
-                  // value={user.name}
-                  // onChange={handleInputChange}
-                  required
-                />
-              </Flex>
-              <Flex sx={{ flexDirection: "column" }}>
-                <Label htmlFor="username" variant="defaultLabel">
-                  Username
-                </Label>
-                <Input
-                  id="username"
-                  variant="defaultInput"
-                  name="username"
-                  // value={user.name}
-                  // onChange={handleInputChange}
-                  required
-                />
-              </Flex>
-              <ReCAPTCHA
-                sitekey="6LdW_CUpAAAAAOC--lA01wOnW1UA3RlZyc_LgX_0"
-                onChange={() => setIsRobot(false)}
-                theme={colorMode === "dark" ? "dark" : "light"}
-              />
 
-              <Button type="submit" variant="primaryButton" disabled={isRobot}>
-                Register
-              </Button>
-            </Flex>
-          </form>
-        )}
-        {username && (
-          <form onSubmit={verifyAccount}>
-            <Flex sx={{ flexDirection: "column", gap: "15px" }}>
-              <Flex sx={{ flexDirection: "column" }}>
-                <Label htmlFor="email" variant="defaultLabel">
-                  Email Verify Code
-                </Label>
-
-                <Input
-                  id="code"
-                  variant="defaultInput"
-                  // type="code"/
-                  name="code"
-                  // value={user.email}
-                  // onChange={handleInputChange}
-                  required
-                />
+                <Button
+                  type="submit"
+                  variant="primaryButton"
+                  disabled={isRobot}
+                >
+                  Register
+                </Button>
               </Flex>
-              <Button type="submit" variant="primaryButton">
-                Verify
-              </Button>
-            </Flex>
-          </form>
-        )}
-      </Box>
-    </Flex>
+            </form>
+          )}
+          {username && (
+            <form onSubmit={verifyAccount}>
+              <Flex sx={{ flexDirection: "column", gap: "15px" }}>
+                <Flex sx={{ flexDirection: "column" }}>
+                  <Label htmlFor="email" variant="defaultLabel">
+                    Email Verify Code
+                  </Label>
+
+                  <Input
+                    id="code"
+                    variant="defaultInput"
+                    // type="code"/
+                    name="code"
+                    // value={user.email}
+                    // onChange={handleInputChange}
+                    required
+                  />
+                </Flex>
+                <Button type="submit" variant="primaryButton">
+                  Verify
+                </Button>
+              </Flex>
+            </form>
+          )}
+        </Box>
+      </Flex>
+    </>
   );
 };
 export default RegisterPage;

@@ -1,0 +1,22 @@
+name: CI
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install modules
+        run: npm ci
+      - name: Configure Amplify Mock
+        run: |
+          echo "export default {};" > src/aws-exports.js
+          cp aws-exports.mock.js src/aws-exports.js
+
+      - name: Run tests
+        run: |
+          npx jest --coverage | tee ./coverage.txt && exit ${PIPESTATUS[0]}
+
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          coverage-path: ./coverage.txt

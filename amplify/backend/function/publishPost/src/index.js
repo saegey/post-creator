@@ -1,10 +1,10 @@
 /* Amplify Params - DO NOT EDIT
-	API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT
-	API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT
-	API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT
-	ENV
-	REGION
-	STORAGE_ROUTEFILES_BUCKETNAME
+  API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT
+  API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT
+  API_NEXTJSBLOG_GRAPHQLAPIKEYOUTPUT
+  ENV
+  REGION
+  STORAGE_ROUTEFILES_BUCKETNAME
 Amplify Params - DO NOT EDIT */
 
 // /**
@@ -13,20 +13,7 @@ Amplify Params - DO NOT EDIT */
 
 const AWS = require("aws-sdk");
 const uuid = require("uuid");
-const zlib = require("zlib");
-const crypto = require("@aws-crypto/sha256-js");
-const { defaultProvider } = require("@aws-sdk/credential-provider-node");
-const { SignatureV4 } = require("@aws-sdk/signature-v4");
-const { HttpRequest } = require("@aws-sdk/protocol-http");
-const { Sha256 } = crypto;
-
-const docClient = new AWS.DynamoDB.DocumentClient();
-const S3 = new AWS.S3();
-
-const AWS_REGION = process.env.AWS_REGION || "us-east-1";
-const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
-const publishedPostTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
-const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
+const fetch = require("node-fetch");
 
 const generateUID = () => {
   // I generate the UID from two parts here
@@ -104,6 +91,19 @@ const query = /* GraphQL */ `
 
 exports.handler = async (event) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
+  const crypto = require("@aws-crypto/sha256-js");
+  const { defaultProvider } = require("@aws-sdk/credential-provider-node");
+  const { SignatureV4 } = require("@aws-sdk/signature-v4");
+  const { HttpRequest } = require("@aws-sdk/protocol-http");
+  const { Sha256 } = crypto;
+
+  const docClient = new AWS.DynamoDB.DocumentClient();
+  const S3 = new AWS.S3();
+
+  const AWS_REGION = process.env.AWS_REGION || "us-east-1";
+  const GRAPHQL_ENDPOINT = process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT;
+  const publishedPostTable = `PublishedPost-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
+  const postTable = `Post-${process.env.API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT}-${process.env.ENV}`;
 
   const { body } = event;
   const { postId, origin } = JSON.parse(body);
@@ -115,11 +115,13 @@ exports.handler = async (event) => {
   );
 
   let date = new Date();
+  console.log(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
+  const endpoint = new URL(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
 
-  const endpoint = new URL(GRAPHQL_ENDPOINT);
-
+  const creds = defaultProvider();
+  console.log(creds, creds);
   const signer = new SignatureV4({
-    credentials: defaultProvider(),
+    credentials: creds,
     region: AWS_REGION,
     service: "appsync",
     sha256: Sha256,
@@ -141,7 +143,10 @@ exports.handler = async (event) => {
   });
 
   const signed = await signer.sign(requestToBeSigned);
-  const request = new Request(GRAPHQL_ENDPOINT, signed);
+  const request = new Request(
+    process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT,
+    signed
+  );
 
   let statusCode = 200;
   let resBody;
@@ -149,17 +154,24 @@ exports.handler = async (event) => {
 
   try {
     response = await fetch(request);
+    console.log("response", response);
     resBody = await response.json();
-    console.log("resBody", resBody);
     if (resBody.errors) statusCode = 400;
   } catch (error) {
-    statusCode = 500;
-    body = {
-      errors: [
-        {
-          message: error.message,
-        },
-      ],
+    console.log("error", error);
+    return {
+      statusCode: 500,
+      headers: {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        errors: [
+          {
+            message: error.message,
+          },
+        ],
+      }),
     };
   }
 
@@ -170,7 +182,8 @@ exports.handler = async (event) => {
     .split(":")
     .pop();
 
-  // console.log(JSON.stringify(event.requestContext.identity));
+  console.log("identityId", identityId);
+
   const getParams = {
     TableName: publishedPostTable,
     IndexName: "PublishedPostByOriginalPostId",
@@ -184,6 +197,8 @@ exports.handler = async (event) => {
     // ProjectionExpression: 'ATTRIBUTE_NAME',
   };
 
+  console.log(getParams);
+
   // Call DynamoDB to read the item from the table
 
   let existingId = undefined;
@@ -191,15 +206,12 @@ exports.handler = async (event) => {
 
   try {
     await docClient
-      .query(getParams, function (err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          if (data.Items && data.Items.length > 0) {
-            existingId = data.Items[0].id;
-            shortUrl = data.Items[0].shortUrl;
-          }
-          console.log("Success", data, existingId);
+      .query(getParams, function (err, res) {
+        console.log(res.data.Items.length);
+        if (res.data.Items && res.data.Items.length > 0) {
+          // console.log(res.data.Items[0]);
+          existingId = res.data.Items[0].id;
+          shortUrl = res.data.Items[0].shortUrl;
         }
       })
       .promise();
@@ -239,6 +251,7 @@ exports.handler = async (event) => {
     // shortUrl = 't';
   }
 
+  console.log(resBody);
   const privateTimeSeriesFile = await S3.getObject({
     Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
     Key: `private/${event.requestContext.identity.cognitoIdentityId}/${resBody.data.getPost.timeSeriesFile}`,
