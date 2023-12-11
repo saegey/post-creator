@@ -27,6 +27,7 @@ beforeEach(() => {
       cy.get("#email").type("adam.saegebarth@gmail.com");
       cy.get("#password").type(`mec4czd8YGE@gut@feh`);
       cy.get("#submit-login").click();
+      cy.wait(500);
       cy.location("pathname").should("eq", "/");
     },
     {
