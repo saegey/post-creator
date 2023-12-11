@@ -86,17 +86,30 @@ const LoginPage: React.FC = () => {
             <Button id="submit-login" type="submit" variant="primaryButton">
               Login
             </Button>
-            <ThemeLink
-              as={Link}
-              href="/register"
-              sx={{
-                textDecoration: "none",
-                color: "text",
-                "&:hover": { textDecoration: "underline" },
-              }}
-            >
-              Create an account
-            </ThemeLink>
+            <Flex sx={{ gap: "20px" }}>
+              <ThemeLink
+                as={Link}
+                href="/register"
+                sx={{
+                  textDecoration: "none",
+                  color: "text",
+                  "&:hover": { textDecoration: "underline" },
+                }}
+              >
+                Create an account
+              </ThemeLink>
+              <ThemeLink
+                as={Link}
+                href="/reset"
+                sx={{
+                  textDecoration: "none",
+                  color: "text",
+                  "&:hover": { textDecoration: "underline" },
+                }}
+              >
+                Reset Password
+              </ThemeLink>
+            </Flex>
           </Flex>
         </form>
       </Box>
