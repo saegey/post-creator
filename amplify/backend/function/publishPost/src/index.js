@@ -118,10 +118,10 @@ exports.handler = async (event) => {
   console.log(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
   const endpoint = new URL(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
 
-  const creds = defaultProvider();
-  console.log(creds, creds);
+  // const creds = defaultProvider();
+  // console.log(creds, creds);
   const signer = new SignatureV4({
-    credentials: creds,
+    credentials: defaultProvider(),
     region: AWS_REGION,
     service: "appsync",
     sha256: Sha256,
@@ -142,18 +142,23 @@ exports.handler = async (event) => {
     path: endpoint.pathname,
   });
 
+  console.log(requestToBeSigned);
+
   const signed = await signer.sign(requestToBeSigned);
-  const request = new Request(
-    process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT,
-    signed
-  );
+  // const request = new Request(
+  //   process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT,
+  //   signed
+  // );
 
   let statusCode = 200;
   let resBody;
   let response;
 
   try {
-    response = await fetch(request);
+    response = await fetch(
+      process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT,
+      signed
+    );
     console.log("response", response);
     resBody = await response.json();
     if (resBody.errors) statusCode = 400;
@@ -207,8 +212,8 @@ exports.handler = async (event) => {
   try {
     await docClient
       .query(getParams, function (err, res) {
-        console.log(res.data.Items.length);
-        if (res.data.Items && res.data.Items.length > 0) {
+        // console.log(res.data.Items.length);
+        if (res.data && res.data.Items && res.data.Items.length > 0) {
           // console.log(res.data.Items[0]);
           existingId = res.data.Items[0].id;
           shortUrl = res.data.Items[0].shortUrl;
