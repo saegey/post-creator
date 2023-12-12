@@ -65,10 +65,7 @@ describe("publishPost function", () => {
       callback({ error: "no data" });
     });
     AWS.mock("DynamoDB.DocumentClient", "update", function (params, callback) {
-      // callback(null, { Attributes: { id: "5678" } });
-      return {
-        promise: jest.fn().mockResolvedValue({ Attributes: { id: "5678" } }),
-      };
+      callback(null, { Attributes: { id: "5678" } });
     });
 
     expect(await handler(event)).toEqual({
