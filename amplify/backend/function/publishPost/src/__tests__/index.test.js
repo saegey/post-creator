@@ -2,6 +2,13 @@ const AWS = require("aws-sdk-mock");
 const { defaultProvider } = require("@aws-sdk/credential-provider-node");
 const { SignatureV4 } = require("@aws-sdk/signature-v4");
 const fetch = require("node-fetch");
+const path = require("path");
+
+AWS.setSDK(
+  path.resolve(
+    "./amplify/backend/function/publishPost/src/node_modules/aws-sdk"
+  )
+);
 
 const { handler } = require("../index");
 const event = require("../event.json");
@@ -19,7 +26,7 @@ AWS.mock("S3", "getObject", {
 });
 
 describe("publishPost function", () => {
-  beforeEach(() => {
+  beforeEach((done) => {
     jest.resetModules(); // Most important - it clears the cache
     jest.resetAllMocks();
     process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT =
@@ -37,6 +44,7 @@ describe("publishPost function", () => {
       },
     });
     fetch.mockImplementation(() => response);
+    done();
   });
 
   test("returns an error if no results", async () => {
@@ -62,6 +70,7 @@ describe("publishPost function", () => {
 
   test("it creates a short url if one doesn't exist", async () => {
     AWS.mock("DynamoDB.DocumentClient", "query", function (params, callback) {
+      // console.log(params);
       callback({ error: "no data" });
     });
     AWS.mock("DynamoDB.DocumentClient", "update", function (params, callback) {
@@ -77,11 +86,13 @@ describe("publishPost function", () => {
       statusCode: 200,
     });
 
+    // AWS.restore("DynamoDB");
     AWS.restore("DynamoDB.DocumentClient");
   });
 
   test("returns a successful response", async () => {
     AWS.mock("DynamoDB.DocumentClient", "update", function (params, callback) {
+
       callback(null, { Attributes: { id: "1234" } });
     });
 
@@ -101,7 +112,7 @@ describe("publishPost function", () => {
       },
       statusCode: 200,
     });
-
+    // AWS.restore("DynamoDB");
     AWS.restore("DynamoDB.DocumentClient");
   });
 });
