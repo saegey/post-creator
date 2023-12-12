@@ -26,7 +26,7 @@ const PostAuthor = () => {
             },
           marginX: width < 1015 ? "auto" : "200px",
           // width: width < 1015 ? "690px" : "150px",
-          height: "100%",
+          // height: "100%",
           marginBottom: ["20px", "30px", "60px"],
         }}
       >
