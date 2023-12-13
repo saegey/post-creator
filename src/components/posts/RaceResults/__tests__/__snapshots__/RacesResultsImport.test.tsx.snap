@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`race results import it should render) 1`] = `
+[
+  <style
+    dangerouslySetInnerHTML={
+      {
+        "__html": ".css-1ynrwvv-Box{box-sizing:border-box;margin:0;min-width:0;position:fixed;top:0;height:100%;width:100%;left:0;background-color:rgba(var(--theme-ui-colors-blackBoxColor), 0.7);z-index:50;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}",
+      }
+    }
+    data-emotion="css 1ynrwvv-Box"
+  />,
+  <div
+    className="css-1ynrwvv-Box"
+    onClick={[Function]}
+  >
+    <style
+      dangerouslySetInnerHTML={
+        {
+          "__html": ".css-1clgg7s-Box{box-sizing:border-box;margin:0;min-width:0;max-width:690px;position:fixed;max-height:100%;height:100%;width:100%;margin:auto;background:background;padding:20px;}@media screen and (min-width: 40em){.css-1clgg7s-Box{position:inherit;max-height:800px;height:auto;border-radius:5px;}}@media screen and (min-width: 52em){.css-1clgg7s-Box{position:inherit;max-height:800px;height:auto;border-radius:5px;}}",
+        }
+      }
+      data-emotion="css 1clgg7s-Box"
+    />
+    <div
+      className="css-1clgg7s-Box"
+      onClick={[Function]}
+    >
+      <style
+        dangerouslySetInnerHTML={
+          {
+            "__html": ".css-11a34ar-Flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;border-bottom-width:1px;border-bottom-color:divider;border-bottom-style:solid;padding-top:5px;padding-bottom:5px;}",
+          }
+        }
+        data-emotion="css 11a34ar-Flex"
+      />
+      <style
+        dangerouslySetInnerHTML={
+          {
+            "__html": ".css-1a3s0av-Flex{box-sizing:border-box;margin:0;min-width:0;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;border-bottom-width:1px;border-bottom-color:divider;border-bottom-style:solid;padding-top:5px;padding-bottom:5px;}",
+          }
+        }
+        data-emotion="css 1a3s0av-Flex"
+      />
+      <div
+        className="css-1a3s0av-Flex"
+      >
+        <style
+          dangerouslySetInnerHTML={
+            {
+              "__html": ".css-dz3wj2-Text{font-size:20px;font-weight:600;}",
+            }
+          }
+          data-emotion="css dz3wj2-Text"
+        />
+        <style
+          dangerouslySetInnerHTML={
+            {
+              "__html": ".css-r4uko2-Text{box-sizing:border-box;margin:0;min-width:0;font-size:20px;font-weight:600;}",
+            }
+          }
+          data-emotion="css r4uko2-Text"
+        />
+        <div
+          className="css-r4uko2-Text"
+        >
+          Race Results
+        </div>
+        <style
+          dangerouslySetInnerHTML={
+            {
+              "__html": ".css-afjjfe-Close{-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;margin-left:auto;}",
+            }
+          }
+          data-emotion="css afjjfe-Close"
+        />
+        <style
+          dangerouslySetInnerHTML={
+            {
+              "__html": ".css-wqkgnj-IconButton-Close{box-sizing:border-box;margin:0;min-width:0;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearance:none;display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;padding:4px;width:32px;height:32px;color:inherit;background-color:transparent;border:none;border-radius:4px;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;height:100%;margin-left:auto;}",
+            }
+          }
+          data-emotion="css wqkgnj-IconButton-Close"
+        />
+        <button
+          aria-label="Close"
+          className="css-wqkgnj-IconButton-Close"
+          id="close-button"
+          onClick={[Function]}
+          title="Close"
+        >
+          <svg
+            fill="currentColor"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+        </button>
+      </div>
+      <style
+        dangerouslySetInnerHTML={
+          {
+            "__html": ".css-9617yx-Flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;gap:10px;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;}",
+          }
+        }
+        data-emotion="css 9617yx-Flex"
+      />
+      <style
+        dangerouslySetInnerHTML={
+          {
+            "__html": ".css-1wmeto1-Flex{box-sizing:border-box;margin:0;min-width:0;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;gap:10px;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;}",
+          }
+        }
+        data-emotion="css 1wmeto1-Flex"
+      />
+      <div
+        className="css-1wmeto1-Flex"
+      >
+        <form
+          onSubmit={[Function]}
+          style={
+            {
+              "width": "100%",
+            }
+          }
+        >
+          <style
+            dangerouslySetInnerHTML={
+              {
+                "__html": ".css-civ7zb-Flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;gap:20px;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}",
+              }
+            }
+            data-emotion="css civ7zb-Flex"
+          />
+          <style
+            dangerouslySetInnerHTML={
+              {
+                "__html": ".css-6n86f7-Flex{box-sizing:border-box;margin:0;min-width:0;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;gap:20px;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}",
+              }
+            }
+            data-emotion="css 6n86f7-Flex"
+          />
+          <div
+            className="css-6n86f7-Flex"
+          >
+            <style
+              dangerouslySetInnerHTML={
+                {
+                  "__html": ".css-1csqw02-Box{box-sizing:border-box;margin:0;min-width:0;margin-top:20px;}",
+                }
+              }
+              data-emotion="css 1csqw02-Box"
+            />
+            <div
+              className="css-1csqw02-Box"
+            >
+              <style
+                dangerouslySetInnerHTML={
+                  {
+                    "__html": ".css-18qhrp0-Box{box-sizing:border-box;margin:0;min-width:0;width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}",
+                  }
+                }
+                data-emotion="css 18qhrp0-Box"
+              />
+              <label
+                className="css-18qhrp0-Box"
+                htmlFor="url"
+              >
+                Link to results
+              </label>
+              <style
+                dangerouslySetInnerHTML={
+                  {
+                    "__html": ".css-jhzmzz-Input{box-sizing:border-box;margin:0;min-width:0;display:block;width:100%;padding:8px;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearance:none;font-size:inherit;line-height:inherit;border:1px solid;border-radius:4px;color:inherit;background-color:transparent;}.css-jhzmzz-Input:autofill,.css-jhzmzz-Input:autofill:hover,.css-jhzmzz-Input:autofill:focus{box-shadow:inset 0 0 0 1000px var(--theme-ui-input-autofill-bg);font-size:inherit;}.css-jhzmzz-Input:autofill:first-line,.css-jhzmzz-Input:autofill:hover:first-line,.css-jhzmzz-Input:autofill:focus:first-line{font-size:1rem;}.css-jhzmzz-Input:-webkit-autofill,.css-jhzmzz-Input:-webkit-autofill:hover,.css-jhzmzz-Input:-webkit-autofill:focus{box-shadow:inset 0 0 0 1000px var(--theme-ui-input-autofill-bg);font-size:inherit;}.css-jhzmzz-Input:-webkit-autofill:first-line,.css-jhzmzz-Input:-webkit-autofill:hover:first-line,.css-jhzmzz-Input:-webkit-autofill:focus:first-line{font-size:1rem;}",
+                  }
+                }
+                data-emotion="css jhzmzz-Input"
+              />
+              <input
+                className="css-jhzmzz-Input"
+                id="url"
+                name="url"
+                readOnly={false}
+              />
+            </div>
+            <style
+              dangerouslySetInnerHTML={
+                {
+                  "__html": ".css-9rr9pc-Box{box-sizing:border-box;margin:0;min-width:0;margin-left:auto;}",
+                }
+              }
+              data-emotion="css 9rr9pc-Box"
+            />
+            <div
+              className="css-9rr9pc-Box"
+            >
+              <style
+                dangerouslySetInnerHTML={
+                  {
+                    "__html": ".css-5unna8-Box{box-sizing:border-box;margin:0;min-width:0;-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;appearance:none;display:inline-block;text-align:center;line-height:inherit;-webkit-text-decoration:none;text-decoration:none;font-size:inherit;padding-left:16px;padding-right:16px;padding-top:8px;padding-bottom:8px;color:white;background-color:primary;border:0;border-radius:4px;}",
+                  }
+                }
+                data-emotion="css 5unna8-Box"
+              />
+              <button
+                className="css-5unna8-Box"
+                disabled={false}
+                id="import-results"
+              >
+                <style
+                  dangerouslySetInnerHTML={
+                    {
+                      "__html": ".css-donn1z-Flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;gap:10px;}",
+                    }
+                  }
+                  data-emotion="css donn1z-Flex"
+                />
+                <style
+                  dangerouslySetInnerHTML={
+                    {
+                      "__html": ".css-fdyw5a-Flex{box-sizing:border-box;margin:0;min-width:0;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;gap:10px;}",
+                    }
+                  }
+                  data-emotion="css fdyw5a-Flex"
+                />
+                <div
+                  className="css-fdyw5a-Flex"
+                >
+                  <style
+                    dangerouslySetInnerHTML={
+                      {
+                        "__html": ".css-g89m8z-Box{box-sizing:border-box;margin:0;min-width:0;}",
+                      }
+                    }
+                    data-emotion="css g89m8z-Box"
+                  />
+                  <span
+                    className="css-g89m8z-Box"
+                  >
+                    Import
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>,
+]
+`;

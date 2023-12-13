@@ -56,5 +56,6 @@ amplifytools.xcconfig
 
 src/ui-components
 playright/
-cypress/
+cypress/report/
+cypress/screenshots/
 **coverage/

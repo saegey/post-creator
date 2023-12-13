@@ -10,7 +10,6 @@ import Dropdown from "../../shared/Dropdown";
 import { useClickOutside } from "../../../utils/ux";
 import { VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
-import { useUnits } from "../../UnitProvider";
 
 const VisualOverview = dynamic(import("./VisualOverview"), {
   ssr: false,
@@ -41,7 +40,6 @@ const VisualOverviewWrapper = ({
   const [isSaved, setIsSaved] = React.useState<boolean>(
     element && element.selectionStart ? true : false
   );
-  // const units = useUnits();
 
   useClickOutside(
     wrapperRef,

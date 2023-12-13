@@ -46,6 +46,7 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           padding: "5px",
           borderRadius: "5px",
         }}
+        id="race-results-list"
       >
         <Flex sx={{ width: "100%", paddingX: "5px" }}>
           <Text
@@ -75,6 +76,7 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           raceResults.results.map((row, i) => {
             return (
               <Flex
+                id={`race-result-row-${i}`}
                 key={`race-result-row-${i}`}
                 sx={{
                   backgroundColor:

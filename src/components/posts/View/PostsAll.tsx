@@ -72,9 +72,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
       authMode: "AMAZON_COGNITO_USER_POOLS",
       variables: {
         filter: {
-          // postAuthorId: {
-          //   eq: user.attributes.sub,
-          // },
           privacyStatus: {
             eq: type,
           },
@@ -135,7 +132,9 @@ const PostsAll = ({ user }: { user: IUser }) => {
     if (!response || !response.data || !response.data.createPost) {
       console.error("failed to create post");
     }
-    window.location.href = `/posts/${response?.data?.createPost?.id}/edit`;
+
+    Router.push(`/posts/${response?.data?.createPost?.id}/edit`);
+    // window.location.href = `/posts/${response?.data?.createPost?.id}/edit`;
     // setNewPost(true);
   };
 
@@ -159,7 +158,11 @@ const PostsAll = ({ user }: { user: IUser }) => {
           <Flex
             sx={{ paddingBottom: "20px", flexGrow: 1, justifyContent: "right" }}
           >
-            <Button onClick={() => createNewPost()} variant="primaryButton">
+            <Button
+              onClick={() => createNewPost()}
+              id="create-new-post"
+              variant="primaryButton"
+            >
               New Post
             </Button>
           </Flex>

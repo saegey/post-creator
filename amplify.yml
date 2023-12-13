@@ -10,7 +10,6 @@ frontend:
     preBuild:
       commands:
         - npm ci
-        # - npm test:e2e
     build:
       commands:
         - npm run build
@@ -38,7 +37,7 @@ test:
         - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss" --component'
     postTest:
       commands:
-        - npx mochawesome-merge cypress/report/mochawesome-report/mochawesome*.json > cypress/report/mochawesome.json
+        - npx mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/mochawesome.json
         - pm2 kill
   artifacts:
     baseDirectory: cypress

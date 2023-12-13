@@ -118,10 +118,10 @@ exports.handler = async (event) => {
   console.log(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
   const endpoint = new URL(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
 
-  // const creds = defaultProvider();
+  const creds = defaultProvider();
   // console.log(creds, creds);
   const signer = new SignatureV4({
-    credentials: defaultProvider(),
+    credentials: creds,
     region: AWS_REGION,
     service: "appsync",
     sha256: Sha256,

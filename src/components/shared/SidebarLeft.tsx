@@ -49,7 +49,11 @@ const SidebarLeft = ({
           >
             {title}
           </Text>
-          <Close onClick={(e) => closeOnclick(e)} sx={{ marginLeft: "auto" }} />
+          <Close
+            onClick={(e) => closeOnclick(e)}
+            sx={{ marginLeft: "auto" }}
+            id="close-sidebar-menu"
+          />
         </Flex>
         {children}
       </Box>

@@ -27,7 +27,6 @@ import {
   IUser,
 } from "../../src/types/common";
 import { CloudinaryImage } from "../../src/types/common";
-import { WebscorerResultsRow } from "../../src/components/posts/RaceResults/RaceResultsImport";
 
 const PostView = dynamic(import("../../src/components/posts/View/PostView"), {
   ssr: false,

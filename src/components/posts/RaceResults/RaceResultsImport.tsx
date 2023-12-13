@@ -7,7 +7,6 @@ import {
   Text,
   Select,
   Spinner,
-  Link,
 } from "theme-ui";
 import { API } from "aws-amplify";
 import React from "react";
@@ -160,6 +159,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     const myInit = {
       response: true, // OPTIONAL (return the entire Axios response object instead of only response.data)
     };
+    console.log(apiName, path);
     const response = await API.get(apiName, path, myInit);
     setKey(response.data.key);
     setServer(response.data.server);
@@ -285,6 +285,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                         onChange={(e) => {
                           setDivision(e.target.value);
                         }}
+                        id="division"
                       >
                         <option></option>
                         {categories.data?.filterValues[1]["Values"].map(
@@ -301,6 +302,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                     <Button
                       disabled={isLoading ? true : false}
                       variant="primaryButton"
+                      id="import-results"
                     >
                       <Flex sx={{ gap: "10px" }}>
                         <Text as="span">Import</Text>
@@ -345,6 +347,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                 {categories && (
                   <Box sx={{ marginLeft: "auto" }}>
                     <Button
+                      id="get-race-results"
                       type="button"
                       variant="primaryButton"
                       onClick={() => {

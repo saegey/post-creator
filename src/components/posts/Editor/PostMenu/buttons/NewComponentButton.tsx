@@ -9,6 +9,7 @@ const NewComponentButton = () => {
 
   return (
     <IconButton
+      id="new-component"
       onClick={() => {
         if (isGraphMenuOpen) {
           setIsGraphMenuOpen(false);

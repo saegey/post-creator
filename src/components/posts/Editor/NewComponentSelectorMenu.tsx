@@ -216,7 +216,7 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
             onClick={addTimePowerZones}
             variant="boxes.sidebarMenuItem"
             sx={{
-              cursor: gpxFile ? "pointer" : "not-allowed",
+              cursor: currentFtp ? "pointer" : "not-allowed",
             }}
           >
             <Flex sx={{ alignItems: "center", gap: "20px" }}>
@@ -227,9 +227,23 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
                   // marginRight: "10px",
                 }}
               >
-                <TimePowerZonesIcon color={color} />
+                <TimePowerZonesIcon
+                  color={
+                    currentFtp
+                      ? `var(--theme-ui-colors-text)`
+                      : `var(--theme-ui-colors-iconButtonDisabled)`
+                  }
+                />
               </Box>
-              <Text as="span" sx={{ color: color }}>
+
+              <Text
+                as="span"
+                sx={{
+                  color: currentFtp
+                    ? `var(--theme-ui-colors-text)`
+                    : `var(--theme-ui-colors-iconButtonDisabled)`,
+                }}
+              >
                 Time in Zones
               </Text>
             </Flex>
@@ -346,6 +360,7 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
             sx={{
               cursor: "pointer",
             }}
+            id="add-race-results"
           >
             <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box
