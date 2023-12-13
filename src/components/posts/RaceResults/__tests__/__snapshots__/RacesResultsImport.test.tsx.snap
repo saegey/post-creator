@@ -85,6 +85,7 @@ exports[`race results import it should render) 1`] = `
         <button
           aria-label="Close"
           className="css-wqkgnj-IconButton-Close"
+          id="close-button"
           onClick={[Function]}
           title="Close"
         >
@@ -209,6 +210,7 @@ exports[`race results import it should render) 1`] = `
               <button
                 className="css-5unna8-Box"
                 disabled={false}
+                id="import-results"
               >
                 <style
                   dangerouslySetInnerHTML={

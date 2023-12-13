@@ -10,7 +10,7 @@
     "test:e2e": "playwright test",
     "cypress:open": "cypress open",
     "test:watch": "jest --watch",
-    "test:ci": "jest --collect-coverage --ci"
+    "test:ci": "jest --collect-coverage --ci --silent"
   },
   "dependencies": {
     "@cloudinary-util/url-loader": "^3.10.0",
