@@ -118,9 +118,10 @@ const PostMenu = () => {
               }}
             >
               <IconButton
-                aria-label="Toggle options"
+                aria-label="Open settings"
                 variant="iconButton"
                 type="button"
+                id="settings-button"
               >
                 <SettingsIcon />
               </IconButton>

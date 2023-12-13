@@ -216,6 +216,7 @@ const PostSettings = () => {
               </Box>
               <Box sx={{ marginLeft: "auto", marginY: "auto" }}>
                 <Button
+                  id="delete-post"
                   variant="dangerButton"
                   type="button"
                   onClick={processDeletePost}

@@ -1,4 +1,6 @@
 import nextJest from "next/jest.js";
+import "@testing-library/jest-dom";
+import "@testing-library/react";
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
@@ -17,7 +19,7 @@ const config = {
     "<rootDir>/node_modules/(?!(@aws-amplify|ui-react|@aws-sdk)/)",
   ],
   preset: "ts-jest",
-  testEnvironment: "node",
+  testEnvironment: "jest-environment-jsdom",
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

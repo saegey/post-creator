@@ -346,6 +346,7 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
             sx={{
               cursor: "pointer",
             }}
+            id="add-race-results"
           >
             <Flex sx={{ alignItems: "center", gap: "20px" }}>
               <Box

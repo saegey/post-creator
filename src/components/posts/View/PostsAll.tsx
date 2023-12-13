@@ -158,7 +158,11 @@ const PostsAll = ({ user }: { user: IUser }) => {
           <Flex
             sx={{ paddingBottom: "20px", flexGrow: 1, justifyContent: "right" }}
           >
-            <Button onClick={() => createNewPost()} variant="primaryButton">
+            <Button
+              onClick={() => createNewPost()}
+              id="create-new-post"
+              variant="primaryButton"
+            >
               New Post
             </Button>
           </Flex>
