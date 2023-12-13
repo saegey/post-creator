@@ -44,6 +44,8 @@ const UploadGpxModal = () => {
     setPowerZoneBuckets,
     setPowerZones,
     setTimeSeriesFile,
+    setPowers,
+    setHearts,
   }: PostContextType = React.useContext(PostContext);
 
   const { setIsGpxUploadOpen } = React.useContext(EditorContext);
@@ -139,8 +141,12 @@ const UploadGpxModal = () => {
     });
     const timeSeriesData = await new Response(result.Body).json();
     setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
+    setPowers && setPowers(timeSeriesData.powers);
+    setHearts && setHearts(timeSeriesData.hearts);
+
     const activity = await getActivity(timeSeriesData);
 
+    // console.log(activity);
     setActivity && setActivity(activity);
     setProcessingGpxStatus("GPX file has been processed and analyzed");
     setIsProcessingFile(false);
