@@ -89,6 +89,14 @@
           ],
           "category": "function",
           "resourceName": "videoWebhook"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "crossresults"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -205,6 +213,12 @@
           "resourceName": "nextjsblog"
         }
       ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "crossresults": {
+      "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -373,6 +387,22 @@
         {
           "category": "function",
           "resourceName": "UserPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_crossresults_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "crossresults"
+        }
+      ]
+    },
+    "AMPLIFY_function_crossresults_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "crossresults"
         }
       ]
     },

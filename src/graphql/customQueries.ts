@@ -95,6 +95,7 @@ export const getPostInitial = /* GraphQL */ `
       shortUrl
       raceResults
       webscorerResults
+      crossResults
       privacyStatus
       __typename
     }

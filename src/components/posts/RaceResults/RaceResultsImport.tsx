@@ -17,6 +17,7 @@ import RaceResultsPreview from "./RaceResultsPreview";
 import WebscorerResultsPreview from "./WebscorerResultsPreview";
 import StandardModal from "../../shared/StandardModal";
 import { CustomEditor } from "../../../types/common";
+import CrossResultsPreview from "./CrossResultsPreview";
 
 export type WebscorerResultsRow = {
   Place: string;
@@ -75,15 +76,20 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
   }>();
   const [category, setCategory] = React.useState("");
   const [webscorerCategory, setWebscorerCategory] = React.useState("");
+  const [crossResultsCategory, setCrossResultsCategory] = React.useState("");
   const [division, setDivision] = React.useState("");
   const [webscorerCategories, setWebscorerCategeries] =
     React.useState<Array<string> | null>(null);
+  const [crossResultsCategories, setCrossResultsCategories] =
+    React.useState<Set<string> | null>();
   const [raceId, setRaceId] = React.useState<string | null>();
   const [key, setKey] = React.useState();
   const [server, setServer] = React.useState();
   const [previewResults, setPreviewResults] = React.useState(false);
   const [previewWebscorerResults, setPreviewWebscorerResults] =
     React.useState(false);
+  const [previewCrossResults, setPreviewCrossResults] = React.useState(false);
+
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =
@@ -91,6 +97,8 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
 
   const { setRaceResults, setWebscorerResultPreview } =
     React.useContext(PostContext);
+
+  const { crossResults, setCrossResults } = React.useContext(PostContext);
 
   const getResults = async () => {
     if (!category || !division) {
@@ -150,6 +158,29 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     return res.data;
   };
 
+  const getCrossResults = async () => {
+    const url = `/results/crossresults?raceId=${raceId}`;
+
+    const res = (await API.get("api12660653", url, {
+      response: true,
+    })) as WebscorerRes;
+
+    return res.data;
+  };
+
+  const getCrossResultsCategories = async ({ url }: { url: string }) => {
+    // https://www.crossresults.com/race/12190#cat175293
+    const resultsUrl = new URL(url);
+    console.log(resultsUrl.pathname.split("/")[2]);
+    const raceId = resultsUrl.pathname.split("/")[2];
+    setRaceId(raceId);
+
+    const path = `/results/crossresults?raceId=${raceId}`;
+    const response = await API.get("api12660653", path, { response: true });
+    setCrossResultsCategories(new Set([...response.data.map((r) => r["2"])]));
+    // console.log(new Set([...response.data.map((r) => r["2"] )]));
+  };
+
   const getCategories = async ({ url }: { url: string }) => {
     const resultsUrl = new URL(url);
     setRaceId(resultsUrl.pathname.split("/")[1]);
@@ -195,189 +226,267 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
         )}
         {previewResults && <RaceResultsPreview editor={editor} />}
         {previewWebscorerResults && <WebscorerResultsPreview editor={editor} />}
-        {!previewResults && !previewWebscorerResults && (
-          <Flex sx={{ gap: "10px", flexDirection: "row" }}>
-            <form
-              onSubmit={(event: any) => {
-                // http://my.raceresult.com/262579/results
-                // https://www.webscorer.com/racedetails?raceid=335949&did=422618&cid=2089650
-                setIsLoading(true);
-                event.preventDefault();
-                const form = new FormData(event.target);
-                const url = form.get("url") as string;
-                const domain = new URL(url);
+        {previewCrossResults && <CrossResultsPreview editor={editor} />}
+        {!previewResults &&
+          !previewWebscorerResults &&
+          !previewCrossResults && (
+            <Flex sx={{ gap: "10px", flexDirection: "row" }}>
+              <form
+                onSubmit={(event: any) => {
+                  // http://my.raceresult.com/262579/results
+                  // https://www.webscorer.com/racedetails?raceid=335949&did=422618&cid=2089650
+                  setIsLoading(true);
+                  event.preventDefault();
+                  const form = new FormData(event.target);
+                  const url = form.get("url") as string;
+                  const domain = new URL(url);
 
-                switch (domain.hostname) {
-                  case "www.webscorer.com":
-                    getWebScorerCategories({ url }).then(() => {
-                      setIsLoading(false);
-                    });
-                    break;
-                  case "my.raceresult.com":
-                    getCategories({ url }).then(() => setIsLoading(false));
-                    break;
-                  // default:
-                  //   console.log(`Sorry, we are out of shit.`);
-                }
-              }}
-              style={{ width: "100%" }}
-            >
-              <Flex sx={{ gap: "20px", flexDirection: "column" }}>
-                <Box sx={{ marginTop: "20px" }}>
-                  <Label htmlFor="url" variant="defaultLabel">
-                    Link to results
-                  </Label>
-                  <Input
-                    id="url"
-                    name="url"
-                    variant={"defaultInput"}
-                    readOnly={raceId ? true : false}
-                  />
-                </Box>
-                {webscorerCategories && (
-                  <>
-                    <Box>
-                      <Label htmlFor="url" variant="defaultLabel">
-                        Category
-                      </Label>
-                      <Select
-                        id="category"
-                        variant={"defaultInput"}
-                        onChange={(e) => {
-                          setWebscorerCategory(e.target.value);
-                        }}
-                      >
-                        <option></option>
-                        {webscorerCategories.map((c: string, i: number) => (
-                          <option key={`category-${i}`}>{c}</option>
-                        ))}
-                      </Select>
-                    </Box>
-                  </>
-                )}
-                {categories && (
-                  <>
-                    <Box>
-                      <Label htmlFor="url" variant="defaultLabel">
-                        Category
-                      </Label>
-                      <Select
-                        id="category"
-                        variant={"defaultInput"}
-                        onChange={(e) => {
-                          setCategory(e.target.value);
-                        }}
-                      >
-                        <option></option>
-                        {categories.data?.filterValues[0]["Values"].map(
-                          (c: string, i: number) => (
-                            <option key={`category-${i}`}>{c}</option>
-                          )
-                        )}
-                      </Select>
-                    </Box>
-                    <Box>
-                      <Label htmlFor="url" variant="defaultLabel">
-                        Division
-                      </Label>
-                      <Select
-                        variant={"defaultInput"}
-                        onChange={(e) => {
-                          setDivision(e.target.value);
-                        }}
-                        id="division"
-                      >
-                        <option></option>
-                        {categories.data?.filterValues[1]["Values"].map(
-                          (c: string, i: number) => (
-                            <option key={`category-${i}`}>{c}</option>
-                          )
-                        )}
-                      </Select>
-                    </Box>
-                  </>
-                )}
-                {!categories && !webscorerCategories && (
-                  <Box sx={{ marginLeft: "auto" }}>
-                    <Button
-                      disabled={isLoading ? true : false}
-                      variant="primaryButton"
-                      id="import-results"
-                    >
-                      <Flex sx={{ gap: "10px" }}>
-                        <Text as="span">Import</Text>
-                        {isLoading && (
-                          <Spinner
-                            sx={{ size: "20px", color: "spinnerButton" }}
-                          />
-                        )}
-                      </Flex>
-                    </Button>
-                  </Box>
-                )}
-                {webscorerCategories && (
-                  <Box sx={{ marginLeft: "auto" }}>
-                    <Button
-                      disabled={isLoading ? true : false}
-                      variant="primaryButton"
-                      onClick={() => {
-                        setIsLoading(true);
-                        getWebscorerResults().then((results) => {
-                          setWebscorerResultPreview &&
-                            setWebscorerResultPreview({
-                              results,
-                              selected: undefined,
-                            });
-                          setPreviewWebscorerResults(true);
-                        });
+                  switch (domain.hostname) {
+                    case "www.webscorer.com":
+                      getWebScorerCategories({ url }).then(() => {
                         setIsLoading(false);
-                      }}
-                    >
-                      <Flex sx={{ gap: "10px" }}>
-                        <Text as="span">Import</Text>
-                        {isLoading && (
-                          <Spinner
-                            sx={{ size: "20px", color: "spinnerButton" }}
-                          />
-                        )}
-                      </Flex>
-                    </Button>
+                      });
+                      break;
+                    case "my.raceresult.com":
+                      getCategories({ url }).then(() => setIsLoading(false));
+                      break;
+                    case "www.crossresults.com":
+                      getCrossResultsCategories({ url }).then(() => {
+                        setIsLoading(false);
+                      });
+                      console.log("cross results");
+                      break;
+                    // default:
+                    //   console.log(`Sorry, we are out of shit.`);
+                  }
+                }}
+                style={{ width: "100%" }}
+              >
+                <Flex sx={{ gap: "20px", flexDirection: "column" }}>
+                  <Box sx={{ marginTop: "20px" }}>
+                    <Label htmlFor="url" variant="defaultLabel">
+                      Link to results
+                    </Label>
+                    <Input
+                      id="url"
+                      name="url"
+                      variant={"defaultInput"}
+                      readOnly={raceId ? true : false}
+                    />
                   </Box>
-                )}
-                {categories && (
-                  <Box sx={{ marginLeft: "auto" }}>
-                    <Button
-                      id="get-race-results"
-                      type="button"
-                      variant="primaryButton"
-                      onClick={() => {
-                        setIsLoading(true);
-                        getResults().then((r: any) => {
-                          setRaceResults &&
-                            setRaceResults({
-                              results: r as any,
-                              selected: undefined,
-                            });
-                          setPreviewResults(true);
+                  {webscorerCategories && (
+                    <>
+                      <Box>
+                        <Label htmlFor="url" variant="defaultLabel">
+                          Category
+                        </Label>
+                        <Select
+                          id="category"
+                          variant={"defaultInput"}
+                          onChange={(e) => {
+                            setWebscorerCategory(e.target.value);
+                          }}
+                        >
+                          <option></option>
+                          {webscorerCategories.map((c: string, i: number) => (
+                            <option key={`category-${i}`}>{c}</option>
+                          ))}
+                        </Select>
+                      </Box>
+                    </>
+                  )}
+                  {crossResultsCategories && (
+                    <>
+                      <Box>
+                        <Label htmlFor="url" variant="defaultLabel">
+                          Category
+                        </Label>
+                        <Select
+                          id="category"
+                          variant={"defaultInput"}
+                          onChange={(e) => {
+                            setCrossResultsCategory(e.target.value);
+                          }}
+                        >
+                          <option></option>
+                          {Array.from(crossResultsCategories).map(
+                            (c: string, i: number) => (
+                              <option key={`category-${i}`}>{c}</option>
+                            )
+                          )}
+                        </Select>
+                      </Box>
+                    </>
+                  )}
+                  {categories && (
+                    <>
+                      <Box>
+                        <Label htmlFor="url" variant="defaultLabel">
+                          Category
+                        </Label>
+                        <Select
+                          id="category"
+                          variant={"defaultInput"}
+                          onChange={(e) => {
+                            setCategory(e.target.value);
+                          }}
+                        >
+                          <option></option>
+                          {categories.data?.filterValues[0]["Values"].map(
+                            (c: string, i: number) => (
+                              <option key={`category-${i}`}>{c}</option>
+                            )
+                          )}
+                        </Select>
+                      </Box>
+                      <Box>
+                        <Label htmlFor="url" variant="defaultLabel">
+                          Division
+                        </Label>
+                        <Select
+                          variant={"defaultInput"}
+                          onChange={(e) => {
+                            setDivision(e.target.value);
+                          }}
+                          id="division"
+                        >
+                          <option></option>
+                          {categories.data?.filterValues[1]["Values"].map(
+                            (c: string, i: number) => (
+                              <option key={`category-${i}`}>{c}</option>
+                            )
+                          )}
+                        </Select>
+                      </Box>
+                    </>
+                  )}
+                  {!categories &&
+                    !webscorerCategories &&
+                    !crossResultsCategories && (
+                      <Box sx={{ marginLeft: "auto" }}>
+                        <Button
+                          disabled={isLoading ? true : false}
+                          variant="primaryButton"
+                          id="import-results"
+                        >
+                          <Flex sx={{ gap: "10px" }}>
+                            <Text as="span">Import</Text>
+                            {isLoading && (
+                              <Spinner
+                                sx={{ size: "20px", color: "spinnerButton" }}
+                              />
+                            )}
+                          </Flex>
+                        </Button>
+                      </Box>
+                    )}
+                  {webscorerCategories && (
+                    <Box sx={{ marginLeft: "auto" }}>
+                      <Button
+                        disabled={isLoading ? true : false}
+                        variant="primaryButton"
+                        onClick={() => {
+                          setIsLoading(true);
+                          getWebscorerResults().then((results) => {
+                            setWebscorerResultPreview &&
+                              setWebscorerResultPreview({
+                                results,
+                                selected: undefined,
+                              });
+                            setPreviewWebscorerResults(true);
+                          });
                           setIsLoading(false);
-                        });
-                      }}
-                    >
-                      <Flex sx={{ gap: "10px" }}>
-                        <Text as="span">Import</Text>
-                        {isLoading && (
-                          <Spinner
-                            sx={{ size: "20px", color: "spinnerButton" }}
-                          />
-                        )}
-                      </Flex>
-                    </Button>
-                  </Box>
-                )}
-              </Flex>
-            </form>
-          </Flex>
-        )}
+                        }}
+                      >
+                        <Flex sx={{ gap: "10px" }}>
+                          <Text as="span">Import</Text>
+                          {isLoading && (
+                            <Spinner
+                              sx={{ size: "20px", color: "spinnerButton" }}
+                            />
+                          )}
+                        </Flex>
+                      </Button>
+                    </Box>
+                  )}
+                  {crossResultsCategories && (
+                    <Box sx={{ marginLeft: "auto" }}>
+                      <Button
+                        disabled={isLoading ? true : false}
+                        variant="primaryButton"
+                        onClick={() => {
+                          setIsLoading(true);
+                          getCrossResults().then((results) => {
+                            const catResults = results
+                              .filter(
+                                (row) =>
+                                  row["RaceCategoryName"] ===
+                                  crossResultsCategory
+                              )
+                              .sort((a, b) => a["Place"] > b["Place"]);
+                            setWebscorerResultPreview &&
+                              setCrossResults({
+                                results: catResults,
+                                selected: undefined,
+                              });
+                            setPreviewCrossResults(true);
+                          });
+                          // getCro().then((results) => {
+                          //   setWebscorerResultPreview &&
+                          //     setWebscorerResultPreview({
+                          //       results,
+                          //       selected: undefined,
+                          //     });
+                          //   setPreviewWebscorerResults(true);
+                          // });
+                          setIsLoading(false);
+                        }}
+                      >
+                        <Flex sx={{ gap: "10px" }}>
+                          <Text as="span">Import</Text>
+                          {isLoading && (
+                            <Spinner
+                              sx={{ size: "20px", color: "spinnerButton" }}
+                            />
+                          )}
+                        </Flex>
+                      </Button>
+                    </Box>
+                  )}
+                  {categories && (
+                    <Box sx={{ marginLeft: "auto" }}>
+                      <Button
+                        id="get-race-results"
+                        type="button"
+                        variant="primaryButton"
+                        onClick={() => {
+                          setIsLoading(true);
+                          getResults().then((r: any) => {
+                            setRaceResults &&
+                              setRaceResults({
+                                results: r as any,
+                                selected: undefined,
+                              });
+                            setPreviewResults(true);
+                            setIsLoading(false);
+                          });
+                        }}
+                      >
+                        <Flex sx={{ gap: "10px" }}>
+                          <Text as="span">Import</Text>
+                          {isLoading && (
+                            <Spinner
+                              sx={{ size: "20px", color: "spinnerButton" }}
+                            />
+                          )}
+                        </Flex>
+                      </Button>
+                    </Box>
+                  )}
+                </Flex>
+              </form>
+            </Flex>
+          )}
       </StandardModal>
     </>
   );

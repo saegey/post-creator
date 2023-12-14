@@ -122,6 +122,16 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/results/crossresults": {
+      "name": "/results/crossresults",
+      "lambdaFunction": "crossresults",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
     }
   }
 }

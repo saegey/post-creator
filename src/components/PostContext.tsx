@@ -35,6 +35,22 @@ export type WebscorerResultPreview = {
   results: Array<WebscorerResultsRow> | undefined;
 };
 
+export type CrossResultsPreviewRowType = {
+  RaceName: string;
+  RaceCategoryName: string;
+  Place: number;
+  FirstName: string;
+  LastName: string;
+  TeamName: string;
+  RaceTime: string;
+  IsDnf: number;
+}
+
+export type CrossResultsPreviewType = {
+  selected: CrossResultsPreviewRowType | undefined;
+  results: Array<CrossResultsPreviewRowType> | undefined;
+}
+
 export type Author = { fullName: string; image: string };
 
 export type PostContextType = {
@@ -72,6 +88,7 @@ export type PostContextType = {
   shortUrl?: string | undefined;
   raceResults?: RaceResultRow | undefined;
   webscorerResultPreview?: WebscorerResultPreview | undefined;
+  crossResults?: CrossResultsPreviewType | undefined;
   timeSeriesFile?: string | undefined;
   privacyStatus?: string | undefined;
   createdAt?: string | undefined;
@@ -133,6 +150,9 @@ export type PostContextType = {
   setWebscorerResultPreview?: React.Dispatch<
     React.SetStateAction<WebscorerResultPreview | undefined>
   >;
+  setCrossResults?:  React.Dispatch<
+    React.SetStateAction<CrossResultsPreviewType | undefined>
+  >;
   setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined>>;
   setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPrivacyStatus?: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -174,6 +194,7 @@ const PostContext = React.createContext<PostContextType>({
   shortUrl: undefined,
   raceResults: undefined,
   webscorerResultPreview: undefined,
+  crossResults: undefined,
   timeSeriesFile: undefined,
   privacyStatus: undefined,
   createdAt: undefined,
@@ -208,6 +229,7 @@ const PostContext = React.createContext<PostContextType>({
   setShortUrl: () => {},
   setRaceResults: () => {},
   setWebscorerResultPreview: () => {},
+  setCrossResults: () => {},
   setAuthor: () => {},
   setTimeSeriesFile: () => {},
   setPrivacyStatus: () => {},

@@ -1,5 +1,4 @@
 import { CognitoUser } from "@aws-amplify/auth";
-// import { CloudinaryImage } from "../components/AddImage";
 import { BaseEditor, Element } from "slate";
 import { ReactEditor } from "slate-react";
 import { HistoryEditor } from "slate-history";
@@ -7,6 +6,7 @@ import { BaseElement } from "slate";
 
 import {
   Author,
+  CrossResultsPreviewRowType,
   RaceResultRow,
   WebscorerResultPreview,
 } from "../components/PostContext";
@@ -194,6 +194,11 @@ export type WebscorerResultsType = {
   children: CustomText[];
 };
 
+export type CrossResultsType = {
+  type: "crossResults";
+  children: CustomText[];
+};
+
 export type VideoEmbedType = {
   type: "videoEmbed";
   children: CustomText[];
@@ -222,7 +227,8 @@ export type CustomElement =
   | ListItemType
   | RaceResultsDotComType
   | WebscorerResultsType
-  | VideoEmbedType;
+  | VideoEmbedType
+  | CrossResultsType;
 
 export type FormattedText = {
   text: string;
@@ -348,6 +354,7 @@ export interface PostType {
   postShortUrl: string | undefined;
   postRaceResults: RaceResultRow | undefined;
   postWebscorerResults: WebscorerResultPreview | undefined;
+  postCrossResults: CrossResultsPreviewRowType | undefined;
   postTimeSeriesFile: string | undefined;
   postPrivacyStatus: string | undefined;
   postCreatedAt: string | undefined;
