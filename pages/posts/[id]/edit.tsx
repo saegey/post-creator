@@ -37,7 +37,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     session = await SSR.Auth.currentSession();
     const sessionData = session.getIdToken();
     const { payload } = sessionData;
-    //"custom:role": role if custom attribute is added
+
     const {
       email,
       sub,
@@ -147,7 +147,9 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postWebscorerResults: post.webscorerResults
         ? JSON.parse(post.webscorerResults)
         : null,
-      postCrossResults: post.crossResults ? JSON.parse(post.crossResults) : null,
+      postCrossResults: (post.crossResults
+        ? JSON.parse(post.crossResults)
+        : null) as CrossResultsPreviewType | null,
       postTimeSeriesFile: post.timeSeriesFile,
       postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
       postCreatedAt: post.createdAt,
@@ -335,7 +337,7 @@ const Post = ({
       setShortUrl(postShortUrl);
       setRaceResults(postRaceResults);
       setWebscorerResults(postWebscorerResults);
-      setCrossResults(postCrossResults)
+      setCrossResults(postCrossResults);
       setTimeSeriesFile(postTimeSeriesFile);
       setPrivacyStatus(postPrivacyStatus);
       setCreatedAt(postCreatedAt);

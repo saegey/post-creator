@@ -11,7 +11,11 @@ import {
 import { API } from "aws-amplify";
 import React from "react";
 
-import { PostContext } from "../../PostContext";
+import {
+  CrossResultsPreviewRowType,
+  CrossResultsPreviewType,
+  PostContext,
+} from "../../PostContext";
 import { EditorContext } from "../Editor/EditorContext";
 import RaceResultsPreview from "./RaceResultsPreview";
 import WebscorerResultsPreview from "./WebscorerResultsPreview";
@@ -163,7 +167,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
 
     const res = (await API.get("api12660653", url, {
       response: true,
-    })) as WebscorerRes;
+    })) as { data: Array<CrossResultsPreviewRowType> };
 
     return res.data;
   };
@@ -176,9 +180,12 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     setRaceId(raceId);
 
     const path = `/results/crossresults?raceId=${raceId}`;
-    const response = await API.get("api12660653", path, { response: true });
-    setCrossResultsCategories(new Set([...response.data.map((r) => r["2"])]));
-    // console.log(new Set([...response.data.map((r) => r["2"] )]));
+    const response = (await API.get("api12660653", path, {
+      response: true,
+    })) as { data: Array<CrossResultsPreviewRowType> };
+    setCrossResultsCategories(
+      new Set([...response.data.map((r) => r["RaceCategoryName"])])
+    );
   };
 
   const getCategories = async ({ url }: { url: string }) => {
@@ -423,22 +430,17 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                                   row["RaceCategoryName"] ===
                                   crossResultsCategory
                               )
-                              .sort((a, b) => a["Place"] > b["Place"]);
+                              .sort((a, b) =>
+                                a["Place"] > b["Place"] ? 1 : -1
+                              );
                             setWebscorerResultPreview &&
+                              setCrossResults &&
                               setCrossResults({
                                 results: catResults,
                                 selected: undefined,
                               });
                             setPreviewCrossResults(true);
                           });
-                          // getCro().then((results) => {
-                          //   setWebscorerResultPreview &&
-                          //     setWebscorerResultPreview({
-                          //       results,
-                          //       selected: undefined,
-                          //     });
-                          //   setPreviewWebscorerResults(true);
-                          // });
                           setIsLoading(false);
                         }}
                       >

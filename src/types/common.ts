@@ -7,6 +7,7 @@ import { BaseElement } from "slate";
 import {
   Author,
   CrossResultsPreviewRowType,
+  CrossResultsPreviewType,
   RaceResultRow,
   WebscorerResultPreview,
 } from "../components/PostContext";
@@ -354,7 +355,7 @@ export interface PostType {
   postShortUrl: string | undefined;
   postRaceResults: RaceResultRow | undefined;
   postWebscorerResults: WebscorerResultPreview | undefined;
-  postCrossResults: CrossResultsPreviewRowType | undefined;
+  postCrossResults: CrossResultsPreviewType | undefined;
   postTimeSeriesFile: string | undefined;
   postPrivacyStatus: string | undefined;
   postCreatedAt: string | undefined;
