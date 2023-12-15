@@ -18,6 +18,7 @@ import { CustomElement } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import WebscorerListWrapper from "../RaceResults/WebscorerListWrapper";
 import VideoPlayer from "../VideoEmbed/VideoPlayer";
+import CrossResultstListWrapper from "../RaceResults/CrossResultsListWrapper";
 
 const Leaf = (props: RenderLeafProps) => {
   return (
@@ -121,6 +122,8 @@ const renderElement = (props: {
       return <RaceResultsDotComListWrapper />;
     case "webscorerResults":
       return <WebscorerListWrapper />;
+    case "crossResults":
+      return <CrossResultstListWrapper />;
     case "paragraph":
       return (
         <Text

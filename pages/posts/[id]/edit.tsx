@@ -4,6 +4,7 @@ import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 
 import {
+  CrossResultsPreviewType,
   PostContext,
   RaceResultRow,
   WebscorerResultPreview,
@@ -36,7 +37,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     session = await SSR.Auth.currentSession();
     const sessionData = session.getIdToken();
     const { payload } = sessionData;
-    //"custom:role": role if custom attribute is added
+
     const {
       email,
       sub,
@@ -146,6 +147,9 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postWebscorerResults: post.webscorerResults
         ? JSON.parse(post.webscorerResults)
         : null,
+      postCrossResults: (post.crossResults
+        ? JSON.parse(post.crossResults)
+        : null) as CrossResultsPreviewType | null,
       postTimeSeriesFile: post.timeSeriesFile,
       postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
       postCreatedAt: post.createdAt,
@@ -183,6 +187,7 @@ const Post = ({
   postShortUrl,
   postRaceResults,
   postWebscorerResults,
+  postCrossResults,
   postTimeSeriesFile,
   postPrivacyStatus,
   postCreatedAt,
@@ -287,6 +292,10 @@ const Post = ({
     WebscorerResultPreview | undefined
   >(postWebscorerResults);
 
+  const [crossResults, setCrossResults] = React.useState<
+    CrossResultsPreviewType | undefined
+  >(postCrossResults);
+
   const [timeSeriesFile, setTimeSeriesFile] =
     React.useState(postTimeSeriesFile);
   const [privacyStatus, setPrivacyStatus] = React.useState<string | undefined>(
@@ -328,6 +337,7 @@ const Post = ({
       setShortUrl(postShortUrl);
       setRaceResults(postRaceResults);
       setWebscorerResults(postWebscorerResults);
+      setCrossResults(postCrossResults);
       setTimeSeriesFile(postTimeSeriesFile);
       setPrivacyStatus(postPrivacyStatus);
       setCreatedAt(postCreatedAt);
@@ -397,6 +407,8 @@ const Post = ({
         setRaceResults,
         webscorerResultPreview: webscorerResults,
         setWebscorerResultPreview: setWebscorerResults,
+        crossResults,
+        setCrossResults,
         author,
         setAuthor,
         timeSeriesFile,
