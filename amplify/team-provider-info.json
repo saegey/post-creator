@@ -156,6 +156,10 @@
         "crossresults": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/crossresults-7a7052647536546d6450-build.zip"
+        },
+        "omnigoCategories": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/omnigoCategories-4e2b37736f584b657544-build.zip"
         }
       },
       "api": {

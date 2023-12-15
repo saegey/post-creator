@@ -55,6 +55,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
+    "omnigoCategories": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "postUpdateCalc": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

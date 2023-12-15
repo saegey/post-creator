@@ -97,6 +97,14 @@
           ],
           "category": "function",
           "resourceName": "crossresults"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "omnigoCategories"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -223,6 +231,11 @@
       "service": "Lambda"
     },
     "nextjsblog24b60079": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "omnigoCategories": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -419,6 +432,22 @@
         {
           "category": "function",
           "resourceName": "nextjsblog24b60079"
+        }
+      ]
+    },
+    "AMPLIFY_function_omnigoCategories_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "omnigoCategories"
+        }
+      ]
+    },
+    "AMPLIFY_function_omnigoCategories_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "omnigoCategories"
         }
       ]
     },

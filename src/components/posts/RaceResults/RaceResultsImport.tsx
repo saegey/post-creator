@@ -86,6 +86,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     React.useState<Array<string> | null>(null);
   const [crossResultsCategories, setCrossResultsCategories] =
     React.useState<Set<string> | null>();
+
+  const [omniCategories, setOmniCategories] =
+    React.useState<Array<string> | null>();
   const [raceId, setRaceId] = React.useState<string | null>();
   const [key, setKey] = React.useState();
   const [server, setServer] = React.useState();
@@ -170,6 +173,16 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     })) as { data: Array<CrossResultsPreviewRowType> };
 
     return res.data;
+  };
+
+  const getOmniResultsCategories = async ({ url }: { url: string }) => {
+    const apiUrl = `/results/omnigo?url=${url}`;
+
+    const res = (await API.get("api12660653", apiUrl, {
+      response: true,
+    })) as { data: { eventClasses: Array<{ classWithPrefix: string }> } };
+
+    setOmniCategories(res.data.eventClasses.map((r) => r["classWithPrefix"]));
   };
 
   const getCrossResultsCategories = async ({ url }: { url: string }) => {
@@ -263,6 +276,12 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                       });
                       console.log("cross results");
                       break;
+                    case "www.omnigoevents.com":
+                      console.log("omni");
+                      getOmniResultsCategories({ url }).then(() => {
+                        setIsLoading(false);
+                      });
+
                     // default:
                     //   console.log(`Sorry, we are out of shit.`);
                   }
@@ -325,6 +344,27 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                       </Box>
                     </>
                   )}
+                  {omniCategories && (
+                    <>
+                      <Box>
+                        <Label htmlFor="url" variant="defaultLabel">
+                          Category
+                        </Label>
+                        <Select
+                          id="category"
+                          variant={"defaultInput"}
+                          onChange={(e) => {
+                            setCrossResultsCategory(e.target.value);
+                          }}
+                        >
+                          <option></option>
+                          {omniCategories.map((c: string, i: number) => (
+                            <option key={`category-${i}`}>{c}</option>
+                          ))}
+                        </Select>
+                      </Box>
+                    </>
+                  )}
                   {categories && (
                     <>
                       <Box>
@@ -369,7 +409,8 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                   )}
                   {!categories &&
                     !webscorerCategories &&
-                    !crossResultsCategories && (
+                    !crossResultsCategories &&
+                    !omniCategories && (
                       <Box sx={{ marginLeft: "auto" }}>
                         <Button
                           disabled={isLoading ? true : false}
@@ -456,6 +497,36 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                     </Box>
                   )}
                   {categories && (
+                    <Box sx={{ marginLeft: "auto" }}>
+                      <Button
+                        id="get-race-results"
+                        type="button"
+                        variant="primaryButton"
+                        onClick={() => {
+                          setIsLoading(true);
+                          getResults().then((r: any) => {
+                            setRaceResults &&
+                              setRaceResults({
+                                results: r as any,
+                                selected: undefined,
+                              });
+                            setPreviewResults(true);
+                            setIsLoading(false);
+                          });
+                        }}
+                      >
+                        <Flex sx={{ gap: "10px" }}>
+                          <Text as="span">Import</Text>
+                          {isLoading && (
+                            <Spinner
+                              sx={{ size: "20px", color: "spinnerButton" }}
+                            />
+                          )}
+                        </Flex>
+                      </Button>
+                    </Box>
+                  )}
+                  {omniCategories && (
                     <Box sx={{ marginLeft: "auto" }}>
                       <Button
                         id="get-race-results"

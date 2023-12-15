@@ -132,6 +132,16 @@
           "read"
         ]
       }
+    },
+    "/results/omnigo": {
+      "name": "/results/omnigo",
+      "lambdaFunction": "omnigoCategories",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
     }
   }
 }
