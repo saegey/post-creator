@@ -44,12 +44,37 @@ export type CrossResultsPreviewRowType = {
   TeamName: string;
   RaceTime: string;
   IsDnf: number;
-}
+};
 
 export type CrossResultsPreviewType = {
   selected: CrossResultsPreviewRowType | undefined;
   results: Array<CrossResultsPreviewRowType> | undefined;
-}
+};
+
+export type OmniResultRowType = {
+  id: string;
+  classId: number;
+  firstName: string;
+  lastName: string;
+  bib: number;
+  team: string;
+  start: number;
+  adjustment: string | null;
+  status: string | null;
+  finishTime: number;
+  totalTime: number;
+  timeFormattted: string;
+  checkpointTimes: Array<{
+    eventCheckpointId: string;
+    bib: number;
+    ts: number;
+  }>;
+};
+
+export type OmniResultType = {
+  selected: OmniResultRowType | undefined;
+  results: Array<OmniResultRowType> | undefined;
+};
 
 export type Author = { fullName: string; image: string };
 
@@ -86,13 +111,17 @@ export type PostContextType = {
   timeInRed?: number | undefined;
   date?: string | undefined;
   shortUrl?: string | undefined;
+
+  // Race results
   raceResults?: RaceResultRow | undefined;
   webscorerResultPreview?: WebscorerResultPreview | undefined;
   crossResults?: CrossResultsPreviewType | undefined;
+  omniResults?: OmniResultType | undefined;
+
   timeSeriesFile?: string | undefined;
   privacyStatus?: string | undefined;
   createdAt?: string | undefined;
-  // selection: [number, number] | undefined;
+
   powers: Array<number> | undefined;
   hearts: Array<number> | undefined;
   setActivity?: React.Dispatch<
@@ -144,15 +173,21 @@ export type PostContextType = {
   setDate?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPowerZoneBuckets?: React.Dispatch<React.SetStateAction<Array<number>>>;
   setShortUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+
+  // race results
   setRaceResults?: React.Dispatch<
     React.SetStateAction<RaceResultRow | undefined>
   >;
   setWebscorerResultPreview?: React.Dispatch<
     React.SetStateAction<WebscorerResultPreview | undefined>
   >;
-  setCrossResults?:  React.Dispatch<
+  setCrossResults?: React.Dispatch<
     React.SetStateAction<CrossResultsPreviewType | undefined>
   >;
+  setOmniResults?: React.Dispatch<
+    React.SetStateAction<OmniResultType | undefined>
+  >;
+
   setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined>>;
   setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPrivacyStatus?: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -192,15 +227,19 @@ const PostContext = React.createContext<PostContextType>({
   powerZoneBuckets: [],
   heroImage: undefined,
   shortUrl: undefined,
+
+  // race results
   raceResults: undefined,
   webscorerResultPreview: undefined,
   crossResults: undefined,
+  omniResults: undefined,
+
   timeSeriesFile: undefined,
   privacyStatus: undefined,
   createdAt: undefined,
-  // selection: undefined,
   powers: undefined,
   hearts: undefined,
+
   setActivity: () => {},
   setTitle: () => {},
   setSubhead: () => {},
@@ -227,9 +266,12 @@ const PostContext = React.createContext<PostContextType>({
   setHeroImage: () => {},
   setDate: () => {},
   setShortUrl: () => {},
+  // race results
   setRaceResults: () => {},
   setWebscorerResultPreview: () => {},
   setCrossResults: () => {},
+  setOmniResults: () => {},
+
   setAuthor: () => {},
   setTimeSeriesFile: () => {},
   setPrivacyStatus: () => {},

@@ -19,6 +19,8 @@ import { useUnits } from "../../UnitProvider";
 import WebscorerListWrapper from "../RaceResults/WebscorerListWrapper";
 import VideoPlayer from "../VideoEmbed/VideoPlayer";
 import CrossResultstListWrapper from "../RaceResults/CrossResultsListWrapper";
+import OmniResultsList from "../RaceResults/OmniResultsList";
+import OmniResultsListWrapper from "../RaceResults/OmniResultsListWrapper";
 
 const Leaf = (props: RenderLeafProps) => {
   return (
@@ -124,6 +126,8 @@ const renderElement = (props: {
       return <WebscorerListWrapper />;
     case "crossResults":
       return <CrossResultstListWrapper />;
+    case "omniResults":
+      return <OmniResultsListWrapper />;
     case "paragraph":
       return (
         <Text

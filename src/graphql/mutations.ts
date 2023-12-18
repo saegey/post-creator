@@ -112,6 +112,7 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -178,6 +179,7 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -244,6 +246,7 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -307,6 +310,7 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     originalPostId
     originalPost {
@@ -368,6 +372,7 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -428,6 +433,7 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     originalPostId
     originalPost {
@@ -489,6 +495,7 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -549,6 +556,7 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     originalPostId
     originalPost {
@@ -610,6 +618,7 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -700,6 +709,7 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -741,6 +751,7 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     privacyStatus
     updatedAt
@@ -826,6 +837,7 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -867,6 +879,7 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     privacyStatus
     updatedAt
@@ -952,6 +965,7 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -993,6 +1007,7 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     privacyStatus
     updatedAt

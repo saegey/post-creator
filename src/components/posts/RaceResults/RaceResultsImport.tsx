@@ -22,6 +22,7 @@ import WebscorerResultsPreview from "./WebscorerResultsPreview";
 import StandardModal from "../../shared/StandardModal";
 import { CustomEditor } from "../../../types/common";
 import CrossResultsPreview from "./CrossResultsPreview";
+import OmniResultsPreview from "./OmniResultsPreview";
 
 export type WebscorerResultsRow = {
   Place: string;
@@ -89,13 +90,17 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
 
   const [omniCategories, setOmniCategories] =
     React.useState<Array<string> | null>();
+  const [omniCategory, setOmniCategory] = React.useState("");
+
   const [raceId, setRaceId] = React.useState<string | null>();
   const [key, setKey] = React.useState();
   const [server, setServer] = React.useState();
+
   const [previewResults, setPreviewResults] = React.useState(false);
   const [previewWebscorerResults, setPreviewWebscorerResults] =
     React.useState(false);
   const [previewCrossResults, setPreviewCrossResults] = React.useState(false);
+  const [previewOmniResults, setPreviewOmniResults] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -105,7 +110,23 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
   const { setRaceResults, setWebscorerResultPreview } =
     React.useContext(PostContext);
 
-  const { crossResults, setCrossResults } = React.useContext(PostContext);
+  const { setCrossResults } = React.useContext(PostContext);
+  const { setOmniResults } = React.useContext(PostContext);
+
+  const getOmniResults = async () => {
+    if (raceId === undefined || raceId === null) {
+      throw Error("no race id provided");
+    }
+    console.log(omniCategory, raceId);
+    const url = `/results/omnigo/cat-results?url=${encodeURIComponent(
+      raceId
+    )}&category=${encodeURIComponent(omniCategory)}`;
+
+    const res = (await API.get("api12660653", url, {
+      response: true,
+    })) as ApiRes;
+    return res.data;
+  };
 
   const getResults = async () => {
     if (!category || !division) {
@@ -181,6 +202,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     const res = (await API.get("api12660653", apiUrl, {
       response: true,
     })) as { data: { eventClasses: Array<{ classWithPrefix: string }> } };
+    setRaceId(url);
 
     setOmniCategories(res.data.eventClasses.map((r) => r["classWithPrefix"]));
   };
@@ -239,17 +261,24 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
         setIsOpen={setIsRaceResultsModalOpen}
         isOpen={isRaceResultsModalOpen}
       >
-        {(previewResults || previewWebscorerResults) && (
+        {(previewResults ||
+          previewWebscorerResults ||
+          previewCrossResults ||
+          previewOmniResults) && (
           <Text as="div" sx={{ marginY: "5px" }}>
             Select your result below:
           </Text>
         )}
+
         {previewResults && <RaceResultsPreview editor={editor} />}
         {previewWebscorerResults && <WebscorerResultsPreview editor={editor} />}
         {previewCrossResults && <CrossResultsPreview editor={editor} />}
+        {previewOmniResults && <OmniResultsPreview editor={editor} />}
+
         {!previewResults &&
           !previewWebscorerResults &&
-          !previewCrossResults && (
+          !previewCrossResults &&
+          !previewOmniResults && (
             <Flex sx={{ gap: "10px", flexDirection: "row" }}>
               <form
                 onSubmit={(event: any) => {
@@ -354,7 +383,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                           id="category"
                           variant={"defaultInput"}
                           onChange={(e) => {
-                            setCrossResultsCategory(e.target.value);
+                            setOmniCategory(e.target.value);
                           }}
                         >
                           <option></option>
@@ -529,18 +558,24 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
                   {omniCategories && (
                     <Box sx={{ marginLeft: "auto" }}>
                       <Button
-                        id="get-race-results"
+                        id="get-race-results-omni"
                         type="button"
                         variant="primaryButton"
                         onClick={() => {
                           setIsLoading(true);
-                          getResults().then((r: any) => {
-                            setRaceResults &&
-                              setRaceResults({
+                          getOmniResults().then((r: any) => {
+                            console.log(r);
+                            setOmniResults &&
+                              setOmniResults({
                                 results: r as any,
                                 selected: undefined,
                               });
-                            setPreviewResults(true);
+                            // setRaceResults &&
+                            // setRaceResults({
+                            //   results: r as any,
+                            //   selected: undefined,
+                            // });
+                            setPreviewOmniResults(true);
                             setIsLoading(false);
                           });
                         }}

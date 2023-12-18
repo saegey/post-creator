@@ -14,6 +14,7 @@ exports.handler = async (event) => {
   const endpoint = new URL(url);
   let statusCode = 200;
   let body;
+
   let response;
   const context = {};
 

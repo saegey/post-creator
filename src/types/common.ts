@@ -8,6 +8,7 @@ import {
   Author,
   CrossResultsPreviewRowType,
   CrossResultsPreviewType,
+  OmniResultType,
   RaceResultRow,
   WebscorerResultPreview,
 } from "../components/PostContext";
@@ -200,6 +201,13 @@ export type CrossResultsType = {
   children: CustomText[];
 };
 
+
+export type OmniResultsType = {
+  type: "omniResults";
+  children: CustomText[];
+};
+
+
 export type VideoEmbedType = {
   type: "videoEmbed";
   children: CustomText[];
@@ -229,7 +237,8 @@ export type CustomElement =
   | RaceResultsDotComType
   | WebscorerResultsType
   | VideoEmbedType
-  | CrossResultsType;
+  | CrossResultsType
+  | OmniResultsType;
 
 export type FormattedText = {
   text: string;
@@ -353,9 +362,13 @@ export interface PostType {
       }
     | undefined;
   postShortUrl: string | undefined;
+
+  // race results
   postRaceResults: RaceResultRow | undefined;
   postWebscorerResults: WebscorerResultPreview | undefined;
   postCrossResults: CrossResultsPreviewType | undefined;
+  postOmniResults: OmniResultType | undefined;
+
   postTimeSeriesFile: string | undefined;
   postPrivacyStatus: string | undefined;
   postCreatedAt: string | undefined;

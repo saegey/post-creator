@@ -112,6 +112,7 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -178,6 +179,7 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -244,6 +246,7 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -307,6 +310,7 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     originalPostId
     originalPost {
@@ -368,6 +372,7 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -428,6 +433,7 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     originalPostId
     originalPost {
@@ -489,6 +495,7 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -549,6 +556,7 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     originalPostId
     originalPost {
@@ -610,6 +618,7 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -700,6 +709,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -741,6 +751,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     privacyStatus
     updatedAt
@@ -826,6 +837,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -867,6 +879,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     privacyStatus
     updatedAt
@@ -952,6 +965,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -993,6 +1007,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     privacyStatus
     updatedAt
