@@ -1,25 +1,28 @@
 import React from "react";
-import { Box, Flex, Text } from "theme-ui";
+import { Box, Button, Flex, Link, Text } from "theme-ui";
 
-import { CrossResultsPreviewType, OmniResultType } from "../../PostContext";
+import { OmniResultType } from "../../../PostContext";
 
 const OmniResultsList = ({
   raceResults,
+  resultsUrl,
 }: {
   raceResults: OmniResultType | undefined;
+  resultsUrl: string;
 }) => {
   return (
     <>
-      <Text
-        as="h2"
-        sx={{
-          borderBottomColor: "dividerDark",
-          borderBottomWidth: "1px",
-          borderBottomStyle: "solid",
-        }}
-      >
-        Results
-      </Text>
+      <Flex>
+        <Flex sx={{ flexGrow: 1 }}>
+          <Text as="h2">Results</Text>
+        </Flex>
+        <Flex sx={{ justifyContent: "right" }}>
+          <Link target="_blank" href={resultsUrl}>
+            <Button variant="primaryButton">Link to results</Button>
+          </Link>
+        </Flex>
+      </Flex>
+      <Text>{raceResults?.category}</Text>
       <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
         {raceResults &&
           raceResults?.results?.map((row, i) => {

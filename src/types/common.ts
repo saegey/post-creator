@@ -13,6 +13,58 @@ import {
   WebscorerResultPreview,
 } from "../components/PostContext";
 
+export type ResultsRow = [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string
+];
+
+export type ApiRes = {
+  data: { data: ResultsRow[]; list: { Fields: Array<{ Label: string }> } };
+};
+
+
+export type WebscorerResultsRow = {
+  Place: string;
+  Bib: string;
+  Name: string;
+  FirstName: string;
+  LastName: string;
+  TeamName: string;
+  Category: string;
+  Age: number;
+  YearOfBirth: number;
+  Gender: string;
+  Time: string;
+  LapTimes: Array<{
+    LapNumber: number;
+    LapTime: string;
+    LapRank: number;
+    LapBehind: string;
+    RaceTime: string;
+    RaceRank: number;
+    RaceBehind: string;
+  }>;
+  Difference: string;
+  PercentBack: string;
+  PercentWinning: string;
+  PercentAverage: string;
+  PercentMedian: string;
+  CompletedLaps: number;
+  StartTime: string;
+};
+
+export type WebscorerRes = {
+  data: Array<WebscorerResultsRow>;
+};
+
 export interface IUser {
   userId: string;
   email: string;
@@ -201,12 +253,10 @@ export type CrossResultsType = {
   children: CustomText[];
 };
 
-
 export type OmniResultsType = {
   type: "omniResults";
   children: CustomText[];
 };
-
 
 export type VideoEmbedType = {
   type: "videoEmbed";

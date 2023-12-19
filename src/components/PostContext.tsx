@@ -1,38 +1,41 @@
 import React from "react";
 
-import { ActivityItem, CustomElement, CloudinaryImage } from "../types/common";
-import { WebscorerResultsRow } from "./posts/RaceResults/RaceResultsImport";
+import {
+  ActivityItem,
+  CustomElement,
+  CloudinaryImage,
+  WebscorerResultsRow,
+} from "../types/common";
+
+// {"missing":"2","CatPlace":"1","Name":"Stephen Mull","AgeSex":"40 M","Time":"4:04:57.1","Speed":"21.4 mph","SexPlace":"1","OverallPlace":"1","Bib":"2","Team":"Canyon"}
+// 21.4 mph
+// 4:04:57.1
+
+export type RaceResultRowType = {
+  CatPlace: string;
+  AgeSex: string;
+  Name: string;
+  Age: string;
+  Time: string;
+  Speed: string;
+  SexPlace: string;
+  GenderPlace: string;
+  OverallPlace: string;
+  Bib: string;
+  Team: string;
+};
 
 export type RaceResultRow = {
-  selected:
-    | {
-        CatPlace: string;
-        Name: string;
-        Age: string;
-        Time: string;
-        Speed: string;
-        GenderPlace: string;
-        OverallPlace: string;
-        Bib: string;
-      }
-    | undefined;
-  results:
-    | Array<{
-        CatPlace: string;
-        Name: string;
-        Age: string;
-        Time: string;
-        Speed: string;
-        GenderPlace: string;
-        OverallPlace: string;
-        Bib: string;
-      }>
-    | undefined;
+  selected: RaceResultRowType | undefined;
+  results: Array<RaceResultRowType> | undefined;
+  category: string;
+  division: string;
 };
 
 export type WebscorerResultPreview = {
   selected: WebscorerResultsRow | undefined;
   results: Array<WebscorerResultsRow> | undefined;
+  category: string;
 };
 
 export type CrossResultsPreviewRowType = {
@@ -49,6 +52,7 @@ export type CrossResultsPreviewRowType = {
 export type CrossResultsPreviewType = {
   selected: CrossResultsPreviewRowType | undefined;
   results: Array<CrossResultsPreviewRowType> | undefined;
+  category: string;
 };
 
 export type OmniResultRowType = {
@@ -74,6 +78,7 @@ export type OmniResultRowType = {
 export type OmniResultType = {
   selected: OmniResultRowType | undefined;
   results: Array<OmniResultRowType> | undefined;
+  category: string;
 };
 
 export type Author = { fullName: string; image: string };
@@ -91,7 +96,7 @@ export type PostContextType = {
   images?: Array<CloudinaryImage> | null;
   heroImage?: CloudinaryImage | undefined;
   currentFtp?: number | null;
-  resultsUrl?: string | null;
+  resultsUrl?: string;
   powerAnalysis?: Array<Record<number | string, number>> | undefined;
   heartAnalysis?: Array<Record<number | string, number>> | undefined;
   cadenceAnalysis?: Array<Record<number | string, number>> | undefined;
@@ -211,7 +216,7 @@ const PostContext = React.createContext<PostContextType>({
   components: [],
   images: [],
   currentFtp: undefined,
-  resultsUrl: undefined,
+  resultsUrl: "",
   powerAnalysis: undefined,
   heartAnalysis: undefined,
   cadenceAnalysis: undefined,

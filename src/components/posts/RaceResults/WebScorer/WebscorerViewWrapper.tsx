@@ -1,7 +1,7 @@
 import { Box } from "theme-ui";
 import React from "react";
 
-import { PostContext } from "../../PostContext";
+import { PostContext } from "../../../PostContext";
 import WebscorerList from "./WebscorerList";
 
 const WebscorerViewWrapper = () => {

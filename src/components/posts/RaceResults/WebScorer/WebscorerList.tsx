@@ -1,25 +1,28 @@
 import React from "react";
-import { Box, Flex, Text } from "theme-ui";
+import { Box, Button, Flex, Link, Text } from "theme-ui";
 
-import { CrossResultsPreviewType } from "../../PostContext";
+import { WebscorerResultPreview } from "../../../PostContext";
 
-const CrossResultsList = ({
+const WebscorerList = ({
   raceResults,
+  resultsUrl,
 }: {
-  raceResults: CrossResultsPreviewType | undefined;
+  raceResults: WebscorerResultPreview | undefined;
+  resultsUrl: string;
 }) => {
   return (
     <>
-      <Text
-        as="h2"
-        sx={{
-          borderBottomColor: "dividerDark",
-          borderBottomWidth: "1px",
-          borderBottomStyle: "solid",
-        }}
-      >
-        Results
-      </Text>
+      <Flex>
+        <Flex sx={{ flexGrow: 1 }}>
+          <Text as="h2">Results</Text>
+        </Flex>
+        <Flex sx={{ justifyContent: "right" }}>
+          <Link target="_blank" href={resultsUrl}>
+            <Button variant="primaryButton">Link to results</Button>
+          </Link>
+        </Flex>
+      </Flex>
+      <Text>{`${raceResults?.category}`}</Text>
       <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
         {raceResults &&
           raceResults?.results?.map((row, i) => {
@@ -30,13 +33,11 @@ const CrossResultsList = ({
                   paddingY: "2px",
                   paddingX: "5px",
                   backgroundColor:
-                    `${row.FirstName} ${row.LastName}` ===
-                    `${raceResults?.selected?.FirstName} ${raceResults?.selected?.LastName}`
+                    row.Name === raceResults?.selected?.Name
                       ? "selectedBackground"
                       : null,
                   color:
-                    `${row.FirstName} ${row.LastName}` ===
-                    `${raceResults?.selected?.FirstName} ${raceResults?.selected?.LastName}`
+                    row.Name === raceResults?.selected?.Name
                       ? "selectedBackgroundText"
                       : null,
                   borderRadius: "5px",
@@ -50,9 +51,7 @@ const CrossResultsList = ({
                   {row.Place}
                 </Text>
                 <Box sx={{ flexGrow: 2 }}>
-                  <Text as="span">
-                    {row.FirstName} {row.LastName}
-                  </Text>
+                  <Text as="span">{row.Name}</Text>
                   <Text
                     as="span"
                     sx={{
@@ -65,9 +64,11 @@ const CrossResultsList = ({
                     {row.TeamName ? row.TeamName : " "}
                   </Text>
                 </Box>
-                <Text as="span" sx={{ marginLeft: "15px" }}></Text>
                 <Text as="span" sx={{ marginLeft: "15px" }}>
-                  {row.IsDnf === 1 ? "DNF" : row.RaceTime}
+                  {row.Difference}
+                </Text>
+                <Text as="span" sx={{ marginLeft: "15px" }}>
+                  {row.Time}
                 </Text>
               </Flex>
             );
@@ -77,4 +78,4 @@ const CrossResultsList = ({
   );
 };
 
-export default CrossResultsList;
+export default WebscorerList;

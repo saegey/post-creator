@@ -1,43 +1,27 @@
 import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import { Transforms } from "slate";
+import { Transforms, Descendant } from "slate";
 
-import { PostContext } from "../../PostContext";
-import { EditorContext } from "../Editor/EditorContext";
-import { UpdatePostMutation } from "../../../API";
-import { updatePost } from "../../../graphql/mutations";
-import { CustomEditor, CustomElement } from "../../../types/common";
+import { PostContext } from "../../../PostContext";
+import { EditorContext } from "../../Editor/EditorContext";
+import { CustomEditor } from "../../../../types/common";
+import { saveMyRaceResults } from "../api";
+import { ResultsContext } from "../ResultsContext";
 
-const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
+const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { crossResults, id, setCrossResults } = React.useContext(PostContext);
+  const { raceResults, id, setRaceResults } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
-
-  const saveResults = async () => {
-    try {
-      const response = await API.graphql({
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: updatePost,
-        variables: {
-          input: {
-            crossResults: JSON.stringify(crossResults),
-            raceResultsProvider: "crossresults",
-            id: id,
-          },
-        },
-      });
-      return response;
-    } catch (errors) {
-      console.error(errors);
-    }
-  };
+  const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
 
   return (
     <>
+      <Text as="h3" sx={{ lineHeight: "40px" }}>
+        {raceResultsMeta.category} - {raceResultsMeta.division}
+      </Text>
+      <Text>{resultsUrl}</Text>
       <Box
         sx={{
           overflowY: "auto",
@@ -46,29 +30,37 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           padding: "5px",
           borderRadius: "5px",
         }}
+        id="race-results-list"
       >
-        <Flex sx={{ width: "100%" }}>
+        <Flex sx={{ width: "100%", paddingX: "5px" }}>
           <Text
             as="span"
             sx={{
-              width: ["30px", "60px", "100px"],
+              width: ["30px", "60px", "60px"],
               visibility: ["hidden", "visible", "visible"],
             }}
           >
             Place
           </Text>
-          <Text as="span" sx={{ width: "300px" }}>
+          <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
             Name
           </Text>
-          <Flex sx={{ width: "100%", justifyContent: "right" }}>
-            <Text as="span">Time</Text>
-          </Flex>
+          <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
+            Speed
+          </Text>
+          <Text
+            as="span"
+            sx={{ width: "100px", display: "flex", justifyContent: "right" }}
+          >
+            Time
+          </Text>
         </Flex>
-        {crossResults &&
-          crossResults.results &&
-          crossResults.results.map((row, i) => {
+        {raceResults &&
+          raceResults.results &&
+          raceResults.results.map((row, i) => {
             return (
               <Flex
+                id={`race-result-row-${i}`}
                 key={`race-result-row-${i}`}
                 sx={{
                   backgroundColor:
@@ -82,41 +74,44 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                       selectedRow === i ? "selectedBackground" : "muted",
                     borderRadius: "5px",
                   },
-                  // paddingX: "5px",
+                  paddingX: "5px",
                   paddingY: "2px",
                 }}
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
-                    setCrossResults &&
-                      setCrossResults({
-                        ...crossResults,
+                    setRaceResults &&
+                      setRaceResults({
+                        ...raceResults,
                         selected: undefined,
                       });
                   } else {
                     setSelectedRow(i);
-                    setCrossResults &&
-                      setCrossResults({
-                        ...crossResults,
+                    setRaceResults &&
+                      setRaceResults({
+                        ...raceResults,
                         selected:
-                          crossResults && crossResults.results
-                            ? crossResults.results[i]
+                          raceResults && raceResults.results
+                            ? raceResults.results[i]
                             : undefined,
                       });
                   }
                 }}
               >
                 <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
-                  {row.Place}
+                  {row.CatPlace}
                 </Text>
-                <Text as="span" sx={{ width: "300px", flexGrow: "1" }}>
-                  {row.FirstName} {row.LastName}
-                </Text>
+                <Box sx={{ width: "300px", flexGrow: "2" }}>
+                  <Text as="div">{row.Name}</Text>
+                  <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                    {row.Team ? row.Team : " "}
+                  </Text>
+                </Box>
                 <Text
                   as="span"
                   sx={{ display: ["none", "inherit", "inherit"] }}
                 >
-                  {/* {row.TeamName} */}
+                  {row.Speed}
                 </Text>
                 <Text
                   as="span"
@@ -126,7 +121,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     width: "100px",
                   }}
                 >
-                  {row.RaceTime}
+                  {row.Time}
                 </Text>
               </Flex>
             );
@@ -151,16 +146,19 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             disabled={selectedRow ? false : true}
             onClick={() => {
               setIsLoading(true);
-              saveResults().then((r) => {
+              saveMyRaceResults({
+                raceResults,
+                id,
+                resultsUrl,
+                category: raceResultsMeta.category,
+                division: raceResultsMeta.division,
+              }).then((r) => {
                 Transforms.insertNodes(editor, [
                   {
-                    type: "crossResults",
+                    type: "raceResultsDotCom",
                     children: [{ text: "" }],
-                  },
-                  {
-                    type: "paragraph",
-                    children: [{ text: "" }],
-                  },
+                  } as Descendant,
+                  { type: "text", children: [{ text: "" }] } as Descendant,
                 ]);
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
@@ -178,4 +176,4 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   );
 };
 
-export default CrossResultsPreview;
+export default RaceResultsPreview;

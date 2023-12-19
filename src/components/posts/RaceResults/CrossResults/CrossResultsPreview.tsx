@@ -1,44 +1,27 @@
 import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
 import { Transforms } from "slate";
 
-import { PostContext } from "../../PostContext";
-import { EditorContext } from "../Editor/EditorContext";
-import { UpdatePostMutation } from "../../../API";
-import { updatePost } from "../../../graphql/mutations";
-import { CustomEditor, CustomElement } from "../../../types/common";
+import { PostContext } from "../../../PostContext";
+import { EditorContext } from "../../Editor/EditorContext";
+import { CustomEditor, CustomElement } from "../../../../types/common";
+import { saveCrossResults } from "../api";
+import { ResultsContext } from "../ResultsContext";
 
-const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
+const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { webscorerResultPreview, id, setWebscorerResultPreview } =
-    React.useContext(PostContext);
+  const { crossResults, id, setCrossResults } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
-
-  const saveResults = async () => {
-    try {
-      const response = await API.graphql({
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: updatePost,
-        variables: {
-          input: {
-            webscorerResults: JSON.stringify(webscorerResultPreview),
-            raceResultsProvider: "webscorer",
-            id: id,
-          },
-        },
-      });
-      return response;
-    } catch (errors) {
-      console.error(errors);
-    }
-  };
+  const { crossResultsMeta, resultsUrl } = React.useContext(ResultsContext);
 
   return (
     <>
+      <Text as="h3" sx={{ lineHeight: "40px" }}>
+        {crossResultsMeta.category}
+      </Text>
+      <Text>{resultsUrl}</Text>
       <Box
         sx={{
           overflowY: "auto",
@@ -52,7 +35,7 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           <Text
             as="span"
             sx={{
-              width: ["30px", "60px", "60px"],
+              width: ["30px", "60px", "100px"],
               visibility: ["hidden", "visible", "visible"],
             }}
           >
@@ -61,19 +44,13 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           <Text as="span" sx={{ width: "300px" }}>
             Name
           </Text>
-          <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
-            Time Behind
-          </Text>
-          <Text
-            as="span"
-            sx={{ width: "100px", display: "flex", justifyContent: "right" }}
-          >
-            Time
-          </Text>
+          <Flex sx={{ width: "100%", justifyContent: "right" }}>
+            <Text as="span">Time</Text>
+          </Flex>
         </Flex>
-        {webscorerResultPreview &&
-          webscorerResultPreview.results &&
-          webscorerResultPreview.results.map((row, i) => {
+        {crossResults &&
+          crossResults.results &&
+          crossResults.results.map((row, i) => {
             return (
               <Flex
                 key={`race-result-row-${i}`}
@@ -95,36 +72,40 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
-                    setWebscorerResultPreview &&
-                      setWebscorerResultPreview({
-                        ...webscorerResultPreview,
+                    setCrossResults &&
+                      setCrossResults({
+                        ...crossResults,
                         selected: undefined,
                       });
                   } else {
                     setSelectedRow(i);
-                    setWebscorerResultPreview &&
-                      setWebscorerResultPreview({
-                        ...webscorerResultPreview,
+                    setCrossResults &&
+                      setCrossResults({
+                        ...crossResults,
                         selected:
-                          webscorerResultPreview &&
-                          webscorerResultPreview.results
-                            ? webscorerResultPreview.results[i]
+                          crossResults && crossResults.results
+                            ? crossResults.results[i]
                             : undefined,
                       });
                   }
                 }}
               >
                 <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
-                  {i + 1}
+                  {row.Place}
                 </Text>
-                <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
-                  {row.Name}
-                </Text>
+                <Box sx={{ width: "300px", flexGrow: "2" }}>
+                  <Text as="div">
+                    {row.FirstName} {row.LastName}
+                  </Text>
+                  <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                    {row.TeamName}
+                  </Text>
+                </Box>
                 <Text
                   as="span"
                   sx={{ display: ["none", "inherit", "inherit"] }}
                 >
-                  {row.Difference}
+                  {/* {row.TeamName} */}
                 </Text>
                 <Text
                   as="span"
@@ -134,7 +115,7 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     width: "100px",
                   }}
                 >
-                  {row.Time}
+                  {row.RaceTime}
                 </Text>
               </Flex>
             );
@@ -159,10 +140,15 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             disabled={selectedRow ? false : true}
             onClick={() => {
               setIsLoading(true);
-              saveResults().then((r) => {
+              saveCrossResults({
+                crossResults,
+                id,
+                resultsUrl,
+                category: crossResultsMeta.category,
+              }).then((r) => {
                 Transforms.insertNodes(editor, [
                   {
-                    type: "webscorerResults",
+                    type: "crossResults",
                     children: [{ text: "" }],
                   },
                   {
@@ -186,4 +172,4 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   );
 };
 
-export default WebscorerResultsPreview;
+export default CrossResultsPreview;

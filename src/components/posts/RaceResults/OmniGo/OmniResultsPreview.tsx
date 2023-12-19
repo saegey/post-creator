@@ -1,31 +1,15 @@
 import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
-import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { Transforms } from "slate";
 
-import { PostContext } from "../../PostContext";
-import { EditorContext } from "../Editor/EditorContext";
-import { UpdatePostMutation } from "../../../API";
-import { updatePost } from "../../../graphql/mutations";
-import { CustomEditor, CustomElement } from "../../../types/common";
-
-const formatMillisecondsToHHMM = (milliseconds: number) => {
-  if (milliseconds === 0) {
-    return "";
-  }
-  const totalSeconds = Math.floor(milliseconds / 1000);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  // Add leading zeros if needed
-  const formattedHours = hours < 10 ? `${hours}` : hours;
-  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
-  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-};
+import { PostContext } from "../../../PostContext";
+import { EditorContext } from "../../Editor/EditorContext";
+import { updatePost } from "../../../../graphql/mutations";
+import { CustomEditor } from "../../../../types/common";
+import { formatMillisecondsToHHMM } from "../../../../utils/time";
+import { saveOmniResults } from "../api";
+import { ResultsContext } from "../ResultsContext";
 
 const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
@@ -33,29 +17,14 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   const { omniResults, id, setOmniResults } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
-
-  const saveResults = async () => {
-    try {
-      const response = await API.graphql({
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: updatePost,
-        variables: {
-          input: {
-            omniResults: JSON.stringify(omniResults),
-            raceResultsProvider: "omnigo",
-            id: id,
-          },
-        },
-      });
-      return response;
-    } catch (errors) {
-      console.error(errors);
-    }
-  };
+  const { omniMeta, resultsUrl } = React.useContext(ResultsContext);
 
   return (
     <>
-      {/* <pre>{JSON.stringify({ omniResults })}</pre> */}
+      <Text as="h3" sx={{ lineHeight: "40px" }}>
+        {omniMeta.category}
+      </Text>
+      <Text>{resultsUrl}</Text>
       <Box
         sx={{
           overflowY: "auto",
@@ -130,8 +99,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                       setOmniResults({
                         ...omniResults,
                         selected:
-                          omniResults &&
-                          omniResults.results
+                          omniResults && omniResults.results
                             ? omniResults.results[i]
                             : undefined,
                       });
@@ -141,14 +109,14 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
                   {i + 1}
                 </Text>
-                <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
+                <Box sx={{ width: "300px", flexGrow: "2" }}>
                   <Text as="div">
                     {row.firstName} {row.lastName}
                   </Text>
-                  <Text as="div" sx={{ fontSize: "12px" }}>
+                  <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
                     {row.team}
                   </Text>
-                </Text>
+                </Box>
                 <Text
                   as="span"
                   sx={{ display: ["none", "inherit", "inherit"] }}
@@ -191,7 +159,12 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             disabled={selectedRow ? false : true}
             onClick={() => {
               setIsLoading(true);
-              saveResults().then((r) => {
+              saveOmniResults({
+                omniResults,
+                resultsUrl,
+                category: omniMeta.category,
+                id: id ? id : "",
+              }).then(() => {
                 Transforms.insertNodes(editor, [
                   {
                     type: "omniResults",
@@ -202,6 +175,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     children: [{ text: "" }],
                   },
                 ]);
+
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
               });

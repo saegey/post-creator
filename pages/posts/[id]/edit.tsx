@@ -144,13 +144,18 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postDate: post.date,
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
-      postRaceResults: post.raceResults ? JSON.parse(post.raceResults) : null,
+
+      postRaceResults: post.raceResults ? JSON.parse(post.raceResults) : "null",
       postWebscorerResults: post.webscorerResults
         ? JSON.parse(post.webscorerResults)
         : null,
       postCrossResults: (post.crossResults
         ? JSON.parse(post.crossResults)
         : null) as CrossResultsPreviewType | null,
+      postOmniResults: (post.omniResults
+        ? JSON.parse(post.omniResults)
+        : null) as OmniResultType | null,
+
       postTimeSeriesFile: post.timeSeriesFile,
       postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
       postCreatedAt: post.createdAt,
@@ -243,8 +248,8 @@ const Post = ({
   const [currentFtp, setCurrentFtp] = React.useState<number | undefined>(
     postCurrentFtp
   );
-  const [resultsUrl, setResultsUrl] = React.useState<string | undefined>(
-    postResultsUrl
+  const [resultsUrl, setResultsUrl] = React.useState<string>(
+    postResultsUrl ? postResultsUrl : ""
   );
 
   const [powerAnalysis, setPowerAnalysis] =

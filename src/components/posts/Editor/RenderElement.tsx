@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Text } from "theme-ui";
 import { RenderLeafProps } from "slate-react";
 
+import { CustomElement } from "../../../types/common";
+import { useUnits } from "../../UnitProvider";
 import PowerGraphElement from "../PowerGraph/PowerGraphElement";
 import ImageElement from "../Image/ImageElement";
 import VisualOverviewWrapper from "../VisualOverview/VisualOverviewWrapper";
@@ -11,16 +13,15 @@ import MatchesBurnedWrapper from "../Matches/MatchesBurnedWrapper";
 import StravaLink from "../Embed/StravaLink";
 import HeroBanner from "../HeroBanner/HeroBanner";
 import EmbedElemnt from "../Embed/EmbedElement";
-import RaceResultsDotComListWrapper from "../RaceResults/RaceResultsDotComListWrapper";
 import Link from "../Text/Link";
 import PostAuthorWrapper from "../PostAuthor/PostAuthorWrapper";
-import { CustomElement } from "../../../types/common";
-import { useUnits } from "../../UnitProvider";
-import WebscorerListWrapper from "../RaceResults/WebscorerListWrapper";
+
 import VideoPlayer from "../VideoEmbed/VideoPlayer";
-import CrossResultstListWrapper from "../RaceResults/CrossResultsListWrapper";
-import OmniResultsList from "../RaceResults/OmniResultsList";
-import OmniResultsListWrapper from "../RaceResults/OmniResultsListWrapper";
+
+import CrossResultstListWrapper from "../RaceResults/CrossResults/CrossResultsListWrapper";
+import OmniResultsListWrapper from "../RaceResults/OmniGo/OmniResultsListWrapper";
+import WebscorerListWrapper from "../RaceResults/WebScorer/WebscorerListWrapper";
+import RaceResultsDotComListWrapper from "../RaceResults/RaceResults/RaceResultsDotComListWrapper";
 
 const Leaf = (props: RenderLeafProps) => {
   return (

@@ -206,7 +206,7 @@ exports.handler = async (event) => {
   const dnfRacers = racers.filter(
     (r) => r.checkpointTimes.length < requiredCheckPoints.length
   );
-  filterRacers.concat(dnfRacers);
+  const allRacers = filterRacers.concat(dnfRacers);
   // console.log(
   //   requiredCheckPoints.length,
   //   JSON.stringify(filterRacers.slice(0, 3))
@@ -219,6 +219,6 @@ exports.handler = async (event) => {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
     },
-    body: JSON.stringify(filterRacers),
+    body: JSON.stringify(allRacers),
   };
 };

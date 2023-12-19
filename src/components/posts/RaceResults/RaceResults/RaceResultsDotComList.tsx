@@ -1,27 +1,30 @@
-import React, { use } from "react";
-import { Box, Flex, Text } from "theme-ui";
+import React from "react";
+import { Box, Button, Flex, Link, Text } from "theme-ui";
 
-import { RaceResultRow } from "../../PostContext";
-import { useUnits } from "../../UnitProvider";
+import { RaceResultRow } from "../../../PostContext";
+import { useUnits } from "../../../UnitProvider";
 
 const RaceResultsDotComList = ({
   raceResults,
+  resultsUrl,
 }: {
   raceResults: RaceResultRow | undefined;
+  resultsUrl: string;
 }) => {
   const { unitOfMeasure } = useUnits();
   return (
     <>
-      <Text
-        as="h2"
-        sx={{
-          borderBottomColor: "dividerDark",
-          borderBottomWidth: "1px",
-          borderBottomStyle: "solid",
-        }}
-      >
-        Results
-      </Text>
+      <Flex>
+        <Flex sx={{ flexGrow: 1 }}>
+          <Text as="h2">Results</Text>
+        </Flex>
+        <Flex sx={{ justifyContent: "right" }}>
+          <Link target="_blank" href={resultsUrl}>
+            <Button variant="primaryButton">Link to results</Button>
+          </Link>
+        </Flex>
+      </Flex>
+      <Text>{`${raceResults?.category} - ${raceResults?.division}`}</Text>
       <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
         {raceResults &&
           raceResults?.results?.map((row, i) => {
@@ -46,9 +49,12 @@ const RaceResultsDotComList = ({
                 <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
                   {row.CatPlace}
                 </Text>
-                <Text as="span" sx={{ width: ["150px", "300px", "300px"] }}>
-                  {row.Name}
-                </Text>
+                <Box sx={{ width: "300px" }}>
+                  <Text as="div">{row.Name}</Text>
+                  <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                    {row.Team ? row.Team : " "}
+                  </Text>
+                </Box>
                 <Text as="span">
                   {unitOfMeasure === "imperial"
                     ? row.Speed
