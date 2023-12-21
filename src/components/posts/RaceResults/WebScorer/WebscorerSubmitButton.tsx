@@ -26,6 +26,8 @@ const WebscorerSubmitButton = () => {
               setWebscorerResultPreview({
                 results: results.data,
                 selected: undefined,
+                eventName: webScorerMeta.eventName,
+                category: webScorerMeta.category,
               });
             setPreviewWebscorerResults(true);
           });

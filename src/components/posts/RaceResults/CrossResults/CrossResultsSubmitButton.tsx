@@ -10,7 +10,7 @@ const CrossResultsSubmitButton = () => {
     React.useContext(ResultsContext);
 
   const { setCrossResults } = React.useContext(PostContext);
-  const { category } = crossResultsMeta;
+  const { category, eventName } = crossResultsMeta;
 
   return (
     <Box sx={{ marginLeft: "auto" }}>
@@ -28,6 +28,7 @@ const CrossResultsSubmitButton = () => {
               setCrossResults({
                 results: catResults,
                 selected: undefined,
+                eventName: eventName,
               });
             setPreviewCrossResults(true);
           });
