@@ -15,8 +15,10 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.5",
     "@types/aws-lambda": "^8.10.92",
+    "@types/cheerio": "^0.22.35",
     "aws-lambda": "^1.0.7",
-    "typescript": "^5.3.3",
-    "@types/cheerio": "^0.22.35"
+    "copyfiles": "^2.4.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
   }
 }
