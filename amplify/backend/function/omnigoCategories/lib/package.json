@@ -16,6 +16,8 @@
     "@testing-library/jest-dom": "^6.1.5",
     "@types/aws-lambda": "^8.10.92",
     "@types/cheerio": "^0.22.35",
+    "@types/node": "^20.10.5",
+    "@types/testing-library__jest-dom": "^6.0.0",
     "aws-lambda": "^1.0.7",
     "copyfiles": "^2.4.1",
     "rimraf": "^5.0.5",
