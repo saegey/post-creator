@@ -10,6 +10,8 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - npm install -g rimraf
+        - npm install -g copyfiles
     build:
       commands:
         - npm run build
