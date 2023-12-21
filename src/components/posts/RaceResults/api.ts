@@ -4,6 +4,9 @@ import { ApiRes, WebscorerRes } from "../../../types/common";
 import {
   CrossResultsPreviewRowType,
   CrossResultsPreviewType,
+  OmniResultRowType,
+  OmniResultType,
+  RaceResultRowType,
   WebscorerResultPreview,
 } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
@@ -14,7 +17,16 @@ export const getWebScorerCategories = async ({ url }: { url: string }) => {
   const apiName = "api12660653";
   const path = `/results/webscorer?raceId=${searchParams.get("raceid")}`;
 
-  const response = await API.get(apiName, path, { response: true });
+  const response = (await API.get(apiName, path, { response: true })) as {
+    data: {
+      categories: Array<string>;
+      name: string;
+      date: string;
+      city: string;
+      stateOrProvince: string;
+      sport: string;
+    };
+  };
   console.log(response);
   return response;
 };
@@ -44,11 +56,13 @@ export const saveWebscorerResults = async ({
   id,
   category,
   resultsUrl,
+  eventName,
 }: {
   webscorerResultPreview?: WebscorerResultPreview;
   id?: string;
   category: string;
   resultsUrl: string;
+  eventName: string;
 }) => {
   try {
     const response = (await API.graphql({
@@ -59,6 +73,7 @@ export const saveWebscorerResults = async ({
           webscorerResults: JSON.stringify({
             ...webscorerResultPreview,
             category: category,
+            eventName: eventName,
           }),
           resultsUrl: resultsUrl,
           raceResultsProvider: "webscorer",
@@ -87,11 +102,16 @@ export const getOmniResults = async ({
     url
   )}&category=${encodeURIComponent(category)}`;
 
-  const res = await API.get("api12660653", path, {
+  const res = (await API.get("api12660653", path, {
     response: true,
-  });
+  })) as {
+    data: OmniResultRowType[];
+  };
 
-  return res;
+  return {
+    ...res,
+    data: res.data.filter((r) => r.status !== "DNS"),
+  };
 };
 
 export const saveOmniResults = async ({
@@ -99,11 +119,13 @@ export const saveOmniResults = async ({
   resultsUrl,
   category,
   id,
+  eventName,
 }: {
   omniResults: any;
   resultsUrl: string;
   category: string;
   id: string;
+  eventName: string;
 }) => {
   try {
     const response = await API.graphql({
@@ -111,7 +133,11 @@ export const saveOmniResults = async ({
       query: updatePost,
       variables: {
         input: {
-          omniResults: JSON.stringify({ ...omniResults, category: category }),
+          omniResults: JSON.stringify({
+            ...omniResults,
+            category: category,
+            eventName: eventName,
+          }),
           raceResultsProvider: "omnigo",
           resultsUrl: resultsUrl,
           id: id,
@@ -142,6 +168,7 @@ export const getCategories = async ({ url }: { url: string }) => {
       }>;
       server: string;
       key: string;
+      eventName: string;
     };
   };
 
@@ -191,7 +218,7 @@ export const getResults = async ({
     });
     // console.log(temp);
     return temp;
-  });
+  }) as Array<RaceResultRowType>;
 };
 
 export const saveMyRaceResults = async ({
@@ -258,11 +285,13 @@ export const saveCrossResults = async ({
   id,
   resultsUrl,
   category,
+  eventName,
 }: {
   crossResults?: CrossResultsPreviewType;
   id?: string;
   resultsUrl?: string;
   category: string;
+  eventName?: string;
 }) => {
   try {
     const response = await API.graphql({
@@ -270,7 +299,11 @@ export const saveCrossResults = async ({
       query: updatePost,
       variables: {
         input: {
-          crossResults: JSON.stringify({ ...crossResults, category: category }),
+          crossResults: JSON.stringify({
+            ...crossResults,
+            category: category,
+            eventName: eventName,
+          }),
           raceResultsProvider: "crossresults",
           id: id,
           resultsUrl: resultsUrl,
@@ -289,7 +322,14 @@ export const getOmniResultsCategories = async ({ url }: { url: string }) => {
 
   const res = (await API.get("api12660653", apiUrl, {
     response: true,
-  })) as { data: { eventClasses: Array<{ classWithPrefix: string }> } };
+  })) as {
+    data: {
+      eventClasses: Array<{ classWithPrefix: string }>;
+      name: string;
+      city: string;
+      state: string;
+    };
+  };
 
   return res;
 };

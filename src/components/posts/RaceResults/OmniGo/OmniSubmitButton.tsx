@@ -8,7 +8,7 @@ import { ResultsContext } from "./../ResultsContext";
 const OmniSubmitButton = () => {
   const { resultsUrl, omniMeta, setPreviewOmniResults } =
     React.useContext(ResultsContext);
-  const { setOmniResults } = React.useContext(PostContext);
+  const { setOmniResults, omniResults } = React.useContext(PostContext);
   const { category } = omniMeta;
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -22,12 +22,15 @@ const OmniSubmitButton = () => {
         onClick={() => {
           setIsLoading(true);
 
-          getOmniResults({ url: resultsUrl, category }).then((r: any) => {
+          getOmniResults({ url: resultsUrl, category }).then((r) => {
             console.log(r);
             setOmniResults &&
               setOmniResults({
-                results: r.data as any,
+                ...omniResults,
+                results: r.data,
                 selected: undefined,
+                category: omniMeta.category,
+                eventName: omniMeta.eventName,
               });
 
             setPreviewOmniResults(true);

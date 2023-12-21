@@ -32,22 +32,26 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
       division: "",
       key: "",
       server: "",
+      eventName: "",
     });
 
   const [webScorerMeta, setWebScorerMeta] = React.useState<WebScorerMetaType>({
     category: "",
     categories: [],
+    eventName: "",
   });
 
   const [crossResultsMeta, setCrossResultsMeta] =
     React.useState<CrossResultsMetaType>({
       category: "",
       categories: [],
+      eventName: "",
     });
 
   const [omniMeta, setOmniMeta] = React.useState<OmniMetaType>({
     category: "",
-    categories: new Set(),
+    categories: [],
+    eventName: "",
   });
 
   const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =

@@ -20,35 +20,38 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   return (
     <>
-      <Text as="h3" sx={{ lineHeight: "40px" }}>
-        {webScorerMeta.category}
-      </Text>
-      <Text>{resultsUrl}</Text>
+      <Box sx={{ marginY: "10px" }}>
+        <Text as="h3">
+          {webScorerMeta.eventName} - {webScorerMeta.category}
+        </Text>
+
+        <Text>{resultsUrl}</Text>
+      </Box>
+      <Flex sx={{ width: "100%" }}>
+        <Text
+          as="span"
+          sx={{
+            width: ["30px", "60px", "60px"],
+            visibility: ["hidden", "visible", "visible"],
+          }}
+        >
+          Place
+        </Text>
+        <Text as="span" sx={{ width: "300px" }}>
+          Name
+        </Text>
+        {/* <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
+          Time Behind
+        </Text> */}
+        <Text
+          as="span"
+          sx={{ width: "100px", display: "flex", justifyContent: "right" }}
+        >
+          Time
+        </Text>
+      </Flex>
       <ResultsBox>
         <>
-          <Flex sx={{ width: "100%" }}>
-            <Text
-              as="span"
-              sx={{
-                width: ["30px", "60px", "60px"],
-                visibility: ["hidden", "visible", "visible"],
-              }}
-            >
-              Place
-            </Text>
-            <Text as="span" sx={{ width: "300px" }}>
-              Name
-            </Text>
-            <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
-              Time Behind
-            </Text>
-            <Text
-              as="span"
-              sx={{ width: "100px", display: "flex", justifyContent: "right" }}
-            >
-              Time
-            </Text>
-          </Flex>
           {webscorerResultPreview &&
             webscorerResultPreview.results &&
             webscorerResultPreview.results.map((row, i) => {
@@ -101,12 +104,12 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                       {row.TeamName ? row.TeamName : " "}
                     </Text>
                   </Box>
-                  <Text
+                  {/* <Text
                     as="span"
                     sx={{ display: ["none", "inherit", "inherit"] }}
                   >
                     {row.Difference}
-                  </Text>
+                  </Text> */}
                   <Text
                     as="span"
                     sx={{
@@ -146,7 +149,15 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 id,
                 category: webScorerMeta.category,
                 resultsUrl: resultsUrl,
+                eventName: webScorerMeta.eventName,
               }).then((r) => {
+                setWebscorerResultPreview &&
+                  webscorerResultPreview &&
+                  setWebscorerResultPreview({
+                    ...webscorerResultPreview,
+                    eventName: webScorerMeta.eventName,
+                    category: webScorerMeta.category,
+                  });
                 Transforms.insertNodes(editor, [
                   {
                     type: "webscorerResults",

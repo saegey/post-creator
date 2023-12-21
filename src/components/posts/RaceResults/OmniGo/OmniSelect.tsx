@@ -5,6 +5,7 @@ import { ResultsContext } from "../ResultsContext";
 
 const OmniSelect = () => {
   const { omniMeta, setOmniMeta } = React.useContext(ResultsContext);
+
   return (
     <>
       <Box>

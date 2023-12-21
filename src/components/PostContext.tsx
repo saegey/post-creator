@@ -30,12 +30,14 @@ export type RaceResultRow = {
   results: Array<RaceResultRowType> | undefined;
   category: string;
   division: string;
+  eventName: string;
 };
 
 export type WebscorerResultPreview = {
   selected: WebscorerResultsRow | undefined;
   results: Array<WebscorerResultsRow> | undefined;
   category: string;
+  eventName: string;
 };
 
 export type CrossResultsPreviewRowType = {
@@ -52,7 +54,8 @@ export type CrossResultsPreviewRowType = {
 export type CrossResultsPreviewType = {
   selected: CrossResultsPreviewRowType | undefined;
   results: Array<CrossResultsPreviewRowType> | undefined;
-  category: string;
+  category?: string;
+  eventName: string;
 };
 
 export type OmniResultRowType = {
@@ -79,6 +82,7 @@ export type OmniResultType = {
   selected: OmniResultRowType | undefined;
   results: Array<OmniResultRowType> | undefined;
   category: string;
+  eventName: string;
 };
 
 export type Author = { fullName: string; image: string };
@@ -146,7 +150,7 @@ export type PostContextType = {
   >;
   setHeroImage?: React.Dispatch<CloudinaryImage | undefined>;
   setCurrentFtp?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setResultsUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setResultsUrl?: React.Dispatch<React.SetStateAction<string>>;
   setPowerAnalysis?: React.Dispatch<
     React.SetStateAction<Array<Record<number | string, number>> | undefined>
   >;

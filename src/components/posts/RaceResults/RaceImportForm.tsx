@@ -49,7 +49,11 @@ const RaceImportForm = () => {
             // https://www.webscorer.com/race?raceid=336176
             case "www.webscorer.com":
               getWebScorerCategories({ url }).then((res) => {
-                setWebScorerMeta({ ...webScorerMeta, categories: res.data });
+                setWebScorerMeta({
+                  ...webScorerMeta,
+                  categories: res.data.categories,
+                  eventName: res.data.name,
+                });
                 setIsLoading(false);
               });
               break;
@@ -62,6 +66,7 @@ const RaceImportForm = () => {
                   key: res.data.key,
                   server: res.data.server,
                   categories: res,
+                  eventName: res.data.eventName,
                 });
 
                 setIsLoading(false);
@@ -76,6 +81,7 @@ const RaceImportForm = () => {
                   categories: Array.from(
                     new Set([...res.data.map((r) => r["RaceCategoryName"])])
                   ),
+                  eventName: res.data[0]["RaceName"],
                 });
                 setIsLoading(false);
               });
@@ -90,6 +96,7 @@ const RaceImportForm = () => {
                   categories: res.data.eventClasses.map(
                     (r) => r["classWithPrefix"]
                   ),
+                  eventName: res.data.name,
                 });
                 setIsLoading(false);
               });

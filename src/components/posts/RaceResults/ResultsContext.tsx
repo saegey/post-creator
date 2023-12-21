@@ -8,21 +8,25 @@ export type RaceResultsMetaType = {
   division: string;
   key: string;
   server: string;
+  eventName: string;
 };
 
 export type CrossResultsMetaType = {
   category: string;
   categories: Array<string>;
+  eventName: string;
 };
 
 export type WebScorerMetaType = {
   category: string;
   categories: Array<string>;
+  eventName: string;
 };
 
 export type OmniMetaType = {
   category: string;
   categories: Array<string>;
+  eventName: string;
 };
 
 export type ResultsContextType = {
@@ -76,21 +80,25 @@ const ResultsContext = React.createContext<ResultsContextType>({
     division: "",
     key: "",
     server: "",
+    eventName: "",
   },
   setRaceResultsMeta: () => {},
   webScorerMeta: {
     category: "",
     categories: [],
+    eventName: "",
   },
   omniMeta: {
     category: "",
     categories: [],
+    eventName: "",
   },
   setOmniMeta: () => {},
   setWebScorerMeta: () => {},
   crossResultsMeta: {
     category: "",
     categories: [],
+    eventName: "",
   },
   setCrossResultsMeta: () => {},
 });

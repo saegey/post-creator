@@ -9,8 +9,8 @@ const RaceResultsSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { raceResultsMeta, resultsUrl, setPreviewResults } =
     React.useContext(ResultsContext);
-  const { setRaceResults } = React.useContext(PostContext);
-  const { category, key, server, division } = raceResultsMeta;
+  const { setRaceResults, raceResults } = React.useContext(PostContext);
+  const { category, key, server, division, eventName } = raceResultsMeta;
 
   return (
     <Box sx={{ marginLeft: "auto" }}>
@@ -26,11 +26,15 @@ const RaceResultsSubmitButton = () => {
             server,
             division,
             url: resultsUrl,
-          }).then((r) => {
+          }).then((res) => {
             setRaceResults &&
               setRaceResults({
-                results: r as any,
+                ...raceResults,
+                results: res,
                 selected: undefined,
+                category: raceResultsMeta.category,
+                division: raceResultsMeta.division,
+                eventName,
               });
             setPreviewResults(true);
             setIsLoading(false);

@@ -22,7 +22,9 @@ const CrossResultsList = ({
           </Link>
         </Flex>
       </Flex>
-      <Text>{raceResults?.category}</Text>
+      <Text>
+        {raceResults?.eventName} - {raceResults?.category}
+      </Text>
       <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
         {raceResults &&
           raceResults?.results?.map((row, i) => {

@@ -21,10 +21,42 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   return (
     <>
-      <Text as="h3" sx={{ lineHeight: "40px" }}>
-        {omniMeta.category}
-      </Text>
-      <Text>{resultsUrl}</Text>
+      <Box sx={{ marginY: "10px" }}>
+        <Text as="h3">
+          {omniMeta.eventName} - {omniMeta.category}
+        </Text>
+        <Text>{resultsUrl}</Text>
+      </Box>
+      <Flex sx={{ width: "100%" }}>
+        <Text
+          as="span"
+          sx={{
+            width: ["30px", "60px", "60px"],
+            visibility: ["hidden", "visible", "visible"],
+          }}
+        >
+          Place
+        </Text>
+        <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
+          Name
+        </Text>
+        {/* <Text
+            as="span"
+            sx={{
+              display: ["none", "inherit", "flex"],
+              width: "100px",
+              justifyContent: "right",
+            }}
+          >
+            Time Behind
+          </Text> */}
+        <Text
+          as="span"
+          sx={{ width: "100px", display: "flex", justifyContent: "right" }}
+        >
+          Time
+        </Text>
+      </Flex>
       <Box
         sx={{
           overflowY: "auto",
@@ -34,36 +66,6 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           borderRadius: "5px",
         }}
       >
-        <Flex sx={{ width: "100%" }}>
-          <Text
-            as="span"
-            sx={{
-              width: ["30px", "60px", "60px"],
-              visibility: ["hidden", "visible", "visible"],
-            }}
-          >
-            Place
-          </Text>
-          <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
-            Name
-          </Text>
-          <Text
-            as="span"
-            sx={{
-              display: ["none", "inherit", "flex"],
-              width: "100px",
-              justifyContent: "right",
-            }}
-          >
-            Time Behind
-          </Text>
-          <Text
-            as="span"
-            sx={{ width: "100px", display: "flex", justifyContent: "right" }}
-          >
-            Time
-          </Text>
-        </Flex>
         {omniResults &&
           omniResults.results &&
           omniResults.results.map((row, i) => {
@@ -117,7 +119,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     {row.team}
                   </Text>
                 </Box>
-                <Text
+                {/* <Text
                   as="span"
                   sx={{ display: ["none", "inherit", "inherit"] }}
                 >
@@ -125,7 +127,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     formatMillisecondsToHHMM(
                       row.totalTime - omniResults.results[0].totalTime
                     )}
-                </Text>
+                </Text> */}
                 <Text
                   as="span"
                   sx={{
@@ -134,7 +136,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     width: "100px",
                   }}
                 >
-                  {row.timeFormattted}
+                  {row.totalTime > 0 ? row.timeFormattted : "DNF"}
                 </Text>
               </Flex>
             );
@@ -163,8 +165,16 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 omniResults,
                 resultsUrl,
                 category: omniMeta.category,
+                eventName: omniMeta.eventName,
                 id: id ? id : "",
               }).then(() => {
+                setOmniResults &&
+                  omniResults &&
+                  setOmniResults({
+                    ...omniResults,
+                    category: omniMeta.category,
+                    eventName: omniMeta.eventName,
+                  });
                 Transforms.insertNodes(editor, [
                   {
                     type: "omniResults",

@@ -24,7 +24,7 @@ const RaceResultsDotComList = ({
           </Link>
         </Flex>
       </Flex>
-      <Text>{`${raceResults?.category} - ${raceResults?.division}`}</Text>
+      <Text>{`${raceResults?.eventName} - ${raceResults?.category} - ${raceResults?.division}`}</Text>
       <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
         {raceResults &&
           raceResults?.results?.map((row, i) => {
@@ -55,7 +55,7 @@ const RaceResultsDotComList = ({
                     {row.Team ? row.Team : " "}
                   </Text>
                 </Box>
-                <Text as="span">
+                {/* <Text as="span">
                   {unitOfMeasure === "imperial"
                     ? row.Speed
                     : row.Speed !== "" &&
@@ -65,7 +65,7 @@ const RaceResultsDotComList = ({
                         2
                       )} km/h`
                     : ""}
-                </Text>
+                </Text> */}
                 <Text as="span" sx={{ marginLeft: "auto" }}>
                   {row.Time}
                 </Text>

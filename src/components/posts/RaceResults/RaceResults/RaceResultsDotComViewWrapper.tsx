@@ -11,7 +11,7 @@ const RaceResultsDotComViewWrapper = () => {
     <Box variant="boxes.componentCard" key="race-results">
       <RaceResultsDotComList
         raceResults={raceResults}
-        resultsUrl={resultsUrl}
+        resultsUrl={resultsUrl ? resultsUrl : ""}
       />
     </Box>
   );

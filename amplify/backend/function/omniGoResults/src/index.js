@@ -149,8 +149,7 @@ exports.handler = async (event) => {
   const eventClass = eventClasses.find(
     (element) => element.classWithPrefix === category
   );
-  // console.log(eventClass);
-  // const genderCode = eventClass.gender == 1 ? "m" : "f";
+
   const racers = await getResults({
     gender: eventClass.gender == 1 ? "m" : "f",
     distance: eventClass.distance,
@@ -183,7 +182,7 @@ exports.handler = async (event) => {
       (t) => t.bib === racer.bib
     );
   });
-  // console.log(racers[0].finishTime);
+
   racers.sort((a, b) => {
     if (a.finishTime === null && b.finishTime === null) {
       return 0;
@@ -195,7 +194,6 @@ exports.handler = async (event) => {
       return a.finishTime - b.finishTime;
     }
   });
-  //
 
   const requiredCheckPoints = checkpoints.filter((c) => c.required === true);
 
@@ -203,10 +201,18 @@ exports.handler = async (event) => {
     (r) => r.checkpointTimes.length === requiredCheckPoints.length
   );
 
-  const dnfRacers = racers.filter(
-    (r) => r.checkpointTimes.length < requiredCheckPoints.length
-  );
+  const dnfRacers = racers
+    .filter(
+      (r) =>
+        r.checkpointTimes.length < requiredCheckPoints.length &&
+        r.status !== "DNS"
+    )
+    .map((r) => Object.assign(r, { status: "DNF" }));
   const allRacers = filterRacers.concat(dnfRacers);
+
+  const catRacers = allRacers.filter(
+    (r) => r.classId === Number(eventClass.id)
+  );
   // console.log(
   //   requiredCheckPoints.length,
   //   JSON.stringify(filterRacers.slice(0, 3))
@@ -219,6 +225,6 @@ exports.handler = async (event) => {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
     },
-    body: JSON.stringify(allRacers),
+    body: JSON.stringify(catRacers),
   };
 };

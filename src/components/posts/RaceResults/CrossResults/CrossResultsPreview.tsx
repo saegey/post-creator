@@ -14,40 +14,44 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   const { crossResults, id, setCrossResults } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
-  const { crossResultsMeta, resultsUrl } = React.useContext(ResultsContext);
+  const { crossResultsMeta, setCrossResultsMeta, resultsUrl } =
+    React.useContext(ResultsContext);
 
   return (
     <>
-      <Text as="h3" sx={{ lineHeight: "40px" }}>
-        {crossResultsMeta.category}
-      </Text>
-      <Text>{resultsUrl}</Text>
+      <Box sx={{ marginY: "10px" }}>
+        <Text as="h3">
+          {crossResultsMeta.eventName} - {crossResultsMeta.category}
+        </Text>
+
+        <Text>{resultsUrl}</Text>
+      </Box>
+      <Flex sx={{ width: "100%" }}>
+        <Text
+          as="span"
+          sx={{
+            width: ["30px", "60px", "100px"],
+            visibility: ["hidden", "visible", "visible"],
+          }}
+        >
+          Place
+        </Text>
+        <Text as="span" sx={{ width: "300px" }}>
+          Name
+        </Text>
+        <Flex sx={{ width: "100%", justifyContent: "right" }}>
+          <Text as="span">Time</Text>
+        </Flex>
+      </Flex>
       <Box
         sx={{
           overflowY: "auto",
           height: ["80%", "300px", "300px"],
-          backgroundColor: "activityOverviewBackgroundColor",
-          padding: "5px",
+          // backgroundColor: "activityOverviewBackgroundColor",
+          // padding: "5px",
           borderRadius: "5px",
         }}
       >
-        <Flex sx={{ width: "100%" }}>
-          <Text
-            as="span"
-            sx={{
-              width: ["30px", "60px", "100px"],
-              visibility: ["hidden", "visible", "visible"],
-            }}
-          >
-            Place
-          </Text>
-          <Text as="span" sx={{ width: "300px" }}>
-            Name
-          </Text>
-          <Flex sx={{ width: "100%", justifyContent: "right" }}>
-            <Text as="span">Time</Text>
-          </Flex>
-        </Flex>
         {crossResults &&
           crossResults.results &&
           crossResults.results.map((row, i) => {
@@ -63,10 +67,12 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   cursor: "pointer",
                   "&:hover": {
                     backgroundColor:
-                      selectedRow === i ? "selectedBackground" : "muted",
+                      selectedRow === i
+                        ? "selectedBackground"
+                        : "inputBorderColor",
                     borderRadius: "5px",
                   },
-                  // paddingX: "5px",
+                  paddingX: "5px",
                   paddingY: "2px",
                 }}
                 onClick={() => {
@@ -144,8 +150,20 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 crossResults,
                 id,
                 resultsUrl,
+                eventName: crossResultsMeta.eventName,
                 category: crossResultsMeta.category,
               }).then((r) => {
+                setCrossResultsMeta({
+                  ...crossResultsMeta,
+                  category: crossResultsMeta.category,
+                });
+                setCrossResults &&
+                  crossResults &&
+                  setCrossResults({
+                    ...crossResults,
+                    category: crossResultsMeta.category,
+                    eventName: crossResultsMeta.eventName,
+                  });
                 Transforms.insertNodes(editor, [
                   {
                     type: "crossResults",

@@ -22,7 +22,9 @@ const OmniResultsList = ({
           </Link>
         </Flex>
       </Flex>
-      <Text>{raceResults?.category}</Text>
+      <Text>
+        {raceResults?.eventName} - {raceResults?.category}
+      </Text>
       <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
         {raceResults &&
           raceResults?.results?.map((row, i) => {
@@ -50,7 +52,7 @@ const OmniResultsList = ({
                 }}
               >
                 <Text as="span" sx={{ width: "60px" }}>
-                  {i + 1}
+                  {row.totalTime && row.status !== "DNF" ? i + 1 : "dnf"}
                 </Text>
                 <Box sx={{ flexGrow: 2 }}>
                   <Text as="span">
@@ -70,7 +72,9 @@ const OmniResultsList = ({
                 </Box>
                 <Text as="span" sx={{ marginLeft: "15px" }}></Text>
                 <Text as="span" sx={{ marginLeft: "15px" }}>
-                  {row.timeFormattted}
+                  {row.totalTime && row.status !== "DNF"
+                    ? row.timeFormattted
+                    : " "}
                 </Text>
               </Flex>
             );

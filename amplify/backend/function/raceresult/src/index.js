@@ -5,6 +5,7 @@ exports.handler = async (event) => {
 
   const raceId = event.queryStringParameters.raceId;
   const url = `https://my.raceresult.com/${raceId}/RRPublish/data/config?page=results&noVisitor=1`;
+
   console.log("URL:", url);
   const endpoint = new URL(url);
 
@@ -58,7 +59,6 @@ exports.handler = async (event) => {
 
   return {
     statusCode,
-    //  Uncomment below to enable CORS requests
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
@@ -67,6 +67,7 @@ exports.handler = async (event) => {
       key,
       server,
       filterValues: resultsBody.groupFilters,
+      eventName: body.eventname,
     }),
   };
 };

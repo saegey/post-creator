@@ -18,10 +18,12 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   return (
     <>
-      <Text as="h3" sx={{ lineHeight: "40px" }}>
-        {raceResultsMeta.category} - {raceResultsMeta.division}
-      </Text>
-      <Text>{resultsUrl}</Text>
+      <Box sx={{ marginY: "10px" }}>
+        <Text as="h3">
+          {raceResultsMeta.eventName} - {raceResultsMeta.category}
+        </Text>
+        <Text>{resultsUrl}</Text>
+      </Box>
       <Box
         sx={{
           overflowY: "auto",

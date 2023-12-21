@@ -47,7 +47,13 @@ exports.handler = async (event) => {
     },
     body: JSON.stringify({
       eventClasses: context.OmniGo.event.EventClasses,
+      eventRoutes: context.OmniGo.event.EventRoutes,
       checkpoints: context.OmniGo.event.checkpoints,
+      city: context.OmniGo.event.city,
+      date: context.OmniGo.event.date,
+      image: context.OmniGo.event.img,
+      name: context.OmniGo.event.name,
+      state: context.OmniGo.event.state,
     }),
   };
 };
