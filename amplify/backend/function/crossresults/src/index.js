@@ -36,7 +36,6 @@ exports.handler = async (event) => {
     // console.log(response);
     body = await response.json();
     console.log("BODY:", JSON.stringify(body));
-    // categories = body["Results"].map((r) => r["Grouping"]["Category"]);
   } catch (error) {
     console.log("ERROR", JSON.stringify(error));
     statusCode = 500;

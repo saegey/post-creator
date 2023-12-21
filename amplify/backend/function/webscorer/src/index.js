@@ -18,11 +18,8 @@ exports.handler = async (event) => {
   const requestToBeSigned = {
     method: "GET",
     headers: {
-      //   "Content-Type": "application/json",
-      //   Accept: "application/json",
       "User-Agent":
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-      //   host: endpoint.host,
     },
     hostname: endpoint.host,
     path: endpoint.pathname,
@@ -48,11 +45,17 @@ exports.handler = async (event) => {
 
   return {
     statusCode: 200,
-    //  Uncomment below to enable CORS requests
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
     },
-    body: JSON.stringify(categories),
+    body: JSON.stringify({
+      categories,
+      name: body["RaceInfo"]["Name"],
+      date: body["RaceInfo"]["Date"],
+      city: body["RaceInfo"]["City"],
+      stateOrProvince: body["RaceInfo"]["StateOrProvince"],
+      sport: body["RaceInfo"]["Sport"],
+    }),
   };
 };

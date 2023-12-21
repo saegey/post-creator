@@ -24,9 +24,9 @@ import TimeInZonesViewWrapper from "../TimeInZones/TimeInZonesViewWrapper";
 import BullettedListViewWrapper from "../Text/BulletedListViewWrapper";
 import ParagraphViewWrapper from "../Text/ParagraphViewWrapper";
 import HeadingViewWrapper from "../Text/HeadingViewWrapper";
-import RaceResultsDotComViewWrapper from "../RaceResults/RaceResultsDotComViewWrapper";
+import RaceResultsDotComViewWrapper from "../RaceResults/RaceResults/RaceResultsDotComViewWrapper";
 import ImageViewWrapper from "../Image/ImageViewWrapper";
-import WebscorerViewWrapper from "../RaceResults/WebscorerViewWrapper";
+import WebscorerViewWrapper from "../RaceResults/WebScorer/WebscorerViewWrapper";
 
 const SlatePublish = () => {
   const config: SlateToReactConfig = {

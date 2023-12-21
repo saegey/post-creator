@@ -1,44 +1,29 @@
 import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import { Transforms } from "slate";
+import { Transforms, Descendant } from "slate";
 
-import { PostContext } from "../../PostContext";
-import { EditorContext } from "../Editor/EditorContext";
-import { UpdatePostMutation } from "../../../API";
-import { updatePost } from "../../../graphql/mutations";
-import { CustomEditor, CustomElement } from "../../../types/common";
+import { PostContext } from "../../../PostContext";
+import { EditorContext } from "../../Editor/EditorContext";
+import { CustomEditor } from "../../../../types/common";
+import { saveMyRaceResults } from "../api";
+import { ResultsContext } from "../ResultsContext";
 
-const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
+const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { webscorerResultPreview, id, setWebscorerResultPreview } =
-    React.useContext(PostContext);
+  const { raceResults, id, setRaceResults } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
-
-  const saveResults = async () => {
-    try {
-      const response = await API.graphql({
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: updatePost,
-        variables: {
-          input: {
-            webscorerResults: JSON.stringify(webscorerResultPreview),
-            raceResultsProvider: "webscorer",
-            id: id,
-          },
-        },
-      });
-      return response;
-    } catch (errors) {
-      console.error(errors);
-    }
-  };
+  const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
 
   return (
     <>
+      <Box sx={{ marginY: "10px" }}>
+        <Text as="h3">
+          {raceResultsMeta.eventName} - {raceResultsMeta.category}
+        </Text>
+        <Text>{resultsUrl}</Text>
+      </Box>
       <Box
         sx={{
           overflowY: "auto",
@@ -47,8 +32,9 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           padding: "5px",
           borderRadius: "5px",
         }}
+        id="race-results-list"
       >
-        <Flex sx={{ width: "100%" }}>
+        <Flex sx={{ width: "100%", paddingX: "5px" }}>
           <Text
             as="span"
             sx={{
@@ -58,11 +44,11 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           >
             Place
           </Text>
-          <Text as="span" sx={{ width: "300px" }}>
+          <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
             Name
           </Text>
           <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
-            Time Behind
+            Speed
           </Text>
           <Text
             as="span"
@@ -71,11 +57,12 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             Time
           </Text>
         </Flex>
-        {webscorerResultPreview &&
-          webscorerResultPreview.results &&
-          webscorerResultPreview.results.map((row, i) => {
+        {raceResults &&
+          raceResults.results &&
+          raceResults.results.map((row, i) => {
             return (
               <Flex
+                id={`race-result-row-${i}`}
                 key={`race-result-row-${i}`}
                 sx={{
                   backgroundColor:
@@ -89,42 +76,44 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                       selectedRow === i ? "selectedBackground" : "muted",
                     borderRadius: "5px",
                   },
-                  // paddingX: "5px",
+                  paddingX: "5px",
                   paddingY: "2px",
                 }}
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
-                    setWebscorerResultPreview &&
-                      setWebscorerResultPreview({
-                        ...webscorerResultPreview,
+                    setRaceResults &&
+                      setRaceResults({
+                        ...raceResults,
                         selected: undefined,
                       });
                   } else {
                     setSelectedRow(i);
-                    setWebscorerResultPreview &&
-                      setWebscorerResultPreview({
-                        ...webscorerResultPreview,
+                    setRaceResults &&
+                      setRaceResults({
+                        ...raceResults,
                         selected:
-                          webscorerResultPreview &&
-                          webscorerResultPreview.results
-                            ? webscorerResultPreview.results[i]
+                          raceResults && raceResults.results
+                            ? raceResults.results[i]
                             : undefined,
                       });
                   }
                 }}
               >
                 <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
-                  {i + 1}
+                  {row.CatPlace}
                 </Text>
-                <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
-                  {row.Name}
-                </Text>
+                <Box sx={{ width: "300px", flexGrow: "2" }}>
+                  <Text as="div">{row.Name}</Text>
+                  <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                    {row.Team ? row.Team : " "}
+                  </Text>
+                </Box>
                 <Text
                   as="span"
                   sx={{ display: ["none", "inherit", "inherit"] }}
                 >
-                  {row.Difference}
+                  {row.Speed}
                 </Text>
                 <Text
                   as="span"
@@ -159,16 +148,19 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             disabled={selectedRow ? false : true}
             onClick={() => {
               setIsLoading(true);
-              saveResults().then((r) => {
+              saveMyRaceResults({
+                raceResults,
+                id,
+                resultsUrl,
+                category: raceResultsMeta.category,
+                division: raceResultsMeta.division,
+              }).then((r) => {
                 Transforms.insertNodes(editor, [
                   {
-                    type: "webscorerResults",
+                    type: "raceResultsDotCom",
                     children: [{ text: "" }],
-                  },
-                  {
-                    type: "paragraph",
-                    children: [{ text: "" }],
-                  },
+                  } as Descendant,
+                  { type: "text", children: [{ text: "" }] } as Descendant,
                 ]);
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
@@ -186,4 +178,4 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   );
 };
 
-export default WebscorerResultsPreview;
+export default RaceResultsPreview;

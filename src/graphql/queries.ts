@@ -85,6 +85,7 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -165,6 +166,7 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     originalPostId
     originalPost {
@@ -226,6 +228,7 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -288,6 +291,7 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       originalPostId
       originalPost {
@@ -326,6 +330,7 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -401,6 +406,7 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       originalPostId
       originalPost {
@@ -439,6 +445,7 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -514,6 +521,7 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       originalPostId
       originalPost {
@@ -552,6 +560,7 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -642,6 +651,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
         raceResults
         webscorerResults
         crossResults
+        omniResults
         raceResultsProvider
         privacyStatus
         updatedAt
@@ -683,6 +693,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     raceResults
     webscorerResults
     crossResults
+    omniResults
     raceResultsProvider
     privacyStatus
     updatedAt
@@ -759,6 +770,7 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -848,6 +860,7 @@ export const listPostsByCreatedAt = /* GraphQL */ `query ListPostsByCreatedAt(
       raceResults
       webscorerResults
       crossResults
+      omniResults
       raceResultsProvider
       privacyStatus
       updatedAt

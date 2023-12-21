@@ -8,9 +8,62 @@ import {
   Author,
   CrossResultsPreviewRowType,
   CrossResultsPreviewType,
+  OmniResultType,
   RaceResultRow,
   WebscorerResultPreview,
 } from "../components/PostContext";
+
+export type ResultsRow = [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string
+];
+
+export type ApiRes = {
+  data: { data: ResultsRow[]; list: { Fields: Array<{ Label: string }> } };
+};
+
+
+export type WebscorerResultsRow = {
+  Place: string;
+  Bib: string;
+  Name: string;
+  FirstName: string;
+  LastName: string;
+  TeamName: string;
+  Category: string;
+  Age: number;
+  YearOfBirth: number;
+  Gender: string;
+  Time: string;
+  LapTimes: Array<{
+    LapNumber: number;
+    LapTime: string;
+    LapRank: number;
+    LapBehind: string;
+    RaceTime: string;
+    RaceRank: number;
+    RaceBehind: string;
+  }>;
+  Difference: string;
+  PercentBack: string;
+  PercentWinning: string;
+  PercentAverage: string;
+  PercentMedian: string;
+  CompletedLaps: number;
+  StartTime: string;
+};
+
+export type WebscorerRes = {
+  data: Array<WebscorerResultsRow>;
+};
 
 export interface IUser {
   userId: string;
@@ -200,6 +253,11 @@ export type CrossResultsType = {
   children: CustomText[];
 };
 
+export type OmniResultsType = {
+  type: "omniResults";
+  children: CustomText[];
+};
+
 export type VideoEmbedType = {
   type: "videoEmbed";
   children: CustomText[];
@@ -229,7 +287,8 @@ export type CustomElement =
   | RaceResultsDotComType
   | WebscorerResultsType
   | VideoEmbedType
-  | CrossResultsType;
+  | CrossResultsType
+  | OmniResultsType;
 
 export type FormattedText = {
   text: string;
@@ -353,9 +412,13 @@ export interface PostType {
       }
     | undefined;
   postShortUrl: string | undefined;
+
+  // race results
   postRaceResults: RaceResultRow | undefined;
   postWebscorerResults: WebscorerResultPreview | undefined;
   postCrossResults: CrossResultsPreviewType | undefined;
+  postOmniResults: OmniResultType | undefined;
+
   postTimeSeriesFile: string | undefined;
   postPrivacyStatus: string | undefined;
   postCreatedAt: string | undefined;

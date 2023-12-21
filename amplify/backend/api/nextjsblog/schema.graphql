@@ -88,10 +88,14 @@ type PublishedPost
   heroImage: AWSJSON
   subhead: String
   shortUrl: String
+
+  # race results
   raceResults: AWSJSON
   webscorerResults: AWSJSON
   crossResults: AWSJSON
+  omniResults: AWSJSON
   raceResultsProvider: String
+
   originalPostId: String
     @index(
       name: "PublishedPostByOriginalPostId"
@@ -157,10 +161,13 @@ type Post
   heroImage: AWSJSON
   subhead: String
   shortUrl: String
+  # race results
   raceResults: AWSJSON
   webscorerResults: AWSJSON
   crossResults: AWSJSON
+  omniResults: AWSJSON
   raceResultsProvider: String
+
   privacyStatus: String
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany

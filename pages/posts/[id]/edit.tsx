@@ -5,6 +5,7 @@ import { GraphQLResult } from "@aws-amplify/api";
 
 import {
   CrossResultsPreviewType,
+  OmniResultType,
   PostContext,
   RaceResultRow,
   WebscorerResultPreview,
@@ -143,13 +144,18 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       postDate: post.date,
       postAuthor: post.author,
       postShortUrl: post.shortUrl,
-      postRaceResults: post.raceResults ? JSON.parse(post.raceResults) : null,
+
+      postRaceResults: post.raceResults ? JSON.parse(post.raceResults) : "null",
       postWebscorerResults: post.webscorerResults
         ? JSON.parse(post.webscorerResults)
         : null,
       postCrossResults: (post.crossResults
         ? JSON.parse(post.crossResults)
         : null) as CrossResultsPreviewType | null,
+      postOmniResults: (post.omniResults
+        ? JSON.parse(post.omniResults)
+        : null) as OmniResultType | null,
+
       postTimeSeriesFile: post.timeSeriesFile,
       postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
       postCreatedAt: post.createdAt,
@@ -185,9 +191,12 @@ const Post = ({
   postDate,
   postAuthor,
   postShortUrl,
+
   postRaceResults,
   postWebscorerResults,
   postCrossResults,
+  postOmniResults,
+
   postTimeSeriesFile,
   postPrivacyStatus,
   postCreatedAt,
@@ -239,8 +248,8 @@ const Post = ({
   const [currentFtp, setCurrentFtp] = React.useState<number | undefined>(
     postCurrentFtp
   );
-  const [resultsUrl, setResultsUrl] = React.useState<string | undefined>(
-    postResultsUrl
+  const [resultsUrl, setResultsUrl] = React.useState<string>(
+    postResultsUrl ? postResultsUrl : ""
   );
 
   const [powerAnalysis, setPowerAnalysis] =
@@ -291,10 +300,12 @@ const Post = ({
   const [webscorerResults, setWebscorerResults] = React.useState<
     WebscorerResultPreview | undefined
   >(postWebscorerResults);
-
   const [crossResults, setCrossResults] = React.useState<
     CrossResultsPreviewType | undefined
   >(postCrossResults);
+  const [omniResults, setOmniResults] = React.useState<
+    OmniResultType | undefined
+  >(postOmniResults);
 
   const [timeSeriesFile, setTimeSeriesFile] =
     React.useState(postTimeSeriesFile);
@@ -304,7 +315,7 @@ const Post = ({
   const [createdAt, setCreatedAt] = React.useState<string | undefined>(
     postCreatedAt
   );
-  const [selection, setSelection] = React.useState<[number, number]>();
+  // const [selection, setSelection] = React.useState<[number, number]>();
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
 
@@ -335,9 +346,12 @@ const Post = ({
       setDate(postDate);
       setAuthor(postAuthor);
       setShortUrl(postShortUrl);
+
       setRaceResults(postRaceResults);
       setWebscorerResults(postWebscorerResults);
       setCrossResults(postCrossResults);
+      setOmniResults(postOmniResults);
+
       setTimeSeriesFile(postTimeSeriesFile);
       setPrivacyStatus(postPrivacyStatus);
       setCreatedAt(postCreatedAt);
@@ -403,12 +417,16 @@ const Post = ({
         setDate,
         shortUrl,
         setShortUrl,
+        // race results
         raceResults,
         setRaceResults,
         webscorerResultPreview: webscorerResults,
         setWebscorerResultPreview: setWebscorerResults,
         crossResults,
         setCrossResults,
+        omniResults,
+        setOmniResults,
+
         author,
         setAuthor,
         timeSeriesFile,
