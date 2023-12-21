@@ -9,9 +9,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
         - npm install -g rimraf
         - npm install -g copyfiles
+        - npm ci
+
     build:
       commands:
         - npm run build
