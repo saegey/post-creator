@@ -3,20 +3,30 @@
  *
  */
 
-const cheerio = require("cheerio");
-const fetch = require("node-fetch");
-const vm = require("node:vm");
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import cheerio from "cheerio";
+import fetch from "node-fetch";
+import vm from "node:vm";
 
-exports.handler = async (event) => {
+export const handler = async (event: APIGatewayProxyEvent) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
+
   const { url } = event.queryStringParameters;
-
   const endpoint = new URL(url);
-  let statusCode = 200;
-  let body;
-
-  let response;
-  const context = {};
+  const context: {
+    OmniGo?: {
+      event: {
+        city: string;
+        date: string;
+        img: string;
+        name: string;
+        state: string;
+        checkpoints: any;
+        EventRoutes: any;
+        EventClasses: any;
+      };
+    };
+  } = {};
 
   const requestToBeSigned = {
     method: "GET",
@@ -29,8 +39,8 @@ exports.handler = async (event) => {
   };
 
   try {
-    response = await fetch(endpoint, requestToBeSigned);
-    body = await response.text();
+    const response = await fetch(endpoint, requestToBeSigned);
+    const body = await response.text();
     const $ = cheerio.load(body);
     const scripts = $('script:contains("EventClasses")').text();
     vm.createContext(context);

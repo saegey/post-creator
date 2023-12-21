@@ -6,6 +6,7 @@
     "start": "next start",
     "amplify:pull": "amplify pull --appId d15noiwtuwwref --envName dev",
     "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -",
+    "amplify:omnigoCategories": "cd amplify/backend/function/omnigoCategories/lib && npm install && npm run build && cd -",
     "check-types": "tsc --noEmit",
     "test:e2e": "playwright test",
     "cypress:open": "cypress open",
