@@ -9,6 +9,8 @@ jobs:
         run: npm ci
       - name: install lambda modules
         run: cd amplify/backend/function/publishPost/src && npm install
+      - name: install lambda modules
+        run: cd amplify/backend/function/omniGoResults/src && npm install
       - name: Configure Amplify Mock
         run: |
           echo "export default {};" > src/aws-exports.js
