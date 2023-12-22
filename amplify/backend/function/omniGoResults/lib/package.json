@@ -13,7 +13,6 @@
     "node-fetch": "^2.7.0"
   },
   "devDependencies": {
-    "@serverless/event-mocks": "^1.1.1",
     "@testing-library/jest-dom": "^6.1.5",
     "@types/aws-lambda": "^8.10.92",
     "@types/cheerio": "^0.22.35",

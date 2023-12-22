@@ -13,7 +13,7 @@ jobs:
       - name: install lambda modules
         run: cd amplify/backend/function/publishPost/src && npm install
       - name: install lambda modules
-        run: cd amplify/backend/function/omniGoResults/lib && npm install
+        run: cd amplify/backend/function/omniGoResults/lib && npm install  --force
       - name: Configure Amplify Mock
         run: |
           echo "export default {};" > src/aws-exports.js
