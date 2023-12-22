@@ -1,13 +1,13 @@
 import AWS from "aws-sdk-mock";
 import path from "path";
 
-import { handler } from "./index";
+import { handler } from "../index";
 import {
   getEventMetadata,
   getResults,
   getFinishTimes,
   getCheckPoints,
-} from "./actions";
+} from "../actions";
 
 AWS.setSDK(
   path.resolve(

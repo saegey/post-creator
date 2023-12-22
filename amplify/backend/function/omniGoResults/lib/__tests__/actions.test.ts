@@ -3,16 +3,16 @@ import { setupServer } from "msw/node";
 import fs from "fs";
 import path from "path";
 
-import resultStub from "./stubs/results.json";
-import categories from "./stubs/categories.json";
-import finishTimes from "./stubs/finishTimes.json";
-import checkpoints from "./stubs/checkpoints.json";
+import resultStub from "../stubs/results.json";
+import categories from "../stubs/categories.json";
+import finishTimes from "../stubs/finishTimes.json";
+import checkpoints from "../stubs/checkpoints.json";
 import {
   getEventMetadata,
   getResults,
   getFinishTimes,
   getCheckPoints,
-} from "./actions";
+} from "../actions";
 
 const body = fs.readFileSync(
   path.resolve(__dirname, "stubs/body.html"),

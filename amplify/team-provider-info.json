@@ -159,11 +159,11 @@
         },
         "omnigoCategories": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/omnigoCategories-684b72676d7274383167-build.zip"
+          "s3Key": "amplify-builds/omnigoCategories-676d6b5774662f613871-build.zip"
         },
         "omniGoResults": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/omniGoResults-666e5838516843536a43-build.zip"
+          "s3Key": "amplify-builds/omniGoResults-67564d6870664f6c7a79-build.zip"
         }
       },
       "api": {

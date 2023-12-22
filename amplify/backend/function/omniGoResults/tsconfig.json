@@ -8,13 +8,14 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "outDir": "lib",
+    "outDir": "./src",
     "baseUrl": "./",
     "rootDir": "./lib",
     "paths": {
-      "src": ["lib"]
+      "src": ["./src"]
     },
-    "types": ["node"],
+    "types": ["node", "jest"],
     "typeRoots": ["./lib/node_modules/@types"]
-  }
+  },
+  "exclude": ["lib/**/*.test.ts", "lib/stubs/*.json"]
 }

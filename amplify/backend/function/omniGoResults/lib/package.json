@@ -5,8 +5,10 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "npm run clean && tsc && copyfiles -e '**/*.ts' -e 'tsconfig.json' '**/**' ../src",
-    "clean": "rimraf ../src/*"
+    "build": "npm run clean && tsc && copyfiles -e '**/*.ts' -e '**/*.test.js' -e 'tsconfig.json' '**/**' ../src",
+    "clean": "rimraf ../src/*",
+    "test:watch": "jest --watch",
+    "test": "jest"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
@@ -16,12 +18,14 @@
     "@testing-library/jest-dom": "^6.1.5",
     "@types/aws-lambda": "^8.10.92",
     "@types/cheerio": "^0.22.35",
+    "@types/jest": "^29.5.11",
     "@types/node": "^20.10.5",
     "@types/testing-library__jest-dom": "^6.0.0",
     "aws-lambda": "^1.0.7",
     "copyfiles": "^2.4.1",
+    "jest": "^29.7.0",
     "msw": "^2.0.11",
     "rimraf": "^5.0.5",
-    "typescript": "^5.3.3"
+    "typescript": "~5.1.6"
   }
 }
