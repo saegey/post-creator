@@ -1,3 +1,6 @@
+import AWS from "aws-sdk-mock";
+import path from "path";
+
 import { handler } from "./index";
 import {
   getEventMetadata,
@@ -5,6 +8,12 @@ import {
   getFinishTimes,
   getCheckPoints,
 } from "./actions";
+
+AWS.setSDK(
+  path.resolve(
+    "./amplify/backend/function/publishPost/src/node_modules/aws-sdk"
+  )
+);
 
 jest.mock("./actions.ts", () => ({
   ...jest.requireActual("./actions.ts"),
