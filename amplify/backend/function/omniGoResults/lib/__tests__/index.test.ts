@@ -1,4 +1,4 @@
-import AWS from "aws-sdk-mock";
+import * as AWS from "aws-sdk-mock";
 import path from "path";
 
 import { handler } from "../index";
@@ -11,12 +11,12 @@ import {
 
 AWS.setSDK(
   path.resolve(
-    "./amplify/backend/function/publishPost/src/node_modules/aws-sdk"
+    "./amplify/backend/function/omniGoResults/lib/node_modules/aws-sdk"
   )
 );
 
-jest.mock("./actions.ts", () => ({
-  ...jest.requireActual("./actions.ts"),
+jest.mock("../actions.ts", () => ({
+  ...jest.requireActual("../actions.ts"),
   getResults: jest.fn().mockResolvedValue([
     {
       id: "05ee70a9-fae3-4dbe-b4e6-29068cd82257",

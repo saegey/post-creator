@@ -15,7 +15,7 @@ import {
 } from "../actions";
 
 const body = fs.readFileSync(
-  path.resolve(__dirname, "stubs/body.html"),
+  path.resolve(__dirname, "../stubs/body.html"),
   "utf8"
 );
 
