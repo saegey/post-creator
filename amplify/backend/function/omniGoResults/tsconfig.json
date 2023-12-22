@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "target": "ES6",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "esnext"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "outDir": "lib",
+    "baseUrl": "./",
+    "rootDir": "./lib",
+    "paths": {
+      "src": ["lib"]
+    },
+    "types": ["node"],
+    "typeRoots": ["./lib/node_modules/@types"]
+  }
+}

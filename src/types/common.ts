@@ -6,7 +6,6 @@ import { BaseElement } from "slate";
 
 import {
   Author,
-  CrossResultsPreviewRowType,
   CrossResultsPreviewType,
   OmniResultType,
   RaceResultRow,

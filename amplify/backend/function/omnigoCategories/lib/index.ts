@@ -1,9 +1,4 @@
-/**
- * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- *
- */
-
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyEvent } from "aws-lambda";
 import cheerio from "cheerio";
 import fetch from "node-fetch";
 import vm from "node:vm";
