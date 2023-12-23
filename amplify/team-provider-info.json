@@ -163,7 +163,7 @@
         },
         "omniGoResults": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/omniGoResults-67564d6870664f6c7a79-build.zip"
+          "s3Key": "amplify-builds/omniGoResults-706a35667534652b6f65-build.zip"
         }
       },
       "api": {
@@ -213,11 +213,11 @@
         },
         "publishPost": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/publishPost-70752b4a614838624d4b-build.zip"
+          "s3Key": "amplify-builds/publishPost-64655034326d45654269-build.zip"
         },
         "raceresult": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/raceresult-3979345a59757a37504b-build.zip"
+          "s3Key": "amplify-builds/raceresult-6e7147752b6169504c38-build.zip"
         },
         "raceresultgetResults": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
@@ -247,7 +247,7 @@
         },
         "webscorer": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/webscorer-4352724b51712b715431-build.zip"
+          "s3Key": "amplify-builds/webscorer-486e2b324d7130563639-build.zip"
         },
         "webscorerResults": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
@@ -256,7 +256,19 @@
         "nextjsblog": {},
         "api12660653": {},
         "routeFiles": {},
-        "nextjsbloga585e058": {}
+        "nextjsbloga585e058": {},
+        "crossresults": {
+          "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
+          "s3Key": "amplify-builds/crossresults-3645307374424f523242-build.zip"
+        },
+        "omniGoResults": {
+          "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
+          "s3Key": "amplify-builds/omniGoResults-706a35667534652b6f65-build.zip"
+        },
+        "omnigoCategories": {
+          "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
+          "s3Key": "amplify-builds/omnigoCategories-676d6b5774662f613871-build.zip"
+        }
       },
       "api": {
         "api12660653": {},
