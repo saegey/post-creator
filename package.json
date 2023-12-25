@@ -6,6 +6,8 @@
     "start": "next start",
     "amplify:pull": "amplify pull --appId d15noiwtuwwref --envName dev",
     "amplify:S3Trigger71ba5706": "cd amplify/backend/function/S3Trigger71ba5706/ts && npm install && npm run tsc && cd -",
+    "amplify:omnigoCategories": "cd amplify/backend/function/omnigoCategories/lib && npm install && npm run build && cd -",
+    "amplify:omnigoResults": "cd amplify/backend/function/omniGoResults/lib && npm install && npm run build && cd -",
     "check-types": "tsc --noEmit",
     "test:e2e": "playwright test",
     "cypress:open": "cypress open",
@@ -47,7 +49,6 @@
     "@types/formidable": "^3.4.0",
     "@types/jest": "^29.5.11",
     "@types/mapbox-gl": "^2.7.13",
-    "@types/node": "^20.4.9",
     "@types/react": "^18.2.19",
     "@types/react-google-recaptcha": "^2.1.8",
     "@types/react-test-renderer": "^18.0.7",
@@ -64,6 +65,6 @@
     "react-test-renderer": "^18.2.0",
     "theme-ui": "^0.16.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.1.6"
+    "typescript": "~5.1.6"
   }
 }

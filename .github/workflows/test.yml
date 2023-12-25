@@ -3,12 +3,17 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
     steps:
       - uses: actions/checkout@v3
       - name: Install modules
         run: npm ci
       - name: install lambda modules
         run: cd amplify/backend/function/publishPost/src && npm install
+      - name: install lambda modules
+        run: cd amplify/backend/function/omniGoResults/lib && npm install  --force
       - name: Configure Amplify Mock
         run: |
           echo "export default {};" > src/aws-exports.js
@@ -16,7 +21,7 @@ jobs:
 
       - name: Run tests
         run: |
-          npx jest --coverage | tee ./coverage.txt && exit ${PIPESTATUS[0]}
+          npx jest --coverage --silent | tee ./coverage.txt && exit ${PIPESTATUS[0]}
 
       - name: Jest Coverage Comment
         uses: MishaKav/jest-coverage-comment@main

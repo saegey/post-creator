@@ -59,3 +59,5 @@ playright/
 cypress/report/
 cypress/screenshots/
 **coverage/
+
+# amplify/backend/function/**/src/

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "target": "ES6",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "esnext"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "outDir": "./src",
+    "baseUrl": "./",
+    "rootDir": "./lib",
+    "paths": {
+      "src": ["./src"]
+    },
+    "types": ["node", "jest"],
+    "typeRoots": ["./lib/node_modules/@types"]
+  },
+  "exclude": ["lib/**/*.test.ts", "lib/stubs/*.json"]
+}
