@@ -60,4 +60,4 @@ cypress/report/
 cypress/screenshots/
 **coverage/
 
-amplify/backend/function/**/src/
+# amplify/backend/function/**/src/
