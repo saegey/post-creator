@@ -5,6 +5,7 @@ import {
   getCategories,
   getCrossResultsCategories,
   getOmniResultsCategories,
+  getRunSignupCategories,
   getWebScorerCategories,
 } from "./api";
 import { ResultsContext } from "./ResultsContext";
@@ -17,6 +18,8 @@ import RaceResultsSelect from "./RaceResults/RacesResultsSelect";
 import WebscorerSubmitButton from "./WebScorer/WebscorerSubmitButton";
 import CrossResultsSubmitButton from "./CrossResults/CrossResultsSubmitButton";
 import CrossResultsSelect from "./CrossResults/CrossResultsSelect";
+import RunSignupSelect from "./RunSignup/RunSignupSelect";
+import RunSignupSubmitButton from "./RunSignup/RunSignupSubmitButton";
 
 const RaceImportForm = () => {
   const {
@@ -30,6 +33,8 @@ const RaceImportForm = () => {
     setOmniMeta,
     crossResultsMeta,
     setCrossResultsMeta,
+    runSignupMeta,
+    setRunSignupMeta,
   } = React.useContext(ResultsContext);
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -103,8 +108,22 @@ const RaceImportForm = () => {
 
               break;
 
+            // https://runsignup.com/Race/Results/86159
+            case "runsignup.com":
+              getRunSignupCategories({ url }).then((res) => {
+                console.log(res);
+                setRunSignupMeta({
+                  ...runSignupMeta,
+                  categories: res.data.categories,
+                  eventName: "fdsafd",
+                });
+                setIsLoading(false);
+              });
+
+              break;
+
             default:
-              console.log(`Sorry, we are out of shit.`);
+              console.log(`Sorry, we don't support that url`);
           }
         }}
         style={{ width: "100%" }}
@@ -128,11 +147,13 @@ const RaceImportForm = () => {
           {raceResultsMeta.categories.data.filterValues.length > 0 && (
             <RaceResultsSelect />
           )}
+          {runSignupMeta.categories.length > 0 && <RunSignupSelect />}
 
           {raceResultsMeta.categories.data.filterValues.length === 0 &&
             webScorerMeta.categories.length === 0 &&
             crossResultsMeta.categories.length === 0 &&
-            Array.from(omniMeta.categories).length === 0 && (
+            Array.from(omniMeta.categories).length === 0 &&
+            runSignupMeta.categories.length === 0 && (
               <Box sx={{ marginLeft: "auto" }}>
                 <Button
                   disabled={isLoading ? true : false}
@@ -148,6 +169,7 @@ const RaceImportForm = () => {
                 </Button>
               </Box>
             )}
+
           {webScorerMeta.categories.length > 0 && <WebscorerSubmitButton />}
           {crossResultsMeta.categories.length > 0 && (
             <CrossResultsSubmitButton />
@@ -156,6 +178,7 @@ const RaceImportForm = () => {
             <RaceResultsSubmitButton />
           )}
           {Array.from(omniMeta.categories).length > 0 && <OmniSubmitButton />}
+          {runSignupMeta.categories.length > 0 && <RunSignupSubmitButton />}
         </Flex>
       </form>
     </Flex>

@@ -13,7 +13,7 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { webscorerResultPreview, id, setWebscorerResultPreview } =
+  const { webscorerResults, id, setWebscorerResults } =
     React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
   const { webScorerMeta, resultsUrl } = React.useContext(ResultsContext);
@@ -52,9 +52,9 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
       </Flex>
       <ResultsBox>
         <>
-          {webscorerResultPreview &&
-            webscorerResultPreview.results &&
-            webscorerResultPreview.results.map((row, i) => {
+          {webscorerResults &&
+            webscorerResults.results &&
+            webscorerResults.results.map((row, i) => {
               return (
                 <Flex
                   key={`race-result-row-${i}`}
@@ -76,20 +76,20 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   onClick={() => {
                     if (selectedRow === i) {
                       setSelectedRow(undefined);
-                      setWebscorerResultPreview &&
-                        setWebscorerResultPreview({
-                          ...webscorerResultPreview,
+                      setWebscorerResults &&
+                        setWebscorerResults({
+                          ...webscorerResults,
                           selected: undefined,
                         });
                     } else {
                       setSelectedRow(i);
-                      setWebscorerResultPreview &&
-                        setWebscorerResultPreview({
-                          ...webscorerResultPreview,
+                      setWebscorerResults &&
+                        setWebscorerResults({
+                          ...webscorerResults,
                           selected:
-                            webscorerResultPreview &&
-                            webscorerResultPreview.results
-                              ? webscorerResultPreview.results[i]
+                            webscorerResults &&
+                            webscorerResults.results
+                              ? webscorerResults.results[i]
                               : undefined,
                         });
                     }
@@ -145,16 +145,16 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             onClick={() => {
               setIsLoading(true);
               saveWebscorerResults({
-                webscorerResultPreview,
+                webscorerResults,
                 id,
                 category: webScorerMeta.category,
                 resultsUrl: resultsUrl,
                 eventName: webScorerMeta.eventName,
               }).then((r) => {
-                setWebscorerResultPreview &&
-                  webscorerResultPreview &&
-                  setWebscorerResultPreview({
-                    ...webscorerResultPreview,
+                setWebscorerResults &&
+                  webscorerResults &&
+                  setWebscorerResults({
+                    ...webscorerResults,
                     eventName: webScorerMeta.eventName,
                     category: webScorerMeta.category,
                   });

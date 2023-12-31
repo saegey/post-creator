@@ -1,6 +1,6 @@
 import { Box } from "theme-ui";
 
-const ResultsBox = ({ children }: { children: JSX.Element }) => {
+const ResultsBox = ({ children }: { children?: JSX.Element }) => {
   return (
     <Box
       sx={{
@@ -11,7 +11,7 @@ const ResultsBox = ({ children }: { children: JSX.Element }) => {
         borderRadius: "5px",
       }}
     >
-      {children}
+      {children && children}
     </Box>
   );
 };

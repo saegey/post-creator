@@ -159,11 +159,19 @@
         },
         "omnigoCategories": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/omnigoCategories-676d6b5774662f613871-build.zip"
+          "s3Key": "amplify-builds/omnigoCategories-5269356f4b5573703438-build.zip"
         },
         "omniGoResults": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/omniGoResults-706a35667534652b6f65-build.zip"
+          "s3Key": "amplify-builds/omniGoResults-6848744e534d6f654b4d-build.zip"
+        },
+        "runsignupCategories": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/runsignupCategories-3652477044695a374933-build.zip"
+        },
+        "runSignupResults": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/runSignupResults-564e4e3379626d335343-build.zip"
         }
       },
       "api": {

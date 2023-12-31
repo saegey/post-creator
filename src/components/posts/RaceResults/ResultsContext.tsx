@@ -29,6 +29,12 @@ export type OmniMetaType = {
   eventName: string;
 };
 
+export type RunSignupMetaType = {
+  category: string;
+  categories: Array<{ id: number; cat: string; year: number; name: string }>;
+  eventName: string;
+};
+
 export type ResultsContextType = {
   previewResults: boolean;
   setPreviewResults: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,6 +47,9 @@ export type ResultsContextType = {
 
   previewOmniResults: boolean;
   setPreviewOmniResults: React.Dispatch<React.SetStateAction<boolean>>;
+
+  previewRunSignupResults: boolean;
+  setPreviewRunSignupResults: React.Dispatch<React.SetStateAction<boolean>>;
 
   resultsUrl: string;
   setResultsUrl: React.Dispatch<React.SetStateAction<string>>;
@@ -59,19 +68,26 @@ export type ResultsContextType = {
     React.SetStateAction<CrossResultsMetaType>
   >;
 
-  // omniGoResults: OmniGoResultsType;
-  // setOmniGoResults: React.Dispatch<React.SetStateAction<OmniGoResultsType>>;
+  runSignupMeta: RunSignupMetaType;
+  setRunSignupMeta: React.Dispatch<React.SetStateAction<RunSignupMetaType>>;
 };
 
 const ResultsContext = React.createContext<ResultsContextType>({
   previewResults: false,
   setPreviewResults: () => {},
+
   previewWebscorerResults: false,
   setPreviewWebscorerResults: () => {},
+
   previewCrossResults: false,
   setPreviewCrossResults: () => {},
+
   previewOmniResults: false,
   setPreviewOmniResults: () => {},
+
+  previewRunSignupResults: false,
+  setPreviewRunSignupResults: () => {},
+
   resultsUrl: "",
   setResultsUrl: () => {},
   raceResultsMeta: {
@@ -83,24 +99,34 @@ const ResultsContext = React.createContext<ResultsContextType>({
     eventName: "",
   },
   setRaceResultsMeta: () => {},
+
   webScorerMeta: {
     category: "",
     categories: [],
     eventName: "",
   },
+  setWebScorerMeta: () => {},
+
   omniMeta: {
     category: "",
     categories: [],
     eventName: "",
   },
   setOmniMeta: () => {},
-  setWebScorerMeta: () => {},
+
   crossResultsMeta: {
     category: "",
     categories: [],
     eventName: "",
   },
   setCrossResultsMeta: () => {},
+
+  runSignupMeta: {
+    category: "",
+    categories: [],
+    eventName: "",
+  },
+  setRunSignupMeta: () => {},
 });
 
 export { ResultsContext };

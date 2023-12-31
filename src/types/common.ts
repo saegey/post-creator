@@ -3,14 +3,8 @@ import { BaseEditor, Element } from "slate";
 import { ReactEditor } from "slate-react";
 import { HistoryEditor } from "slate-history";
 import { BaseElement } from "slate";
-
-import {
-  Author,
-  CrossResultsPreviewType,
-  OmniResultType,
-  RaceResultRow,
-  WebscorerResultPreview,
-} from "../components/PostContext";
+import { RunSignupMetaType } from "../components/posts/RaceResults/ResultsContext";
+import { RunSignupResultType } from "../components/posts/RaceResults/RunSignup/RunSignupResultsPreview";
 
 export type ResultsRow = [
   string,
@@ -28,7 +22,6 @@ export type ResultsRow = [
 export type ApiRes = {
   data: { data: ResultsRow[]; list: { Fields: Array<{ Label: string }> } };
 };
-
 
 export type WebscorerResultsRow = {
   Place: string;
@@ -257,6 +250,11 @@ export type OmniResultsType = {
   children: CustomText[];
 };
 
+export type RunSignupResultsSlateType = {
+  type: "runSignupResults";
+  children: CustomText[];
+};
+
 export type VideoEmbedType = {
   type: "videoEmbed";
   children: CustomText[];
@@ -287,7 +285,8 @@ export type CustomElement =
   | WebscorerResultsType
   | VideoEmbedType
   | CrossResultsType
-  | OmniResultsType;
+  | OmniResultsType
+  | RunSignupResultsSlateType;
 
 export type FormattedText = {
   text: string;
@@ -337,33 +336,38 @@ export interface TimeSeriesDataType {
 export interface PostViewType {
   id: string;
   title: string;
-  subhead?: string | null;
-  components?: string | null;
-  timeSeriesFile?: string | null;
+  subhead?: string;
+  components?: string;
+  timeSeriesFile?: string;
   __typename: "PublishedPost" | "Post";
-  gpxFile?: string | null;
-  elevation?: string | null;
-  distance?: number | null;
-  heartAnalysis?: string | null;
-  cadenceAnalysis?: string | null;
-  tempAnalysis?: string | null;
-  stoppedTime?: number | null;
-  elapsedTime?: number | null;
-  timeInRed?: number | null;
-  heroImage?: string | null;
-  powerZones?: string | null;
-  raceResults?: string | null;
-  webscorerResults?: string | null;
-  images?: string | null;
-  currentFtp?: string | null;
-  date?: string | null;
-  postLocation?: string | null;
-  author?: Author | null;
-  powerZoneBuckets?: string | null;
-  shortUrl?: string | null;
-  normalizedPower?: number | null;
-  owner?: string | null;
-  originalPostId?: string | null;
+  gpxFile?: string;
+  elevation?: string;
+  distance?: number;
+  heartAnalysis?: string;
+  cadenceAnalysis?: string;
+  tempAnalysis?: string;
+  stoppedTime?: number;
+  elapsedTime?: number;
+  timeInRed?: number;
+  heroImage?: string;
+  powerZones?: string;
+  raceResults?: string;
+  webscorerResults?: string;
+  images?: string;
+  currentFtp?: number;
+  date?: string;
+  postLocation?: string;
+  author?: Author;
+  powerZoneBuckets?: string;
+  shortUrl?: string;
+  normalizedPower?: number;
+  owner?: string;
+  originalPostId?: string;
+  stravaUrl?: string;
+  resultsUrl?: string;
+  elevationTotal?: number;
+  privacyStatus: "private" | "public";
+  createdAt: string;
 }
 
 export type ListPostsCustom = {
@@ -379,48 +383,248 @@ export type ListPostsCustom = {
   };
 };
 
+export interface Post
+  extends Omit<
+    PostViewType,
+    | "components"
+    | "images"
+    | "heartAnalysis"
+    | "powerAnalysis"
+    | "cadenceAnalysis"
+    | "tempAnalysis"
+    | "powerZones"
+    | "heroImage"
+    | "powerZoneBuckets"
+    | "raceResults"
+    | "webscorerResults"
+    | "crossResults"
+    | "omniResults"
+    | "runSignupResults"
+    | "powerZones"
+  > {
+  components: Array<CustomElement>;
+  images: Array<CloudinaryImage> | undefined;
+  heartAnalysis: Array<Record<number | string, number>> | undefined;
+  powerAnalysis: Array<Record<number | string, number>> | undefined;
+  cadenceAnalysis: Array<Record<number | string, number>> | undefined;
+  tempAnalysis: Array<Record<number | string, number>> | undefined;
+  powerZones: Array<PowerZoneType> | undefined;
+  heroImage: CloudinaryImage | undefined;
+  powerZoneBuckets: Array<number>;
+  raceResults: RaceResultRow | undefined;
+  webscorerResults: WebscorerResultPreview | undefined;
+  crossResults: CrossResultsPreviewType | undefined;
+  omniResults: OmniResultType | undefined;
+  runSignupResults: RunSignupType | undefined;
+}
+
 export interface PostType {
-  postId: string;
-  postTitle: string;
-  postImages: Array<CloudinaryImage>;
-  postSubhead: string;
-  postGpxFile: string;
-  postLocationOrig: string;
-  postComponents: Array<CustomElement>;
-  postResultsUrl: string | undefined;
-  postStravaUrl: string | undefined;
-  postCurrentFtp: number | undefined;
-  postElevationTotal: number | undefined;
-  postNormalizedPower: number | undefined;
-  postDistance: number | undefined;
-  postElapsedTime: number | undefined;
-  postStoppedTime: number | undefined;
-  postTimeInRed: number | undefined;
-  postHeartAnalysis: Array<Record<number | string, number>>;
-  postPowerAnalysis: Array<Record<number | string, number>>;
-  postCadenceAnalysis: Array<Record<number | string, number>>;
-  postTempAnalysis: Array<Record<number | string, number>>;
-  postPowerZones: PowerZoneType[];
-  postPowerZoneBuckets: Array<number>;
-  postHeroImage: CloudinaryImage | undefined;
-  postDate: string | undefined;
-  postAuthor:
-    | {
-        fullName: string;
-        image: string;
-      }
-    | undefined;
-  postShortUrl: string | undefined;
-
-  // race results
-  postRaceResults: RaceResultRow | undefined;
-  postWebscorerResults: WebscorerResultPreview | undefined;
-  postCrossResults: CrossResultsPreviewType | undefined;
-  postOmniResults: OmniResultType | undefined;
-
-  postTimeSeriesFile: string | undefined;
-  postPrivacyStatus: string | undefined;
-  postCreatedAt: string | undefined;
+  post: Post;
   errorCode?: number;
   user: IUser;
+}
+
+export type RaceResultRowType = {
+  CatPlace: string;
+  AgeSex: string;
+  Name: string;
+  Age: string;
+  Time: string;
+  Speed: string;
+  SexPlace: string;
+  GenderPlace: string;
+  OverallPlace: string;
+  Bib: string;
+  Team: string;
+};
+
+export type RaceResultRow = {
+  selected: RaceResultRowType | undefined;
+  results: Array<RaceResultRowType> | undefined;
+  category: string;
+  division: string;
+  eventName: string;
+};
+
+export type WebscorerResultPreview = {
+  selected: WebscorerResultsRow | undefined;
+  results: Array<WebscorerResultsRow> | undefined;
+  category: string;
+  eventName: string;
+};
+
+export type CrossResultsPreviewRowType = {
+  RaceName: string;
+  RaceCategoryName: string;
+  Place: number;
+  FirstName: string;
+  LastName: string;
+  TeamName: string;
+  RaceTime: string;
+  IsDnf: number;
+};
+
+export type CrossResultsPreviewType = {
+  selected: CrossResultsPreviewRowType | undefined;
+  results: Array<CrossResultsPreviewRowType> | undefined;
+  category?: string;
+  eventName: string;
+};
+
+export type OmniResultRowType = {
+  id: string;
+  classId: number;
+  firstName: string;
+  lastName: string;
+  bib: number;
+  team: string;
+  start: number;
+  adjustment: string | null;
+  status: string | null;
+  finishTime: number;
+  totalTime: number;
+  timeFormattted: string;
+  checkpointTimes: Array<{
+    eventCheckpointId: string;
+    bib: number;
+    ts: number;
+  }>;
+};
+
+export type OmniResultType = {
+  selected: OmniResultRowType | undefined;
+  results: Array<OmniResultRowType> | undefined;
+  category: string;
+  eventName: string;
+};
+
+export type RunSignupType = {
+  selected: RunSignupResultType | undefined;
+  results: RunSignupResultsType;
+  category: string;
+  eventName: string;
+};
+
+export type Author = { fullName: string; image: string };
+
+export interface PostContextType extends Post {
+  activity: Array<ActivityItem> | undefined;
+  powers: Array<number> | undefined;
+  hearts: Array<number> | undefined;
+  setActivity?: React.Dispatch<
+    React.SetStateAction<ActivityItem[] | undefined>
+  >;
+  setTitle?: React.Dispatch<React.SetStateAction<string>>;
+  setSubhead?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPostLocation?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setId?: React.Dispatch<React.SetStateAction<string>>;
+  setStravaUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setComponents?: React.Dispatch<React.SetStateAction<Array<CustomElement>>>;
+  setImages?: React.Dispatch<
+    React.SetStateAction<Array<CloudinaryImage> | undefined>
+  >;
+  setHeroImage?: React.Dispatch<CloudinaryImage | undefined>;
+  setCurrentFtp?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setResultsUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPowerAnalysis?: React.Dispatch<
+    React.SetStateAction<Array<Record<number | string, number>> | undefined>
+  >;
+  setHeartAnalysis?: React.Dispatch<
+    React.SetStateAction<Array<Record<number | string, number>> | undefined>
+  >;
+  setCadenceAnalysis?: React.Dispatch<
+    React.SetStateAction<Array<Record<number | string, number>> | undefined>
+  >;
+  setTempAnalysis?: React.Dispatch<
+    React.SetStateAction<Array<Record<number | string, number>> | undefined>
+  >;
+  setElevationTotal?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setNormalizedPower?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setDistance?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setElapsedTime?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setStoppedTime?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setTimeInRed?: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setPowerZones?: React.Dispatch<
+    React.SetStateAction<
+      | Array<{
+          powerLow: number;
+          powerHigh: number;
+          zone: number;
+          title: string;
+        }>
+      | undefined
+    >
+  >;
+  setDate?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPowerZoneBuckets?: React.Dispatch<React.SetStateAction<Array<number>>>;
+  setShortUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+
+  // race results
+  setRaceResults?: React.Dispatch<
+    React.SetStateAction<RaceResultRow | undefined>
+  >;
+  setWebscorerResults?: React.Dispatch<
+    React.SetStateAction<WebscorerResultPreview | undefined>
+  >;
+  setCrossResults?: React.Dispatch<
+    React.SetStateAction<CrossResultsPreviewType | undefined>
+  >;
+  setOmniResults?: React.Dispatch<
+    React.SetStateAction<OmniResultType | undefined>
+  >;
+  setRunSignupResults?: React.Dispatch<
+    React.SetStateAction<RunSignupType | undefined>
+  >;
+
+  setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined>>;
+  setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPrivacyStatus?: React.Dispatch<React.SetStateAction<"public" | "private">>;
+  setCreatedAt?: React.Dispatch<React.SetStateAction<string>>;
+  // setSelection: React.Dispatch<
+  //   React.SetStateAction<[number, number] | undefined>
+  // >;
+  setPowers: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
+  setHearts: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
+}
+
+export interface RunSignupResultsType {
+  headings: Array<{
+    key: string;
+    sortKey?: string;
+    tooltip?: string;
+    name: string;
+    style: string;
+    hidden: boolean;
+  }>;
+  resultSet: {
+    results: [Array<string | number>];
+    nonGroupedDivisionIds: [number];
+    splits: Array<{
+      split_id: number;
+      individual_result_set_id: number;
+      split_name: string;
+      split_order: number;
+      split_distance: null;
+      split_distance_units: null;
+      pace_type: "N";
+      approx_percent_time_complete: null;
+      deleeted: "F";
+      include_split_place: "F";
+    }>;
+    numResults: number;
+    setInfo: {
+      individual_result_set_id: number;
+      race_category_id: number;
+    };
+  };
+  divisions: Array<{
+    race_division_id: number;
+    division_name: string;
+    division_short_name: string;
+    show_top_num: number;
+    gender: string | null;
+    max_age: string | null;
+    min_age: string | null;
+  }>;
 }

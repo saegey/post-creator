@@ -1,15 +1,19 @@
 import { Flex, Box, Button, Text, Spinner } from "theme-ui";
 import React from "react";
 
-import { getWebscorerResults } from "../api";
+import { getRunSignupResults, getWebscorerResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { PostContext } from "../../../PostContext";
 
-const WebscorerSubmitButton = () => {
+const RunSignupSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const { webScorerMeta, setPreviewWebscorerResults, resultsUrl } =
-    React.useContext(ResultsContext);
-  const { setWebscorerResults } = React.useContext(PostContext);
+  const {
+    runSignupMeta,
+    setRunSignupMeta,
+    resultsUrl,
+    setPreviewRunSignupResults,
+  } = React.useContext(ResultsContext);
+  const { setRunSignupResults } = React.useContext(PostContext);
 
   return (
     <Box sx={{ marginLeft: "auto" }}>
@@ -17,19 +21,21 @@ const WebscorerSubmitButton = () => {
         disabled={isLoading ? true : false}
         variant="primaryButton"
         onClick={() => {
+          console.log(runSignupMeta.category);
           setIsLoading(true);
-          getWebscorerResults({
+          getRunSignupResults({
             url: resultsUrl,
-            category: webScorerMeta.category,
+            category: runSignupMeta.category,
           }).then((results) => {
-            setWebscorerResults &&
-              setWebscorerResults({
+            setRunSignupResults &&
+              setRunSignupResults({
                 results: results.data,
                 selected: undefined,
-                eventName: webScorerMeta.eventName,
-                category: webScorerMeta.category,
+                eventName: runSignupMeta.eventName,
+                category: runSignupMeta.category,
               });
-            setPreviewWebscorerResults(true);
+            setPreviewRunSignupResults(true);
+            // setPreviewWebscorerResults(true);
           });
           setIsLoading(false);
         }}
@@ -45,4 +51,4 @@ const WebscorerSubmitButton = () => {
   );
 };
 
-export default WebscorerSubmitButton;
+export default RunSignupSubmitButton;

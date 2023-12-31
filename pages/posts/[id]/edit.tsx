@@ -3,13 +3,7 @@ import Head from "next/head";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 
-import {
-  CrossResultsPreviewType,
-  OmniResultType,
-  PostContext,
-  RaceResultRow,
-  WebscorerResultPreview,
-} from "../../../src/components/PostContext";
+import { PostContext } from "../../../src/components/PostContext";
 import { getPostInitial } from "../../../src/graphql/customQueries";
 import EditUserPost from "../../../src/components/posts/Editor/EditUserPost";
 import { GetPostInitialQuery } from "../../../src/API";
@@ -18,6 +12,8 @@ import {
   CustomElement,
   GraphQLError,
   IUser,
+  OmniResultType,
+  CrossResultsPreviewType,
   PostType,
 } from "../../../src/types/common";
 import { CloudinaryImage } from "../../../src/types/common";
@@ -88,6 +84,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   } catch (error: unknown) {
     const knownError = error as GraphQLError;
     console.log(error);
+
     if (knownError.errors?.find((e) => e.errorType === "Unauthorized")) {
       return {
         props: { errorCode: 403 },
@@ -105,103 +102,47 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   return {
     props: {
       user,
-      postId: post.id,
-      postComponents: post.components
-        ? (JSON.parse(post.components) as Array<CustomElement>)
-        : [],
-      postTitle: post.title,
-      postSubhead: post.subhead,
-      postImages:
-        post.images && post.images !== null
+      post: {
+        ...post,
+        components: post.components
+          ? (JSON.parse(post.components) as Array<CustomElement>)
+          : [],
+        images: post.images
           ? (JSON.parse(post.images) as Array<CloudinaryImage>)
           : [],
-      postLocationOrig: post.postLocation,
-      postGpxFile: post.gpxFile,
-      postStravaUrl: post.stravaUrl,
-      postResultsUrl: post.resultsUrl,
-      postCurrentFtp: post.currentFtp,
-      postElevationTotal: post.elevationTotal,
-      postNormalizedPower: post.normalizedPower,
-      postDistance: post.distance,
-      postStoppedTime: post.stoppedTime,
-      postElapsedTime: post.elapsedTime,
-      postTimeInRed: post.timeInRed,
-      postHeartAnalysis:
-        post.heartAnalysis && post.heartAnalysis !== null
-          ? JSON.parse(post.heartAnalysis)
+        heartAnalysis:
+          post.heartAnalysis && post.heartAnalysis !== null
+            ? JSON.parse(post.heartAnalysis)
+            : null,
+        cadenceAnalysis: post.cadenceAnalysis
+          ? JSON.parse(post.cadenceAnalysis)
           : null,
-      postCadenceAnalysis: post.cadenceAnalysis
-        ? JSON.parse(post.cadenceAnalysis)
-        : null,
-      postTempAnalysis: post.tempAnalysis
-        ? JSON.parse(post.tempAnalysis)
-        : null,
-      postPowerZones: post.powerZones ? JSON.parse(post.powerZones) : null,
-      postPowerZoneBuckets: post.powerZoneBuckets
-        ? JSON.parse(post.powerZoneBuckets)
-        : null,
-      postHeroImage: post.heroImage ? JSON.parse(post.heroImage) : null,
-      postDate: post.date,
-      postAuthor: post.author,
-      postShortUrl: post.shortUrl,
-
-      postRaceResults: post.raceResults ? JSON.parse(post.raceResults) : "null",
-      postWebscorerResults: post.webscorerResults
-        ? JSON.parse(post.webscorerResults)
-        : null,
-      postCrossResults: (post.crossResults
-        ? JSON.parse(post.crossResults)
-        : null) as CrossResultsPreviewType | null,
-      postOmniResults: (post.omniResults
-        ? JSON.parse(post.omniResults)
-        : null) as OmniResultType | null,
-
-      postTimeSeriesFile: post.timeSeriesFile,
-      postPrivacyStatus: post.privacyStatus ? post.privacyStatus : null,
-      postCreatedAt: post.createdAt,
+        tempAnalysis: post.tempAnalysis ? JSON.parse(post.tempAnalysis) : null,
+        powerZones: post.powerZones ? JSON.parse(post.powerZones) : null,
+        heroImage: post.heroImage ? JSON.parse(post.heroImage) : null,
+        powerZoneBuckets: post.powerZoneBuckets
+          ? JSON.parse(post.powerZoneBuckets)
+          : null,
+        raceResults: post.raceResults ? JSON.parse(post.raceResults) : "null",
+        webscorerResults: post.webscorerResults
+          ? JSON.parse(post.webscorerResults)
+          : null,
+        crossResults: (post.crossResults
+          ? JSON.parse(post.crossResults)
+          : null) as CrossResultsPreviewType | null,
+        omniResults: (post.omniResults
+          ? JSON.parse(post.omniResults)
+          : null) as OmniResultType | null,
+        runSignupResults: (post.runSignupResults !== undefined &&
+        post.runSignupResults !== null
+          ? JSON.parse(post.runSignupResults)
+          : null) as OmniResultType | null,
+      },
     },
   };
 };
 
-const Post = ({
-  user,
-  postComponents,
-  postTitle,
-  postSubhead,
-  postLocationOrig,
-  postGpxFile,
-  postId,
-  postImages,
-  postResultsUrl,
-  postStravaUrl,
-  postCurrentFtp,
-  postElevationTotal,
-  postNormalizedPower,
-  postDistance,
-  postElapsedTime,
-  postStoppedTime,
-  postTimeInRed,
-  postHeartAnalysis,
-  postPowerAnalysis,
-  postCadenceAnalysis,
-  postTempAnalysis,
-  postPowerZones,
-  postPowerZoneBuckets,
-  postHeroImage,
-  postDate,
-  postAuthor,
-  postShortUrl,
-
-  postRaceResults,
-  postWebscorerResults,
-  postCrossResults,
-  postOmniResults,
-
-  postTimeSeriesFile,
-  postPrivacyStatus,
-  postCreatedAt,
-  errorCode,
-}: PostType) => {
+const Post = ({ user, post, errorCode }: PostType) => {
   if (errorCode) {
     return <></>;
   }
@@ -212,20 +153,24 @@ const Post = ({
       return false;
     }
   };
-  const [title, setTitle] = React.useState<string | undefined>(postTitle);
-  const [subhead, setSubhead] = React.useState<string | undefined>(postSubhead);
-  const [postLocation, setPostLocation] = React.useState<string | undefined>(
-    postLocationOrig
+  const [title, setTitle] = React.useState(post.title ? post.title : "");
+  const [subhead, setSubhead] = React.useState<string | undefined>(
+    post.subhead
   );
-  const [id, setId] = React.useState(postId);
-  const [activity, setActivity] = React.useState<ActivityItem[] | undefined>();
-  const [gpxFile, setGpxFile] = React.useState(postGpxFile);
+  const [postLocation, setPostLocation] = React.useState<string | undefined>(
+    post.postLocation
+  );
+  const [id, setId] = React.useState(post.id);
+  const [activity, setActivity] = React.useState<
+    Array<ActivityItem> | undefined
+  >();
+  const [gpxFile, setGpxFile] = React.useState(post.gpxFile);
   const [stravaUrl, setStravaUrl] = React.useState<string | undefined>(
-    postStravaUrl
+    post.stravaUrl
   );
   const [components, setComponents] = React.useState(
-    (isNewPost(postComponents)
-      ? [
+    isNewPost(post.components)
+      ? ([
           {
             type: "heroBanner",
             children: [{ text: "" }],
@@ -238,125 +183,96 @@ const Post = ({
             type: "paragraph",
             children: [{ text: "Discuss your race..." }],
           },
-        ]
-      : postComponents) as Array<CustomElement> | undefined
+        ] as Array<CustomElement>)
+      : post.components
   );
-  const [images, setImages] = React.useState<
-    Array<CloudinaryImage> | undefined
-  >(postImages ? postImages : undefined);
-
-  const [currentFtp, setCurrentFtp] = React.useState<number | undefined>(
-    postCurrentFtp
-  );
-  const [resultsUrl, setResultsUrl] = React.useState<string>(
-    postResultsUrl ? postResultsUrl : ""
-  );
-
+  const [images, setImages] = React.useState(post.images);
+  const [currentFtp, setCurrentFtp] = React.useState(post.currentFtp);
+  const [resultsUrl, setResultsUrl] = React.useState(post.resultsUrl);
   const [powerAnalysis, setPowerAnalysis] =
-    React.useState<Array<Record<string | number, number>>>();
-  const [heartAnalysis, setHeartAnalysis] = React.useState<
-    Array<Record<number | string, number>> | undefined
-  >(postHeartAnalysis);
-  const [cadenceAnalysis, setCadenceAnalysis] = React.useState<
-    Array<Record<number | string, number>> | undefined
-  >(postCadenceAnalysis);
-  const [tempAnalysis, setTempAnalysis] = React.useState<
-    Array<Record<number | string, number>> | undefined
-  >(postTempAnalysis);
-
+    React.useState<Array<Record<number | string, number>>>();
+  const [heartAnalysis, setHeartAnalysis] = React.useState(post.heartAnalysis);
+  const [cadenceAnalysis, setCadenceAnalysis] = React.useState(
+    post.cadenceAnalysis
+  );
+  const [tempAnalysis, setTempAnalysis] = React.useState(post.tempAnalysis);
   const [initialLoad, setInitialLoad] = React.useState(true);
+  const [elevationTotal, setElevationTotal] = React.useState(
+    post.elevationTotal
+  );
+  const [normalizedPower, setNormalizedPower] = React.useState(
+    post.normalizedPower
+  );
+  const [distance, setDistance] = React.useState(post.distance);
+  const [elapsedTime, setElapsedTime] = React.useState(post.elapsedTime);
+  const [stoppedTime, setStoppedTime] = React.useState(post.stoppedTime);
+  const [timeInRed, setTimeInRed] = React.useState(post.timeInRed);
+  const [powerZones, setPowerZones] = React.useState(post.powerZones);
+  const [powerZoneBuckets, setPowerZoneBuckets] = React.useState(
+    post.powerZoneBuckets
+  );
+  const [heroImage, setHeroImage] = React.useState(post.heroImage);
+  const [date, setDate] = React.useState(post.date);
+  const [author, setAuthor] = React.useState(post.author);
+  const [shortUrl, setShortUrl] = React.useState(post.shortUrl);
 
-  const [elevationTotal, setElevationTotal] = React.useState<
-    number | undefined
-  >(postElevationTotal);
-  const [normalizedPower, setNormalizedPower] = React.useState<
-    number | undefined
-  >(postNormalizedPower);
-  const [distance, setDistance] = React.useState<number | undefined>(
-    postDistance
+  const [raceResults, setRaceResults] = React.useState(post.raceResults);
+  const [webscorerResults, setWebscorerResults] = React.useState(
+    post.webscorerResults
   );
-  const [elapsedTime, setElapsedTime] = React.useState<number | undefined>(
-    postElapsedTime
-  );
-  const [stoppedTime, setStoppedTime] = React.useState<number | undefined>(
-    postStoppedTime
-  );
-  const [timeInRed, setTimeInRed] = React.useState<number | undefined>(
-    postTimeInRed
-  );
-  const [powerZones, setPowerZones] = React.useState(postPowerZones);
-  const [powerZoneBuckets, setPowerZoneBuckets] =
-    React.useState(postPowerZoneBuckets);
-  const [heroImage, setHeroImage] = React.useState(postHeroImage);
-  const [date, setDate] = React.useState<string | undefined>(postDate);
-  const [author, setAuthor] = React.useState(postAuthor);
-  const [shortUrl, setShortUrl] = React.useState<string | undefined>(
-    postShortUrl
+  const [crossResults, setCrossResults] = React.useState(post.crossResults);
+  const [omniResults, setOmniResults] = React.useState(post.omniResults);
+  const [runSignupResults, setRunSignupResults] = React.useState(
+    post.runSignupResults
   );
 
-  const [raceResults, setRaceResults] = React.useState<
-    RaceResultRow | undefined
-  >(postRaceResults);
-  const [webscorerResults, setWebscorerResults] = React.useState<
-    WebscorerResultPreview | undefined
-  >(postWebscorerResults);
-  const [crossResults, setCrossResults] = React.useState<
-    CrossResultsPreviewType | undefined
-  >(postCrossResults);
-  const [omniResults, setOmniResults] = React.useState<
-    OmniResultType | undefined
-  >(postOmniResults);
-
-  const [timeSeriesFile, setTimeSeriesFile] =
-    React.useState(postTimeSeriesFile);
-  const [privacyStatus, setPrivacyStatus] = React.useState<string | undefined>(
-    postPrivacyStatus
+  const [timeSeriesFile, setTimeSeriesFile] = React.useState(
+    post.timeSeriesFile
   );
-  const [createdAt, setCreatedAt] = React.useState<string | undefined>(
-    postCreatedAt
-  );
-  // const [selection, setSelection] = React.useState<[number, number]>();
+  const [privacyStatus, setPrivacyStatus] = React.useState(post.privacyStatus);
+  const [createdAt, setCreatedAt] = React.useState(post.createdAt);
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
+  const [__typename] = React.useState(post.__typename);
 
   React.useEffect(() => {
     if (!initialLoad) {
-      setId(postId);
-      setTitle(postTitle);
-      setSubhead(postSubhead);
-      setComponents(postComponents);
-      setPostLocation(postLocationOrig);
-      setGpxFile(postGpxFile);
-      setStravaUrl(postStravaUrl);
-      setImages(postImages);
-      setCurrentFtp(postCurrentFtp);
-      setElevationTotal(postElevationTotal);
-      setNormalizedPower(postNormalizedPower);
-      setDistance(postDistance);
-      setElapsedTime(postElapsedTime);
-      setStoppedTime(postStoppedTime);
-      setTimeInRed(postTimeInRed);
-      setHeartAnalysis(postHeartAnalysis);
-      setPowerAnalysis(postPowerAnalysis);
-      setCadenceAnalysis(postCadenceAnalysis);
-      setTempAnalysis(postTempAnalysis);
-      setPowerZones(postPowerZones !== null ? postPowerZones : []);
-      setPowerZoneBuckets(postPowerZoneBuckets);
-      setHeroImage(postHeroImage);
-      setDate(postDate);
-      setAuthor(postAuthor);
-      setShortUrl(postShortUrl);
+      setId(post.id);
+      setTitle(post.title);
+      setSubhead(post.subhead);
+      setComponents(post.components);
+      setPostLocation(post.postLocation);
+      setGpxFile(post.gpxFile);
+      setStravaUrl(post.stravaUrl);
+      setImages(post.images);
+      setCurrentFtp(post.currentFtp);
+      setElevationTotal(post.elevationTotal);
+      setNormalizedPower(post.normalizedPower);
+      setDistance(post.distance);
+      setElapsedTime(post.elapsedTime);
+      setStoppedTime(post.stoppedTime);
+      setTimeInRed(post.timeInRed);
+      setHeartAnalysis(post.heartAnalysis);
+      setPowerAnalysis(post.powerAnalysis);
+      setCadenceAnalysis(post.cadenceAnalysis);
+      setTempAnalysis(post.tempAnalysis);
+      setPowerZones(post.powerZones);
+      setPowerZoneBuckets(post.powerZoneBuckets);
+      setHeroImage(post.heroImage);
+      setDate(post.date);
+      setAuthor(post.author);
+      setShortUrl(post.shortUrl);
 
-      setRaceResults(postRaceResults);
-      setWebscorerResults(postWebscorerResults);
-      setCrossResults(postCrossResults);
-      setOmniResults(postOmniResults);
+      setRaceResults(post.raceResults);
+      setWebscorerResults(post.webscorerResults);
+      setCrossResults(post.crossResults);
+      setOmniResults(post.omniResults);
 
-      setTimeSeriesFile(postTimeSeriesFile);
-      setPrivacyStatus(postPrivacyStatus);
-      setCreatedAt(postCreatedAt);
+      setTimeSeriesFile(post.timeSeriesFile);
+      setPrivacyStatus(post.privacyStatus);
+      setCreatedAt(post.createdAt);
     }
-  }, [postComponents]);
+  }, [post.components]);
 
   React.useEffect(() => {
     setInitialLoad(false);
@@ -420,12 +336,14 @@ const Post = ({
         // race results
         raceResults,
         setRaceResults,
-        webscorerResultPreview: webscorerResults,
-        setWebscorerResultPreview: setWebscorerResults,
+        webscorerResults,
+        setWebscorerResults,
         crossResults,
         setCrossResults,
         omniResults,
         setOmniResults,
+        runSignupResults,
+        setRunSignupResults,
 
         author,
         setAuthor,
@@ -439,6 +357,7 @@ const Post = ({
         setPowers,
         hearts,
         setHearts,
+        __typename,
       }}
     >
       <>
@@ -449,7 +368,7 @@ const Post = ({
 
         <EditUserPost
           postComponents={components}
-          postId={postId}
+          postId={post.id}
           author={author}
           user={user}
         />

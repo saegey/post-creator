@@ -1,15 +1,19 @@
 import { API } from "aws-amplify";
 
-import { ApiRes, WebscorerRes } from "../../../types/common";
 import {
+  ApiRes,
+  WebscorerRes,
+  WebscorerResultPreview,
   CrossResultsPreviewRowType,
   CrossResultsPreviewType,
   OmniResultRowType,
-  OmniResultType,
   RaceResultRowType,
-  WebscorerResultPreview,
-} from "../../PostContext";
+  RunSignupResultsType,
+  RunSignupType,
+} from "../../../types/common";
+
 import { updatePost } from "../../../graphql/mutations";
+import { RunSignupResultType } from "./RunSignup/RunSignupResultsPreview";
 
 export const getWebScorerCategories = async ({ url }: { url: string }) => {
   const paramsRaw = `?${url.split("?")[1]}`;
@@ -52,13 +56,13 @@ export const getWebscorerResults = async ({
 };
 
 export const saveWebscorerResults = async ({
-  webscorerResultPreview,
+  webscorerResults,
   id,
   category,
   resultsUrl,
   eventName,
 }: {
-  webscorerResultPreview?: WebscorerResultPreview;
+  webscorerResults?: WebscorerResultPreview;
   id?: string;
   category: string;
   resultsUrl: string;
@@ -71,7 +75,7 @@ export const saveWebscorerResults = async ({
       variables: {
         input: {
           webscorerResults: JSON.stringify({
-            ...webscorerResultPreview,
+            ...webscorerResults,
             category: category,
             eventName: eventName,
           }),
@@ -332,4 +336,93 @@ export const getOmniResultsCategories = async ({ url }: { url: string }) => {
   };
 
   return res;
+};
+
+export const getRunSignupCategories = async ({ url }: { url: string }) => {
+  if (url === undefined || url === null) {
+    throw Error("no race id provided");
+  }
+
+  const res = (await API.get(
+    "api12660653",
+    `/results/runsignuCategories?url=${url}`,
+    {
+      response: true,
+    }
+  )) as {
+    data: {
+      categories: Array<{
+        id: number;
+        name: string;
+        cat: string;
+        year: number;
+      }>;
+    };
+  };
+
+  return {
+    ...res,
+    data: res.data,
+  };
+};
+
+export const getRunSignupResults = async ({
+  url,
+  category,
+}: {
+  url: string;
+  category: string;
+}) => {
+  // const raceId = new URL(url).pathname.split("/")[2];
+  const path = `/results/runsignup?url=${encodeURIComponent(
+    url.split("#")[0]
+  )}&category=${category}`;
+  console.log(path);
+
+  const res = (await API.get("api12660653", path, {
+    response: true,
+  })) as {
+    data: RunSignupResultsType;
+  };
+
+  return res;
+};
+
+export const saveRunSignupResults = async ({
+  results,
+  id,
+  category,
+  resultsUrl,
+  eventName,
+  selected,
+}: {
+  results?: RunSignupResultsType;
+  id?: string;
+  category: string;
+  resultsUrl: string;
+  eventName: string;
+  selected: RunSignupResultType | undefined;
+}) => {
+  try {
+    const response = (await API.graphql({
+      authMode: "AMAZON_COGNITO_USER_POOLS",
+      query: updatePost,
+      variables: {
+        input: {
+          runSignupResults: JSON.stringify({
+            results: results,
+            selected: selected,
+            category: category,
+            eventName: eventName,
+          }),
+          resultsUrl: resultsUrl,
+          raceResultsProvider: "runSignup",
+          id: id,
+        },
+      },
+    })) as { data: RunSignupType };
+    return response;
+  } catch (errors) {
+    console.error(errors);
+  }
 };
