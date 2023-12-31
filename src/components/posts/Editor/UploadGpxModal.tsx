@@ -7,7 +7,7 @@ import { ZenObservable } from "zen-observable-ts";
 import { UpdatePostMutation } from "../../../API";
 import { updatePost } from "../../../graphql/mutations";
 import BlackBox from "../../layout/BlackBox";
-import { PostContext, PostContextType } from "../../PostContext";
+import { PostContext } from "../../PostContext";
 import { getActivity } from "../../../actions/PostGet";
 import {
   attachIoTPolicyToUser,
@@ -16,6 +16,7 @@ import {
 } from "../../../actions/PubSub";
 import { EditorContext } from "./EditorContext";
 import { getPostInitial } from "../../../graphql/customQueries";
+import { PostContextType } from "../../../types/common";
 
 const UploadGpxModal = () => {
   const [fileData, setFileData] = React.useState<File>();

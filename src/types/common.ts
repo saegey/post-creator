@@ -336,38 +336,43 @@ export interface TimeSeriesDataType {
 export interface PostViewType {
   id: string;
   title: string;
-  subhead?: string;
-  components?: string;
-  timeSeriesFile?: string;
-  __typename: "PublishedPost" | "Post";
-  gpxFile?: string;
-  elevation?: string;
-  distance?: number;
-  heartAnalysis?: string;
-  cadenceAnalysis?: string;
-  tempAnalysis?: string;
-  stoppedTime?: number;
-  elapsedTime?: number;
-  timeInRed?: number;
-  heroImage?: string;
-  powerZones?: string;
-  raceResults?: string;
-  webscorerResults?: string;
-  images?: string;
-  currentFtp?: number;
-  date?: string;
-  postLocation?: string;
-  author?: Author;
-  powerZoneBuckets?: string;
-  shortUrl?: string;
-  normalizedPower?: number;
-  owner?: string;
-  originalPostId?: string;
-  stravaUrl?: string;
-  resultsUrl?: string;
-  elevationTotal?: number;
-  privacyStatus: "private" | "public";
-  createdAt: string;
+  subhead?: string | null;
+  components?: string | null;
+  timeSeriesFile?: string | null;
+  __typename?: "PublishedPost" | "Post";
+  gpxFile?: string | null;
+  elevation?: string | null;
+  distance?: number | null;
+  heartAnalysis?: string | null;
+  cadenceAnalysis?: string | null;
+  tempAnalysis?: string | null;
+  stoppedTime?: number | null;
+  elapsedTime?: number | null;
+  timeInRed?: number | null;
+  heroImage?: string | null;
+  powerZones?: string | null;
+
+  raceResults?: string | null;
+  webscorerResults?: string | null;
+  omniResults?: string | null;
+  runSignupResults?: string | null;
+  crossResults?: string | null;
+
+  images?: string | null;
+  currentFtp?: number | null;
+  date?: string | null;
+  postLocation?: string | null;
+  author?: Author | null;
+  powerZoneBuckets?: string | null;
+  shortUrl?: string | null;
+  normalizedPower?: number | null;
+  owner?: string | null;
+  originalPostId?: string | null;
+  stravaUrl?: string | null;
+  resultsUrl?: string | null;
+  elevationTotal?: number | null;
+  privacyStatus?: string | null;
+  createdAt?: string;
 }
 
 export type ListPostsCustom = {
@@ -401,8 +406,9 @@ export interface Post
     | "omniResults"
     | "runSignupResults"
     | "powerZones"
+    | "__typename"
   > {
-  components: Array<CustomElement>;
+  components?: Array<CustomElement>;
   images: Array<CloudinaryImage> | undefined;
   heartAnalysis: Array<Record<number | string, number>> | undefined;
   powerAnalysis: Array<Record<number | string, number>> | undefined;
@@ -416,6 +422,7 @@ export interface Post
   crossResults: CrossResultsPreviewType | undefined;
   omniResults: OmniResultType | undefined;
   runSignupResults: RunSignupType | undefined;
+  __typename?: string;
 }
 
 export interface PostType {
@@ -500,10 +507,10 @@ export type OmniResultType = {
 
 export type RunSignupType = {
   selected: RunSignupResultType | undefined;
-  results: RunSignupResultsType;
-  category?: number;
-  categoryName: string;
-  eventName: string;
+  results: RunSignupResultsType | undefined;
+  category?: number | undefined;
+  categoryName: string | undefined;
+  eventName: string | undefined;
 };
 
 export type Author = { fullName: string; image: string };
@@ -516,18 +523,28 @@ export interface PostContextType extends Post {
     React.SetStateAction<ActivityItem[] | undefined>
   >;
   setTitle?: React.Dispatch<React.SetStateAction<string>>;
-  setSubhead?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setPostLocation?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSubhead?: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
+  setPostLocation?: React.Dispatch<
+    React.SetStateAction<string | undefined | null>
+  >;
   setId?: React.Dispatch<React.SetStateAction<string>>;
-  setStravaUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setComponents?: React.Dispatch<React.SetStateAction<Array<CustomElement>>>;
+  setStravaUrl?: React.Dispatch<
+    React.SetStateAction<string | undefined | null>
+  >;
+  setComponents?: React.Dispatch<
+    React.SetStateAction<Array<CustomElement> | undefined>
+  >;
   setImages?: React.Dispatch<
     React.SetStateAction<Array<CloudinaryImage> | undefined>
   >;
   setHeroImage?: React.Dispatch<CloudinaryImage | undefined>;
-  setCurrentFtp?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setResultsUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setCurrentFtp?: React.Dispatch<
+    React.SetStateAction<number | undefined | null>
+  >;
+  setResultsUrl?: React.Dispatch<
+    React.SetStateAction<string | undefined | null>
+  >;
   setPowerAnalysis?: React.Dispatch<
     React.SetStateAction<Array<Record<number | string, number>> | undefined>
   >;
@@ -540,26 +557,28 @@ export interface PostContextType extends Post {
   setTempAnalysis?: React.Dispatch<
     React.SetStateAction<Array<Record<number | string, number>> | undefined>
   >;
-  setElevationTotal?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setNormalizedPower?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setDistance?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setElapsedTime?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setStoppedTime?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setTimeInRed?: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setPowerZones?: React.Dispatch<
-    React.SetStateAction<
-      | Array<{
-          powerLow: number;
-          powerHigh: number;
-          zone: number;
-          title: string;
-        }>
-      | undefined
-    >
+  setElevationTotal?: React.Dispatch<
+    React.SetStateAction<number | undefined | null>
   >;
-  setDate?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setNormalizedPower?: React.Dispatch<
+    React.SetStateAction<number | undefined | null>
+  >;
+  setDistance?: React.Dispatch<React.SetStateAction<number | undefined | null>>;
+  setElapsedTime?: React.Dispatch<
+    React.SetStateAction<number | undefined | null>
+  >;
+  setStoppedTime?: React.Dispatch<
+    React.SetStateAction<number | undefined | null>
+  >;
+  setTimeInRed?: React.Dispatch<
+    React.SetStateAction<number | undefined | null>
+  >;
+  setPowerZones?: React.Dispatch<
+    React.SetStateAction<Array<PowerZoneType> | undefined>
+  >;
+  setDate?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
   setPowerZoneBuckets?: React.Dispatch<React.SetStateAction<Array<number>>>;
-  setShortUrl?: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setShortUrl?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
 
   // race results
   setRaceResults?: React.Dispatch<
@@ -578,10 +597,14 @@ export interface PostContextType extends Post {
     React.SetStateAction<RunSignupType | undefined>
   >;
 
-  setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined>>;
-  setTimeSeriesFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setPrivacyStatus?: React.Dispatch<React.SetStateAction<"public" | "private">>;
-  setCreatedAt?: React.Dispatch<React.SetStateAction<string>>;
+  setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined | null>>;
+  setTimeSeriesFile?: React.Dispatch<
+    React.SetStateAction<string | undefined | null>
+  >;
+  setPrivacyStatus?: React.Dispatch<
+    React.SetStateAction<string | null | undefined>
+  >;
+  setCreatedAt?: React.Dispatch<React.SetStateAction<string | undefined>>;
   // setSelection: React.Dispatch<
   //   React.SetStateAction<[number, number] | undefined>
   // >;

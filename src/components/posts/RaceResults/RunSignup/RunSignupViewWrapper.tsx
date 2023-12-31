@@ -2,19 +2,19 @@ import { Box } from "theme-ui";
 import React from "react";
 
 import { PostContext } from "../../../PostContext";
-import WebscorerList from "./WebscorerList";
+import RunSignupList from './RunSignupList';
 
-const WebscorerViewWrapper = () => {
-  const { webscorerResultPreview, resultsUrl } = React.useContext(PostContext);
+const RunSignUpVieweWrapper = () => {
+  const { runSignupResults, resultsUrl } = React.useContext(PostContext);
 
   return (
     <Box variant="boxes.componentCard" key="race-results">
-      <WebscorerList
-        raceResults={webscorerResultPreview}
+      <RunSignupList
+        raceResults={runSignupResults}
         resultsUrl={resultsUrl ? resultsUrl : ""}
       />
     </Box>
   );
 };
 
-export default WebscorerViewWrapper;
+export default RunSignUpVieweWrapper;

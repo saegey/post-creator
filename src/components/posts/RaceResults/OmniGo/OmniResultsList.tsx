@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Flex, Link, Text } from "theme-ui";
 
-import { OmniResultType } from "../../../PostContext";
+import { OmniResultType } from "../../../../types/common";
 
 const OmniResultsList = ({
   raceResults,

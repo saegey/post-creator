@@ -372,7 +372,7 @@ export const getRunSignupResults = async ({
   category,
 }: {
   url: string;
-  category: string;
+  category: number | undefined;
 }) => {
   // const raceId = new URL(url).pathname.split("/")[2];
   const path = `/results/runsignup?url=${encodeURIComponent(

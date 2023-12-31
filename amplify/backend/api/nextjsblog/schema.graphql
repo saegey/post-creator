@@ -95,6 +95,7 @@ type PublishedPost
   crossResults: AWSJSON
   omniResults: AWSJSON
   runSignupResults: AWSJSON
+
   raceResultsProvider: String
 
   originalPostId: String

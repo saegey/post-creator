@@ -35,10 +35,10 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
       return;
     }
     const { results } = runSignupResults;
-    const divisionId = results.divisions[0].race_division_id;
+    const divisionId = results?.divisions[0].race_division_id;
     return {
       divisionId: divisionId,
-      results: results.resultSet.results.map((r, i) => {
+      results: results?.resultSet.results.map((r, i) => {
         const resultObj: RunSignupResultType = {
           race_placement: null,
           name: "",

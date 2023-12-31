@@ -154,22 +154,16 @@ const Post = ({ user, post, errorCode }: PostType) => {
     }
   };
   const [title, setTitle] = React.useState(post.title ? post.title : "");
-  const [subhead, setSubhead] = React.useState<string | undefined>(
-    post.subhead
-  );
-  const [postLocation, setPostLocation] = React.useState<string | undefined>(
-    post.postLocation
-  );
+  const [subhead, setSubhead] = React.useState(post.subhead);
+  const [postLocation, setPostLocation] = React.useState(post.postLocation);
   const [id, setId] = React.useState(post.id);
   const [activity, setActivity] = React.useState<
     Array<ActivityItem> | undefined
   >();
   const [gpxFile, setGpxFile] = React.useState(post.gpxFile);
-  const [stravaUrl, setStravaUrl] = React.useState<string | undefined>(
-    post.stravaUrl
-  );
+  const [stravaUrl, setStravaUrl] = React.useState(post.stravaUrl);
   const [components, setComponents] = React.useState(
-    isNewPost(post.components)
+    post.components && isNewPost(post.components)
       ? ([
           {
             type: "heroBanner",

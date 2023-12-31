@@ -33,6 +33,7 @@ const RunSignupSubmitButton = () => {
                 selected: undefined,
                 eventName: runSignupMeta.eventName,
                 category: runSignupMeta.category,
+                categoryName: runSignupMeta.categoryName,
               });
             setPreviewRunSignupResults(true);
             // setPreviewWebscorerResults(true);
