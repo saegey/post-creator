@@ -501,7 +501,8 @@ export type OmniResultType = {
 export type RunSignupType = {
   selected: RunSignupResultType | undefined;
   results: RunSignupResultsType;
-  category: string;
+  category?: number;
+  categoryName: string;
   eventName: string;
 };
 

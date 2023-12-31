@@ -30,8 +30,14 @@ export type OmniMetaType = {
 };
 
 export type RunSignupMetaType = {
-  category: string;
-  categories: Array<{ id: number; cat: string; year: number; name: string }>;
+  category: number | undefined;
+  categoryName: string;
+  categories: Array<{
+    id: number;
+    category: string;
+    year: number;
+    name: string;
+  }>;
   eventName: string;
 };
 
@@ -122,9 +128,10 @@ const ResultsContext = React.createContext<ResultsContextType>({
   setCrossResultsMeta: () => {},
 
   runSignupMeta: {
-    category: "",
+    category: undefined,
     categories: [],
     eventName: "",
+    categoryName: "",
   },
   setRunSignupMeta: () => {},
 });

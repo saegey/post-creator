@@ -60,9 +60,10 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
   });
 
   const [runSignupMeta, setRunSignupMeta] = React.useState<RunSignupMetaType>({
-    category: "",
+    category: undefined,
     categories: [],
     eventName: "",
+    categoryName: "",
   });
 
   const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =

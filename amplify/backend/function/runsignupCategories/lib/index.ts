@@ -48,6 +48,11 @@ export const handler = async (event: APIGatewayProxyEvent) => {
       });
     });
 
+    const eventName = $(".websiteFullScreenHeader__name > h1")
+      .text()
+      .replace("Results For", "")
+      .trim();
+
     return {
       statusCode: 200,
       headers: {
@@ -56,6 +61,7 @@ export const handler = async (event: APIGatewayProxyEvent) => {
       },
       body: JSON.stringify({
         categories: res,
+        eventName,
       }),
     };
   } catch (e) {

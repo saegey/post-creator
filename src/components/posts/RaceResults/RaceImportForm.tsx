@@ -115,7 +115,7 @@ const RaceImportForm = () => {
                 setRunSignupMeta({
                   ...runSignupMeta,
                   categories: res.data.categories,
-                  eventName: "fdsafd",
+                  eventName: res.data.eventName,
                 });
                 setIsLoading(false);
               });

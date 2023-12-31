@@ -32,7 +32,6 @@ const handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
                 "sec-fetch-mode": "cors",
                 "sec-fetch-site": "same-origin",
                 "x-requested-with": "XMLHttpRequest",
-                cookie: "PHPSESSID=CwAH0Yiu8eHx2DhRIea9Hj6WCQqvwn1F; _ga=GA1.1.635150062.1703541516; _ga_TMP7T3SB18=GS1.1.1703735342.5.1.1703735343.59.0.0",
                 Referer: "https://runsignup.com/Race/Results/86159",
                 "Referrer-Policy": "strict-origin-when-cross-origin",
             },

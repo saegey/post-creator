@@ -47,7 +47,7 @@ const RunSignupList = ({
           </Link>
         </Flex>
       </Flex>
-      <Text>{`${raceResults?.eventName} - ${raceResults?.category}`}</Text>
+      <Text>{`${raceResults?.eventName} - ${raceResults?.categoryName}`}</Text>
       <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
         {raceResults &&
           formatResults()?.results.map((row, i) => {

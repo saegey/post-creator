@@ -167,11 +167,11 @@
         },
         "runsignupCategories": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/runsignupCategories-3652477044695a374933-build.zip"
+          "s3Key": "amplify-builds/runsignupCategories-577a6a396a583569384c-build.zip"
         },
         "runSignupResults": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/runSignupResults-564e4e3379626d335343-build.zip"
+          "s3Key": "amplify-builds/runSignupResults-33484b5878636f6f7542-build.zip"
         }
       },
       "api": {

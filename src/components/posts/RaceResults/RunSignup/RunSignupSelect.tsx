@@ -15,8 +15,18 @@ const RunSignupSelect = () => {
           id="category"
           variant={"defaultInput"}
           onChange={(e) => {
+            const category = categories.find(
+              (c) => c.id === Number(e.target.value)
+            );
+            if (category === undefined) {
+              return;
+            }
             console.log(e.target);
-            setRunSignupMeta({ ...runSignupMeta, category: e.target.value });
+            setRunSignupMeta({
+              ...runSignupMeta,
+              category: category?.id,
+              categoryName: category ? category.name : "",
+            });
           }}
         >
           <option></option>

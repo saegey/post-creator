@@ -354,9 +354,10 @@ export const getRunSignupCategories = async ({ url }: { url: string }) => {
       categories: Array<{
         id: number;
         name: string;
-        cat: string;
+        category: string;
         year: number;
       }>;
+      eventName: string;
     };
   };
 
@@ -395,13 +396,15 @@ export const saveRunSignupResults = async ({
   resultsUrl,
   eventName,
   selected,
+  categoryName,
 }: {
   results?: RunSignupResultsType;
   id?: string;
-  category: string;
+  category?: number;
   resultsUrl: string;
   eventName: string;
   selected: RunSignupResultType | undefined;
+  categoryName?: string;
 }) => {
   try {
     const response = (await API.graphql({
@@ -414,6 +417,7 @@ export const saveRunSignupResults = async ({
             selected: selected,
             category: category,
             eventName: eventName,
+            categoryName: categoryName,
           }),
           resultsUrl: resultsUrl,
           raceResultsProvider: "runSignup",

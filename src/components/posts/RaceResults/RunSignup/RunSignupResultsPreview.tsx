@@ -58,7 +58,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
     <>
       <Box sx={{ marginY: "10px" }}>
         <Text as="h3">
-          {runSignupMeta.eventName} - {runSignupMeta.category}
+          {runSignupMeta.eventName} - {runSignupMeta.categoryName}
         </Text>
 
         <Text>{resultsUrl}</Text>
@@ -199,6 +199,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 results: runSignupResults?.results,
                 id,
                 category: runSignupMeta.category,
+                categoryName: runSignupMeta.categoryName,
                 resultsUrl: resultsUrl,
                 eventName: runSignupMeta.eventName,
                 selected: runSignupResults?.selected,
@@ -210,6 +211,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     results: runSignupResults?.results,
                     eventName: runSignupMeta.eventName,
                     category: runSignupMeta.category,
+                    categoryName: runSignupMeta.categoryName,
                   });
                 Transforms.insertNodes(editor, [
                   {

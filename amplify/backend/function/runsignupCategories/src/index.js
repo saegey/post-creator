@@ -72,6 +72,10 @@ const handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
                 category: cat,
             });
         });
+        const eventName = $(".websiteFullScreenHeader__name > h1")
+            .text()
+            .replace("Results For", "")
+            .trim();
         return {
             statusCode: 200,
             headers: {
@@ -80,6 +84,7 @@ const handler = (event) => __awaiter(void 0, void 0, void 0, function* () {
             },
             body: JSON.stringify({
                 categories: res,
+                eventName,
             }),
         };
     }
