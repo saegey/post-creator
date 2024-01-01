@@ -14,8 +14,10 @@ import {
   OmniMetaType,
   RaceResultsMetaType,
   ResultsContext,
+  RunSignupMetaType,
   WebScorerMetaType,
 } from "./ResultsContext";
+import RunSignUpResultsPreview from "./RunSignup/RunSignupResultsPreview";
 
 const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
   const [previewResults, setPreviewResults] = React.useState(false);
@@ -23,6 +25,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     React.useState(false);
   const [previewCrossResults, setPreviewCrossResults] = React.useState(false);
   const [previewOmniResults, setPreviewOmniResults] = React.useState(false);
+  const [previewRunSignupResults, setPreviewRunSignupResults] =
+    React.useState(false);
+
   const [resultsUrl, setResultsUrl] = React.useState<string>("");
 
   const [raceResultsMeta, setRaceResultsMeta] =
@@ -54,6 +59,13 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
     eventName: "",
   });
 
+  const [runSignupMeta, setRunSignupMeta] = React.useState<RunSignupMetaType>({
+    category: undefined,
+    categories: [],
+    eventName: "",
+    categoryName: "",
+  });
+
   const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =
     React.useContext(EditorContext);
 
@@ -62,7 +74,8 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
       previewResults ||
       previewWebscorerResults ||
       previewCrossResults ||
-      previewOmniResults
+      previewOmniResults ||
+      previewRunSignupResults
     );
   };
 
@@ -71,7 +84,8 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
       !previewResults &&
       !previewWebscorerResults &&
       !previewCrossResults &&
-      !previewOmniResults
+      !previewOmniResults &&
+      !previewRunSignupResults
     );
   };
 
@@ -102,6 +116,10 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
             setCrossResultsMeta,
             omniMeta,
             setOmniMeta,
+            runSignupMeta,
+            setRunSignupMeta,
+            previewRunSignupResults,
+            setPreviewRunSignupResults,
           }}
         >
           {isPreview() && (
@@ -116,6 +134,9 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
           )}
           {previewCrossResults && <CrossResultsPreview editor={editor} />}
           {previewOmniResults && <OmniResultsPreview editor={editor} />}
+          {previewRunSignupResults && (
+            <RunSignUpResultsPreview editor={editor} />
+          )}
 
           {notPreview() && <RaceImportForm />}
         </ResultsContext.Provider>

@@ -98,6 +98,7 @@ export const getPostInitial = /* GraphQL */ `
       webscorerResults
       crossResults
       omniResults
+      runSignupResults
 
       privacyStatus
       __typename
@@ -189,8 +190,9 @@ export const getPublishedPost =
     shortUrl
     raceResults
     raceResultsProvider
+    runSignupResults
     updatedAt
-		originalPostId
+    originalPostId
     owner
     __typename
   }

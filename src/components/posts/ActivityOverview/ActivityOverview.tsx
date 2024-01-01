@@ -12,7 +12,7 @@ type RaceStatsProps = {
   items: Item[];
 };
 
-const getTimeInRed = (timeInRed: number | string | undefined) => {
+const getTimeInRed = (timeInRed: number | string | undefined | null) => {
   if (timeInRed === "....") {
     return "....";
   }
@@ -42,7 +42,7 @@ const RaceStats = ({ items }: RaceStatsProps) => {
               <Text
                 sx={{
                   fontWeight: "500",
-                  textTransform: 'uppercase',
+                  textTransform: "uppercase",
                   fontSize: ["12px", "13px", "13px"],
                   color: "text",
                   marginBottom: "3px",
@@ -74,9 +74,9 @@ const RaceStats = ({ items }: RaceStatsProps) => {
 
 type Props = {
   data: {
-    elevationGain?: number;
-    distance?: number;
-    normalizedPower?: number;
+    elevationGain?: number | null;
+    distance?: number | null;
+    normalizedPower?: number | null;
     heartAnalysis?: Record<"entire" | number, number>[] | undefined;
     // heartAnalysis: Map<"entire", number>[] | undefined;
     tempAnalysis?: Record<string | number, number>[] | undefined;
@@ -85,8 +85,8 @@ type Props = {
     elapsedTime?: {
       seconds: number;
     };
-    stoppedTime?: number;
-    timeInRed?: number | string | undefined;
+    stoppedTime?: number | null;
+    timeInRed?: number | string | undefined | null;
   };
   selectedFields: string[];
 };

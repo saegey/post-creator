@@ -22,6 +22,7 @@ import CrossResultstListWrapper from "../RaceResults/CrossResults/CrossResultsLi
 import OmniResultsListWrapper from "../RaceResults/OmniGo/OmniResultsListWrapper";
 import WebscorerListWrapper from "../RaceResults/WebScorer/WebscorerListWrapper";
 import RaceResultsDotComListWrapper from "../RaceResults/RaceResults/RaceResultsDotComListWrapper";
+import RunSignupListWrapper from "../RaceResults/RunSignup/RunSignupListWrapper";
 
 const Leaf = (props: RenderLeafProps) => {
   return (
@@ -129,6 +130,8 @@ const renderElement = (props: {
       return <CrossResultstListWrapper />;
     case "omniResults":
       return <OmniResultsListWrapper />;
+    case "runSignupResults":
+      return <RunSignupListWrapper />;
     case "paragraph":
       return (
         <Text

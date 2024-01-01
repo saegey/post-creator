@@ -94,6 +94,8 @@ type PublishedPost
   webscorerResults: AWSJSON
   crossResults: AWSJSON
   omniResults: AWSJSON
+  runSignupResults: AWSJSON
+
   raceResultsProvider: String
 
   originalPostId: String
@@ -161,13 +163,15 @@ type Post
   heroImage: AWSJSON
   subhead: String
   shortUrl: String
+
   # race results
   raceResults: AWSJSON
   webscorerResults: AWSJSON
   crossResults: AWSJSON
   omniResults: AWSJSON
-  raceResultsProvider: String
+  runSignupResults: AWSJSON
 
+	raceResultsProvider: String
   privacyStatus: String
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany

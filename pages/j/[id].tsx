@@ -10,12 +10,7 @@ import {
 } from "../../src/graphql/customQueries";
 import { getActivity } from "../../src/actions/PostGet";
 import SlatePublish from "../../src/components/posts/View/SlatePublish";
-import {
-  Author,
-  PostContext,
-  RaceResultRow,
-  WebscorerResultPreview,
-} from "../../src/components/PostContext";
+import { PostContext } from "../../src/components/PostContext";
 import { generate as generateMetaTags } from "../../src/utils/metaTags";
 import { GetPostInitialQuery, GetPublishedPostQuery } from "../../src/API";
 import {
@@ -25,6 +20,12 @@ import {
   TimeSeriesDataType,
   PowerZoneType,
   IUser,
+  Author,
+  WebscorerResultPreview,
+  RaceResultRow,
+  OmniResultType,
+  CrossResultsPreviewType,
+  RunSignupType,
 } from "../../src/types/common";
 import { CloudinaryImage } from "../../src/types/common";
 
@@ -121,11 +122,20 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     typeof post.author === "string" ? JSON.parse(post.author) : post.author
   ) as Author;
 
-  const newPost = { ...post, author: author ? author : undefined };
   return {
     props: {
-      post: newPost,
-      metaTags: generateMetaTags({ post: newPost }),
+      post: {
+        ...post,
+        author: author ? author : undefined,
+        currentFtp: Number(post.currentFtp),
+      },
+      metaTags: generateMetaTags({
+        post: {
+          ...post,
+          author: author ? author : undefined,
+          currentFtp: Number(post.currentFtp),
+        },
+      }),
       isPublished,
       user: user,
       // errorCode: errorCode
@@ -154,14 +164,14 @@ const Publish = ({
     Array<Record<number | string, number>> | undefined
   >();
   const [elevationTotal, setElevationTotal] = React.useState<
-    number | undefined
+    number | undefined | null
   >(Number(post.elevation));
   const [id, setId] = React.useState(post.id);
-  const [distance, setDistance] = React.useState<number | undefined>(
+  const [distance, setDistance] = React.useState<number | null | undefined>(
     post.distance ? post.distance : undefined
   );
   const [normalizedPower, setNormalizedPower] = React.useState<
-    number | undefined
+    number | undefined | null
   >(post.normalizedPower ? post.normalizedPower : undefined);
 
   const [heartAnalysis, setHeartAnalysis] = React.useState(
@@ -173,25 +183,25 @@ const Publish = ({
   const [tempAnalysis, setTempAnalysis] = React.useState(
     post.tempAnalysis ? JSON.parse(post.tempAnalysis) : undefined
   );
-  const [stoppedTime, setStoppedTime] = React.useState<number | undefined>(
-    post.stoppedTime ? post.stoppedTime : undefined
-  );
-  const [elapsedTime, setElapsedTime] = React.useState<number | undefined>(
-    post.elapsedTime ? post.elapsedTime : undefined
-  );
-  const [timeInRed, setTimeInRed] = React.useState<number | undefined>(
+  const [stoppedTime, setStoppedTime] = React.useState<
+    number | undefined | null
+  >(post.stoppedTime ? post.stoppedTime : undefined);
+  const [elapsedTime, setElapsedTime] = React.useState<
+    number | undefined | null
+  >(post.elapsedTime ? post.elapsedTime : undefined);
+  const [timeInRed, setTimeInRed] = React.useState<number | undefined | null>(
     post.timeInRed ? post.timeInRed : undefined
   );
   const [heroImage, setHeroImage] = React.useState<CloudinaryImage | undefined>(
     post.heroImage ? JSON.parse(post.heroImage) : undefined
   );
-  const [author, setAuthor] = React.useState<Author | undefined>(
+  const [author, setAuthor] = React.useState<Author | undefined | null>(
     post.author ? post.author : undefined
   );
 
-  const [powerZones, setPowerZones] = React.useState<PowerZoneType[]>(
-    post.powerZones ? JSON.parse(post.powerZones) : undefined
-  );
+  const [powerZones, setPowerZones] = React.useState<
+    PowerZoneType[] | undefined
+  >(post.powerZones ? JSON.parse(post.powerZones) : undefined);
 
   const [powerZoneBuckets, setPowerZoneBuckets] = React.useState<number[]>(
     post.powerZoneBuckets ? JSON.parse(post.powerZoneBuckets) : undefined
@@ -201,32 +211,45 @@ const Publish = ({
     RaceResultRow | undefined
   >(post.raceResults ? JSON.parse(post.raceResults) : undefined);
 
-  const [webscorerResultPreview, setWebscorerResultPreview] = React.useState<
+  const [webscorerResults, setWebscorerResults] = React.useState<
     WebscorerResultPreview | undefined
   >(post.webscorerResults ? JSON.parse(post.webscorerResults) : undefined);
+
+  const [crossResults, setCrossResults] = React.useState<
+    CrossResultsPreviewType | undefined
+  >(post.crossResults ? JSON.parse(post.crossResults) : undefined);
+
+  const [omniResults, setOmniResults] = React.useState<
+    OmniResultType | undefined
+  >(post.omniResults ? JSON.parse(post.omniResults) : undefined);
+
+  const [runSignupResults, setRunSignupResults] = React.useState<
+    RunSignupType | undefined
+  >(post.runSignupResults ? JSON.parse(post.runSignupResults) : undefined);
 
   const [images, setImages] = React.useState<CloudinaryImage[] | undefined>(
     post.images ? JSON.parse(post.images) : undefined
   );
 
-  const [title, setTitle] = React.useState<string | undefined>(post.title);
+  const [title, setTitle] = React.useState<string>(post.title);
 
-  const [subhead, setSubhead] = React.useState<string | undefined>(
+  const [subhead, setSubhead] = React.useState<string | undefined | null>(
     post.subhead ? post.subhead : undefined
   );
 
-  const [date, setDate] = React.useState<string | undefined>(
+  const [date, setDate] = React.useState<string | undefined | null>(
     post.date ? post.date : undefined
   );
 
-  const [currentFtp, setCurrentFtp] = React.useState<number | undefined>(
+  const [currentFtp, setCurrentFtp] = React.useState<number | undefined | null>(
     post.currentFtp ? Number(post.currentFtp) : undefined
   );
-  const [postLocation, setPostLocation] = React.useState<string | undefined>(
-    post.postLocation ? post.postLocation : undefined
-  );
+  const [postLocation, setPostLocation] = React.useState<
+    string | undefined | null
+  >(post.postLocation ? post.postLocation : undefined);
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
+  const [resultsUrl, setResultsUrl] = React.useState(post.resultsUrl);
 
   const getTimeSeriesFile = async (timeSeriesFile: string) => {
     const result = await Storage.get(timeSeriesFile, {
@@ -309,11 +332,17 @@ const Publish = ({
           setImages,
           raceResults,
           setRaceResults,
-          webscorerResultPreview,
-          setWebscorerResultPreview,
+          webscorerResults,
+          setWebscorerResults,
+          crossResults,
+          setCrossResults,
+          omniResults,
+          setOmniResults,
+          runSignupResults,
+          setRunSignupResults,
           title,
           setTitle,
-          currentFtp,
+          currentFtp: Number(currentFtp),
           setCurrentFtp,
           subhead,
           setSubhead,
@@ -329,6 +358,8 @@ const Publish = ({
           setPowers,
           hearts,
           setHearts,
+          resultsUrl,
+          setResultsUrl,
         }}
       >
         <Head>

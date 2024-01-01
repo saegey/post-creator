@@ -113,6 +113,22 @@
           ],
           "category": "function",
           "resourceName": "omniGoResults"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "runsignupCategories"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "runSignupResults"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -339,6 +355,16 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "runSignupResults": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "runsignupCategories": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "shorturl": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -558,6 +584,38 @@
         {
           "category": "function",
           "resourceName": "routeAccessPoint"
+        }
+      ]
+    },
+    "AMPLIFY_function_runSignupResults_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "runSignupResults"
+        }
+      ]
+    },
+    "AMPLIFY_function_runSignupResults_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "runSignupResults"
+        }
+      ]
+    },
+    "AMPLIFY_function_runsignupCategories_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "runsignupCategories"
+        }
+      ]
+    },
+    "AMPLIFY_function_runsignupCategories_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "runsignupCategories"
         }
       ]
     },

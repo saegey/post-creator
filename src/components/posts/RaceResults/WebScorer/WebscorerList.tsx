@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Flex, Link, Text } from "theme-ui";
 
-import { WebscorerResultPreview } from "../../../PostContext";
+import { WebscorerResultPreview } from "../../../../types/common";
 
 const WebscorerList = ({
   raceResults,

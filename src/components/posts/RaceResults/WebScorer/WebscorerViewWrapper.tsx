@@ -5,12 +5,12 @@ import { PostContext } from "../../../PostContext";
 import WebscorerList from "./WebscorerList";
 
 const WebscorerViewWrapper = () => {
-  const { webscorerResultPreview, resultsUrl } = React.useContext(PostContext);
+  const { webscorerResults, resultsUrl } = React.useContext(PostContext);
 
   return (
     <Box variant="boxes.componentCard" key="race-results">
       <WebscorerList
-        raceResults={webscorerResultPreview}
+        raceResults={webscorerResults}
         resultsUrl={resultsUrl ? resultsUrl : ""}
       />
     </Box>

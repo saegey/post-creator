@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Flex, Link, Text } from "theme-ui";
 
-import { CrossResultsPreviewType } from "../../../PostContext";
+import { CrossResultsPreviewType } from "../../../../types/common";
 
 const CrossResultsList = ({
   raceResults,

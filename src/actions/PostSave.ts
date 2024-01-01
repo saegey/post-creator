@@ -9,7 +9,7 @@ import { CloudinaryImage } from "../types/common";
 interface PostSaveProps {
   postId: string | undefined;
   title: string | undefined;
-  postLocation: string | undefined;
+  postLocation: string | undefined | null;
   components: Array<any>;
   stravaUrl?: string;
   resultsUrl?: string;

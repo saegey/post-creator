@@ -152,6 +152,26 @@
           "read"
         ]
       }
+    },
+    "/results/runsignuCategories": {
+      "name": "/results/runsignupCategories",
+      "lambdaFunction": "runsignupCategories",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    },
+    "/results/runsignup": {
+      "name": "/results/runsignup",
+      "lambdaFunction": "runSignupResults",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
     }
   }
 }

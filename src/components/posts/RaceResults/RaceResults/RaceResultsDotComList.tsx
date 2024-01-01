@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, Flex, Link, Text } from "theme-ui";
 
-import { RaceResultRow } from "../../../PostContext";
 import { useUnits } from "../../../UnitProvider";
+import { RaceResultRow } from "../../../../types/common";
 
 const RaceResultsDotComList = ({
   raceResults,

@@ -9,7 +9,7 @@ const WebscorerSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { webScorerMeta, setPreviewWebscorerResults, resultsUrl } =
     React.useContext(ResultsContext);
-  const { setWebscorerResultPreview } = React.useContext(PostContext);
+  const { setWebscorerResults } = React.useContext(PostContext);
 
   return (
     <Box sx={{ marginLeft: "auto" }}>
@@ -22,8 +22,8 @@ const WebscorerSubmitButton = () => {
             url: resultsUrl,
             category: webScorerMeta.category,
           }).then((results) => {
-            setWebscorerResultPreview &&
-              setWebscorerResultPreview({
+            setWebscorerResults &&
+              setWebscorerResults({
                 results: results.data,
                 selected: undefined,
                 eventName: webScorerMeta.eventName,
