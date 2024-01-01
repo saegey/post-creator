@@ -249,6 +249,7 @@ const Publish = ({
   >(post.postLocation ? post.postLocation : undefined);
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
+  const [resultsUrl, setResultsUrl] = React.useState(post.resultsUrl);
 
   const getTimeSeriesFile = async (timeSeriesFile: string) => {
     const result = await Storage.get(timeSeriesFile, {
@@ -357,6 +358,8 @@ const Publish = ({
           setPowers,
           hearts,
           setHearts,
+          resultsUrl,
+          setResultsUrl,
         }}
       >
         <Head>

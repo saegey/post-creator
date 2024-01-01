@@ -86,8 +86,8 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
         webscorerResults
         crossResults
         omniResults
-        raceResultsProvider
         runSignupResults
+        raceResultsProvider
         privacyStatus
         updatedAt
         blogPostsId
@@ -231,8 +231,8 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
       webscorerResults
       crossResults
       omniResults
-      raceResultsProvider
       runSignupResults
+      raceResultsProvider
       privacyStatus
       updatedAt
       blogPostsId
@@ -335,8 +335,8 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
         webscorerResults
         crossResults
         omniResults
-        raceResultsProvider
         runSignupResults
+        raceResultsProvider
         privacyStatus
         updatedAt
         blogPostsId
@@ -452,8 +452,8 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
         webscorerResults
         crossResults
         omniResults
-        raceResultsProvider
         runSignupResults
+        raceResultsProvider
         privacyStatus
         updatedAt
         blogPostsId
@@ -569,8 +569,8 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
         webscorerResults
         crossResults
         omniResults
-        raceResultsProvider
         runSignupResults
+        raceResultsProvider
         privacyStatus
         updatedAt
         blogPostsId
@@ -661,8 +661,8 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
         webscorerResults
         crossResults
         omniResults
-        raceResultsProvider
         runSignupResults
+        raceResultsProvider
         privacyStatus
         updatedAt
         blogPostsId
@@ -704,8 +704,8 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     webscorerResults
     crossResults
     omniResults
-    raceResultsProvider
     runSignupResults
+    raceResultsProvider
     privacyStatus
     updatedAt
     blogPostsId
@@ -782,8 +782,8 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       webscorerResults
       crossResults
       omniResults
-      raceResultsProvider
       runSignupResults
+      raceResultsProvider
       privacyStatus
       updatedAt
       blogPostsId
@@ -873,8 +873,8 @@ export const listPostsByCreatedAt = /* GraphQL */ `query ListPostsByCreatedAt(
       webscorerResults
       crossResults
       omniResults
-      raceResultsProvider
       runSignupResults
+      raceResultsProvider
       privacyStatus
       updatedAt
       blogPostsId

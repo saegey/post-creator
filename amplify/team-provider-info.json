@@ -121,7 +121,7 @@
         },
         "publishPost": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/publishPost-64655034326d45654269-build.zip"
+          "s3Key": "amplify-builds/publishPost-7a566d5564724e4d4b4e-build.zip"
         },
         "routeAccessPoint": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",

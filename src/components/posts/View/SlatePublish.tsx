@@ -27,6 +27,9 @@ import HeadingViewWrapper from "../Text/HeadingViewWrapper";
 import RaceResultsDotComViewWrapper from "../RaceResults/RaceResults/RaceResultsDotComViewWrapper";
 import ImageViewWrapper from "../Image/ImageViewWrapper";
 import WebscorerViewWrapper from "../RaceResults/WebScorer/WebscorerViewWrapper";
+import RunSignUpVieweWrapper from "../RaceResults/RunSignup/RunSignupViewWrapper";
+import CrossResultsListViewWrapper from "../RaceResults/CrossResults/CrossResultsListViewWrapper";
+import OmniResultsListViewWrapper from "../RaceResults/OmniGo/OmniResultsListViewWrapper";
 
 const SlatePublish = () => {
   const config: SlateToReactConfig = {
@@ -107,6 +110,19 @@ const SlatePublish = () => {
         },
         webscorerResults: () => {
           return <WebscorerViewWrapper key={`racerez-${Math.random()}`} />;
+        },
+        crossResults: () => {
+          return (
+            <CrossResultsListViewWrapper key={`racerez-${Math.random()}`} />
+          );
+        },
+        omniResults: () => {
+          return (
+            <OmniResultsListViewWrapper key={`racerez-${Math.random()}`} />
+          );
+        },
+        runSignupResults: () => {
+          return <RunSignUpVieweWrapper key={`racerez-${Math.random()}`} />;
         },
         postAuthor: () => {
           return <PostAuthor key={`postauth-${Math.random()}`} />;

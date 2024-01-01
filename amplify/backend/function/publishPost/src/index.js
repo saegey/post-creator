@@ -75,7 +75,13 @@ const query = /* GraphQL */ `
       heroImage
       subhead
       shortUrl
+
       raceResults
+      webscorerResults
+      crossResults
+      omniResults
+      runSignupResults
+
       raceResultsProvider
       privacyStatus
       updatedAt
@@ -299,7 +305,7 @@ exports.handler = async (event) => {
     TableName: publishedPostTable,
     Key: { id: publishedPostId },
     UpdateExpression:
-      "SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile",
+      "SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, webscorerResults = :webscorerResults,crossResults = :crossResults, omniResults = :omniResults, runSignupResults = :runSignupResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile",
     ExpressionAttributeNames: {
       // '#id': 'id',
       "#typename": "__typename",
@@ -370,6 +376,18 @@ exports.handler = async (event) => {
         : "",
       ":raceResults": resBody.data.getPost.raceResults
         ? JSON.parse(resBody.data.getPost.raceResults)
+        : "{}",
+      ":webscorerResults": resBody.data.getPost.webscorerResults
+        ? JSON.parse(resBody.data.getPost.webscorerResults)
+        : "{}",
+      ":crossResults": resBody.data.getPost.crossResults
+        ? JSON.parse(resBody.data.getPost.crossResults)
+        : "{}",
+      ":omniResults": resBody.data.getPost.omniResults
+        ? JSON.parse(resBody.data.getPost.omniResults)
+        : "{}",
+      ":runSignupResults": resBody.data.getPost.runSignupResults
+        ? JSON.parse(resBody.data.getPost.runSignupResults)
         : "{}",
       ":raceResultsProvider": resBody.data.getPost.raceResults
         ? resBody.data.getPost.raceResultsProvider
