@@ -172,6 +172,18 @@
           "read"
         ]
       }
+    },
+    "/request/results-provider": {
+      "name": "/request/results-provider",
+      "lambdaFunction": "requestResultsProvider",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update"
+        ]
+      }
     }
   }
 }

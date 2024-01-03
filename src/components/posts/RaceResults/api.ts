@@ -389,6 +389,30 @@ export const getRunSignupResults = async ({
   return res;
 };
 
+export const saveRequestProvider = async ({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) => {
+  // const raceId = new URL(url).pathname.split("/")[2];
+  const path = `/request/results-provider/`;
+  console.log(path);
+
+  const res = (await API.post("api12660653", path, {
+    body: {
+      title: title,
+      body: body,
+    },
+    response: true,
+  })) as {
+    data: any;
+  };
+
+  return res;
+};
+
 export const saveRunSignupResults = async ({
   results,
   id,
