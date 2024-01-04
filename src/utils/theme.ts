@@ -209,7 +209,7 @@ export default {
         backgroundColor: "primaryButtonBackgroundHover",
         cursor: "pointer",
       },
-      ":disabled": {
+      "&:disabled": {
         backgroundColor: "#c6c6c6",
         cursor: "not-allowed",
       },

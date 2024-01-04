@@ -2,7 +2,7 @@
 import * as React from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import { ThemeUIProvider } from "theme-ui";
+import { Close, Flex, Message, Text, ThemeUIProvider } from "theme-ui";
 import { Amplify, Hub, Auth } from "aws-amplify";
 
 import theme from "../src/utils/theme";
@@ -13,7 +13,9 @@ import ErrorBoundary from "../src/components/shared/ErrorBoundary";
 import "../styles/globals.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { UserContext } from "../src/components/UserContext";
-import { IUser } from "../src/types/common";
+import { IUser, NotificationType } from "../src/types/common";
+import { NotificationContext } from "../src/components/NotificationContext";
+import NotificationMessage from "../src/components/NotificationMessage";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 
@@ -22,6 +24,8 @@ const app = ({ Component, pageProps }: AppProps) => {
   const [unitOfMeasure, setUnitOfMeasure] = React.useState<
     "imperial" | "metric"
   >("imperial");
+
+  const [notification, setNotification] = React.useState<NotificationType>();
 
   const initialLoad = React.useCallback(async () => {
     Hub.listen("auth", async ({ payload: { event, data } }) => {
@@ -147,28 +151,37 @@ const app = ({ Component, pageProps }: AppProps) => {
           />
         </Head>
         {/* <React.StrictMode> */}
-        <UnitProvider.Provider
+        <NotificationContext.Provider
           value={{
-            unitOfMeasure,
-            toggleUnit: async () => {
-              const newUnit =
-                unitOfMeasure === "imperial" ? "metric" : "imperial";
-              setUnitOfMeasure(newUnit);
-              const cUser: IUser = await Auth.currentAuthenticatedUser();
-              await Auth.updateUserAttributes(cUser, {
-                zoneinfo: newUnit,
-              });
-            },
+            notification,
+            setNotification,
           }}
         >
-          <ViewportProvider>
-            <ThemeUIProvider theme={theme}>
-              <UserContext.Provider value={{ user, setUser }}>
-                <Component {...pageProps} />
-              </UserContext.Provider>
-            </ThemeUIProvider>
-          </ViewportProvider>
-        </UnitProvider.Provider>
+          <UnitProvider.Provider
+            value={{
+              unitOfMeasure,
+              toggleUnit: async () => {
+                const newUnit =
+                  unitOfMeasure === "imperial" ? "metric" : "imperial";
+                setUnitOfMeasure(newUnit);
+                const cUser: IUser = await Auth.currentAuthenticatedUser();
+                await Auth.updateUserAttributes(cUser, {
+                  zoneinfo: newUnit,
+                });
+              },
+            }}
+          >
+            <ViewportProvider>
+              <ThemeUIProvider theme={theme}>
+                <UserContext.Provider value={{ user, setUser }}>
+                  <Component {...pageProps} />
+                </UserContext.Provider>
+              </ThemeUIProvider>
+            </ViewportProvider>
+          </UnitProvider.Provider>
+          <NotificationMessage />
+        </NotificationContext.Provider>
+
         {/* </React.StrictMode> */}
       </>
     </ErrorBoundary>

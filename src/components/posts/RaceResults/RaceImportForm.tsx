@@ -31,6 +31,7 @@ import CrossResultsSubmitButton from "./CrossResults/CrossResultsSubmitButton";
 import CrossResultsSelect from "./CrossResults/CrossResultsSelect";
 import RunSignupSelect from "./RunSignup/RunSignupSelect";
 import RunSignupSubmitButton from "./RunSignup/RunSignupSubmitButton";
+import { NotificationContext } from "../../NotificationContext";
 
 const RaceImportForm = () => {
   const {
@@ -47,17 +48,20 @@ const RaceImportForm = () => {
     runSignupMeta,
     setRunSignupMeta,
   } = React.useContext(ResultsContext);
+  const { setNotification } = React.useContext(NotificationContext);
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [requestImport, setIsRequestImport] = React.useState(false);
+  const [requestImport, setRequestImport] = React.useState(false);
   const [importRequested, setImportRequested] = React.useState(false);
   const [invalidUrl, setInvalidUrl] = React.useState(false);
+  const [requestImportLoading, setRequestImportLoading] = React.useState(false);
 
-  const submitForm = (event: FormEvent<HTMLFormElement>) => {
+  const submitForm = (event: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
     setInvalidUrl(false);
+    setRequestImport(false);
     event.preventDefault();
-    const form = new FormData(event.target);
+    const form = new FormData(event.target as HTMLFormElement);
     const url = form.get("url") as string;
     const domain = new URL(url);
     setResultsUrl(url);
@@ -120,34 +124,49 @@ const RaceImportForm = () => {
 
       // https://runsignup.com/Race/Results/86159
       case "runsignup.com":
-        getRunSignupCategories({ url }).then((res) => {
-          console.log(res);
-          setRunSignupMeta({
-            ...runSignupMeta,
-            categories: res.data.categories,
-            eventName: res.data.eventName,
+        getRunSignupCategories({ url })
+          .then((res) => {
+            console.log(res);
+            if (!res) {
+              console.log("noo categoroieis");
+            } else {
+              setRunSignupMeta({
+                ...runSignupMeta,
+                categories: res.data.categories,
+                eventName: res.data.eventName,
+              });
+            }
+          })
+          .catch((e) =>
+            setNotification({
+              message: "Failed to get race info",
+              type: "Error",
+            })
+          )
+          .then(() => {
+            setIsLoading(false);
           });
-          setIsLoading(false);
-        });
 
         break;
 
       default:
         console.log(`Sorry, we don't support that url`);
         setIsLoading(false);
-        setIsRequestImport(true);
+        setRequestImport(true);
     }
   };
 
   const submitImportRequest = async (
-    event: React.MouseEvent<HTMLAnchorElement>
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
     console.log(event);
+    setRequestImportLoading(true);
     await saveRequestProvider({
       title: "Request results provider",
       body: JSON.stringify({ url: resultsUrl }),
     });
     setImportRequested(true);
+    setRequestImportLoading(false);
   };
 
   return (
@@ -155,17 +174,59 @@ const RaceImportForm = () => {
       {requestImport && (
         <Box sx={{ paddingY: "10px" }}>
           <Message variant="default">
-            We don't support this provider.{" "}
-            {importRequested ? (
-              <Text sx={{ fontWeight: 500 }}>Requested!</Text>
-            ) : (
-              <Link
-                sx={{ fontWeight: 500, cursor: "pointer" }}
-                onClick={submitImportRequest}
-              >
-                Request Import{" "}
-              </Link>
-            )}
+            <Flex sx={{ width: "100%" }}>
+              <Box sx={{ flexGrow: 1 }}>
+                <Text as="div" sx={{ lineHeight: "28px", fontWeight: "600" }}>
+                  We don't support this provider yet.
+                </Text>
+                <Text>
+                  If you request it, we will notify when the results are
+                  imported.
+                </Text>
+              </Box>
+
+              <Flex sx={{ flexDirection: "column", justifyContent: "center" }}>
+                <Button
+                  sx={{
+                    paddingY: "8px",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor: "#3d3d3d",
+                    },
+                    "&:disabled": {
+                      backgroundColor: "gray",
+                      cursor: "not-allowed",
+                    },
+                  }}
+                  disabled={
+                    requestImportLoading || importRequested ? true : false
+                  }
+                  onClick={submitImportRequest}
+                >
+                  <Flex
+                    sx={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <Text sx={{ lineHeight: "20px" }}>
+                      {importRequested ? "Requested" : "Request Import"}
+                    </Text>
+                    <Spinner
+                      sx={{
+                        width: "20px",
+                        height: "20px",
+                        color: "white",
+                        display: requestImportLoading ? "inherit" : "none",
+                      }}
+                    />
+                  </Flex>
+                </Button>
+              </Flex>
+            </Flex>
           </Message>
         </Box>
       )}
@@ -180,9 +241,6 @@ const RaceImportForm = () => {
                 console.log(err.message);
                 setInvalidUrl(true);
                 setIsLoading(false);
-                // if (err.message === "Failed to construct 'URL': Invalid URL") {
-                //   console.log("invalid url");
-                // }
               }
             }
           }}
@@ -196,8 +254,11 @@ const RaceImportForm = () => {
               <Input
                 id="url"
                 name="url"
+                defaultValue={resultsUrl ? resultsUrl : ""}
+                autoFocus
+                onFocus={(e) => e.currentTarget.select()}
                 variant={invalidUrl ? "errorInput" : "defaultInput"}
-                readOnly={resultsUrl ? true : false}
+                readOnly={resultsUrl && !requestImport ? true : false}
               />
               {invalidUrl && (
                 <Text as="span" variant="error">
