@@ -23,7 +23,7 @@ const NotificationMessage = () => {
       }}
     >
       <Message
-        sx={{ width: "200px", padding: "10px", backgroundColor: "#cc2020" }}
+        sx={{ width: "400px", padding: "10px", backgroundColor: "#cc2020" }}
       >
         <Flex>
           <Text sx={{ alignSelf: "center" }}>{notification?.message}</Text>

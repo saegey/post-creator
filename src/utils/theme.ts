@@ -241,13 +241,13 @@ export default {
   },
   forms: {
     defaultInput: {
-      borderColor: "transparent",
+      borderColor: "inputBackgroundColor",
       "&:focus": {
         // backgroundColor: 'inputFocusBackground',
         borderColor: "inputFocusBorderColor",
         outline: "none",
       },
-      backgroundColor: "inputBackgroundColor",
+      backgroundColor: "transparent",
       fontSize: "16px",
       padding: "10px",
     },
@@ -265,6 +265,8 @@ export default {
     defaultLabel: {
       fontSize: "15px",
       marginBottom: "5px",
+      display: "block",
+      width: "unset",
     },
   },
   fonts: {
