@@ -97,6 +97,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
+    "requestResultsProvider": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "routeAccessPoint": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

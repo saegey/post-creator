@@ -54,8 +54,12 @@ export default {
     chartAxes: "black",
     spinnerButton: "white",
     videoAccent: "#3096f0",
+    messagesBackGround: "#a6bccf",
+    messagesBorderLeft: "#5f6870",
     modes: {
       dark: {
+        messagesBackGround: "#667079",
+        messagesBorderLeft: "#a7b6c4",
         spinnerButton: "black",
         skeletonLight: "hsl(0, 0%, 12%)",
         skeletonDark: "hsl(0, 0%, 7%)",
@@ -101,6 +105,12 @@ export default {
       },
     },
   },
+  messages: {
+    default: {
+      backgroundColor: "messagesBackGround",
+      borderLeftColor: "messagesBorderLeft",
+    },
+  },
   text: {
     menuItem: {
       // textTransform: 'uppercase',
@@ -116,6 +126,11 @@ export default {
       width: "100%",
       fontSize: ["17px", "15px", "15px"],
       textDecoration: "none",
+    },
+    error: {
+      color: "#de4747",
+      lineHeight: "24px",
+      fontSize: "15px",
     },
   },
   boxes: {
@@ -194,7 +209,7 @@ export default {
         backgroundColor: "primaryButtonBackgroundHover",
         cursor: "pointer",
       },
-      ":disabled": {
+      "&:disabled": {
         backgroundColor: "#c6c6c6",
         cursor: "not-allowed",
       },
@@ -226,7 +241,18 @@ export default {
   },
   forms: {
     defaultInput: {
-      borderColor: "transparent",
+      borderColor: "inputBackgroundColor",
+      "&:focus": {
+        // backgroundColor: 'inputFocusBackground',
+        borderColor: "inputFocusBorderColor",
+        outline: "none",
+      },
+      backgroundColor: "transparent",
+      fontSize: "16px",
+      padding: "10px",
+    },
+    errorInput: {
+      borderColor: "#de4747",
       "&:focus": {
         // backgroundColor: 'inputFocusBackground',
         borderColor: "inputFocusBorderColor",
@@ -239,6 +265,8 @@ export default {
     defaultLabel: {
       fontSize: "15px",
       marginBottom: "5px",
+      display: "block",
+      width: "unset",
     },
   },
   fonts: {

@@ -129,6 +129,14 @@
           ],
           "category": "function",
           "resourceName": "runSignupResults"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "requestResultsProvider"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -338,6 +346,12 @@
     },
     "raceresultgetResults": {
       "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "requestResultsProvider": {
+      "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -568,6 +582,30 @@
         {
           "category": "function",
           "resourceName": "raceresultgetResults"
+        }
+      ]
+    },
+    "AMPLIFY_function_requestResultsProvider_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "requestResultsProvider"
+        }
+      ]
+    },
+    "AMPLIFY_function_requestResultsProvider_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "requestResultsProvider"
+        }
+      ]
+    },
+    "AMPLIFY_function_requestResultsProvider_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "requestResultsProvider"
         }
       ]
     },

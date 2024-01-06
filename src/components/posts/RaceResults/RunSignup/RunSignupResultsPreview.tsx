@@ -28,7 +28,49 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const { runSignupResults, id, setRunSignupResults } =
     React.useContext(PostContext);
   const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
-  const { runSignupMeta, resultsUrl } = React.useContext(ResultsContext);
+  const { runSignupMeta, resultsUrl, setPreviewRunSignupResults } =
+    React.useContext(ResultsContext);
+
+  const back = () => {
+    setPreviewRunSignupResults(false);
+  };
+
+  const saveResults = async () => {
+    setIsLoading(true);
+    await saveRunSignupResults({
+      results: runSignupResults?.results,
+      id,
+      category: runSignupMeta.category,
+      categoryName: runSignupMeta.categoryName,
+      resultsUrl: resultsUrl,
+      eventName: runSignupMeta.eventName,
+      selected: runSignupResults?.selected,
+    });
+
+    setRunSignupResults &&
+      runSignupResults &&
+      setRunSignupResults({
+        ...runSignupResults,
+        results: runSignupResults?.results,
+        eventName: runSignupMeta.eventName,
+        category: runSignupMeta.category,
+        categoryName: runSignupMeta.categoryName,
+      });
+
+    Transforms.insertNodes(editor, [
+      {
+        type: "runSignupResults",
+        children: [{ text: "" }],
+      },
+      {
+        type: "paragraph",
+        children: [{ text: "" }],
+      },
+    ]);
+
+    setIsLoading(false);
+    setIsRaceResultsModalOpen(false);
+  };
 
   const formatResults = () => {
     if (runSignupResults === undefined) {
@@ -87,7 +129,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
       <Box
         sx={{
           overflowY: "auto",
-          height: ["80%", "300px", "300px"],
+          height: ["60vh", "300px", "300px"],
           backgroundColor: "activityOverviewBackgroundColor",
           padding: "5px",
           borderRadius: "5px",
@@ -149,15 +191,6 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                         {row.city} {row.state}
                       </Text>
                     </Box>
-                    {/* <Text
-                  as="span"
-                  sx={{ display: ["none", "inherit", "inherit"] }}
-                >
-                  {omniResults.results &&
-                    formatMillisecondsToHHMM(
-                      row.totalTime - omniResults.results[0].totalTime
-                    )}
-                </Text> */}
                     <Text
                       as="span"
                       sx={{
@@ -185,48 +218,20 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           borderTopWidth: "1px",
         }}
       >
-        <Flex>
+        <Flex sx={{ justifyContent: "right", gap: "10px" }}>
+          <Button variant="secondaryButton" onClick={() => back()}>
+            Back
+          </Button>
           <Button
             title="Save"
             sx={{
-              marginLeft: "auto",
               backgroundColor: selectedRow ? null : "gray",
             }}
             disabled={selectedRow ? false : true}
             onClick={() => {
-              setIsLoading(true);
-              saveRunSignupResults({
-                results: runSignupResults?.results,
-                id,
-                category: runSignupMeta.category,
-                categoryName: runSignupMeta.categoryName,
-                resultsUrl: resultsUrl,
-                eventName: runSignupMeta.eventName,
-                selected: runSignupResults?.selected,
-              }).then((r) => {
-                setRunSignupResults &&
-                  runSignupResults &&
-                  setRunSignupResults({
-                    ...runSignupResults,
-                    results: runSignupResults?.results,
-                    eventName: runSignupMeta.eventName,
-                    category: runSignupMeta.category,
-                    categoryName: runSignupMeta.categoryName,
-                  });
-                Transforms.insertNodes(editor, [
-                  {
-                    type: "runSignupResults",
-                    children: [{ text: "" }],
-                  },
-                  {
-                    type: "paragraph",
-                    children: [{ text: "" }],
-                  },
-                ]);
-                setIsLoading(false);
-                setIsRaceResultsModalOpen(false);
-              });
+              saveResults();
             }}
+            variant="primaryButton"
           >
             <Flex sx={{ gap: "10px" }}>
               <Text as="span">Save</Text>

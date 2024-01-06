@@ -47,6 +47,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
+  // const { isGraphMenuOpen } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     let subUpdates: ZenObservable.Subscription;
@@ -253,7 +254,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
       <Box
         sx={{
-          minWidth: [null, null, "900px"],
+          minWidth: [null, null, isGraphMenuOpen ? "" : "900px"],
           marginLeft: isGraphMenuOpen
             ? ["20px", "20px", "auto"]
             : [0, 0, "auto"],
@@ -261,7 +262,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             ? ["20px", "20px", "auto"]
             : [0, 0, "auto"],
           marginBottom: "50px",
-          width: ["100%", null, null],
+          width: [isGraphMenuOpen ? "calc(100% - 300px)" : "100%", null, null],
           backgroundColor: "background",
           borderRadius: "10px",
           padding: "0px",

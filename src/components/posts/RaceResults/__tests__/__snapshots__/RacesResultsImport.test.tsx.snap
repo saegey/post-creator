@@ -182,9 +182,12 @@ exports[`race results import it should render) 1`] = `
                 data-emotion="css jhzmzz-Input"
               />
               <input
+                autoFocus={true}
                 className="css-jhzmzz-Input"
+                defaultValue=""
                 id="url"
                 name="url"
+                onFocus={[Function]}
                 readOnly={false}
               />
             </div>

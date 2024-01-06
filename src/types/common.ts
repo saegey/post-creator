@@ -652,3 +652,8 @@ export interface RunSignupResultsType {
     min_age: string | null;
   }>;
 }
+
+export type NotificationType = {
+  message: string;
+  type: "Error" | "Info";
+};

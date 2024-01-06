@@ -1,0 +1,6 @@
+{
+  "queryStringParameters": {
+    "url": "https://runsignup.com/Race/Results/86159"
+  },
+  "body": "{\"title\": \"Request a new results proovider\", \"body\": {\"url\": \"this is a url\"}}"
+}

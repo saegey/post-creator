@@ -1,4 +1,5 @@
 import { API } from "aws-amplify";
+import axios, { AxiosError } from "axios";
 
 import {
   ApiRes,
@@ -343,28 +344,34 @@ export const getRunSignupCategories = async ({ url }: { url: string }) => {
     throw Error("no race id provided");
   }
 
-  const res = (await API.get(
-    "api12660653",
-    `/results/runsignuCategories?url=${url}`,
-    {
-      response: true,
-    }
-  )) as {
-    data: {
-      categories: Array<{
-        id: number;
-        name: string;
-        category: string;
-        year: number;
-      }>;
-      eventName: string;
+  try {
+    const res = (await API.get(
+      "api12660653",
+      `/results/runsignuCategories?url=${url}`,
+      {
+        response: true,
+      }
+    )) as {
+      data: {
+        categories: Array<{
+          id: number;
+          name: string;
+          category: string;
+          year: number;
+        }>;
+        eventName: string;
+      };
     };
-  };
 
-  return {
-    ...res,
-    data: res.data,
-  };
+    return {
+      ...res,
+      data: res.data,
+    };
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      throw new Error("network error");
+    }
+  }
 };
 
 export const getRunSignupResults = async ({
@@ -380,10 +387,40 @@ export const getRunSignupResults = async ({
   )}&category=${category}`;
   console.log(path);
 
-  const res = (await API.get("api12660653", path, {
+  try {
+    const res = (await API.get("api12660653", path, {
+      response: true,
+    })) as {
+      data: RunSignupResultsType;
+    };
+
+    return res;
+  } catch (err) {
+    if (err instanceof AxiosError) {
+      throw Error("network error");
+    }
+  }
+};
+
+export const saveRequestProvider = async ({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) => {
+  // const raceId = new URL(url).pathname.split("/")[2];
+  const path = `/request/results-provider/`;
+  console.log(path);
+
+  const res = (await API.post("api12660653", path, {
+    body: {
+      title: title,
+      body: body,
+    },
     response: true,
   })) as {
-    data: RunSignupResultsType;
+    data: any;
   };
 
   return res;
