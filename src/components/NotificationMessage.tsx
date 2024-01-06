@@ -16,14 +16,22 @@ const NotificationMessage = () => {
       sx={{
         position: "absolute",
         width: "100%",
-        marginTop: "5px",
+        marginTop: ["", "5px", "5px"],
         flexGrow: 1,
         justifyContent: "center",
         zIndex: 51,
       }}
     >
       <Message
-        sx={{ width: "400px", padding: "10px", backgroundColor: "#cc2020" }}
+        sx={{
+          width: ["100vw", "400px", "400px"],
+          padding: ["20px", "10px", "10px"],
+          color: "white",
+          backgroundColor: "#cc2020",
+          borderRadius: ["0px", "5px", "5px"],
+          borderLeftWidth: ["0px", "5px", "5px"],
+          borderLeftColor: "#970808",
+        }}
       >
         <Flex>
           <Text sx={{ alignSelf: "center" }}>{notification?.message}</Text>

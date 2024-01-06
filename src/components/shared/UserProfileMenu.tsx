@@ -187,7 +187,7 @@ const UserProfileMenu = ({
                     }}
                     href={`/profile`}
                   >
-                    Your Profile
+                    Profile
                   </ThemeLink>
                 </Flex>
                 <Flex as="li">
@@ -206,7 +206,7 @@ const UserProfileMenu = ({
                     }}
                     href={`/posts`}
                   >
-                    Your Posts
+                    My Posts
                   </ThemeLink>
                 </Flex>
                 <Flex as="li">
@@ -287,12 +287,47 @@ const UserProfileMenu = ({
                     borderTopWidth: "1px",
                   }}
                 >
-                  <Text variant={"menuItem"}>Docs</Text>
+                  <ThemeLink
+                    href="https://monopad.gitbook.io/docs/"
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "menuItemBackgroundHoverColor",
+                        borderRadius: "5px",
+                      },
+                      textDecoration: "none",
+                      color: "text",
+                      padding: "5px",
+                      width: "100%",
+                      fontSize: ["17px", "15px", "15px"],
+                    }}
+                    // variant="defaultLink"
+                  >
+                    Docs
+                  </ThemeLink>
                 </Flex>
                 <Flex as="li">
                   <Text as="span" variant={"menuItem"}>
                     Support
                   </Text>
+                </Flex>
+                <Flex as="li">
+                  <ThemeLink
+                    href="https://monopad.productlane.com/roadmap"
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "menuItemBackgroundHoverColor",
+                        borderRadius: "5px",
+                      },
+                      textDecoration: "none",
+                      color: "text",
+                      padding: "5px",
+                      width: "100%",
+                      fontSize: ["17px", "15px", "15px"],
+                    }}
+                    // variant="defaultLink"
+                  >
+                    Roadmap
+                  </ThemeLink>
                 </Flex>
                 <Flex
                   as="li"

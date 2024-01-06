@@ -129,32 +129,44 @@ const LoginPage: React.FC = () => {
                     </ThemeLink>
                   </Flex>
                 </Flex>
-                <Grid>
+                <Flex>
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     variant="defaultInput"
                     name="password"
-                    sx={{ gridArea: "1/1" }}
+                    sx={{
+                      borderTopRightRadius: "0px",
+                      borderBottomRightRadius: "0px",
+                    }}
                     // value={user.password}
                     // onChange={handleInputChange}
                     required
                   />
-                  <Box
+                  <Flex
                     sx={{
-                      width: "24px",
-                      height: "100%",
-                      alignSelf: "center",
-                      placeSelf: "end",
-                      gridArea: "1/1",
-                      marginRight: "10px",
+                      paddingX: "10px",
+                      backgroundColor: "inputBackgroundColor",
+                      borderTopRightRadius: "5px",
+                      borderBottomRightRadius: "5px",
                       cursor: "pointer",
                     }}
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <EyeHideIcon /> : <EyeIcon />}
-                  </Box>
-                </Grid>
+                    <Box
+                      sx={{
+                        width: "24px",
+                        height: "100%",
+                        alignSelf: "center",
+                        placeSelf: "end",
+                        // gridArea: "1/1",
+                        // marginRight: "10px",
+                      }}
+                    >
+                      {showPassword ? <EyeHideIcon /> : <EyeIcon />}
+                    </Box>
+                  </Flex>
+                </Flex>
               </Flex>
               <Flex>
                 <Button

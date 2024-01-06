@@ -129,7 +129,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
       <Box
         sx={{
           overflowY: "auto",
-          height: ["80%", "300px", "300px"],
+          height: ["60vh", "300px", "300px"],
           backgroundColor: "activityOverviewBackgroundColor",
           padding: "5px",
           borderRadius: "5px",

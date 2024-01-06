@@ -25,6 +25,7 @@ const PostMenu = () => {
   const { id } = React.useContext(PostContext);
   const {
     setIsImageModalOpen,
+    isGraphMenuOpen,
     setIsGraphMenuOpen,
     isSettingsModalOpen,
     setIsSettingsModalOpen,
@@ -63,7 +64,7 @@ const PostMenu = () => {
           borderBottomStyle: "solid",
           borderBottomWidth: "1px",
           borderBottomColor: "divider",
-          width: "100vw",
+          width: isGraphMenuOpen ? "" : "100vw",
         }}
       >
         <BoldButton editor={editor} />
