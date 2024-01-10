@@ -8,7 +8,13 @@ import { Amplify, Hub, Auth, withSSRContext } from "aws-amplify";
 
 // This function can be marked `async` if using `await` inside
 const middleware = async (request: NextRequest) => {
-	const response = NextResponse.next();
+  const host = request.headers.get("host");
+  if (host === "www.localhost:3000") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/public";
+    return NextResponse.rewrite(url);
+  }
+  const response = NextResponse.next();
   // const session = await Auth.currentSession();
   // const authenticated = await runWithAmplifyServerContext({
   //   nextServerContext: { request, response },
