@@ -1,6 +1,6 @@
 import { Box } from "theme-ui";
 
-const ActivityOverviewIcon = ({ color }: { color: string }) => {
+const ActivityOverviewIcon = ({ color }: { color?: string }) => {
   return (
     <Box
       sx={{

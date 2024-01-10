@@ -112,6 +112,27 @@ export default {
     },
   },
   text: {
+    aboutHeader: {
+      fontWeight: 400,
+      fontSize: "40px",
+      lineHeight: "48px",
+      letterSpacing: "-1px",
+      marginBottom: "16px",
+    },
+    aboutHeaderSmall: {
+      fontWeight: 400,
+      fontSize: "32px",
+      lineHeight: "40px",
+      letterSpacing: "-1px",
+      marginBottom: "8px",
+    },
+    aboutParagraph: {
+      marginBottom: "28px",
+      paddingTop: "16px",
+      fontSize: "16px",
+      lineHeight: "28px",
+      fontWeight: 300,
+    },
     menuItem: {
       // textTransform: 'uppercase',
       // letterSpacing: '.2em',
@@ -270,7 +291,7 @@ export default {
     },
   },
   fonts: {
-    body: '"SF Pro Display", "Public Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+    body: '"SF Pro Display", "inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading:
       'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     monospace: "Menlo, monospace",

@@ -1,4 +1,4 @@
-const PowerGraphIcon = ({ color }: { color: string }) => (
+const PowerGraphIcon = ({ color }: { color?: string }) => (
   <svg
     width="100%"
     height="100%"

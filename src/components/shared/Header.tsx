@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuButton, Box, Flex } from "theme-ui";
+import { MenuButton, Box, Flex, Text } from "theme-ui";
 import { CldImage } from "next-cloudinary";
 
 import AvatarIcon from "../icons/AvatarIcon";
@@ -7,6 +7,7 @@ import UserProfileMenu from "./UserProfileMenu";
 import { IUser } from "../../types/common";
 import { cloudUrl } from "../../utils/cloudinary";
 import Logo from "./Logo";
+import LogoBlock from "../public/LogoBlock";
 
 const Header = ({ user }: { user: IUser }) => {
   const [profileOpen, setProfileOpen] = React.useState(false);
@@ -39,21 +40,26 @@ const Header = ({ user }: { user: IUser }) => {
           <Flex
             sx={{
               marginLeft: "10px",
-              gap: "15px",
+              gap: "10px",
               flexGrow: 1,
               alignItems: "center",
             }}
           >
-            <Box
+            <LogoBlock />
+            <Text
               sx={{
-                width: "30px",
-                height: "30px",
-                // backgroundColor: "black",
-                // padding: "5px",
+                fontSize: "18px",
+                color: "text",
+                paddingLeft: "10px",
+                fontWeight: 300,
+                letterSpacing: "0px",
+                borderLeftColor: "text",
+                borderLeftStyle: "solid",
+                borderLeftWidth: "1px",
               }}
             >
-              <Logo />
-            </Box>
+              Race Journal
+            </Text>
           </Flex>
           <Flex
             sx={{
