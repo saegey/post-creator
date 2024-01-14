@@ -9,7 +9,9 @@ module.exports = {
       },
     ],
     domains: ["res.cloudinary.com"],
+    unoptimized: true,
   },
   trailingSlash: true,
+
   // exclude: ['amplify'],
 };
