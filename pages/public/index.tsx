@@ -239,7 +239,7 @@ const Home = () => {
             ]}
           />
         </Box>
-        <Flex
+        {/* <Flex
           sx={{
             height: "100vh",
             justifyContent: "center",
@@ -256,7 +256,7 @@ const Home = () => {
               This is the next generation mf.
             </Text>
           </Flex>
-        </Flex>
+        </Flex> */}
         <PublicFooter />
       </Box>
     </>

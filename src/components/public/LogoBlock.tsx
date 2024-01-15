@@ -4,20 +4,29 @@ import Link from "next/link";
 
 import Logo from "../shared/Logo";
 
-const LogoBlock = ({ size }: { size?: "small" }) => {
+const LogoBlock = ({
+  size,
+  inheritColor = false,
+}: {
+  size?: "small";
+  inheritColor?: boolean;
+}) => {
   return (
     <Flex sx={{ gap: "10px", alignItems: "center" }}>
       <Box
         sx={{
           width: size === "small" ? "16px" : "20px",
           height: size === "small" ? "16px" : "20px",
-          backgroundColor: "text",
+          backgroundColor: inheritColor ? "currentColor" : "text",
         }}
       ></Box>
       <ThemeLink
         as={Link}
         href="/"
-        sx={{ color: "text", textDecoration: "none" }}
+        sx={{
+          color: inheritColor ? "inherit" : "text",
+          textDecoration: "none",
+        }}
       >
         <Text
           sx={{

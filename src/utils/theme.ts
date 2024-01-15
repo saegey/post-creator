@@ -225,7 +225,7 @@ export default {
       backgroundColor: "text",
       color: "background",
       fontSize: "14px",
-      fontWeight: "600",
+      fontWeight: "400",
       "&:hover": {
         backgroundColor: "primaryButtonBackgroundHover",
         cursor: "pointer",
@@ -239,7 +239,7 @@ export default {
       backgroundColor: "secondaryButtonBackground",
       color: "text",
       fontSize: "14px",
-      fontWeight: "600",
+      fontWeight: "400",
       "&:hover": {
         backgroundColor: "secondaryButtonBackgroundHover",
       },

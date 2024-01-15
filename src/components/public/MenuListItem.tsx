@@ -1,6 +1,12 @@
 import React from "react";
 import { Box, Flex, Link as ThemeLink, Text, Badge } from "theme-ui";
 import Link from "next/link";
+import { keyframes } from "@emotion/react";
+
+const fadeIn = keyframes({
+  from: { height: "0px", opacity: "0" },
+  to: { height: "auto", opacity: 1 },
+});
 
 const MenuListItem = ({
   onClick,
@@ -8,15 +14,19 @@ const MenuListItem = ({
   href,
   externalHref,
   disabled = false,
+  textColor,
+  isVisible,
 }: {
   onClick: () => void;
   title: string;
   href?: string;
   externalHref?: string;
   disabled?: boolean;
+  textColor?: string;
+  isVisible: boolean;
 }) => {
   const titleText = !disabled ? (
-    <Text sx={{ color: "black", fontWeight: 300 }}>{title}</Text>
+    <Text sx={{ color: textColor, fontWeight: 300 }}>{title}</Text>
   ) : (
     <Flex sx={{ gap: "10px" }}>
       <Text sx={{ color: "#969696", fontWeight: 300 }}>{title}</Text>
@@ -25,7 +35,11 @@ const MenuListItem = ({
   );
 
   return (
-    <Flex sx={{ padding: "16px" }}>
+    <Flex
+      sx={{
+        paddingY: "16px",
+      }}
+    >
       <Box>
         {externalHref && (
           <ThemeLink

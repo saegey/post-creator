@@ -1,16 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Link as ThemeLink,
-  NavLink,
-  Text,
-  Badge,
-} from "theme-ui";
-import Link from "next/link";
+import { Box, Flex, Link as ThemeLink, Text } from "theme-ui";
 
 const Manifesto = () => {
   return (
@@ -33,6 +23,7 @@ const Manifesto = () => {
           sx={{
             width: "1060px",
             flexDirection: "column",
+            paddingX: ["16px", "16px", "0px"],
             gap: "16px",
           }}
         >

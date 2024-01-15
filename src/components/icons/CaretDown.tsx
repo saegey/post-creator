@@ -11,7 +11,7 @@ const CaretDown = () => {
         <path
           id="Vector"
           d="M16 10L12 14L8 10"
-          stroke="var(--theme-ui-colors-text)"
+          stroke={"currentcolor"}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"

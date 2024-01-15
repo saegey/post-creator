@@ -17,11 +17,20 @@ import CaretDown from "../icons/CaretDown";
 import LogoBlock from "./LogoBlock";
 import MenuHeadingItem from "./MenuHeadingItem";
 import MenuListItem from "./MenuListItem";
+import MenuWrapper from "./MenuWrapper";
 
 const PublicHeader = () => {
   const [isProductMenuOpen, setIsProductMenuOpen] = React.useState(false);
   const [isResourcesMenuOpen, setIsResourcesMenuOpen] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMenuOpen]);
 
   return (
     <Box sx={{ zIndex: 10, position: "sticky", top: 0 }}>
@@ -267,14 +276,17 @@ const PublicHeader = () => {
           <Flex sx={{ justifyContent: "flex-end" }}>
             <Flex sx={{ alignItems: "center", gap: "10px" }}>
               <ThemeLink
-                // as={Link}
                 onClick={(e) => {
                   e.preventDefault();
+                  //https://platform.d15noiwtuwwref/login
                   window.open(
                     location.protocol +
                       "//platform." +
                       (location.host.split(".")[1]
-                        ? location.host.split(".")[1]
+                        ? location.host
+                            .split(".")
+                            .slice(1, location.host.split(".").length)
+                            .join("")
                         : location.host) +
                       "/login"
                   );
@@ -286,14 +298,29 @@ const PublicHeader = () => {
                   },
                   textDecoration: "none",
                   color: "text",
-                  // padding: "5px",
-                  // width: "100%",
                   fontSize: ["17px", "15px", "15px"],
                 }}
               >
                 Login
               </ThemeLink>
-              <ThemeLink as={Link} href={`/register`}>
+              <ThemeLink
+                href={`/register`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  //https://platform.d15noiwtuwwref/login
+                  window.open(
+                    location.protocol +
+                      "//platform." +
+                      (location.host.split(".")[1]
+                        ? location.host
+                            .split(".")
+                            .slice(1, location.host.split(".").length)
+                            .join("")
+                        : location.host) +
+                      "/register"
+                  );
+                }}
+              >
                 <Button variant="primaryButton">Sign Up</Button>
               </ThemeLink>
             </Flex>
@@ -328,42 +355,57 @@ const PublicHeader = () => {
       </Flex>
       <Box
         sx={{
-          position: "absolute",
+          position: "fixed",
+          overflowX: "hidden",
+          overflowY: "auto",
           display: [
-            isMenuOpen ? "inherit" : "none",
-            isMenuOpen ? "inherit" : "none",
+            isMenuOpen ? "flex" : "none",
+            isMenuOpen ? "flex" : "none",
             "none",
           ],
           top: "48px",
+          bottom: "0px",
+          left: "0px",
+          right: "0px",
           height: "calc(100vh - 48px)",
-          width: "100vw",
+          // width: "100vw",
           zIndex: 100,
           backgroundColor: "white",
         }}
       >
-        <Box as="nav" role="navigation" sx={{ width: "100%", paddingX: "5%" }}>
-          <Flex sx={{ flexDirection: "column" }}>
+        <Flex
+          as="nav"
+          role="navigation"
+          sx={{ width: "100%", flexDirection: "column" }}
+        >
+          <Box sx={{ marginX: "16px" }}>
             <MenuHeadingItem
               name="Product"
               isOpen={isProductMenuOpen}
               setIsOpen={setIsProductMenuOpen}
             />
-            {isProductMenuOpen && (
+            <MenuWrapper isOpen={isProductMenuOpen}>
               <>
                 <MenuListItem
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsProductMenuOpen(false);
+                  }}
+                  isVisible={isProductMenuOpen}
                   title="Race Journal"
                   href="/journal"
+                  textColor="text"
                 />
                 <MenuListItem
                   onClick={() => setIsMenuOpen(false)}
                   title="Race Calendar"
+                  isVisible={isProductMenuOpen}
                   disabled={true}
                   // href="/journal"
                 />
               </>
-            )}
-            <Flex sx={{ padding: "16px" }}>
+            </MenuWrapper>
+            <Flex sx={{ paddingY: "16px" }}>
               <ThemeLink
                 href="https://monopad.productlane.com/changelog"
                 sx={{ textDecoration: "none", color: "black" }}
@@ -373,37 +415,80 @@ const PublicHeader = () => {
                   sx={{
                     flexGrow: 1,
                     justifyContent: "right",
-                    // flexDirection: "column",
                   }}
                 ></Flex>
               </ThemeLink>
             </Flex>
+
+            <MenuHeadingItem
+              name="Resources"
+              isOpen={isResourcesMenuOpen}
+              setIsOpen={setIsResourcesMenuOpen}
+            />
+            <MenuWrapper isOpen={isResourcesMenuOpen}>
+              <>
+                <MenuListItem
+                  onClick={() => setIsMenuOpen(false)}
+                  isVisible={isResourcesMenuOpen}
+                  title="Blog"
+                  href="/blog"
+                  textColor="text"
+                />
+                <MenuListItem
+                  onClick={() => setIsMenuOpen(false)}
+                  isVisible={isResourcesMenuOpen}
+                  title="Docs"
+                  externalHref="https://monopad.gitbook.io/docs-1/v/1/"
+                  textColor="text"
+                />
+                <MenuListItem
+                  onClick={() => setIsMenuOpen(false)}
+                  isVisible={isResourcesMenuOpen}
+                  title="API"
+                  disabled={true}
+                />
+              </>
+            </MenuWrapper>
+          </Box>
+          <Flex
+            sx={{
+              marginTop: "auto",
+              marginBottom: "16px",
+              padding: "20px",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <ThemeLink as={Link} href={`/login`} sx={{ width: "100%" }}>
+              <Button
+                variant="secondaryButton"
+                sx={{
+                  width: "100%",
+                  paddingX: "16px",
+                  paddingY: "12px",
+                  fontSize: "16px",
+                  letterSpacing: "-0.08px",
+                }}
+              >
+                Sign in
+              </Button>
+            </ThemeLink>
+            <ThemeLink as={Link} href={`/register`} sx={{ width: "100%" }}>
+              <Button
+                variant="primaryButton"
+                sx={{
+                  width: "100%",
+                  paddingX: "16px",
+                  paddingY: "12px",
+                  fontSize: "16px",
+                  letterSpacing: "-0.08px",
+                }}
+              >
+                Sign Up
+              </Button>
+            </ThemeLink>
           </Flex>
-          <MenuHeadingItem
-            name="Resources"
-            isOpen={isResourcesMenuOpen}
-            setIsOpen={setIsResourcesMenuOpen}
-          />
-          {isResourcesMenuOpen && (
-            <>
-              <MenuListItem
-                onClick={() => setIsMenuOpen(false)}
-                title="Blog"
-                href="/blog"
-              />
-              <MenuListItem
-                onClick={() => setIsMenuOpen(false)}
-                title="Docs"
-                externalHref="https://monopad.gitbook.io/docs-1/v/1/"
-              />
-              <MenuListItem
-                onClick={() => setIsMenuOpen(false)}
-                title="API"
-                disabled={true}
-              />
-            </>
-          )}
-        </Box>
+        </Flex>
       </Box>
     </Box>
   );
