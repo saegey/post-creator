@@ -2,10 +2,17 @@ import { Slate, Editable, withReact } from "slate-react";
 import { API, graphqlOperation, Storage, Amplify, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
-import { Element as SlateElement, createEditor } from "slate";
+import {
+  Editor,
+  Range,
+  Element as SlateElement,
+  createEditor,
+  Transforms,
+  Descendant,
+} from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
-import { Descendant, Transforms } from "slate";
+// import { , Transforms } from "slate";
 import { ZenObservable } from "zen-observable-ts";
 
 import renderElement, { renderLeaf } from "./RenderElement";
@@ -37,6 +44,7 @@ import {
   configurePubSub,
   getEndpoint,
 } from "../../../actions/PubSub";
+import NewComponentSidebar from "./NewComponentSidebar";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -48,6 +56,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
   // const { isGraphMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const [showMenu, setShowMenu] = React.useState(false);
 
   React.useEffect(() => {
     let subUpdates: ZenObservable.Subscription;
@@ -242,7 +252,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   return (
     <Flex>
       {isPublishedConfirmationOpen && <PublishModalConfirmation />}
-      {isGraphMenuOpen && <NewComponentSelectorMenu editor={editor} />}
+      {isGraphMenuOpen && <NewComponentSidebar editor={editor} />}
       {isImageModalOpen && (
         <AddImage callback={insertImage} setIsOpen={setIsImageModalOpen} />
       )}
@@ -267,8 +277,24 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           borderRadius: "10px",
           padding: "0px",
           paddingBottom: "200px",
+          position: "relative",
         }}
       >
+        {showMenu && (
+          <div
+            style={{
+              position: "absolute",
+              top: "500px",
+              left: "0",
+              padding: "10px",
+              background: "white",
+              border: "1px solid #ddd",
+            }}
+          >
+            {/* Your menu content goes here */}
+            Pressed Slash! Display your menu items here.
+          </div>
+        )}
         <Slate
           editor={editor}
           initialValue={initialState}
@@ -313,8 +339,39 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             spellCheck
             autoFocus
             renderElement={renderElement}
+            decorate={([node, path]) => {
+              // console.log(node);
+              if (editor.selection != null) {
+                if (
+                  !Editor.isEditor(node) &&
+                  Editor.string(editor, [path[0]]) === "" &&
+                  Range.includes(editor.selection, path) &&
+                  Range.isCollapsed(editor.selection)
+                ) {
+                  return [
+                    {
+                      ...editor.selection,
+                      placeholder: true,
+                    },
+                  ];
+                }
+              }
+
+              return [];
+            }}
             renderLeaf={renderLeaf}
             style={{ paddingBottom: "200px" }}
+            onKeyDown={(event) => {
+              const { selection } = editor;
+              // console.log(selection);
+
+              if (
+                (event.key === "/" && !selection) ||
+                (event.key === "/" && selection && selection.focus.offset == 0)
+              ) {
+                editor.addMark("pressSlash", true);
+              }
+            }}
           />
         </Slate>
       </Box>

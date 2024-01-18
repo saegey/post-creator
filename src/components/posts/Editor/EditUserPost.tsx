@@ -35,6 +35,8 @@ const EditUserPost = ({
   const [isPublishedConfirmationOpen, setIsPublishedConfirmationOpen] =
     React.useState(false);
   const [isVideoUploadOpen, setIsVideoUploadOpen] = React.useState(false);
+  const [isNewComponentMenuOpen, setIsNewComponentMenuOpen] =
+    React.useState(false);
 
   React.useEffect(() => {
     if (user && user?.attributes.sub !== author.id) {
@@ -54,6 +56,8 @@ const EditUserPost = ({
       <Box>
         <EditorContext.Provider
           value={{
+            isNewComponentMenuOpen,
+            setIsNewComponentMenuOpen,
             setIsGraphMenuOpen,
             isGraphMenuOpen,
             setIsFtpUpdating,

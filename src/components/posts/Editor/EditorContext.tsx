@@ -39,6 +39,9 @@ export type EditorContextType = {
 
   isVideoUploadOpen: boolean;
   setIsVideoUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isNewComponentMenuOpen: boolean;
+  setIsNewComponentMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -68,6 +71,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsPublishedConfirmationOpen: () => {},
   isVideoUploadOpen: false,
   setIsVideoUploadOpen: () => {},
+  isNewComponentMenuOpen: false,
+  setIsNewComponentMenuOpen: () => {},
 });
 
 export { EditorContext };

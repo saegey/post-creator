@@ -289,6 +289,7 @@ export type CustomElement =
   | RunSignupResultsSlateType;
 
 export type FormattedText = {
+  placeholder: boolean;
   text: string;
   bold?: true;
   children?: CustomElement[];

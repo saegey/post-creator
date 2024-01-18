@@ -13,13 +13,21 @@ import StandardModal from "../../shared/StandardModal";
 import EmbedSettings from "../Embed/EmbedSettings";
 import { useViewport } from "../../ViewportProvider";
 import ResultsIcon from "../../icons/ResultsIcon";
-import SidebarLeft from "../../shared/SidebarLeft";
+
 import StravaEmbed from "../Embed/StravaEmbed";
 import VideoUploader from "../VideoEmbed/VideoUploader";
 import { CustomEditor, TextElement } from "../../../types/common";
 import VideoIcon from "../../icons/VideoIcon";
 
-const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
+const GraphSelectorMenu = ({
+  editor,
+  callback,
+  size,
+}: {
+  editor: CustomEditor;
+  callback?: any;
+  size?: "small";
+}) => {
   const {
     setIsGraphMenuOpen,
     setIsGpxUploadOpen,
@@ -76,7 +84,7 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
     if (gpxFile && currentFtp) {
       Transforms.insertNodes(editor, [
         { type: "timeInZones", children: [{ text: "" }], void: true },
-        { type: "text", children: [{ text: "" }] } as TextElement,
+        { type: "paragraph", children: [{ text: "" }] },
       ]);
       closeMenu();
     }
@@ -90,7 +98,7 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
         { type: "visualOverview", children: [{ text: "" }], void: true },
-        { type: "text", children: [{ text: "" }] } as TextElement,
+        { type: "paragraph", children: [{ text: "" }] },
       ]);
       closeMenu();
     }
@@ -104,9 +112,10 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
           children: [{ text: "" }],
           void: true,
         },
-        { type: "text", children: [{ text: "" }] } as TextElement,
+        { type: "paragraph", children: [{ text: "" }] },
       ]);
       closeMenu();
+      // callback();
     }
   };
 
@@ -118,7 +127,7 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
           children: [{ text: "" }],
           void: true,
         },
-        { type: "text", children: [{ text: "" }] } as TextElement,
+        { type: "paragraph", children: [{ text: "" }] },
       ]);
       closeMenu();
     }
@@ -158,134 +167,135 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
           <VideoUploader editor={editor} />
         </StandardModal>
       )}
-      <SidebarLeft
-        closeOnclick={() => setIsGraphMenuOpen(false)}
-        title={"Components"}
-      >
-        <Flex sx={{ flexDirection: "column", margin: "10px" }}>
-          <Box
-            onClick={() => {
-              if (gpxFile) {
-                addPowerCurve();
-              }
-            }}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: gpxFile ? "pointer" : "not-allowed",
-            }}
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <PowerGraphIcon color={color} />
-              </Box>
-              <Text as="span" sx={{ color: color }}>
-                Power Curve
-              </Text>
-            </Flex>
-          </Box>
+      <Flex sx={{ flexDirection: "column", margin: "10px" }}>
+        <Box
+          onClick={() => {
+            if (gpxFile) {
+              addPowerCurve();
+            }
+          }}
+          variant="boxes.sidebarMenuItem"
+          sx={{
+            cursor: gpxFile ? "pointer" : "not-allowed",
+            padding: size === "small" ? "5px" : "15px",
+          }}
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: size === "small" ? "16px" : "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <PowerGraphIcon color={color} />
+            </Box>
+            <Text
+              as="span"
+              sx={{
+                color: color,
+                fontSize: size === "small" ? "14px" : "inherit",
+              }}
+            >
+              Power Curve
+            </Text>
+          </Flex>
+        </Box>
 
-          <Box
-            onClick={addActivityOverview}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: gpxFile ? "pointer" : "not-allowed",
-            }}
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <ActivityOverviewIcon color={color} />
-              </Box>
-              <Text as="span" sx={{ color: color }}>
-                Activity Overview
-              </Text>
-            </Flex>
-          </Box>
-          <Box
-            onClick={addTimePowerZones}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: currentFtp ? "pointer" : "not-allowed",
-            }}
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <TimePowerZonesIcon
-                  color={
-                    currentFtp
-                      ? `var(--theme-ui-colors-text)`
-                      : `var(--theme-ui-colors-iconButtonDisabled)`
-                  }
-                />
-              </Box>
-
-              <Text
-                as="span"
-                sx={{
-                  color: currentFtp
+        <Box
+          onClick={addActivityOverview}
+          variant="boxes.sidebarMenuItem"
+          sx={{
+            cursor: gpxFile ? "pointer" : "not-allowed",
+          }}
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <ActivityOverviewIcon color={color} />
+            </Box>
+            <Text as="span" sx={{ color: color }}>
+              Activity Overview
+            </Text>
+          </Flex>
+        </Box>
+        <Box
+          onClick={addTimePowerZones}
+          variant="boxes.sidebarMenuItem"
+          sx={{
+            cursor: currentFtp ? "pointer" : "not-allowed",
+          }}
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <TimePowerZonesIcon
+                color={
+                  currentFtp
                     ? `var(--theme-ui-colors-text)`
-                    : `var(--theme-ui-colors-iconButtonDisabled)`,
-                }}
+                    : `var(--theme-ui-colors-iconButtonDisabled)`
+                }
+              />
+            </Box>
+
+            <Text
+              as="span"
+              sx={{
+                color: currentFtp ? "text" : "iconButtonDisabled",
+              }}
+            >
+              Time in Zones
+            </Text>
+          </Flex>
+        </Box>
+        <Box
+          onClick={addMap}
+          sx={{
+            cursor: gpxFile ? "pointer" : "not-allowed",
+          }}
+          variant="boxes.sidebarMenuItem"
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <svg
+                className="childButton"
+                width="100%"
+                height="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                Time in Zones
-              </Text>
-            </Flex>
-          </Box>
-          <Box
-            onClick={addMap}
-            sx={{
-              cursor: gpxFile ? "pointer" : "not-allowed",
-            }}
-            variant="boxes.sidebarMenuItem"
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <svg
-                  className="childButton"
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z"
-                    stroke={color}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Box>
-              <Text as="span" sx={{ color: color }}>
-                Route Overview
-              </Text>
-            </Flex>
-          </Box>
-          {/* <Box
+                <path
+                  d="M12 6H12.01M9 20L3 17V4L5 5M9 20L15 17M9 20V14M15 17L21 20V7L19 6M15 17V14M15 6.2C15 7.96731 13.5 9.4 12 11C10.5 9.4 9 7.96731 9 6.2C9 4.43269 10.3431 3 12 3C13.6569 3 15 4.43269 15 6.2Z"
+                  stroke={color}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Box>
+            <Text as="span" sx={{ color: color }}>
+              Route Overview
+            </Text>
+          </Flex>
+        </Box>
+        {/* <Box
             onClick={addMatchesBurned}
             variant='boxes.sidebarMenuItem'
             sx={{
@@ -307,136 +317,135 @@ const GraphSelectorMenu = ({ editor }: { editor: CustomEditor }) => {
               </Text>
             </Flex>
           </Box> */}
-          <Box
-            onClick={addStravaLink}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: "pointer",
-            }}
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <StravaIcon color={"var(--theme-ui-colors-text)"} />
-              </Box>
-              <Text as="span">Embed Strava activity</Text>
-            </Flex>
-          </Box>
-          <Box
-            onClick={() => addEmbed()}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: "pointer",
-            }}
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <EmbedIcon />
-              </Box>
-              <Text
-                as="span"
-                sx={{
-                  color: "text",
-                }}
-              >
-                Embed RWGPS Route
-              </Text>
-            </Flex>
-          </Box>
-          <Box
-            onClick={() => addRaceResults()}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: "pointer",
-            }}
-            id="add-race-results"
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <ResultsIcon />
-              </Box>
-              <Text
-                as="span"
-                sx={{
-                  color: "text",
-                }}
-              >
-                Race Results
-              </Text>
-            </Flex>
-          </Box>
-          <Box
-            onClick={() => embedVideo()}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: "pointer",
-            }}
-          >
-            <Flex sx={{ alignItems: "center", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: "25px",
-                  height: "auto",
-                  // marginRight: "10px",
-                }}
-              >
-                <VideoIcon />
-              </Box>
-              <Text
-                as="span"
-                sx={{
-                  color: "text",
-                }}
-              >
-                Embed Video
-              </Text>
-            </Flex>
-          </Box>
-        </Flex>
-        {!gpxFile && (
-          <Box
-            sx={{
-              marginY: "auto",
-              borderTopColor: "divider",
-              borderTopStyle: "solid",
-              borderTopWidth: "1px",
-            }}
-          >
-            <Box sx={{ marginX: "15px" }}>
-              <Text as="p" sx={{ marginY: "10px" }}>
-                A GPX file must be uploaded to enabled activity components.
-              </Text>
-              <Button
-                type="button"
-                variant="primaryButton"
-                onClick={() => {
-                  setIsGpxUploadOpen(true);
-                }}
-                sx={{ width: "100%" }}
-              >
-                Upload GPX
-              </Button>
+        <Box
+          onClick={addStravaLink}
+          variant="boxes.sidebarMenuItem"
+          sx={{
+            cursor: "pointer",
+          }}
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <StravaIcon color={"var(--theme-ui-colors-text)"} />
             </Box>
+            <Text as="span">Embed Strava activity</Text>
+          </Flex>
+        </Box>
+        <Box
+          onClick={() => addEmbed()}
+          variant="boxes.sidebarMenuItem"
+          sx={{
+            cursor: "pointer",
+          }}
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <EmbedIcon />
+            </Box>
+            <Text
+              as="span"
+              sx={{
+                color: "text",
+              }}
+            >
+              Embed RWGPS Route
+            </Text>
+          </Flex>
+        </Box>
+        <Box
+          onClick={() => addRaceResults()}
+          variant="boxes.sidebarMenuItem"
+          sx={{
+            cursor: "pointer",
+          }}
+          id="add-race-results"
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <ResultsIcon />
+            </Box>
+            <Text
+              as="span"
+              sx={{
+                color: "text",
+              }}
+            >
+              Race Results
+            </Text>
+          </Flex>
+        </Box>
+        <Box
+          onClick={() => embedVideo()}
+          variant="boxes.sidebarMenuItem"
+          sx={{
+            cursor: "pointer",
+          }}
+        >
+          <Flex sx={{ alignItems: "center", gap: "20px" }}>
+            <Box
+              sx={{
+                width: "25px",
+                height: "auto",
+                // marginRight: "10px",
+              }}
+            >
+              <VideoIcon />
+            </Box>
+            <Text
+              as="span"
+              sx={{
+                color: "text",
+              }}
+            >
+              Embed Video
+            </Text>
+          </Flex>
+        </Box>
+      </Flex>
+      {!gpxFile && (
+        <Box
+          sx={{
+            marginY: "auto",
+            borderTopColor: "divider",
+            borderTopStyle: "solid",
+            borderTopWidth: "1px",
+          }}
+        >
+          <Box sx={{ marginX: "15px" }}>
+            <Text as="p" sx={{ marginY: "10px" }}>
+              A GPX file must be uploaded to enabled activity components.
+            </Text>
+            <Button
+              type="button"
+              variant="primaryButton"
+              onClick={() => {
+                setIsGpxUploadOpen(true);
+              }}
+              sx={{ width: "100%" }}
+            >
+              Upload GPX
+            </Button>
           </Box>
-        )}
-      </SidebarLeft>
+        </Box>
+      )}
     </>
   );
 };
