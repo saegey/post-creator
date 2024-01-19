@@ -37,6 +37,7 @@ const EditUserPost = ({
   const [isVideoUploadOpen, setIsVideoUploadOpen] = React.useState(false);
   const [isNewComponentMenuOpen, setIsNewComponentMenuOpen] =
     React.useState(false);
+  const [menuPosition, setMenuPosition] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
     if (user && user?.attributes.sub !== author.id) {
@@ -84,6 +85,8 @@ const EditUserPost = ({
             setIsPublishedConfirmationOpen,
             isVideoUploadOpen,
             setIsVideoUploadOpen,
+            menuPosition,
+            setMenuPosition,
           }}
         >
           <PostEditor initialState={postComponents} />

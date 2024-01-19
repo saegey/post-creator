@@ -18,13 +18,15 @@ import StravaEmbed from "../Embed/StravaEmbed";
 import VideoUploader from "../VideoEmbed/VideoUploader";
 import { CustomEditor, TextElement } from "../../../types/common";
 import VideoIcon from "../../icons/VideoIcon";
+import { useSlateStatic } from "slate-react";
+import AddPowerCurve from "./PowerCurve";
 
 const GraphSelectorMenu = ({
-  editor,
+  // editor,
   callback,
   size,
 }: {
-  editor: CustomEditor;
+  // editor: CustomEditor;
   callback?: any;
   size?: "small";
 }) => {
@@ -34,7 +36,9 @@ const GraphSelectorMenu = ({
     setIsRaceResultsModalOpen,
     setIsVideoUploadOpen,
     isVideoUploadOpen,
+    setIsNewComponentMenuOpen,
   } = React.useContext(EditorContext);
+  const editor = useSlateStatic();
   const { width } = useViewport();
   const { gpxFile, currentFtp, components } = React.useContext(PostContext);
 
@@ -104,21 +108,6 @@ const GraphSelectorMenu = ({
     }
   };
 
-  const addPowerCurve = () => {
-    if (gpxFile) {
-      Transforms.insertNodes(editor, [
-        {
-          type: "powergraph",
-          children: [{ text: "" }],
-          void: true,
-        },
-        { type: "paragraph", children: [{ text: "" }] },
-      ]);
-      closeMenu();
-      // callback();
-    }
-  };
-
   const addActivityOverview = () => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
@@ -168,39 +157,10 @@ const GraphSelectorMenu = ({
         </StandardModal>
       )}
       <Flex sx={{ flexDirection: "column", margin: "10px" }}>
-        <Box
-          onClick={() => {
-            if (gpxFile) {
-              addPowerCurve();
-            }
-          }}
-          variant="boxes.sidebarMenuItem"
-          sx={{
-            cursor: gpxFile ? "pointer" : "not-allowed",
-            padding: size === "small" ? "5px" : "15px",
-          }}
-        >
-          <Flex sx={{ alignItems: "center", gap: "20px" }}>
-            <Box
-              sx={{
-                width: size === "small" ? "16px" : "25px",
-                height: "auto",
-                // marginRight: "10px",
-              }}
-            >
-              <PowerGraphIcon color={color} />
-            </Box>
-            <Text
-              as="span"
-              sx={{
-                color: color,
-                fontSize: size === "small" ? "14px" : "inherit",
-              }}
-            >
-              Power Curve
-            </Text>
-          </Flex>
-        </Box>
+        <AddPowerCurve
+          size={"small"}
+          callback={() => setIsNewComponentMenuOpen(false)}
+        />
 
         <Box
           onClick={addActivityOverview}
@@ -420,7 +380,7 @@ const GraphSelectorMenu = ({
           </Flex>
         </Box>
       </Flex>
-      {!gpxFile && (
+      {!gpxFile && false && (
         <Box
           sx={{
             marginY: "auto",

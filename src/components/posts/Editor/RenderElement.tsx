@@ -27,69 +27,7 @@ import ComponentMenu from "./ComponentMenu";
 import { extend } from "cypress/types/lodash";
 import { EditorContext } from "./EditorContext";
 import { Editor, Node, Transforms } from "slate";
-
-const Leaf = (props: RenderLeafProps) => {
-  return (
-    <span
-      {...props.attributes}
-      style={{ fontWeight: props.leaf.bold ? "bold" : "" }}
-    >
-      {props.children}
-    </span>
-  );
-};
-
-// Define a leaf rendering function that is memoized with `useCallback`.
-const renderLeaf = (props: RenderLeafProps) => {
-  // return <Leaf {...props} />;
-  console.log(props);
-
-  if (props.text.pressSlash === true || props.leaf.pressSlash) {
-    // props.text.text = "";
-    return (
-      <>
-        <Leaf {...props} />
-        {props.leaf.placeholder && (
-          <span
-            style={{
-              opacity: 0.3,
-              position: "absolute",
-              top: "0px",
-              left: "5px",
-            }}
-            contentEditable={false}
-          >
-            Type CTRL + / to open menu
-          </span>
-        )}
-        {/* <Box sx={{ position: "relative" }} contentEditable={false}>
-          <ComponentMenu />
-        </Box> */}
-      </>
-    );
-  }
-  if (props.leaf.placeholder) {
-    // console.log("placehoolder");
-    return (
-      <>
-        <Leaf {...props} />
-        <span
-          style={{
-            opacity: 0.3,
-            position: "absolute",
-            top: "0px",
-            left: "5px",
-          }}
-          contentEditable={false}
-        >
-          Type CTRL + / to open menu
-        </span>
-      </>
-    );
-  }
-
-  return <Leaf {...props} />;
-};
+import ParagraphElement from "../../ParagraphElement";
 
 const renderElement = (props: {
   attributes: object;
@@ -98,10 +36,6 @@ const renderElement = (props: {
 }) => {
   const { attributes, children, element } = props;
   const units = useUnits();
-  const [isHover, setIsHover] = React.useState(false);
-  const { isNewComponentMenuOpen, setIsNewComponentMenuOpen } =
-    React.useContext(EditorContext);
-  // const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   switch (element.type) {
     case "postAuthor":
@@ -188,90 +122,7 @@ const renderElement = (props: {
     case "runSignupResults":
       return <RunSignupListWrapper />;
     case "paragraph":
-      // const emptyText = children[0].props.text.text.length === 0;
-      const editor = useSlateStatic();
-      console.log(element);
-      return (
-        <Flex
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-        >
-          <Box
-            sx={{
-              position: "relative",
-              width: ["100%", "690px", "690px"],
-              marginX: "auto",
-              marginY: "20px",
-            }}
-          >
-            <Text
-              as="div"
-              sx={{
-                position: "relative",
-                // marginRight: 'auto',
-
-                fontSize: "19px",
-                lineHeight: "30px",
-                // marginY: "20px",
-                paddingX: ["10px", "0px", "0px"],
-                backgroundColor: "#ff000026",
-                // fontSize: "19px",
-                // lineHeight: "30px",
-              }}
-              {...attributes}
-            >
-              {children}
-              {/* </Text> */}
-            </Text>
-            <Text
-              sx={{
-                display: isHover ? "inherit" : "none",
-                position: "absolute",
-                top: "0px",
-                left: "-30px",
-                cursor: "pointer",
-                border: "1px solid #e1e1e1",
-                paddingY: "3px",
-                paddingX: "4px",
-                borderRadius: "3px",
-              }}
-              contentEditable={false}
-              onClick={() => {
-                const path = ReactEditor.findPath(editor, element);
-                console.log(path);
-                const markTypeToAdd = "pressSlash";
-                // const { selection } = editor;
-
-                // if (!selection) {
-                //   return;
-                // }
-                // const [currentNode, path] = Editor.node(editor, selection);
-                // if (currentNode) {
-                // editor.addMark("pressSlash", true);
-                // const match = (n) => Node.string(n).length > 0;
-
-                Transforms.setNodes(editor, { pressSlash: true }, { at: path });
-
-                // Transforms.insertNodes(
-                //   editor,
-                //   { type: "paragraph", children: [{ text: "fuck" }] },
-                //   { at: path }
-                // );
-                // Transforms.removeNodes(editor, { at: path });
-
-                // }
-              }}
-            >
-              +
-            </Text>
-            {element.pressSlash === true && (
-              <Box sx={{ position: "relative" }} contentEditable={false}>
-                <ComponentMenu />
-              </Box>
-            )}
-          </Box>
-        </Flex>
-      );
+      return <ParagraphElement {...props} />;
     default:
       return (
         <Text
@@ -295,4 +146,3 @@ const renderElement = (props: {
 };
 
 export default renderElement;
-export { renderLeaf };

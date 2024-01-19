@@ -1,4 +1,4 @@
-import { Slate, Editable, withReact } from "slate-react";
+import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { API, graphqlOperation, Storage, Amplify, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
@@ -15,7 +15,7 @@ import { withHistory } from "slate-history";
 // import { , Transforms } from "slate";
 import { ZenObservable } from "zen-observable-ts";
 
-import renderElement, { renderLeaf } from "./RenderElement";
+import renderElement from "./RenderElement";
 import PostMenu from "./PostMenu/PostMenu";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
@@ -45,33 +45,59 @@ import {
   getEndpoint,
 } from "../../../actions/PubSub";
 import NewComponentSidebar from "./NewComponentSidebar";
+import Menu from "../../Menu";
+
+const Leaf = ({
+  attributes,
+  children,
+  updateMenuPosition,
+}: {
+  attributes: RenderLeafProps;
+  children: JSX.Element;
+  updateMenuPosition: React.MouseEventHandler<HTMLSpanElement>;
+}) => {
+  return (
+    <span
+      {...attributes}
+      onMouseUp={updateMenuPosition}
+      // style={{ fontWeight: attributes.leaf.bold ? "bold" : "" }}
+    >
+      {children}
+    </span>
+  );
+};
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
     () => withLayout(withHistory(withLinks(withReact(createEditor())))),
     []
-  ) as CustomEditor;
+  );
 
   const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
   // const { isGraphMenuOpen } = React.useContext(EditorContext);
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const {
+    setIsNewComponentMenuOpen,
+    isNewComponentMenuOpen,
+    setMenuPosition,
+    menuPosition,
+  } = React.useContext(EditorContext);
   const [showMenu, setShowMenu] = React.useState(false);
 
-  React.useEffect(() => {
-    let subUpdates: ZenObservable.Subscription;
+  // React.useEffect(() => {
+  //   let subUpdates: ZenObservable.Subscription;
 
-    setUpSub().then((sub) => {
-      subUpdates = sub;
-    });
+  //   setUpSub().then((sub) => {
+  //     subUpdates = sub;
+  //   });
 
-    return () => {
-      if (subUpdates) {
-        subUpdates.unsubscribe();
-      }
-    };
-  }, [subPubConfigured]);
+  //   return () => {
+  //     if (subUpdates) {
+  //       subUpdates.unsubscribe();
+  //     }
+  //   };
+  // }, [subPubConfigured]);
 
   const {
     id,
@@ -104,236 +130,62 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setSavingStatus,
     isPublishedConfirmationOpen,
   } = React.useContext(EditorContext);
+  // const [showMenu, setShowMenu] = React.useState(false);
+  // const [menuPosition, setMenuPosition] = React.useState({ top: 0, left: 0 });
 
-  React.useEffect(() => {
-    if (initialState) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-  }, [initialState]);
+  const updateMenuPosition = React.useCallback(() => {
+    const selection = editor.selection;
+    if (selection) {
+      const domSelection = window.getSelection();
+      if (!domSelection) {
+        return;
+      }
 
-  React.useEffect(() => {
-    const subscription = API.graphql<
-      GraphQLSubscription<OnUpdatePostSubscription>
-    >(graphqlOperation(subscriptions.onUpdatePost)).subscribe({
-      next: ({ value }) => {
-        if (
-          !value.data?.onUpdatePost?.powerZoneBuckets ||
-          !value.data?.onUpdatePost?.timeInRed ||
-          !value.data?.onUpdatePost?.powerZones
-        ) {
-          return;
+      if (domSelection && domSelection.anchorNode) {
+        const parentElement = domSelection.anchorNode.parentElement;
+
+        if (parentElement) {
+          const rect = parentElement.getBoundingClientRect();
+          console.log("Bounding rect for the parent element:", rect);
+          setMenuPosition({ top: rect.bottom, left: rect.left });
         }
-
-        setTimeInRed && setTimeInRed(value.data?.onUpdatePost?.timeInRed);
-        setPowerZoneBuckets &&
-          setPowerZoneBuckets(
-            JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
-          );
-        setPowerZones &&
-          setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
-        setIsFtpUpdating(false);
-      },
-      error: (error) => console.warn(error),
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const getData = async () => {
-    if (!timeSeriesFile) {
-      return;
+      }
     }
-    const result = await Storage.get(timeSeriesFile, {
-      download: true,
-      // bucket: "s3-object-lambda-access-point",
-      level: "private",
-    });
-    const timeSeriesData = (await new Response(
-      result.Body
-    ).json()) as TimeSeriesDataType;
+  }, [editor]);
 
-    const activity = await getActivity(timeSeriesData);
-    setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
-    setPowers && setPowers(timeSeriesData.powers);
-    setHearts && setHearts(timeSeriesData.hearts);
-    return activity;
-  };
-
-  React.useEffect(() => {
-    getData().then((d) => {
-      setActivity && setActivity(d as any);
-    });
-  }, [id]);
-
-  const insertImage = ({
-    selectedImage,
-  }: {
-    selectedImage: CloudinaryImage | undefined;
-  }) => {
-    Transforms.insertNodes(editor, [
-      {
-        type: "image",
-        asset_id: selectedImage?.asset_id,
-        public_id: selectedImage?.public_id,
-        children: [{ text: "" }],
-        void: true,
-      } as Descendant,
-      { type: "text", children: [{ text: "" }] } as Descendant,
-    ]);
-  };
-
-  const addImage = async ({
-    selectedImage,
-  }: {
-    selectedImage: CloudinaryImage | undefined;
-  }) => {
-    setHeroImage && setHeroImage(selectedImage);
-    setIsHeroImageModalOpen(false);
-
-    await PostSaveComponents({
-      postId: id,
-      title: title,
-      postLocation: postLocation,
-      components: editor.children,
-      heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
-    });
-  };
-
-  const setUpSub = async () => {
-    if (!subPubConfigured) {
-      const endpoint = await getEndpoint();
-      await configurePubSub(endpoint);
-      await attachIoTPolicyToUser();
-      setSubPubConfigured(true);
-    }
-
-    return PubSub.subscribe(`post-${id}`).subscribe({
-      next: async (data: any) => {
-        console.log(data);
-        if (data.value.type === "video.asset.ready") {
-          console.log("asseet reead");
-          Transforms.setNodes<CustomElement>(
-            editor,
-            {
-              isReady: true,
-            } as VideoEmbedType,
-            {
-              at: [],
-              match: (node) => {
-                const custom = node as CustomElement;
-                return custom.type === "videoEmbed" && custom.isReady === false;
-              },
-            }
-          );
-
-          await PostSaveComponents({
-            postId: id,
-            title: title,
-            postLocation: postLocation,
-            components: editor.children,
-            heroImage: heroImage ? JSON.stringify(heroImage) : "",
-          });
-        }
-      },
-      error: (error: any) => console.error(error),
-    });
-  };
-
-  let timeoutHandle: NodeJS.Timeout;
-
-  if (loading) {
-    return <SkeletonPost />;
-  }
+  // console.log(hoverIconPosition);
 
   return (
     <Flex>
-      {isPublishedConfirmationOpen && <PublishModalConfirmation />}
-      {isGraphMenuOpen && <NewComponentSidebar editor={editor} />}
-      {isImageModalOpen && (
-        <AddImage callback={insertImage} setIsOpen={setIsImageModalOpen} />
-      )}
-      {isHeroImageModalOpen && (
-        <AddImage setIsOpen={setIsHeroImageModalOpen} callback={addImage} />
-      )}
-      {isGpxUploadOpen && <UploadGpxModal />}
-      {isShareModalOpen && <ShareModal />}
-      {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
       <Box
         sx={{
-          minWidth: [null, null, isGraphMenuOpen ? "" : "900px"],
-          marginLeft: isGraphMenuOpen
-            ? ["20px", "20px", "auto"]
-            : [0, 0, "auto"],
-          marginRight: isGraphMenuOpen
-            ? ["20px", "20px", "auto"]
-            : [0, 0, "auto"],
+          minWidth: [null, null, "900px"],
+          marginLeft: [0, 0, "auto"],
+          marginRight: [0, 0, "auto"],
           marginBottom: "50px",
-          width: [isGraphMenuOpen ? "calc(100% - 300px)" : "100%", null, null],
+          width: ["100%", null, null],
           backgroundColor: "background",
           borderRadius: "10px",
           padding: "0px",
-          paddingBottom: "200px",
+          // paddingBottom: "200px",
           position: "relative",
         }}
       >
-        {showMenu && (
-          <div
-            style={{
-              position: "absolute",
-              top: "500px",
-              left: "0",
-              padding: "10px",
-              background: "white",
-              border: "1px solid #ddd",
-            }}
-          >
-            {/* Your menu content goes here */}
-            Pressed Slash! Display your menu items here.
-          </div>
-        )}
         <Slate
           editor={editor}
           initialValue={initialState}
           onChange={(newValue) => {
-            const ops = editor.operations.filter((o) => {
-              if (o) {
-                return o.type !== "set_selection";
-              }
-              return false;
-            });
-
-            if (ops && ops.length === 0) {
-              return;
-            }
-            setSavingStatus("");
-
-            if (timeoutLink) {
-              clearTimeout(timeoutLink);
-            }
-            timeoutHandle = setTimeout(async () => {
-              setIsSavingPost(true);
-              setSavingStatus("saving...");
-
-              await PostSaveComponents({
-                postId: id,
-                title: title,
-                postLocation: postLocation,
-                components: editor.children,
-                heroImage: heroImage ? JSON.stringify(heroImage) : "",
-              });
-              setSavingStatus("saved");
-
-              setIsSavingPost(false);
-            }, 2000);
-
-            setTimeoutLink(timeoutHandle);
-            setComponents && setComponents(newValue as Array<CustomElement>);
+            updateMenuPosition();
           }}
         >
+          {isNewComponentMenuOpen && (
+            <Menu
+              onClose={() => {
+                setIsNewComponentMenuOpen(false);
+              }}
+              menuPosition={menuPosition}
+            />
+          )}
           <PostMenu />
           <Editable
             spellCheck
@@ -359,7 +211,26 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
               return [];
             }}
-            renderLeaf={renderLeaf}
+            renderLeaf={(props: RenderLeafProps) => {
+              return (
+                <>
+                  <Leaf {...props} updateMenuPosition={updateMenuPosition} />
+                  {props.leaf.placeholder && (
+                    <span
+                      style={{
+                        opacity: 0.3,
+                        position: "absolute",
+                        top: "0px",
+                        left: "5px",
+                      }}
+                      contentEditable={false}
+                    >
+                      Type / to open menu
+                    </span>
+                  )}
+                </>
+              );
+            }}
             style={{ paddingBottom: "200px" }}
             onKeyDown={(event) => {
               const { selection } = editor;
@@ -367,9 +238,10 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
               if (
                 (event.key === "/" && !selection) ||
-                (event.key === "/" && selection && selection.focus.offset == 0)
+                (event.key === "/" && selection && selection.focus.offset === 0)
               ) {
-                editor.addMark("pressSlash", true);
+                // event.preventDefault();
+                setIsNewComponentMenuOpen(true);
               }
             }}
           />
