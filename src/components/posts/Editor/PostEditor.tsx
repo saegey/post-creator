@@ -85,19 +85,77 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   } = React.useContext(EditorContext);
   const [showMenu, setShowMenu] = React.useState(false);
 
-  // React.useEffect(() => {
-  //   let subUpdates: ZenObservable.Subscription;
+  React.useEffect(() => {
+    if (initialState) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, [initialState]);
 
-  //   setUpSub().then((sub) => {
-  //     subUpdates = sub;
-  //   });
+  React.useEffect(() => {
+    const subscription = API.graphql<
+      GraphQLSubscription<OnUpdatePostSubscription>
+    >(graphqlOperation(subscriptions.onUpdatePost)).subscribe({
+      next: ({ value }) => {
+        if (
+          !value.data?.onUpdatePost?.powerZoneBuckets ||
+          !value.data?.onUpdatePost?.timeInRed ||
+          !value.data?.onUpdatePost?.powerZones
+        ) {
+          return;
+        }
 
-  //   return () => {
-  //     if (subUpdates) {
-  //       subUpdates.unsubscribe();
-  //     }
-  //   };
-  // }, [subPubConfigured]);
+        setTimeInRed && setTimeInRed(value.data?.onUpdatePost?.timeInRed);
+        setPowerZoneBuckets &&
+          setPowerZoneBuckets(
+            JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
+          );
+        setPowerZones &&
+          setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
+        setIsFtpUpdating(false);
+      },
+      error: (error) => console.warn(error),
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const getData = async () => {
+    if (!timeSeriesFile) {
+      return;
+    }
+    const result = await Storage.get(timeSeriesFile, {
+      download: true,
+      // bucket: "s3-object-lambda-access-point",
+      level: "private",
+    });
+    const timeSeriesData = (await new Response(
+      result.Body
+    ).json()) as TimeSeriesDataType;
+
+    const activity = await getActivity(timeSeriesData);
+    setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
+    setPowers && setPowers(timeSeriesData.powers);
+    setHearts && setHearts(timeSeriesData.hearts);
+    return activity;
+  };
+
+  React.useEffect(() => {
+    let subUpdates: ZenObservable.Subscription;
+
+    setUpSub().then((sub) => {
+      subUpdates = sub;
+    });
+
+    return () => {
+      if (subUpdates) {
+        subUpdates.unsubscribe();
+      }
+    };
+  }, [subPubConfigured]);
 
   const {
     id,
@@ -133,6 +191,86 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   // const [showMenu, setShowMenu] = React.useState(false);
   // const [menuPosition, setMenuPosition] = React.useState({ top: 0, left: 0 });
 
+  React.useEffect(() => {
+    getData().then((d) => {
+      setActivity && setActivity(d as any);
+    });
+  }, [id]);
+
+  const insertImage = ({
+    selectedImage,
+  }: {
+    selectedImage: CloudinaryImage | undefined;
+  }) => {
+    Transforms.insertNodes(editor, [
+      {
+        type: "image",
+        asset_id: selectedImage?.asset_id,
+        public_id: selectedImage?.public_id,
+        children: [{ text: "" }],
+        void: true,
+      } as Descendant,
+      { type: "text", children: [{ text: "" }] } as Descendant,
+    ]);
+  };
+
+  const addImage = async ({
+    selectedImage,
+  }: {
+    selectedImage: CloudinaryImage | undefined;
+  }) => {
+    setHeroImage && setHeroImage(selectedImage);
+    setIsHeroImageModalOpen(false);
+
+    await PostSaveComponents({
+      postId: id,
+      title: title,
+      postLocation: postLocation,
+      components: editor.children,
+      heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
+    });
+  };
+
+  const setUpSub = async () => {
+    if (!subPubConfigured) {
+      const endpoint = await getEndpoint();
+      await configurePubSub(endpoint);
+      await attachIoTPolicyToUser();
+      setSubPubConfigured(true);
+    }
+
+    return PubSub.subscribe(`post-${id}`).subscribe({
+      next: async (data: any) => {
+        console.log(data);
+        if (data.value.type === "video.asset.ready") {
+          console.log("asseet reead");
+          Transforms.setNodes<CustomElement>(
+            editor,
+            {
+              isReady: true,
+            } as VideoEmbedType,
+            {
+              at: [],
+              match: (node) => {
+                const custom = node as CustomElement;
+                return custom.type === "videoEmbed" && custom.isReady === false;
+              },
+            }
+          );
+
+          await PostSaveComponents({
+            postId: id,
+            title: title,
+            postLocation: postLocation,
+            components: editor.children,
+            heroImage: heroImage ? JSON.stringify(heroImage) : "",
+          });
+        }
+      },
+      error: (error: any) => console.error(error),
+    });
+  };
+
   const updateMenuPosition = React.useCallback(() => {
     const selection = editor.selection;
     if (selection) {
@@ -157,6 +295,17 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
   return (
     <Flex>
+      {isPublishedConfirmationOpen && <PublishModalConfirmation />}
+      {isGraphMenuOpen && <NewComponentSidebar editor={editor} />}
+      {isImageModalOpen && (
+        <AddImage callback={insertImage} setIsOpen={setIsImageModalOpen} />
+      )}
+      {isHeroImageModalOpen && (
+        <AddImage setIsOpen={setIsHeroImageModalOpen} callback={addImage} />
+      )}
+      {isGpxUploadOpen && <UploadGpxModal />}
+      {isShareModalOpen && <ShareModal />}
+      {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
       <Box
         sx={{
           minWidth: [null, null, "900px"],
@@ -176,6 +325,40 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           initialValue={initialState}
           onChange={(newValue) => {
             updateMenuPosition();
+            const ops = editor.operations.filter((o) => {
+              if (o) {
+                return o.type !== "set_selection";
+              }
+              return false;
+            });
+
+            if (ops && ops.length === 0) {
+              return;
+            }
+            setSavingStatus("");
+
+            if (timeoutLink) {
+              clearTimeout(timeoutLink);
+            }
+            let timeoutHandle: NodeJS.Timeout;
+            timeoutHandle = setTimeout(async () => {
+              setIsSavingPost(true);
+              setSavingStatus("saving...");
+
+              await PostSaveComponents({
+                postId: id,
+                title: title,
+                postLocation: postLocation,
+                components: editor.children,
+                heroImage: heroImage ? JSON.stringify(heroImage) : "",
+              });
+              setSavingStatus("saved");
+
+              setIsSavingPost(false);
+            }, 2000);
+
+            setTimeoutLink(timeoutHandle);
+            setComponents && setComponents(newValue as Array<CustomElement>);
           }}
         >
           {isNewComponentMenuOpen && (
