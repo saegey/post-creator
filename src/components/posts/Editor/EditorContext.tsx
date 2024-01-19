@@ -43,6 +43,12 @@ export type EditorContextType = {
   isNewComponentMenuOpen: boolean;
   setIsNewComponentMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
+  isStravaModalOpen: boolean;
+  setIsStravaModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isRWGPSModalOpen: boolean;
+  setIsRWGPSModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   menuPosition: { top: number; left: number };
   setMenuPosition: React.Dispatch<
     React.SetStateAction<{ top: string | number; left: string | number }>
@@ -80,6 +86,10 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsNewComponentMenuOpen: () => {},
   menuPosition: { top: 0, left: 0 },
   setMenuPosition: () => {},
+  isStravaModalOpen: false,
+  setIsStravaModalOpen: () => {},
+  isRWGPSModalOpen: false,
+  setIsRWGPSModalOpen: () => {},
 });
 
 export { EditorContext };

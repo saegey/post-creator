@@ -1,69 +1,54 @@
-import { Flex, Text, Box } from "theme-ui";
+import { Flex, Text, Box, Button } from "theme-ui";
 import React from "react";
 import { Transforms } from "slate";
-
-import PowerGraphIcon from "../../icons/PowerGraphIcon";
-import { PostContext } from "../../PostContext";
 import { useSlateStatic } from "slate-react";
+
+import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
+import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 
-const AddPowerCurve = ({ size }: { size?: "small" }) => {
+const AddActivityOverview = () => {
   const { gpxFile } = React.useContext(PostContext);
   const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
 
   const editor = useSlateStatic();
 
-  const addPowerCurve = () => {
+  const addActivityOverview = () => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
         {
-          type: "powergraph",
+          type: "activityOverview",
           children: [{ text: "" }],
           void: true,
-          // placeholder: "",
         },
         { type: "paragraph", children: [{ text: "" }] },
       ]);
-
       setIsNewComponentMenuOpen(false);
     }
   };
+
   return (
     <Box
-      onClick={() => {
-        if (gpxFile) {
-          addPowerCurve();
-        }
-      }}
+      onClick={() => addActivityOverview()}
       variant="boxes.sidebarMenuItem"
       sx={{
         cursor: gpxFile ? "pointer" : "not-allowed",
-        padding: size === "small" ? "5px" : "15px",
       }}
     >
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: size === "small" ? "16px" : "25px",
+            width: "25px",
             height: "auto",
             // marginRight: "10px",
           }}
         >
-          <PowerGraphIcon />
+          <ActivityOverviewIcon />
         </Box>
-        <Text
-          as="span"
-          sx={{
-            // color: color,
-
-            fontSize: size === "small" ? "14px" : "inherit",
-          }}
-        >
-          Power Curve
-        </Text>
+        <Text as="span">Activity Overview</Text>
       </Flex>
     </Box>
   );
 };
 
-export default AddPowerCurve;
+export default AddActivityOverview;

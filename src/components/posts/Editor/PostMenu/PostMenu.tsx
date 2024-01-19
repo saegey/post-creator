@@ -77,7 +77,7 @@ const PostMenu = () => {
             setIsImageModalOpen(true);
           }}
         />
-        <NewComponentButton />
+        {/* <NewComponentButton /> */}
         <Link href={`/j/${id}`} rel="noopener noreferrer" target="_blank">
           <PreviewButton />
         </Link>

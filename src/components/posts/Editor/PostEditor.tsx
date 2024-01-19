@@ -46,26 +46,11 @@ import {
 } from "../../../actions/PubSub";
 import NewComponentSidebar from "./NewComponentSidebar";
 import Menu from "../../Menu";
-
-const Leaf = ({
-  attributes,
-  children,
-  updateMenuPosition,
-}: {
-  attributes: RenderLeafProps;
-  children: JSX.Element;
-  updateMenuPosition: React.MouseEventHandler<HTMLSpanElement>;
-}) => {
-  return (
-    <span
-      {...attributes}
-      onMouseUp={updateMenuPosition}
-      // style={{ fontWeight: attributes.leaf.bold ? "bold" : "" }}
-    >
-      {children}
-    </span>
-  );
-};
+import { StravaModal } from "./AddStravaLink";
+import { AddVideoModal } from "./AddVideo";
+import { RWGPSModal } from "./AddRWGPS";
+import Leaf from "./Leaf";
+import SlateDecorate from "./SlateDecorate";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -76,14 +61,13 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
-  // const { isGraphMenuOpen } = React.useContext(EditorContext);
+
   const {
     setIsNewComponentMenuOpen,
     isNewComponentMenuOpen,
     setMenuPosition,
     menuPosition,
   } = React.useContext(EditorContext);
-  const [showMenu, setShowMenu] = React.useState(false);
 
   React.useEffect(() => {
     if (initialState) {
@@ -175,7 +159,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   } = React.useContext(PostContext);
 
   const {
-    isGraphMenuOpen,
     isGpxUploadOpen,
     isRaceResultsModalOpen,
     setIsFtpUpdating,
@@ -296,7 +279,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   return (
     <Flex>
       {isPublishedConfirmationOpen && <PublishModalConfirmation />}
-      {isGraphMenuOpen && <NewComponentSidebar editor={editor} />}
       {isImageModalOpen && (
         <AddImage callback={insertImage} setIsOpen={setIsImageModalOpen} />
       )}
@@ -369,31 +351,15 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               menuPosition={menuPosition}
             />
           )}
+          <RWGPSModal />
+          <StravaModal />
+          <AddVideoModal />
           <PostMenu />
           <Editable
             spellCheck
             autoFocus
             renderElement={renderElement}
-            decorate={([node, path]) => {
-              // console.log(node);
-              if (editor.selection != null) {
-                if (
-                  !Editor.isEditor(node) &&
-                  Editor.string(editor, [path[0]]) === "" &&
-                  Range.includes(editor.selection, path) &&
-                  Range.isCollapsed(editor.selection)
-                ) {
-                  return [
-                    {
-                      ...editor.selection,
-                      placeholder: true,
-                    },
-                  ];
-                }
-              }
-
-              return [];
-            }}
+            decorate={SlateDecorate}
             renderLeaf={(props: RenderLeafProps) => {
               return (
                 <>
@@ -414,11 +380,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
                 </>
               );
             }}
-            style={{ paddingBottom: "200px" }}
             onKeyDown={(event) => {
               const { selection } = editor;
-              // console.log(selection);
-
               if (
                 (event.key === "/" && !selection) ||
                 (event.key === "/" && selection && selection.focus.offset === 0)

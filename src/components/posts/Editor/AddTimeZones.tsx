@@ -1,69 +1,63 @@
 import { Flex, Text, Box } from "theme-ui";
 import React from "react";
 import { Transforms } from "slate";
-
-import PowerGraphIcon from "../../icons/PowerGraphIcon";
-import { PostContext } from "../../PostContext";
 import { useSlateStatic } from "slate-react";
+
+import TimePowerZonesIcon from "../../icons/TimePowerZonesIcon";
+import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 
-const AddPowerCurve = ({ size }: { size?: "small" }) => {
-  const { gpxFile } = React.useContext(PostContext);
+const AddTimeZones = () => {
+  const { gpxFile, currentFtp } = React.useContext(PostContext);
   const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
-
   const editor = useSlateStatic();
 
-  const addPowerCurve = () => {
-    if (gpxFile) {
+  const addTimePowerZones = () => {
+    if (gpxFile && currentFtp) {
       Transforms.insertNodes(editor, [
-        {
-          type: "powergraph",
-          children: [{ text: "" }],
-          void: true,
-          // placeholder: "",
-        },
+        { type: "timeInZones", children: [{ text: "" }], void: true },
         { type: "paragraph", children: [{ text: "" }] },
       ]);
-
       setIsNewComponentMenuOpen(false);
     }
   };
+
   return (
     <Box
-      onClick={() => {
-        if (gpxFile) {
-          addPowerCurve();
-        }
-      }}
+      onClick={addTimePowerZones}
       variant="boxes.sidebarMenuItem"
       sx={{
-        cursor: gpxFile ? "pointer" : "not-allowed",
-        padding: size === "small" ? "5px" : "15px",
+        cursor: currentFtp ? "pointer" : "not-allowed",
       }}
     >
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: size === "small" ? "16px" : "25px",
+            width: "25px",
             height: "auto",
             // marginRight: "10px",
           }}
         >
-          <PowerGraphIcon />
+          <TimePowerZonesIcon
+            color={
+              currentFtp
+                ? `var(--theme-ui-colors-text)`
+                : `var(--theme-ui-colors-iconButtonDisabled)`
+            }
+          />
         </Box>
+
         <Text
           as="span"
           sx={{
-            // color: color,
-
-            fontSize: size === "small" ? "14px" : "inherit",
+            color: currentFtp ? "text" : "iconButtonDisabled",
           }}
         >
-          Power Curve
+          Time in Zones
         </Text>
       </Flex>
     </Box>
   );
 };
 
-export default AddPowerCurve;
+export default AddTimeZones;

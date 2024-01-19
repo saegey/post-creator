@@ -38,6 +38,8 @@ const EditUserPost = ({
   const [isNewComponentMenuOpen, setIsNewComponentMenuOpen] =
     React.useState(false);
   const [menuPosition, setMenuPosition] = React.useState({ top: 0, left: 0 });
+  const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
+  const [isRWGPSModalOpen, setIsRWGPSModalOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (user && user?.attributes.sub !== author.id) {
@@ -87,6 +89,10 @@ const EditUserPost = ({
             setIsVideoUploadOpen,
             menuPosition,
             setMenuPosition,
+            isStravaModalOpen,
+            setIsStravaModalOpen,
+            isRWGPSModalOpen,
+            setIsRWGPSModalOpen,
           }}
         >
           <PostEditor initialState={postComponents} />
