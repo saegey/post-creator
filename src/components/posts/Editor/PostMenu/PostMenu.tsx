@@ -6,10 +6,10 @@ import { API } from "aws-amplify";
 
 import PostSettings from "../PostSettings";
 
-import ImagesButton from "./buttons/ImagesButton";
+// import ImagesButton from "./buttons/ImagesButton";
 import BoldButton from "./buttons/BoldButton";
 import HeadingButton from "./buttons/HeadingButton";
-import NewComponentButton from "./buttons/NewComponentButton";
+// import NewComponentButton from "./buttons/NewComponentButton";
 
 import PreviewButton from "./buttons/PreviewButton";
 import { PostContext } from "../../../PostContext";
@@ -26,7 +26,6 @@ const PostMenu = () => {
   const {
     setIsImageModalOpen,
     isGraphMenuOpen,
-    setIsGraphMenuOpen,
     isSettingsModalOpen,
     setIsSettingsModalOpen,
     setIsPublishedConfirmationOpen,
@@ -71,13 +70,6 @@ const PostMenu = () => {
         <HeadingButton editor={editor} />
         <BulletListButton editor={editor} />
         <LinkButton editor={editor} />
-        <ImagesButton
-          onClick={() => {
-            setIsGraphMenuOpen(false);
-            setIsImageModalOpen(true);
-          }}
-        />
-        {/* <NewComponentButton /> */}
         <Link href={`/j/${id}`} rel="noopener noreferrer" target="_blank">
           <PreviewButton />
         </Link>

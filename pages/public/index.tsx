@@ -55,7 +55,7 @@ const Home = () => {
                   textAlign: "center",
                 }}
               >
-                The journal that<br></br>redefines journaling.
+                Track, Trek, Triumph: Your Journey, Your Journal..
               </Text>
               <Text
                 as="p"
@@ -67,9 +67,10 @@ const Home = () => {
                   textAlign: "center",
                 }}
               >
-                Write a full bike race recap in minutes. Add your photos and
-                videos and analyze your numbers and discuss key points in the
-                race.
+                Effortlessly craft a comprehensive bike race recap within
+                minutes. Enhance your narrative by seamlessly incorporating
+                photos and videos. Dive into insightful data analysis,
+                discussing pivotal moments and key highlights of the race.
               </Text>
               <Flex
                 sx={{
@@ -99,18 +100,14 @@ const Home = () => {
         </Flex>
         <Box sx={{ marginTop: ["80px", "0px", "0px"] }}>
           <FeatureHiglight
-            featureName="Crypto fundraising"
+            featureName="Activity Analytics"
             imagePath="/cryptop-1600.webp"
-            headline={
-              <>
-                Delightful to use.<br></br>Heavy on features
-              </>
-            }
+            headline={<>Explore insightful analytics for your race activity.</>}
             subHeadline={
               <>
-                Automate your fundraising securely and reliably without building
-                your own platform. Create on-brand investment opportunities that
-                will impress your investors.
+                Gain a competitive edge with detailed activity analytics.
+                Elevate your understanding of performance metrics. Harness
+                strategic insights for race excellence.
               </>
             }
             imagePosition="right"
@@ -119,9 +116,9 @@ const Home = () => {
                 icon: <ResultsIcon />,
                 content: (
                   <>
-                    Customize your campaign with flexible rules for investor
-                    eligibility, variable fees, and allocation preferences—all
-                    in one seamless setup.
+                    Zones time breakdown in a race is essential for strategic
+                    planning, enabling athletes to optimize pacing and energy
+                    distribution for peak performance throughout the event.
                   </>
                 ),
               },
@@ -129,9 +126,11 @@ const Home = () => {
                 icon: <PowerGraphIcon />,
                 content: (
                   <>
-                    Collect funds securely and direct them to your preferred
-                    wallet. Transactions are authenticated and investor token
-                    allocations are auto-calculated.
+                    Explore your performance evolution with our app's power
+                    curve feature, offering a dynamic graph that compares and
+                    contrasts your power profiles from various races and
+                    seasons, providing valuable insights into your athletic
+                    progress.
                   </>
                 ),
               },
@@ -139,35 +138,34 @@ const Home = () => {
                 icon: <VideoIcon />,
                 content: (
                   <>
-                    Create custom forms to gather essential investor information
-                    and enhance your pitch with social links, images, and
-                    videos—all in one place.
+                    Analyze your race intensity with a feature showcasing a
+                    breakdown of 'matches burned,' providing insights into
+                    kilojoules expended during the event.
                   </>
                 ),
               },
             ]}
           />
           <FeatureHiglight
-            featureName="Allocation management"
+            featureName="Race Results"
             imagePath="/p-1600.webp"
             subHeadline={
               <>
-                Allocation management ensures full control over your investments
-                and investor data. Swap manual tasks and scattered spreadsheets
-                for a single, reliable source that benefits both you and your
-                investors.
+                Effortlessly integrate and display race results within each
+                journal post, creating a centralized hub for your complete
+                racing history, instantly accessible and providing a
+                comprehensive snapshot of your performance journey.
               </>
             }
-            headline={<>Spread thin by spreadsheets? Retake control</>}
+            headline={<>Embed race results</>}
             imagePosition="left"
             highlights={[
               {
                 icon: <TimePowerZonesIcon color="black" />,
                 content: (
                   <>
-                    Keep track of how much you have raised, who you have raised
-                    it from, and how many tokens each individual is owed.
-                    Everything is calculated for you and managed in one place.
+                    Automatically embed and display your race results within
+                    each corresponding journal post.
                   </>
                 ),
               },
@@ -175,9 +173,8 @@ const Home = () => {
                 icon: <ActivityOverviewIcon />,
                 content: (
                   <>
-                    Keep user data current with a unified platform that syncs
-                    investor changes, refunds, and OTC transactions across all
-                    deals.
+                    Streamlined integration keeps your race history organized
+                    and easily accessible in one centralized location.
                   </>
                 ),
               },
@@ -185,34 +182,42 @@ const Home = () => {
                 icon: <StravaIcon color="black" />,
                 content: (
                   <>
-                    Offer investors a dedicated portal where they can log in to
-                    monitor and assess their investments, and remain updated on
-                    future distributions.
+                    Instantly view your performance metrics, rankings, and
+                    achievements without navigating away from your journal
+                    entry.
+                  </>
+                ),
+              },
+              {
+                icon: <StravaIcon color="black" />,
+                content: (
+                  <>
+                    Eliminates the need to search through external sources,
+                    ensuring your complete race history is at your fingertips
+                    within the app.
                   </>
                 ),
               },
             ]}
           />
           <FeatureHiglight
-            featureName="Token distributions"
+            featureName="Journal Sharing"
             imagePath="/token_1.webp"
             subHeadline={
               <>
-                Simplify operations and minimize errors with a secure platform
-                that automates token distributions. Save time and keep investors
-                updated on their progress.
+                Share your racing adventures externally with various sharing
+                options.
               </>
             }
-            headline={<>Effortlessly distribute tokens to investors</>}
+            headline={<>Share Your Racing Story with Precision and Control</>}
             imagePosition="right"
             highlights={[
               {
                 icon: <AvatarIcon />,
                 content: (
                   <>
-                    Effortlessly set up vesting schedules and get detailed batch
-                    breakdowns for token distribution. Each investor's
-                    allocation is automatically calculated.
+                    Invite-Only Access. Control access by sharing through
+                    invite-only or private links.
                   </>
                 ),
               },
@@ -220,9 +225,8 @@ const Home = () => {
                 icon: <HeroBannerIcon color="black" />,
                 content: (
                   <>
-                    Distribute tokens securely with our audited bulk-transfer
-                    smart contract. Send tokens to thousands of investors in a
-                    single transaction, no claiming portals needed.
+                    Public Visibility. Opt for public sharing to inspire and
+                    connect with the broader community.
                   </>
                 ),
               },
@@ -230,9 +234,18 @@ const Home = () => {
                 icon: <EyeIcon />,
                 content: (
                   <>
-                    Keep investors informed. After each token distribution, they
-                    receive an email confirmation and can see real-time progress
-                    in their investor portal.
+                    Effortlessly publish and share your journal entries from
+                    within the app. Keep your audience engaged with instant,
+                    real-time updates on your racing journey.
+                  </>
+                ),
+              },
+              {
+                icon: <EyeIcon />,
+                content: (
+                  <>
+                    Capture Moments Together. Collaboratively share experiences
+                    by inviting others to contribute to your journal entries.
                   </>
                 ),
               },

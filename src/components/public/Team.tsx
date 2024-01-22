@@ -27,30 +27,29 @@ const Team = ({ show } = { show: false }) => {
         <Flex sx={{ justifyContent: "center" }}>
           <Flex sx={{ flexDirection: "column" }}>
             <Text as="h1" variant="aboutHeader">
-              Building a European banking platform to last
+              Meet the Minds Behind Monopad Journal: A Collective Passion for
+              Cycling Excellence
             </Text>
             <Grid columns={["1fr", "1fr 1fr", "1fr 1fr"]}>
               <Text as="p" variant="aboutParagraph">
-                At Swan, our dream is to be the first thing people think of when
-                they want to add banking features to any product. Our founders,
-                all fintech veterans and seasoned entrepreneurs, experienced
-                first-hand the pain of embedding finance: long meetings, piles
-                of paperwork, convoluted APIs. There had to be an easier way. So
-                they teamed up to launch Swan in 2019.
+                Step into the world of Monopad Journal and discover the
+                brilliant minds steering our journey. Our team, fueled by a
+                shared passion for cycling and technological innovation, is at
+                the heart of creating an app that resonates with cyclists,
+                triathletes, gravel and mountain bike enthusiasts alike. From
+                seasoned racers to tech wizards, each member contributes a
+                unique blend of expertise, creativity, and dedication.
               </Text>
               <Text as="p" variant="aboutParagraph">
-                Since then, we’ve earned 58€m funding and became a licensed
-                financial institution. Our platform is getting more powerful and
-                more elegant by the day. Now we're expanding in Europe:
-                localizing our product, internationalizing our team and our
-                partner portfolio. With partners in 8 EU countries and product
-                coverage across 30, we are on track to take Swan much, much
-                further!
+                Together, we're weaving the fabric of an app that goes beyond
+                tracking – it's a digital companion crafted by individuals
+                committed to redefining how athletes experience and celebrate
+                the thrill of the ride. Get to know the diverse talents that
+                drive Monopad Journal's success.
               </Text>
             </Grid>
             <Text as="p" variant="aboutParagraph">
-              We are looking for the best talent to help us build the future of
-              banking services!
+              We are looking for the best talent to help us build the future!
             </Text>
           </Flex>
         </Flex>
@@ -61,8 +60,8 @@ const Team = ({ show } = { show: false }) => {
             </Text>
             <Box>
               <Text as="p" variant="aboutParagraph">
-                An international team of experts in banking, fraud, payments,
-                product development, and more.
+                Charting the Course: Our Leadership Team's Commitment to
+                Excellence and Innovation.
               </Text>
             </Box>
           </Box>
@@ -72,32 +71,13 @@ const Team = ({ show } = { show: false }) => {
             sx={{ gridColumnGap: "56px", gridRowGap: "80px" }}
           >
             <TeamMember
-              photo="/assets/aboutt/633340290358c30aeaa698e5_nb-p-500.png"
-              name="Nicolas Benady"
+              photo="/assets/aboutt/0.jpeg"
+              name="Adam Saegebarth"
               isCofounder={true}
               title="Chief Executive Officer"
-              bio="A serial entrepreneur and payments expert, Nicolas has already cofounded two successful startups, Limonetik and Antelop, both acquired in 2021. Swan is his biggest venture yet, and his ambition is to make it a major European Banking platform for years to come. Nicolas is an avid cyclist, and one of the things that keep him up at night is how to build a more ecologically responsible company."
-            />
-            <TeamMember
-              photo="/assets/aboutt/609a39f33751ff5ad4c6114b_nicolas-s.png"
-              name="Nicolas Saison"
-              isCofounder={true}
-              title="Chief operations Officer"
-              bio="Nicolas integrated 40+ payment methods at Limonetik and went on to manage payments and a B2C Finance Management app at Veolia. He leads daily operations with a sharp product vision and unbreakable positivity. Once upon a time, Nicolas Saison was actually CEO Nicolas Benady's apprentice. The two later joined forces as partners to make Swan take flight."
-            />
-            <TeamMember
-              photo="/assets/aboutt/609a39f33751ff07a8c61148_mathieu-b.png"
-              name="Mathieu Breton"
-              isCofounder={true}
-              title="CHIEF TECHNICAL OFFICER"
-              bio="Mathieu pilots super complex projects with admirable tech prowess. Passionate and altruistic, he's as comfortable sharing at a conference as he is huddled around a beer. Ex-lead dev at Xebia, then technical director, Breton has already launched his first tech company, JS-Republic, and now brings his savoir faire to Swan."
-            />
-            <TeamMember
-              photo="/assets/aboutt/609a39f33751ff081ac611cd_stephie.png"
-              name="Stéphie Ndinga"
-              isCofounder={false}
-              title="CHIEF COMPLIANCE OFFICER"
-              bio="Before joining Swan as Chief Compliance Officer, Stéphie was at Leetchi, European leader in online money pots (12 million+ users), where she created a powerful scoring engine and built a compliance department from the ground up. An expert in fraud, regulation, and client services, Stéphie is just the powerhouse Swan needed to help us earn our coveted e-money license, and to provide the most robust possible compliance processes."
+              bio="An experienced full-stack software architect and entrepreneur celebrated for his adept crafting of sophisticated software solutions. A 42-year-old tech enthusiast, Adam's passions extend beyond the digital realm to conquering gravel roads and navigating cyclocross challenges. Notably, he holds the title of the former Washington Cat4 State Champion in Cyclocross.
+
+							In the dynamic landscape of early-stage startups and maritime consulting, Adam's entrepreneurial journey unfolds, marked by a resilient spirit and a penchant for problem-solving. Renowned for his nuanced approach to software architecture, Adam embodies a humble yet impactful fusion of technological innovation and a genuine love for the open road. His story is one of pushing boundaries in technology and savoring the thrill of cycling pursuits."
             />
           </Grid>
         </Box>
@@ -113,26 +93,26 @@ const Team = ({ show } = { show: false }) => {
               <Box sx={{ paddingTop: ["0px", "80px", "80px"] }}>
                 <ValueCard
                   image="/assets/aboutt/human-graphics-svgrepo-com.svg"
-                  header="Be human"
-                  body="We do the right thing and go the extra mile to help people — colleagues, partners, or clients. Be human, straightforward, transparent, and sincerely care."
+                  header="Innovation"
+                  body="We embrace continuous innovation, crafting cutting-edge solutions that redefine the cycling experience and set new standards in the tech landscape."
                 />
                 <ValueCard
                   image="/assets/aboutt/bullseye-svgrepo-com.svg"
-                  header="Move fast, don't break things"
-                  body="If we must choose between security and going fast, we choose security. We are in banking, after all."
+                  header="Community"
+                  body="Fostering a sense of community, we believe in the power of shared experiences and collaborative efforts, uniting cyclists and tech enthusiasts in a dynamic ecosystem."
                 />
               </Box>
             </Box>
             <Box>
               <ValueCard
                 image="/assets/aboutt/diamond-svgrepo-com.svg"
-                header="Be ambitious"
-                body="We’re in this for the long game. To transform the entire financial services market, we constantly seek to do better, to do more."
+                header="Adaptability"
+                body=" Our commitment to adaptability reflects in our versatile solutions, seamlessly adjusting to the evolving needs of cyclists, triathletes, and mountain biking enthusiasts."
               />
               <ValueCard
                 image="/assets/aboutt/hourglass-half-svgrepo-com.svg"
-                header="Make everything simple"
-                body="If something is confusing, we break it down. Making complex things simple is what we do."
+                header="Excellence"
+                body="Striving for excellence in every aspect, we uphold a standard of precision and quality, ensuring our software architecture and features meet the highest standards, elevating the user experience."
               />
             </Box>
           </Grid>

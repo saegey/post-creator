@@ -51,7 +51,7 @@ export type EditorContextType = {
 
   menuPosition: { top: number; left: number };
   setMenuPosition: React.Dispatch<
-    React.SetStateAction<{ top: string | number; left: string | number }>
+    React.SetStateAction<{ top: number; left: number }>
   >;
 };
 

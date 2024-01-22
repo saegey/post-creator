@@ -46,7 +46,7 @@ const AddRWGPS = () => {
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: "25px",
+            width: "16px",
             height: "auto",
             // marginRight: "10px",
           }}
@@ -57,6 +57,7 @@ const AddRWGPS = () => {
           as="span"
           sx={{
             color: "text",
+            fontSize: "14px",
           }}
         >
           Embed RWGPS Route

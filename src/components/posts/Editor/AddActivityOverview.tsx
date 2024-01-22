@@ -38,14 +38,16 @@ const AddActivityOverview = () => {
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: "25px",
+            width: "16px",
             height: "auto",
             // marginRight: "10px",
           }}
         >
           <ActivityOverviewIcon />
         </Box>
-        <Text as="span">Activity Overview</Text>
+        <Text as="span" sx={{ fontSize: "14px" }}>
+          Activity Overview
+        </Text>
       </Flex>
     </Box>
   );

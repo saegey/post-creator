@@ -38,7 +38,7 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
       variant="boxes.sidebarMenuItem"
       sx={{
         cursor: gpxFile ? "pointer" : "not-allowed",
-        padding: size === "small" ? "5px" : "15px",
+        // padding: size === "small" ? "5px" : "15px",
       }}
     >
       <Flex sx={{ alignItems: "center", gap: "20px" }}>

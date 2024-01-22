@@ -5,13 +5,6 @@ import { useSlateStatic } from "slate-react";
 
 import { EditorContext } from "./EditorContext";
 import { PostContext } from "../../PostContext";
-import AddPowerCurve from "./PowerCurve";
-import AddStravaLink from "./AddStravaLink";
-import AddActivityOverview from "./AddActivityOverview";
-import AddTimeZones from "./AddTimeZones";
-import AddVideo from "./AddVideo";
-import AddRaceResults from "./AddRaceResults";
-import AddRWGPS from "./AddRWGPS";
 
 const AddRouteOverview = () => {
   const editor = useSlateStatic();
@@ -24,7 +17,6 @@ const AddRouteOverview = () => {
         { type: "visualOverview", children: [{ text: "" }], void: true },
         { type: "paragraph", children: [{ text: "" }] },
       ]);
-      // closeMenu();
       setIsNewComponentMenuOpen(false);
     }
   };
@@ -40,9 +32,8 @@ const AddRouteOverview = () => {
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: "25px",
+            width: "16px",
             height: "auto",
-            // marginRight: "10px",
           }}
         >
           <svg
@@ -62,7 +53,9 @@ const AddRouteOverview = () => {
             />
           </svg>
         </Box>
-        <Text as="span">Route Overview</Text>
+        <Text as="span" sx={{ fontSize: "14px" }}>
+          Route Overview
+        </Text>
       </Flex>
     </Box>
   );

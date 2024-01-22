@@ -1,19 +1,9 @@
-import React from "react";
 import { Storage } from "aws-amplify";
 
-import { PostContext } from "../src/components/PostContext";
 import { getActivity } from "../src/actions/PostGet";
 import { TimeSeriesDataType } from "../src/types/common";
 
-const getActivityData = async () => {
-  const {
-    timeSeriesFile,
-    setPowerAnalysis,
-    setPowers,
-    setHearts,
-    setActivity,
-  } = React.useContext(PostContext);
-
+const getActivityData = async (timeSeriesFile: string | null | undefined) => {
   if (!timeSeriesFile) {
     return;
   }
@@ -26,13 +16,14 @@ const getActivityData = async () => {
   ).json()) as TimeSeriesDataType;
 
   const activity = await getActivity(timeSeriesData);
+  const { powerAnalysis, powers, hearts } = timeSeriesData;
 
-  setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
-  setPowers && setPowers(timeSeriesData.powers);
-  setHearts && setHearts(timeSeriesData.hearts);
-  setActivity && setActivity(activity);
-
-  // return activity;
+  return {
+    powerAnalysis,
+    powers,
+    hearts,
+    activity,
+  };
 };
 
 export { getActivityData };

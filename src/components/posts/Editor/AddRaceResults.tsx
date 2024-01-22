@@ -38,7 +38,7 @@ const AddRaceResults = () => {
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: "25px",
+            width: "16px",
             height: "auto",
             // marginRight: "10px",
           }}
@@ -49,6 +49,7 @@ const AddRaceResults = () => {
           as="span"
           sx={{
             color: "text",
+            fontSize: "14px",
           }}
         >
           Race Results

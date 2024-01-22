@@ -14,49 +14,63 @@ const AboutUs = ({ show }: { show: boolean }) => {
       }}
     >
       <Text as="p" variant="aboutParagraph">
-        Swan is the easiest way to embed banking features into your product. Via
-        its simple APIs, European companies can integrate banking services
-        (accounts, cards and payments) quickly and easily into their own
-        product.
-      </Text>
-      <Text as="p" variant="aboutParagraph">
-        Founded in 2019, Swan processes around 300 million euros of transactions
-        per month, for 100+ companies across ten European countries. The company
-        was founded with the startup studio eFounders, and has received growth
-        capital from leading VC investors such as Lakestar, Accel, Creandum, and
-        Bpifrance. Swan is a Mastercard principal member and a licensed
-        financial institution, regulated by the ACPR.
+        Welcome to Monopad, the brainchild of a passionate cyclist based in the
+        vibrant city of Seattle. Established in 2023, Monopad Journal is a
+        testament to the fusion of technological innovation and a deep love for
+        the diverse world of cycling and triathlon.
       </Text>
       <Text as="h2" variant="aboutHeaderSmall">
-        What we do: embedded banking
+        Our Journey
       </Text>
       <Text as="p" variant="aboutParagraph">
-        Embedded finance is the contextualized integration of financial services
-        into digital products. Tech companies of all kinds can benefit from
-        embedding banking features like accounts, cards, and payments.
+        Our journey began as a solo venture, fueled by a racer's desire to
+        redefine the way cyclists and triathletes engage with their experiences
+        on roads, trails, and during multi-disciplinary events. Rooted in the
+        picturesque landscapes of the Pacific Northwest, Monopad Journal was
+        conceptualized to be more than just a tracking app – it's a companion on
+        your journey to mastering various terrains and disciplines.
       </Text>
       <Text as="h2" variant="aboutHeaderSmall">
-        Why embedded banking?
+        Passion Meets Innovation
       </Text>
       <Text as="p" variant="aboutParagraph">
-        We believe banking operations are at their best when you barely notice
-        them. Think about your favorite chauffeur app: you order a car, you're
-        driven, and you get out. You don't have to worry about the payment, it
-        just happens. All types of digital businesses can make this kind of
-        super-smooth user experience by embedding banking features.
+        Situated at the intersection of passion and innovation, our one-person
+        team in Seattle has dedicated itself to creating a race journal app that
+        resonates with the unique needs of cyclists, triathletes, gravel and
+        mountain bike enthusiasts. Every feature, from meticulous data tracking
+        to intuitive user interfaces, reflects our commitment to enhancing your
+        athletic endeavors.
       </Text>
-      ‍
-      <Text as="p" variant="aboutParagraph">
-        There are countless processes involving money movement that can be
-        improved: welcoming a new employee, paying a supplier, getting a new
-        tenant moved in. Specialized software already handles these things, but
-        they’re often still lacking the required banking feature integrations to
-        offer a unified user journey.
+      <Text as="h2" variant="aboutHeaderSmall">
+        What Sets Us Apart
       </Text>
       <Text as="p" variant="aboutParagraph">
-        Swan’s easy integration lets companies put banking services right where
-        the end-user might need them, and it’s all white-labeled so the user
-        experience continues to match the companies own branding and colors.
+        At Monopad Journal, we recognize that every ride, every race, and every
+        athlete has a story waiting to be told. Our app transcends traditional
+        tracking, offering a canvas for your journey. We pride ourselves on
+        delivering a seamless, intuitive, and personalized experience that
+        adapts to your individual aspirations and goals across various cycling
+        disciplines.
+      </Text>
+      <Text as="h2" variant="aboutHeaderSmall">
+        Our Commitment
+      </Text>
+      <Text as="p" variant="aboutParagraph">
+        As a one-person team rooted in Seattle's dynamic cycling and triathlon
+        community, our commitment goes beyond coding and technology. We are here
+        to support your diverse athletic journey, celebrate your triumphs, and
+        learn from your challenges. Your insights fuel our continuous
+        improvement, ensuring that Monopad Journal evolves to meet the dynamic
+        needs of cyclists, triathletes, gravel and mountain biking enthusiasts.
+      </Text>
+      <Text as="h2" variant="aboutHeaderSmall">
+        Join Us in the Journey
+      </Text>
+      <Text as="p" variant="aboutParagraph">
+        Whether you're conquering roads, trails, or participating in triathlons,
+        Monopad Journal is your digital companion. Join us in this exciting
+        journey where technology, passion, and community converge to redefine
+        how we experience and celebrate the exhilaration of the ride.
       </Text>
     </Box>
   );

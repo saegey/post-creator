@@ -79,8 +79,8 @@ const About = () => {
                 textAlign: "center",
               }}
             >
-              Wondering what we do, who we are, just looking for some basic
-              info? <br></br>This is the place!
+              Curious about our services, team, or seeking foundational details?
+              <br></br>You've found the right destination!
             </Text>
           </Flex>
         </Flex>
@@ -115,7 +115,7 @@ const About = () => {
               Team
             </Box>
           </Link>
-          <Link
+          {/* <Link
             href="about?section=story"
             style={{ textDecoration: "none", color: "black" }}
           >
@@ -129,8 +129,8 @@ const About = () => {
             >
               Our Story
             </Box>
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             href="about?section=press"
             style={{ textDecoration: "none", color: "black" }}
           >
@@ -144,7 +144,7 @@ const About = () => {
             >
               Press
             </Box>
-          </Link>
+          </Link> */}
         </Flex>
         <Flex sx={{ justifyContent: "center" }}>
           <AboutUs show={isAbout} />

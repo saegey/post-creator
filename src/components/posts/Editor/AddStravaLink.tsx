@@ -8,7 +8,7 @@ import { useSlateStatic } from "slate-react";
 import { EditorContext } from "./EditorContext";
 
 const StravaModal = () => {
-  const { isStravaModalOpen, setIsStravaModalOpen, } =
+  const { isStravaModalOpen, setIsStravaModalOpen } =
     React.useContext(EditorContext);
   const editor = useSlateStatic();
 
@@ -26,11 +26,11 @@ const StravaModal = () => {
 };
 
 const AddStravaLink = () => {
-  const { setIsStravaModalOpen, setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsStravaModalOpen, setIsNewComponentMenuOpen } =
+    React.useContext(EditorContext);
   const addStravaLink = () => {
     setIsStravaModalOpen(true);
-		setIsNewComponentMenuOpen(false);
-    // callback();
+    setIsNewComponentMenuOpen(false);
   };
 
   return (
@@ -45,14 +45,15 @@ const AddStravaLink = () => {
         <Flex sx={{ alignItems: "center", gap: "20px" }}>
           <Box
             sx={{
-              width: "25px",
+              width: "16px",
               height: "auto",
-              // marginRight: "10px",
             }}
           >
             <StravaIcon color={"var(--theme-ui-colors-text)"} />
           </Box>
-          <Text as="span">Embed Strava activity</Text>
+          <Text as="span" sx={{ fontSize: "14px" }}>
+            Embed Strava activity
+          </Text>
         </Flex>
       </Box>
     </>

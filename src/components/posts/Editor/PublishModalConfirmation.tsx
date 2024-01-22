@@ -61,7 +61,7 @@ const PublishModalConfirmation = () => {
     fetch();
   }, []);
 
-  return (
+  return isPublishedConfirmationOpen ? (
     <StandardModal
       isOpen={isPublishedConfirmationOpen}
       setIsOpen={setIsPublishedConfirmationOpen}
@@ -206,6 +206,8 @@ const PublishModalConfirmation = () => {
         </Box>
       </Flex>
     </StandardModal>
+  ) : (
+    <></>
   );
 };
 

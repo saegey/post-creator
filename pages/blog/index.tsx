@@ -55,8 +55,12 @@ export default function Post({ allPosts }: Props) {
           >
             <Text as="h1">Blog</Text>
             <Text as="p">
-              Here you can learn about UX/UI, front-end development, and product
-              management. Stay up to date by subscribing to our newsletter.
+              Delve into a blog encompassing diverse articles on training
+              methodologies, UI/UX insights, software innovations, and the
+              intricacies of cycling in the professional realm.
+            </Text>
+            <Text as="p">
+              Stay up to date by subscribing to our newsletter.
             </Text>
             <Flex sx={{ flexDirection: "column", gap: "80px" }}>
               {allPosts.map((post) => (

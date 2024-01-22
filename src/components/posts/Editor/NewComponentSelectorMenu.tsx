@@ -9,11 +9,13 @@ import AddVideo from "./AddVideo";
 import AddRaceResults from "./AddRaceResults";
 import AddRWGPS from "./AddRWGPS";
 import AddRouteOverview from "./AddRouteOverview";
+import AddImage from "./AddImage";
 
 const GraphSelectorMenu = ({ size }: { size?: "small" }) => {
   return (
     <>
-      <Flex sx={{ flexDirection: "column", margin: "10px" }}>
+      <Flex sx={{ flexDirection: "column", margin: "0px" }}>
+        <AddImage />
         <AddPowerCurve size={"small"} />
         <AddActivityOverview />
         <AddTimeZones />

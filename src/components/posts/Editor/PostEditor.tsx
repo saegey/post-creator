@@ -1,18 +1,10 @@
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { API, graphqlOperation, Storage, Amplify, PubSub } from "aws-amplify";
+import { API, graphqlOperation, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
-import {
-  Editor,
-  Range,
-  Element as SlateElement,
-  createEditor,
-  Transforms,
-  Descendant,
-} from "slate";
+import { createEditor, Transforms } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
-// import { , Transforms } from "slate";
 import { ZenObservable } from "zen-observable-ts";
 
 import renderElement from "./RenderElement";
@@ -21,7 +13,7 @@ import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import SkeletonPost from "./SkeletonPost";
 import { getActivity } from "../../../actions/PostGet";
-import NewComponentSelectorMenu from "./NewComponentSelectorMenu";
+
 import * as subscriptions from "../../../graphql/subscriptions";
 import UploadGpxModal from "./UploadGpxModal";
 import { OnUpdatePostSubscription } from "../../../API";
@@ -33,10 +25,8 @@ import withLayout from "../../plugins/withLayout";
 import { PostSaveComponents } from "../../../actions/PostSave";
 import PublishModalConfirmation from "./PublishModalConfirmation";
 import {
-  CustomEditor,
   CustomElement,
   CloudinaryImage,
-  TimeSeriesDataType,
   VideoEmbedType,
 } from "../../../types/common";
 import {
@@ -44,13 +34,14 @@ import {
   configurePubSub,
   getEndpoint,
 } from "../../../actions/PubSub";
-import NewComponentSidebar from "./NewComponentSidebar";
 import Menu from "../../Menu";
 import { StravaModal } from "./AddStravaLink";
 import { AddVideoModal } from "./AddVideo";
 import { RWGPSModal } from "./AddRWGPS";
 import Leaf from "./Leaf";
 import SlateDecorate from "./SlateDecorate";
+import { getActivityData } from "../../../../lib/editorApi";
+import slateApi from "../../../../lib/slateApi";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -108,23 +99,16 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, []);
 
   const getData = async () => {
-    if (!timeSeriesFile) {
+    const payload = await getActivityData(timeSeriesFile);
+    if (!payload) {
+      console.log("no data found for post");
       return;
     }
-    const result = await Storage.get(timeSeriesFile, {
-      download: true,
-      // bucket: "s3-object-lambda-access-point",
-      level: "private",
-    });
-    const timeSeriesData = (await new Response(
-      result.Body
-    ).json()) as TimeSeriesDataType;
 
-    const activity = await getActivity(timeSeriesData);
-    setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
-    setPowers && setPowers(timeSeriesData.powers);
-    setHearts && setHearts(timeSeriesData.hearts);
-    return activity;
+    setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
+    setPowers && setPowers(payload.powers);
+    setHearts && setHearts(payload.hearts);
+    setActivity && setActivity(payload.activity);
   };
 
   React.useEffect(() => {
@@ -171,31 +155,27 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setSavingStatus,
     isPublishedConfirmationOpen,
   } = React.useContext(EditorContext);
-  // const [showMenu, setShowMenu] = React.useState(false);
-  // const [menuPosition, setMenuPosition] = React.useState({ top: 0, left: 0 });
 
   React.useEffect(() => {
-    getData().then((d) => {
-      setActivity && setActivity(d as any);
-    });
+    getData();
   }, [id]);
 
-  const insertImage = ({
-    selectedImage,
-  }: {
-    selectedImage: CloudinaryImage | undefined;
-  }) => {
-    Transforms.insertNodes(editor, [
-      {
-        type: "image",
-        asset_id: selectedImage?.asset_id,
-        public_id: selectedImage?.public_id,
-        children: [{ text: "" }],
-        void: true,
-      } as Descendant,
-      { type: "text", children: [{ text: "" }] } as Descendant,
-    ]);
-  };
+  // const insertImage = ({
+  //   selectedImage,
+  // }: {
+  //   selectedImage: CloudinaryImage | undefined;
+  // }) => {
+  //   Transforms.insertNodes(editor, [
+  //     {
+  //       type: "image",
+  //       asset_id: selectedImage?.asset_id,
+  //       public_id: selectedImage?.public_id,
+  //       children: [{ text: "" }],
+  //       void: true,
+  //     } as Descendant,
+  //     { type: "text", children: [{ text: "" }] } as Descendant,
+  //   ]);
+  // };
 
   const addImage = async ({
     selectedImage,
@@ -274,14 +254,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     }
   }, [editor]);
 
-  // console.log(hoverIconPosition);
-
   return (
     <Flex>
-      {isPublishedConfirmationOpen && <PublishModalConfirmation />}
-      {isImageModalOpen && (
-        <AddImage callback={insertImage} setIsOpen={setIsImageModalOpen} />
-      )}
+      <PublishModalConfirmation />
       {isHeroImageModalOpen && (
         <AddImage setIsOpen={setIsHeroImageModalOpen} callback={addImage} />
       )}
@@ -307,40 +282,18 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           initialValue={initialState}
           onChange={(newValue) => {
             updateMenuPosition();
-            const ops = editor.operations.filter((o) => {
-              if (o) {
-                return o.type !== "set_selection";
-              }
-              return false;
-            });
-
-            if (ops && ops.length === 0) {
-              return;
-            }
-            setSavingStatus("");
-
-            if (timeoutLink) {
-              clearTimeout(timeoutLink);
-            }
-            let timeoutHandle: NodeJS.Timeout;
-            timeoutHandle = setTimeout(async () => {
-              setIsSavingPost(true);
-              setSavingStatus("saving...");
-
-              await PostSaveComponents({
-                postId: id,
-                title: title,
-                postLocation: postLocation,
-                components: editor.children,
-                heroImage: heroImage ? JSON.stringify(heroImage) : "",
-              });
-              setSavingStatus("saved");
-
-              setIsSavingPost(false);
-            }, 2000);
-
-            setTimeoutLink(timeoutHandle);
             setComponents && setComponents(newValue as Array<CustomElement>);
+
+            slateApi.saveEditor({
+              editor,
+              id,
+              title,
+              postLocation,
+              setSavingStatus,
+              setIsSavingPost,
+              timeoutLink,
+              setTimeoutLink,
+            });
           }}
         >
           {isNewComponentMenuOpen && (
@@ -363,7 +316,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             renderLeaf={(props: RenderLeafProps) => {
               return (
                 <>
-                  <Leaf {...props} updateMenuPosition={updateMenuPosition} />
+                  <Leaf
+                    children={props.children}
+                    attributes={props}
+                    updateMenuPosition={updateMenuPosition}
+                  />
                   {props.leaf.placeholder && (
                     <span
                       style={{

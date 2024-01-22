@@ -23,10 +23,10 @@ import OmniResultsListWrapper from "../RaceResults/OmniGo/OmniResultsListWrapper
 import WebscorerListWrapper from "../RaceResults/WebScorer/WebscorerListWrapper";
 import RaceResultsDotComListWrapper from "../RaceResults/RaceResults/RaceResultsDotComListWrapper";
 import RunSignupListWrapper from "../RaceResults/RunSignup/RunSignupListWrapper";
-import ComponentMenu from "./ComponentMenu";
-import { extend } from "cypress/types/lodash";
-import { EditorContext } from "./EditorContext";
-import { Editor, Node, Transforms } from "slate";
+// import ComponentMenu from "./ComponentMenu";
+// import { extend } from "cypress/types/lodash";
+// import { EditorContext } from "./EditorContext";
+// import { Editor, Node, Transforms } from "slate";
 import ParagraphElement from "../../ParagraphElement";
 
 const renderElement = (props: {

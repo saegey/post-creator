@@ -33,7 +33,7 @@ const AddTimeZones = () => {
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: "25px",
+            width: "16px",
             height: "auto",
             // marginRight: "10px",
           }}
@@ -51,6 +51,7 @@ const AddTimeZones = () => {
           as="span"
           sx={{
             color: currentFtp ? "text" : "iconButtonDisabled",
+            fontSize: "14px",
           }}
         >
           Time in Zones
