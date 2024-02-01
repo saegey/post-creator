@@ -5,73 +5,42 @@ import React from "react";
 
 import TimePowerZones from "./TimePowerZones";
 import { PostContext } from "../../PostContext";
-import Dropdown from "../../shared/Dropdown";
-import OptionsButton from "../../buttons/OptionsButton";
-import { useClickOutside } from "../../../utils/ux";
 import { CustomEditor, TimeInZonesType } from "../../../types/common";
+import OptionsMenu from "../Editor/OptionsMenu";
+import HoverAction from "../Editor/HoverAction";
 
 const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
   const editor = useSlateStatic() as CustomEditor;
   const path = ReactEditor.findPath(editor, element);
   const { powerZones, powerZoneBuckets } = React.useContext(PostContext);
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const wrapperRef = React.useRef();
-  useClickOutside(
-    wrapperRef,
-    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      setIsMenuOpen(false);
-      e.stopPropagation();
-    }
-  );
-
-  return (
-    <Box
-      sx={{
-        backgroundColor: [
-          "transparent",
-          "activityOverviewBackgroundColor",
-          "activityOverviewBackgroundColor",
-        ],
-        borderRadius: "5px",
-        padding: ["10px", "30px", "30px"],
-        position: "relative",
-        marginY: ["20px", "60px", "60px"],
-        marginX: "auto",
-        maxWidth: "690px",
-      }}
-      contentEditable={false}
-    >
-      <TimePowerZones
-        powerZoneBuckets={powerZoneBuckets}
-        powerZones={powerZones}
-      />
-      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-        <OptionsButton
-          onClick={() => {
-            if (isMenuOpen) {
-              setIsMenuOpen(false);
-            } else {
-              setIsMenuOpen(true);
-            }
-          }}
-        />
-        <Box ref={wrapperRef}>
-          <Dropdown isOpen={isMenuOpen}>
-            <Box
-              onClick={() => {
-                Transforms.removeNodes(editor, { at: path });
-                setIsMenuOpen(false);
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              Remove
-            </Box>
-          </Dropdown>
+  const hoverAction = React.useMemo(() => {
+    console.log("render time in zones");
+    return (
+      <HoverAction>
+        <Box variant="boxes.componentCard" contentEditable={false}>
+          <TimePowerZones
+            powerZoneBuckets={powerZoneBuckets}
+            powerZones={powerZones}
+          />
+          <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
+            <OptionsMenu>
+              <Box
+                onClick={() => {
+                  Transforms.removeNodes(editor, { at: path });
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                Remove
+              </Box>
+            </OptionsMenu>
+          </Box>
         </Box>
-      </Box>
-    </Box>
-  );
+      </HoverAction>
+    );
+  }, [element]);
+
+  return hoverAction;
 };
 
 export default TimePowerZonesWrapper;

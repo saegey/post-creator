@@ -43,7 +43,7 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
       <IconButton
         onMouseDown={(e) => toggleLink(e)}
         title={"Toggle Bold Text"}
-        variant="iconButton"
+        // variant="iconButton"
         sx={{
           marginX: ["5px", 0, 0],
           marginBottom: ["5px", 0, 0],
@@ -70,7 +70,8 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
         <Box
           sx={{
             position: "absolute",
-            left: "0",
+            top: "40px",
+            left: "-85px",
             width: "300px",
             backgroundColor: "background",
             height: "fit-content",

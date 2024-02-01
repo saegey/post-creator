@@ -1,7 +1,7 @@
 import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
 import { Transforms, Element as SlateElement } from "slate";
 
-import { CustomEditor, ParagraphElement } from "../../../types/common";
+import { CustomEditor } from "../../../types/common";
 
 interface StravaEmbedProps {
   editor: CustomEditor;
@@ -25,7 +25,6 @@ const StravaEmbed = ({ editor, isModalOpen }: StravaEmbedProps) => {
               activityId: JSON.parse(activityId)[0],
               children: [{ text: "" }],
             },
-            { type: "paragraph", children: [{ text: "" }] } as ParagraphElement,
           ]);
 
           isModalOpen(false);

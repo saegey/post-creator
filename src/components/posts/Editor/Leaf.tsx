@@ -1,23 +1,24 @@
 import { RenderLeafProps } from "slate-react";
 import React from "react";
+import { Box } from "theme-ui";
 
 const Leaf = ({
-  attributes,
-  children,
+  props,
   updateMenuPosition,
 }: {
-  attributes: RenderLeafProps;
-  children?: JSX.Element;
+  props: RenderLeafProps;
+  // children?: JSX.Element;
   updateMenuPosition: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   return (
-    <span
-      {...attributes}
+    <Box
+      as="span"
+      {...props.attributes}
       onMouseUp={updateMenuPosition}
-      // style={{ fontWeight: attributes.leaf.bold ? "bold" : "" }}
+      sx={{ fontWeight: props.leaf.bold ? "bold" : "" }}
     >
-      {children}
-    </span>
+      {props.children}
+    </Box>
   );
 };
 

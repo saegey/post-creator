@@ -1,28 +1,25 @@
 import { Box, Flex, Text } from "theme-ui";
-import ImagesButton from "./PostMenu/buttons/ImagesButton";
 import React from "react";
-// import { CldImage, CldUploadButton, CldUploadWidget } from "next-cloudinary";
+import { useSlateStatic } from "slate-react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
+import { CldUploadWidget } from "next-cloudinary";
+import { Transforms } from "slate";
+
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
 import { CloudinaryImage } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
-import StandardModal from "../../shared/StandardModal";
-import { useSlateStatic } from "slate-react";
-
-import { CldUploadWidget } from "next-cloudinary";
-import { Descendant, Transforms } from "slate";
+import ImagesButton from "./PostMenu/buttons/ImagesButton";
 
 const AddImage = () => {
-  const { setIsImageModalOpen, setIsNewComponentMenuOpen } =
+  const { setIsNewComponentMenuOpen } =
     React.useContext(EditorContext);
   const { setImages, images, id } = React.useContext(PostContext);
   const editor = useSlateStatic();
 
   const openModal = (open: Function) => {
-    // setIsImageModalOpen(true);
     setIsNewComponentMenuOpen(false);
     open();
   };
@@ -35,8 +32,9 @@ const AddImage = () => {
         public_id: selectedImage?.public_id,
         children: [{ text: "" }],
         void: true,
-      } as Descendant,
-      { type: "text", children: [{ text: "" }] } as Descendant,
+        photoCaption: "",
+        caption: "",
+      },
     ]);
   };
 

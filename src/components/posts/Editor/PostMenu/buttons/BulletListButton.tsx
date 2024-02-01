@@ -29,12 +29,12 @@ const BulletListButton = ({ editor }: { editor: CustomEditor }) => {
         }
       }}
       title={"Toggle bullet list"}
-      sx={{
-        marginX: ["5px", 0, 0],
-        marginBottom: ["5px", 0, 0],
-        verticalAlign: "top",
-      }}
-      variant="iconButton"
+      // sx={{
+      //   marginX: ["5px", 0, 0],
+      //   marginBottom: ["5px", 0, 0],
+      //   verticalAlign: "top",
+      // }}
+      // variant="iconButton"
     >
       <Box sx={{ padding: "2px", marginY: "auto" }}>
         <svg width="100%" height="100%" viewBox="0 -3.5 29 29" version="1.1">

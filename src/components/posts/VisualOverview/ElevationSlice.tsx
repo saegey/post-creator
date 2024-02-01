@@ -19,13 +19,13 @@ const ElevationSlice = ({
   selection,
   downSampledData,
   element,
-  units,
+  unitOfMeasure,
 }: {
   marker: ActivityItem | undefined;
   selection: [number, number] | undefined;
   downSampledData: any;
   element: VisualOverviewType;
-  units: any;
+  unitOfMeasure: string;
 }) => {
   const { powers, hearts } = React.useContext(PostContext);
 
@@ -36,7 +36,7 @@ const ElevationSlice = ({
       : selection
       ? (
           (downSampledData[selection[1]].e - downSampledData[selection[0]].e) /
-          (units.unitOfMeasure === "metric"
+          (unitOfMeasure === "metric"
             ? (downSampledData[selection[1]].d -
                 downSampledData[selection[0]].d) *
               1000
@@ -48,7 +48,7 @@ const ElevationSlice = ({
       ? (
           (downSampledData[element.selectionEnd].e -
             downSampledData[element.selectionStart].e) /
-          (units.unitOfMeasure === "metric"
+          (unitOfMeasure === "metric"
             ? (downSampledData[element.selectionEnd].d -
                 downSampledData[element.selectionStart].d) *
               1000
@@ -149,7 +149,7 @@ const ElevationSlice = ({
         <Text as="p">Distance</Text>
         <Text sx={{ fontSize: "20px" }}>
           {distance
-            ? `${distance} ${units.unitOfMeasure === "metric" ? "km" : "mi"}`
+            ? `${distance} ${unitOfMeasure === "metric" ? "km" : "mi"}`
             : ""}
         </Text>
       </Box>
@@ -157,7 +157,7 @@ const ElevationSlice = ({
         <Text as="p">Elevation</Text>
         <Text sx={{ fontSize: "20px" }}>
           {elevation
-            ? `${elevation} ${units.unitOfMeasure === "metric" ? "m" : "ft"}`
+            ? `${elevation} ${unitOfMeasure === "metric" ? "m" : "ft"}`
             : "-"}
         </Text>
       </Box>

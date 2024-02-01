@@ -1,51 +1,15 @@
-// SlateEditor.js
 import React from "react";
-import HoverIcon from "./HoverIcon";
-import { Box, Flex } from "theme-ui";
-import { EditorContext } from "./posts/Editor/EditorContext";
+import { Text } from "theme-ui";
 
-const ParagraphElement = ({
-  attributes,
-  children,
-}: {
-  attributes: object;
-  children: JSX.Element;
-}) => {
-  const [hoverIcon, setHoverIcon] = React.useState(false);
-  const { setIsNewComponentMenuOpen, setMenuPosition } =
-    React.useContext(EditorContext);
+import HoverAction from "./posts/Editor/HoverAction";
 
+const ParagraphElement = ({ children }: { children: JSX.Element }) => {
   return (
-    <Flex
-      onMouseEnter={() => setHoverIcon(true)}
-      onMouseLeave={() => setHoverIcon(false)}
-    >
-      <Box
-        sx={{
-          position: "relative",
-          width: ["100%", "690px", "690px"],
-          marginX: "auto",
-          marginY: "20px",
-        }}
-      >
-        <Box {...attributes} style={{ position: "relative" }}>
-          {hoverIcon && (
-            <HoverIcon
-              onClick={(event) => {
-                const rect = event.currentTarget.getBoundingClientRect();
-
-                setMenuPosition({
-                  top: rect.bottom - 10,
-                  left: rect.right + 10,
-                });
-                setIsNewComponentMenuOpen(true);
-              }}
-            />
-          )}
-          {children}
-        </Box>
-      </Box>
-    </Flex>
+    <HoverAction>
+      <Text as="p" sx={{ lineHeight: "32px", fontSize: "19px" }}>
+        {children}
+      </Text>
+    </HoverAction>
   );
 };
 

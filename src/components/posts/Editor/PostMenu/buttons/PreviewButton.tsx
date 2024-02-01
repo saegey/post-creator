@@ -1,35 +1,55 @@
-import React from 'react';
-import { Box, IconButton } from 'theme-ui';
+import React from "react";
+import { Box, Flex, IconButton, Text } from "theme-ui";
 
 const PreviewButton = () => {
   return (
-    <IconButton
-      // onClick={() => {}}
-      title='Preview Post'
-      variant='iconButton'
+    // <IconButton
+    //   // onClick={() => {}}
+    //   title="Preview Post"
+    //   // variant='iconButton'
+    //   sx={{
+    //     marginX: ["5px", 0, 0],
+    //     marginBottom: ["5px", 0, 0],
+    //     verticalAlign: "top",
+    //   }}
+    // >
+    <Flex
       sx={{
-        marginX: ['5px', 0, 0],
-        marginBottom: ['5px', 0, 0],
-        verticalAlign: 'top',
+        alignItems: "center",
+        gap: "10px",
+        backgroundColor: "gray",
+        paddingX: "15px",
+        paddingY: "5px",
+        borderRadius: "5px",
+        width: "fit-content",
       }}
     >
-      <Box sx={{ padding: '2px', marginY: 'auto' }}>
+      <Box sx={{ width: "20px", height: "20px" }}>
         <svg
-          fill='var(--theme-ui-colors-text)'
-          version='1.1'
-          className='menu-button'
-          id='Layer_1'
-          viewBox='0 0 480.606 480.606'
-          width='100%'
-          height='100%'
+          fill="var(--theme-ui-colors-text)"
+          version="1.1"
+          className="menu-button"
+          id="Layer_1"
+          viewBox="0 0 480.606 480.606"
+          width="100%"
+          height="100%"
         >
           <g>
-            <rect x='85.285' y='192.5' width='200' height='30' />
-            <path d='M439.108,480.606l21.213-21.213l-71.349-71.349c12.528-16.886,19.949-37.777,19.949-60.371 c0-40.664-24.032-75.814-58.637-92.012V108.787L241.499,0H20.285v445h330v-25.313c6.188-2.897,12.04-6.396,17.475-10.429 L439.108,480.606z M250.285,51.213L299.072,100h-48.787V51.213z M50.285,30h170v100h100v96.957 c-4.224-0.538-8.529-0.815-12.896-0.815c-31.197,0-59.148,14.147-77.788,36.358H85.285v30h126.856 c-4.062,10.965-6.285,22.814-6.285,35.174c0,1.618,0.042,3.226,0.117,4.826H85.285v30H212.01 c8.095,22.101,23.669,40.624,43.636,52.5H50.285V30z M307.389,399.208c-39.443,0-71.533-32.09-71.533-71.533 s32.089-71.533,71.533-71.533s71.533,32.089,71.533,71.533S346.832,399.208,307.389,399.208z' />
+            <rect x="85.285" y="192.5" width="200" height="30" />
+            <path d="M439.108,480.606l21.213-21.213l-71.349-71.349c12.528-16.886,19.949-37.777,19.949-60.371 c0-40.664-24.032-75.814-58.637-92.012V108.787L241.499,0H20.285v445h330v-25.313c6.188-2.897,12.04-6.396,17.475-10.429 L439.108,480.606z M250.285,51.213L299.072,100h-48.787V51.213z M50.285,30h170v100h100v96.957 c-4.224-0.538-8.529-0.815-12.896-0.815c-31.197,0-59.148,14.147-77.788,36.358H85.285v30h126.856 c-4.062,10.965-6.285,22.814-6.285,35.174c0,1.618,0.042,3.226,0.117,4.826H85.285v30H212.01 c8.095,22.101,23.669,40.624,43.636,52.5H50.285V30z M307.389,399.208c-39.443,0-71.533-32.09-71.533-71.533 s32.089-71.533,71.533-71.533s71.533,32.089,71.533,71.533S346.832,399.208,307.389,399.208z" />
           </g>
         </svg>
       </Box>
-    </IconButton>
+      <Text
+        sx={{
+          // lineHeight: "20px",
+          color: "text",
+        }}
+      >
+        Preview
+      </Text>
+    </Flex>
+    // </IconButton>
   );
 };
 

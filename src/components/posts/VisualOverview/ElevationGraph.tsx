@@ -74,7 +74,7 @@ const ElevationGraph = ({
     );
   }
 
-  console.log(top, bottom);
+  // console.log(top, bottom);
 
   const getAxisYDomain = (
     from: string | undefined,
@@ -123,7 +123,7 @@ const ElevationGraph = ({
   };
 
   const [zoomGraph, setZoomGraph] = React.useState(initialState);
-  console.log(zoomGraph);
+  // console.log(zoomGraph);
 
   const saveState = () => {
     if (editor && selection && path) {

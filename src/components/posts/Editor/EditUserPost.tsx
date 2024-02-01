@@ -55,7 +55,6 @@ const EditUserPost = ({
         flexGrow: 1,
       }}
     >
-      {user && <Header user={user} />}
       <Box>
         <EditorContext.Provider
           value={{
@@ -95,6 +94,7 @@ const EditUserPost = ({
             setIsRWGPSModalOpen,
           }}
         >
+          {user && <Header user={user} />}
           <PostEditor initialState={postComponents} />
         </EditorContext.Provider>
       </Box>

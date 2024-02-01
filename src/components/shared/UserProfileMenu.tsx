@@ -61,7 +61,7 @@ const UserProfileMenu = ({
           marginLeft: ["auto", 0, 0],
           position: "relative",
           flexGrow: 1,
-          justifyContent: "end",
+          // justifyContent: "end",
         }}
       >
         <Box
@@ -71,7 +71,7 @@ const UserProfileMenu = ({
             height: ["100%", "fit-content", "fit-content"],
             position: "relative",
             top: ["", "53px", "53px"],
-            right: ["", "10px", "10px"],
+            left: ["", "10px", "10px"],
             backgroundColor: "background",
             animation: "fadeIn .2s;",
             borderTopLeftRadius: [0, "10px", "10px"],

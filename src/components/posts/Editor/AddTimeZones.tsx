@@ -16,7 +16,6 @@ const AddTimeZones = () => {
     if (gpxFile && currentFtp) {
       Transforms.insertNodes(editor, [
         { type: "timeInZones", children: [{ text: "" }], void: true },
-        { type: "paragraph", children: [{ text: "" }] },
       ]);
       setIsNewComponentMenuOpen(false);
     }

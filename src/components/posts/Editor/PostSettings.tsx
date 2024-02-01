@@ -1,4 +1,13 @@
-import { Box, Flex, Text, Input, Button, Label, Spinner } from "theme-ui";
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  Button,
+  Label,
+  Spinner,
+  Link as ThemeLink,
+} from "theme-ui";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -10,6 +19,9 @@ import { EditorContext } from "./EditorContext";
 import { UpdatePostMutation, DeletePostMutation } from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
 import { updatePost, deletePost } from "../../../../src/graphql/mutations";
+import Link from "next/link";
+import PreviewButton from "./PostMenu/buttons/PreviewButton";
+import ShareButton from "./PostMenu/buttons/ShareButton";
 
 const PostSettings = () => {
   const {
@@ -119,6 +131,18 @@ const PostSettings = () => {
             paddingTop: "10px",
           }}
         >
+          <Flex sx={{ gap: "10px" }}>
+            <ThemeLink
+              as={Link}
+              href={`/j/${id}`}
+              rel="noopener noreferrer"
+              target="_blank"
+              sx={{ textDecoration: "none", textDecorationThickness: 0 }}
+            >
+              <PreviewButton />
+            </ThemeLink>
+            <ShareButton />
+          </Flex>
           <Box>
             <Label htmlFor="title" variant={"defaultLabel"}>
               Title

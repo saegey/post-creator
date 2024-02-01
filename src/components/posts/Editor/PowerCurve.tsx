@@ -22,7 +22,7 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
           void: true,
           // placeholder: "",
         },
-        { type: "paragraph", children: [{ text: "" }] },
+        // { type: "paragraph", children: [{ text: "" }] },
       ]);
 
       setIsNewComponentMenuOpen(false);

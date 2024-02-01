@@ -15,7 +15,6 @@ const AddRouteOverview = () => {
     if (gpxFile) {
       Transforms.insertNodes(editor, [
         { type: "visualOverview", children: [{ text: "" }], void: true },
-        { type: "paragraph", children: [{ text: "" }] },
       ]);
       setIsNewComponentMenuOpen(false);
     }

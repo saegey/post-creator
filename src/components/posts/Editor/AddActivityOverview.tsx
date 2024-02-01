@@ -21,7 +21,7 @@ const AddActivityOverview = () => {
           children: [{ text: "" }],
           void: true,
         },
-        { type: "paragraph", children: [{ text: "" }] },
+        // { type: "paragraph", children: [{ text: "" }] },
       ]);
       setIsNewComponentMenuOpen(false);
     }

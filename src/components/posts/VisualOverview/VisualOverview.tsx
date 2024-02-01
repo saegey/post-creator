@@ -12,10 +12,7 @@ interface Vizprops {
   token: string;
   element: VisualOverviewType;
   view: boolean;
-  units: {
-    unitOfMeasure: string;
-    toggleUnit: () => void;
-  };
+  unitOfMeasure: string;
 }
 
 const VisualOverview = ({
@@ -23,41 +20,18 @@ const VisualOverview = ({
   token,
   element,
   view,
-  units,
+  unitOfMeasure,
 }: Vizprops) => {
-  if (!activity || activity.length === 0) {
-    return (
-      <Flex
-        sx={{
-          width: "100%",
-          backgroundColor: "divider",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "5px",
-          margin: "60px",
-          // width: "500px",
-          height: "820px",
-        }}
-        className="skeleton"
-      />
-    );
-  }
-
   const { selection, setSelection, isSaved } = React.useContext(
     VisualOverviewContext
   );
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
   const [downsampleRate] = React.useState<number>(20);
   const [isZoomedOut, setIsZoomedOut] = React.useState(false);
-  const coordinates = React.useMemo(
-    () => (activity !== undefined ? activity.map((a) => a.c) : undefined),
-    [activity]
-  );
+  const coordinates =
+    activity !== undefined ? activity.map((a) => a.c) : undefined;
 
-  const graph = React.useMemo(() => {
-    if (activity === undefined) {
-      return <Box>Error loading graph</Box>;
-    }
+  const graph = () => {
     const fixedActivity = activity.slice(0, activity.length - 1);
     const selectionStart = isZoomedOut
       ? 0
@@ -106,7 +80,7 @@ const VisualOverview = ({
         setIsZoomedOut={setIsZoomedOut}
       />
     );
-  }, [activity, selection, units]);
+  };
 
   return (
     <Box sx={{ marginY: "60px", borderRadius: [0, "5px", "5px"] }}>
@@ -127,9 +101,9 @@ const VisualOverview = ({
         selection={selection}
         downSampledData={activity}
         element={element}
-        units={units}
+        unitOfMeasure={unitOfMeasure}
       />
-      {graph}
+      {graph()}
     </Box>
   );
 };

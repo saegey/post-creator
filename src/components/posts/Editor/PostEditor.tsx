@@ -8,7 +8,6 @@ import { withHistory } from "slate-history";
 import { ZenObservable } from "zen-observable-ts";
 
 import renderElement from "./RenderElement";
-import PostMenu from "./PostMenu/PostMenu";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import SkeletonPost from "./SkeletonPost";
@@ -42,6 +41,7 @@ import Leaf from "./Leaf";
 import SlateDecorate from "./SlateDecorate";
 import { getActivityData } from "../../../../lib/editorApi";
 import slateApi from "../../../../lib/slateApi";
+import FloatingMenu from "./FloatingMenu";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -52,6 +52,32 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
+  const [selectionMenu, setSelectionMenu] = React.useState<{
+    top: number;
+    left: number;
+  } | null>(null);
+
+  const handleSelectionChange = () => {
+    const selection = window.getSelection();
+    // console.log(selection);
+    if (!selection) {
+      return;
+    }
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const selectedText = range.toString();
+
+      if (selectedText.length > 0) {
+        const rect = range.getBoundingClientRect();
+        setSelectionMenu({ top: rect.bottom, left: rect.left });
+      } else {
+        setSelectionMenu(null);
+      }
+      // setSelectionMenu({ top: rect.bottom, left: rect.left });
+    } else {
+      setSelectionMenu(null);
+    }
+  };
 
   const {
     setIsNewComponentMenuOpen,
@@ -146,36 +172,16 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isGpxUploadOpen,
     isRaceResultsModalOpen,
     setIsFtpUpdating,
-    isImageModalOpen,
-    setIsImageModalOpen,
     isShareModalOpen,
     setIsHeroImageModalOpen,
     isHeroImageModalOpen,
     setIsSavingPost,
     setSavingStatus,
-    isPublishedConfirmationOpen,
   } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     getData();
   }, [id]);
-
-  // const insertImage = ({
-  //   selectedImage,
-  // }: {
-  //   selectedImage: CloudinaryImage | undefined;
-  // }) => {
-  //   Transforms.insertNodes(editor, [
-  //     {
-  //       type: "image",
-  //       asset_id: selectedImage?.asset_id,
-  //       public_id: selectedImage?.public_id,
-  //       children: [{ text: "" }],
-  //       void: true,
-  //     } as Descendant,
-  //     { type: "text", children: [{ text: "" }] } as Descendant,
-  //   ]);
-  // };
 
   const addImage = async ({
     selectedImage,
@@ -282,6 +288,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           initialValue={initialState}
           onChange={(newValue) => {
             updateMenuPosition();
+            handleSelectionChange();
             setComponents && setComponents(newValue as Array<CustomElement>);
 
             slateApi.saveEditor({
@@ -307,7 +314,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           <RWGPSModal />
           <StravaModal />
           <AddVideoModal />
-          <PostMenu />
+          {selectionMenu && (
+            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
+          )}
           <Editable
             spellCheck
             autoFocus
@@ -315,26 +324,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             decorate={SlateDecorate}
             renderLeaf={(props: RenderLeafProps) => {
               return (
-                <>
-                  <Leaf
-                    children={props.children}
-                    attributes={props}
-                    updateMenuPosition={updateMenuPosition}
-                  />
-                  {props.leaf.placeholder && (
-                    <span
-                      style={{
-                        opacity: 0.3,
-                        position: "absolute",
-                        top: "0px",
-                        left: "5px",
-                      }}
-                      contentEditable={false}
-                    >
-                      Type / to open menu
-                    </span>
-                  )}
-                </>
+                <Leaf props={props} updateMenuPosition={updateMenuPosition} />
               );
             }}
             onKeyDown={(event) => {

@@ -34,11 +34,13 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
         }
       }}
       sx={{
-        marginX: ["5px", 0, 0],
-        marginBottom: ["5px", 0, 0],
-        verticalAlign: "top",
+        // marginX: ["5px", 0, 0],
+        // marginBottom: ["5px", 0, 0],
+        // verticalAlign: "top",
+        width: "24px",
+        height: "auto",
       }}
-      variant="iconButton"
+      // variant="iconButton"
       key="headingtwo"
     >
       <svg
