@@ -1,6 +1,11 @@
 import React from "react";
 
-import { CustomElement } from "../../../types/common";
+import {
+  BulletedListType,
+  CustomElement,
+  HeadingElement,
+  ParagraphElement as ParagraphElementType,
+} from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import PowerGraphElement from "../PowerGraph/PowerGraphElement";
 import ImageElement from "../Image/ImageElement";
@@ -45,7 +50,11 @@ const renderElement = (props: {
       return <ActivityOverviewWrapper element={element} />;
     case "visualOverview":
       return (
-        <VisualOverviewWrapper element={element} view={false} unitOfMeasure={units.unitOfMeasure} />
+        <VisualOverviewWrapper
+          element={element}
+          view={false}
+          unitOfMeasure={units.unitOfMeasure}
+        />
       );
     case "image":
       return <ImageElement children={children} element={element} />;
@@ -56,9 +65,20 @@ const renderElement = (props: {
     case "videoEmbed":
       return <VideoPlayer element={element} />;
     case "heading-two":
-      return <Heading {...props} />;
+      return (
+        <Heading
+          children={props.children}
+          element={props.element as HeadingElement}
+        />
+      );
     case "bulleted-list":
-      return <BulletList {...props} />;
+      return (
+        <BulletList
+          children={props.children}
+          element={props.element as BulletedListType}
+          attributes={props.attributes}
+        />
+      );
     case "list-item":
       return <li {...attributes}>{children}</li>;
     case "raceResultsDotCom":
@@ -72,9 +92,19 @@ const renderElement = (props: {
     case "runSignupResults":
       return <RunSignupListWrapper />;
     case "paragraph":
-      return <ParagraphElement {...props} />;
+      return (
+        <ParagraphElement
+          children={props.children}
+          element={props.element as ParagraphElementType}
+        />
+      );
     default:
-      return <ParagraphElement {...props} />;
+      return (
+        <ParagraphElement
+          children={props.children}
+          element={props.element as ParagraphElementType}
+        />
+      );
   }
 };
 

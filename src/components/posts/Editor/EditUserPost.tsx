@@ -37,7 +37,11 @@ const EditUserPost = ({
   const [isVideoUploadOpen, setIsVideoUploadOpen] = React.useState(false);
   const [isNewComponentMenuOpen, setIsNewComponentMenuOpen] =
     React.useState(false);
-  const [menuPosition, setMenuPosition] = React.useState({ top: 0, left: 0 });
+  const [menuPosition, setMenuPosition] = React.useState({
+    top: 0,
+    left: 0,
+    path: [0],
+  });
   const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
   const [isRWGPSModalOpen, setIsRWGPSModalOpen] = React.useState(false);
 

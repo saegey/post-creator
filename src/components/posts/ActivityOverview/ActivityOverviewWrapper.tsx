@@ -36,7 +36,7 @@ const ActivityOverviewWrapper = ({
   const hoverAction = React.useMemo(() => {
     console.log("render activity");
     return (
-      <HoverAction>
+      <HoverAction element={element}>
         <Box variant="boxes.componentCard" contentEditable={false}>
           <ActivityOverview
             data={{

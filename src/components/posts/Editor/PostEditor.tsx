@@ -86,6 +86,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     menuPosition,
   } = React.useContext(EditorContext);
 
+  // console.log(menuPosition);
+
   React.useEffect(() => {
     if (initialState) {
       setTimeout(() => {
@@ -254,7 +256,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         if (parentElement) {
           const rect = parentElement.getBoundingClientRect();
           console.log("Bounding rect for the parent element:", rect);
-          setMenuPosition({ top: rect.bottom, left: rect.left });
+          setMenuPosition({
+            ...menuPosition,
+            top: rect.bottom,
+            left: rect.left,
+          });
         }
       }
     }
@@ -305,9 +311,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         >
           {isNewComponentMenuOpen && (
             <Menu
-              onClose={() => {
-                setIsNewComponentMenuOpen(false);
-              }}
+              // onClose={() => {
+              //   setIsNewComponentMenuOpen(false);
+              // }}
               menuPosition={menuPosition}
             />
           )}
@@ -337,6 +343,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
                 setIsNewComponentMenuOpen(true);
               }
             }}
+            contentEditable="true"
           />
         </Slate>
       </Box>

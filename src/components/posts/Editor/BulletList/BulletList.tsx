@@ -1,18 +1,19 @@
 import React from "react";
 import { Box } from "theme-ui";
 import HoverAction from "../HoverAction";
+import { BulletedListType } from "../../../../types/common";
 
 const BulletList = ({
   attributes,
   children,
-}: // element,
-{
+  element,
+}: {
   attributes: object;
   children: JSX.Element;
-  // element: CustomElement;
+  element: BulletedListType;
 }) => {
   return (
-    <HoverAction>
+    <HoverAction element={element}>
       <Box
         as="ul"
         sx={{

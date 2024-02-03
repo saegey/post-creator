@@ -7,14 +7,13 @@ import GraphSelectorMenu from "./posts/Editor/NewComponentSelectorMenu";
 import { EditorContext } from "./posts/Editor/EditorContext";
 
 const Menu = ({
-  onClose,
   menuPosition,
 }: {
-  onClose: Function;
   menuPosition: { top: number; left: number };
 }) => {
   const wrapperRef = React.useRef();
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen, isNewComponentMenuOpen } =
+    React.useContext(EditorContext);
 
   useClickOutside(
     wrapperRef,
@@ -23,6 +22,16 @@ const Menu = ({
       e.stopPropagation();
     }
   );
+
+  // React.useEffect(() => {
+  //   if (isNewComponentMenuOpen) {
+  //     document.body.style.overflow = "hidden";
+  //   }
+
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, [isNewComponentMenuOpen]);
 
   return (
     <Box
@@ -38,7 +47,7 @@ const Menu = ({
         borderStyle: "solid",
         // border: "1px solid #ddd",
         borderRadius: "5px",
-        zIndex: "200",
+        zIndex: "4",
       }}
     >
       <GraphSelectorMenu size={"small"} />

@@ -14,14 +14,14 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
 
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  console.log("redner power graph");
+  // console.log("redner power graph");
   if (!powerAnalysis) {
     return <></>;
   }
 
   const hoverAction = React.useMemo(() => {
     return (
-      <HoverAction>
+      <HoverAction element={element}>
         <Box variant="boxes.componentCard" contentEditable={false}>
           <Box sx={{ width: "100%", height: ["250px", "450px", "450px"] }}>
             <PowerCurveGraph

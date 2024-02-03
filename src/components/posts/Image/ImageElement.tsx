@@ -75,7 +75,7 @@ const ImageElement = ({
   };
 
   return (
-    <HoverAction>
+    <HoverAction element={element}>
       <Box contentEditable={false}>
         {isMaximized && imageMeta && (
           <ImageFullScreen

@@ -1,9 +1,16 @@
 import { Text } from "theme-ui";
 import HoverAction from "./HoverAction";
+import { HeadingElement } from "../../../types/common";
 
-const Heading = ({ children }: { children: JSX.Element }) => {
+const Heading = ({
+  children,
+  element,
+}: {
+  children: JSX.Element;
+  element: HeadingElement;
+}) => {
   return (
-    <HoverAction>
+    <HoverAction element={element}>
       <Text
         as="h2"
         sx={{

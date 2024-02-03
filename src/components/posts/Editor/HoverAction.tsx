@@ -3,11 +3,24 @@ import React from "react";
 import HoverIcon from "../../HoverIcon";
 import { Box, Flex } from "theme-ui";
 import { EditorContext } from "./EditorContext";
+import { useSlateStatic, ReactEditor } from "slate-react";
+import { CustomElement } from "../../../types/common";
+import { Transforms } from "slate";
 
-const HoverAction = ({ children }: { children: JSX.Element }) => {
+const HoverAction = ({
+  children,
+  element,
+}: {
+  children: JSX.Element;
+  element: CustomElement;
+}) => {
   const [hoverIcon, setHoverIcon] = React.useState(false);
+  const editor = useSlateStatic();
+  const path = ReactEditor.findPath(editor, element);
   const { setIsNewComponentMenuOpen, setMenuPosition } =
     React.useContext(EditorContext);
+
+  // console.log(editor.selection);
 
   return (
     <Flex
@@ -26,12 +39,32 @@ const HoverAction = ({ children }: { children: JSX.Element }) => {
           {hoverIcon && (
             <HoverIcon
               onClick={(event) => {
-                const rect = event.currentTarget.getBoundingClientRect();
+                event.preventDefault();
+                const { selection } = editor;
 
+                console.log(editor.selection);
+
+                editor.deselect();
+
+                const rect = event.currentTarget.getBoundingClientRect();
+                const scrollX = window.scrollX || window.pageXOffset;
+                const scrollY = window.scrollY || window.pageYOffset;
+                const adjustedTop = rect.bottom + scrollY - 10;
+                const adjustedLeft = rect.right + scrollX + 10;
+
+                // Transforms.select(editor, {
+                //   anchor: selection?.anchor,
+                //   focus: selection?.focus,
+                // });
+
+                console.log(path);
                 setMenuPosition({
-                  top: rect.bottom - 10,
-                  left: rect.right + 10,
+                  top: adjustedTop,
+                  left: adjustedLeft,
+                  path: path,
                 });
+
+                console.log(editor.selection);
                 setIsNewComponentMenuOpen(true);
               }}
             />
