@@ -17,8 +17,9 @@ const EmbedElemnt = ({ element }: { element: EmbedElementType }) => {
   }}`;
 
   return (
-    <HoverAction>
+    <HoverAction element={element}>
       <Flex
+        contentEditable={false}
         sx={{
           minWidth: "100%",
           maxWidth: ["100vw", "690px", "690px"],

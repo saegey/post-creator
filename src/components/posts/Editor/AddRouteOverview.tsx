@@ -9,13 +9,16 @@ import { PostContext } from "../../PostContext";
 const AddRouteOverview = () => {
   const editor = useSlateStatic();
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen, menuPosition } =
+    React.useContext(EditorContext);
 
   const addMap = () => {
     if (gpxFile) {
-      Transforms.insertNodes(editor, [
+      Transforms.insertNodes(
+        editor,
         { type: "visualOverview", children: [{ text: "" }], void: true },
-      ]);
+        { at: menuPosition.path }
+      );
       setIsNewComponentMenuOpen(false);
     }
   };

@@ -128,7 +128,7 @@ const RaceImportForm = () => {
           .then((res) => {
             console.log(res);
             if (!res) {
-              console.log("noo categoroieis");
+              console.log("no categories");
             } else {
               setRunSignupMeta({
                 ...runSignupMeta,

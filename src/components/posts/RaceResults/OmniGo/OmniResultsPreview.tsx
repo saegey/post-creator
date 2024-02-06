@@ -1,13 +1,10 @@
 import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
-import { API } from "aws-amplify";
 import { Transforms } from "slate";
 
 import { PostContext } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
-import { updatePost } from "../../../../graphql/mutations";
 import { CustomEditor } from "../../../../types/common";
-import { formatMillisecondsToHHMM } from "../../../../utils/time";
 import { saveOmniResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 
@@ -16,7 +13,8 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { omniResults, id, setOmniResults } = React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
+  const { setIsRaceResultsModalOpen, menuPosition } =
+    React.useContext(EditorContext);
   const { omniMeta, resultsUrl } = React.useContext(ResultsContext);
 
   return (
@@ -119,15 +117,6 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     {row.team}
                   </Text>
                 </Box>
-                {/* <Text
-                  as="span"
-                  sx={{ display: ["none", "inherit", "inherit"] }}
-                >
-                  {omniResults.results &&
-                    formatMillisecondsToHHMM(
-                      row.totalTime - omniResults.results[0].totalTime
-                    )}
-                </Text> */}
                 <Text
                   as="span"
                   sx={{
@@ -175,16 +164,14 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     category: omniMeta.category,
                     eventName: omniMeta.eventName,
                   });
-                Transforms.insertNodes(editor, [
+                Transforms.insertNodes(
+                  editor,
                   {
                     type: "omniResults",
                     children: [{ text: "" }],
                   },
-                  {
-                    type: "paragraph",
-                    children: [{ text: "" }],
-                  },
-                ]);
+                  { at: menuPosition.path }
+                );
 
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);

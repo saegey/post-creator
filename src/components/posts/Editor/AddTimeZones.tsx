@@ -1,4 +1,3 @@
-
 import { Flex, Text, Box } from "theme-ui";
 import React from "react";
 import { Transforms } from "slate";
@@ -10,14 +9,21 @@ import { EditorContext } from "./EditorContext";
 
 const AddTimeZones = () => {
   const { gpxFile, currentFtp } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen, menuPosition } =
+    React.useContext(EditorContext);
   const editor = useSlateStatic();
 
   const addTimePowerZones = () => {
     if (gpxFile && currentFtp) {
-      Transforms.insertNodes(editor, [
-        { type: "timeInZones", children: [{ text: "" }], void: true },
-      ]);
+      Transforms.insertNodes(
+        editor,
+        {
+          type: "timeInZones",
+          children: [{ text: "" }],
+          void: true,
+        },
+        { at: menuPosition.path }
+      );
       setIsNewComponentMenuOpen(false);
     }
   };
@@ -35,7 +41,6 @@ const AddTimeZones = () => {
           sx={{
             width: "16px",
             height: "auto",
-            // marginRight: "10px",
           }}
         >
           <TimePowerZonesIcon

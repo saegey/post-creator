@@ -1,5 +1,5 @@
 import { CognitoUser } from "@aws-amplify/auth";
-import { BaseEditor, Element } from "slate";
+import { BaseEditor, Element, Path } from "slate";
 import { ReactEditor } from "slate-react";
 import { HistoryEditor } from "slate-history";
 import { BaseElement } from "slate";
@@ -177,6 +177,7 @@ export type TimeInZonesType = {
   type: "timeInZones";
   children: CustomText[];
   void: true;
+  // at?: Path;
 };
 
 export type MatchesBurnedType = {
@@ -188,6 +189,7 @@ export type ActivityOverviewType = {
   type: "activityOverview";
   children: CustomText[];
   void: true;
+  // at?: Path;
 };
 
 export type VisualOverviewType = {

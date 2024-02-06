@@ -9,20 +9,22 @@ import { EditorContext } from "./EditorContext";
 
 const AddActivityOverview = () => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen, menuPosition } =
+    React.useContext(EditorContext);
 
   const editor = useSlateStatic();
 
   const addActivityOverview = () => {
     if (gpxFile) {
-      Transforms.insertNodes(editor, [
+      Transforms.insertNodes(
+        editor,
         {
           type: "activityOverview",
           children: [{ text: "" }],
           void: true,
         },
-        // { type: "paragraph", children: [{ text: "" }] },
-      ]);
+        { at: menuPosition.path }
+      );
       setIsNewComponentMenuOpen(false);
     }
   };
@@ -40,7 +42,6 @@ const AddActivityOverview = () => {
           sx={{
             width: "16px",
             height: "auto",
-            // marginRight: "10px",
           }}
         >
           <ActivityOverviewIcon />

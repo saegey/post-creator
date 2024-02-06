@@ -62,7 +62,7 @@ const VisualOverviewWrapper = ({
     });
 
     return (
-      <HoverAction>
+      <HoverAction element={element}>
         <Box
           sx={{ position: "relative", maxWidth: "690px", marginX: "auto" }}
           contentEditable={false}

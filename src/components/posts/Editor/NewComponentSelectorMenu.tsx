@@ -25,9 +25,6 @@ const AddText = () => {
     event.preventDefault();
     setIsNewComponentMenuOpen(false);
 
-    // if (gpxFile && currentFtp) {
-    console.log(menuPosition);
-    console.log(editor.selection);
     Transforms.insertNodes(
       editor,
       { type: "paragraph", children: [{ text: "" }] },
@@ -36,31 +33,13 @@ const AddText = () => {
 
     // Move the cursor (caret) to the end of the newly inserted paragraph
     const newOffset = editor.children[0].children[0].text.length;
-    console.log(newOffset);
     const newPath = menuPosition.path.concat(0);
-    // const newSelection = {
-    //   anchor: { path: newPath, offset: 0 },
-    //   focus: { path: newPath, offset: 0 },
-    // };
-    // Transforms.select(editor, newSelection);
 
-    // Move the cursor (caret) to the end of the newly inserted text element
-    // const newPath = editor.selection?.path.concat(0); // Adjust the path as needed
-    // const newOffset = Editor.node(editor, newPath).[0].text.length;
-    // const newOffset = Node.get(editor, newPath).children[0].text.length;
+    Transforms.select(editor, {
+      anchor: { path: newPath, offset: newOffset },
+      focus: { path: newPath, offset: newOffset },
+    });
 
-    // Transforms.setSelection(editor, {
-    //   anchor: { path: newOffset, offset: 1 },
-    //   focus: { path: newOffset, offset: 1 },
-    // });
-    setTimeout(() => {
-      Transforms.select(editor, {
-        anchor: { path: newPath, offset: newOffset },
-        focus: { path: newPath, offset: newOffset },
-      });
-    }, 100);
-
-    console.log(editor.selection);
   };
 
   return (

@@ -13,12 +13,11 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
   const { webscorerResults, resultsUrl } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  // console.log("webscorerResults render");
 
   const hoverAct = React.useMemo(() => {
-    console.log("render");
+    // console.log("render");
     return (
-      <HoverAction>
+      <HoverAction element={element}>
         <Box variant="boxes.componentCard" contentEditable={false}>
           <Box sx={{ position: "relative" }}>
             <WebscorerList

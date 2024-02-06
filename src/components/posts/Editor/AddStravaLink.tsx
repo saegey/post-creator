@@ -28,6 +28,7 @@ const StravaModal = () => {
 const AddStravaLink = () => {
   const { setIsStravaModalOpen, setIsNewComponentMenuOpen } =
     React.useContext(EditorContext);
+
   const addStravaLink = () => {
     setIsStravaModalOpen(true);
     setIsNewComponentMenuOpen(false);

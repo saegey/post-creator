@@ -19,7 +19,7 @@ const RaceResultsDotComListWrapper = ({
   const path = ReactEditor.findPath(editor, element);
 
   return (
-    <HoverAction>
+    <HoverAction element={element}>
       <Box variant="boxes.componentCard" contentEditable={false}>
         <Box sx={{ position: "relative" }}>
           {resultsUrl && (

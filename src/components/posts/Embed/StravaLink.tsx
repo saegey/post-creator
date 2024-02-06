@@ -16,7 +16,7 @@ const StravaLink = ({ element }: { element: StravaEmbed }) => {
   }
 
   return (
-    <HoverAction>
+    <HoverAction element={element}>
       <Flex
         contentEditable={false}
         variant="boxes.componentCard"

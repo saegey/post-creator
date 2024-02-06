@@ -9,21 +9,22 @@ import { EditorContext } from "./EditorContext";
 
 const AddPowerCurve = ({ size }: { size?: "small" }) => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen, menuPosition } =
+    React.useContext(EditorContext);
 
   const editor = useSlateStatic();
 
   const addPowerCurve = () => {
     if (gpxFile) {
-      Transforms.insertNodes(editor, [
+      Transforms.insertNodes(
+        editor,
         {
           type: "powergraph",
           children: [{ text: "" }],
           void: true,
-          // placeholder: "",
         },
-        // { type: "paragraph", children: [{ text: "" }] },
-      ]);
+        { at: menuPosition.path }
+      );
 
       setIsNewComponentMenuOpen(false);
     }
@@ -38,7 +39,6 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
       variant="boxes.sidebarMenuItem"
       sx={{
         cursor: gpxFile ? "pointer" : "not-allowed",
-        // padding: size === "small" ? "5px" : "15px",
       }}
     >
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
@@ -46,7 +46,6 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
           sx={{
             width: size === "small" ? "16px" : "25px",
             height: "auto",
-            // marginRight: "10px",
           }}
         >
           <PowerGraphIcon />
@@ -54,8 +53,6 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
         <Text
           as="span"
           sx={{
-            // color: color,
-
             fontSize: size === "small" ? "14px" : "inherit",
           }}
         >

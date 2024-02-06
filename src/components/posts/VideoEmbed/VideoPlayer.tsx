@@ -11,7 +11,7 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
 
   const videoPlayer = React.useMemo(() => {
     return (
-      <HoverAction>
+      <HoverAction element={element}>
         <Flex sx={{ width: "100%", justifyContent: "center" }}>
           <Box>
             {!element.isReady && (

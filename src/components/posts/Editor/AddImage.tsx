@@ -14,7 +14,7 @@ import { EditorContext } from "./EditorContext";
 import ImagesButton from "./PostMenu/buttons/ImagesButton";
 
 const AddImage = () => {
-  const { setIsNewComponentMenuOpen } =
+  const { setIsNewComponentMenuOpen, menuPosition } =
     React.useContext(EditorContext);
   const { setImages, images, id } = React.useContext(PostContext);
   const editor = useSlateStatic();
@@ -25,7 +25,8 @@ const AddImage = () => {
   };
 
   const insertImage = (selectedImage: CloudinaryImage) => {
-    Transforms.insertNodes(editor, [
+    Transforms.insertNodes(
+      editor,
       {
         type: "image",
         asset_id: selectedImage?.asset_id,
@@ -35,7 +36,8 @@ const AddImage = () => {
         photoCaption: "",
         caption: "",
       },
-    ]);
+      { at: menuPosition.path }
+    );
   };
 
   return (

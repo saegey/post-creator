@@ -86,11 +86,11 @@ const renderElement = (props: {
     case "webscorerResults":
       return <WebscorerListWrapper {...props} />;
     case "crossResults":
-      return <CrossResultstListWrapper />;
+      return <CrossResultstListWrapper element={props.element} />;
     case "omniResults":
-      return <OmniResultsListWrapper />;
+      return <OmniResultsListWrapper element={props.element} />;
     case "runSignupResults":
-      return <RunSignupListWrapper />;
+      return <RunSignupListWrapper element={props.element} />;
     case "paragraph":
       return (
         <ParagraphElement
