@@ -101,7 +101,7 @@ const Home = () => {
         <Box sx={{ marginTop: ["80px", "0px", "0px"] }}>
           <FeatureHiglight
             featureName="Activity Analytics"
-            imagePath="/cryptop-1600.webp"
+            imagePath="https://placehold.co/800x800"
             headline={<>Explore insightful analytics for your race activity.</>}
             subHeadline={
               <>
@@ -148,7 +148,7 @@ const Home = () => {
           />
           <FeatureHiglight
             featureName="Race Results"
-            imagePath="/p-1600.webp"
+            imagePath="https://placehold.co/800x800"
             subHeadline={
               <>
                 Effortlessly integrate and display race results within each
@@ -202,7 +202,7 @@ const Home = () => {
           />
           <FeatureHiglight
             featureName="Journal Sharing"
-            imagePath="/token_1.webp"
+            imagePath="https://placehold.co/800x800"
             subHeadline={
               <>
                 Share your racing adventures externally with various sharing
