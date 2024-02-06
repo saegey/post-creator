@@ -8,8 +8,8 @@ const HoverIcon = ({
 }) => {
   return (
     <Text
+      className="hoverIcon"
       sx={{
-
         position: "absolute",
         top: `0px`,
         left: `-35px`,

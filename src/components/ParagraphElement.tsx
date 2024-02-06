@@ -13,7 +13,10 @@ const ParagraphElement = ({
 }) => {
   return (
     <HoverAction element={element}>
-      <Text as="p" sx={{ lineHeight: "32px", fontSize: "19px" }}>
+      <Text
+        as="p"
+        sx={{ lineHeight: "32px", fontSize: "19px" }}
+      >
         {children}
       </Text>
     </HoverAction>

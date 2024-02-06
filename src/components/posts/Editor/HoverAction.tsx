@@ -5,7 +5,6 @@ import { Box, Flex } from "theme-ui";
 import { EditorContext } from "./EditorContext";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import { CustomElement } from "../../../types/common";
-import { Transforms } from "slate";
 
 const HoverAction = ({
   children,
@@ -26,6 +25,7 @@ const HoverAction = ({
     <Flex
       onMouseEnter={() => setHoverIcon(true)}
       onMouseLeave={() => setHoverIcon(false)}
+      className="hoverAction"
     >
       <Box
         sx={{
@@ -40,9 +40,9 @@ const HoverAction = ({
             <HoverIcon
               onClick={(event) => {
                 event.preventDefault();
-                const { selection } = editor;
+                // const { selection } = editor;
 
-                console.log(editor.selection);
+                // console.log(editor.selection);
 
                 editor.deselect();
 
@@ -57,14 +57,14 @@ const HoverAction = ({
                 //   focus: selection?.focus,
                 // });
 
-                console.log(path);
+                // console.log(path);
                 setMenuPosition({
                   top: adjustedTop,
                   left: adjustedLeft,
                   path: path,
                 });
 
-                console.log(editor.selection);
+                // console.log(editor.selection);
                 setIsNewComponentMenuOpen(true);
               }}
             />
