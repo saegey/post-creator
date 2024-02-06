@@ -35,6 +35,15 @@ const EditUserPost = ({
   const [isPublishedConfirmationOpen, setIsPublishedConfirmationOpen] =
     React.useState(false);
   const [isVideoUploadOpen, setIsVideoUploadOpen] = React.useState(false);
+  const [isNewComponentMenuOpen, setIsNewComponentMenuOpen] =
+    React.useState(false);
+  const [menuPosition, setMenuPosition] = React.useState({
+    top: 0,
+    left: 0,
+    path: [0],
+  });
+  const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
+  const [isRWGPSModalOpen, setIsRWGPSModalOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (user && user?.attributes.sub !== author.id) {
@@ -50,10 +59,11 @@ const EditUserPost = ({
         flexGrow: 1,
       }}
     >
-      {user && <Header user={user} />}
       <Box>
         <EditorContext.Provider
           value={{
+            isNewComponentMenuOpen,
+            setIsNewComponentMenuOpen,
             setIsGraphMenuOpen,
             isGraphMenuOpen,
             setIsFtpUpdating,
@@ -80,8 +90,15 @@ const EditUserPost = ({
             setIsPublishedConfirmationOpen,
             isVideoUploadOpen,
             setIsVideoUploadOpen,
+            menuPosition,
+            setMenuPosition,
+            isStravaModalOpen,
+            setIsStravaModalOpen,
+            isRWGPSModalOpen,
+            setIsRWGPSModalOpen,
           }}
         >
+          {user && <Header user={user} />}
           <PostEditor initialState={postComponents} />
         </EditorContext.Provider>
       </Box>

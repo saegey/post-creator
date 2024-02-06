@@ -42,7 +42,7 @@ const PostsAllUsers = ({
       {user && <Header user={user} />}
       <Box
         sx={{
-          maxWidth: "900px",
+          maxWidth: "1280px",
           marginLeft: ["0px", "auto", "auto"],
           marginRight: ["0px", "auto", "auto"],
           padding: "20px",

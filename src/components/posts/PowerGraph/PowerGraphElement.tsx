@@ -5,72 +5,59 @@ import React from "react";
 
 import { PowerCurveGraph } from "./PowerCurveGraph";
 import { PostContext } from "../../PostContext";
-import OptionsButton from "../../buttons/OptionsButton";
-import Dropdown from "../../shared/Dropdown";
-import { useClickOutside } from "../../../utils/ux";
 import { PowerGraphType } from "../../../types/common";
+import OptionsMenu from "../Editor/OptionsMenu";
+import HoverAction from "../Editor/HoverAction";
 
 const PowerGraph = ({ element }: { element: PowerGraphType }) => {
   const { powerAnalysis, currentFtp } = React.useContext(PostContext);
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const wrapperRef = React.useRef();
 
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-
-  useClickOutside(
-    wrapperRef,
-    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      setIsMenuOpen(false);
-      e.stopPropagation();
-    }
-  );
-
+  // console.log("redner power graph");
   if (!powerAnalysis) {
     return <></>;
   }
 
-  const graphData = Object.keys(powerAnalysis)
-    .map((k, i) => {
-      if (Number(k) > 0) {
-        return { x: Number(k), y: powerAnalysis[k as keyof Object] };
-      }
-    })
-    .filter((p) => p !== undefined);
-
-  return (
-    <Box variant="boxes.componentCard" contentEditable={false}>
-      <Box sx={{ width: "100%", height: ["250px", "450px", "450px"] }}>
-        <PowerCurveGraph
-          ftp={currentFtp ? Number(currentFtp) : 0}
-          data={graphData as any}
-        />
-      </Box>
-      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-        <OptionsButton
-          onClick={() => {
-            if (isMenuOpen) {
-              setIsMenuOpen(false);
-            } else {
-              setIsMenuOpen(true);
-            }
-          }}
-        />
-        <Dropdown isOpen={isMenuOpen}>
-          <Box
-            onClick={() => {
-              Transforms.removeNodes(editor, { at: path });
-              setIsMenuOpen(false);
-            }}
-            ref={wrapperRef}
-            variant="boxes.dropdownMenuItem"
-          >
-            Remove
+  const hoverAction = React.useMemo(() => {
+    return (
+      <HoverAction element={element}>
+        <Box variant="boxes.componentCard" contentEditable={false}>
+          <Box sx={{ width: "100%", height: ["250px", "450px", "450px"] }}>
+            <PowerCurveGraph
+              ftp={currentFtp ? Number(currentFtp) : 0}
+              data={
+                Object.keys(powerAnalysis)
+                  .map((k, i) => {
+                    if (Number(k) > 0) {
+                      return {
+                        x: Number(k),
+                        y: powerAnalysis[k as keyof Object],
+                      };
+                    }
+                  })
+                  .filter((p) => p !== undefined) as any
+              }
+            />
           </Box>
-        </Dropdown>
-      </Box>
-    </Box>
-  );
+          <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
+            <OptionsMenu>
+              <Box
+                onClick={() => {
+                  Transforms.removeNodes(editor, { at: path });
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                Remove
+              </Box>
+            </OptionsMenu>
+          </Box>
+        </Box>
+      </HoverAction>
+    );
+  }, [powerAnalysis, currentFtp]);
+
+  return hoverAction;
 };
 
 export default PowerGraph;

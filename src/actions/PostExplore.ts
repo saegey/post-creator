@@ -17,7 +17,7 @@ class Post {
     try {
       const response = (await SSR.API.graphql({
         query: listPostsCustom,
-        authMode: "API_KEY",
+        authMode: "AMAZON_COGNITO_USER_POOLS",
       })) as GraphQLResult<ListPostsCustom>;
 
       return {

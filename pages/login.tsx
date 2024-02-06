@@ -16,6 +16,7 @@ import { NotificationContext } from "../src/components/NotificationContext";
 import Logo from "../src/components/shared/Logo";
 import EyeIcon from "../src/components/icons/EyeIcon";
 import EyeHideIcon from "../src/components/icons/EyeHideIcon";
+import LogoBlock from "../src/components/public/LogoBlock";
 
 const LoginPage: React.FC = () => {
   const { setNotification } = React.useContext(NotificationContext);
@@ -65,25 +66,7 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <Flex sx={{ flexDirection: "column", gap: "15px" }}>
             <Flex sx={{ justifyContent: "center" }}>
-              <Box sx={{ width: "80px", height: "80px" }}>
-                <Logo />
-              </Box>
-            </Flex>
-            <Flex
-              sx={{
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                as="div"
-                sx={{
-                  // justifyContent: "center",
-                  fontSize: "30px",
-                  fontWeight: 500,
-                }}
-              >
-                Sign in to Monopad
-              </Text>
+              <LogoBlock />
             </Flex>
             <Box
               sx={{
@@ -176,7 +159,7 @@ const LoginPage: React.FC = () => {
                   sx={{ width: "100%" }}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Logging in ..." : "Login"}
+                  {isLoading ? "Signing in ..." : "Sign In"}
                 </Button>
               </Flex>
             </Box>

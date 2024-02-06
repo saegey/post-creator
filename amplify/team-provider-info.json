@@ -28,11 +28,11 @@
         },
         "postUpdateCalc": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/postUpdateCalc-4242567758417a636763-build.zip"
+          "s3Key": "amplify-builds/postUpdateCalc-332b6a3078314f2f624e-build.zip"
         },
         "publishPost": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/publishPost-70752b4a614838624d4b-build.zip"
+          "s3Key": "amplify-builds/publishPost-494873486e75335a7675-build.zip"
         },
         "raceresultgetResults": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
@@ -48,27 +48,67 @@
         },
         "videoUploadUrl": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/videoUploadUrl-5649764f6938736a7955-build.zip",
+          "s3Key": "amplify-builds/videoUploadUrl-6a4b6b777a486b394356-build.zip",
           "secretsPathAmplifyAppId": "d15noiwtuwwref"
         },
         "webscorer": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/webscorer-4352724b51712b715431-build.zip"
+          "s3Key": "amplify-builds/webscorer-486e2b324d7130563639-build.zip"
         },
         "webscorerResults": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
           "s3Key": "amplify-builds/webscorerResults-48573252436764565072-build.zip"
         },
-        "UserPostConfirmation": {},
-        "raceresult": {},
-        "videoUploadToAsset": {
-          "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        "UserPostConfirmation": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/UserPostConfirmation-446177685966574e5146-build.zip"
         },
-        "videoWebhook": {}
+        "raceresult": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/raceresult-756833786271744e7339-build.zip"
+        },
+        "videoUploadToAsset": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/videoUploadToAsset-6d775565537170436d4f-build.zip"
+        },
+        "videoWebhook": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/videoWebhook-2b7341597a4761665748-build.zip"
+        },
+        "crossresults": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/crossresults-3645307374424f523242-build.zip"
+        },
+        "omniGoResults": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/omniGoResults-6848744e534d6f654b4d-build.zip"
+        },
+        "omnigoCategories": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/omnigoCategories-5269356f4b5573703438-build.zip"
+        },
+        "requestResultsProvider": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/requestResultsProvider-6f31532f68316567786a-build.zip"
+        },
+        "runSignupResults": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/runSignupResults-33484b5878636f6f7542-build.zip"
+        },
+        "runsignupCategories": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/runsignupCategories-577a6a396a583569384c-build.zip"
+        }
       },
       "storage": {
         "dynamo1a552de1": {},
         "routeFiles": {}
+      },
+      "api": {
+        "api12660653": {},
+        "nextjsblog": {}
       }
     }
   },

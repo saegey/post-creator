@@ -1,13 +1,13 @@
 import { Box } from "theme-ui";
 
-const MatchesBurnedIcon = ({ color }: { color: string }) => {
+const MatchesBurnedIcon = ({ color }: { color?: string }) => {
   return (
     <Box
       sx={{
         ".iconStyle": { fill: color ? color : "text" },
         ".iconStyleLine": {
           fill: "none",
-          stroke: "text",
+          stroke: color ? color : "text",
           strokeWidth: "2",
           strokeLinecap: "round",
           strokeLinejoin: "round",

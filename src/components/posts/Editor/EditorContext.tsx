@@ -1,4 +1,5 @@
 import React from "react";
+import { Path } from "slate";
 
 export type EditorContextType = {
   isGraphMenuOpen: boolean;
@@ -39,6 +40,20 @@ export type EditorContextType = {
 
   isVideoUploadOpen: boolean;
   setIsVideoUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isNewComponentMenuOpen: boolean;
+  setIsNewComponentMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isStravaModalOpen: boolean;
+  setIsStravaModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  isRWGPSModalOpen: boolean;
+  setIsRWGPSModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
+  menuPosition: { top: number; left: number; path: Path };
+  setMenuPosition: React.Dispatch<
+    React.SetStateAction<{ top: number; left: number; path: Path }>
+  >;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -68,6 +83,14 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsPublishedConfirmationOpen: () => {},
   isVideoUploadOpen: false,
   setIsVideoUploadOpen: () => {},
+  isNewComponentMenuOpen: false,
+  setIsNewComponentMenuOpen: () => {},
+  menuPosition: { top: 0, left: 0, path: [0] },
+  setMenuPosition: () => {},
+  isStravaModalOpen: false,
+  setIsStravaModalOpen: () => {},
+  isRWGPSModalOpen: false,
+  setIsRWGPSModalOpen: () => {},
 });
 
 export { EditorContext };

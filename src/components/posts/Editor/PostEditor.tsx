@@ -1,20 +1,18 @@
-import { Slate, Editable, withReact } from "slate-react";
-import { API, graphqlOperation, Storage, Amplify, PubSub } from "aws-amplify";
+import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
+import { API, graphqlOperation, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
-import { Element as SlateElement, createEditor } from "slate";
+import { createEditor, Transforms } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
-import { Descendant, Transforms } from "slate";
 import { ZenObservable } from "zen-observable-ts";
 
-import renderElement, { renderLeaf } from "./RenderElement";
-import PostMenu from "./PostMenu/PostMenu";
+import renderElement from "./RenderElement";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import SkeletonPost from "./SkeletonPost";
 import { getActivity } from "../../../actions/PostGet";
-import NewComponentSelectorMenu from "./NewComponentSelectorMenu";
+
 import * as subscriptions from "../../../graphql/subscriptions";
 import UploadGpxModal from "./UploadGpxModal";
 import { OnUpdatePostSubscription } from "../../../API";
@@ -26,10 +24,8 @@ import withLayout from "../../plugins/withLayout";
 import { PostSaveComponents } from "../../../actions/PostSave";
 import PublishModalConfirmation from "./PublishModalConfirmation";
 import {
-  CustomEditor,
   CustomElement,
   CloudinaryImage,
-  TimeSeriesDataType,
   VideoEmbedType,
 } from "../../../types/common";
 import {
@@ -37,63 +33,60 @@ import {
   configurePubSub,
   getEndpoint,
 } from "../../../actions/PubSub";
+import Menu from "../../Menu";
+import { StravaModal } from "./AddStravaLink";
+import { AddVideoModal } from "./AddVideo";
+import { RWGPSModal } from "./AddRWGPS";
+import Leaf from "./Leaf";
+import SlateDecorate from "./SlateDecorate";
+import { getActivityData } from "../../../../lib/editorApi";
+import slateApi from "../../../../lib/slateApi";
+import FloatingMenu from "./FloatingMenu";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
     () => withLayout(withHistory(withLinks(withReact(createEditor())))),
     []
-  ) as CustomEditor;
+  );
 
   const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
-  // const { isGraphMenuOpen } = React.useContext(EditorContext);
+  const [selectionMenu, setSelectionMenu] = React.useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
-  React.useEffect(() => {
-    let subUpdates: ZenObservable.Subscription;
+  const handleSelectionChange = () => {
+    const selection = window.getSelection();
+    // console.log(selection);
+    if (!selection) {
+      return;
+    }
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const selectedText = range.toString();
 
-    setUpSub().then((sub) => {
-      subUpdates = sub;
-    });
-
-    return () => {
-      if (subUpdates) {
-        subUpdates.unsubscribe();
+      if (selectedText.length > 0) {
+        const rect = range.getBoundingClientRect();
+        setSelectionMenu({ top: rect.bottom, left: rect.left });
+      } else {
+        setSelectionMenu(null);
       }
-    };
-  }, [subPubConfigured]);
+      // setSelectionMenu({ top: rect.bottom, left: rect.left });
+    } else {
+      setSelectionMenu(null);
+    }
+  };
 
   const {
-    id,
-    timeSeriesFile,
-    title,
-    postLocation,
-    heroImage,
-    setActivity,
-    setPowerAnalysis,
-    setComponents,
-    setTimeInRed,
-    setPowerZones,
-    setPowerZoneBuckets,
-    setHeroImage,
-    setPowers,
-    setHearts,
-  } = React.useContext(PostContext);
-
-  const {
-    isGraphMenuOpen,
-    isGpxUploadOpen,
-    isRaceResultsModalOpen,
-    setIsFtpUpdating,
-    isImageModalOpen,
-    setIsImageModalOpen,
-    isShareModalOpen,
-    setIsHeroImageModalOpen,
-    isHeroImageModalOpen,
-    setIsSavingPost,
-    setSavingStatus,
-    isPublishedConfirmationOpen,
+    setIsNewComponentMenuOpen,
+    isNewComponentMenuOpen,
+    setMenuPosition,
+    menuPosition,
   } = React.useContext(EditorContext);
+
+  // console.log(menuPosition);
 
   React.useEffect(() => {
     if (initialState) {
@@ -134,47 +127,63 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, []);
 
   const getData = async () => {
-    if (!timeSeriesFile) {
+    const payload = await getActivityData(timeSeriesFile);
+    if (!payload) {
+      console.log("no data found for post");
       return;
     }
-    const result = await Storage.get(timeSeriesFile, {
-      download: true,
-      // bucket: "s3-object-lambda-access-point",
-      level: "private",
-    });
-    const timeSeriesData = (await new Response(
-      result.Body
-    ).json()) as TimeSeriesDataType;
 
-    const activity = await getActivity(timeSeriesData);
-    setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
-    setPowers && setPowers(timeSeriesData.powers);
-    setHearts && setHearts(timeSeriesData.hearts);
-    return activity;
+    setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
+    setPowers && setPowers(payload.powers);
+    setHearts && setHearts(payload.hearts);
+    setActivity && setActivity(payload.activity);
   };
 
   React.useEffect(() => {
-    getData().then((d) => {
-      setActivity && setActivity(d as any);
-    });
-  }, [id]);
+    let subUpdates: ZenObservable.Subscription;
 
-  const insertImage = ({
-    selectedImage,
-  }: {
-    selectedImage: CloudinaryImage | undefined;
-  }) => {
-    Transforms.insertNodes(editor, [
-      {
-        type: "image",
-        asset_id: selectedImage?.asset_id,
-        public_id: selectedImage?.public_id,
-        children: [{ text: "" }],
-        void: true,
-      } as Descendant,
-      { type: "text", children: [{ text: "" }] } as Descendant,
-    ]);
-  };
+    setUpSub().then((sub) => {
+      subUpdates = sub;
+    });
+
+    return () => {
+      if (subUpdates) {
+        subUpdates.unsubscribe();
+      }
+    };
+  }, [subPubConfigured]);
+
+  const {
+    id,
+    timeSeriesFile,
+    title,
+    postLocation,
+    heroImage,
+    setActivity,
+    setPowerAnalysis,
+    setComponents,
+    setTimeInRed,
+    setPowerZones,
+    setPowerZoneBuckets,
+    setHeroImage,
+    setPowers,
+    setHearts,
+  } = React.useContext(PostContext);
+
+  const {
+    isGpxUploadOpen,
+    isRaceResultsModalOpen,
+    setIsFtpUpdating,
+    isShareModalOpen,
+    setIsHeroImageModalOpen,
+    isHeroImageModalOpen,
+    setIsSavingPost,
+    setSavingStatus,
+  } = React.useContext(EditorContext);
+
+  React.useEffect(() => {
+    getData();
+  }, [id]);
 
   const addImage = async ({
     selectedImage,
@@ -233,19 +242,33 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     });
   };
 
-  let timeoutHandle: NodeJS.Timeout;
+  const updateMenuPosition = React.useCallback(() => {
+    const selection = editor.selection;
+    if (selection) {
+      const domSelection = window.getSelection();
+      if (!domSelection) {
+        return;
+      }
 
-  if (loading) {
-    return <SkeletonPost />;
-  }
+      if (domSelection && domSelection.anchorNode) {
+        const parentElement = domSelection.anchorNode.parentElement;
+
+        if (parentElement) {
+          const rect = parentElement.getBoundingClientRect();
+          console.log("Bounding rect for the parent element:", rect);
+          setMenuPosition({
+            ...menuPosition,
+            top: rect.bottom,
+            left: rect.left,
+          });
+        }
+      }
+    }
+  }, [editor]);
 
   return (
     <Flex>
-      {isPublishedConfirmationOpen && <PublishModalConfirmation />}
-      {isGraphMenuOpen && <NewComponentSelectorMenu editor={editor} />}
-      {isImageModalOpen && (
-        <AddImage callback={insertImage} setIsOpen={setIsImageModalOpen} />
-      )}
+      <PublishModalConfirmation />
       {isHeroImageModalOpen && (
         <AddImage setIsOpen={setIsHeroImageModalOpen} callback={addImage} />
       )}
@@ -254,67 +277,73 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
       <Box
         sx={{
-          minWidth: [null, null, isGraphMenuOpen ? "" : "900px"],
-          marginLeft: isGraphMenuOpen
-            ? ["20px", "20px", "auto"]
-            : [0, 0, "auto"],
-          marginRight: isGraphMenuOpen
-            ? ["20px", "20px", "auto"]
-            : [0, 0, "auto"],
+          minWidth: [null, null, "900px"],
+          marginLeft: [0, 0, "auto"],
+          marginRight: [0, 0, "auto"],
           marginBottom: "50px",
-          width: [isGraphMenuOpen ? "calc(100% - 300px)" : "100%", null, null],
+          width: ["100%", null, null],
           backgroundColor: "background",
           borderRadius: "10px",
           padding: "0px",
-          paddingBottom: "200px",
+          // paddingBottom: "200px",
+          position: "relative",
         }}
       >
         <Slate
           editor={editor}
           initialValue={initialState}
           onChange={(newValue) => {
-            const ops = editor.operations.filter((o) => {
-              if (o) {
-                return o.type !== "set_selection";
-              }
-              return false;
-            });
-
-            if (ops && ops.length === 0) {
-              return;
-            }
-            setSavingStatus("");
-
-            if (timeoutLink) {
-              clearTimeout(timeoutLink);
-            }
-            timeoutHandle = setTimeout(async () => {
-              setIsSavingPost(true);
-              setSavingStatus("saving...");
-
-              await PostSaveComponents({
-                postId: id,
-                title: title,
-                postLocation: postLocation,
-                components: editor.children,
-                heroImage: heroImage ? JSON.stringify(heroImage) : "",
-              });
-              setSavingStatus("saved");
-
-              setIsSavingPost(false);
-            }, 2000);
-
-            setTimeoutLink(timeoutHandle);
+            updateMenuPosition();
+            handleSelectionChange();
             setComponents && setComponents(newValue as Array<CustomElement>);
+
+            slateApi.saveEditor({
+              editor,
+              id,
+              title,
+              postLocation,
+              setSavingStatus,
+              setIsSavingPost,
+              timeoutLink,
+              setTimeoutLink,
+            });
           }}
         >
-          <PostMenu />
+          {isNewComponentMenuOpen && (
+            <Menu
+              // onClose={() => {
+              //   setIsNewComponentMenuOpen(false);
+              // }}
+              menuPosition={menuPosition}
+            />
+          )}
+          <RWGPSModal />
+          <StravaModal />
+          <AddVideoModal />
+          {selectionMenu && (
+            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
+          )}
           <Editable
             spellCheck
             autoFocus
             renderElement={renderElement}
-            renderLeaf={renderLeaf}
-            style={{ paddingBottom: "200px" }}
+            decorate={SlateDecorate}
+            renderLeaf={(props: RenderLeafProps) => {
+              return (
+                <Leaf props={props} updateMenuPosition={updateMenuPosition} />
+              );
+            }}
+            onKeyDown={(event) => {
+              const { selection } = editor;
+              if (
+                (event.key === "/" && !selection) ||
+                (event.key === "/" && selection && selection.focus.offset === 0)
+              ) {
+                // event.preventDefault();
+                setIsNewComponentMenuOpen(true);
+              }
+            }}
+            contentEditable="true"
           />
         </Slate>
       </Box>

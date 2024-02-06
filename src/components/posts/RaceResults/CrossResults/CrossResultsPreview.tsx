@@ -13,7 +13,8 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { crossResults, id, setCrossResults } = React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
+  const { setIsRaceResultsModalOpen, menuPosition } =
+    React.useContext(EditorContext);
   const { crossResultsMeta, setCrossResultsMeta, resultsUrl } =
     React.useContext(ResultsContext);
 
@@ -157,6 +158,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   ...crossResultsMeta,
                   category: crossResultsMeta.category,
                 });
+
                 setCrossResults &&
                   crossResults &&
                   setCrossResults({
@@ -164,16 +166,16 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     category: crossResultsMeta.category,
                     eventName: crossResultsMeta.eventName,
                   });
-                Transforms.insertNodes(editor, [
+
+                Transforms.insertNodes(
+                  editor,
                   {
                     type: "crossResults",
                     children: [{ text: "" }],
                   },
-                  {
-                    type: "paragraph",
-                    children: [{ text: "" }],
-                  },
-                ]);
+                  { at: menuPosition.path }
+                );
+
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
               });

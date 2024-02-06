@@ -1,44 +1,31 @@
 import React from "react";
-import { Box, Text } from "theme-ui";
-import { RenderLeafProps } from "slate-react";
 
-import { CustomElement } from "../../../types/common";
+import {
+  BulletedListType,
+  CustomElement,
+  HeadingElement,
+  ParagraphElement as ParagraphElementType,
+} from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import PowerGraphElement from "../PowerGraph/PowerGraphElement";
 import ImageElement from "../Image/ImageElement";
 import VisualOverviewWrapper from "../VisualOverview/VisualOverviewWrapper";
 import ActivityOverviewWrapper from "../ActivityOverview/ActivityOverviewWrapper";
 import TimePowerZonesWrapper from "../TimeInZones/TimePowerZonesWrapper";
-import MatchesBurnedWrapper from "../Matches/MatchesBurnedWrapper";
 import StravaLink from "../Embed/StravaLink";
 import HeroBanner from "../HeroBanner/HeroBanner";
 import EmbedElemnt from "../Embed/EmbedElement";
 import Link from "../Text/Link";
 import PostAuthorWrapper from "../PostAuthor/PostAuthorWrapper";
-
 import VideoPlayer from "../VideoEmbed/VideoPlayer";
-
 import CrossResultstListWrapper from "../RaceResults/CrossResults/CrossResultsListWrapper";
 import OmniResultsListWrapper from "../RaceResults/OmniGo/OmniResultsListWrapper";
 import WebscorerListWrapper from "../RaceResults/WebScorer/WebscorerListWrapper";
 import RaceResultsDotComListWrapper from "../RaceResults/RaceResults/RaceResultsDotComListWrapper";
 import RunSignupListWrapper from "../RaceResults/RunSignup/RunSignupListWrapper";
-
-const Leaf = (props: RenderLeafProps) => {
-  return (
-    <span
-      {...props.attributes}
-      style={{ fontWeight: props.leaf.bold ? "bold" : "" }}
-    >
-      {props.children}
-    </span>
-  );
-};
-
-// Define a leaf rendering function that is memoized with `useCallback`.
-const renderLeaf = (props: RenderLeafProps) => {
-  return <Leaf {...props} />;
-};
+import ParagraphElement from "../../ParagraphElement";
+import BulletList from "./BulletList/BulletList";
+import Heading from "./Heading";
 
 const renderElement = (props: {
   attributes: object;
@@ -59,13 +46,15 @@ const renderElement = (props: {
       return <PowerGraphElement element={element} />;
     case "timeInZones":
       return <TimePowerZonesWrapper element={element} />;
-    case "matchesBurned":
-      return <MatchesBurnedWrapper element={element} />;
     case "activityOverview":
       return <ActivityOverviewWrapper element={element} />;
     case "visualOverview":
       return (
-        <VisualOverviewWrapper element={element} view={false} units={units} />
+        <VisualOverviewWrapper
+          element={element}
+          view={false}
+          unitOfMeasure={units.unitOfMeasure}
+        />
       );
     case "image":
       return <ImageElement children={children} element={element} />;
@@ -77,99 +66,46 @@ const renderElement = (props: {
       return <VideoPlayer element={element} />;
     case "heading-two":
       return (
-        <Text
-          as="h2"
-          sx={{
-            fontWeight: 700,
-            maxWidth: "690px",
-            width: ["100%", "690px", "690px"],
-            marginLeft: "auto",
-            marginRight: "auto",
-            paddingX: ["10px", "0px", "0px"],
-          }}
-        >
-          {children}
-        </Text>
+        <Heading
+          children={props.children}
+          element={props.element as HeadingElement}
+        />
       );
     case "bulleted-list":
       return (
-        <Box
-          as="ul"
-          sx={{
-            lineHeight: "30px",
-            paddingTop: ["0px", "0px", "0px"],
-            paddingBottom: ["0px", "20px", "20px"],
-            paddingLeft: ["40px", "25px", "28px"],
-            paddingRight: ["20px", "20px", "20px"],
-            borderLeftColor: "postBorderLeft",
-            borderLeftStyle: "solid",
-            borderLeftWidth: ["0px", "1px", "1px"],
-            marginX: "auto",
-            marginTop: "10px",
-            maxWidth: "690px",
-            fontSize: "19px",
-            li: {
-              paddingRight: "5px",
-              paddingLeft: "15px",
-              marginBottom: "10px",
-              paddingY: "5px",
-            },
-          }}
-          {...attributes}
-        >
-          {children}
-        </Box>
+        <BulletList
+          children={props.children}
+          element={props.element as BulletedListType}
+          attributes={props.attributes}
+        />
       );
     case "list-item":
       return <li {...attributes}>{children}</li>;
     case "raceResultsDotCom":
-      return <RaceResultsDotComListWrapper />;
+      return <RaceResultsDotComListWrapper {...props} />;
     case "webscorerResults":
-      return <WebscorerListWrapper />;
+      return <WebscorerListWrapper {...props} />;
     case "crossResults":
-      return <CrossResultstListWrapper />;
+      return <CrossResultstListWrapper element={props.element} />;
     case "omniResults":
-      return <OmniResultsListWrapper />;
+      return <OmniResultsListWrapper element={props.element} />;
     case "runSignupResults":
-      return <RunSignupListWrapper />;
+      return <RunSignupListWrapper element={props.element} />;
     case "paragraph":
       return (
-        <Text
-          as="div"
-          sx={{
-            marginX: "auto",
-            // marginRight: 'auto',
-            width: ["100%", "690px", "690px"],
-            fontSize: "19px",
-            lineHeight: "30px",
-            marginY: "20px",
-            paddingX: ["10px", "0px", "0px"],
-          }}
-          {...attributes}
-        >
-          {children}
-        </Text>
+        <ParagraphElement
+          children={props.children}
+          element={props.element as ParagraphElementType}
+        />
       );
     default:
       return (
-        <Text
-          as="div"
-          sx={{
-            marginX: "auto",
-            // marginRight: 'auto',
-            width: ["100%", "690px", "690px"],
-            fontSize: "19px",
-            lineHeight: "30px",
-            marginY: "20px",
-            paddingX: ["10px", "0px", "0px"],
-          }}
-          {...attributes}
-        >
-          {children}
-        </Text>
+        <ParagraphElement
+          children={props.children}
+          element={props.element as ParagraphElementType}
+        />
       );
   }
 };
 
 export default renderElement;
-export { renderLeaf };

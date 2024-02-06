@@ -4,10 +4,12 @@ import React from "react";
 import { CustomEditor, ParagraphElement } from "../../../types/common";
 import { Transforms, Element as SlateElement } from "slate";
 import { PostContext } from "../../PostContext";
+import { EditorContext } from "../Editor/EditorContext";
 
 const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
   const [uploadId, setUploadId] = React.useState<string | undefined>();
   const { id } = React.useContext(PostContext);
+  const { menuPosition } = React.useContext(EditorContext);
 
   const getEndpoint = async () => {
     const res = (await API.get("api12660653", `/video/upload?postId=${id}`, {
@@ -36,8 +38,9 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
       endpoint={getEndpoint}
       onSuccess={(e) => {
         getAssetId().then((res) => {
-          console.log(res);
-          Transforms.insertNodes<SlateElement>(editor, [
+          // console.log(res);
+          Transforms.insertNodes(
+            editor,
             {
               type: "videoEmbed",
               void: true,
@@ -46,8 +49,8 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
               isReady: false,
               children: [{ text: "" }],
             },
-            { type: "paragraph", children: [{ text: "" }] } as ParagraphElement,
-          ]);
+            { at: menuPosition.path }
+          );
         });
       }}
     />

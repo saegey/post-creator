@@ -1,7 +1,9 @@
 import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
 import { Transforms, Element as SlateElement } from "slate";
+import React from "react";
 
 import { CustomEditor } from "../../../types/common";
+import { EditorContext } from "../Editor/EditorContext";
 
 const EmbedSettings = ({
   editor,
@@ -10,6 +12,8 @@ const EmbedSettings = ({
   editor: CustomEditor;
   isModalOpen: (arg0: boolean) => void;
 }) => {
+  const { menuPosition } = React.useContext(EditorContext);
+
   return (
     <Flex sx={{ gap: "10px", flexDirection: "row", marginTop: "15px" }}>
       <form
@@ -25,14 +29,16 @@ const EmbedSettings = ({
           }
           const url = new URL(iframe.src);
           const finalUrl = `https://ridewithgps.com/embeds?${url.search}`;
-          Transforms.insertNodes<SlateElement>(editor, [
+          Transforms.insertNodes(
+            editor,
             {
               type: "embed",
               void: true,
               url: finalUrl,
               children: [{ text: "" }],
             },
-          ]);
+            { at: menuPosition.path }
+          );
           isModalOpen(false);
         }}
         style={{ width: "100%" }}

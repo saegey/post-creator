@@ -13,7 +13,8 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { raceResults, id, setRaceResults } = React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
+  const { setIsRaceResultsModalOpen, menuPosition } =
+    React.useContext(EditorContext);
   const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
 
   return (
@@ -155,13 +156,14 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 category: raceResultsMeta.category,
                 division: raceResultsMeta.division,
               }).then((r) => {
-                Transforms.insertNodes(editor, [
+                Transforms.insertNodes(
+                  editor,
                   {
                     type: "raceResultsDotCom",
                     children: [{ text: "" }],
-                  } as Descendant,
-                  { type: "text", children: [{ text: "" }] } as Descendant,
-                ]);
+                  },
+                  { at: menuPosition.path }
+                );
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
               });

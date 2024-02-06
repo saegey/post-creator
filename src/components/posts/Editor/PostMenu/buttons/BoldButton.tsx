@@ -1,7 +1,10 @@
 import { IconButton } from "theme-ui";
 import React from "react";
 
-import { isMarkActive, toggleMark } from "../../../../../utils/SlateUtilityFunctions";
+import {
+  isMarkActive,
+  toggleMark,
+} from "../../../../../utils/SlateUtilityFunctions";
 import { CustomEditor } from "../../../../../types/common";
 
 const BoldButton = ({ editor }: { editor: CustomEditor }) => {
@@ -12,20 +15,22 @@ const BoldButton = ({ editor }: { editor: CustomEditor }) => {
         toggleMark(editor, "bold");
       }}
       title={"Toggle Bold Text"}
-      key="bold1"
-      variant="iconButton"
+      // key="bold1"
+      // variant="iconButton"
       sx={{
-        marginRight: ["5px", 0, 0],
-        marginBottom: ["5px", 0, 0],
-        padding: "7px",
-        verticalAlign: "top",
+        width: "24px",
+        height: "auto",
+        // marginRight: ["5px", 0, 0],
+        // marginBottom: ["5px", 0, 0],
+        // padding: "7px",
+        // verticalAlign: "top",
       }}
     >
       <svg
         className="menu-button"
         fill={
           isMarkActive(editor, "bold")
-            ? "var(--theme-ui-colors-text)"
+            ? "var(--theme-ui-colors-background)"
             : "var(--theme-ui-colors-iconButtonDisabled)"
         }
         width="100%"

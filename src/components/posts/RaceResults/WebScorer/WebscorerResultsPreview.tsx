@@ -15,7 +15,8 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   const { webscorerResults, id, setWebscorerResults } =
     React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen } = React.useContext(EditorContext);
+  const { setIsRaceResultsModalOpen, menuPosition } =
+    React.useContext(EditorContext);
   const { webScorerMeta, resultsUrl } = React.useContext(ResultsContext);
 
   return (
@@ -87,8 +88,7 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                         setWebscorerResults({
                           ...webscorerResults,
                           selected:
-                            webscorerResults &&
-                            webscorerResults.results
+                            webscorerResults && webscorerResults.results
                               ? webscorerResults.results[i]
                               : undefined,
                         });
@@ -158,16 +158,14 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     eventName: webScorerMeta.eventName,
                     category: webScorerMeta.category,
                   });
-                Transforms.insertNodes(editor, [
+                Transforms.insertNodes(
+                  editor,
                   {
                     type: "webscorerResults",
                     children: [{ text: "" }],
                   },
-                  {
-                    type: "paragraph",
-                    children: [{ text: "" }],
-                  },
-                ]);
+                  { at: menuPosition.path }
+                );
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
               });

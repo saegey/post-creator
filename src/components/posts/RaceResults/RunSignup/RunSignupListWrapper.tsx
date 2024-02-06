@@ -2,19 +2,22 @@ import React from "react";
 import { Box } from "theme-ui";
 
 import { PostContext } from "../../../PostContext";
-// import { ResultsContext } from "../ResultsContext";
-import RunSignupList from './RunSignupList';
+import RunSignupList from "./RunSignupList";
+import { CustomElement } from "../../../../types/common";
+import HoverAction from "../../Editor/HoverAction";
 
-const RunSignupListWrapper = () => {
+const RunSignupListWrapper = ({ element }: { element: CustomElement }) => {
   const { runSignupResults, resultsUrl } = React.useContext(PostContext);
 
   return (
-    <Box variant="boxes.componentCard" contentEditable={false}>
-      <RunSignupList
-        raceResults={runSignupResults}
-        resultsUrl={resultsUrl ? resultsUrl : ""}
-      />
-    </Box>
+    <HoverAction element={element}>
+      <Box variant="boxes.componentCard" contentEditable={false}>
+        <RunSignupList
+          raceResults={runSignupResults}
+          resultsUrl={resultsUrl ? resultsUrl : ""}
+        />
+      </Box>
+    </HoverAction>
   );
 };
 
