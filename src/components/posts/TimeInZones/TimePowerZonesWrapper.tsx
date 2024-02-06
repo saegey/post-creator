@@ -17,7 +17,7 @@ const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
   const hoverAction = React.useMemo(() => {
     console.log("render time in zones");
     return (
-      <HoverAction>
+      <HoverAction element={element}>
         <Box variant="boxes.componentCard" contentEditable={false}>
           <TimePowerZones
             powerZoneBuckets={powerZoneBuckets}

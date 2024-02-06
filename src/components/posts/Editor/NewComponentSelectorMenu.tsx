@@ -32,14 +32,13 @@ const AddText = () => {
     );
 
     // Move the cursor (caret) to the end of the newly inserted paragraph
-    const newOffset = editor.children[0].children[0].text.length;
+
     const newPath = menuPosition.path.concat(0);
 
     Transforms.select(editor, {
-      anchor: { path: newPath, offset: newOffset },
-      focus: { path: newPath, offset: newOffset },
+      anchor: { path: newPath, offset: 0 },
+      focus: { path: newPath, offset: 0 },
     });
-
   };
 
   return (

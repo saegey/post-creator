@@ -83,7 +83,7 @@ const VisualOverviewViewWrapper = ({
             />
           ) : (
             <VisualOverview
-              units={units}
+              unitOfMeasure={units.unitOfMeasure}
               element={element}
               activity={fixedData}
               token={
