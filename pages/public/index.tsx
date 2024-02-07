@@ -252,24 +252,6 @@ const Home = () => {
             ]}
           />
         </Box>
-        {/* <Flex
-          sx={{
-            height: "100vh",
-            justifyContent: "center",
-            alignItems: "center",
-            // zIndex: 1,
-            position: "relative",
-          }}
-        >
-          <Flex sx={{ justifyItems: "center" }}>
-            <Text
-              as="h1"
-              sx={{ color: "text", fontSize: "62px", lineHeight: "60px" }}
-            >
-              This is the next generation mf.
-            </Text>
-          </Flex>
-        </Flex> */}
         <PublicFooter />
       </Box>
     </>

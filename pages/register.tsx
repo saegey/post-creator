@@ -126,6 +126,8 @@ const RegisterPage: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
+          height: ["fit-content", "100dvh", "100dvh"],
+          overflow: ["scroll", "", ""],
         }}
       >
         <Flex sx={{ justifyContent: "center" }}>
