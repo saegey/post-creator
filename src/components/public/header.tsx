@@ -367,7 +367,11 @@ const PublicHeader = () => {
           bottom: "0px",
           left: "0px",
           right: "0px",
-          height: "calc(100vh - 48px)",
+          height: [
+            "calc(100dvh - 48px)",
+            "calc(100vh - 48px)",
+            "calc(100vh - 48px)",
+          ],
           // width: "100vw",
           zIndex: 100,
           backgroundColor: "white",
@@ -452,8 +456,8 @@ const PublicHeader = () => {
           </Box>
           <Flex
             sx={{
-              marginTop: "auto",
-              marginBottom: "16px",
+              flexGrow: "1",
+              justifyContent: "flex-end",
               padding: "20px",
               flexDirection: "column",
               gap: "12px",

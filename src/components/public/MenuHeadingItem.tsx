@@ -28,7 +28,7 @@ const MenuHeadingItem = ({
       >
         <Box
           sx={{
-            width: "auto",
+            width: "24px",
             height: "24px",
             transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
             transitionDuration: isOpen ? "500ms" : "500ms",
