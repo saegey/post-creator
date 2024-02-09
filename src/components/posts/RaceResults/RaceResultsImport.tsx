@@ -18,8 +18,10 @@ import {
   WebScorerMetaType,
 } from "./ResultsContext";
 import RunSignUpResultsPreview from "./RunSignup/RunSignupResultsPreview";
+import { Path } from "slate";
+import { useSlateStatic } from "slate-react";
 
-const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
+const RaceResultsImport = ({ path }: { path: Path }) => {
   const [previewResults, setPreviewResults] = React.useState(false);
   const [previewWebscorerResults, setPreviewWebscorerResults] =
     React.useState(false);
@@ -27,6 +29,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
   const [previewOmniResults, setPreviewOmniResults] = React.useState(false);
   const [previewRunSignupResults, setPreviewRunSignupResults] =
     React.useState(false);
+  const editor = useSlateStatic();
 
   const [resultsUrl, setResultsUrl] = React.useState<string>("");
 
@@ -128,7 +131,7 @@ const RaceResultsImport = ({ editor }: { editor: CustomEditor }) => {
             </Text>
           )}
 
-          {previewResults && <RaceResultsPreview editor={editor} />}
+          {previewResults && <RaceResultsPreview path={path} />}
           {previewWebscorerResults && (
             <WebscorerResultsPreview editor={editor} />
           )}

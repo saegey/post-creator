@@ -179,7 +179,7 @@ export default {
       },
     },
     componentCard: {
-      marginX: "auto",
+      // marginX: "auto",
       maxWidth: "690px",
       backgroundColor: [
         "background",
@@ -189,7 +189,7 @@ export default {
       borderRadius: ["0px", "5px", "5px"],
       padding: ["10px", "20px", "20px"],
       position: "relative",
-      marginY: ["20px", "60px", "60px"],
+      marginY: ["20px", "20px", "20px"],
     },
     dropdownMenuItem: {
       padding: "10px",

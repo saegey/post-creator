@@ -5,6 +5,7 @@ import { Box, Flex } from "theme-ui";
 import { EditorContext } from "./EditorContext";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import { CustomElement } from "../../../types/common";
+import {useViewport} from '../../ViewportProvider';
 
 const HoverAction = ({
   children,
@@ -18,6 +19,7 @@ const HoverAction = ({
   const path = ReactEditor.findPath(editor, element);
   const { setIsNewComponentMenuOpen, setMenuPosition } =
     React.useContext(EditorContext);
+	const { width } = useViewport();
 
   // console.log(editor.selection);
 
@@ -36,7 +38,7 @@ const HoverAction = ({
         }}
       >
         <Box sx={{ position: "relative" }}>
-          {hoverIcon && (
+          {width > 500 && hoverIcon && (
             <HoverIcon
               onClick={(event) => {
                 event.preventDefault();

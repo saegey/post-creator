@@ -42,6 +42,13 @@ const EditUserPost = ({
     left: 0,
     path: [0],
   });
+  const [mobileMenu, setMobileMenu] = React.useState({
+    display: false,
+    top: 0,
+    left: 0,
+    path: [0, 0],
+    isFullScreen: false,
+  });
   const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
   const [isRWGPSModalOpen, setIsRWGPSModalOpen] = React.useState(false);
 
@@ -96,6 +103,8 @@ const EditUserPost = ({
             setIsStravaModalOpen,
             isRWGPSModalOpen,
             setIsRWGPSModalOpen,
+            mobileMenu,
+            setMobileMenu,
           }}
         >
           {user && <Header user={user} />}

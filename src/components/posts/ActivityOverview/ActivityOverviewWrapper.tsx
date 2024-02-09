@@ -34,7 +34,6 @@ const ActivityOverviewWrapper = ({
   const { isFtpUpdating } = React.useContext(EditorContext);
 
   const hoverAction = React.useMemo(() => {
-    console.log("render activity");
     return (
       <HoverAction element={element}>
         <Box variant="boxes.componentCard" contentEditable={false}>

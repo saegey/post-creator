@@ -33,6 +33,8 @@ const Header = ({ user }: { user: IUser }) => {
     setIsPublishedConfirmationOpen,
     isSavingPost,
     savingStatus,
+    setMobileMenu,
+    mobileMenu,
   } = React.useContext(EditorContext);
   const { id } = React.useContext(PostContext);
 
@@ -86,7 +88,10 @@ const Header = ({ user }: { user: IUser }) => {
               borderRadius: "100px",
               padding: "3px 10px 3px 10px",
             }}
-            onClick={() => setProfileOpen(true)}
+            onClick={() => {
+              setProfileOpen(true);
+              setMobileMenu({ ...mobileMenu, display: false });
+            }}
           >
             <MenuButton
               sx={{ marginY: "auto", border: "1px solid buttonBorderColor" }}

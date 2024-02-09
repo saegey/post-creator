@@ -1,5 +1,5 @@
 import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
-import { Transforms, Element as SlateElement } from "slate";
+import { Transforms, Element as SlateElement, Path } from "slate";
 import React from "react";
 
 import { CustomEditor } from "../../../types/common";
@@ -8,11 +8,14 @@ import { EditorContext } from "../Editor/EditorContext";
 const EmbedSettings = ({
   editor,
   isModalOpen,
+  path,
 }: {
   editor: CustomEditor;
   isModalOpen: (arg0: boolean) => void;
+  path: Path;
 }) => {
-  const { menuPosition } = React.useContext(EditorContext);
+  const { mobileMenu, setMobileMenu, setIsNewComponentMenuOpen } =
+    React.useContext(EditorContext);
 
   return (
     <Flex sx={{ gap: "10px", flexDirection: "row", marginTop: "15px" }}>
@@ -37,9 +40,11 @@ const EmbedSettings = ({
               url: finalUrl,
               children: [{ text: "" }],
             },
-            { at: menuPosition.path }
+            { at: path }
           );
           isModalOpen(false);
+          setIsNewComponentMenuOpen(false);
+          setMobileMenu({ ...mobileMenu, display: false, isFullScreen: false });
         }}
         style={{ width: "100%" }}
       >

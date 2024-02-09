@@ -42,15 +42,16 @@ const Menu = ({
         left: menuPosition.left,
         padding: "10px",
         background: "background",
-        borderColor: "text",
+        borderColor: "#ccc",
         borderWidth: "1px",
         borderStyle: "solid",
         // border: "1px solid #ddd",
         borderRadius: "5px",
         zIndex: "4",
+        boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
       }}
     >
-      <GraphSelectorMenu size={"small"} />
+      <GraphSelectorMenu />
     </Box>
   );
 };

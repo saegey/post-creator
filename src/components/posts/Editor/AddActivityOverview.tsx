@@ -1,13 +1,13 @@
 import { Flex, Text, Box, Button } from "theme-ui";
 import React from "react";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 import { useSlateStatic } from "slate-react";
 
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 
-const AddActivityOverview = () => {
+const AddActivityOverview = ({ path }: { path: Path }) => {
   const { gpxFile } = React.useContext(PostContext);
   const { setIsNewComponentMenuOpen, menuPosition } =
     React.useContext(EditorContext);
@@ -23,7 +23,7 @@ const AddActivityOverview = () => {
           children: [{ text: "" }],
           void: true,
         },
-        { at: menuPosition.path }
+        { at: path }
       );
       setIsNewComponentMenuOpen(false);
     }

@@ -14,7 +14,7 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
 
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  // console.log("redner power graph");
+
   if (!powerAnalysis) {
     return <></>;
   }

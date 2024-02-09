@@ -2,7 +2,7 @@ import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { API, graphqlOperation, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
-import { createEditor, Transforms } from "slate";
+import { createEditor, Path, Transforms } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
 import { ZenObservable } from "zen-observable-ts";
@@ -42,6 +42,8 @@ import SlateDecorate from "./SlateDecorate";
 import { getActivityData } from "../../../../lib/editorApi";
 import slateApi from "../../../../lib/slateApi";
 import FloatingMenu from "./FloatingMenu";
+import { useViewport } from "../../ViewportProvider";
+import MobileMenu from "./MobileMenu";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -57,14 +59,41 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     left: number;
   } | null>(null);
 
+  const { width } = useViewport();
+
   const handleSelectionChange = () => {
     const selection = window.getSelection();
-    // console.log(selection);
-    if (!selection) {
+
+    if (!selection || selection.rangeCount < 1) {
       return;
     }
+    const range = selection.getRangeAt(0);
+    if (range && width < 500) {
+      console.log("set mobile menu");
+      const rect = range.getBoundingClientRect();
+      const scrollX = window.scrollX;
+      const scrollY = window.scrollY;
+      const adjustedTop = rect.bottom + scrollY - 10;
+      const adjustedLeft = rect.right + scrollX + 10;
+      const { anchorNode } = selection;
+
+      // If selection exists, get the path
+      const { anchor } = editor.selection;
+      // console.log(anchor);
+
+      // // If selection exists, get the path
+      // const path = anchor && editor.path(anchor.path);
+
+      setMobileMenu({
+        display: true,
+        top: adjustedTop,
+        left: adjustedLeft,
+        path: anchor.path,
+        isFullScreen: false,
+      });
+    }
     if (selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
+      // const range = selection.getRangeAt(0);
       const selectedText = range.toString();
 
       if (selectedText.length > 0) {
@@ -73,7 +102,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       } else {
         setSelectionMenu(null);
       }
-      // setSelectionMenu({ top: rect.bottom, left: rect.left });
     } else {
       setSelectionMenu(null);
     }
@@ -84,9 +112,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isNewComponentMenuOpen,
     setMenuPosition,
     menuPosition,
+    mobileMenu,
+    setMobileMenu,
   } = React.useContext(EditorContext);
-
-  // console.log(menuPosition);
 
   React.useEffect(() => {
     if (initialState) {
@@ -274,7 +302,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       )}
       {isGpxUploadOpen && <UploadGpxModal />}
       {isShareModalOpen && <ShareModal />}
-      {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
       <Box
         sx={{
           minWidth: [null, null, "900px"],
@@ -309,19 +336,18 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             });
           }}
         >
-          {isNewComponentMenuOpen && (
-            <Menu
-              // onClose={() => {
-              //   setIsNewComponentMenuOpen(false);
-              // }}
-              menuPosition={menuPosition}
-            />
-          )}
-          <RWGPSModal />
-          <StravaModal />
+          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+
           <AddVideoModal />
           {selectionMenu && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
+          )}
+          {mobileMenu.display && (
+            <MobileMenu
+              top={mobileMenu.top}
+              left={mobileMenu.left}
+              path={mobileMenu.path}
+            />
           )}
           <Editable
             spellCheck

@@ -4,7 +4,7 @@ import { useSlateStatic } from "slate-react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { CldUploadWidget } from "next-cloudinary";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
@@ -13,14 +13,15 @@ import { CloudinaryImage } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
 import ImagesButton from "./PostMenu/buttons/ImagesButton";
 
-const AddImage = () => {
-  const { setIsNewComponentMenuOpen, menuPosition } =
+const AddImage = ({ path }: { path: Path }) => {
+  const { setIsNewComponentMenuOpen, setMobileMenu, mobileMenu } =
     React.useContext(EditorContext);
   const { setImages, images, id } = React.useContext(PostContext);
   const editor = useSlateStatic();
 
   const openModal = (open: Function) => {
     setIsNewComponentMenuOpen(false);
+    setMobileMenu({ ...mobileMenu, display: false });
     open();
   };
 
@@ -36,7 +37,7 @@ const AddImage = () => {
         photoCaption: "",
         caption: "",
       },
-      { at: menuPosition.path }
+      { at: path }
     );
   };
 
@@ -75,7 +76,7 @@ const AddImage = () => {
               sourceBg: "#e4e4e4",
             },
             fonts: {
-              "SF Pro Display": "",
+              Inter: "",
             },
           },
         }}

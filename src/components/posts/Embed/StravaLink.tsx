@@ -11,6 +11,27 @@ const StravaLink = ({ element }: { element: StravaEmbed }) => {
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+
+  React.useEffect(() => {
+    const resizeParentToIframe = (event: MessageEvent) => {
+      console.log(event, event.data[2]);
+      if (event.origin !== "https://strava-embeds.com") return;
+      // Change to match the origin of the iframe content
+
+      const height = event.data[2] + "px";
+      if (iframeRef.current && iframeRef.current.parentElement) {
+        iframeRef.current.parentElement.style.height = height;
+      }
+    };
+
+    window.addEventListener("message", resizeParentToIframe);
+
+    return () => {
+      window.removeEventListener("message", resizeParentToIframe);
+    };
+  }, []);
+
   if (!element.activityId) {
     return <></>;
   }
@@ -21,22 +42,21 @@ const StravaLink = ({ element }: { element: StravaEmbed }) => {
         contentEditable={false}
         variant="boxes.componentCard"
         key="strava-link"
+        sx={{ justifyContent: "center" }}
       >
         <Box
           sx={{
-            marginX: "auto",
-            width: ["100%", "100%", "100%"],
-            maxWidth: "450px",
-            marginY: ["20px", "30px", "20px"],
+            position: "relative",
           }}
         >
-          <Embed
+          <iframe
             src={`https://strava-embeds.com/activity/${element.activityId}`}
-            sx={{
-              height: "620px",
+            style={{
+              height: "100%",
               width: "100%",
               border: "none",
             }}
+            ref={iframeRef}
           />
         </Box>
         <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>

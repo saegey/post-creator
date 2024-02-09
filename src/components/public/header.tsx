@@ -286,7 +286,7 @@ const PublicHeader = () => {
                         ? location.host
                             .split(".")
                             .slice(1, location.host.split(".").length)
-                            .join("")
+                            .join(".")
                         : location.host) +
                       "/login"
                   );
@@ -315,7 +315,7 @@ const PublicHeader = () => {
                         ? location.host
                             .split(".")
                             .slice(1, location.host.split(".").length)
-                            .join("")
+                            .join(".")
                         : location.host) +
                       "/register"
                   );
