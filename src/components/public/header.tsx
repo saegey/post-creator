@@ -463,7 +463,27 @@ const PublicHeader = () => {
               gap: "12px",
             }}
           >
-            <ThemeLink as={Link} href={`/login`} sx={{ width: "100%" }}>
+            <ThemeLink
+              as={Link}
+              href={`/login`}
+              sx={{ width: "100%" }}
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("themelink");
+                //https://platform.d15noiwtuwwref/login
+                window.open(
+                  location.protocol +
+                    "//platform." +
+                    (location.host.split(".")[1]
+                      ? location.host
+                          .split(".")
+                          .slice(1, location.host.split(".").length)
+                          .join(".")
+                      : location.host) +
+                    "/login"
+                );
+              }}
+            >
               <Button
                 variant="secondaryButton"
                 sx={{
@@ -477,7 +497,27 @@ const PublicHeader = () => {
                 Sign in
               </Button>
             </ThemeLink>
-            <ThemeLink as={Link} href={`/register`} sx={{ width: "100%" }}>
+            <ThemeLink
+              as={Link}
+              href={`/register`}
+              sx={{ width: "100%" }}
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("themelink");
+                //https://platform.d15noiwtuwwref/login
+                window.open(
+                  location.protocol +
+                    "//platform." +
+                    (location.host.split(".")[1]
+                      ? location.host
+                          .split(".")
+                          .slice(1, location.host.split(".").length)
+                          .join(".")
+                      : location.host) +
+                    "/register"
+                );
+              }}
+            >
               <Button
                 variant="primaryButton"
                 sx={{

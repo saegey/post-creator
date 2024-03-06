@@ -79,7 +79,26 @@ const Home = () => {
                   flexDirection: ["column", "row", "row"],
                 }}
               >
-                <ThemeLink as={Link} href="/register">
+                <ThemeLink
+                  as={Link}
+                  href="/register"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log("themelink");
+                    //https://platform.d15noiwtuwwref/login
+                    window.open(
+                      location.protocol +
+                        "//platform." +
+                        (location.host.split(".")[1]
+                          ? location.host
+                              .split(".")
+                              .slice(1, location.host.split(".").length)
+                              .join(".")
+                          : location.host) +
+                        "/register"
+                    );
+                  }}
+                >
                   <Button
                     sx={{
                       background: "white",
