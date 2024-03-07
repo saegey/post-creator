@@ -19,7 +19,7 @@ import {
 } from "./ResultsContext";
 import RunSignUpResultsPreview from "./RunSignup/RunSignupResultsPreview";
 import { Path } from "slate";
-import { useSlateStatic } from "slate-react";
+import SlateReact from "slate-react";
 
 const RaceResultsImport = ({ path }: { path: Path }) => {
   const [previewResults, setPreviewResults] = React.useState(false);
@@ -29,7 +29,7 @@ const RaceResultsImport = ({ path }: { path: Path }) => {
   const [previewOmniResults, setPreviewOmniResults] = React.useState(false);
   const [previewRunSignupResults, setPreviewRunSignupResults] =
     React.useState(false);
-  const editor = useSlateStatic();
+  const editor = SlateReact.useSlateStatic();
 
   const [resultsUrl, setResultsUrl] = React.useState<string>("");
 
