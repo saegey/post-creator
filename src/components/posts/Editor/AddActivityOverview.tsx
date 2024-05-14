@@ -9,12 +9,13 @@ import { EditorContext } from "./EditorContext";
 
 const AddActivityOverview = ({ path }: { path: Path }) => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen, menuPosition } =
-    React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setMobileMenu } = React.useContext(EditorContext);
 
   const editor = useSlateStatic();
 
   const addActivityOverview = () => {
+    // console.log(path);
     if (gpxFile) {
       Transforms.insertNodes(
         editor,
@@ -25,7 +26,17 @@ const AddActivityOverview = ({ path }: { path: Path }) => {
         },
         { at: path }
       );
+      setMobileMenu({
+        top: 0,
+        left: 0,
+        display: false,
+        path: path,
+        isFullScreen: false,
+      });
       setIsNewComponentMenuOpen(false);
+      const selection = window.getSelection();
+      // console.log(selection)
+      selection && selection.removeAllRanges();
     }
   };
 

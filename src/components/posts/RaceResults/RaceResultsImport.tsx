@@ -19,7 +19,7 @@ import {
 } from "./ResultsContext";
 import RunSignUpResultsPreview from "./RunSignup/RunSignupResultsPreview";
 import { Path } from "slate";
-import SlateReact from "slate-react";
+import { useSlateStatic } from "slate-react";
 
 const RaceResultsImport = ({ path }: { path: Path }) => {
   const [previewResults, setPreviewResults] = React.useState(false);
@@ -29,7 +29,7 @@ const RaceResultsImport = ({ path }: { path: Path }) => {
   const [previewOmniResults, setPreviewOmniResults] = React.useState(false);
   const [previewRunSignupResults, setPreviewRunSignupResults] =
     React.useState(false);
-  const editor = SlateReact.useSlateStatic();
+  const editor = useSlateStatic();
 
   const [resultsUrl, setResultsUrl] = React.useState<string>("");
 
@@ -133,7 +133,7 @@ const RaceResultsImport = ({ path }: { path: Path }) => {
 
           {previewResults && <RaceResultsPreview path={path} />}
           {previewWebscorerResults && (
-            <WebscorerResultsPreview editor={editor} />
+            <WebscorerResultsPreview editor={editor} path={path} />
           )}
           {previewCrossResults && <CrossResultsPreview editor={editor} />}
           {previewOmniResults && <OmniResultsPreview editor={editor} />}

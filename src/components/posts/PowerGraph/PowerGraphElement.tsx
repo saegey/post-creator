@@ -45,6 +45,8 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
               <Box
                 onClick={() => {
                   Transforms.removeNodes(editor, { at: path });
+                  const selection = window.getSelection();
+                  selection && selection.removeAllRanges();
                 }}
                 variant="boxes.dropdownMenuItem"
               >

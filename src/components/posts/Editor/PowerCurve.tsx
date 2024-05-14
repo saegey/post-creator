@@ -25,9 +25,20 @@ const AddPowerCurve = ({ path }: { path: Path }) => {
         },
         { at: path }
       );
+      setMobileMenu({
+        top: 0,
+        left: 0,
+        display: false,
+        path: path,
+        isFullScreen: false,
+      });
 
       setIsNewComponentMenuOpen(false);
-      setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
+      const selection = window.getSelection();
+      // console.log(selection)
+      selection && selection.removeAllRanges();
+
+      // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
     }
   };
   return (

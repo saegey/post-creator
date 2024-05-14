@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 
 import { PostContext } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
@@ -9,13 +9,19 @@ import { ResultsContext } from "../ResultsContext";
 import { saveWebscorerResults } from "../api";
 import ResultsBox from "../shared/ResultsBox";
 
-const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
+const WebscorerResultsPreview = ({
+  editor,
+  path,
+}: {
+  editor: CustomEditor;
+  path: Path;
+}) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { webscorerResults, id, setWebscorerResults } =
     React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen, menuPosition } =
+  const { setIsRaceResultsModalOpen, setMobileMenu } =
     React.useContext(EditorContext);
   const { webScorerMeta, resultsUrl } = React.useContext(ResultsContext);
 
@@ -164,8 +170,18 @@ const WebscorerResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     type: "webscorerResults",
                     children: [{ text: "" }],
                   },
-                  { at: menuPosition.path }
+                  { at: path }
                 );
+                setMobileMenu({
+                  top: 0,
+                  left: 0,
+                  path: [0, 0],
+                  display: false,
+                  isFullScreen: false,
+                });
+                const selection = window.getSelection();
+                // console.log(selection)
+                selection && selection.removeAllRanges();
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
               });

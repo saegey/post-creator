@@ -194,6 +194,7 @@ const PostSettings = () => {
                   type="button"
                   onClick={() => {
                     setIsGpxUploadOpen(true);
+                    setIsSettingsModalOpen(false);
                   }}
                   sx={{
                     width: "100%",

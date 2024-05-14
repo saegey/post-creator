@@ -39,6 +39,18 @@ const AddImage = ({ path }: { path: Path }) => {
       },
       { at: path }
     );
+
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
+    setIsNewComponentMenuOpen(false);
+    const selection = window.getSelection();
+    // console.log(selection)
+    selection && selection.removeAllRanges();
   };
 
   return (

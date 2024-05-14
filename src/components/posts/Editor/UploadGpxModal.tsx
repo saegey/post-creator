@@ -217,7 +217,7 @@ const UploadGpxModal = () => {
           background: "background",
           borderRadius: "5px",
           padding: "20px",
-          zIndex: 5000,
+          zIndex: 6000,
         }}
       >
         <Flex

@@ -12,19 +12,30 @@ const AddRaceResults = ({ path }: { path: Path }) => {
     isRaceResultsModalOpen,
     setIsRaceResultsModalOpen,
     setIsNewComponentMenuOpen,
+    setMobileMenu,
   } = React.useContext(EditorContext);
   const editor = useSlateStatic();
 
   const addResults = () => {
     setIsRaceResultsModalOpen(true);
     // setIsNewComponentMenuOpen(false);
+    // setMobileMenu({
+    //   top: 0,
+    //   left: 0,
+    //   display: false,
+    //   path: path,
+    //   isFullScreen: false,
+    // });
+
+    // const selection = window.getSelection();
+    // console.log(selection)
+    // selection && selection.removeAllRanges();
+    // setIsNewComponentMenuOpen(false);
   };
 
   return (
     <>
-      {isRaceResultsModalOpen && (
-        <RaceResultsImport path={path} />
-      )}
+      {isRaceResultsModalOpen && <RaceResultsImport path={path} />}
       <Box
         onClick={() => addResults()}
         variant="boxes.sidebarMenuItem"

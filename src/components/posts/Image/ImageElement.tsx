@@ -235,6 +235,8 @@ const ImageElement = ({
                 <Box
                   onClick={(e) => {
                     Transforms.removeNodes(editor, { at: path });
+                    const selection = window.getSelection();
+                    selection && selection.removeAllRanges();
                   }}
                   variant="boxes.dropdownMenuItem"
                 >

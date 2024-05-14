@@ -5,7 +5,8 @@ const ResultsBox = ({ children }: { children?: JSX.Element }) => {
     <Box
       sx={{
         overflowY: "auto",
-        height: ["80%", "300px", "300px"],
+        height: ["unset", "300px", "300px"],
+        flexGrow: [1, "inherit", "inherit"],
         backgroundColor: "activityOverviewBackgroundColor",
         padding: "5px",
         borderRadius: "5px",

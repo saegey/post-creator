@@ -1,5 +1,5 @@
 import { Box } from "theme-ui";
-import { Transforms } from "slate";
+import { Editor, Transforms } from "slate";
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
@@ -30,7 +30,6 @@ const ActivityOverviewWrapper = ({
     tempAnalysis,
     currentFtp,
   } = React.useContext(PostContext);
-
   const { isFtpUpdating } = React.useContext(EditorContext);
 
   const hoverAction = React.useMemo(() => {
@@ -75,6 +74,8 @@ const ActivityOverviewWrapper = ({
               <Box
                 onClick={() => {
                   Transforms.removeNodes(editor, { at: path });
+                  const selection = window.getSelection();
+                  selection && selection.removeAllRanges();
                 }}
                 variant="boxes.dropdownMenuItem"
               >

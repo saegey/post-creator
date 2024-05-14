@@ -14,16 +14,30 @@ const WebscorerList = ({
     <>
       <Flex>
         <Flex sx={{ flexGrow: 1 }}>
-          <Text as="h2">Results</Text>
+          <Text as="h2" sx={{ fontSize: ["16px", "20px", "20px"] }}>
+            Results
+          </Text>
         </Flex>
-        <Flex sx={{ justifyContent: "right" }}>
+        {/* <Flex sx={{ justifyContent: "right" }}>
           <Link target="_blank" href={resultsUrl}>
             <Button variant="primaryButton">Link to results</Button>
           </Link>
-        </Flex>
+        </Flex> */}
       </Flex>
-      <Text>{`${raceResults?.eventName} - ${raceResults?.category}`}</Text>
-      <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
+      <Link href={resultsUrl} target="_blank" sx={{ color: "text" }}>
+        <Text>{`${raceResults?.eventName} - ${raceResults?.category}`}</Text>
+      </Link>
+      <Box
+        sx={{
+          height: "500px",
+          overflowY: "scroll",
+          paddingTop: "10px",
+          marginTop: "10px",
+          borderTopWidth: "1px",
+          borderTopStyle: "solid",
+          borderTopColor: "postCardBorderDark",
+        }}
+      >
         {raceResults &&
           raceResults?.results?.map((row, i) => {
             return (
@@ -42,20 +56,18 @@ const WebscorerList = ({
                       : null,
                   borderRadius: "5px",
                   fontSize: ["15px", "16px", "16px"],
-                  // justifyContent: "space-around",
                   flexFlow: "row wrap",
-                  // alignItems: "stretch",
                 }}
               >
-                <Text as="span" sx={{ width: "60px" }}>
+                <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
                   {row.Place}
                 </Text>
-                <Box sx={{ flexGrow: 2 }}>
+                <Box sx={{ flexGrow: 2, paddingY: "2px" }}>
                   <Text as="span">{row.Name}</Text>
                   <Text
                     as="span"
                     sx={{
-                      display: "block",
+                      display: ["none", "block", "block"],
                       fontSize: "12px",
                       height: "15px",
                       flexGrow: 2,
@@ -64,7 +76,13 @@ const WebscorerList = ({
                     {row.TeamName ? row.TeamName : " "}
                   </Text>
                 </Box>
-                <Text as="span" sx={{ marginLeft: "15px" }}>
+                <Text
+                  as="span"
+                  sx={{
+                    display: ["none", "inherit", "inherit"],
+                    marginLeft: "15px",
+                  }}
+                >
                   {row.Difference}
                 </Text>
                 <Text as="span" sx={{ marginLeft: "15px" }}>

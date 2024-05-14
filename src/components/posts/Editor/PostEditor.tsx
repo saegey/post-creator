@@ -59,6 +59,23 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     left: number;
   } | null>(null);
 
+  const {
+    isGpxUploadOpen,
+    isRaceResultsModalOpen,
+    setIsFtpUpdating,
+    isShareModalOpen,
+    setIsHeroImageModalOpen,
+    isHeroImageModalOpen,
+    setIsSavingPost,
+    setSavingStatus,
+    mobileMenu,
+    setMobileMenu,
+    setIsNewComponentMenuOpen,
+    isNewComponentMenuOpen,
+    setMenuPosition,
+    menuPosition,
+  } = React.useContext(EditorContext);
+
   const { width } = useViewport();
 
   const handleSelectionChange = () => {
@@ -68,6 +85,10 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       return;
     }
     const range = selection.getRangeAt(0);
+    const { anchor } = editor.selection;
+
+    console.log(range, editor.path(anchor.path));
+
     if (range && width < 500) {
       console.log("set mobile menu");
       const rect = range.getBoundingClientRect();
@@ -75,20 +96,21 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       const scrollY = window.scrollY;
       const adjustedTop = rect.bottom + scrollY - 10;
       const adjustedLeft = rect.right + scrollX + 10;
-      const { anchorNode } = selection;
+      // const { anchorNode } = selection;
 
       // If selection exists, get the path
-      const { anchor } = editor.selection;
+
       // console.log(anchor);
 
       // // If selection exists, get the path
-      // const path = anchor && editor.path(anchor.path);
+      const path = anchor && editor.path(anchor.path);
+      console.log(path);
 
       setMobileMenu({
         display: true,
         top: adjustedTop,
         left: adjustedLeft,
-        path: anchor.path,
+        path: path,
         isFullScreen: false,
       });
     }
@@ -107,14 +129,14 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     }
   };
 
-  const {
-    setIsNewComponentMenuOpen,
-    isNewComponentMenuOpen,
-    setMenuPosition,
-    menuPosition,
-    mobileMenu,
-    setMobileMenu,
-  } = React.useContext(EditorContext);
+  // const {
+  //   setIsNewComponentMenuOpen,
+  //   isNewComponentMenuOpen,
+  //   setMenuPosition,
+  //   menuPosition,
+  //   // mobileMenu,
+  //   // setMobileMenu,
+  // } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -197,17 +219,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setPowers,
     setHearts,
   } = React.useContext(PostContext);
-
-  const {
-    isGpxUploadOpen,
-    isRaceResultsModalOpen,
-    setIsFtpUpdating,
-    isShareModalOpen,
-    setIsHeroImageModalOpen,
-    isHeroImageModalOpen,
-    setIsSavingPost,
-    setSavingStatus,
-  } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     getData();
@@ -321,6 +332,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           initialValue={initialState}
           onChange={(newValue) => {
             updateMenuPosition();
+
+            console.log("on change");
             handleSelectionChange();
             setComponents && setComponents(newValue as Array<CustomElement>);
 
@@ -342,13 +355,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           {selectionMenu && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
-          {mobileMenu.display && (
-            <MobileMenu
-              top={mobileMenu.top}
-              left={mobileMenu.left}
-              path={mobileMenu.path}
-            />
-          )}
+          <MobileMenu
+          // top={mobileMenu.top}
+          // left={mobileMenu.left}
+          // path={mobileMenu.path}
+          />
           <Editable
             spellCheck
             autoFocus

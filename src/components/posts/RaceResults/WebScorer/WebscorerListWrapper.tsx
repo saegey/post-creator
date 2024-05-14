@@ -8,6 +8,7 @@ import WebscorerList from "./WebscorerList";
 import HoverAction from "../../Editor/HoverAction";
 import OptionsMenu from "../../Editor/OptionsMenu";
 import { CustomElement } from "../../../../types/common";
+import theme from "../../../../utils/theme";
 
 const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
   const { webscorerResults, resultsUrl } = React.useContext(PostContext);
@@ -18,7 +19,11 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
     // console.log("render");
     return (
       <HoverAction element={element}>
-        <Box variant="boxes.componentCard" contentEditable={false}>
+        <Box
+          variant="boxes.componentCard"
+          contentEditable={false}
+          sx={{ backgroundColor: "activityOverviewBackgroundColor" }}
+        >
           <Box sx={{ position: "relative" }}>
             <WebscorerList
               raceResults={webscorerResults}

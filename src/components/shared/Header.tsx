@@ -184,6 +184,13 @@ const Header = ({ user }: { user: IUser }) => {
                   onClick={() => {
                     setIsImageModalOpen(false);
                     setIsSettingsModalOpen(true);
+                    setMobileMenu({
+                      display: false,
+                      top: 0,
+                      left: 0,
+                      isFullScreen: false,
+                      path: [0, 0],
+                    });
                   }}
                 >
                   <IconButton
