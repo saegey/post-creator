@@ -87,7 +87,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     const range = selection.getRangeAt(0);
     const { anchor } = editor.selection;
 
-    console.log(range, editor.path(anchor.path));
+    // console.log(range, editor.path(anchor.path));
 
     if (range && width < 500) {
       console.log("set mobile menu");
@@ -331,6 +331,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           editor={editor}
           initialValue={initialState}
           onChange={(newValue) => {
+            console.log(newValue);
+
             updateMenuPosition();
 
             console.log("on change");

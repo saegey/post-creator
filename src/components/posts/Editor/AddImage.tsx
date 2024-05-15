@@ -26,6 +26,7 @@ const AddImage = ({ path }: { path: Path }) => {
   };
 
   const insertImage = (selectedImage: CloudinaryImage) => {
+    console.log(path);
     Transforms.insertNodes(
       editor,
       {
@@ -36,9 +37,12 @@ const AddImage = ({ path }: { path: Path }) => {
         void: true,
         photoCaption: "",
         caption: "",
-      },
-      { at: path }
+      }
+      // { at: path }
     );
+    if (path.length > 2) {
+      Transforms.liftNodes(editor);
+    }
 
     setMobileMenu({
       top: 0,

@@ -40,7 +40,7 @@ const StandardModal = ({
             maxWidth: "690px",
             display: ["flex", "inherit", "inherit"],
             position: ["fixed", "inherit", "inherit"],
-            flexDirection: ["column", "inherit", "inherit"],
+            flexDirection: "column",
             maxHeight: ["100dvh", "800px", "800px"],
             height: ["100dvh", "auto", "auto"],
             width: ["100%", null, null],

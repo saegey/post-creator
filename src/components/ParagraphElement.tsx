@@ -11,6 +11,7 @@ const ParagraphElement = ({
   children: JSX.Element;
   element: ParagraphElementType;
 }) => {
+  // console.log(children);
   return (
     <HoverAction element={element}>
       <Text
