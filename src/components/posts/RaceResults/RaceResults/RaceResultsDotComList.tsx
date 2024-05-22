@@ -14,18 +14,26 @@ const RaceResultsDotComList = ({
   const { unitOfMeasure } = useUnits();
   return (
     <>
-      <Flex>
-        <Flex sx={{ flexGrow: 1 }}>
-          <Text as="h2">Results</Text>
-        </Flex>
-        <Flex sx={{ justifyContent: "right" }}>
-          <Link target="_blank" href={resultsUrl}>
-            <Button variant="primaryButton">Link to results</Button>
-          </Link>
-        </Flex>
+      <Flex sx={{ flexGrow: 1 }}>
+        <Text as="h2" sx={{ fontSize: ["16px", "20px", "20px"] }}>
+          Results
+        </Text>
       </Flex>
-      <Text>{`${raceResults?.eventName} - ${raceResults?.category} - ${raceResults?.division}`}</Text>
-      <Box sx={{ height: "500px", overflowY: "scroll", paddingTop: "10px" }}>
+
+      <Link href={resultsUrl} target="_blank" sx={{ color: "text" }}>
+        <Text>{`${raceResults?.eventName} - ${raceResults?.category}`}</Text>
+      </Link>
+      <Box
+        sx={{
+          height: "500px",
+          overflowY: "scroll",
+          paddingTop: "10px",
+          marginTop: "10px",
+          borderTopWidth: "1px",
+          borderTopStyle: "solid",
+          borderTopColor: "postCardBorderDark",
+        }}
+      >
         {raceResults &&
           raceResults?.results?.map((row, i) => {
             return (

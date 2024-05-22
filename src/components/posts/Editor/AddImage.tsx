@@ -153,7 +153,7 @@ const AddImage = ({ path }: { path: Path }) => {
                     fontSize: "14px",
                   }}
                 >
-                  Add image
+                  Image
                 </Text>
               </Flex>
             </Box>

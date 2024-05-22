@@ -39,12 +39,25 @@ const EmbedSettings = ({
               void: true,
               url: finalUrl,
               children: [{ text: "" }],
-            },
-            { at: path }
+            }
+            // { at: path }
           );
+          if (path.length > 2) {
+            Transforms.liftNodes(editor);
+          }
           isModalOpen(false);
           setIsNewComponentMenuOpen(false);
-          setMobileMenu({ ...mobileMenu, display: false, isFullScreen: false });
+          setMobileMenu({
+            top: 0,
+            left: 0,
+            display: false,
+            path: path,
+            isFullScreen: false,
+          });
+          const selection = window.getSelection();
+          // console.log(selection)
+          selection && selection.removeAllRanges();
+
         }}
         style={{ width: "100%" }}
       >

@@ -20,7 +20,11 @@ const RaceResultsDotComListWrapper = ({
 
   return (
     <HoverAction element={element}>
-      <Box variant="boxes.componentCard" contentEditable={false}>
+      <Box
+        variant="boxes.componentCard"
+        contentEditable={false}
+        sx={{ backgroundColor: "activityOverviewBackgroundColor" }}
+      >
         <Box sx={{ position: "relative" }}>
           {resultsUrl && (
             <RaceResultsDotComList

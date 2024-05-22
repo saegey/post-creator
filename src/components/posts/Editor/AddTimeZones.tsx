@@ -21,9 +21,12 @@ const AddTimeZones = ({ path }: { path: Path }) => {
           type: "timeInZones",
           children: [{ text: "" }],
           void: true,
-        },
-        { at: path }
+        }
+        // { at: path }
       );
+      if (path.length > 2) {
+        Transforms.liftNodes(editor);
+      }
       setIsNewComponentMenuOpen(false);
     }
   };

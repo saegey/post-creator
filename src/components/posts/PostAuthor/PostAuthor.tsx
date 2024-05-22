@@ -60,7 +60,7 @@ const PostAuthor = () => {
                 alt="Uploaded"
                 width={400}
                 height={300}
-                layout="responsive"
+                // layout="responsive"
                 style={{
                   objectFit: "cover",
                   width: "100%",

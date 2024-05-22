@@ -117,7 +117,7 @@ const Header = ({ user }: { user: IUser }) => {
                   alt="Uploaded"
                   width={400}
                   height={300}
-                  layout="responsive"
+                  // layout="responsive"
                   style={{
                     width: "100%",
                     height: "100%",

@@ -178,9 +178,13 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                   {
                     type: "raceResultsDotCom",
                     children: [{ text: "" }],
-                  },
-                  { at: path }
+                  }
+                  // { at: path }
                 );
+
+                if (path.length > 2) {
+                  Transforms.liftNodes(editor);
+                }
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
                 setMobileMenu({
@@ -188,6 +192,9 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                   display: false,
                   isFullScreen: false,
                 });
+                const selection = window.getSelection();
+                // console.log(selection)
+                selection && selection.removeAllRanges();
                 setIsNewComponentMenuOpen(false);
               });
             }}

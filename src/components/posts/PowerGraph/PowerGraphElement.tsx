@@ -1,7 +1,8 @@
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { Transforms } from "slate";
+import { Transforms, Editor } from "slate";
 import { Box } from "theme-ui";
 import React from "react";
+// import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PowerCurveGraph } from "./PowerCurveGraph";
 import { PostContext } from "../../PostContext";
@@ -10,14 +11,16 @@ import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
 
 const PowerGraph = ({ element }: { element: PowerGraphType }) => {
-  const { powerAnalysis, currentFtp } = React.useContext(PostContext);
-
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
+  const { powerAnalysis, currentFtp } = React.useContext(PostContext);
 
-  if (!powerAnalysis) {
-    return <></>;
-  }
+  // const editor = useSlateStatic();
+  // const path = ReactEditor.findPath(editor, element);
+
+  // if (!powerAnalysis) {
+  //   return <></>;
+  // }
 
   const hoverAction = React.useMemo(() => {
     return (
@@ -27,12 +30,14 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
             <PowerCurveGraph
               ftp={currentFtp ? Number(currentFtp) : 0}
               data={
-                Object.keys(powerAnalysis)
+                Object.keys(powerAnalysis ? powerAnalysis : [])
                   .map((k, i) => {
                     if (Number(k) > 0) {
                       return {
                         x: Number(k),
-                        y: powerAnalysis[k as keyof Object],
+                        y: powerAnalysis
+                          ? powerAnalysis[k as keyof Object]
+                          : undefined,
                       };
                     }
                   })
@@ -57,7 +62,7 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
         </Box>
       </HoverAction>
     );
-  }, [powerAnalysis, currentFtp]);
+  }, [element, powerAnalysis, currentFtp]);
 
   return hoverAction;
 };

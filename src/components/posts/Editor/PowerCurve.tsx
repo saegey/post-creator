@@ -23,7 +23,7 @@ const AddPowerCurve = ({ path }: { path: Path }) => {
           children: [{ text: "" }],
           void: true,
         },
-        { at: path }
+        // { at: path }
       );
 
       if (path.length > 2) {

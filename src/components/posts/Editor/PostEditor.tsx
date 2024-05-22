@@ -84,16 +84,17 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       return;
     }
     const range = selection.getRangeAt(0);
+    // console.log(range.startOffset);
     // const { anchor } = editor.selection;
-    if (range.startOffset && width < 500) {
+    if (range.startOffset === 0 && width < 500) {
       const rect = range.getBoundingClientRect();
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       const adjustedTop = rect.bottom + scrollY - 10;
       const adjustedLeft = rect.right + scrollX + 10;
-      if (editor.selection && Range.isCollapsed(editor.selection)) {
+      if (editor.selection) {
         const path = editor.selection.anchor.path;
-        console.log("Current selection path:", path);
+        console.log("Current selection path:", editor.selection, width);
         setMobileMenu({
           display: true,
           top: adjustedTop,
@@ -101,15 +102,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           path: path,
           isFullScreen: false,
         });
-      } else {
-        // setMobileMenu({
-        //   display: false,
-        //   top: adjustedTop,
-        //   left: adjustedLeft,
-        //   path: [0, 0],
-        //   isFullScreen: false,
-        // });
       }
+
       // const { anchorNode } = selection;
       // If selection exists, get the path
       // console.log(anchor);
@@ -117,13 +111,13 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       // const path = anchor && editor.path(anchor.path);
       // console.log(path);
     } else {
-      // setMobileMenu({
-      //   display: false,
-      //   top: 0,
-      //   left: 0,
-      //   path: [0, 0],
-      //   isFullScreen: false,
-      // });
+      setMobileMenu({
+        display: false,
+        top: 0,
+        left: 0,
+        path: [0, 0],
+        isFullScreen: false,
+      });
     }
     if (selection.rangeCount > 0) {
       // const range = selection.getRangeAt(0);
@@ -137,7 +131,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     } else {
       setSelectionMenu(null);
     }
-  }, [editor]);
+  }, [editor, width]);
 
   // const {
   //   setIsNewComponentMenuOpen,

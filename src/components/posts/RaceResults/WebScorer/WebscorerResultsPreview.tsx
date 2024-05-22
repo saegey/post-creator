@@ -21,7 +21,7 @@ const WebscorerResultsPreview = ({
 
   const { webscorerResults, id, setWebscorerResults } =
     React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen, setMobileMenu } =
+  const { setIsRaceResultsModalOpen, mobileMenu, setMobileMenu } =
     React.useContext(EditorContext);
   const { webScorerMeta, resultsUrl } = React.useContext(ResultsContext);
 
@@ -169,13 +169,14 @@ const WebscorerResultsPreview = ({
                   {
                     type: "webscorerResults",
                     children: [{ text: "" }],
-                  },
-                  { at: path }
+                  }
+                  // { at: path }
                 );
+                if (path.length > 2) {
+                  Transforms.liftNodes(editor);
+                }
                 setMobileMenu({
-                  top: 0,
-                  left: 0,
-                  path: [0, 0],
+                  ...mobileMenu,
                   display: false,
                   isFullScreen: false,
                 });
