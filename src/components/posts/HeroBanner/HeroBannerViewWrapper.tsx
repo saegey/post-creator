@@ -33,10 +33,10 @@ const HeroBannerViewWrapper = ({ node }: { node?: HeroBannerType }) => {
         {" "}
         <Box
           sx={{
-            backgroundColor: heroImage ? heroImage.colors[0] : "red",
+            // backgroundColor: heroImage ? heroImage.colors[0] : "red",
             width: ["100%", "65%", "65%"],
             display: ["inline-block", "", ""],
-            height: "600px",
+            // height: "600px",
             // height: ['400px', '600px', '600px'],
             // '@media (max-width: 400px)': {
             //   height: '300px',
@@ -46,9 +46,9 @@ const HeroBannerViewWrapper = ({ node }: { node?: HeroBannerType }) => {
             //   {
             //     height: '400px',
             //   },
-            "@media (min-width: 900px)": {
-              height: "700px",
-            },
+            // "@media (min-width: 900px)": {
+            //   height: "700px",
+            // },
           }}
         >
           <CldImage

@@ -20,13 +20,13 @@ const AddImage = ({ path }: { path: Path }) => {
   const editor = useSlateStatic();
 
   const openModal = (open: Function) => {
-    setIsNewComponentMenuOpen(false);
-    setMobileMenu({ ...mobileMenu, display: false });
+    // setIsNewComponentMenuOpen(false);
+    // setMobileMenu({ ...mobileMenu, display: false });
     open();
   };
 
   const insertImage = (selectedImage: CloudinaryImage) => {
-    console.log(path);
+    // console.log(path);
     Transforms.insertNodes(
       editor,
       {
@@ -62,16 +62,16 @@ const AddImage = ({ path }: { path: Path }) => {
       <CldUploadWidget
         uploadPreset="epcsmymp"
         options={{
-          sources: [
-            "local",
-            "url",
-            "camera",
-            "image_search",
-            "google_drive",
-            // 'facebook',
-            "dropbox",
-            "instagram",
-          ],
+          // sources: [
+          //   "local",
+          //   "url",
+          //   "camera",
+          //   "image_search",
+          //   "google_drive",
+          //   // 'facebook',
+          //   "dropbox",
+          //   "instagram",
+          // ],
           styles: {
             frame: {
               background: "black",
@@ -120,10 +120,11 @@ const AddImage = ({ path }: { path: Path }) => {
               console.error(errors);
             }
           }
-          widget.close();
+          // widget.close();
         }}
       >
         {({ open }) => {
+          console.log(open);
           return (
             <Box
               onClick={() => openModal(open)}

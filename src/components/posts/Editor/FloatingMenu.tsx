@@ -6,7 +6,7 @@ import BulletListButton from "./PostMenu/buttons/BulletListButton";
 import LinkButton from "./PostMenu/buttons/LinkButton";
 
 const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
-  console.log("floatingmenu", top, left);
+  // console.log("floatingmenu", top, left);
   const editor = useSlateStatic();
   return (
     <div

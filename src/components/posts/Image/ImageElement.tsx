@@ -8,6 +8,8 @@ import { Transforms } from "slate";
 import { CldImage } from "next-cloudinary";
 import { Box, Button, Label, Textarea, Close, Flex, Text } from "theme-ui";
 import React from "react";
+import { getCldImageUrl } from "next-cloudinary";
+import Image from "next/image";
 
 import { PostSaveComponents } from "../../../actions/PostSave";
 import { PostContext } from "../../PostContext";
@@ -45,11 +47,7 @@ const ImageElement = ({
   const [addCaption, setAddCaption] = React.useState(false);
   const [isMaximized, setIsMaximized] = React.useState(false);
   const { width } = useViewport();
-
   const { id, title, postLocation, images } = React.useContext(PostContext);
-  const selected = useSelected();
-  const focused = useFocused();
-
   const imageMetaIndex: number | undefined = images?.findIndex(
     (i) => i.public_id === element.public_id
   );
@@ -57,6 +55,16 @@ const ImageElement = ({
     return;
   }
   const imageMeta = images ? images[imageMetaIndex] : undefined;
+  const imageWidth = width < 690 ? width : 690;
+
+  const imageUrl = getCldImageUrl({
+    src: element.public_id,
+    width: width < 690 ? width : 690,
+    height: imageMeta?.height / (imageMeta?.width / imageWidth),
+  });
+
+  const selected = useSelected();
+  const focused = useFocused();
 
   const saveCaption = async (event: any) => {
     event.preventDefault();
@@ -78,10 +86,6 @@ const ImageElement = ({
       components: editor.children,
     });
   };
-
-  // console.log(imageMeta, width);
-
-	const imageWidth = width < 690 ? width : 690
 
   return (
     <HoverAction element={element}>
@@ -117,7 +121,30 @@ const ImageElement = ({
                 borderRadius: [0, "5px", "5px"],
               }}
             >
-              <CldImage
+              <Image
+                src={imageUrl}
+                alt="Uploaded"
+                width={400}
+                height={300}
+                layout="responsive"
+                style={{
+                  objectFit: "cover",
+                  // width: "100%",
+                  // maxHeight: "100%",
+                  // borderRadius:
+                  //   imageMeta &&
+                  //   imageMeta.width &&
+                  //   imageMeta.height &&
+                  //   imageMeta?.width > imageMeta?.height
+                  //     ? "5px"
+                  //     : "0px",
+                  boxShadow: `${
+                    selected && focused ? "0 0 0 3px #B4D5FF" : "none"
+                  }`,
+                }}
+                priority={true}
+              />
+              {/* <CldImage
                 width={width < 690 ? width : 690}
                 height={imageMeta?.height / (imageMeta?.width / imageWidth)}
                 src={element.public_id}
@@ -144,7 +171,7 @@ const ImageElement = ({
                     cloudName: cloudUrl,
                   },
                 }}
-              />
+              /> */}
             </Flex>
             <Box
               sx={{

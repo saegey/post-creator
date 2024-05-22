@@ -2,7 +2,7 @@ import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { API, graphqlOperation, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
-import { createEditor, Path, Transforms } from "slate";
+import { createEditor, Path, Range, Transforms } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
 import { ZenObservable } from "zen-observable-ts";
@@ -78,46 +78,56 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
   const { width } = useViewport();
 
-  const handleSelectionChange = () => {
+  const handleSelectionChange = React.useCallback(() => {
     const selection = window.getSelection();
-
     if (!selection || selection.rangeCount < 1) {
       return;
     }
     const range = selection.getRangeAt(0);
-    const { anchor } = editor.selection;
-
-    // console.log(range, editor.path(anchor.path));
-
-    if (range && width < 500) {
-      console.log("set mobile menu");
+    // const { anchor } = editor.selection;
+    if (range.startOffset && width < 500) {
       const rect = range.getBoundingClientRect();
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
       const adjustedTop = rect.bottom + scrollY - 10;
       const adjustedLeft = rect.right + scrollX + 10;
+      if (editor.selection && Range.isCollapsed(editor.selection)) {
+        const path = editor.selection.anchor.path;
+        console.log("Current selection path:", path);
+        setMobileMenu({
+          display: true,
+          top: adjustedTop,
+          left: adjustedLeft,
+          path: path,
+          isFullScreen: false,
+        });
+      } else {
+        // setMobileMenu({
+        //   display: false,
+        //   top: adjustedTop,
+        //   left: adjustedLeft,
+        //   path: [0, 0],
+        //   isFullScreen: false,
+        // });
+      }
       // const { anchorNode } = selection;
-
       // If selection exists, get the path
-
       // console.log(anchor);
-
       // // If selection exists, get the path
-      const path = anchor && editor.path(anchor.path);
-      console.log(path);
-
-      setMobileMenu({
-        display: true,
-        top: adjustedTop,
-        left: adjustedLeft,
-        path: path,
-        isFullScreen: false,
-      });
+      // const path = anchor && editor.path(anchor.path);
+      // console.log(path);
+    } else {
+      // setMobileMenu({
+      //   display: false,
+      //   top: 0,
+      //   left: 0,
+      //   path: [0, 0],
+      //   isFullScreen: false,
+      // });
     }
     if (selection.rangeCount > 0) {
       // const range = selection.getRangeAt(0);
       const selectedText = range.toString();
-
       if (selectedText.length > 0) {
         const rect = range.getBoundingClientRect();
         setSelectionMenu({ top: rect.bottom, left: rect.left });
@@ -127,7 +137,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     } else {
       setSelectionMenu(null);
     }
-  };
+  }, [editor]);
 
   // const {
   //   setIsNewComponentMenuOpen,
@@ -229,6 +239,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }: {
     selectedImage: CloudinaryImage | undefined;
   }) => {
+    console.log(selectedImage);
     setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
 
@@ -294,7 +305,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
         if (parentElement) {
           const rect = parentElement.getBoundingClientRect();
-          console.log("Bounding rect for the parent element:", rect);
+          // console.log("Bounding rect for the parent element:", rect);
           setMenuPosition({
             ...menuPosition,
             top: rect.bottom,
@@ -331,11 +342,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           editor={editor}
           initialValue={initialState}
           onChange={(newValue) => {
-            console.log(newValue);
+            // console.log(newValue);
 
             updateMenuPosition();
 
-            console.log("on change");
+            // console.log("on change");
             handleSelectionChange();
             setComponents && setComponents(newValue as Array<CustomElement>);
 
@@ -366,7 +377,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             spellCheck
             autoFocus
             renderElement={renderElement}
-            decorate={SlateDecorate}
+            // decorate={SlateDecorate}
             renderLeaf={(props: RenderLeafProps) => {
               return (
                 <Leaf props={props} updateMenuPosition={updateMenuPosition} />

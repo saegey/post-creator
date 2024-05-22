@@ -24,8 +24,13 @@ const AddActivityOverview = ({ path }: { path: Path }) => {
           children: [{ text: "" }],
           void: true,
         },
-        { at: path }
+        // { at: path }
       );
+
+      if (path.length > 2) {
+        Transforms.liftNodes(editor);
+      }
+
       setMobileMenu({
         top: 0,
         left: 0,

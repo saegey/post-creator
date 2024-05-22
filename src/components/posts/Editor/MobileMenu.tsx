@@ -25,7 +25,7 @@ const MobileMenu = () => {
       document.body.style.overflow = "auto";
     };
   }, [mobileMenu.isFullScreen]);
-  console.log(mobileMenu);
+  // console.log(mobileMenu);
 
   if (!mobileMenu.display) {
     return <></>;

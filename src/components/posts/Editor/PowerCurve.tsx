@@ -25,6 +25,11 @@ const AddPowerCurve = ({ path }: { path: Path }) => {
         },
         { at: path }
       );
+
+      if (path.length > 2) {
+        Transforms.liftNodes(editor);
+      }
+
       setMobileMenu({
         top: 0,
         left: 0,

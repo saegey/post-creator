@@ -16,7 +16,7 @@ interface AddImageProps {
     selectedImage,
   }: {
     selectedImage: CloudinaryImage | undefined;
-  }) => void;
+  }) => Promise<void>;
   setIsOpen: (arg0: boolean) => void;
 }
 
@@ -153,8 +153,8 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
         >
           <Button
             variant="primaryButton"
-            onClick={() => {
-              callback({ selectedImage });
+            onClick={async () => {
+              await callback({ selectedImage });
               setIsOpen(false);
             }}
             disabled={selectedImage ? false : true}

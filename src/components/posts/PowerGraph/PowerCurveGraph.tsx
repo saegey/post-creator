@@ -49,7 +49,7 @@ PowerCurveGraphProps) => {
   const context = useThemeUI();
   const { theme } = context;
   const { width } = useViewport();
-  const hideAxes = width < 400;
+  const hideAxes = width < 500;
 
   return (
     <ResponsiveContainer width='100%' height='100%'>

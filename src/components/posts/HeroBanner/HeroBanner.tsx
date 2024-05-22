@@ -11,10 +11,12 @@ import { useClickOutside } from "../../../utils/ux";
 import PostHeaderTextBlock from "./PostHeaderTextBlock";
 import { cloudUrl } from "../../../utils/cloudinary";
 import { HeroBannerType } from "../../../types/common";
+import { useViewport } from "../../ViewportProvider";
 
 const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { heroImage, title, postLocation, date, subhead } =
     React.useContext(PostContext);
+  // console.log(cloudUrl);
 
   const { setIsHeroImageModalOpen, setIsPhotoCaptionOpen, isPhotoCaptionOpen } =
     React.useContext(EditorContext);
@@ -29,6 +31,9 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
       e.stopPropagation();
     }
   );
+
+  const { width } = useViewport();
+  const imageWidth = width < 690 ? width : 690;
 
   const menu = (
     <Box sx={{ position: "absolute", right: "10px", top: "20px" }}>
@@ -91,10 +96,10 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                 background: "divider",
                 justifyContent: "center",
                 alignContent: "center",
-                height: "600px",
-                "@media (min-width: 900px)": {
-                  height: "700px",
-                },
+                // height: "600px",
+                // "@media (min-width: 900px)": {
+                //   height: "700px",
+                // },
               }}
             >
               <Flex>
@@ -118,17 +123,22 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   heroImage && heroImage.colors ? heroImage.colors[0] : "black",
                 width: ["100%", "65%", "65%"],
                 display: ["inline-block", "", ""],
-                height: "600px",
-                "@media (min-width: 900px)": {
-                  height: "700px",
-                },
+                // height: "600px",
+                // "@media (min-width: 900px)": {
+                //   height: "700px",
+                // },
               }}
             >
-              <CldImage
-                priority={true}
-                width={heroImage.width}
-                height={heroImage.height}
+              {/* <CldImage
+                // priority={true}
+                width={heroImage.width < 690 ? heroImage.width : 690}
+                height={heroImage?.height / (heroImage?.width / imageWidth)}
                 src={heroImage.public_id}
+                // src={
+                //   typeof window !== "undefined"
+                //     ? heroImage.public_id
+                //     : `https://res.cloudinary.com/${cloudUrl}/image/upload/${heroImage.public_id}.jpg`
+                // }
                 alt="race pic"
                 style={{
                   objectFit: "contain",
@@ -140,7 +150,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                     cloudName: cloudUrl,
                   },
                 }}
-              />
+              /> */}
             </Box>
           ) : (
             <></>

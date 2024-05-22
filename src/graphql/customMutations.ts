@@ -20,6 +20,7 @@ export const updatePostMinimal = /* GraphQL */ `
       teaser
       currentFtp
       components
+      heroImage
       # powerAnalysis
       # coordinates
       # powers
