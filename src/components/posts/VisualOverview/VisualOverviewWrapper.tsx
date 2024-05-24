@@ -45,6 +45,9 @@ const VisualOverviewWrapper = ({
       return <></>;
     }
     console.log("visual overview render");
+
+
+
     const formatted = activity.map((a, i) => {
       return {
         ...a,

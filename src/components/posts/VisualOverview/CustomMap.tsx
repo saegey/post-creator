@@ -19,7 +19,7 @@ interface MapProps {
   markerCoordinates: ActivityItem | undefined;
   token: string;
   // selection: [number, number];
-  downsampleRate: number;
+  // downsampleRate: number;
   element: VisualOverviewType;
 }
 
@@ -72,7 +72,7 @@ const Map = ({
   token,
   element,
   // selection,
-  downsampleRate,
+  // downsampleRate,
 }: MapProps): JSX.Element => {
   if (!coordinates || coordinates.length === 0) {
     return (
@@ -250,7 +250,7 @@ const Map = ({
               properties: { name: "Null Island" },
               geometry: {
                 type: "Point",
-                coordinates: markerCoordinates?.c,
+                coordinates: coordinates[markerCoordinates.i],
               },
             },
           ],

@@ -16,6 +16,8 @@ import { Transforms } from "slate";
 
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
+import { useViewport } from "../../ViewportProvider";
+import simplify from "simplify-js";
 
 // type ActivityEvent = {
 //   c: Array<number> | Array<null>;
@@ -74,6 +76,8 @@ const ElevationGraph = ({
     );
   }
 
+  const { width } = useViewport();
+
   // console.log(top, bottom);
 
   const getAxisYDomain = (
@@ -83,9 +87,9 @@ const ElevationGraph = ({
     offset: number
   ): (number | string)[] => {
     if (from && to) {
-      const lower = data.findIndex((s) => s.d === Number(from));
-      const upper = data.findIndex((s) => s.d === Number(to));
-      const refData = data.slice(lower, upper);
+      const lower = simple.findIndex((s) => s.x === Number(from));
+      const upper = simple.findIndex((s) => s.x === Number(to));
+      const refData = simple.slice(lower, upper);
 
       let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
         number,
@@ -113,7 +117,7 @@ const ElevationGraph = ({
       : undefined;
   const themeContext = useThemeUI();
   const units = useUnits();
-  const hideAxes = false;
+  const hideAxes = width > 500 ? false : true;
 
   // console.log(left.d);
 
@@ -223,15 +227,23 @@ const ElevationGraph = ({
       refAreaLeft: "",
       refAreaRight: "",
     }));
-    const lowBound = data.findIndex((d) => Number(d.d) === Number(refAreaLeft));
-    const highBound = data.findIndex((d) => {
-      return Number(d.d) === Number(refAreaRight);
+    const lowBound = simple.findIndex(
+      (d) => Number(d.x) === Number(refAreaLeft)
+    );
+    const highBound = simple.findIndex((d) => {
+      return Number(d.x) === Number(refAreaRight);
     });
     setSelection([lowBound, highBound]);
     setIsZoomedOut(false);
   };
 
   const { refAreaLeft, refAreaRight } = zoomGraph;
+
+  const points = data.map((d, i) => new Object({ x: d.d, y: d.e, i: i }));
+  // console.log(data.map((d) => new Object({ x: d.c[0], y: d.c[1] })));
+  // console.log(points1);
+  const simple = simplify(points, 0.1, false);
+  console.log(simple);
 
   return (
     <Box
@@ -288,7 +300,7 @@ const ElevationGraph = ({
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           // key={data[0].e}
-          data={data}
+          data={simple}
           onMouseDown={(e) => {
             if (selection) {
               return;
@@ -304,7 +316,7 @@ const ElevationGraph = ({
               setMarker(undefined);
               return;
             }
-
+            console.log(e);
             setMarker(e.activePayload[0].payload as ActivityItem);
 
             if (!selection) {
@@ -338,7 +350,7 @@ const ElevationGraph = ({
           {!hideAxes && (
             <XAxis
               allowDataOverflow
-              dataKey="d"
+              dataKey="x"
               type="number"
               domain={left && right ? [left, right] : undefined}
               tickCount={5}
@@ -373,7 +385,7 @@ const ElevationGraph = ({
                 fontSize: "14px",
               }}
               allowDecimals={false}
-              dataKey="e"
+              dataKey="y"
               tick={{
                 fill: themeContext?.theme?.colors?.text as string,
                 fontSize: "14px",
@@ -385,7 +397,7 @@ const ElevationGraph = ({
           )}
           <Area
             type={"linear"}
-            dataKey="e"
+            dataKey="y"
             fill={themeContext?.theme?.colors?.text as string}
             fillOpacity={0.2}
             dot={false}

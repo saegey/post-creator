@@ -50,6 +50,7 @@
     "recharts": "^2.8.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "simplify-js": "^1.2.4",
     "slate": "^0.101.1",
     "slate-history": "^0.93.0",
     "slate-react": "^0.101.1",

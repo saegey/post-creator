@@ -31,8 +31,8 @@ const ElevationSlice = ({
 
   // const units = useUnits();
   const grade =
-    marker && marker.g
-      ? marker.g
+    marker && marker.i
+      ? downSampledData[marker.i].g
       : selection
       ? (
           (downSampledData[selection[1]].e - downSampledData[selection[0]].e) /
@@ -59,8 +59,8 @@ const ElevationSlice = ({
       : "";
 
   const distance =
-    marker && marker.d
-      ? marker.d.toFixed(2)
+    marker && marker.i
+      ? downSampledData[marker.i].d.toFixed(2)
       : selection
       ? (
           downSampledData[selection[1]].d - downSampledData[selection[0]].d
@@ -73,8 +73,8 @@ const ElevationSlice = ({
       : "";
 
   const elevation =
-    marker && marker.e
-      ? marker.e.toFixed(0)
+    marker && marker.i
+      ? downSampledData[marker.i].e.toFixed(0)
       : selection
       ? (
           downSampledData[selection[1]].e - downSampledData[selection[0]].e
@@ -87,8 +87,8 @@ const ElevationSlice = ({
       : "";
 
   const time =
-    marker && marker.t
-      ? marker.t
+    marker && marker.i
+      ? downSampledData[marker.i].t.toFixed(0)
       : selection
       ? downSampledData[selection[1]].t - downSampledData[selection[0]].t
       : element && element.selectionEnd && element.selectionStart
@@ -105,8 +105,9 @@ const ElevationSlice = ({
     selectPowers = powers?.slice(element.selectionStart, element.selectionEnd);
   }
 
+	// console.log(powers[time]);
   const power =
-    marker && marker.t && powers && time
+    marker && marker.i && powers && time
       ? powers[time as keyof object]
       : selectPowers
       ? selectPowers.reduce((a, b) => a + b) / selectPowers.length
@@ -120,7 +121,7 @@ const ElevationSlice = ({
       : undefined;
 
   const heartSummary =
-    marker && marker.t && hearts && time
+    marker && marker.i && hearts && time
       ? hearts[time as keyof object]
       : selectHearts
       ? selectHearts.reduce((a, b) => a + b) / selectHearts.length

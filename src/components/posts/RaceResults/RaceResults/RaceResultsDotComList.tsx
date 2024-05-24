@@ -57,7 +57,7 @@ const RaceResultsDotComList = ({
                 <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
                   {row.CatPlace}
                 </Text>
-                <Box sx={{ width: "300px" }}>
+                <Box sx={{ flexGrow: "1" }}>
                   <Text as="div">{row.Name}</Text>
                   <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
                     {row.Team ? row.Team : " "}
@@ -74,7 +74,7 @@ const RaceResultsDotComList = ({
                       )} km/h`
                     : ""}
                 </Text> */}
-                <Text as="span" sx={{ marginLeft: "auto" }}>
+                <Text as="span" sx={{ width: "fit-content" }}>
                   {row.Time}
                 </Text>
               </Flex>
