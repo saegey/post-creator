@@ -119,8 +119,6 @@ const ElevationGraph = ({
   const units = useUnits();
   const hideAxes = width > 500 ? false : true;
 
-  // console.log(left.d);
-
   const initialState = {
     refAreaLeft: "",
     refAreaRight: "",
@@ -227,11 +225,9 @@ const ElevationGraph = ({
       refAreaLeft: "",
       refAreaRight: "",
     }));
-    const lowBound = simple.findIndex(
-      (d) => Number(d.x) === Number(refAreaLeft)
-    );
-    const highBound = simple.findIndex((d) => {
-      return Number(d.x) === Number(refAreaRight);
+    const lowBound = data.findIndex((d) => Number(d.d) === Number(refAreaLeft));
+    const highBound = data.findIndex((d) => {
+      return Number(d.d) === Number(refAreaRight);
     });
     setSelection([lowBound, highBound]);
     setIsZoomedOut(false);
@@ -242,8 +238,8 @@ const ElevationGraph = ({
   const points = data.map((d, i) => new Object({ x: d.d, y: d.e, i: i }));
   // console.log(data.map((d) => new Object({ x: d.c[0], y: d.c[1] })));
   // console.log(points1);
-  const simple = simplify(points, 0.1, false);
-  console.log(simple);
+  const simple = simplify(points, 0.01, false);
+  // console.log(simple);
 
   return (
     <Box
@@ -316,7 +312,7 @@ const ElevationGraph = ({
               setMarker(undefined);
               return;
             }
-            console.log(e);
+            // console.log(e);
             setMarker(e.activePayload[0].payload as ActivityItem);
 
             if (!selection) {
@@ -347,54 +343,55 @@ const ElevationGraph = ({
               <GradeGradient data={downSampledData} xMax={xMax} />
             </linearGradient>
           </defs> */}
-          {!hideAxes && (
-            <XAxis
-              allowDataOverflow
-              dataKey="x"
-              type="number"
-              domain={left && right ? [left, right] : undefined}
-              tickCount={5}
-              label={{
-                value: `Distance (${
-                  units.unitOfMeasure === "metric" ? "km" : "mi"
-                })`,
-                position: "bottom",
-                fontSize: "14px",
-              }}
-              allowDecimals={false}
-              tickFormatter={(t) => t.toFixed(1)}
-              tick={{
-                fill: themeContext?.theme?.colors?.text as string,
-                fontSize: "14px",
-              }}
-              hide={hideAxes}
-              stroke={themeContext?.theme?.colors?.chartAxes as string}
-            />
-          )}
-          {!hideAxes && (
-            <YAxis
-              allowDataOverflow
-              domain={[bottom, top]}
-              type="number"
-              label={{
-                value: `Elevation (${
-                  units.unitOfMeasure === "metric" ? "m" : "ft"
-                })`,
-                angle: -90,
-                position: "left",
-                fontSize: "14px",
-              }}
-              allowDecimals={false}
-              dataKey="y"
-              tick={{
-                fill: themeContext?.theme?.colors?.text as string,
-                fontSize: "14px",
-              }}
-              tickFormatter={(t) => t.toFixed(0)}
-              stroke={themeContext?.theme?.colors?.chartAxes as string}
-              hide={hideAxes}
-            />
-          )}
+          {/* {!hideAxes && ( */}
+          <XAxis
+            hide={hideAxes}
+            allowDataOverflow
+            dataKey="x"
+            type="number"
+            domain={left && right ? [left, right] : undefined}
+            tickCount={5}
+            label={{
+              value: `Distance (${
+                units.unitOfMeasure === "metric" ? "km" : "mi"
+              })`,
+              position: "bottom",
+              fontSize: "14px",
+            }}
+            allowDecimals={false}
+            tickFormatter={(t) => t.toFixed(1)}
+            tick={{
+              fill: themeContext?.theme?.colors?.text as string,
+              fontSize: "14px",
+            }}
+            // hide={hideAxes}
+            stroke={themeContext?.theme?.colors?.chartAxes as string}
+          />
+          {/* )} */}
+          {/* {!hideAxes && ( */}
+          <YAxis
+            allowDataOverflow
+            domain={[bottom, top]}
+            type="number"
+            label={{
+              value: `Elevation (${
+                units.unitOfMeasure === "metric" ? "m" : "ft"
+              })`,
+              angle: -90,
+              position: "left",
+              fontSize: "14px",
+            }}
+            allowDecimals={false}
+            dataKey="y"
+            tick={{
+              fill: themeContext?.theme?.colors?.text as string,
+              fontSize: "14px",
+            }}
+            tickFormatter={(t) => t.toFixed(0)}
+            stroke={themeContext?.theme?.colors?.chartAxes as string}
+            hide={hideAxes}
+          />
+          {/* )} */}
           <Area
             type={"linear"}
             dataKey="y"

@@ -1,6 +1,6 @@
 import { Box, Flex } from "theme-ui";
 import React from "react";
-import simplify from 'simplify-js';
+import simplify from "simplify-js";
 
 import Map from "./CustomMap";
 import ElevationGraph from "./ElevationGraph";
@@ -49,6 +49,8 @@ const VisualOverview = ({
       : element.selectionEnd
       ? element.selectionEnd
       : undefined;
+
+    console.log(selection);
 
     return (
       <ElevationGraph
