@@ -89,9 +89,11 @@ export type ModelPostConditionInput = {
   and?: Array< ModelPostConditionInput | null > | null,
   or?: Array< ModelPostConditionInput | null > | null,
   not?: ModelPostConditionInput | null,
+  updatedAt?: ModelStringInput | null,
   blogPostsId?: ModelIDInput | null,
   postRelatedId?: ModelIDInput | null,
   postAuthorId?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelStringInput = {
@@ -348,10 +350,12 @@ export type ModelPublishedPostFilterInput = {
   runSignupResults?: ModelStringInput | null,
   raceResultsProvider?: ModelStringInput | null,
   originalPostId?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelPublishedPostFilterInput | null > | null,
   or?: Array< ModelPublishedPostFilterInput | null > | null,
   not?: ModelPublishedPostFilterInput | null,
   publishedPostOriginalPostId?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelPostFilterInput = {
@@ -394,12 +398,14 @@ export type ModelPostFilterInput = {
   runSignupResults?: ModelStringInput | null,
   raceResultsProvider?: ModelStringInput | null,
   privacyStatus?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelPostFilterInput | null > | null,
   or?: Array< ModelPostFilterInput | null > | null,
   not?: ModelPostFilterInput | null,
   blogPostsId?: ModelIDInput | null,
   postRelatedId?: ModelIDInput | null,
   postAuthorId?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type CreateUserInput = {
@@ -418,6 +424,9 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type UpdateUserInput = {
@@ -442,6 +451,9 @@ export type ModelBlogConditionInput = {
   and?: Array< ModelBlogConditionInput | null > | null,
   or?: Array< ModelBlogConditionInput | null > | null,
   not?: ModelBlogConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type UpdateBlogInput = {
@@ -540,7 +552,9 @@ export type ModelPublishedPostConditionInput = {
   and?: Array< ModelPublishedPostConditionInput | null > | null,
   or?: Array< ModelPublishedPostConditionInput | null > | null,
   not?: ModelPublishedPostConditionInput | null,
+  updatedAt?: ModelStringInput | null,
   publishedPostOriginalPostId?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type UpdatePublishedPostInput = {
@@ -646,9 +660,12 @@ export type ModelUserFilterInput = {
   email?: ModelStringInput | null,
   image?: ModelStringInput | null,
   username?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelUserConnection = {
@@ -660,9 +677,12 @@ export type ModelUserConnection = {
 export type ModelBlogFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelBlogFilterInput | null > | null,
   or?: Array< ModelBlogFilterInput | null > | null,
   not?: ModelBlogFilterInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelBlogConnection = {
@@ -693,8 +713,11 @@ export type ModelSubscriptionUserFilterInput = {
   email?: ModelSubscriptionStringInput | null,
   image?: ModelSubscriptionStringInput | null,
   username?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -730,8 +753,12 @@ export type ModelSubscriptionStringInput = {
 export type ModelSubscriptionBlogFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionBlogFilterInput | null > | null,
   or?: Array< ModelSubscriptionBlogFilterInput | null > | null,
+  blogPostsId?: ModelSubscriptionIDInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelSubscriptionPublishedPostFilterInput = {
@@ -775,8 +802,11 @@ export type ModelSubscriptionPublishedPostFilterInput = {
   runSignupResults?: ModelSubscriptionStringInput | null,
   raceResultsProvider?: ModelSubscriptionStringInput | null,
   originalPostId?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPublishedPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPublishedPostFilterInput | null > | null,
+  publishedPostOriginalPostId?: ModelSubscriptionIDInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelSubscriptionFloatInput = {
@@ -843,8 +873,12 @@ export type ModelSubscriptionPostFilterInput = {
   runSignupResults?: ModelSubscriptionStringInput | null,
   raceResultsProvider?: ModelSubscriptionStringInput | null,
   privacyStatus?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPostFilterInput | null > | null,
   or?: Array< ModelSubscriptionPostFilterInput | null > | null,
+  postRelatedId?: ModelSubscriptionIDInput | null,
+  postAuthorId?: ModelSubscriptionIDInput | null,
+  owner?: ModelStringInput | null,
 };
 
 export type UpdatePostMinimalMutationVariables = {
@@ -859,7 +893,6 @@ export type UpdatePostMinimalMutation = {
     title: string,
     gpxFile?: string | null,
     images?: string | null,
-    headerImage?: string | null,
     date?: string | null,
     publishedDate?: string | null,
     location?: string | null,
@@ -871,6 +904,7 @@ export type UpdatePostMinimalMutation = {
     teaser?: string | null,
     currentFtp?: string | null,
     components?: string | null,
+    heroImage?: string | null,
     blog?:  {
       __typename: "Blog",
       id: string,
