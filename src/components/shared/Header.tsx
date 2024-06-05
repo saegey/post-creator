@@ -189,7 +189,7 @@ const Header = ({ user }: { user: IUser }) => {
                     <Text>{savingStatus}</Text>
                   </Box>
                 )}
-                <Button
+                {/* <Button
                   variant="primaryButton"
                   type="button"
                   onClick={publishPost}
@@ -201,7 +201,7 @@ const Header = ({ user }: { user: IUser }) => {
                       <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
                     )}
                   </Flex>
-                </Button>
+                </Button> */}
                 <Box
                   sx={{
                     marginY: "auto",

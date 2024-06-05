@@ -75,9 +75,9 @@ const VisualOverviewViewWrapper = ({
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: "5px",
-                margin: "60px",
+                // margin: "60px",
                 // width: "500px",
-                height: "820px",
+                // height: "820px",
               }}
               className="skeleton"
             />

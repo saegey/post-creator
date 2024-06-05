@@ -11,6 +11,8 @@ const HeroBannerViewWrapper = ({ node }: { node?: HeroBannerType }) => {
   const { heroImage, id, title, subhead, date, postLocation } =
     React.useContext(PostContext);
 
+  console.log(heroImage);
+
   if (!heroImage) {
     return <Box key={`{herobanner-${id}}`} />;
   }

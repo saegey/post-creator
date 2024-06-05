@@ -12,6 +12,7 @@ import AddActivityOverview from "./AddActivityOverview";
 import AddStravaLink from "./AddStravaLink";
 import AddRWGPS from "./AddRWGPS";
 import AddRaceResults from "./AddRaceResults";
+import AddRouteOverview from "./AddRouteOverview";
 
 const MobileMenu = () => {
   const { mobileMenu, setMobileMenu } = React.useContext(EditorContext);
@@ -137,6 +138,15 @@ const MobileMenu = () => {
               }}
             >
               <AddRWGPS path={mobileMenu.path} />
+            </Box>
+            <Box
+              sx={{
+                borderBottomWidth: "1px",
+                borderBottomStyle: "solid",
+                borderBottomColor: "divider",
+              }}
+            >
+              <AddRouteOverview path={mobileMenu.path} />
             </Box>
             <Box
               sx={{

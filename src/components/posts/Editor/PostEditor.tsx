@@ -84,23 +84,42 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       return;
     }
     const range = selection.getRangeAt(0);
-    // console.log(range.startOffset);
+    // const parentElement =
+    //   selection.anchorNode.parentElement?.getAttribute("data-slate-length");
+    console.log(editor.selection);
+    const operations = editor.operations;
+    console.log(editor.operations);
+    const isNewLineInserted = operations.some((op) => {
+      return op.type === "split_node";
+    });
+
+    if (isNewLineInserted) {
+      console.log("New line inserted!");
+    }
+
     // const { anchor } = editor.selection;
-    if (range.startOffset === 0 && width < 500) {
+    if (editor.selection?.focus.offset === 0 && width < 500) {
       const rect = range.getBoundingClientRect();
+
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
-      const adjustedTop = rect.bottom + scrollY - 10;
+      console.log(rect, scrollX, scrollY);
+      const adjustedTop =
+        rect.bottom + scrollY + (isNewLineInserted ? 60 : -10);
       const adjustedLeft = rect.right + scrollX + 10;
       if (editor.selection) {
         const path = editor.selection.anchor.path;
-        console.log("Current selection path:", editor.selection, width);
+        // console.log("Current selection path:", editor.selection, width);
         setMobileMenu({
           display: true,
           top: adjustedTop,
           left: adjustedLeft,
           path: path,
           isFullScreen: false,
+        });
+        setMenuPosition({
+          ...menuPosition,
+          path: path,
         });
       }
 
@@ -336,7 +355,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           editor={editor}
           initialValue={initialState}
           onChange={(newValue) => {
-            // console.log(newValue);
+            console.log(newValue);
 
             updateMenuPosition();
 
@@ -353,6 +372,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               setIsSavingPost,
               timeoutLink,
               setTimeoutLink,
+              heroImage: JSON.stringify(heroImage),
             });
           }}
         >

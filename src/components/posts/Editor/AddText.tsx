@@ -7,28 +7,40 @@ import { EditorContext } from "./EditorContext";
 
 const AddText = ({ path }: { path: Path }) => {
   const editor = useSlateStatic();
-  const { setIsNewComponentMenuOpen, menuPosition } =
+  const { setIsNewComponentMenuOpen, menuPosition, setMobileMenu } =
     React.useContext(EditorContext);
 
   const addItem = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault();
     setIsNewComponentMenuOpen(false);
-		console.log
+    console.log(path);
 
     Transforms.insertNodes(
       editor,
       { type: "paragraph", children: [{ text: "" }] },
-      { at: path }
+      { at: [path[0], path[1]] }
     );
+
+    // if (path.length > 2) {
+    //   Transforms.liftNodes(editor);
+    // }
+
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
 
     // Move the cursor (caret) to the end of the newly inserted paragraph
 
-    const newPath = menuPosition.path.concat(0);
+    // const newPath = menuPosition.path.concat(0);
 
-    Transforms.select(editor, {
-      anchor: { path: newPath, offset: 0 },
-      focus: { path: newPath, offset: 0 },
-    });
+    // Transforms.select(editor, {
+    //   anchor: { path: newPath, offset: 0 },
+    //   focus: { path: newPath, offset: 0 },
+    // });
   };
 
   return (

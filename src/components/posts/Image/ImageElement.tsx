@@ -117,6 +117,8 @@ const ImageElement = ({
                 // maxWidth: "1200px",
                 height: "auto",
                 // height: "600px",
+                justifyContent: "center",
+                alignItems: "center",
                 backgroundColor: imageMeta?.colors[0],
                 borderRadius: [0, "5px", "5px"],
               }}
@@ -124,11 +126,13 @@ const ImageElement = ({
               <Image
                 src={imageUrl}
                 alt="Uploaded"
-                width={400}
-                height={300}
+                width={600}
+                height={500}
                 // layout="responsive"
                 style={{
-                  objectFit: "cover",
+                  maxWidth: "100%",
+                  height: "auto",
+                  // objectFit: "cover",
                   // width: "100%",
                   // maxHeight: "100%",
                   // borderRadius:

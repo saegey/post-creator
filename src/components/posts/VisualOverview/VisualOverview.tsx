@@ -50,7 +50,7 @@ const VisualOverview = ({
       ? element.selectionEnd
       : undefined;
 
-    console.log(selection);
+    // console.log(selection);
 
     return (
       <ElevationGraph
@@ -86,7 +86,7 @@ const VisualOverview = ({
   };
 
   return (
-    <Box sx={{ marginY: "60px", borderRadius: [0, "5px", "5px"] }}>
+    <Box sx={{ borderRadius: [0, "5px", "5px"] }}>
       {coordinates !== undefined ? (
         <Map
           coordinates={coordinates}

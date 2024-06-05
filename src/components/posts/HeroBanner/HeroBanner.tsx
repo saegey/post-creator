@@ -1,6 +1,7 @@
 import { Box, Flex, Button } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
+import { getCldImageUrl } from "next-cloudinary";
 
 import { PostContext } from "../../PostContext";
 import OptionsButton from "../../buttons/OptionsButton";
@@ -12,14 +13,23 @@ import PostHeaderTextBlock from "./PostHeaderTextBlock";
 import { cloudUrl } from "../../../utils/cloudinary";
 import { HeroBannerType } from "../../../types/common";
 import { useViewport } from "../../ViewportProvider";
+import Image from "next/image";
 
 const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { heroImage, title, postLocation, date, subhead } =
     React.useContext(PostContext);
   // console.log(cloudUrl);
 
-  const { setIsHeroImageModalOpen, setIsPhotoCaptionOpen, isPhotoCaptionOpen } =
-    React.useContext(EditorContext);
+  console.log(heroImage);
+
+  const {
+    setIsHeroImageModalOpen,
+    setIsPhotoCaptionOpen,
+    isPhotoCaptionOpen,
+    setMenuPosition,
+    menuPosition,
+    setMobileMenu,
+  } = React.useContext(EditorContext);
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
@@ -34,6 +44,14 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
 
   const { width } = useViewport();
   const imageWidth = width < 690 ? width : 690;
+
+  const imageUrl = heroImage
+    ? getCldImageUrl({
+        src: heroImage?.public_id,
+        width: width < 690 ? width : 690,
+        height: heroImage?.height / (heroImage?.width / imageWidth),
+      })
+    : undefined;
 
   const menu = (
     <Box sx={{ position: "absolute", right: "10px", top: "20px" }}>
@@ -61,6 +79,13 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
             onClick={() => {
               setIsHeroImageModalOpen(true);
               setIsMenuOpen(false);
+              setMobileMenu({
+                display: false,
+                top: 0,
+                left: 0,
+                path: [0, 0],
+                isFullScreen: false,
+              });
             }}
             variant="boxes.dropdownMenuItem"
           >
@@ -109,7 +134,21 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   sx={{
                     marginY: "auto",
                   }}
-                  onClick={() => setIsHeroImageModalOpen(true)}
+                  onClick={() => {
+                    setIsHeroImageModalOpen(true);
+                    // setMenuPosition({
+                    //   ...menuPosition,
+                    //   top: 0,
+                    //   left: 0,
+                    // });
+                    // setMobileMenu({
+                    //   display: false,
+                    //   top: 0,
+                    //   left: 0,
+                    //   path: [0, 0],
+                    //   isFullScreen: false,
+                    // });
+                  }}
                 >
                   Add Image
                 </Button>
@@ -117,18 +156,47 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
             </Flex>
           )}
           {heroImage && heroImage !== null ? (
-            <Box
+            <Flex
               sx={{
                 backgroundColor:
                   heroImage && heroImage.colors ? heroImage.colors[0] : "black",
                 width: ["100%", "65%", "65%"],
                 display: ["inline-block", "", ""],
+
                 // height: "600px",
                 // "@media (min-width: 900px)": {
                 //   height: "700px",
                 // },
               }}
             >
+              {imageUrl && (
+                <Flex
+                  sx={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    // height: "100vh",
+                  }}
+                >
+                  <Image
+                    src={imageUrl}
+                    alt="Uploaded"
+                    width={600}
+                    height={500}
+                    // layout="responsive"
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto",
+                      // width: "100%",
+                      // height: "100%",
+                      // marginTop: "auto",
+                      // marginBottom: "auto",
+                      // borderRadius: "100%",
+                      // objectFit: "cover",
+                    }}
+                    priority={true}
+                  />
+                </Flex>
+              )}
               {/* <CldImage
                 // priority={true}
                 width={heroImage.width < 690 ? heroImage.width : 690}
@@ -151,7 +219,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   },
                 }}
               /> */}
-            </Box>
+            </Flex>
           ) : (
             <></>
           )}

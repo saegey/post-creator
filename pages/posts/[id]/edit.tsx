@@ -98,6 +98,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       props: { errorCode: 403 },
     };
   }
+  console.log(post);
 
   return {
     props: {

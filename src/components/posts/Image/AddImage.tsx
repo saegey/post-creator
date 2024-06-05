@@ -10,6 +10,8 @@ import { UpdatePostMutation } from "../../../API";
 import SidebarLeft from "../../shared/SidebarLeft";
 import { CloudinaryImage } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
+import StandardModal from "../../shared/StandardModal";
+import { EditorContext } from "../Editor/EditorContext";
 
 interface AddImageProps {
   callback: ({
@@ -23,15 +25,24 @@ interface AddImageProps {
 const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
   const { setImages, images, id } = React.useContext(PostContext);
+  const { setIsHeroImageModalOpen, isHeroImageModalOpen } =
+    React.useContext(EditorContext);
 
   return (
     <>
-      <SidebarLeft closeOnclick={() => setIsOpen(false)} title={"Photos"}>
+      <StandardModal
+        title={"Add Caption"}
+        setIsOpen={() => setIsHeroImageModalOpen(false)}
+        isOpen={isHeroImageModalOpen}
+      >
+        {/* <SidebarLeft closeOnclick={() => setIsOpen(false)} title={"Photos"}> */}
         <Flex
           sx={{
-            margin: "15px",
+            marginY: "15px",
             flexDirection: "column",
             height: "calc(100% - 300px)",
+            flexGrow: ["1", "inherit", "inherit"],
+            overflowY: "scroll",
           }}
         >
           <Box
@@ -143,9 +154,9 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
           sx={{
             flex: "0 1 40px",
             display: "flex",
-            marginY: "20px",
-            paddingLeft: "20px",
-            paddingTop: "20px",
+            // marginY: "10px",
+            paddingLeft: "0px",
+            paddingTop: "10px",
             borderTopWidth: "1px",
             borderTopStyle: "solid",
             borderTopColor: "divider",
@@ -162,7 +173,7 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
             Choose
           </Button>
         </Box>
-      </SidebarLeft>
+      </StandardModal>
     </>
   );
 };

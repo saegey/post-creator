@@ -33,6 +33,7 @@ import simplify from "simplify-js";
 
 export interface ElevationGraphProps {
   data: Array<ActivityItem>;
+
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
   element: VisualOverviewType;
   view: boolean;
@@ -245,14 +246,20 @@ const ElevationGraph = ({
     <Box
       sx={{
         width: "100%",
-        height: ["150px", "200px", "300px"],
+        height: ["130px", "200px", "200px"],
         borderWidth: "1px",
         // paddingBottom: [0, "20px", "40px"],
         paddingX: 0,
         userSelect: "none",
       }}
     >
-      <Flex sx={{ gap: "10px", marginBottom: "10px" }}>
+      <Flex
+        sx={{
+          gap: "10px",
+          marginBottom: "10px",
+          marginX: ["10px", "0px", "0px"],
+        }}
+      >
         <Button
           variant="primaryButton"
           sx={{
@@ -293,8 +300,9 @@ const ElevationGraph = ({
           Save Selection
         </Button>
       </Flex>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width={"100%"} height={"100%"}>
         <AreaChart
+          height={300}
           // key={data[0].e}
           data={simple}
           onMouseDown={(e) => {
@@ -356,7 +364,7 @@ const ElevationGraph = ({
                 units.unitOfMeasure === "metric" ? "km" : "mi"
               })`,
               position: "bottom",
-              fontSize: "14px",
+              fontSize: hideAxes ? "0px" : "14px",
             }}
             allowDecimals={false}
             tickFormatter={(t) => t.toFixed(1)}

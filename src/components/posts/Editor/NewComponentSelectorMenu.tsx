@@ -27,7 +27,7 @@ const GraphSelectorMenu = () => {
         <AddStravaLink path={menuPosition.path} />
         <AddRWGPS path={menuPosition.path} />
         <AddRaceResults path={menuPosition.path}/>
-        <AddRouteOverview />
+        <AddRouteOverview path={menuPosition.path}/>
         <AddVideo />
       </Flex>
     </>
