@@ -254,10 +254,10 @@ const Publish = ({
   const [resultsUrl, setResultsUrl] = React.useState(post.resultsUrl);
 
   const getTimeSeriesFile = async (timeSeriesFile: string) => {
-    const result = await Storage.get(timeSeriesFile, {
+    const result = (await Storage.get(timeSeriesFile, {
       download: true,
       level: isPublished === true ? "public" : "private",
-    });
+    })) as unknown as { Body: string };
 
     const timeSeriesData = (await new Response(
       result.Body

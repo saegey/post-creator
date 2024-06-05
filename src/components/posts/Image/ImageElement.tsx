@@ -56,6 +56,9 @@ const ImageElement = ({
   }
   const imageMeta = images ? images[imageMetaIndex] : undefined;
   const imageWidth = width < 690 ? width : 690;
+  if (!imageMeta?.height || !imageMeta.width) {
+    return <></>;
+  }
 
   const imageUrl = getCldImageUrl({
     src: element.public_id,
@@ -119,7 +122,9 @@ const ImageElement = ({
                 // height: "600px",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: imageMeta?.colors[0],
+                backgroundColor: imageMeta?.colors
+                  ? imageMeta?.colors[0]
+                  : "white",
                 borderRadius: [0, "5px", "5px"],
               }}
             >

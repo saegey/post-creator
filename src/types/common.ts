@@ -79,7 +79,7 @@ export interface CloudinaryImage {
   format: "jpeg" | "jpg" | "png";
   width: number;
   height: number;
-  colors: Array<string>;
+  colors?: Array<string>;
 }
 
 export interface GraphQLError {
@@ -213,6 +213,7 @@ export type HeroBannerType = {
 
 export type LinkType = {
   type: "link";
+  text?: "";
   children: CustomText[];
   href: string;
   target: string;
@@ -317,6 +318,7 @@ export interface ActivityItem {
   e: number;
   g: number;
   t: number;
+  i?: number;
 }
 
 export interface PowerZoneType {

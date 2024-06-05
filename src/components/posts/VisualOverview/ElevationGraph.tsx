@@ -81,35 +81,33 @@ const ElevationGraph = ({
 
   // console.log(top, bottom);
 
-  const getAxisYDomain = (
-    from: string | undefined,
-    to: string | undefined,
-    ref: keyof ActivityItem,
-    offset: number
-  ): (number | string)[] => {
-    if (from && to) {
-      const lower = simple.findIndex((s) => s.x === Number(from));
-      const upper = simple.findIndex((s) => s.x === Number(to));
-      const refData = simple.slice(lower, upper);
+  // const getAxisYDomain = (
+  //   from: string | undefined,
+  //   to: string | undefined,
+  //   ref: keyof ActivityItem,
+  //   offset: number
+  // ): (number | string)[] => {
+  //   if (from && to) {
+  //     const lower = simple.findIndex((s) => s.x === Number(from));
+  //     const upper = simple.findIndex((s) => s.x === Number(to));
+  //     const refData = simple.slice(lower, upper);
+	// 		const test = refData[0].y
 
-      let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
-        number,
-        number
-      ];
+  //     let [bottom, top] = [refData[0][ref], refData[0][ref]];
 
-      refData.forEach((d) => {
-        if (Number(d[ref]) > top) {
-          top = Number(d[ref]);
-        }
-        if (Number(d[ref]) < bottom) {
-          bottom = Number(d[ref]);
-        }
-      });
-      return [bottom, top + offset];
-    }
+  //     refData.forEach((d) => {
+  //       if (Number(d[ref]) > top) {
+  //         top = Number(d[ref]);
+  //       }
+  //       if (Number(d[ref]) < bottom) {
+  //         bottom = Number(d[ref]);
+  //       }
+  //     });
+  //     return [bottom, top + offset];
+  //   }
 
-    return [bottom, top];
-  };
+  //   return [bottom, top];
+  // };
 
   const editor = element && !view && useSlateStatic();
   const path =
@@ -236,7 +234,9 @@ const ElevationGraph = ({
 
   const { refAreaLeft, refAreaRight } = zoomGraph;
 
-  const points = data.map((d, i) => new Object({ x: d.d, y: d.e, i: i }));
+  const points = data.map(
+    (d, i) => new Object({ x: d.d, y: d.e, i: i })
+  ) as Array<{ x: number; y: number; i: number }>;
   // console.log(data.map((d) => new Object({ x: d.c[0], y: d.c[1] })));
   // console.log(points1);
   const simple = simplify(points, 0.01, false);

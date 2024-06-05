@@ -63,7 +63,7 @@ const UploadGpxModal = () => {
       `uploads/${fileData.name.replace(" ", "_")}`,
       fileData,
       {
-        progressCallback(progress) {
+        progressCallback(progress: { loaded: number; total: number }) {
           setProgress({ loaded: progress.loaded, total: progress.total });
           if (progress.total === progress.loaded) {
             setProcessingGpxStatus("File successfully uploaded");
@@ -133,13 +133,13 @@ const UploadGpxModal = () => {
     setPowerZoneBuckets && setPowerZoneBuckets(JSON.parse(powerZoneBuckets));
     setTimeInRed && setTimeInRed(timeInRed);
 
-    const result = await Storage.get(timeSeriesFile, {
+    const result = (await Storage.get(timeSeriesFile, {
       download: true,
       // customPrefix: {
       //   public: 'private/us-east-1:29b6299d-6fd7-44d5-a53e-2a94fdf5401d/',
       // },
       level: "private",
-    });
+    })) as unknown as { Body: string };
     const timeSeriesData = await new Response(result.Body).json();
     setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
     setPowers && setPowers(timeSeriesData.powers);

@@ -16,10 +16,12 @@ const PostAuthor = () => {
   // console.log(author?.image);
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   // const publicId = 'sample_image';
-  const imageUrl = getCldImageUrl({
-    src: author.image,
-    width: 100, // Resize the original file to a smaller size
-  });
+  const imageUrl = author?.image
+    ? getCldImageUrl({
+        src: author.image,
+        width: 100, // Resize the original file to a smaller size
+      })
+    : undefined;
 
   // console.log(`Cloudinary Cloud Name: ${cloudName}`);
   return (
@@ -55,22 +57,24 @@ const PostAuthor = () => {
                 height: ["60px", "80px", "80px"],
               }}
             >
-              <Image
-                src={imageUrl}
-                alt="Uploaded"
-                width={400}
-                height={300}
-                // layout="responsive"
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                  marginTop: "auto",
-                  marginBottom: "auto",
-                  borderRadius: "100%",
-                }}
-                priority={true}
-              />
+              {imageUrl && (
+                <Image
+                  src={imageUrl}
+                  alt="Uploaded"
+                  width={400}
+                  height={300}
+                  // layout="responsive"
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    borderRadius: "100%",
+                  }}
+                  priority={true}
+                />
+              )}
               {/* <CldImage
                 priority={true}
                 width="400"

@@ -241,21 +241,21 @@ const Map = ({
         return;
       }
 
-      if (markerCoordinates) {
-        geojsonSource.setData({
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              properties: { name: "Null Island" },
-              geometry: {
-                type: "Point",
-                coordinates: coordinates[markerCoordinates.i],
-              },
-            },
-          ],
-        });
-      }
+      // if (markerCoordinates) {
+      //   geojsonSource.setData({
+      //     type: "FeatureCollection",
+      //     features: [
+      //       {
+      //         type: "Feature",
+      //         properties: { name: "Null Island" },
+      //         geometry: {
+      //           type: "Point",
+      //           coordinates: coordinates[markerCoordinates.i],
+      //         },
+      //       },
+      //     ],
+      //   });
+      // }
     }
   }, [markerCoordinates]);
 
