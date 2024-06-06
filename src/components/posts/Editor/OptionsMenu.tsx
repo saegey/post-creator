@@ -4,10 +4,12 @@ import { useClickOutside } from "../../../utils/ux";
 import OptionsButton from "../../buttons/OptionsButton";
 import Dropdown from "../../shared/Dropdown";
 import { Box, Flex } from "theme-ui";
+import { EditorContext } from "./EditorContext";
 
 const OptionsMenu = ({ children }: { children: JSX.Element }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const wrapperRef = React.useRef();
+  const { setMobileMenu } = React.useContext(EditorContext);
 
   useClickOutside(
     wrapperRef,
@@ -25,6 +27,15 @@ const OptionsMenu = ({ children }: { children: JSX.Element }) => {
         top: "10px",
       }}
       ref={wrapperRef}
+      onClick={() => {
+        setMobileMenu({
+          display: false,
+          left: 0,
+          top: 0,
+          path: [0, 0],
+          isFullScreen: false,
+        });
+      }}
     >
       <OptionsButton
         onClick={() => {

@@ -1,5 +1,5 @@
 import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
-import { Transforms, Element as SlateElement } from "slate";
+import { Transforms, Element as SlateElement, Path } from "slate";
 import React from "react";
 
 import { CustomEditor } from "../../../types/common";
@@ -8,9 +8,9 @@ import { EditorContext } from "../Editor/EditorContext";
 interface StravaEmbedProps {
   editor: CustomEditor;
   isModalOpen: (arg: boolean) => void;
+  path: Path;
 }
-const StravaEmbed = ({ editor, isModalOpen }: StravaEmbedProps) => {
-  const { menuPosition } = React.useContext(EditorContext);
+const StravaEmbed = ({ editor, isModalOpen, path }: StravaEmbedProps) => {
   return (
     <Flex sx={{ gap: "10px", flexDirection: "row", marginTop: "15px" }}>
       <form
@@ -29,7 +29,7 @@ const StravaEmbed = ({ editor, isModalOpen }: StravaEmbedProps) => {
               activityId: JSON.parse(activityId)[0],
               children: [{ text: "" }],
             },
-            { at: menuPosition.path }
+            { at: path }
           );
 
           isModalOpen(false);

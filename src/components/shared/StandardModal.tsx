@@ -36,10 +36,13 @@ const StandardModal = ({
       >
         <Box
           sx={{
+            backgroundColor: "yellow",
             maxWidth: "690px",
+            display: ["flex", "inherit", "inherit"],
             position: ["fixed", "inherit", "inherit"],
-            maxHeight: ["100%", "800px", "800px"],
-            height: ["100%", "auto", "auto"],
+            flexDirection: "column",
+            maxHeight: ["100dvh", "800px", "800px"],
+            height: ["100dvh", "auto", "auto"],
             width: ["100%", null, null],
             margin: "auto",
             background: "background",
@@ -55,6 +58,7 @@ const StandardModal = ({
               borderBottomColor: "divider",
               borderBottomStyle: "solid",
               paddingY: "5px",
+
               // marginBottom: '20px',
             }}
           >

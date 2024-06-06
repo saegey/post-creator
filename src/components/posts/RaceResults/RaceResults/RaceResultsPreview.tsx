@@ -1,136 +1,153 @@
 import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
-import { Transforms, Descendant } from "slate";
+import { Transforms, Path } from "slate";
 
 import { PostContext } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
-import { CustomEditor } from "../../../../types/common";
 import { saveMyRaceResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
+import { useSlateStatic } from "slate-react";
 
-const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
+const RaceResultsPreview = ({ path }: { path: Path }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { raceResults, id, setRaceResults } = React.useContext(PostContext);
-  const { setIsRaceResultsModalOpen, menuPosition } =
-    React.useContext(EditorContext);
+  const {
+    setIsRaceResultsModalOpen,
+    setMobileMenu,
+    mobileMenu,
+    setIsNewComponentMenuOpen,
+  } = React.useContext(EditorContext);
   const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
+  const editor = useSlateStatic();
 
   return (
-    <>
-      <Box sx={{ marginY: "10px" }}>
+    <Flex
+      sx={{
+        flexDirection: "column",
+        height: ["calc(100dvh - 120px)", "auto", "auto"],
+        maxHeight: ["100dvh", "500px", "500px"],
+      }}
+    >
+      <Flex sx={{ marginY: "10px", flexDirection: "column" }}>
         <Text as="h3">
           {raceResultsMeta.eventName} - {raceResultsMeta.category}
         </Text>
         <Text>{resultsUrl}</Text>
-      </Box>
-      <Box
+      </Flex>
+      <Flex
         sx={{
+          flexGrow: 1,
           overflowY: "auto",
-          height: ["80%", "300px", "300px"],
           backgroundColor: "activityOverviewBackgroundColor",
           padding: "5px",
           borderRadius: "5px",
         }}
-        id="race-results-list"
       >
-        <Flex sx={{ width: "100%", paddingX: "5px" }}>
-          <Text
-            as="span"
-            sx={{
-              width: ["30px", "60px", "60px"],
-              visibility: ["hidden", "visible", "visible"],
-            }}
-          >
-            Place
-          </Text>
-          <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
-            Name
-          </Text>
-          <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
-            Speed
-          </Text>
-          <Text
-            as="span"
-            sx={{ width: "100px", display: "flex", justifyContent: "right" }}
-          >
-            Time
-          </Text>
-        </Flex>
-        {raceResults &&
-          raceResults.results &&
-          raceResults.results.map((row, i) => {
-            return (
-              <Flex
-                id={`race-result-row-${i}`}
-                key={`race-result-row-${i}`}
-                sx={{
-                  backgroundColor:
-                    selectedRow === i ? "selectedBackground" : null,
-                  color: selectedRow === i ? "selectedBackgroundText" : null,
-                  borderRadius: selectedRow === i ? "5px" : null,
-                  width: "100%",
-                  cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor:
-                      selectedRow === i ? "selectedBackground" : "muted",
-                    borderRadius: "5px",
-                  },
-                  paddingX: "5px",
-                  paddingY: "2px",
-                }}
-                onClick={() => {
-                  if (selectedRow === i) {
-                    setSelectedRow(undefined);
-                    setRaceResults &&
-                      setRaceResults({
-                        ...raceResults,
-                        selected: undefined,
-                      });
-                  } else {
-                    setSelectedRow(i);
-                    setRaceResults &&
-                      setRaceResults({
-                        ...raceResults,
-                        selected:
-                          raceResults && raceResults.results
-                            ? raceResults.results[i]
-                            : undefined,
-                      });
-                  }
-                }}
-              >
-                <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
-                  {row.CatPlace}
-                </Text>
-                <Box sx={{ width: "300px", flexGrow: "2" }}>
-                  <Text as="div">{row.Name}</Text>
-                  <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
-                    {row.Team ? row.Team : " "}
-                  </Text>
-                </Box>
-                <Text
-                  as="span"
-                  sx={{ display: ["none", "inherit", "inherit"] }}
-                >
-                  {row.Speed}
-                </Text>
-                <Text
-                  as="span"
+        <Box
+          sx={{
+            width: "100%",
+          }}
+          id="race-results-list"
+        >
+          <Flex sx={{ width: "100%", paddingX: "5px" }}>
+            <Text
+              as="span"
+              sx={{
+                width: ["30px", "60px", "60px"],
+                visibility: ["hidden", "visible", "visible"],
+              }}
+            >
+              Place
+            </Text>
+            <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
+              Name
+            </Text>
+            <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
+              Speed
+            </Text>
+            <Text
+              as="span"
+              sx={{ width: "100px", display: "flex", justifyContent: "right" }}
+            >
+              Time
+            </Text>
+          </Flex>
+          {raceResults &&
+            raceResults.results &&
+            raceResults.results.map((row, i) => {
+              return (
+                <Flex
+                  id={`race-result-row-${i}`}
+                  key={`race-result-row-${i}`}
                   sx={{
-                    display: "flex",
-                    justifyContent: "right",
-                    width: "100px",
+                    backgroundColor:
+                      selectedRow === i ? "selectedBackground" : null,
+                    color: selectedRow === i ? "selectedBackgroundText" : null,
+                    borderRadius: selectedRow === i ? "5px" : null,
+                    width: "100%",
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor:
+                        selectedRow === i ? "selectedBackground" : "muted",
+                      borderRadius: "5px",
+                    },
+                    paddingX: "5px",
+                    paddingY: "2px",
+                  }}
+                  onClick={() => {
+                    if (selectedRow === i) {
+                      setSelectedRow(undefined);
+                      setRaceResults &&
+                        setRaceResults({
+                          ...raceResults,
+                          selected: undefined,
+                        });
+                    } else {
+                      setSelectedRow(i);
+                      setRaceResults &&
+                        setRaceResults({
+                          ...raceResults,
+                          selected:
+                            raceResults && raceResults.results
+                              ? raceResults.results[i]
+                              : undefined,
+                        });
+                    }
                   }}
                 >
-                  {row.Time}
-                </Text>
-              </Flex>
-            );
-          })}
-      </Box>
-      <Box
+                  <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
+                    {row.CatPlace}
+                  </Text>
+                  <Box sx={{ width: "300px", flexGrow: "2" }}>
+                    <Text as="div">{row.Name}</Text>
+                    <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                      {row.Team ? row.Team : " "}
+                    </Text>
+                  </Box>
+                  <Text
+                    as="span"
+                    sx={{ display: ["none", "inherit", "inherit"] }}
+                  >
+                    {row.Speed}
+                  </Text>
+                  <Text
+                    as="span"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "right",
+                      width: "100px",
+                    }}
+                  >
+                    {row.Time}
+                  </Text>
+                </Flex>
+              );
+            })}
+        </Box>
+      </Flex>
+      <Flex
         sx={{
           paddingTop: "15px",
           marginTop: "15px",
@@ -161,11 +178,24 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   {
                     type: "raceResultsDotCom",
                     children: [{ text: "" }],
-                  },
-                  { at: menuPosition.path }
+                  }
+                  // { at: path }
                 );
+
+                if (path.length > 2) {
+                  Transforms.liftNodes(editor);
+                }
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);
+                setMobileMenu({
+                  ...mobileMenu,
+                  display: false,
+                  isFullScreen: false,
+                });
+                const selection = window.getSelection();
+                // console.log(selection)
+                selection && selection.removeAllRanges();
+                setIsNewComponentMenuOpen(false);
               });
             }}
           >
@@ -175,8 +205,8 @@ const RaceResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             </Flex>
           </Button>
         </Flex>
-      </Box>
-    </>
+      </Flex>
+    </Flex>
   );
 };
 

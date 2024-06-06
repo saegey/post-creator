@@ -50,8 +50,10 @@ const ImageViewWrapper = ({ node }: { node: ImageElementType }) => {
             <Flex
               sx={{
                 width: "100%",
-                height: "600px",
-                backgroundColor: imageMeta?.colors[0],
+                // height: "600px",
+                backgroundColor: imageMeta?.colors
+                  ? imageMeta?.colors[0]
+                  : "white",
                 borderRadius: [0, "5px", "5px"],
               }}
             >

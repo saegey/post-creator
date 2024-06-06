@@ -8,6 +8,8 @@ import { Transforms } from "slate";
 import { CldImage } from "next-cloudinary";
 import { Box, Button, Label, Textarea, Close, Flex, Text } from "theme-ui";
 import React from "react";
+import { getCldImageUrl } from "next-cloudinary";
+import Image from "next/image";
 
 import { PostSaveComponents } from "../../../actions/PostSave";
 import { PostContext } from "../../PostContext";
@@ -17,6 +19,10 @@ import MaximizeIcon from "../../icons/MaximizeIcon";
 import ImageFullScreen from "./ImageFullScreen";
 import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
+import BlackBox from "../../layout/BlackBox";
+import StandardModal from "../../shared/StandardModal";
+
+import { useViewport } from "../../ViewportProvider";
 
 type SlateImageType = {
   type: "image";
@@ -40,11 +46,8 @@ const ImageElement = ({
 
   const [addCaption, setAddCaption] = React.useState(false);
   const [isMaximized, setIsMaximized] = React.useState(false);
-
+  const { width } = useViewport();
   const { id, title, postLocation, images } = React.useContext(PostContext);
-  const selected = useSelected();
-  const focused = useFocused();
-
   const imageMetaIndex: number | undefined = images?.findIndex(
     (i) => i.public_id === element.public_id
   );
@@ -52,6 +55,19 @@ const ImageElement = ({
     return;
   }
   const imageMeta = images ? images[imageMetaIndex] : undefined;
+  const imageWidth = width < 690 ? width : 690;
+  if (!imageMeta?.height || !imageMeta.width) {
+    return <></>;
+  }
+
+  const imageUrl = getCldImageUrl({
+    src: element.public_id,
+    width: width < 690 ? width : 690,
+    height: imageMeta?.height / (imageMeta?.width / imageWidth),
+  });
+
+  const selected = useSelected();
+  const focused = useFocused();
 
   const saveCaption = async (event: any) => {
     event.preventDefault();
@@ -88,11 +104,11 @@ const ImageElement = ({
         )}
         <Box
           sx={{
-            position: "relative",
+            // position: "relative",
             // width: ["100%", "900px", "900px"],
             // maxWidth: "900px",
-            marginX: "auto",
-            marginY: ["20px", "60px", "60px"],
+            // marginX: "auto",
+            marginY: ["20px", "20px", "20px"],
             height: "fit-content",
             marginBottom: "20px",
           }}
@@ -101,29 +117,60 @@ const ImageElement = ({
             <Flex
               sx={{
                 width: "100%",
-                height: "600px",
-                backgroundColor: imageMeta?.colors[0],
+                // maxWidth: "1200px",
+                height: "auto",
+                // height: "600px",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: imageMeta?.colors
+                  ? imageMeta?.colors[0]
+                  : "white",
                 borderRadius: [0, "5px", "5px"],
               }}
             >
-              <CldImage
-                width="1200"
-                height="1200"
+              <Image
+                src={imageUrl}
+                alt="Uploaded"
+                width={600}
+                height={500}
+                // layout="responsive"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                  // objectFit: "cover",
+                  // width: "100%",
+                  // maxHeight: "100%",
+                  // borderRadius:
+                  //   imageMeta &&
+                  //   imageMeta.width &&
+                  //   imageMeta.height &&
+                  //   imageMeta?.width > imageMeta?.height
+                  //     ? "5px"
+                  //     : "0px",
+                  boxShadow: `${
+                    selected && focused ? "0 0 0 3px #B4D5FF" : "none"
+                  }`,
+                }}
+                priority={true}
+              />
+              {/* <CldImage
+                width={width < 690 ? width : 690}
+                height={imageMeta?.height / (imageMeta?.width / imageWidth)}
                 src={element.public_id}
                 sizes="100vw"
                 alt="race pic"
                 quality={90}
                 style={{
-                  objectFit: "contain",
-                  width: "100%",
-                  maxHeight: "100%",
-                  borderRadius:
-                    imageMeta &&
-                    imageMeta.width &&
-                    imageMeta.height &&
-                    imageMeta?.width > imageMeta?.height
-                      ? "5px"
-                      : "0px",
+                  objectFit: "cover",
+                  // width: "100%",
+                  // maxHeight: "100%",
+                  // borderRadius:
+                  //   imageMeta &&
+                  //   imageMeta.width &&
+                  //   imageMeta.height &&
+                  //   imageMeta?.width > imageMeta?.height
+                  //     ? "5px"
+                  //     : "0px",
                   boxShadow: `${
                     selected && focused ? "0 0 0 3px #B4D5FF" : "none"
                   }`,
@@ -133,7 +180,7 @@ const ImageElement = ({
                     cloudName: cloudUrl,
                   },
                 }}
-              />
+              /> */}
             </Flex>
             <Box
               sx={{
@@ -158,7 +205,7 @@ const ImageElement = ({
               sx={{
                 fontSize: "14px",
                 marginTop: "5px",
-                paddingX: ["10px", 0, 0],
+                paddingX: [0, 0, 0],
               }}
             >
               {element.caption}
@@ -167,57 +214,44 @@ const ImageElement = ({
 
           {addCaption && (
             <>
-              <Box
-                sx={{
-                  position: "absolute",
-                  right: "0px",
-                  top: "0px",
-                  height: "100%",
-                  background: "editorBackground",
-                  width: "100%",
-                  borderRadius: "5px",
-                }}
+              <StandardModal
+                title={"Add Caption"}
+                setIsOpen={() => setAddCaption(false)}
+                isOpen={addCaption}
               >
-                <Flex>
-                  <Box
-                    sx={{
-                      marginLeft: "auto",
-                      marginRight: "10px",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <Close
-                      sx={{ zIndex: "10" }}
-                      onClick={() => setAddCaption(false)}
-                    />
-                  </Box>
-                </Flex>
-                <Box
+                <Flex
                   sx={{
-                    width: "80%",
-                    marginY: "auto",
-                    marginX: "auto",
-                    height: "80%",
+                    gap: "10px",
+                    flexDirection: "row",
+                    marginTop: "15px",
                   }}
                 >
-                  <form onSubmit={saveCaption}>
-                    <Label sx={{ color: "text" }} htmlFor="caption">
-                      Caption
-                    </Label>
-                    <Textarea
-                      sx={{ background: "inputBackgroundColor" }}
-                      name="caption"
-                      id="caption"
-                      rows={6}
-                      mb={3}
-                    >
-                      {element.caption}
-                    </Textarea>
-
-                    <Button variant="primaryButton">Save</Button>
+                  <form onSubmit={saveCaption} style={{ flexGrow: 1 }}>
+                    <Flex sx={{ gap: "20px", flexDirection: "column" }}>
+                      <Label sx={{ color: "text" }} htmlFor="caption">
+                        Caption
+                      </Label>
+                      <Textarea
+                        sx={{ background: "inputBackgroundColor" }}
+                        name="caption"
+                        id="caption"
+                        rows={6}
+                        mb={3}
+                      >
+                        {element.caption}
+                      </Textarea>
+                      <Flex>
+                        <Button
+                          variant="primaryButton"
+                          sx={{ alignSelf: "flex-end" }}
+                        >
+                          Save
+                        </Button>
+                      </Flex>
+                    </Flex>
                   </form>
-                </Box>
-              </Box>
+                </Flex>
+              </StandardModal>
             </>
           )}
 
@@ -230,15 +264,21 @@ const ImageElement = ({
                   }}
                   variant="boxes.dropdownMenuItem"
                 >
-                  {element.caption ? "Edit" : "Add"} Caption
+                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
+                    {element.caption ? "Edit" : "Add"} Caption
+                  </Text>
                 </Box>
                 <Box
                   onClick={(e) => {
                     Transforms.removeNodes(editor, { at: path });
+                    const selection = window.getSelection();
+                    selection && selection.removeAllRanges();
                   }}
                   variant="boxes.dropdownMenuItem"
                 >
-                  Delete
+                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
+                    Delete
+                  </Text>
                 </Box>
               </>
             </OptionsMenu>

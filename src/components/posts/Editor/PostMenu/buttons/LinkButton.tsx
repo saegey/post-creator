@@ -59,7 +59,7 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
         >
           <path
             d="M10 8H6C4.34315 8 3 9.34315 3 11V13C3 14.6569 4.34315 16 6 16H10M9 12H15M14 8H18C19.6569 8 21 9.34315 21 11V13C21 14.6569 19.6569 16 18 16H14"
-            stroke="var(--theme-ui-colors-text)"
+            stroke="var(--theme-ui-colors-iconButtonDisabled)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

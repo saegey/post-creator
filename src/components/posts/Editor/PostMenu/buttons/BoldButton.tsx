@@ -15,15 +15,10 @@ const BoldButton = ({ editor }: { editor: CustomEditor }) => {
         toggleMark(editor, "bold");
       }}
       title={"Toggle Bold Text"}
-      // key="bold1"
-      // variant="iconButton"
       sx={{
-        width: "24px",
-        height: "auto",
-        // marginRight: ["5px", 0, 0],
-        // marginBottom: ["5px", 0, 0],
-        // padding: "7px",
-        // verticalAlign: "top",
+        marginX: ["5px", 0, 0],
+        marginBottom: ["5px", 0, 0],
+        verticalAlign: "top",
       }}
     >
       <svg
@@ -35,13 +30,11 @@ const BoldButton = ({ editor }: { editor: CustomEditor }) => {
         }
         width="100%"
         height="100%"
-        viewBox="0 0 1920 1920"
+        viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          d="M480.286 822.857h548.571c151.269 0 274.286-123.017 274.286-274.286 0-151.268-123.017-274.285-274.286-274.285H480.286v548.571Zm0 822.857H1166c151.269 0 274.286-123.017 274.286-274.285 0-151.269-123.017-274.286-274.286-274.286H480.286v548.571ZM1166 1920H206V0h822.857c302.537 0 548.572 246.034 548.572 548.571 0 134.263-48.549 257.418-128.778 352.732 159.223 96.137 265.92 270.994 265.92 470.126 0 302.537-246.034 548.571-548.571 548.571Z"
-          fillRule="evenodd"
-        />
+        <path d="M16.457 11.868A4.47 4.47 0 0 0 18 8.5 5.506 5.506 0 0 0 12.5 3H5v19h8.5a5.497 5.497 0 0 0 2.957-10.132zM8 6h4.5a2.5 2.5 0 0 1 0 5H8zm5.5 13H8v-5h5.5a2.5 2.5 0 0 1 0 5z" />
+        <path fill="none" d="M0 0h24v24H0z" />
       </svg>
     </IconButton>
   );

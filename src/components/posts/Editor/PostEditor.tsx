@@ -2,7 +2,7 @@ import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { API, graphqlOperation, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
-import { createEditor, Transforms } from "slate";
+import { createEditor, Path, Range, Transforms } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
 import { ZenObservable } from "zen-observable-ts";
@@ -42,6 +42,8 @@ import SlateDecorate from "./SlateDecorate";
 import { getActivityData } from "../../../../lib/editorApi";
 import slateApi from "../../../../lib/slateApi";
 import FloatingMenu from "./FloatingMenu";
+import { useViewport } from "../../ViewportProvider";
+import MobileMenu from "./MobileMenu";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -57,36 +59,107 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     left: number;
   } | null>(null);
 
-  const handleSelectionChange = () => {
-    const selection = window.getSelection();
-    // console.log(selection);
-    if (!selection) {
-      return;
-    }
-    if (selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0);
-      const selectedText = range.toString();
-
-      if (selectedText.length > 0) {
-        const rect = range.getBoundingClientRect();
-        setSelectionMenu({ top: rect.bottom, left: rect.left });
-      } else {
-        setSelectionMenu(null);
-      }
-      // setSelectionMenu({ top: rect.bottom, left: rect.left });
-    } else {
-      setSelectionMenu(null);
-    }
-  };
-
   const {
+    isGpxUploadOpen,
+    isRaceResultsModalOpen,
+    setIsFtpUpdating,
+    isShareModalOpen,
+    setIsHeroImageModalOpen,
+    isHeroImageModalOpen,
+    setIsSavingPost,
+    setSavingStatus,
+    mobileMenu,
+    setMobileMenu,
     setIsNewComponentMenuOpen,
     isNewComponentMenuOpen,
     setMenuPosition,
     menuPosition,
   } = React.useContext(EditorContext);
 
-  // console.log(menuPosition);
+  const { width } = useViewport();
+
+  const handleSelectionChange = React.useCallback(() => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount < 1) {
+      return;
+    }
+    const range = selection.getRangeAt(0);
+    // const parentElement =
+    //   selection.anchorNode.parentElement?.getAttribute("data-slate-length");
+    console.log(editor.selection);
+    const operations = editor.operations;
+    console.log(editor.operations);
+    const isNewLineInserted = operations.some((op) => {
+      return op.type === "split_node";
+    });
+
+    if (isNewLineInserted) {
+      console.log("New line inserted!");
+    }
+
+    // const { anchor } = editor.selection;
+    if (editor.selection?.focus.offset === 0 && width < 500) {
+      const rect = range.getBoundingClientRect();
+
+      const scrollX = window.scrollX;
+      const scrollY = window.scrollY;
+      console.log(rect, scrollX, scrollY);
+      const adjustedTop =
+        rect.bottom + scrollY + (isNewLineInserted ? 60 : -10);
+      const adjustedLeft = rect.right + scrollX + 10;
+      if (editor.selection) {
+        const path = editor.selection.anchor.path;
+        // console.log("Current selection path:", editor.selection, width);
+        setMobileMenu({
+          display: true,
+          top: adjustedTop,
+          left: adjustedLeft,
+          path: path,
+          isFullScreen: false,
+        });
+        setMenuPosition({
+          ...menuPosition,
+          path: path,
+        });
+      }
+
+      // const { anchorNode } = selection;
+      // If selection exists, get the path
+      // console.log(anchor);
+      // // If selection exists, get the path
+      // const path = anchor && editor.path(anchor.path);
+      // console.log(path);
+    } else {
+      setMobileMenu({
+        display: false,
+        top: 0,
+        left: 0,
+        path: [0, 0],
+        isFullScreen: false,
+      });
+    }
+    if (selection.rangeCount > 0) {
+      // const range = selection.getRangeAt(0);
+      const selectedText = range.toString();
+      if (selectedText.length > 0) {
+        const rect = range.getBoundingClientRect();
+        setSelectionMenu({ top: rect.bottom, left: rect.left });
+      } else {
+        setSelectionMenu(null);
+      }
+    } else {
+      setSelectionMenu(null);
+    }
+  }, [editor, width]);
+
+  // const {
+  //   setIsNewComponentMenuOpen,
+  //   isNewComponentMenuOpen,
+  //   setMenuPosition,
+  //   menuPosition,
+  //   // mobileMenu,
+  //   // setMobileMenu,
+  // } = React.useContext(EditorContext);
 
   React.useEffect(() => {
     if (initialState) {
@@ -170,17 +243,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setHearts,
   } = React.useContext(PostContext);
 
-  const {
-    isGpxUploadOpen,
-    isRaceResultsModalOpen,
-    setIsFtpUpdating,
-    isShareModalOpen,
-    setIsHeroImageModalOpen,
-    isHeroImageModalOpen,
-    setIsSavingPost,
-    setSavingStatus,
-  } = React.useContext(EditorContext);
-
   React.useEffect(() => {
     getData();
   }, [id]);
@@ -190,6 +252,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }: {
     selectedImage: CloudinaryImage | undefined;
   }) => {
+    console.log(selectedImage);
     setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
 
@@ -255,7 +318,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
         if (parentElement) {
           const rect = parentElement.getBoundingClientRect();
-          console.log("Bounding rect for the parent element:", rect);
+          // console.log("Bounding rect for the parent element:", rect);
           setMenuPosition({
             ...menuPosition,
             top: rect.bottom,
@@ -274,7 +337,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       )}
       {isGpxUploadOpen && <UploadGpxModal />}
       {isShareModalOpen && <ShareModal />}
-      {isRaceResultsModalOpen && <RaceResultsImport editor={editor} />}
       <Box
         sx={{
           minWidth: [null, null, "900px"],
@@ -293,7 +355,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           editor={editor}
           initialValue={initialState}
           onChange={(newValue) => {
+            console.log(newValue);
+
             updateMenuPosition();
+
+            // console.log("on change");
             handleSelectionChange();
             setComponents && setComponents(newValue as Array<CustomElement>);
 
@@ -306,28 +372,26 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               setIsSavingPost,
               timeoutLink,
               setTimeoutLink,
+              heroImage: JSON.stringify(heroImage),
             });
           }}
         >
-          {isNewComponentMenuOpen && (
-            <Menu
-              // onClose={() => {
-              //   setIsNewComponentMenuOpen(false);
-              // }}
-              menuPosition={menuPosition}
-            />
-          )}
-          <RWGPSModal />
-          <StravaModal />
+          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+
           <AddVideoModal />
           {selectionMenu && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
+          <MobileMenu
+          // top={mobileMenu.top}
+          // left={mobileMenu.left}
+          // path={mobileMenu.path}
+          />
           <Editable
             spellCheck
             autoFocus
             renderElement={renderElement}
-            decorate={SlateDecorate}
+            // decorate={SlateDecorate}
             renderLeaf={(props: RenderLeafProps) => {
               return (
                 <Leaf props={props} updateMenuPosition={updateMenuPosition} />

@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "theme-ui";
+import { Flex } from "theme-ui";
 import React from "react";
 
 import AddPowerCurve from "./PowerCurve";
@@ -10,83 +10,24 @@ import AddRaceResults from "./AddRaceResults";
 import AddRWGPS from "./AddRWGPS";
 import AddRouteOverview from "./AddRouteOverview";
 import AddImage from "./AddImage";
-import TimePowerZonesIcon from "../../icons/TimePowerZonesIcon";
-
-import { Editor, Node, Transforms } from "slate";
-import { useSlateStatic } from "slate-react";
 import { EditorContext } from "./EditorContext";
+import AddText from "./AddText";
 
-const AddText = () => {
-  const editor = useSlateStatic();
-  const { setIsNewComponentMenuOpen, menuPosition } =
-    React.useContext(EditorContext);
+const GraphSelectorMenu = () => {
+  const { menuPosition } = React.useContext(EditorContext);
 
-  const addItem = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.preventDefault();
-    setIsNewComponentMenuOpen(false);
-
-    Transforms.insertNodes(
-      editor,
-      { type: "paragraph", children: [{ text: "" }] },
-      { at: menuPosition.path }
-    );
-
-    // Move the cursor (caret) to the end of the newly inserted paragraph
-
-    const newPath = menuPosition.path.concat(0);
-
-    Transforms.select(editor, {
-      anchor: { path: newPath, offset: 0 },
-      focus: { path: newPath, offset: 0 },
-    });
-  };
-
-  return (
-    <Box
-      onClick={(event) => addItem(event)}
-      onMouseDown={(e) => e.preventDefault()}
-      variant="boxes.sidebarMenuItem"
-      // sx={{
-      //   cursor: currentFtp ? "pointer" : "not-allowed",
-      // }}
-    >
-      <Flex sx={{ alignItems: "center", gap: "20px" }}>
-        <Box
-          sx={{
-            width: "16px",
-            height: "auto",
-            // marginRight: "10px",
-          }}
-        >
-          <Text sx={{ fontFamily: "serif", fontSize: "20px" }}>T</Text>
-        </Box>
-        <Text
-          as="span"
-          sx={{
-            color: "text",
-            fontSize: "14px",
-          }}
-        >
-          Text
-        </Text>
-      </Flex>
-    </Box>
-  );
-};
-
-const GraphSelectorMenu = ({ size }: { size?: "small" }) => {
   return (
     <>
       <Flex sx={{ flexDirection: "column", margin: "0px" }}>
-        <AddText />
-        <AddImage />
-        <AddPowerCurve size={"small"} />
-        <AddActivityOverview />
-        <AddTimeZones />
-        <AddStravaLink />
-        <AddRWGPS />
-        <AddRaceResults />
-        <AddRouteOverview />
+        <AddText path={menuPosition.path} />
+        <AddImage path={menuPosition.path} />
+        <AddPowerCurve path={menuPosition.path} />
+        <AddActivityOverview path={menuPosition.path} />
+        <AddTimeZones path={menuPosition.path} />
+        <AddStravaLink path={menuPosition.path} />
+        <AddRWGPS path={menuPosition.path} />
+        <AddRaceResults path={menuPosition.path}/>
+        <AddRouteOverview path={menuPosition.path}/>
         <AddVideo />
       </Flex>
     </>

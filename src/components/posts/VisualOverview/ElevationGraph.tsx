@@ -16,6 +16,8 @@ import { Transforms } from "slate";
 
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
+import { useViewport } from "../../ViewportProvider";
+import simplify from "simplify-js";
 
 // type ActivityEvent = {
 //   c: Array<number> | Array<null>;
@@ -31,6 +33,7 @@ import { useUnits } from "../../UnitProvider";
 
 export interface ElevationGraphProps {
   data: Array<ActivityItem>;
+
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
   element: VisualOverviewType;
   view: boolean;
@@ -74,37 +77,37 @@ const ElevationGraph = ({
     );
   }
 
+  const { width } = useViewport();
+
   // console.log(top, bottom);
 
-  const getAxisYDomain = (
-    from: string | undefined,
-    to: string | undefined,
-    ref: keyof ActivityItem,
-    offset: number
-  ): (number | string)[] => {
-    if (from && to) {
-      const lower = data.findIndex((s) => s.d === Number(from));
-      const upper = data.findIndex((s) => s.d === Number(to));
-      const refData = data.slice(lower, upper);
+  // const getAxisYDomain = (
+  //   from: string | undefined,
+  //   to: string | undefined,
+  //   ref: keyof ActivityItem,
+  //   offset: number
+  // ): (number | string)[] => {
+  //   if (from && to) {
+  //     const lower = simple.findIndex((s) => s.x === Number(from));
+  //     const upper = simple.findIndex((s) => s.x === Number(to));
+  //     const refData = simple.slice(lower, upper);
+	// 		const test = refData[0].y
 
-      let [bottom, top] = [refData[0][ref], refData[0][ref]] as [
-        number,
-        number
-      ];
+  //     let [bottom, top] = [refData[0][ref], refData[0][ref]];
 
-      refData.forEach((d) => {
-        if (Number(d[ref]) > top) {
-          top = Number(d[ref]);
-        }
-        if (Number(d[ref]) < bottom) {
-          bottom = Number(d[ref]);
-        }
-      });
-      return [bottom, top + offset];
-    }
+  //     refData.forEach((d) => {
+  //       if (Number(d[ref]) > top) {
+  //         top = Number(d[ref]);
+  //       }
+  //       if (Number(d[ref]) < bottom) {
+  //         bottom = Number(d[ref]);
+  //       }
+  //     });
+  //     return [bottom, top + offset];
+  //   }
 
-    return [bottom, top];
-  };
+  //   return [bottom, top];
+  // };
 
   const editor = element && !view && useSlateStatic();
   const path =
@@ -113,9 +116,7 @@ const ElevationGraph = ({
       : undefined;
   const themeContext = useThemeUI();
   const units = useUnits();
-  const hideAxes = false;
-
-  // console.log(left.d);
+  const hideAxes = width > 500 ? false : true;
 
   const initialState = {
     refAreaLeft: "",
@@ -233,18 +234,32 @@ const ElevationGraph = ({
 
   const { refAreaLeft, refAreaRight } = zoomGraph;
 
+  const points = data.map(
+    (d, i) => new Object({ x: d.d, y: d.e, i: i })
+  ) as Array<{ x: number; y: number; i: number }>;
+  // console.log(data.map((d) => new Object({ x: d.c[0], y: d.c[1] })));
+  // console.log(points1);
+  const simple = simplify(points, 0.01, false);
+  // console.log(simple);
+
   return (
     <Box
       sx={{
         width: "100%",
-        height: ["150px", "200px", "300px"],
+        height: ["130px", "200px", "200px"],
         borderWidth: "1px",
         // paddingBottom: [0, "20px", "40px"],
         paddingX: 0,
         userSelect: "none",
       }}
     >
-      <Flex sx={{ gap: "10px", marginBottom: "10px" }}>
+      <Flex
+        sx={{
+          gap: "10px",
+          marginBottom: "10px",
+          marginX: ["10px", "0px", "0px"],
+        }}
+      >
         <Button
           variant="primaryButton"
           sx={{
@@ -285,10 +300,11 @@ const ElevationGraph = ({
           Save Selection
         </Button>
       </Flex>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width={"100%"} height={"100%"}>
         <AreaChart
+          height={300}
           // key={data[0].e}
-          data={data}
+          data={simple}
           onMouseDown={(e) => {
             if (selection) {
               return;
@@ -304,7 +320,7 @@ const ElevationGraph = ({
               setMarker(undefined);
               return;
             }
-
+            // console.log(e);
             setMarker(e.activePayload[0].payload as ActivityItem);
 
             if (!selection) {
@@ -335,57 +351,58 @@ const ElevationGraph = ({
               <GradeGradient data={downSampledData} xMax={xMax} />
             </linearGradient>
           </defs> */}
-          {!hideAxes && (
-            <XAxis
-              allowDataOverflow
-              dataKey="d"
-              type="number"
-              domain={left && right ? [left, right] : undefined}
-              tickCount={5}
-              label={{
-                value: `Distance (${
-                  units.unitOfMeasure === "metric" ? "km" : "mi"
-                })`,
-                position: "bottom",
-                fontSize: "14px",
-              }}
-              allowDecimals={false}
-              tickFormatter={(t) => t.toFixed(1)}
-              tick={{
-                fill: themeContext?.theme?.colors?.text as string,
-                fontSize: "14px",
-              }}
-              hide={hideAxes}
-              stroke={themeContext?.theme?.colors?.chartAxes as string}
-            />
-          )}
-          {!hideAxes && (
-            <YAxis
-              allowDataOverflow
-              domain={[bottom, top]}
-              type="number"
-              label={{
-                value: `Elevation (${
-                  units.unitOfMeasure === "metric" ? "m" : "ft"
-                })`,
-                angle: -90,
-                position: "left",
-                fontSize: "14px",
-              }}
-              allowDecimals={false}
-              dataKey="e"
-              tick={{
-                fill: themeContext?.theme?.colors?.text as string,
-                fontSize: "14px",
-              }}
-              tickFormatter={(t) => t.toFixed(0)}
-              stroke={themeContext?.theme?.colors?.chartAxes as string}
-              hide={hideAxes}
-            />
-          )}
+          {/* {!hideAxes && ( */}
+          <XAxis
+            hide={hideAxes}
+            allowDataOverflow
+            dataKey="x"
+            type="number"
+            domain={left && right ? [left, right] : undefined}
+            tickCount={5}
+            label={{
+              value: `Distance (${
+                units.unitOfMeasure === "metric" ? "km" : "mi"
+              })`,
+              position: "bottom",
+              fontSize: hideAxes ? "0px" : "14px",
+            }}
+            allowDecimals={false}
+            tickFormatter={(t) => t.toFixed(1)}
+            tick={{
+              fill: themeContext?.theme?.colors?.text as string,
+              fontSize: "14px",
+            }}
+            // hide={hideAxes}
+            stroke={themeContext?.theme?.colors?.chartAxes as string}
+          />
+          {/* )} */}
+          {/* {!hideAxes && ( */}
+          <YAxis
+            allowDataOverflow
+            domain={[bottom, top]}
+            type="number"
+            label={{
+              value: `Elevation (${
+                units.unitOfMeasure === "metric" ? "m" : "ft"
+              })`,
+              angle: -90,
+              position: "left",
+              fontSize: "14px",
+            }}
+            allowDecimals={false}
+            dataKey="y"
+            tick={{
+              fill: themeContext?.theme?.colors?.text as string,
+              fontSize: "14px",
+            }}
+            tickFormatter={(t) => t.toFixed(0)}
+            stroke={themeContext?.theme?.colors?.chartAxes as string}
+            hide={hideAxes}
+          />
+          {/* )} */}
           <Area
             type={"linear"}
-            dataKey="e"
+            dataKey="y"
             fill={themeContext?.theme?.colors?.text as string}
             fillOpacity={0.2}
             dot={false}

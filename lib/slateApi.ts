@@ -12,6 +12,7 @@ const saveEditor = ({
   setIsSavingPost,
   timeoutLink,
   setTimeoutLink,
+  heroImage,
 }: {
   // newValue: Descendant[];
   id: string;
@@ -24,6 +25,7 @@ const saveEditor = ({
   setTimeoutLink: React.Dispatch<
     React.SetStateAction<NodeJS.Timeout | undefined>
   >;
+  heroImage?: string;
 }) => {
   // let timeoutLink: NodeJS.Timeout | undefined = undefined;
   const ops = editor.operations.filter((o) => {
@@ -52,7 +54,7 @@ const saveEditor = ({
       title: title,
       postLocation: postLocation,
       components: editor.children,
-      // heroImage: heroImage ? JSON.stringify(heroImage) : "",
+      heroImage: heroImage ? heroImage : "",
     });
     setSavingStatus("saved");
 

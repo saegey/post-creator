@@ -3,22 +3,23 @@ import { useSlateStatic } from "slate-react";
 
 const SlateDecorate = ([node, path]: [Node, Path]) => {
   const editor = useSlateStatic();
+  console.log(editor.selection);
 
-  if (editor.selection != null) {
-    if (
-      !Editor.isEditor(node) &&
-      Editor.string(editor, [path[0]]) === "" &&
-      Range.includes(editor.selection, path) &&
-      Range.isCollapsed(editor.selection)
-    ) {
-      return [
-        {
-          ...editor.selection,
-          placeholder: true,
-        },
-      ];
-    }
-  }
+  // if (editor.selection != null) {
+  //   if (
+  //     !Editor.isEditor(node) &&
+  //     Editor.string(editor, [path[0]]) === "" &&
+  //     Range.includes(editor.selection, path) &&
+  //     Range.isCollapsed(editor.selection)
+  //   ) {
+  //     return [
+  //       {
+  //         ...editor.selection,
+  //         placeholder: true,
+  //       },
+  //     ];
+  //   }
+  // }
 
   return [];
 };

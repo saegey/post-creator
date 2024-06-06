@@ -19,7 +19,7 @@ interface MapProps {
   markerCoordinates: ActivityItem | undefined;
   token: string;
   // selection: [number, number];
-  downsampleRate: number;
+  // downsampleRate: number;
   element: VisualOverviewType;
 }
 
@@ -72,7 +72,7 @@ const Map = ({
   token,
   element,
   // selection,
-  downsampleRate,
+  // downsampleRate,
 }: MapProps): JSX.Element => {
   if (!coordinates || coordinates.length === 0) {
     return (
@@ -241,21 +241,21 @@ const Map = ({
         return;
       }
 
-      if (markerCoordinates) {
-        geojsonSource.setData({
-          type: "FeatureCollection",
-          features: [
-            {
-              type: "Feature",
-              properties: { name: "Null Island" },
-              geometry: {
-                type: "Point",
-                coordinates: markerCoordinates?.c,
-              },
-            },
-          ],
-        });
-      }
+      // if (markerCoordinates) {
+      //   geojsonSource.setData({
+      //     type: "FeatureCollection",
+      //     features: [
+      //       {
+      //         type: "Feature",
+      //         properties: { name: "Null Island" },
+      //         geometry: {
+      //           type: "Point",
+      //           coordinates: coordinates[markerCoordinates.i],
+      //         },
+      //       },
+      //     ],
+      //   });
+      // }
     }
   }, [markerCoordinates]);
 

@@ -4,7 +4,7 @@ import { useSlateStatic } from "slate-react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { CldUploadWidget } from "next-cloudinary";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
@@ -13,18 +13,20 @@ import { CloudinaryImage } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
 import ImagesButton from "./PostMenu/buttons/ImagesButton";
 
-const AddImage = () => {
-  const { setIsNewComponentMenuOpen, menuPosition } =
+const AddImage = ({ path }: { path: Path }) => {
+  const { setIsNewComponentMenuOpen, setMobileMenu, mobileMenu } =
     React.useContext(EditorContext);
   const { setImages, images, id } = React.useContext(PostContext);
   const editor = useSlateStatic();
 
   const openModal = (open: Function) => {
-    setIsNewComponentMenuOpen(false);
+    // setIsNewComponentMenuOpen(false);
+    // setMobileMenu({ ...mobileMenu, display: false });
     open();
   };
 
   const insertImage = (selectedImage: CloudinaryImage) => {
+    // console.log(path);
     Transforms.insertNodes(
       editor,
       {
@@ -35,9 +37,24 @@ const AddImage = () => {
         void: true,
         photoCaption: "",
         caption: "",
-      },
-      { at: menuPosition.path }
+      }
+      // { at: path }
     );
+    if (path.length > 2) {
+      Transforms.liftNodes(editor);
+    }
+
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
+    setIsNewComponentMenuOpen(false);
+    const selection = window.getSelection();
+    // console.log(selection)
+    selection && selection.removeAllRanges();
   };
 
   return (
@@ -45,16 +62,16 @@ const AddImage = () => {
       <CldUploadWidget
         uploadPreset="epcsmymp"
         options={{
-          sources: [
-            "local",
-            "url",
-            "camera",
-            "image_search",
-            "google_drive",
-            // 'facebook',
-            "dropbox",
-            "instagram",
-          ],
+          // sources: [
+          //   "local",
+          //   "url",
+          //   "camera",
+          //   "image_search",
+          //   "google_drive",
+          //   // 'facebook',
+          //   "dropbox",
+          //   "instagram",
+          // ],
           styles: {
             frame: {
               background: "black",
@@ -75,7 +92,7 @@ const AddImage = () => {
               sourceBg: "#e4e4e4",
             },
             fonts: {
-              "SF Pro Display": "",
+              Inter: "",
             },
           },
         }}
@@ -103,10 +120,11 @@ const AddImage = () => {
               console.error(errors);
             }
           }
-          widget.close();
+          // widget.close();
         }}
       >
         {({ open }) => {
+          console.log(open);
           return (
             <Box
               onClick={() => openModal(open)}
@@ -135,7 +153,7 @@ const AddImage = () => {
                     fontSize: "14px",
                   }}
                 >
-                  Add image
+                  Image
                 </Text>
               </Flex>
             </Box>

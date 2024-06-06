@@ -1,9 +1,9 @@
-import { Box } from 'theme-ui';
-import React from 'react';
+import { Box } from "theme-ui";
+import React from "react";
 
 const BlackBox = ({
   children,
-  opacity = '.7',
+  opacity = ".7",
   onClick = () => {},
   zIndex = 30,
   fullScreen = false,
@@ -19,21 +19,22 @@ const BlackBox = ({
   noBackground?: boolean;
 }) => (
   <Box
+    className="blackbox"
     sx={{
-      position: 'fixed',
-      top: '0',
-      height: '100%',
-      width: '100%',
-      left: '0',
+      position: "fixed",
+      top: "0",
+      height: "100dvh",
+      width: "100%",
+      left: "0",
       backgroundColor: noBackground
-        ? 'unset'
+        ? "unset"
         : fullScreen
-        ? 'background'
+        ? "background"
         : `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`,
       zIndex: zIndex,
-      display: 'flex',
-      justifyContent: !noModal || fullScreen ? 'center' : '',
-      alignItems: !noModal || fullScreen ? 'center' : '',
+      display: "flex",
+      justifyContent: !noModal || fullScreen ? "center" : "",
+      alignItems: !noModal || fullScreen ? "center" : "",
     }}
     onClick={onClick}
   >

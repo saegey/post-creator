@@ -1,15 +1,15 @@
 import { Flex, Text, Box, Button } from "theme-ui";
 import React from "react";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 import { useSlateStatic } from "slate-react";
 
 import { EditorContext } from "./EditorContext";
 import { PostContext } from "../../PostContext";
 
-const AddRouteOverview = () => {
+const AddRouteOverview = ({ path }: { path: Path }) => {
   const editor = useSlateStatic();
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen, menuPosition } =
+  const { setIsNewComponentMenuOpen, menuPosition, setMobileMenu } =
     React.useContext(EditorContext);
 
   const addMap = () => {
@@ -17,9 +17,22 @@ const AddRouteOverview = () => {
       Transforms.insertNodes(
         editor,
         { type: "visualOverview", children: [{ text: "" }], void: true },
-        { at: menuPosition.path }
+        { at: path }
       );
+      if (path.length > 2) {
+        Transforms.liftNodes(editor);
+      }
       setIsNewComponentMenuOpen(false);
+      setMobileMenu({
+        top: 0,
+        left: 0,
+        display: false,
+        path: path,
+        isFullScreen: false,
+      });
+      const selection = window.getSelection();
+      // console.log(selection)
+      selection && selection.removeAllRanges();
     }
   };
 

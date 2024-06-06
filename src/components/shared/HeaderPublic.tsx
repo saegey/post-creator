@@ -127,7 +127,25 @@ const HeaderPublic = () => {
                       </Flex>
                     </Flex>
                     <Flex as="li">
-                      <Link href="/login" sx={{ textDecoration: "none" }}>
+                      <Link
+                        href="/login"
+                        sx={{ textDecoration: "none" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          //https://platform.d15noiwtuwwref/login
+                          window.open(
+                            location.protocol +
+                              "//platform." +
+                              (location.host.split(".")[1]
+                                ? location.host
+                                    .split(".")
+                                    .slice(1, location.host.split(".").length)
+                                    .join(".")
+                                : location.host) +
+                              "/login"
+                          );
+                        }}
+                      >
                         <Text
                           as="div"
                           sx={{

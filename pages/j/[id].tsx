@@ -89,7 +89,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   try {
     res = (await SSR.API.graphql({
       query: getPublishedPost,
-      authMode: "API_KEY",
+      authMode: "AMAZON_COGNITO_USER_POOLS",
       variables: {
         id: params.id,
       },
@@ -121,6 +121,8 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   const author = (
     typeof post.author === "string" ? JSON.parse(post.author) : post.author
   ) as Author;
+
+  console.log(post);
 
   return {
     props: {
@@ -252,10 +254,10 @@ const Publish = ({
   const [resultsUrl, setResultsUrl] = React.useState(post.resultsUrl);
 
   const getTimeSeriesFile = async (timeSeriesFile: string) => {
-    const result = await Storage.get(timeSeriesFile, {
+    const result = (await Storage.get(timeSeriesFile, {
       download: true,
       level: isPublished === true ? "public" : "private",
-    });
+    })) as unknown as { Body: string };
 
     const timeSeriesData = (await new Response(
       result.Body

@@ -1,5 +1,6 @@
 import { Box, Flex } from "theme-ui";
 import React from "react";
+import simplify from "simplify-js";
 
 import Map from "./CustomMap";
 import ElevationGraph from "./ElevationGraph";
@@ -26,7 +27,7 @@ const VisualOverview = ({
     VisualOverviewContext
   );
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
-  const [downsampleRate] = React.useState<number>(20);
+  const [downsampleRate] = React.useState<number>(0);
   const [isZoomedOut, setIsZoomedOut] = React.useState(false);
   const coordinates =
     activity !== undefined ? activity.map((a) => a.c) : undefined;
@@ -48,6 +49,8 @@ const VisualOverview = ({
       : element.selectionEnd
       ? element.selectionEnd
       : undefined;
+
+    // console.log(selection);
 
     return (
       <ElevationGraph
@@ -83,13 +86,13 @@ const VisualOverview = ({
   };
 
   return (
-    <Box sx={{ marginY: "60px", borderRadius: [0, "5px", "5px"] }}>
+    <Box sx={{ borderRadius: [0, "5px", "5px"] }}>
       {coordinates !== undefined ? (
         <Map
           coordinates={coordinates}
           markerCoordinates={marker}
           token={token}
-          downsampleRate={downsampleRate}
+          // downsampleRate={downsampleRate}
           element={element}
         />
       ) : (

@@ -8,7 +8,7 @@ export const updatePostMinimal = /* GraphQL */ `
       title
       gpxFile
       images
-      headerImage
+      # headerImage
       date
       publishedDate
       location
@@ -20,6 +20,7 @@ export const updatePostMinimal = /* GraphQL */ `
       teaser
       currentFtp
       components
+      heroImage
       # powerAnalysis
       # coordinates
       # powers

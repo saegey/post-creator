@@ -34,6 +34,7 @@ export default {
     postCardTextBackground: "white",
     cancelButtonColor: "#a1a1a1",
     postCardBorder: "#dadada",
+    postCardBorderDark: "#bdbdbd",
     inputFocusBackground: "#eeeeee",
     inputBorderColor: "#898989",
     background: "#fff",
@@ -65,6 +66,7 @@ export default {
         skeletonDark: "hsl(0, 0%, 7%)",
         inputFocusBorderColor: "#ffffff",
         inputBackgroundColor: "#434343",
+        postCardBorderDark: "#868686",
         secondaryButtonBackground: "#444444",
         secondaryButtonBackgroundHover: "#525252",
         primaryButtonBackgroundHover: "#e4e4e4",
@@ -179,7 +181,7 @@ export default {
       },
     },
     componentCard: {
-      marginX: "auto",
+      // marginX: "auto",
       maxWidth: "690px",
       backgroundColor: [
         "background",
@@ -189,7 +191,7 @@ export default {
       borderRadius: ["0px", "5px", "5px"],
       padding: ["10px", "20px", "20px"],
       position: "relative",
-      marginY: ["20px", "60px", "60px"],
+      marginY: ["0px", "20px", "20px"],
     },
     dropdownMenuItem: {
       padding: "10px",

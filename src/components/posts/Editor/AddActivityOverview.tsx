@@ -1,20 +1,21 @@
 import { Flex, Text, Box, Button } from "theme-ui";
 import React from "react";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 import { useSlateStatic } from "slate-react";
 
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 
-const AddActivityOverview = () => {
+const AddActivityOverview = ({ path }: { path: Path }) => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen, menuPosition } =
-    React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setMobileMenu } = React.useContext(EditorContext);
 
   const editor = useSlateStatic();
 
   const addActivityOverview = () => {
+    // console.log(path);
     if (gpxFile) {
       Transforms.insertNodes(
         editor,
@@ -23,9 +24,24 @@ const AddActivityOverview = () => {
           children: [{ text: "" }],
           void: true,
         },
-        { at: menuPosition.path }
+        // { at: path }
       );
+
+      if (path.length > 2) {
+        Transforms.liftNodes(editor);
+      }
+
+      setMobileMenu({
+        top: 0,
+        left: 0,
+        display: false,
+        path: path,
+        isFullScreen: false,
+      });
       setIsNewComponentMenuOpen(false);
+      const selection = window.getSelection();
+      // console.log(selection)
+      selection && selection.removeAllRanges();
     }
   };
 

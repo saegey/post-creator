@@ -8,8 +8,10 @@ import {
   Button,
   Spinner,
 } from "theme-ui";
-import { CldImage } from "next-cloudinary";
+// import { CldImage } from "next-cloudinary";
 import { API } from "aws-amplify";
+import { getCldImageUrl } from "next-cloudinary";
+import Image from "next/image";
 
 import AvatarIcon from "../icons/AvatarIcon";
 import UserProfileMenu from "./UserProfileMenu";
@@ -33,8 +35,14 @@ const Header = ({ user }: { user: IUser }) => {
     setIsPublishedConfirmationOpen,
     isSavingPost,
     savingStatus,
+    setMobileMenu,
+    mobileMenu,
   } = React.useContext(EditorContext);
   const { id } = React.useContext(PostContext);
+  const imageUrl = getCldImageUrl({
+    src: user.attributes.picture,
+    width: 100, // Resize the original file to a smaller size
+  });
 
   const publishPost = async () => {
     setIsPublishing(true);
@@ -86,7 +94,10 @@ const Header = ({ user }: { user: IUser }) => {
               borderRadius: "100px",
               padding: "3px 10px 3px 10px",
             }}
-            onClick={() => setProfileOpen(true)}
+            onClick={() => {
+              setProfileOpen(true);
+              setMobileMenu({ ...mobileMenu, display: false });
+            }}
           >
             <MenuButton
               sx={{ marginY: "auto", border: "1px solid buttonBorderColor" }}
@@ -101,11 +112,31 @@ const Header = ({ user }: { user: IUser }) => {
                   display: ["none", "inherit", "inherit"],
                 }}
               >
-                <CldImage
+                <Image
+                  src={imageUrl}
+                  alt="Uploaded"
+                  width={400}
+                  height={300}
+                  // layout="responsive"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    borderRadius: "100%",
+                  }}
+                  priority={true}
+                />
+                {/* <CldImage
                   priority={true}
                   width="400"
                   height="300"
                   src={user.attributes.picture}
+                  // src={
+                  //   typeof window !== "undefined"
+                  //     ? user.attributes.picture
+                  //     : `https://res.cloudinary.com/${cloudUrl}/image/upload/${user.attributes.picture}.jpg`
+                  // }
                   style={{
                     width: "100%",
                     height: "100%",
@@ -117,12 +148,12 @@ const Header = ({ user }: { user: IUser }) => {
                   sizes="100vw"
                   alt="Description of my image"
                   onClick={() => setProfileOpen(true)}
-                  config={{
-                    cloud: {
-                      cloudName: cloudUrl ? cloudUrl : "dprifih4o",
-                    },
-                  }}
-                />
+                  // config={{
+                  //   cloud: {
+                  //     cloudName: cloudUrl ? cloudUrl : "dprifih4o",
+                  //   },
+                  // }}
+                /> */}
               </Box>
             )}
             {!user || (!user.attributes.picture && <AvatarIcon />)}
@@ -158,7 +189,7 @@ const Header = ({ user }: { user: IUser }) => {
                     <Text>{savingStatus}</Text>
                   </Box>
                 )}
-                <Button
+                {/* <Button
                   variant="primaryButton"
                   type="button"
                   onClick={publishPost}
@@ -170,7 +201,7 @@ const Header = ({ user }: { user: IUser }) => {
                       <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
                     )}
                   </Flex>
-                </Button>
+                </Button> */}
                 <Box
                   sx={{
                     marginY: "auto",
@@ -179,6 +210,13 @@ const Header = ({ user }: { user: IUser }) => {
                   onClick={() => {
                     setIsImageModalOpen(false);
                     setIsSettingsModalOpen(true);
+                    setMobileMenu({
+                      display: false,
+                      top: 0,
+                      left: 0,
+                      isFullScreen: false,
+                      path: [0, 0],
+                    });
                   }}
                 >
                   <IconButton

@@ -1,21 +1,23 @@
 import { Flex, Text, Box } from "theme-ui";
 import React from "react";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 
 import PowerGraphIcon from "../../icons/PowerGraphIcon";
 import { PostContext } from "../../PostContext";
 import { useSlateStatic } from "slate-react";
 import { EditorContext } from "./EditorContext";
 
-const AddPowerCurve = ({ size }: { size?: "small" }) => {
+const AddPowerCurve = ({ path }: { path: Path }) => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen, menuPosition } =
+  const { setIsNewComponentMenuOpen, setMobileMenu, mobileMenu } =
     React.useContext(EditorContext);
 
   const editor = useSlateStatic();
 
   const addPowerCurve = () => {
     if (gpxFile) {
+      console.log(path);
+
       Transforms.insertNodes(
         editor,
         {
@@ -23,15 +25,33 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
           children: [{ text: "" }],
           void: true,
         },
-        { at: menuPosition.path }
+        { at: path }
       );
 
+      if (path.length > 2) {
+        Transforms.liftNodes(editor);
+      }
+
+      setMobileMenu({
+        top: 0,
+        left: 0,
+        display: false,
+        path: path,
+        isFullScreen: false,
+      });
+
       setIsNewComponentMenuOpen(false);
+      const selection = window.getSelection();
+      // console.log(selection)
+      selection && selection.removeAllRanges();
+
+      // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
     }
   };
   return (
     <Box
-      onClick={() => {
+      onClick={(event) => {
+        // event.preventDefault();
         if (gpxFile) {
           addPowerCurve();
         }
@@ -44,7 +64,7 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
       <Flex sx={{ alignItems: "center", gap: "20px" }}>
         <Box
           sx={{
-            width: size === "small" ? "16px" : "25px",
+            width: "16px",
             height: "auto",
           }}
         >
@@ -53,7 +73,7 @@ const AddPowerCurve = ({ size }: { size?: "small" }) => {
         <Text
           as="span"
           sx={{
-            fontSize: size === "small" ? "14px" : "inherit",
+            fontSize: "14px",
           }}
         >
           Power Curve

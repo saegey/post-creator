@@ -54,6 +54,23 @@ export type EditorContextType = {
   setMenuPosition: React.Dispatch<
     React.SetStateAction<{ top: number; left: number; path: Path }>
   >;
+
+  mobileMenu: {
+    top: number;
+    left: number;
+    path: Path;
+    display: boolean;
+    isFullScreen: boolean;
+  };
+  setMobileMenu: React.Dispatch<
+    React.SetStateAction<{
+      top: number;
+      left: number;
+      path: Path;
+      display: boolean;
+      isFullScreen: boolean;
+    }>
+  >;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -91,6 +108,14 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsStravaModalOpen: () => {},
   isRWGPSModalOpen: false,
   setIsRWGPSModalOpen: () => {},
+  mobileMenu: {
+    top: 0,
+    left: 0,
+    path: [0, 0],
+    display: false,
+    isFullScreen: false,
+  },
+  setMobileMenu: () => {},
 });
 
 export { EditorContext };
