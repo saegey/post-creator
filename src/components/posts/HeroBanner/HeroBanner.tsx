@@ -46,11 +46,18 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const imageWidth = width < 690 ? width : 690;
 
   const imageUrl = heroImage
-    ? getCldImageUrl({
-        src: heroImage?.public_id,
-        width: width < 690 ? width : 690,
-        height: heroImage?.height / (heroImage?.width / imageWidth),
-      })
+    ? getCldImageUrl(
+        {
+          src: heroImage?.public_id,
+          width: width < 690 ? width : 690,
+          height: heroImage?.height / (heroImage?.width / imageWidth),
+        },
+        {
+          cloud: {
+            cloudName: cloudUrl,
+          },
+        }
+      )
     : undefined;
 
   const menu = (
