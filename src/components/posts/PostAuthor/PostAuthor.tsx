@@ -17,10 +17,17 @@ const PostAuthor = () => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   // const publicId = 'sample_image';
   const imageUrl = author?.image
-    ? getCldImageUrl({
-        src: author.image,
-        width: 100, // Resize the original file to a smaller size
-      })
+    ? getCldImageUrl(
+        {
+          src: author.image,
+          width: 100, // Resize the original file to a smaller size
+        },
+        {
+          cloud: {
+            cloudName: cloudUrl,
+          },
+        }
+      )
     : undefined;
 
   // console.log(`Cloudinary Cloud Name: ${cloudName}`);

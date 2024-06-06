@@ -39,10 +39,17 @@ const Header = ({ user }: { user: IUser }) => {
     mobileMenu,
   } = React.useContext(EditorContext);
   const { id } = React.useContext(PostContext);
-  const imageUrl = getCldImageUrl({
-    src: user.attributes.picture,
-    width: 100, // Resize the original file to a smaller size
-  });
+  const imageUrl = getCldImageUrl(
+    {
+      src: user.attributes.picture,
+      width: 100, // Resize the original file to a smaller size
+    },
+    {
+      cloud: {
+        cloudName: cloudUrl,
+      },
+    }
+  );
 
   const publishPost = async () => {
     setIsPublishing(true);

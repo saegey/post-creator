@@ -60,11 +60,18 @@ const ImageElement = ({
     return <></>;
   }
 
-  const imageUrl = getCldImageUrl({
-    src: element.public_id,
-    width: width < 690 ? width : 690,
-    height: imageMeta?.height / (imageMeta?.width / imageWidth),
-  });
+  const imageUrl = getCldImageUrl(
+    {
+      src: element.public_id,
+      width: width < 690 ? width : 690,
+      height: imageMeta?.height / (imageMeta?.width / imageWidth),
+    },
+    {
+      cloud: {
+        cloudName: cloudUrl,
+      },
+    }
+  );
 
   const selected = useSelected();
   const focused = useFocused();
