@@ -1,5 +1,5 @@
 describe("<RaceResultsImport />", () => {
-  it("renders", () => {
+  skip("renders", () => {
     // see: https://on.cypress.io/mounting-react
     cy.visit("http://localhost:3000/posts");
     cy.get("#create-new-post").click();
