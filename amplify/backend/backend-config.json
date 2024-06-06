@@ -485,14 +485,6 @@
         }
       ]
     },
-    "AMPLIFY_function_nextjsblog24b60079_secretsPathAmplifyAppId": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "nextjsblog24b60079"
-        }
-      ]
-    },
     "AMPLIFY_function_omniGoResults_deploymentBucketName": {
       "usedBy": [
         {
