@@ -220,7 +220,10 @@ exports.handler = async function (event: TriggerEvent) {
   let coordinates: Array<any> = [];
   let powers, hearts, powerAnalysis, elevation, distances, elevationGrades;
   let elevationGain, stoppedTime, elapsedTime;
-  let heartAnalysis, normalizedPower, cadenceAnalysis, tempAnalysis;
+  let heartAnalysis: Record<number | string, number> | null,
+    normalizedPower,
+    cadenceAnalysis: Record<number | string, number> | null,
+    tempAnalysis: Record<number | string, number> | null;
   let zones, powerZoneBuckets, timeInRedSecs;
 
   const distance = length(gpxData);
@@ -228,15 +231,27 @@ exports.handler = async function (event: TriggerEvent) {
   gpxData.features.map((feature: any) => {
     const { times, atemps, cads } = feature.properties.coordinateProperties;
     coordinates = feature.geometry.coordinates;
-    powers = feature.properties.coordinateProperties.powers;
-    hearts = feature.properties.coordinateProperties.heart;
+    powers = feature.properties.coordinateProperties.powers
+      ? feature.properties.coordinateProperties.powers
+      : null;
+    hearts = feature.properties.coordinateProperties.heart
+      ? feature.properties.coordinateProperties.heart
+      : null;
 
     const powerAnalysisTimer = segment?.addNewSubsegment("powerAnalysis");
 
-    powerAnalysis = calcBestPowers(timeIntervals(powers.length), powers);
-    heartAnalysis = calcBestPowers(timeIntervals(hearts.length), hearts);
-    cadenceAnalysis = calcBestPowers(timeIntervals(cads.length), cads, true);
-    tempAnalysis = calcBestPowers(timeIntervals(atemps.length), atemps, true);
+    powerAnalysis = powers.length
+      ? calcBestPowers(timeIntervals(powers.length), powers)
+      : null;
+    heartAnalysis = hearts.length
+      ? calcBestPowers(timeIntervals(hearts.length), hearts)
+      : null;
+    cadenceAnalysis = cads.length
+      ? calcBestPowers(timeIntervals(cads.length), cads, true)
+      : null;
+    tempAnalysis = atemps.length
+      ? calcBestPowers(timeIntervals(atemps.length), atemps, true)
+      : null;
 
     powerAnalysisTimer.close();
 
@@ -294,14 +309,13 @@ exports.handler = async function (event: TriggerEvent) {
 
   const updateDynamoTimer = segment?.addNewSubsegment("updateDynamo");
   try {
-    const res = await docClient
+    await docClient
       .update({
         TableName: postTable,
         Key: {
           id: postId,
         },
-        UpdateExpression:
-          "SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf",
+        UpdateExpression: `SET distance = :dis,heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf`,
         ExpressionAttributeValues: {
           ":ta": tempAnalysis,
           ":ca": cadenceAnalysis,
