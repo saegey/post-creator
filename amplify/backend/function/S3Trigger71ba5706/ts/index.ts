@@ -240,18 +240,22 @@ exports.handler = async function (event: TriggerEvent) {
 
     const powerAnalysisTimer = segment?.addNewSubsegment("powerAnalysis");
 
-    powerAnalysis = powers.length
-      ? calcBestPowers(timeIntervals(powers.length), powers)
-      : null;
-    heartAnalysis = hearts.length
-      ? calcBestPowers(timeIntervals(hearts.length), hearts)
-      : null;
-    cadenceAnalysis = cads.length
-      ? calcBestPowers(timeIntervals(cads.length), cads, true)
-      : null;
-    tempAnalysis = atemps.length
-      ? calcBestPowers(timeIntervals(atemps.length), atemps, true)
-      : null;
+    powerAnalysis =
+      powers && powers.length
+        ? calcBestPowers(timeIntervals(powers.length), powers)
+        : null;
+    heartAnalysis =
+      hearts && hearts.length
+        ? calcBestPowers(timeIntervals(hearts.length), hearts)
+        : null;
+    cadenceAnalysis =
+      cads && cads.length
+        ? calcBestPowers(timeIntervals(cads.length), cads, true)
+        : null;
+    tempAnalysis =
+      atemps && atemps.length
+        ? calcBestPowers(timeIntervals(atemps.length), atemps, true)
+        : null;
 
     powerAnalysisTimer.close();
 
