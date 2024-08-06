@@ -4176,7 +4176,7 @@
         "Name": "api12660653"
       }
     },
-    "api12660653Default4XXResponse44171341": {
+    "api12660653Default4XXResponseb048982e": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -4191,7 +4191,7 @@
         }
       }
     },
-    "api12660653Default5XXResponse44171341": {
+    "api12660653Default5XXResponseb048982e": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -4206,7 +4206,7 @@
         }
       }
     },
-    "DeploymentAPIGWapi1266065334d8e07b": {
+    "DeploymentAPIGWapi126606533fca5d26": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -4224,8 +4224,8 @@
         }
       },
       "DependsOn": [
-        "api12660653Default4XXResponse44171341",
-        "api12660653Default5XXResponse44171341"
+        "api12660653Default4XXResponseb048982e",
+        "api12660653Default5XXResponseb048982e"
       ]
     }
   }
