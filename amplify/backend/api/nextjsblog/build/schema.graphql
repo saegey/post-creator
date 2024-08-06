@@ -1,0 +1,924 @@
+type User @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  fullName: String!
+  email: String!
+  image: String
+  username: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type Blog @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  posts(filter: ModelPostFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner: String
+}
+
+type PublishedPost @aws_api_key @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  title: String!
+  gpxFile: String
+  images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  postLocation: String
+  stravaUrl: String
+  resultsUrl: String
+  type: String
+  subType: String
+  teaser: String
+  currentFtp: String
+  components: AWSJSON
+  author: AWSJSON
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
+  powerZones: AWSJSON
+  timeSeriesFile: String
+  powerZoneBuckets: AWSJSON
+  createdAt: String!
+  heroImage: AWSJSON
+  subhead: String
+  shortUrl: String
+  raceResults: AWSJSON
+  webscorerResults: AWSJSON
+  crossResults: AWSJSON
+  omniResults: AWSJSON
+  runSignupResults: AWSJSON
+  raceResultsProvider: String
+  originalPostId: String
+  originalPost: Post
+  updatedAt: AWSDateTime!
+  publishedPostOriginalPostId: ID
+  owner: String
+}
+
+type Post @aws_iam @aws_cognito_user_pools {
+  type: String!
+  id: ID!
+  title: String!
+  gpxFile: String
+  images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  postLocation: String
+  stravaUrl: String
+  resultsUrl: String
+  timeSeriesFile: String
+  subType: String
+  teaser: String
+  currentFtp: String
+  components: AWSJSON
+  blog: Blog
+  related(filter: ModelPostFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelPostConnection
+  author: User
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
+  powerZones: AWSJSON
+  powerZoneBuckets: AWSJSON
+  createdAt: String!
+  heroImage: AWSJSON
+  subhead: String
+  shortUrl: String
+  raceResults: AWSJSON
+  webscorerResults: AWSJSON
+  crossResults: AWSJSON
+  omniResults: AWSJSON
+  runSignupResults: AWSJSON
+  raceResultsProvider: String
+  privacyStatus: String
+  updatedAt: AWSDateTime!
+  blogPostsId: ID
+  postRelatedId: ID
+  postAuthorId: ID
+  owner: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelUserConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [User]!
+  nextToken: String
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  fullName: ModelStringInput
+  email: ModelStringInput
+  image: ModelStringInput
+  username: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+  owner: ModelStringInput
+}
+
+type Query {
+  getUser(id: ID!): User @aws_api_key @aws_iam @aws_cognito_user_pools
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getBlog(id: ID!): Blog @aws_api_key @aws_iam @aws_cognito_user_pools
+  listBlogs(filter: ModelBlogFilterInput, limit: Int, nextToken: String): ModelBlogConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getPublishedPost(id: ID!): PublishedPost @aws_api_key @aws_iam @aws_cognito_user_pools
+  listPublishedPosts(filter: ModelPublishedPostFilterInput, limit: Int, nextToken: String): ModelPublishedPostConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  listPublishedPostsByCreatedAt(type: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPublishedPostFilterInput, limit: Int, nextToken: String): ModelPublishedPostConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  PublishedPostByOriginalPostId(originalPostId: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPublishedPostFilterInput, limit: Int, nextToken: String): ModelPublishedPostConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getPost(id: ID!): Post @aws_iam @aws_cognito_user_pools
+  listPosts(filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection @aws_iam @aws_cognito_user_pools
+  listPostsByCreatedAt(type: String!, createdAt: ModelStringKeyConditionInput, sortDirection: ModelSortDirection, filter: ModelPostFilterInput, limit: Int, nextToken: String): ModelPostConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelUserConditionInput {
+  fullName: ModelStringInput
+  email: ModelStringInput
+  image: ModelStringInput
+  username: ModelStringInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateUserInput {
+  id: ID
+  fullName: String!
+  email: String!
+  image: String
+  username: String
+}
+
+input UpdateUserInput {
+  id: ID!
+  fullName: String
+  email: String
+  image: String
+  username: String
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  createBlog(input: CreateBlogInput!, condition: ModelBlogConditionInput): Blog @aws_iam @aws_cognito_user_pools
+  updateBlog(input: UpdateBlogInput!, condition: ModelBlogConditionInput): Blog @aws_iam @aws_cognito_user_pools
+  deleteBlog(input: DeleteBlogInput!, condition: ModelBlogConditionInput): Blog @aws_iam @aws_cognito_user_pools
+  createPublishedPost(input: CreatePublishedPostInput!, condition: ModelPublishedPostConditionInput): PublishedPost @aws_iam @aws_cognito_user_pools
+  updatePublishedPost(input: UpdatePublishedPostInput!, condition: ModelPublishedPostConditionInput): PublishedPost @aws_iam @aws_cognito_user_pools
+  deletePublishedPost(input: DeletePublishedPostInput!, condition: ModelPublishedPostConditionInput): PublishedPost @aws_iam @aws_cognito_user_pools
+  createPost(input: CreatePostInput!, condition: ModelPostConditionInput): Post @aws_iam @aws_cognito_user_pools
+  updatePost(input: UpdatePostInput!, condition: ModelPostConditionInput): Post @aws_iam @aws_cognito_user_pools
+  deletePost(input: DeletePostInput!, condition: ModelPostConditionInput): Post @aws_iam @aws_cognito_user_pools
+}
+
+input ModelSubscriptionUserFilterInput {
+  id: ModelSubscriptionIDInput
+  fullName: ModelSubscriptionStringInput
+  email: ModelSubscriptionStringInput
+  image: ModelSubscriptionStringInput
+  username: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionUserFilterInput]
+  or: [ModelSubscriptionUserFilterInput]
+  owner: ModelStringInput
+}
+
+type Subscription {
+  onCreateUser(filter: ModelSubscriptionUserFilterInput, owner: String): User @aws_subscribe(mutations: ["createUser"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateUser(filter: ModelSubscriptionUserFilterInput, owner: String): User @aws_subscribe(mutations: ["updateUser"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteUser(filter: ModelSubscriptionUserFilterInput, owner: String): User @aws_subscribe(mutations: ["deleteUser"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateBlog(filter: ModelSubscriptionBlogFilterInput, owner: String): Blog @aws_subscribe(mutations: ["createBlog"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateBlog(filter: ModelSubscriptionBlogFilterInput, owner: String): Blog @aws_subscribe(mutations: ["updateBlog"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteBlog(filter: ModelSubscriptionBlogFilterInput, owner: String): Blog @aws_subscribe(mutations: ["deleteBlog"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreatePublishedPost(filter: ModelSubscriptionPublishedPostFilterInput, owner: String): PublishedPost @aws_subscribe(mutations: ["createPublishedPost"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdatePublishedPost(filter: ModelSubscriptionPublishedPostFilterInput, owner: String): PublishedPost @aws_subscribe(mutations: ["updatePublishedPost"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeletePublishedPost(filter: ModelSubscriptionPublishedPostFilterInput, owner: String): PublishedPost @aws_subscribe(mutations: ["deletePublishedPost"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreatePost(filter: ModelSubscriptionPostFilterInput, owner: String): Post @aws_subscribe(mutations: ["createPost"]) @aws_iam @aws_cognito_user_pools
+  onUpdatePost(filter: ModelSubscriptionPostFilterInput, owner: String): Post @aws_subscribe(mutations: ["updatePost"]) @aws_iam @aws_cognito_user_pools
+  onDeletePost(filter: ModelSubscriptionPostFilterInput, owner: String): Post @aws_subscribe(mutations: ["deletePost"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelBlogConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [Blog]!
+  nextToken: String
+}
+
+input ModelBlogFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelBlogFilterInput]
+  or: [ModelBlogFilterInput]
+  not: ModelBlogFilterInput
+  owner: ModelStringInput
+}
+
+input ModelBlogConditionInput {
+  name: ModelStringInput
+  and: [ModelBlogConditionInput]
+  or: [ModelBlogConditionInput]
+  not: ModelBlogConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  owner: ModelStringInput
+}
+
+input CreateBlogInput {
+  id: ID
+  name: String!
+}
+
+input UpdateBlogInput {
+  id: ID!
+  name: String
+}
+
+input DeleteBlogInput {
+  id: ID!
+}
+
+input ModelSubscriptionBlogFilterInput {
+  id: ModelSubscriptionIDInput
+  name: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionBlogFilterInput]
+  or: [ModelSubscriptionBlogFilterInput]
+  blogPostsId: ModelSubscriptionIDInput
+  owner: ModelStringInput
+}
+
+type ModelPublishedPostConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [PublishedPost]!
+  nextToken: String
+}
+
+input ModelPublishedPostFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  gpxFile: ModelStringInput
+  images: ModelStringInput
+  headerImage: ModelStringInput
+  date: ModelStringInput
+  publishedDate: ModelStringInput
+  location: ModelStringInput
+  postLocation: ModelStringInput
+  stravaUrl: ModelStringInput
+  resultsUrl: ModelStringInput
+  type: ModelStringInput
+  subType: ModelStringInput
+  teaser: ModelStringInput
+  currentFtp: ModelStringInput
+  components: ModelStringInput
+  author: ModelStringInput
+  elevationTotal: ModelFloatInput
+  normalizedPower: ModelFloatInput
+  distance: ModelFloatInput
+  heartAnalysis: ModelStringInput
+  cadenceAnalysis: ModelStringInput
+  tempAnalysis: ModelStringInput
+  elapsedTime: ModelIntInput
+  stoppedTime: ModelIntInput
+  timeInRed: ModelIntInput
+  powerZones: ModelStringInput
+  timeSeriesFile: ModelStringInput
+  powerZoneBuckets: ModelStringInput
+  createdAt: ModelStringInput
+  heroImage: ModelStringInput
+  subhead: ModelStringInput
+  shortUrl: ModelStringInput
+  raceResults: ModelStringInput
+  webscorerResults: ModelStringInput
+  crossResults: ModelStringInput
+  omniResults: ModelStringInput
+  runSignupResults: ModelStringInput
+  raceResultsProvider: ModelStringInput
+  originalPostId: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelPublishedPostFilterInput]
+  or: [ModelPublishedPostFilterInput]
+  not: ModelPublishedPostFilterInput
+  publishedPostOriginalPostId: ModelIDInput
+  owner: ModelStringInput
+}
+
+input ModelPublishedPostConditionInput {
+  title: ModelStringInput
+  gpxFile: ModelStringInput
+  images: ModelStringInput
+  headerImage: ModelStringInput
+  date: ModelStringInput
+  publishedDate: ModelStringInput
+  location: ModelStringInput
+  postLocation: ModelStringInput
+  stravaUrl: ModelStringInput
+  resultsUrl: ModelStringInput
+  type: ModelStringInput
+  subType: ModelStringInput
+  teaser: ModelStringInput
+  currentFtp: ModelStringInput
+  components: ModelStringInput
+  author: ModelStringInput
+  elevationTotal: ModelFloatInput
+  normalizedPower: ModelFloatInput
+  distance: ModelFloatInput
+  heartAnalysis: ModelStringInput
+  cadenceAnalysis: ModelStringInput
+  tempAnalysis: ModelStringInput
+  elapsedTime: ModelIntInput
+  stoppedTime: ModelIntInput
+  timeInRed: ModelIntInput
+  powerZones: ModelStringInput
+  timeSeriesFile: ModelStringInput
+  powerZoneBuckets: ModelStringInput
+  createdAt: ModelStringInput
+  heroImage: ModelStringInput
+  subhead: ModelStringInput
+  shortUrl: ModelStringInput
+  raceResults: ModelStringInput
+  webscorerResults: ModelStringInput
+  crossResults: ModelStringInput
+  omniResults: ModelStringInput
+  runSignupResults: ModelStringInput
+  raceResultsProvider: ModelStringInput
+  originalPostId: ModelStringInput
+  and: [ModelPublishedPostConditionInput]
+  or: [ModelPublishedPostConditionInput]
+  not: ModelPublishedPostConditionInput
+  updatedAt: ModelStringInput
+  publishedPostOriginalPostId: ModelIDInput
+  owner: ModelStringInput
+}
+
+input CreatePublishedPostInput {
+  id: ID
+  title: String!
+  gpxFile: String
+  images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  postLocation: String
+  stravaUrl: String
+  resultsUrl: String
+  type: String
+  subType: String
+  teaser: String
+  currentFtp: String
+  components: AWSJSON
+  author: AWSJSON
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
+  powerZones: AWSJSON
+  timeSeriesFile: String
+  powerZoneBuckets: AWSJSON
+  createdAt: String
+  heroImage: AWSJSON
+  subhead: String
+  shortUrl: String
+  raceResults: AWSJSON
+  webscorerResults: AWSJSON
+  crossResults: AWSJSON
+  omniResults: AWSJSON
+  runSignupResults: AWSJSON
+  raceResultsProvider: String
+  originalPostId: String
+  publishedPostOriginalPostId: ID
+}
+
+input UpdatePublishedPostInput {
+  id: ID!
+  title: String
+  gpxFile: String
+  images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  postLocation: String
+  stravaUrl: String
+  resultsUrl: String
+  type: String
+  subType: String
+  teaser: String
+  currentFtp: String
+  components: AWSJSON
+  author: AWSJSON
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
+  powerZones: AWSJSON
+  timeSeriesFile: String
+  powerZoneBuckets: AWSJSON
+  createdAt: String
+  heroImage: AWSJSON
+  subhead: String
+  shortUrl: String
+  raceResults: AWSJSON
+  webscorerResults: AWSJSON
+  crossResults: AWSJSON
+  omniResults: AWSJSON
+  runSignupResults: AWSJSON
+  raceResultsProvider: String
+  originalPostId: String
+  publishedPostOriginalPostId: ID
+}
+
+input DeletePublishedPostInput {
+  id: ID!
+}
+
+input ModelSubscriptionPublishedPostFilterInput {
+  id: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  gpxFile: ModelSubscriptionStringInput
+  images: ModelSubscriptionStringInput
+  headerImage: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  publishedDate: ModelSubscriptionStringInput
+  location: ModelSubscriptionStringInput
+  postLocation: ModelSubscriptionStringInput
+  stravaUrl: ModelSubscriptionStringInput
+  resultsUrl: ModelSubscriptionStringInput
+  type: ModelSubscriptionStringInput
+  subType: ModelSubscriptionStringInput
+  teaser: ModelSubscriptionStringInput
+  currentFtp: ModelSubscriptionStringInput
+  components: ModelSubscriptionStringInput
+  author: ModelSubscriptionStringInput
+  elevationTotal: ModelSubscriptionFloatInput
+  normalizedPower: ModelSubscriptionFloatInput
+  distance: ModelSubscriptionFloatInput
+  heartAnalysis: ModelSubscriptionStringInput
+  cadenceAnalysis: ModelSubscriptionStringInput
+  tempAnalysis: ModelSubscriptionStringInput
+  elapsedTime: ModelSubscriptionIntInput
+  stoppedTime: ModelSubscriptionIntInput
+  timeInRed: ModelSubscriptionIntInput
+  powerZones: ModelSubscriptionStringInput
+  timeSeriesFile: ModelSubscriptionStringInput
+  powerZoneBuckets: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  heroImage: ModelSubscriptionStringInput
+  subhead: ModelSubscriptionStringInput
+  shortUrl: ModelSubscriptionStringInput
+  raceResults: ModelSubscriptionStringInput
+  webscorerResults: ModelSubscriptionStringInput
+  crossResults: ModelSubscriptionStringInput
+  omniResults: ModelSubscriptionStringInput
+  runSignupResults: ModelSubscriptionStringInput
+  raceResultsProvider: ModelSubscriptionStringInput
+  originalPostId: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionPublishedPostFilterInput]
+  or: [ModelSubscriptionPublishedPostFilterInput]
+  publishedPostOriginalPostId: ModelSubscriptionIDInput
+  owner: ModelStringInput
+}
+
+type ModelPostConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [Post]!
+  nextToken: String
+}
+
+input ModelPostFilterInput {
+  type: ModelStringInput
+  id: ModelIDInput
+  title: ModelStringInput
+  gpxFile: ModelStringInput
+  images: ModelStringInput
+  headerImage: ModelStringInput
+  date: ModelStringInput
+  publishedDate: ModelStringInput
+  location: ModelStringInput
+  postLocation: ModelStringInput
+  stravaUrl: ModelStringInput
+  resultsUrl: ModelStringInput
+  timeSeriesFile: ModelStringInput
+  subType: ModelStringInput
+  teaser: ModelStringInput
+  currentFtp: ModelStringInput
+  components: ModelStringInput
+  elevationTotal: ModelFloatInput
+  normalizedPower: ModelFloatInput
+  distance: ModelFloatInput
+  heartAnalysis: ModelStringInput
+  cadenceAnalysis: ModelStringInput
+  tempAnalysis: ModelStringInput
+  elapsedTime: ModelIntInput
+  stoppedTime: ModelIntInput
+  timeInRed: ModelIntInput
+  powerZones: ModelStringInput
+  powerZoneBuckets: ModelStringInput
+  createdAt: ModelStringInput
+  heroImage: ModelStringInput
+  subhead: ModelStringInput
+  shortUrl: ModelStringInput
+  raceResults: ModelStringInput
+  webscorerResults: ModelStringInput
+  crossResults: ModelStringInput
+  omniResults: ModelStringInput
+  runSignupResults: ModelStringInput
+  raceResultsProvider: ModelStringInput
+  privacyStatus: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelPostFilterInput]
+  or: [ModelPostFilterInput]
+  not: ModelPostFilterInput
+  blogPostsId: ModelIDInput
+  postRelatedId: ModelIDInput
+  postAuthorId: ModelIDInput
+  owner: ModelStringInput
+}
+
+input ModelPostConditionInput {
+  type: ModelStringInput
+  title: ModelStringInput
+  gpxFile: ModelStringInput
+  images: ModelStringInput
+  headerImage: ModelStringInput
+  date: ModelStringInput
+  publishedDate: ModelStringInput
+  location: ModelStringInput
+  postLocation: ModelStringInput
+  stravaUrl: ModelStringInput
+  resultsUrl: ModelStringInput
+  timeSeriesFile: ModelStringInput
+  subType: ModelStringInput
+  teaser: ModelStringInput
+  currentFtp: ModelStringInput
+  components: ModelStringInput
+  elevationTotal: ModelFloatInput
+  normalizedPower: ModelFloatInput
+  distance: ModelFloatInput
+  heartAnalysis: ModelStringInput
+  cadenceAnalysis: ModelStringInput
+  tempAnalysis: ModelStringInput
+  elapsedTime: ModelIntInput
+  stoppedTime: ModelIntInput
+  timeInRed: ModelIntInput
+  powerZones: ModelStringInput
+  powerZoneBuckets: ModelStringInput
+  createdAt: ModelStringInput
+  heroImage: ModelStringInput
+  subhead: ModelStringInput
+  shortUrl: ModelStringInput
+  raceResults: ModelStringInput
+  webscorerResults: ModelStringInput
+  crossResults: ModelStringInput
+  omniResults: ModelStringInput
+  runSignupResults: ModelStringInput
+  raceResultsProvider: ModelStringInput
+  privacyStatus: ModelStringInput
+  and: [ModelPostConditionInput]
+  or: [ModelPostConditionInput]
+  not: ModelPostConditionInput
+  updatedAt: ModelStringInput
+  blogPostsId: ModelIDInput
+  postRelatedId: ModelIDInput
+  postAuthorId: ModelIDInput
+  owner: ModelStringInput
+}
+
+input CreatePostInput {
+  type: String!
+  id: ID
+  title: String!
+  gpxFile: String
+  images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  postLocation: String
+  stravaUrl: String
+  resultsUrl: String
+  timeSeriesFile: String
+  subType: String
+  teaser: String
+  currentFtp: String
+  components: AWSJSON
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
+  powerZones: AWSJSON
+  powerZoneBuckets: AWSJSON
+  createdAt: String
+  heroImage: AWSJSON
+  subhead: String
+  shortUrl: String
+  raceResults: AWSJSON
+  webscorerResults: AWSJSON
+  crossResults: AWSJSON
+  omniResults: AWSJSON
+  runSignupResults: AWSJSON
+  raceResultsProvider: String
+  privacyStatus: String
+  blogPostsId: ID
+  postRelatedId: ID
+  postAuthorId: ID
+}
+
+input UpdatePostInput {
+  type: String
+  id: ID!
+  title: String
+  gpxFile: String
+  images: AWSJSON
+  headerImage: String
+  date: String
+  publishedDate: String
+  location: String
+  postLocation: String
+  stravaUrl: String
+  resultsUrl: String
+  timeSeriesFile: String
+  subType: String
+  teaser: String
+  currentFtp: String
+  components: AWSJSON
+  elevationTotal: Float
+  normalizedPower: Float
+  distance: Float
+  heartAnalysis: AWSJSON
+  cadenceAnalysis: AWSJSON
+  tempAnalysis: AWSJSON
+  elapsedTime: Int
+  stoppedTime: Int
+  timeInRed: Int
+  powerZones: AWSJSON
+  powerZoneBuckets: AWSJSON
+  createdAt: String
+  heroImage: AWSJSON
+  subhead: String
+  shortUrl: String
+  raceResults: AWSJSON
+  webscorerResults: AWSJSON
+  crossResults: AWSJSON
+  omniResults: AWSJSON
+  runSignupResults: AWSJSON
+  raceResultsProvider: String
+  privacyStatus: String
+  blogPostsId: ID
+  postRelatedId: ID
+  postAuthorId: ID
+}
+
+input DeletePostInput {
+  id: ID!
+}
+
+input ModelSubscriptionPostFilterInput {
+  type: ModelSubscriptionStringInput
+  id: ModelSubscriptionIDInput
+  title: ModelSubscriptionStringInput
+  gpxFile: ModelSubscriptionStringInput
+  images: ModelSubscriptionStringInput
+  headerImage: ModelSubscriptionStringInput
+  date: ModelSubscriptionStringInput
+  publishedDate: ModelSubscriptionStringInput
+  location: ModelSubscriptionStringInput
+  postLocation: ModelSubscriptionStringInput
+  stravaUrl: ModelSubscriptionStringInput
+  resultsUrl: ModelSubscriptionStringInput
+  timeSeriesFile: ModelSubscriptionStringInput
+  subType: ModelSubscriptionStringInput
+  teaser: ModelSubscriptionStringInput
+  currentFtp: ModelSubscriptionStringInput
+  components: ModelSubscriptionStringInput
+  elevationTotal: ModelSubscriptionFloatInput
+  normalizedPower: ModelSubscriptionFloatInput
+  distance: ModelSubscriptionFloatInput
+  heartAnalysis: ModelSubscriptionStringInput
+  cadenceAnalysis: ModelSubscriptionStringInput
+  tempAnalysis: ModelSubscriptionStringInput
+  elapsedTime: ModelSubscriptionIntInput
+  stoppedTime: ModelSubscriptionIntInput
+  timeInRed: ModelSubscriptionIntInput
+  powerZones: ModelSubscriptionStringInput
+  powerZoneBuckets: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  heroImage: ModelSubscriptionStringInput
+  subhead: ModelSubscriptionStringInput
+  shortUrl: ModelSubscriptionStringInput
+  raceResults: ModelSubscriptionStringInput
+  webscorerResults: ModelSubscriptionStringInput
+  crossResults: ModelSubscriptionStringInput
+  omniResults: ModelSubscriptionStringInput
+  runSignupResults: ModelSubscriptionStringInput
+  raceResultsProvider: ModelSubscriptionStringInput
+  privacyStatus: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionPostFilterInput]
+  or: [ModelSubscriptionPostFilterInput]
+  postRelatedId: ModelSubscriptionIDInput
+  postAuthorId: ModelSubscriptionIDInput
+  owner: ModelStringInput
+}
+
+input ModelStringKeyConditionInput {
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  between: [String]
+  beginsWith: String
+}

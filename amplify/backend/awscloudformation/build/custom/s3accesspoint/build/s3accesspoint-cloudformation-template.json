@@ -1,0 +1,78 @@
+{
+  "Parameters": {
+    "env": {
+      "Type": "String",
+      "Description": "Current Amplify CLI env name"
+    },
+    "functionrouteAccessPointName": {
+      "Type": "String"
+    },
+    "functionrouteAccessPointArn": {
+      "Type": "String"
+    },
+    "functionrouteAccessPointRegion": {
+      "Type": "String"
+    },
+    "functionrouteAccessPointLambdaExecutionRole": {
+      "Type": "String"
+    },
+    "functionrouteAccessPointLambdaExecutionRoleArn": {
+      "Type": "String"
+    },
+    "storagerouteFilesBucketName": {
+      "Type": "String"
+    },
+    "storagerouteFilesRegion": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "s3objectlambdasampleaccesspoint": {
+      "Type": "AWS::S3::AccessPoint",
+      "Properties": {
+        "Bucket": {
+          "Ref": "storagerouteFilesBucketName"
+        },
+        "Name": "access-point"
+      }
+    },
+    "s3objectlambdaaccesspoint": {
+      "Type": "AWS::S3ObjectLambda::AccessPoint",
+      "Properties": {
+        "ObjectLambdaConfiguration": {
+          "SupportingAccessPoint": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:aws:s3:",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ":",
+                {
+                  "Ref": "AWS::AccountId"
+                },
+                ":accesspoint/access-point"
+              ]
+            ]
+          },
+          "TransformationConfigurations": [
+            {
+              "Actions": [
+                "GetObject"
+              ],
+              "ContentTransformation": {
+                "AwsLambda": {
+                  "FunctionArn": {
+                    "Ref": "functionrouteAccessPointArn"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Name": "s3-object-lambda-access-point"
+      }
+    }
+  }
+}

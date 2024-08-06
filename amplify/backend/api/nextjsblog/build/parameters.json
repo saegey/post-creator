@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "nextjsblog",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authnextjsbloga585e058",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-nextjsblog-prod-201134-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/76ef1d6f84cf094815e754e116888424d023e7df"
+}

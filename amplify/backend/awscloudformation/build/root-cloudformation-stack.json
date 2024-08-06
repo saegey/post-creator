@@ -1,0 +1,1216 @@
+{
+  "Description": "Root Stack for AWS Amplify Console",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "DeploymentBucketName": {
+      "Type": "String",
+      "Default": "DeploymentBucket",
+      "Description": "Name of the common deployment bucket provided by the parent stack"
+    },
+    "AuthRoleName": {
+      "Type": "String",
+      "Default": "AuthRoleName",
+      "Description": "Name of the common deployment bucket provided by the parent stack"
+    },
+    "UnauthRoleName": {
+      "Type": "String",
+      "Default": "UnAuthRoleName",
+      "Description": "Name of the common deployment bucket provided by the parent stack"
+    }
+  },
+  "Outputs": {
+    "Region": {
+      "Description": "CloudFormation provider root stack Region",
+      "Value": {
+        "Ref": "AWS::Region"
+      },
+      "Export": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-Region"
+        }
+      }
+    },
+    "StackName": {
+      "Description": "CloudFormation provider root stack ID",
+      "Value": {
+        "Ref": "AWS::StackName"
+      },
+      "Export": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-StackName"
+        }
+      }
+    },
+    "StackId": {
+      "Description": "CloudFormation provider root stack name",
+      "Value": {
+        "Ref": "AWS::StackId"
+      },
+      "Export": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-StackId"
+        }
+      }
+    },
+    "AuthRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "AuthRole",
+          "Arn"
+        ]
+      }
+    },
+    "UnauthRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "UnauthRole",
+          "Arn"
+        ]
+      }
+    },
+    "DeploymentBucketName": {
+      "Description": "CloudFormation provider root stack deployment bucket name",
+      "Value": {
+        "Ref": "DeploymentBucketName"
+      },
+      "Export": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-DeploymentBucketName"
+        }
+      }
+    },
+    "AuthRoleName": {
+      "Value": {
+        "Ref": "AuthRole"
+      }
+    },
+    "UnauthRoleName": {
+      "Value": {
+        "Ref": "UnauthRole"
+      }
+    }
+  },
+  "Resources": {
+    "DeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Ref": "DeploymentBucketName"
+        },
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      },
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain"
+    },
+    "DeploymentBucketBlockHTTP": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "DeploymentBucketName"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "DeploymentBucketName"
+                      },
+                      "/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "DeploymentBucketName"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "AuthRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Deny",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity"
+            }
+          ]
+        },
+        "RoleName": {
+          "Ref": "AuthRoleName"
+        }
+      }
+    },
+    "UnauthRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Deny",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity"
+            }
+          ]
+        },
+        "RoleName": {
+          "Ref": "UnauthRoleName"
+        }
+      }
+    },
+    "APIGatewayAuthStack": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+        "Parameters": {
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "env": "prod",
+          "api12660653": {
+            "Fn::GetAtt": [
+              "apiapi12660653",
+              "Outputs.ApiId"
+            ]
+          }
+        }
+      }
+    },
+    "apiapi12660653": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/api/api12660653-cloudformation-template.json",
+        "Parameters": {
+          "functionnextjsblog24b60079Name": {
+            "Fn::GetAtt": [
+              "functionnextjsblog24b60079",
+              "Outputs.Name"
+            ]
+          },
+          "functionnextjsblog24b60079Arn": {
+            "Fn::GetAtt": [
+              "functionnextjsblog24b60079",
+              "Outputs.Arn"
+            ]
+          },
+          "functionshorturlName": {
+            "Fn::GetAtt": [
+              "functionshorturl",
+              "Outputs.Name"
+            ]
+          },
+          "functionshorturlArn": {
+            "Fn::GetAtt": [
+              "functionshorturl",
+              "Outputs.Arn"
+            ]
+          },
+          "functionraceresultName": {
+            "Fn::GetAtt": [
+              "functionraceresult",
+              "Outputs.Name"
+            ]
+          },
+          "functionraceresultArn": {
+            "Fn::GetAtt": [
+              "functionraceresult",
+              "Outputs.Arn"
+            ]
+          },
+          "functionraceresultgetResultsName": {
+            "Fn::GetAtt": [
+              "functionraceresultgetResults",
+              "Outputs.Name"
+            ]
+          },
+          "functionraceresultgetResultsArn": {
+            "Fn::GetAtt": [
+              "functionraceresultgetResults",
+              "Outputs.Arn"
+            ]
+          },
+          "functionpublishPostName": {
+            "Fn::GetAtt": [
+              "functionpublishPost",
+              "Outputs.Name"
+            ]
+          },
+          "functionpublishPostArn": {
+            "Fn::GetAtt": [
+              "functionpublishPost",
+              "Outputs.Arn"
+            ]
+          },
+          "functionrouteAccessPointName": {
+            "Fn::GetAtt": [
+              "functionrouteAccessPoint",
+              "Outputs.Name"
+            ]
+          },
+          "functionrouteAccessPointArn": {
+            "Fn::GetAtt": [
+              "functionrouteAccessPoint",
+              "Outputs.Arn"
+            ]
+          },
+          "functionwebscorerName": {
+            "Fn::GetAtt": [
+              "functionwebscorer",
+              "Outputs.Name"
+            ]
+          },
+          "functionwebscorerArn": {
+            "Fn::GetAtt": [
+              "functionwebscorer",
+              "Outputs.Arn"
+            ]
+          },
+          "functionwebscorerResultsName": {
+            "Fn::GetAtt": [
+              "functionwebscorerResults",
+              "Outputs.Name"
+            ]
+          },
+          "functionwebscorerResultsArn": {
+            "Fn::GetAtt": [
+              "functionwebscorerResults",
+              "Outputs.Arn"
+            ]
+          },
+          "functionvideoUploadUrlName": {
+            "Fn::GetAtt": [
+              "functionvideoUploadUrl",
+              "Outputs.Name"
+            ]
+          },
+          "functionvideoUploadUrlArn": {
+            "Fn::GetAtt": [
+              "functionvideoUploadUrl",
+              "Outputs.Arn"
+            ]
+          },
+          "functionvideoUploadToAssetName": {
+            "Fn::GetAtt": [
+              "functionvideoUploadToAsset",
+              "Outputs.Name"
+            ]
+          },
+          "functionvideoUploadToAssetArn": {
+            "Fn::GetAtt": [
+              "functionvideoUploadToAsset",
+              "Outputs.Arn"
+            ]
+          },
+          "functionvideoWebhookName": {
+            "Fn::GetAtt": [
+              "functionvideoWebhook",
+              "Outputs.Name"
+            ]
+          },
+          "functionvideoWebhookArn": {
+            "Fn::GetAtt": [
+              "functionvideoWebhook",
+              "Outputs.Arn"
+            ]
+          },
+          "functioncrossresultsName": {
+            "Fn::GetAtt": [
+              "functioncrossresults",
+              "Outputs.Name"
+            ]
+          },
+          "functioncrossresultsArn": {
+            "Fn::GetAtt": [
+              "functioncrossresults",
+              "Outputs.Arn"
+            ]
+          },
+          "functionomnigoCategoriesName": {
+            "Fn::GetAtt": [
+              "functionomnigoCategories",
+              "Outputs.Name"
+            ]
+          },
+          "functionomnigoCategoriesArn": {
+            "Fn::GetAtt": [
+              "functionomnigoCategories",
+              "Outputs.Arn"
+            ]
+          },
+          "functionomniGoResultsName": {
+            "Fn::GetAtt": [
+              "functionomniGoResults",
+              "Outputs.Name"
+            ]
+          },
+          "functionomniGoResultsArn": {
+            "Fn::GetAtt": [
+              "functionomniGoResults",
+              "Outputs.Arn"
+            ]
+          },
+          "functionrunsignupCategoriesName": {
+            "Fn::GetAtt": [
+              "functionrunsignupCategories",
+              "Outputs.Name"
+            ]
+          },
+          "functionrunsignupCategoriesArn": {
+            "Fn::GetAtt": [
+              "functionrunsignupCategories",
+              "Outputs.Arn"
+            ]
+          },
+          "functionrunSignupResultsName": {
+            "Fn::GetAtt": [
+              "functionrunSignupResults",
+              "Outputs.Name"
+            ]
+          },
+          "functionrunSignupResultsArn": {
+            "Fn::GetAtt": [
+              "functionrunSignupResults",
+              "Outputs.Arn"
+            ]
+          },
+          "functionrequestResultsProviderName": {
+            "Fn::GetAtt": [
+              "functionrequestResultsProvider",
+              "Outputs.Name"
+            ]
+          },
+          "functionrequestResultsProviderArn": {
+            "Fn::GetAtt": [
+              "functionrequestResultsProvider",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "apinextjsblog": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "Parameters": {
+          "AppSyncApiName": "nextjsblog",
+          "DynamoDBBillingMode": "PAY_PER_REQUEST",
+          "DynamoDBEnableServerSideEncryption": false,
+          "AuthCognitoUserPoolId": {
+            "Fn::GetAtt": [
+              "authnextjsbloga585e058",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "S3DeploymentBucket": "amplify-nextjsblog-prod-201134-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/76ef1d6f84cf094815e754e116888424d023e7df",
+          "env": "prod"
+        }
+      }
+    },
+    "authnextjsbloga585e058": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/auth/nextjsbloga585e058-cloudformation-template.json",
+        "Parameters": {
+          "identityPoolName": "nextjsbloga585e058_identitypool_a585e058",
+          "allowUnauthenticatedIdentities": true,
+          "resourceNameTruncated": "nextjsa585e058",
+          "userPoolName": "nextjsbloga585e058_userpool_a585e058",
+          "autoVerifiedAttributes": "email",
+          "mfaConfiguration": "OPTIONAL",
+          "mfaTypes": "SMS Text Message",
+          "smsAuthenticationMessage": "Your authentication code is {####}",
+          "smsVerificationMessage": "Your verification code is {####}",
+          "emailVerificationSubject": "Your verification code",
+          "emailVerificationMessage": "Your verification code is {####}",
+          "defaultPasswordPolicy": false,
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": "",
+          "requiredAttributes": "email",
+          "aliasAttributes": "",
+          "userpoolClientGenerateSecret": false,
+          "userpoolClientRefreshTokenValidity": 30,
+          "userpoolClientWriteAttributes": "name,preferred_username,picture,profile,website,email",
+          "userpoolClientReadAttributes": "email,name,preferred_username,profile,website",
+          "userpoolClientLambdaRole": "nextjsa585e058_userpoolclient_lambda_role",
+          "userpoolClientSetAttributes": false,
+          "sharedId": "a585e058",
+          "resourceName": "nextjsbloga585e058",
+          "authSelections": "identityPoolAndUserPool",
+          "useDefault": "manual",
+          "usernameAttributes": "email",
+          "userPoolGroupList": "monopadusers",
+          "serviceName": "Cognito",
+          "usernameCaseSensitive": false,
+          "useEnabledMfas": true,
+          "authRoleArn": {
+            "Fn::GetAtt": [
+              "AuthRole",
+              "Arn"
+            ]
+          },
+          "unauthRoleArn": {
+            "Fn::GetAtt": [
+              "UnauthRole",
+              "Arn"
+            ]
+          },
+          "breakCircularDependency": true,
+          "dependsOn": "",
+          "thirdPartyAuth": false,
+          "userPoolGroups": false,
+          "adminQueries": false,
+          "triggers": "{}",
+          "hostedUI": false,
+          "authProviders": "",
+          "parentStack": {
+            "Ref": "AWS::StackId"
+          },
+          "permissions": "",
+          "env": "prod"
+        }
+      }
+    },
+    "authuserPoolGroups": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "Parameters": {
+          "AuthRoleArn": {
+            "Fn::GetAtt": [
+              "AuthRole",
+              "Arn"
+            ]
+          },
+          "UnauthRoleArn": {
+            "Fn::GetAtt": [
+              "UnauthRole",
+              "Arn"
+            ]
+          },
+          "authnextjsbloga585e058UserPoolId": {
+            "Fn::GetAtt": [
+              "authnextjsbloga585e058",
+              "Outputs.UserPoolId"
+            ]
+          },
+          "authnextjsbloga585e058AppClientIDWeb": {
+            "Fn::GetAtt": [
+              "authnextjsbloga585e058",
+              "Outputs.AppClientIDWeb"
+            ]
+          },
+          "authnextjsbloga585e058AppClientID": {
+            "Fn::GetAtt": [
+              "authnextjsbloga585e058",
+              "Outputs.AppClientID"
+            ]
+          },
+          "authnextjsbloga585e058IdentityPoolId": {
+            "Fn::GetAtt": [
+              "authnextjsbloga585e058",
+              "Outputs.IdentityPoolId"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "functionS3Trigger71ba5706": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/S3Trigger71ba5706-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/S3Trigger71ba5706-48676432775545454155-build.zip",
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "functionUserPostConfirmation": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/UserPostConfirmation-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/UserPostConfirmation-446177685966574e5146-build.zip",
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "functioncrossresults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/crossresults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/crossresults-3645307374424f523242-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionnextjsblog24b60079": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/nextjsblog24b60079-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/nextjsblog24b60079-5648696f654e794e6259-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionomniGoResults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/omniGoResults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/omniGoResults-6848744e534d6f654b4d-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionomnigoCategories": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/omnigoCategories-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/omnigoCategories-5269356f4b5573703438-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionpostUpdateCalc": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/postUpdateCalc-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/postUpdateCalc-72386352346a4947564a-build.zip",
+          "apiapi12660653ApiName": {
+            "Fn::GetAtt": [
+              "apiapi12660653",
+              "Outputs.ApiName"
+            ]
+          },
+          "apiapi12660653ApiId": {
+            "Fn::GetAtt": [
+              "apiapi12660653",
+              "Outputs.ApiId"
+            ]
+          },
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "functionS3Trigger71ba5706Name": {
+            "Fn::GetAtt": [
+              "functionS3Trigger71ba5706",
+              "Outputs.Name"
+            ]
+          },
+          "functionnextjsblog24b60079Name": {
+            "Fn::GetAtt": [
+              "functionnextjsblog24b60079",
+              "Outputs.Name"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "functionpublishPost": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/publishPost-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/publishPost-2f78414431735958564a-build.zip",
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "storagerouteFilesBucketName": {
+            "Fn::GetAtt": [
+              "storagerouteFiles",
+              "Outputs.BucketName"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "functionraceresult": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/raceresult-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/raceresult-756833786271744e7339-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionraceresultgetResults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/raceresultgetResults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/raceresultgetResults-43357a2b684c2f2f5339-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionrequestResultsProvider": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/requestResultsProvider-cloudformation-template.json",
+        "Parameters": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/requestResultsProvider-6942476f446764654670-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionrouteAccessPoint": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/routeAccessPoint-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/routeAccessPoint-5979646741653731376a-build.zip",
+          "storagerouteFilesBucketName": {
+            "Fn::GetAtt": [
+              "storagerouteFiles",
+              "Outputs.BucketName"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "functionrunSignupResults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/runSignupResults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/runSignupResults-4b4e345335464a436637-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionrunsignupCategories": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/runsignupCategories-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/runsignupCategories-51393030496e53344642-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionshorturl": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/shorturl-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/shorturl-35576453534556415a4e-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionvideoUploadToAsset": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/videoUploadToAsset-cloudformation-template.json",
+        "Parameters": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/videoUploadToAsset-6d775565537170436d4f-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionvideoUploadUrl": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/videoUploadUrl-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/videoUploadUrl-6a4b6b777a486b394356-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "env": "prod"
+        }
+      }
+    },
+    "functionvideoWebhook": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/videoWebhook-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/videoWebhook-2b7341597a4761665748-build.zip",
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "functionwebscorer": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/webscorer-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/webscorer-486e2b324d7130563639-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionwebscorerResults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/webscorerResults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/webscorerResults-48573252436764565072-build.zip",
+          "env": "prod"
+        }
+      }
+    },
+    "functionprocessFitFile": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/processFitFile-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "s3Key": "amplify-builds/processFitFile-5264414b456b76535552-build.zip",
+          "apiapi12660653ApiName": {
+            "Fn::GetAtt": [
+              "apiapi12660653",
+              "Outputs.ApiName"
+            ]
+          },
+          "apiapi12660653ApiId": {
+            "Fn::GetAtt": [
+              "apiapi12660653",
+              "Outputs.ApiId"
+            ]
+          },
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIKeyOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIKeyOutput"
+            ]
+          },
+          "functionS3Trigger71ba5706Name": {
+            "Fn::GetAtt": [
+              "functionS3Trigger71ba5706",
+              "Outputs.Name"
+            ]
+          },
+          "functionnextjsblog24b60079Name": {
+            "Fn::GetAtt": [
+              "functionnextjsblog24b60079",
+              "Outputs.Name"
+            ]
+          },
+          "storagedynamo1a552de1Name": {
+            "Fn::GetAtt": [
+              "storagedynamo1a552de1",
+              "Outputs.Name"
+            ]
+          },
+          "storagedynamo1a552de1Arn": {
+            "Fn::GetAtt": [
+              "storagedynamo1a552de1",
+              "Outputs.Arn"
+            ]
+          },
+          "storagedynamo1a552de1StreamArn": {
+            "Fn::GetAtt": [
+              "storagedynamo1a552de1",
+              "Outputs.StreamArn"
+            ]
+          },
+          "storagerouteFilesBucketName": {
+            "Fn::GetAtt": [
+              "storagerouteFiles",
+              "Outputs.BucketName"
+            ]
+          },
+          "env": "prod"
+        }
+      }
+    },
+    "storagedynamo1a552de1": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/storage/dynamo1a552de1-cloudformation-template.json",
+        "Parameters": {
+          "tableName": "dynamo1a552de1",
+          "partitionKeyName": "url",
+          "partitionKeyType": "S",
+          "env": "prod"
+        }
+      }
+    },
+    "storagerouteFiles": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "nextjsblog619f9308251149be95e1a59d89c85e5e",
+          "selectedGuestPermissions": "s3:GetObject,s3:ListBucket",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket,s3:DeleteObject",
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "s3PrivatePolicy": "Private_policy_7fae7328",
+          "s3ProtectedPolicy": "Protected_policy_7fae7328",
+          "s3PublicPolicy": "Public_policy_7fae7328",
+          "s3ReadPolicy": "read_policy_7fae7328",
+          "s3UploadsPolicy": "Uploads_policy_7fae7328",
+          "authPolicyName": "s3_amplify_7fae7328",
+          "unauthPolicyName": "s3_amplify_7fae7328",
+          "AuthenticatedAllowList": "ALLOW",
+          "GuestAllowList": "ALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+          "s3PermissionsGuestPublic": "s3:GetObject",
+          "s3PermissionsGuestUploads": "DISALLOW",
+          "env": "prod"
+        }
+      }
+    },
+    "UpdateRolesWithIDPFunction": {
+      "DependsOn": [
+        "AuthRole",
+        "UnauthRole",
+        "authnextjsbloga585e058"
+      ],
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": {
+            "Fn::Join": [
+              "\n",
+              [
+                "const response = require('cfn-response');",
+                "const { IAMClient, GetRoleCommand, UpdateAssumeRolePolicyCommand } = require('@aws-sdk/client-iam');",
+                "exports.handler = function(event, context) {",
+                "    // Don't return promise, response.send() marks context as done internally",
+                "    const ignoredPromise = handleEvent(event, context)",
+                "};",
+                "async function handleEvent(event, context) {",
+                "    try {",
+                "        let authRoleName = event.ResourceProperties.authRoleName;",
+                "        let unauthRoleName = event.ResourceProperties.unauthRoleName;",
+                "        let idpId = event.ResourceProperties.idpId;",
+                "        let authParamsJson = {",
+                "            'Version': '2012-10-17',",
+                "            'Statement': [{",
+                "                'Effect': 'Allow',",
+                "                'Principal': {'Federated': 'cognito-identity.amazonaws.com'},",
+                "                'Action': 'sts:AssumeRoleWithWebIdentity',",
+                "                'Condition': {",
+                "                    'StringEquals': {'cognito-identity.amazonaws.com:aud': idpId},",
+                "                    'ForAnyValue:StringLike': {'cognito-identity.amazonaws.com:amr': 'authenticated'}",
+                "                }",
+                "            }]",
+                "        };",
+                "        let unauthParamsJson = {",
+                "            'Version': '2012-10-17',",
+                "            'Statement': [{",
+                "                'Effect': 'Allow',",
+                "                'Principal': {'Federated': 'cognito-identity.amazonaws.com'},",
+                "                'Action': 'sts:AssumeRoleWithWebIdentity',",
+                "                'Condition': {",
+                "                    'StringEquals': {'cognito-identity.amazonaws.com:aud': idpId},",
+                "                    'ForAnyValue:StringLike': {'cognito-identity.amazonaws.com:amr': 'unauthenticated'}",
+                "                }",
+                "            }]",
+                "        };",
+                "        if (event.RequestType === 'Delete') {",
+                "            try {",
+                "                delete authParamsJson.Statement[0].Condition;",
+                "                delete unauthParamsJson.Statement[0].Condition;",
+                "                authParamsJson.Statement[0].Effect = 'Deny'",
+                "                unauthParamsJson.Statement[0].Effect = 'Deny'",
+                "                let authParams = {PolicyDocument: JSON.stringify(authParamsJson), RoleName: authRoleName};",
+                "                let unauthParams = {PolicyDocument: JSON.stringify(unauthParamsJson), RoleName: unauthRoleName};",
+                "                const iam = new IAMClient({region: event.ResourceProperties.region});",
+                "                let res = await Promise.all([",
+                "                    iam.send(new GetRoleCommand({RoleName: authParams.RoleName})),",
+                "                    iam.send(new GetRoleCommand({RoleName: unauthParams.RoleName}))",
+                "                ]);",
+                "                res = await Promise.all([",
+                "                    iam.send(new UpdateAssumeRolePolicyCommand(authParams)),",
+                "                    iam.send(new UpdateAssumeRolePolicyCommand(unauthParams))",
+                "                ]);",
+                "                response.send(event, context, response.SUCCESS, {});",
+                "            } catch (err) {",
+                "                console.log(err.stack);",
+                "                response.send(event, context, response.SUCCESS, {Error: err});",
+                "            }",
+                "        } else if (event.RequestType === 'Update' || event.RequestType === 'Create') {",
+                "            const iam = new IAMClient({region: event.ResourceProperties.region});",
+                "            let authParams = {PolicyDocument: JSON.stringify(authParamsJson), RoleName: authRoleName};",
+                "            let unauthParams = {PolicyDocument: JSON.stringify(unauthParamsJson), RoleName: unauthRoleName};",
+                "            const res = await Promise.all([",
+                "                iam.send(new UpdateAssumeRolePolicyCommand(authParams)),",
+                "                iam.send(new UpdateAssumeRolePolicyCommand(unauthParams))",
+                "            ]);",
+                "            response.send(event, context, response.SUCCESS, {});",
+                "        }",
+                "    } catch (err) {",
+                "        console.log(err.stack);",
+                "        response.send(event, context, response.FAILED, {Error: err});",
+                "    }",
+                "};"
+              ]
+            ]
+          }
+        },
+        "Handler": "index.handler",
+        "Runtime": "nodejs18.x",
+        "Timeout": 300,
+        "Role": {
+          "Fn::GetAtt": [
+            "UpdateRolesWithIDPFunctionRole",
+            "Arn"
+          ]
+        }
+      }
+    },
+    "UpdateRolesWithIDPFunctionOutputs": {
+      "Type": "Custom::LambdaCallout",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "UpdateRolesWithIDPFunction",
+            "Arn"
+          ]
+        },
+        "region": {
+          "Ref": "AWS::Region"
+        },
+        "idpId": {
+          "Fn::GetAtt": [
+            "authnextjsbloga585e058",
+            "Outputs.IdentityPoolId"
+          ]
+        },
+        "authRoleName": {
+          "Ref": "AuthRole"
+        },
+        "unauthRoleName": {
+          "Ref": "UnauthRole"
+        }
+      }
+    },
+    "UpdateRolesWithIDPFunctionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "AuthRole"
+              },
+              "-idp"
+            ]
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "UpdateRolesWithIDPFunctionPolicy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": "arn:aws:logs:*:*:*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:UpdateAssumeRolePolicy",
+                    "iam:GetRole"
+                  ],
+                  "Resource": {
+                    "Fn::GetAtt": [
+                      "AuthRole",
+                      "Arn"
+                    ]
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:UpdateAssumeRolePolicy",
+                    "iam:GetRole"
+                  ],
+                  "Resource": {
+                    "Fn::GetAtt": [
+                      "UnauthRole",
+                      "Arn"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

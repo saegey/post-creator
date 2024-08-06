@@ -1,0 +1,109 @@
+{
+  "Description": "Root Stack for AWS Amplify CLI",
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "env": {
+      "Type": "String"
+    },
+    "AuthRoleArn": {
+      "Type": "String"
+    },
+    "UnauthRoleArn": {
+      "Type": "String"
+    },
+    "authnextjsbloga585e058UserPoolId": {
+      "Type": "String",
+      "Default": "authnextjsbloga585e058UserPoolId"
+    },
+    "authnextjsbloga585e058IdentityPoolId": {
+      "Type": "String",
+      "Default": "authnextjsbloga585e058IdentityPoolId"
+    },
+    "authnextjsbloga585e058AppClientID": {
+      "Type": "String",
+      "Default": "authnextjsbloga585e058AppClientID"
+    },
+    "authnextjsbloga585e058AppClientIDWeb": {
+      "Type": "String",
+      "Default": "authnextjsbloga585e058AppClientIDWeb"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "monopadusersGroup": {
+      "Type": "AWS::Cognito::UserPoolGroup",
+      "Properties": {
+        "UserPoolId": {
+          "Ref": "authnextjsbloga585e058UserPoolId"
+        },
+        "Description": "override success",
+        "GroupName": "monopadusers",
+        "Precedence": 1,
+        "RoleArn": {
+          "Fn::GetAtt": [
+            "monopadusersGroupRole",
+            "Arn"
+          ]
+        }
+      }
+    },
+    "monopadusersGroupRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": "cognito-identity.amazonaws.com"
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "cognito-identity.amazonaws.com:aud": {
+                    "Ref": "authnextjsbloga585e058IdentityPoolId"
+                  }
+                },
+                "ForAnyValue:StringLike": {
+                  "cognito-identity.amazonaws.com:amr": "authenticated"
+                }
+              }
+            }
+          ]
+        },
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "authnextjsbloga585e058UserPoolId"
+              },
+              "-monopadusersGroupRole"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "monopadusersGroupRole": {
+      "Value": {
+        "Fn::GetAtt": [
+          "monopadusersGroupRole",
+          "Arn"
+        ]
+      }
+    }
+  }
+}
