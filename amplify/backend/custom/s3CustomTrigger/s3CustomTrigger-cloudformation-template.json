@@ -1,0 +1,82 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Resources": {
+    "CustomS3BucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "S3Bucket"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Action": "s3:GetObject",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Sub": "arn:aws:s3:::${S3Bucket}/*"
+              },
+              "Principal": "*"
+            }
+          ]
+        }
+      }
+    },
+    "CustomS3TriggerPermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": "S3Trigger71ba5706",
+        "Principal": "s3.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": ["S3Bucket", "Arn"]
+        }
+      }
+    },
+    "CustomProcessFitFilePermission": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": "processFitFile",
+        "Principal": "s3.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": ["S3Bucket", "Arn"]
+        }
+      }
+    },
+    "CustomS3Notification": {
+      "Type": "Custom::S3BucketNotification",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": ["CustomS3NotificationLambda", "Arn"]
+        },
+        "BucketName": {
+          "Ref": "S3Bucket"
+        },
+        "NotificationConfiguration": {
+          "LambdaConfigurations": [
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": ["S3Trigger71ba5706", "Arn"]
+              }
+            },
+            {
+              "Event": "s3:ObjectCreated:*",
+              "Function": {
+                "Fn::GetAtt": ["processFitFile", "Arn"]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "BucketName": {
+      "Value": {
+        "Ref": "S3Bucket"
+      }
+    }
+  }
+}

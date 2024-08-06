@@ -223,7 +223,26 @@
       "service": "Cognito-UserPool-Groups"
     }
   },
-  "custom": {},
+  "custom": {
+    "s3CustomTrigger": {
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "routeFiles"
+        },
+        {
+          "category": "function",
+          "resourceName": "S3Trigger71ba5706"
+        },
+        {
+          "category": "function",
+          "resourceName": "processFitFile"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "CloudFormation"
+    }
+  },
   "function": {
     "S3Trigger71ba5706": {
       "build": true,
