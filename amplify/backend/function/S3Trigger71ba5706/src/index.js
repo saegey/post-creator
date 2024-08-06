@@ -169,13 +169,29 @@ exports.handler = async function (event) {
     gpxData.features.map((feature) => {
         const { times, atemps, cads } = feature.properties.coordinateProperties;
         coordinates = feature.geometry.coordinates;
-        powers = feature.properties.coordinateProperties.powers;
-        hearts = feature.properties.coordinateProperties.heart;
+        powers = feature.properties.coordinateProperties.powers
+            ? feature.properties.coordinateProperties.powers
+            : null;
+        hearts = feature.properties.coordinateProperties.heart
+            ? feature.properties.coordinateProperties.heart
+            : null;
         const powerAnalysisTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("powerAnalysis");
-        powerAnalysis = (0, exports.calcBestPowers)(timeIntervals(powers.length), powers);
-        heartAnalysis = (0, exports.calcBestPowers)(timeIntervals(hearts.length), hearts);
-        cadenceAnalysis = (0, exports.calcBestPowers)(timeIntervals(cads.length), cads, true);
-        tempAnalysis = (0, exports.calcBestPowers)(timeIntervals(atemps.length), atemps, true);
+        powerAnalysis =
+            powers && powers.length
+                ? (0, exports.calcBestPowers)(timeIntervals(powers.length), powers)
+                : null;
+        heartAnalysis =
+            hearts && hearts.length
+                ? (0, exports.calcBestPowers)(timeIntervals(hearts.length), hearts)
+                : null;
+        cadenceAnalysis =
+            cads && cads.length
+                ? (0, exports.calcBestPowers)(timeIntervals(cads.length), cads, true)
+                : null;
+        tempAnalysis =
+            atemps && atemps.length
+                ? (0, exports.calcBestPowers)(timeIntervals(atemps.length), atemps, true)
+                : null;
         powerAnalysisTimer.close();
         normalizedPower = (0, gpxHelper_1.calcNormalizedPower)(powers);
         elevationGain = (0, gpxHelper_1.calcElevationGain)(coordinates);
@@ -225,13 +241,13 @@ exports.handler = async function (event) {
     }
     const updateDynamoTimer = segment === null || segment === void 0 ? void 0 : segment.addNewSubsegment("updateDynamo");
     try {
-        const res = await docClient
+        await docClient
             .update({
             TableName: postTable,
             Key: {
                 id: postId,
             },
-            UpdateExpression: "SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf",
+            UpdateExpression: `SET distance = :dis,heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf`,
             ExpressionAttributeValues: {
                 ":ta": tempAnalysis,
                 ":ca": cadenceAnalysis,

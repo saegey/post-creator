@@ -11,5 +11,5 @@
     "READ",
     "DELETE"
   ],
-  "triggerFunction": "S3Trigger71ba5706"
+  "triggerFunction": "S3Triggerb3d8ec2c"
 }
