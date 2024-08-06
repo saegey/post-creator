@@ -481,7 +481,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -598,7 +598,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -781,7 +781,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -985,7 +985,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -1153,7 +1153,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -1290,7 +1290,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -1352,7 +1352,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -1414,7 +1414,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },
@@ -1509,7 +1509,7 @@
               {
                 "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
               },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:8ededad0-d06e-49cd-8101-53a40cf17fd7\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-prod\",\"UserPostConfirmation-prod\",\"postUpdateCalc-prod\",\"publishPost-prod\",\"videoWebhook-prod\",\"processFitFile-prod\"]))\n$util.toJson({})"
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"us-east-1:bcf0ca9e-c32b-4424-b29a-49a787af50a1\"))\n$util.qr($ctx.stash.put(\"adminRoles\", [\"us-east-1_lp7hb3tgQ_Full-access/CognitoIdentityCredentials\",\"us-east-1_lp7hb3tgQ_Manage-only/CognitoIdentityCredentials\",\"S3Trigger71ba5706-dev\",\"UserPostConfirmation-dev\",\"postUpdateCalc-dev\",\"processFitFile-dev\",\"publishPost-dev\",\"videoWebhook-dev\"]))\n$util.toJson({})"
             ]
           ]
         },

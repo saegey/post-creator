@@ -4,6 +4,5 @@
   "bucketName": "nextjsblog619f9308251149be95e1a59d89c85e5e",
   "storageAccess": "authAndGuest",
   "guestAccess": ["READ"],
-  "authAccess": ["CREATE_AND_UPDATE", "READ", "DELETE"],
-  "triggerFunctions": ["S3Trigger71ba5706", "processFitFile"]
+  "authAccess": ["CREATE_AND_UPDATE", "READ", "DELETE"]
 }

@@ -26,6 +26,11 @@ export type AmplifyDependentResourcesAttributes = {
       "monopadusersGroupRole": "string"
     }
   },
+  "custom": {
+    "s3CustomTrigger": {
+      "BucketName": "string"
+    }
+  },
   "function": {
     "S3Trigger71ba5706": {
       "Arn": "string",

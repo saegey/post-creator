@@ -1,11 +1,19 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
+  "Parameters": {
+    "env": {
+      "Type": "String"
+    },
+    "bucketName": {
+      "Type": "String"
+    }
+  },
   "Resources": {
     "CustomS3BucketPolicy": {
       "Type": "AWS::S3::BucketPolicy",
       "Properties": {
         "Bucket": {
-          "Ref": "S3Bucket"
+          "Ref": "bucketName"
         },
         "PolicyDocument": {
           "Version": "2012-10-17",
@@ -14,7 +22,7 @@
               "Action": "s3:GetObject",
               "Effect": "Allow",
               "Resource": {
-                "Fn::Sub": "arn:aws:s3:::${S3Bucket}/*"
+                "Fn::Sub": "arn:aws:s3:::${bucketName}/*"
               },
               "Principal": "*"
             }
@@ -26,10 +34,13 @@
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "Action": "lambda:InvokeFunction",
-        "FunctionName": "S3Trigger71ba5706",
+        "FunctionName": "S3Trigger71ba5706-${env}",
         "Principal": "s3.amazonaws.com",
         "SourceArn": {
-          "Fn::GetAtt": ["S3Bucket", "Arn"]
+          "Fn::GetAtt": [
+            "bucketName",
+            "Arn"
+          ]
         }
       }
     },
@@ -37,10 +48,13 @@
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "Action": "lambda:InvokeFunction",
-        "FunctionName": "processFitFile",
+        "FunctionName": "processFitFile-${env}",
         "Principal": "s3.amazonaws.com",
         "SourceArn": {
-          "Fn::GetAtt": ["S3Bucket", "Arn"]
+          "Fn::GetAtt": [
+            "bucketName",
+            "Arn"
+          ]
         }
       }
     },
@@ -48,23 +62,32 @@
       "Type": "Custom::S3BucketNotification",
       "Properties": {
         "ServiceToken": {
-          "Fn::GetAtt": ["CustomS3NotificationLambda", "Arn"]
+          "Fn::GetAtt": [
+            "CustomS3NotificationLambda",
+            "Arn"
+          ]
         },
         "BucketName": {
-          "Ref": "S3Bucket"
+          "Ref": "bucketName"
         },
         "NotificationConfiguration": {
           "LambdaConfigurations": [
             {
               "Event": "s3:ObjectCreated:*",
               "Function": {
-                "Fn::GetAtt": ["S3Trigger71ba5706", "Arn"]
+                "Fn::GetAtt": [
+                  "S3Trigger71ba5706-${env}",
+                  "Arn"
+                ]
               }
             },
             {
               "Event": "s3:ObjectCreated:*",
               "Function": {
-                "Fn::GetAtt": ["processFitFile", "Arn"]
+                "Fn::GetAtt": [
+                  "processFitFile-${env}",
+                  "Arn"
+                ]
               }
             }
           ]
@@ -75,8 +98,9 @@
   "Outputs": {
     "BucketName": {
       "Value": {
-        "Ref": "S3Bucket"
+        "Ref": "bucketName"
       }
     }
-  }
+  },
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.5\",\"stackType\":\"custom-CloudFormation\",\"metadata\":{}}"
 }

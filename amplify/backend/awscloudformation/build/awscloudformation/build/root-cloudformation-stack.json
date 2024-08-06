@@ -202,7 +202,7 @@
     "APIGatewayAuthStack": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
         "Parameters": {
           "authRoleName": {
             "Ref": "AuthRoleName"
@@ -210,7 +210,7 @@
           "unauthRoleName": {
             "Ref": "UnauthRoleName"
           },
-          "env": "prod",
+          "env": "dev",
           "api12660653": {
             "Fn::GetAtt": [
               "apiapi12660653",
@@ -223,7 +223,7 @@
     "apiapi12660653": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/api/api12660653-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/api/api12660653-cloudformation-template.json",
         "Parameters": {
           "functionnextjsblog24b60079Name": {
             "Fn::GetAtt": [
@@ -429,14 +429,14 @@
               "Outputs.Arn"
             ]
           },
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "apinextjsblog": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "Parameters": {
           "AppSyncApiName": "nextjsblog",
           "DynamoDBBillingMode": "PAY_PER_REQUEST",
@@ -453,16 +453,16 @@
           "unauthRoleName": {
             "Ref": "UnauthRoleName"
           },
-          "S3DeploymentBucket": "amplify-nextjsblog-prod-201134-deployment",
+          "S3DeploymentBucket": "amplify-nextjsblog-dev-233823-deployment",
           "S3DeploymentRootKey": "amplify-appsync-files/76ef1d6f84cf094815e754e116888424d023e7df",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "authnextjsbloga585e058": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/auth/nextjsbloga585e058-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/auth/nextjsbloga585e058-cloudformation-template.json",
         "Parameters": {
           "identityPoolName": "nextjsbloga585e058_identitypool_a585e058",
           "allowUnauthenticatedIdentities": true,
@@ -519,14 +519,14 @@
             "Ref": "AWS::StackId"
           },
           "permissions": "",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "authuserPoolGroups": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
         "Parameters": {
           "AuthRoleArn": {
             "Fn::GetAtt": [
@@ -564,16 +564,26 @@
               "Outputs.IdentityPoolId"
             ]
           },
-          "env": "prod"
+          "env": "dev"
+        }
+      }
+    },
+    "customs3CustomTrigger": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/custom/s3CustomTrigger-cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "nextjsblog619f9308251149be95e1a59d89c85e5e",
+          "env": "dev"
         }
       }
     },
     "functionS3Trigger71ba5706": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/S3Trigger71ba5706-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/S3Trigger71ba5706-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/S3Trigger71ba5706-48676432775545454155-build.zip",
           "apinextjsblogGraphQLAPIIdOutput": {
             "Fn::GetAtt": [
@@ -587,16 +597,16 @@
               "Outputs.GraphQLAPIEndpointOutput"
             ]
           },
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "functionUserPostConfirmation": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/UserPostConfirmation-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/UserPostConfirmation-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/UserPostConfirmation-446177685966574e5146-build.zip",
           "apinextjsblogGraphQLAPIIdOutput": {
             "Fn::GetAtt": [
@@ -610,60 +620,60 @@
               "Outputs.GraphQLAPIEndpointOutput"
             ]
           },
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "functioncrossresults": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/crossresults-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/crossresults-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/crossresults-3645307374424f523242-build.zip",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "functionnextjsblog24b60079": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/nextjsblog24b60079-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/nextjsblog24b60079-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/nextjsblog24b60079-5648696f654e794e6259-build.zip",
-          "env": "prod"
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/nextjsblog24b60079-76304f6b74716f584174-build.zip",
+          "env": "dev"
         }
       }
     },
     "functionomniGoResults": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/omniGoResults-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/omniGoResults-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/omniGoResults-6848744e534d6f654b4d-build.zip",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "functionomnigoCategories": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/omnigoCategories-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/omnigoCategories-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/omnigoCategories-5269356f4b5573703438-build.zip",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "functionpostUpdateCalc": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/postUpdateCalc-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/postUpdateCalc-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/postUpdateCalc-72386352346a4947564a-build.zip",
           "apiapi12660653ApiName": {
             "Fn::GetAtt": [
@@ -701,199 +711,17 @@
               "Outputs.Name"
             ]
           },
-          "env": "prod"
-        }
-      }
-    },
-    "functionpublishPost": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/publishPost-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/publishPost-2f78414431735958564a-build.zip",
-          "apinextjsblogGraphQLAPIIdOutput": {
-            "Fn::GetAtt": [
-              "apinextjsblog",
-              "Outputs.GraphQLAPIIdOutput"
-            ]
-          },
-          "apinextjsblogGraphQLAPIEndpointOutput": {
-            "Fn::GetAtt": [
-              "apinextjsblog",
-              "Outputs.GraphQLAPIEndpointOutput"
-            ]
-          },
-          "storagerouteFilesBucketName": {
-            "Fn::GetAtt": [
-              "storagerouteFiles",
-              "Outputs.BucketName"
-            ]
-          },
-          "env": "prod"
-        }
-      }
-    },
-    "functionraceresult": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/raceresult-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/raceresult-756833786271744e7339-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionraceresultgetResults": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/raceresultgetResults-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/raceresultgetResults-43357a2b684c2f2f5339-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionrequestResultsProvider": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/requestResultsProvider-cloudformation-template.json",
-        "Parameters": {
-          "secretsPathAmplifyAppId": "d15noiwtuwwref",
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/requestResultsProvider-6942476f446764654670-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionrouteAccessPoint": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/routeAccessPoint-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/routeAccessPoint-5979646741653731376a-build.zip",
-          "storagerouteFilesBucketName": {
-            "Fn::GetAtt": [
-              "storagerouteFiles",
-              "Outputs.BucketName"
-            ]
-          },
-          "env": "prod"
-        }
-      }
-    },
-    "functionrunSignupResults": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/runSignupResults-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/runSignupResults-4b4e345335464a436637-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionrunsignupCategories": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/runsignupCategories-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/runsignupCategories-51393030496e53344642-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionshorturl": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/shorturl-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/shorturl-35576453534556415a4e-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionvideoUploadToAsset": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/videoUploadToAsset-cloudformation-template.json",
-        "Parameters": {
-          "secretsPathAmplifyAppId": "d15noiwtuwwref",
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/videoUploadToAsset-6d775565537170436d4f-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionvideoUploadUrl": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/videoUploadUrl-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/videoUploadUrl-6a4b6b777a486b394356-build.zip",
-          "secretsPathAmplifyAppId": "d15noiwtuwwref",
-          "env": "prod"
-        }
-      }
-    },
-    "functionvideoWebhook": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/videoWebhook-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/videoWebhook-2b7341597a4761665748-build.zip",
-          "apinextjsblogGraphQLAPIIdOutput": {
-            "Fn::GetAtt": [
-              "apinextjsblog",
-              "Outputs.GraphQLAPIIdOutput"
-            ]
-          },
-          "apinextjsblogGraphQLAPIEndpointOutput": {
-            "Fn::GetAtt": [
-              "apinextjsblog",
-              "Outputs.GraphQLAPIEndpointOutput"
-            ]
-          },
-          "env": "prod"
-        }
-      }
-    },
-    "functionwebscorer": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/webscorer-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/webscorer-486e2b324d7130563639-build.zip",
-          "env": "prod"
-        }
-      }
-    },
-    "functionwebscorerResults": {
-      "Type": "AWS::CloudFormation::Stack",
-      "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/webscorerResults-cloudformation-template.json",
-        "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/webscorerResults-48573252436764565072-build.zip",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "functionprocessFitFile": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/function/processFitFile-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/processFitFile-cloudformation-template.json",
         "Parameters": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/processFitFile-5264414b456b76535552-build.zip",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/processFitFile-632b6367742b4e745a76-build.zip",
           "apiapi12660653ApiName": {
             "Fn::GetAtt": [
               "apiapi12660653",
@@ -960,26 +788,208 @@
               "Outputs.BucketName"
             ]
           },
-          "env": "prod"
+          "env": "dev"
+        }
+      }
+    },
+    "functionpublishPost": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/publishPost-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/publishPost-2f78414431735958564a-build.zip",
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "storagerouteFilesBucketName": {
+            "Fn::GetAtt": [
+              "storagerouteFiles",
+              "Outputs.BucketName"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
+    "functionraceresult": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/raceresult-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/raceresult-756833786271744e7339-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionraceresultgetResults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/raceresultgetResults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/raceresultgetResults-43357a2b684c2f2f5339-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionrequestResultsProvider": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/requestResultsProvider-cloudformation-template.json",
+        "Parameters": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/requestResultsProvider-6942476f446764654670-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionrouteAccessPoint": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/routeAccessPoint-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/routeAccessPoint-5979646741653731376a-build.zip",
+          "storagerouteFilesBucketName": {
+            "Fn::GetAtt": [
+              "storagerouteFiles",
+              "Outputs.BucketName"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
+    "functionrunSignupResults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/runSignupResults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/runSignupResults-4b4e345335464a436637-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionrunsignupCategories": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/runsignupCategories-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/runsignupCategories-51393030496e53344642-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionshorturl": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/shorturl-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/shorturl-35576453534556415a4e-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionvideoUploadToAsset": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/videoUploadToAsset-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/videoUploadToAsset-6d775565537170436d4f-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "env": "dev"
+        }
+      }
+    },
+    "functionvideoUploadUrl": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/videoUploadUrl-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/videoUploadUrl-6a4b6b777a486b394356-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "env": "dev"
+        }
+      }
+    },
+    "functionvideoWebhook": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/videoWebhook-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/videoWebhook-6e3871756576422f4156-build.zip",
+          "apinextjsblogGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apinextjsblogGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apinextjsblog",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
+    "functionwebscorer": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/webscorer-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/webscorer-486e2b324d7130563639-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionwebscorerResults": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/function/webscorerResults-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
+          "s3Key": "amplify-builds/webscorerResults-48573252436764565072-build.zip",
+          "env": "dev"
         }
       }
     },
     "storagedynamo1a552de1": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/storage/dynamo1a552de1-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/storage/dynamo1a552de1-cloudformation-template.json",
         "Parameters": {
           "tableName": "dynamo1a552de1",
           "partitionKeyName": "url",
           "partitionKeyType": "S",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
     "storagerouteFiles": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-prod-201134-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-nextjsblog-dev-233823-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "Parameters": {
           "bucketName": "nextjsblog619f9308251149be95e1a59d89c85e5e",
           "selectedGuestPermissions": "s3:GetObject,s3:ListBucket",
@@ -1005,7 +1015,7 @@
           "s3PermissionsAuthenticatedUploads": "s3:PutObject",
           "s3PermissionsGuestPublic": "s3:GetObject",
           "s3PermissionsGuestUploads": "DISALLOW",
-          "env": "prod"
+          "env": "dev"
         }
       }
     },
