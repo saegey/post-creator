@@ -104,18 +104,6 @@
         "processFitFile": {
           "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
           "s3Key": "amplify-builds/processFitFile-5264414b456b76535552-build.zip"
-        },
-        "S3Trigger26594dc9": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/S3Trigger26594dc9-50546371785772773679-build.zip"
-        },
-        "S3Trigger6b7ecdd8": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/S3Trigger6b7ecdd8-33434e384c6473522f67-build.zip"
-        },
-        "S3Triggerb3d8ec2c": {
-          "deploymentBucketName": "amplify-nextjsblog-prod-201134-deployment",
-          "s3Key": "amplify-builds/S3Triggerb3d8ec2c-78374b61745370335734-build.zip"
         }
       },
       "storage": {

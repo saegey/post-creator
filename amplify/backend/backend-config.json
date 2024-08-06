@@ -225,16 +225,6 @@
   },
   "custom": {},
   "function": {
-    "S3Trigger26594dc9": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "S3Trigger6b7ecdd8": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "S3Trigger71ba5706": {
       "build": true,
       "dependsOn": [
@@ -247,11 +237,6 @@
           "resourceName": "nextjsblog"
         }
       ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "S3Triggerb3d8ec2c": {
-      "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -490,38 +475,6 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_S3Trigger26594dc9_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger26594dc9"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Trigger26594dc9_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger26594dc9"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Trigger6b7ecdd8_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger6b7ecdd8"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Trigger6b7ecdd8_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger6b7ecdd8"
-        }
-      ]
-    },
     "AMPLIFY_function_S3Trigger71ba5706_deploymentBucketName": {
       "usedBy": [
         {
@@ -535,22 +488,6 @@
         {
           "category": "function",
           "resourceName": "S3Trigger71ba5706"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Triggerb3d8ec2c_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Triggerb3d8ec2c"
-        }
-      ]
-    },
-    "AMPLIFY_function_S3Triggerb3d8ec2c_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "S3Triggerb3d8ec2c"
         }
       ]
     },
@@ -905,17 +842,7 @@
       "service": "DynamoDB"
     },
     "routeFiles": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ],
-          "category": "function",
-          "resourceName": "S3Triggerb3d8ec2c"
-        }
-      ],
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"
     }
