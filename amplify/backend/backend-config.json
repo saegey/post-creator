@@ -314,6 +314,27 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "processGpxFile": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "routeFiles"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "publishPost": {
       "build": true,
       "dependsOn": [
