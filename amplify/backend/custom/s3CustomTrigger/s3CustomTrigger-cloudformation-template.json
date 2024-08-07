@@ -8,7 +8,30 @@
       "Type": "String"
     }
   },
+  "Outputs": {
+    "BucketName": {
+      "Value": {
+        "Ref": "AdditionalS3Bucket1"
+      }
+    },
+    "BucketArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "AdditionalS3Bucket1",
+          "Arn"
+        ]
+      }
+    }
+  },
   "Resources": {
+    "AdditionalS3Bucket1": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": {
+          "Ref": "bucketName"
+        }
+      }
+    },
     "CustomS3BucketPolicy": {
       "Type": "AWS::S3::BucketPolicy",
       "Properties": {
@@ -30,42 +53,29 @@
         }
       }
     },
-    "CustomS3TriggerPermission": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": "S3Trigger71ba5706-${env}",
-        "Principal": "s3.amazonaws.com",
-        "SourceArn": {
-          "Fn::GetAtt": [
-            "bucketName",
-            "Arn"
-          ]
-        }
-      }
-    },
     "CustomProcessFitFilePermission": {
       "Type": "AWS::Lambda::Permission",
+      "DependsOn": "LambdaFunction",
       "Properties": {
+        "LambdaFunctionArn": {
+          "Fn::ImportValue": "processFitFile"
+        },
         "Action": "lambda:InvokeFunction",
-        "FunctionName": "processFitFile-${env}",
+        "FunctionName": {
+          "Fn::Sub": "processFitFile"
+        },
         "Principal": "s3.amazonaws.com",
         "SourceArn": {
-          "Fn::GetAtt": [
-            "bucketName",
-            "Arn"
-          ]
+          "Fn::Sub": "arn:aws:s3:::${bucketName}"
         }
       }
     },
     "CustomS3Notification": {
       "Type": "Custom::S3BucketNotification",
+      "DependsOn": "AdditionalS3Bucket1",
       "Properties": {
         "ServiceToken": {
-          "Fn::GetAtt": [
-            "CustomS3NotificationLambda",
-            "Arn"
-          ]
+          "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:CustomProcessFitFilePermission"
         },
         "BucketName": {
           "Ref": "bucketName"
@@ -75,30 +85,17 @@
             {
               "Event": "s3:ObjectCreated:*",
               "Function": {
-                "Fn::GetAtt": [
-                  "S3Trigger71ba5706-${env}",
-                  "Arn"
-                ]
+                "Fn::ImportValue": "S3TriggerArn"
               }
             },
             {
               "Event": "s3:ObjectCreated:*",
               "Function": {
-                "Fn::GetAtt": [
-                  "processFitFile-${env}",
-                  "Arn"
-                ]
+                "Fn::ImportValue": "processFitFileArn"
               }
             }
           ]
         }
-      }
-    }
-  },
-  "Outputs": {
-    "BucketName": {
-      "Value": {
-        "Ref": "bucketName"
       }
     }
   },

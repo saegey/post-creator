@@ -886,6 +886,9 @@
           "LambdaFunction",
           "Arn"
         ]
+      },
+      "Export": {
+        "Name": "processFitFileArn"
       }
     },
     "Region": {

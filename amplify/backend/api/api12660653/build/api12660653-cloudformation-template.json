@@ -1,5 +1,5 @@
 {
-  "Description": "API Gateway Resource for AWS Amplify CLI",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.5\",\"stackType\":\"api-API Gateway\",\"metadata\":{}}",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionnextjsblog24b60079Name": {
@@ -4176,7 +4176,7 @@
         "Name": "api12660653"
       }
     },
-    "api12660653Default4XXResponse7ebe23e4": {
+    "api12660653Default4XXResponsec9054a2b": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -4191,7 +4191,7 @@
         }
       }
     },
-    "api12660653Default5XXResponse7ebe23e4": {
+    "api12660653Default5XXResponsec9054a2b": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
         "ResponseParameters": {
@@ -4206,7 +4206,7 @@
         }
       }
     },
-    "DeploymentAPIGWapi12660653a6828af1": {
+    "DeploymentAPIGWapi126606539d2b8197": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "Description": "The Development stage deployment of your API.",
@@ -4224,8 +4224,8 @@
         }
       },
       "DependsOn": [
-        "api12660653Default4XXResponse7ebe23e4",
-        "api12660653Default5XXResponse7ebe23e4"
+        "api12660653Default4XXResponsec9054a2b",
+        "api12660653Default5XXResponsec9054a2b"
       ]
     }
   }

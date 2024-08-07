@@ -28,6 +28,7 @@ export type AmplifyDependentResourcesAttributes = {
   },
   "custom": {
     "s3CustomTrigger": {
+      "BucketArn": "string",
       "BucketName": "string"
     }
   },

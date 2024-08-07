@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.8.2\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.5\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "env": {
       "Type": "String"
@@ -326,6 +326,9 @@
     "Name": {
       "Value": {
         "Ref": "LambdaFunction"
+      },
+      "Export": {
+        "Name": "S3TriggerFunction"
       }
     },
     "Arn": {
@@ -334,6 +337,9 @@
           "LambdaFunction",
           "Arn"
         ]
+      },
+      "Export": {
+        "Name": "S3TriggerArn"
       }
     },
     "Region": {

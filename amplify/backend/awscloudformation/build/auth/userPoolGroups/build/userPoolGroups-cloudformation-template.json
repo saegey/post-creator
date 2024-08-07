@@ -1,5 +1,5 @@
 {
-  "Description": "Root Stack for AWS Amplify CLI",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.5\",\"stackType\":\"auth-Cognito-UserPool-Groups\",\"metadata\":{}}",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "env": {
@@ -42,9 +42,6 @@
     "monopadusersGroup": {
       "Type": "AWS::Cognito::UserPoolGroup",
       "Properties": {
-        "UserPoolId": {
-          "Ref": "authnextjsbloga585e058UserPoolId"
-        },
         "Description": "override success",
         "GroupName": "monopadusers",
         "Precedence": 1,
@@ -53,6 +50,9 @@
             "monopadusersGroupRole",
             "Arn"
           ]
+        },
+        "UserPoolId": {
+          "Ref": "authnextjsbloga585e058UserPoolId"
         }
       }
     },

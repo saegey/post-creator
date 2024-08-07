@@ -1,5 +1,5 @@
 {
-  "Description": "API Gateway Resource for AWS Amplify CLI",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.5\",\"stackType\":\"api-API Gateway\",\"metadata\":{}}",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "functionnextjsblog24b60079Name": {
@@ -4176,43 +4176,43 @@
         "Name": "api12660653"
       }
     },
-    "api12660653Default4XXResponse693fcb1c": {
+    "api12660653Default4XXResponsec9054a2b": {
       "Type": "AWS::ApiGateway::GatewayResponse",
       "Properties": {
+        "ResponseParameters": {
+          "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+          "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+          "gatewayresponse.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
+          "gatewayresponse.header.Access-Control-Expose-Headers": "'Date,X-Amzn-ErrorType'"
+        },
         "ResponseType": "DEFAULT_4XX",
         "RestApiId": {
           "Ref": "api12660653"
-        },
+        }
+      }
+    },
+    "api12660653Default5XXResponsec9054a2b": {
+      "Type": "AWS::ApiGateway::GatewayResponse",
+      "Properties": {
         "ResponseParameters": {
           "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
           "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
           "gatewayresponse.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
           "gatewayresponse.header.Access-Control-Expose-Headers": "'Date,X-Amzn-ErrorType'"
-        }
-      }
-    },
-    "api12660653Default5XXResponse693fcb1c": {
-      "Type": "AWS::ApiGateway::GatewayResponse",
-      "Properties": {
+        },
         "ResponseType": "DEFAULT_5XX",
         "RestApiId": {
           "Ref": "api12660653"
-        },
-        "ResponseParameters": {
-          "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
-          "gatewayresponse.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
-          "gatewayresponse.header.Access-Control-Allow-Methods": "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'",
-          "gatewayresponse.header.Access-Control-Expose-Headers": "'Date,X-Amzn-ErrorType'"
         }
       }
     },
-    "DeploymentAPIGWapi12660653b7c7f7d6": {
+    "DeploymentAPIGWapi126606539d2b8197": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
+        "Description": "The Development stage deployment of your API.",
         "RestApiId": {
           "Ref": "api12660653"
         },
-        "Description": "The Development stage deployment of your API.",
         "StageName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
@@ -4224,8 +4224,8 @@
         }
       },
       "DependsOn": [
-        "api12660653Default4XXResponse693fcb1c",
-        "api12660653Default5XXResponse693fcb1c"
+        "api12660653Default4XXResponsec9054a2b",
+        "api12660653Default5XXResponsec9054a2b"
       ]
     }
   }

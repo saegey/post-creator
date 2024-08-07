@@ -222,7 +222,8 @@
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
           "s3Key": "amplify-builds/requestResultsProvider-6f31532f68316567786a-build.zip"
         },
-        "processFitFile": {}
+        "processFitFile": {},
+        "dynamo1a552de1": {}
       },
       "api": {
         "nextjsblog": {},
@@ -339,7 +340,8 @@
           "secretsPathAmplifyAppId": "d15noiwtuwwref",
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
           "s3Key": "amplify-builds/requestResultsProvider-6f31532f68316567786a-build.zip"
-        }
+        },
+        "processFitFile": {}
       },
       "api": {
         "api12660653": {},
@@ -348,6 +350,60 @@
       "storage": {
         "dynamo1a552de1": {},
         "routeFiles": {}
+      }
+    }
+  },
+  "bstage": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nextjsblog-bstage-a4674-authRole",
+      "UnauthRoleArn": "arn:aws:iam::373376418880:role/amplify-nextjsblog-bstage-a4674-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::373376418880:role/amplify-nextjsblog-bstage-a4674-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-nextjsblog-bstage-a4674-deployment",
+      "UnauthRoleName": "amplify-nextjsblog-bstage-a4674-unauthRole",
+      "StackName": "amplify-nextjsblog-bstage-a4674",
+      "StackId": "arn:aws:cloudformation:us-east-1:373376418880:stack/amplify-nextjsblog-bstage-a4674/74c61aa0-5433-11ef-bf26-0affff7fc013",
+      "AmplifyAppId": "d15noiwtuwwref",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-nextjsblog-bstage-a4674-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "auth": {
+        "nextjsbloga585e058": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "S3Trigger71ba5706": {},
+        "UserPostConfirmation": {},
+        "crossresults": {},
+        "nextjsblog24b60079": {},
+        "omniGoResults": {},
+        "omnigoCategories": {},
+        "postUpdateCalc": {},
+        "processFitFile": {},
+        "publishPost": {},
+        "raceresult": {},
+        "raceresultgetResults": {},
+        "requestResultsProvider": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        },
+        "routeAccessPoint": {},
+        "runSignupResults": {},
+        "runsignupCategories": {},
+        "shorturl": {},
+        "videoUploadToAsset": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        },
+        "videoUploadUrl": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        },
+        "videoWebhook": {},
+        "webscorer": {},
+        "webscorerResults": {},
+        "nextjsblog": {},
+        "api12660653": {},
+        "dynamo1a552de1": {},
+        "routeFiles": {},
+        "nextjsbloga585e058": {}
       }
     }
   }
