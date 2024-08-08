@@ -230,11 +230,34 @@
       "dependsOn": [
         {
           "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "api12660653"
+        },
+        {
+          "attributes": [
             "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
           ],
           "category": "api",
           "resourceName": "nextjsblog"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "nextjsblog24b60079"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "processGpxFile"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -551,6 +574,22 @@
         {
           "category": "function",
           "resourceName": "postUpdateCalc"
+        }
+      ]
+    },
+    "AMPLIFY_function_processGpxFile_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "processGpxFile"
+        }
+      ]
+    },
+    "AMPLIFY_function_processGpxFile_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "processGpxFile"
         }
       ]
     },

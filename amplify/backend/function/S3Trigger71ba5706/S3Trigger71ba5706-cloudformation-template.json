@@ -26,6 +26,22 @@
     "storagerouteFilesBucketName": {
       "Type": "String",
       "Default": "storagerouteFilesBucketName"
+    },
+    "functionprocessGpxFileName": {
+      "Type": "String",
+      "Default": "functionprocessGpxFileName"
+    },
+    "apiapi12660653ApiName": {
+      "Type": "String",
+      "Default": "apiapi12660653ApiName"
+    },
+    "apiapi12660653ApiId": {
+      "Type": "String",
+      "Default": "apiapi12660653ApiId"
+    },
+    "functionnextjsblog24b60079Name": {
+      "Type": "String",
+      "Default": "functionnextjsblog24b60079Name"
     }
   },
   "Conditions": {
@@ -84,6 +100,18 @@
             },
             "STORAGE_ROUTEFILES_BUCKETNAME": {
               "Ref": "storagerouteFilesBucketName"
+            },
+            "FUNCTION_PROCESSGPXFILE_NAME": {
+              "Ref": "functionprocessGpxFileName"
+            },
+            "API_API12660653_APINAME": {
+              "Ref": "apiapi12660653ApiName"
+            },
+            "API_API12660653_APIID": {
+              "Ref": "apiapi12660653ApiId"
+            },
+            "FUNCTION_NEXTJSBLOG24B60079_NAME": {
+              "Ref": "functionnextjsblog24b60079Name"
             }
           }
         },
@@ -251,6 +279,31 @@
             {
               "Effect": "Allow",
               "Action": [
+                "apigateway:POST",
+                "apigateway:PUT"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "::/restapis/",
+                      {
+                        "Ref": "apiapi12660653ApiName"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
                 "appsync:GraphQL"
               ],
               "Resource": [
@@ -299,20 +352,52 @@
             {
               "Effect": "Allow",
               "Action": [
-                "s3:PutObject",
-                "s3:GetObject"
+                "lambda:Create*",
+                "lambda:Put*",
+                "lambda:Add*"
               ],
               "Resource": [
                 {
                   "Fn::Join": [
                     "",
                     [
-                      "arn:aws:s3:::",
+                      "arn:aws:lambda:",
                       {
-                        "Ref": "storagerouteFilesBucketName"
+                        "Ref": "AWS::Region"
                       },
-                      "/*"
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":function:",
+                      {
+                        "Ref": "functionnextjsblog24b60079Name"
+                      }
                     ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "lambda:InvokeFunction"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:lambda:${region}:${account}:function:${lambda}",
+                    {
+                      "region": {
+                        "Ref": "AWS::Region"
+                      },
+                      "account": {
+                        "Ref": "AWS::AccountId"
+                      },
+                      "lambda": {
+                        "Ref": "functionprocessGpxFileName"
+                      }
+                    }
                   ]
                 }
               ]

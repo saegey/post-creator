@@ -7,7 +7,8 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "nextjsblog": {
       "GraphQLAPIEndpointOutput": "string",
-      "GraphQLAPIIdOutput": "string"
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
     }
   },
   "auth": {
@@ -69,6 +70,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "postUpdateCalc": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "processGpxFile": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
