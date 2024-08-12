@@ -227,39 +227,6 @@
   "function": {
     "S3Trigger71ba5706": {
       "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ],
-          "category": "api",
-          "resourceName": "api12660653"
-        },
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "nextjsblog"
-        },
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "nextjsblog24b60079"
-        },
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "processGpxFile"
-        }
-      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -300,44 +267,7 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "postUpdateCalc": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "ApiName",
-            "ApiId"
-          ],
-          "category": "api",
-          "resourceName": "api12660653"
-        },
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ],
-          "category": "api",
-          "resourceName": "nextjsblog"
-        },
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "S3Trigger71ba5706"
-        },
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "nextjsblog24b60079"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "processGpxFile": {
+    "processFitFile": {
       "build": true,
       "dependsOn": [
         {
@@ -353,6 +283,46 @@
           ],
           "category": "api",
           "resourceName": "nextjsblog"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "processGpxFile": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ],
+          "category": "api",
+          "resourceName": "api12660653"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo1a552de1"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "routeFiles"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -561,19 +531,19 @@
         }
       ]
     },
-    "AMPLIFY_function_postUpdateCalc_deploymentBucketName": {
+    "AMPLIFY_function_processFitFile_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "postUpdateCalc"
+          "resourceName": "processFitFile"
         }
       ]
     },
-    "AMPLIFY_function_postUpdateCalc_s3Key": {
+    "AMPLIFY_function_processFitFile_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "postUpdateCalc"
+          "resourceName": "processFitFile"
         }
       ]
     },

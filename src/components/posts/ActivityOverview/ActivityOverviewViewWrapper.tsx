@@ -18,6 +18,7 @@ const ActivityOverviewViewWrapper = () => {
     elapsedTime,
     timeInRed,
   } = React.useContext(PostContext);
+  console.log("powerAnalysis", powerAnalysis);
 
   return (
     <Box

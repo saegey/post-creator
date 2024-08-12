@@ -104,7 +104,7 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     cadenceAnalysis,
     timeInRed,
   } = data;
-
+  console.log("powerAnalysis", powerAnalysis, normalizedPower);
   const units = useUnits();
 
   const items = [
@@ -217,6 +217,17 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     },
   ];
 
+  console.log("elapsedTime", elapsedTime);
+  console.log("stoppedTime", stoppedTime);
+  // console.log("distance", distance * 1000);
+  // console.log(elapsedTime.seconds - (stoppedTime ? stoppedTime : 0));
+  // console.log(
+  //   (
+  //     ((distance * 1000) /
+  //       (elapsedTime.seconds - (stoppedTime ? stoppedTime : 0))) *
+  //     3.6
+  //   ).toFixed(2)
+  // );
   return (
     <Box variant="boxes.figure">
       <RaceStats

@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.8.2\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.12.5\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "env": {
       "Type": "String"
@@ -122,8 +122,7 @@
           ]
         },
         "Runtime": "nodejs18.x",
-        "Timeout": 120,
-        "MemorySize": 10240,
+        "Timeout": 20,
         "Code": {
           "S3Bucket": {
             "Ref": "deploymentBucketName"
@@ -384,22 +383,7 @@
                 "lambda:InvokeFunction"
               ],
               "Resource": [
-                {
-                  "Fn::Sub": [
-                    "arn:aws:lambda:${region}:${account}:function:${lambda}",
-                    {
-                      "region": {
-                        "Ref": "AWS::Region"
-                      },
-                      "account": {
-                        "Ref": "AWS::AccountId"
-                      },
-                      "lambda": {
-                        "Ref": "functionprocessGpxFileName"
-                      }
-                    }
-                  ]
-                }
+                "*"
               ]
             }
           ]

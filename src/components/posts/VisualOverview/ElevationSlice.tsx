@@ -105,7 +105,7 @@ const ElevationSlice = ({
     selectPowers = powers?.slice(element.selectionStart, element.selectionEnd);
   }
 
-	// console.log(powers[time]);
+  // console.log(powers[time]);
   const power =
     marker && marker.i && powers && time
       ? powers[time as keyof object]
@@ -120,10 +120,12 @@ const ElevationSlice = ({
       ? hearts?.slice(element.selectionStart, element.selectionEnd)
       : undefined;
 
+  console.log(selectHearts);
+
   const heartSummary =
     marker && marker.i && hearts && time
       ? hearts[time as keyof object]
-      : selectHearts
+      : selectHearts !== undefined && selectHearts.length > 0
       ? selectHearts.reduce((a, b) => a + b) / selectHearts.length
       : undefined;
 
@@ -177,7 +179,7 @@ const ElevationSlice = ({
       <Box>
         <Text as="p">Heart Rate</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {heartSummary ? `${heartSummary.toFixed(0)}` : "-"}
+          {/* {heartSummary ? `${heartSummary ? heartSummary.toFixed(0) : "-"}` : "-"} */}
         </Text>
       </Box>
     </Grid>

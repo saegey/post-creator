@@ -1,7 +1,44 @@
 {
   "permissions": {
+    "api": {
+      "api12660653": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "nextjsblog": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
     "storage": {
+      "dynamo1a552de1": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "routeFiles": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "User:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Blog:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "PublishedPost:@model(appsync)": [
         "create",
         "read",
         "update",

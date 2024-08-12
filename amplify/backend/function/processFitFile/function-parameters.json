@@ -1,0 +1,19 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "routeFiles": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Post:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
+}

@@ -13,7 +13,7 @@ const getActivity = async (post: TimeSeriesDataType) => {
     return undefined;
   }
 
-  return coordinates
+  const coords = coordinates
     .map((_: [number, number, number], i: number) => {
       if (i % 1 === 0) {
         return {
@@ -26,6 +26,8 @@ const getActivity = async (post: TimeSeriesDataType) => {
       }
     })
     .filter(isDefined);
+  console.log(coords);
+  return coords;
 };
 
 export { getActivity };

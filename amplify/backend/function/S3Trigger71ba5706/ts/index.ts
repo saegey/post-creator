@@ -36,7 +36,7 @@ exports.handler = async function (event: TriggerEvent) {
   if (key.endsWith(".gpx")) {
     await invokeLambda(`processGpxFile-${env}`, event);
   } else if (key.endsWith(".fit")) {
-    await invokeLambda("processFitFile", event);
+    await invokeLambda(`processFitFile-${env}`, event);
   } else {
     console.log("Unsupported file type");
   }

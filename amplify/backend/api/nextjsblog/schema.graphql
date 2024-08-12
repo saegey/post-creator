@@ -63,7 +63,7 @@ type PublishedPost
   teaser: String
   currentFtp: String
   components: AWSJSON
-  # powerAnalysis: AWSJSON
+  powerAnalysis: AWSJSON
   # coordinates: AWSJSON
   # powers: AWSJSON
   # elevation: AWSJSON
@@ -139,7 +139,7 @@ type Post
   teaser: String
   currentFtp: String
   components: AWSJSON
-  # powerAnalysis: AWSJSON
+  powerAnalysis: AWSJSON
   # coordinates: AWSJSON
   # powers: AWSJSON
   # elevation: AWSJSON
@@ -171,7 +171,7 @@ type Post
   omniResults: AWSJSON
   runSignupResults: AWSJSON
 
-	raceResultsProvider: String
+  raceResultsProvider: String
   privacyStatus: String
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
