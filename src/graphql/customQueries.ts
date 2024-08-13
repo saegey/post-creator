@@ -74,6 +74,7 @@ export const getPostInitial = /* GraphQL */ `
       timeInRed
       heartAnalysis
       cadenceAnalysis
+      powerAnalysis
       tempAnalysis
       powerZones
       powerZoneBuckets
@@ -165,7 +166,7 @@ export const getPublishedPost =
     teaser
     currentFtp
     components
-    # powerAnalysis
+    powerAnalysis
     # coordinates
     # powers
     # elevation

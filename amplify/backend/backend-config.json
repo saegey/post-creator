@@ -227,16 +227,6 @@
   "function": {
     "S3Trigger71ba5706": {
       "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ],
-          "category": "api",
-          "resourceName": "nextjsblog"
-        }
-      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -277,7 +267,28 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "postUpdateCalc": {
+    "processFitFile": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "routeFiles"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "nextjsblog"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "processGpxFile": {
       "build": true,
       "dependsOn": [
         {
@@ -291,24 +302,27 @@
         {
           "attributes": [
             "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
           ],
           "category": "api",
           "resourceName": "nextjsblog"
         },
         {
           "attributes": [
-            "Name"
+            "Name",
+            "Arn",
+            "StreamArn"
           ],
-          "category": "function",
-          "resourceName": "S3Trigger71ba5706"
+          "category": "storage",
+          "resourceName": "dynamo1a552de1"
         },
         {
           "attributes": [
-            "Name"
+            "BucketName"
           ],
-          "category": "function",
-          "resourceName": "nextjsblog24b60079"
+          "category": "storage",
+          "resourceName": "routeFiles"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -517,19 +531,35 @@
         }
       ]
     },
-    "AMPLIFY_function_postUpdateCalc_deploymentBucketName": {
+    "AMPLIFY_function_processFitFile_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "postUpdateCalc"
+          "resourceName": "processFitFile"
         }
       ]
     },
-    "AMPLIFY_function_postUpdateCalc_s3Key": {
+    "AMPLIFY_function_processFitFile_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "postUpdateCalc"
+          "resourceName": "processFitFile"
+        }
+      ]
+    },
+    "AMPLIFY_function_processGpxFile_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "processGpxFile"
+        }
+      ]
+    },
+    "AMPLIFY_function_processGpxFile_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "processGpxFile"
         }
       ]
     },

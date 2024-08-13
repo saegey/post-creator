@@ -1,6 +1,5 @@
-import { Box, Flex } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
-import simplify from "simplify-js";
 
 import Map from "./CustomMap";
 import ElevationGraph from "./ElevationGraph";
@@ -14,6 +13,7 @@ interface Vizprops {
   element: VisualOverviewType;
   view: boolean;
   unitOfMeasure: string;
+  elevations: Array<ActivityItem> | undefined;
 }
 
 const VisualOverview = ({
@@ -22,55 +22,65 @@ const VisualOverview = ({
   element,
   view,
   unitOfMeasure,
+  elevations,
 }: Vizprops) => {
   const { selection, setSelection, isSaved } = React.useContext(
     VisualOverviewContext
   );
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
-  const [downsampleRate] = React.useState<number>(0);
   const [isZoomedOut, setIsZoomedOut] = React.useState(false);
   const coordinates =
     activity !== undefined ? activity.map((a) => a.c) : undefined;
+  const elevationsSynthetic =
+    elevations && elevations.length
+      ? elevations.map((e) => ({
+          ...e,
+          e: unitOfMeasure === "metric" ? (e.e ?? 0) / 3.28084 : e.e,
+          d:
+            unitOfMeasure === "imperial"
+              ? Number(((e.d ?? 0) * 0.00062137121212121).toFixed(5))
+              : Number(((e.d ?? 0) / 1000).toFixed(5)),
+          c: [],
+        }))
+      : ([] as ActivityItem[]);
 
-  const graph = () => {
-    const fixedActivity = activity.slice(0, activity.length - 1);
-    const selectionStart = isZoomedOut
-      ? 0
-      : selection
-      ? selection[0]
-      : element.selectionStart
-      ? element.selectionStart
-      : undefined;
+  const selectionStart = isZoomedOut
+    ? 0
+    : selection
+    ? selection[0]
+    : element.selectionStart
+    ? element.selectionStart
+    : undefined;
 
-    const selectionEnd = isZoomedOut
-      ? activity.length - 2
-      : selection
-      ? selection[1]
-      : element.selectionEnd
-      ? element.selectionEnd
-      : undefined;
+  const selectionEnd = isZoomedOut
+    ? activity.length - 2
+    : selection
+    ? selection[1]
+    : element.selectionEnd
+    ? element.selectionEnd
+    : undefined;
 
-    // console.log(selection);
-
-    return (
+  const graph = React.useMemo(
+    () => (
       <ElevationGraph
-        data={fixedActivity}
-        left={selectionStart ? activity[selectionStart].d : "dataMin"}
-        right={selectionEnd ? activity[selectionEnd].d : "dataMax"}
-        bottom={
-          (element && element.selectionEnd) || selection !== undefined
-            ? Math.min(
-                ...activity.slice(selectionStart, selectionEnd).map((d) => d.e)
-              )
-            : "dataMin"
-        }
-        top={
-          (element && element.selectionStart) || selection !== undefined
-            ? Math.max(
-                ...activity.slice(selectionStart, selectionEnd).map((d) => d.e)
-              ) + 100
-            : "dataMax"
-        }
+        data={elevationsSynthetic}
+        // left={selectionStart ? activity[selectionStart].d : "dataMin"}
+        left={0}
+        // right={
+        //   elevationsSynthetic
+        //     ? elevationsSynthetic[elevationsSynthetic.length - 1].d
+        //     : "dataMax"
+        // }
+        right="dataMax"
+        // bottom={
+        //   (element && element.selectionEnd) || selection !== undefined
+        //     ? Math.min(
+        //         ...activity.slice(selectionStart, selectionEnd).map((d) => d.e)
+        //       )
+        //     : "dataMin"
+        // }
+        bottom={0}
+        top="dataMax"
         setMarker={setMarker}
         selection={selection}
         setSelection={setSelection}
@@ -82,8 +92,9 @@ const VisualOverview = ({
         showSaveButton={selection ? true : false}
         setIsZoomedOut={setIsZoomedOut}
       />
-    );
-  };
+    ),
+    [selection, unitOfMeasure]
+  );
 
   return (
     <Box sx={{ borderRadius: [0, "5px", "5px"] }}>
@@ -92,7 +103,6 @@ const VisualOverview = ({
           coordinates={coordinates}
           markerCoordinates={marker}
           token={token}
-          // downsampleRate={downsampleRate}
           element={element}
         />
       ) : (
@@ -102,11 +112,11 @@ const VisualOverview = ({
       <ElevationSlice
         marker={marker}
         selection={selection}
-        downSampledData={activity}
+        data={elevationsSynthetic}
         element={element}
         unitOfMeasure={unitOfMeasure}
       />
-      {graph()}
+      {graph}
     </Box>
   );
 };

@@ -14,7 +14,7 @@ const VisualOverviewViewWrapper = ({
   element: VisualOverviewType;
   view?: boolean;
 }) => {
-  const { activity, id } = React.useContext(PostContext);
+  const { activity, id, elevations } = React.useContext(PostContext);
   const [selection, setSelection] = React.useState<
     [number, number] | undefined
   >(
@@ -86,6 +86,7 @@ const VisualOverviewViewWrapper = ({
               unitOfMeasure={units.unitOfMeasure}
               element={element}
               activity={fixedData}
+              elevations={elevations}
               token={
                 "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
               }

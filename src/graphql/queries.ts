@@ -67,6 +67,7 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -147,6 +148,7 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
     teaser
     currentFtp
     components
+    powerAnalysis
     author
     elevationTotal
     normalizedPower
@@ -189,6 +191,7 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
       teaser
       currentFtp
       components
+      powerAnalysis
       blog {
         id
         name
@@ -274,6 +277,7 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       teaser
       currentFtp
       components
+      powerAnalysis
       author
       elevationTotal
       normalizedPower
@@ -316,6 +320,7 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -391,6 +396,7 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
       teaser
       currentFtp
       components
+      powerAnalysis
       author
       elevationTotal
       normalizedPower
@@ -433,6 +439,7 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -508,6 +515,7 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
       teaser
       currentFtp
       components
+      powerAnalysis
       author
       elevationTotal
       normalizedPower
@@ -550,6 +558,7 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -611,6 +620,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     teaser
     currentFtp
     components
+    powerAnalysis
     blog {
       id
       name
@@ -642,6 +652,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -740,6 +751,7 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       teaser
       currentFtp
       components
+      powerAnalysis
       blog {
         id
         name
@@ -831,6 +843,7 @@ export const listPostsByCreatedAt = /* GraphQL */ `query ListPostsByCreatedAt(
       teaser
       currentFtp
       components
+      powerAnalysis
       blog {
         id
         name

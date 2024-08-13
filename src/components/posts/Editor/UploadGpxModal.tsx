@@ -163,7 +163,11 @@ const UploadGpxModal = () => {
 
     return PubSub.subscribe(`post-${id}`).subscribe({
       next: (data: any) => {
+        console.log("data:", data.value);
         const phase = data.value.phase as string;
+        if (phase === "hellofromgo") {
+          setProcessingGpxStatus("Processing Fit file with Golang.");
+        }
         if (phase === "file-downloaded") {
           setProcessingGpxStatus("File being downloaded for processing.");
         }

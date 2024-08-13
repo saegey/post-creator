@@ -32,63 +32,62 @@ const ActivityOverviewWrapper = ({
   } = React.useContext(PostContext);
   const { isFtpUpdating } = React.useContext(EditorContext);
 
-  const hoverAction = React.useMemo(() => {
-    return (
-      <HoverAction element={element}>
-        <Box variant="boxes.componentCard" contentEditable={false}>
-          <ActivityOverview
-            data={{
-              elevationGain: elevationTotal ? elevationTotal : 0,
-              distance: distance ? distance : 0,
-              normalizedPower: normalizedPower ? normalizedPower : 0,
-              heartAnalysis: heartAnalysis ? heartAnalysis : undefined,
-              powerAnalysis: powerAnalysis ? powerAnalysis : undefined,
-              cadenceAnalysis: cadenceAnalysis ? cadenceAnalysis : undefined,
-              tempAnalysis: tempAnalysis ? tempAnalysis : undefined,
-              stoppedTime: stoppedTime ? stoppedTime : 0,
-              elapsedTime: { seconds: elapsedTime ? elapsedTime : 0 },
-              timeInRed: isFtpUpdating
-                ? "...."
-                : timeInRed
-                ? timeInRed
-                : currentFtp !== undefined
-                ? timeInRed
-                : 0,
-            }}
-            selectedFields={[
-              "Normalized Power",
-              "Avg Heart Rate",
-              "Distance",
-              "Elevation Gain",
-              "Avg Temperature",
-              "Avg Speed",
-              "Elapsed Time",
-              "Stopped Time",
-              "Time in Red",
-              "Avg Cadence",
-              "Avg Power",
-            ]}
-          />
-          <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-            <OptionsMenu>
-              <Box
-                onClick={() => {
-                  Transforms.removeNodes(editor, { at: path });
-                  const selection = window.getSelection();
-                  selection && selection.removeAllRanges();
-                }}
-                variant="boxes.dropdownMenuItem"
-              >
-                Remove
-              </Box>
-            </OptionsMenu>
-          </Box>
+  return (
+    <HoverAction element={element}>
+      <Box variant="boxes.componentCard" contentEditable={false}>
+        <ActivityOverview
+          data={{
+            elevationGain: elevationTotal ? elevationTotal : 0,
+            distance: distance ? distance : 0,
+            normalizedPower: normalizedPower ? normalizedPower : 0,
+            heartAnalysis: heartAnalysis ? heartAnalysis : undefined,
+            powerAnalysis: powerAnalysis ? powerAnalysis : undefined,
+            cadenceAnalysis: cadenceAnalysis ? cadenceAnalysis : undefined,
+            tempAnalysis: tempAnalysis ? tempAnalysis : undefined,
+            stoppedTime: stoppedTime ? stoppedTime : 0,
+            elapsedTime: { seconds: elapsedTime ? elapsedTime : 0 },
+            timeInRed: isFtpUpdating
+              ? "...."
+              : timeInRed
+              ? timeInRed
+              : currentFtp !== undefined
+              ? timeInRed
+              : 0,
+          }}
+          selectedFields={[
+            "Normalized Power",
+            "Avg Heart Rate",
+            "Distance",
+            "Elevation Gain",
+            "Avg Temperature",
+            "Avg Speed",
+            "Elapsed Time",
+            "Stopped Time",
+            // "Time in Red",
+            "Avg Cadence",
+            "Avg Power",
+          ]}
+        />
+        <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
+          <OptionsMenu>
+            <Box
+              onClick={() => {
+                Transforms.removeNodes(editor, { at: path });
+                const selection = window.getSelection();
+                selection && selection.removeAllRanges();
+              }}
+              variant="boxes.dropdownMenuItem"
+            >
+              Remove
+            </Box>
+          </OptionsMenu>
         </Box>
-      </HoverAction>
-    );
-  }, [element]);
+      </Box>
+    </HoverAction>
+  );
+  // }, [element]);
 
-  return hoverAction;
+  // return hoverAction;
 };
 
 export default ActivityOverviewWrapper;

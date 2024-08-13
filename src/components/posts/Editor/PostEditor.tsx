@@ -2,7 +2,7 @@ import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { API, graphqlOperation, PubSub } from "aws-amplify";
 import { GraphQLSubscription } from "@aws-amplify/api";
 import React from "react";
-import { createEditor, Path, Range, Transforms } from "slate";
+import { createEditor, Transforms } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
 import { ZenObservable } from "zen-observable-ts";
@@ -10,14 +10,10 @@ import { ZenObservable } from "zen-observable-ts";
 import renderElement from "./RenderElement";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
-import SkeletonPost from "./SkeletonPost";
-import { getActivity } from "../../../actions/PostGet";
-
 import * as subscriptions from "../../../graphql/subscriptions";
 import UploadGpxModal from "./UploadGpxModal";
 import { OnUpdatePostSubscription } from "../../../API";
 import ShareModal from "./ShareModal";
-import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import AddImage from "../Image/AddImage";
 import withLinks from "../../plugins/withLinks";
 import withLayout from "../../plugins/withLayout";
@@ -34,11 +30,8 @@ import {
   getEndpoint,
 } from "../../../actions/PubSub";
 import Menu from "../../Menu";
-import { StravaModal } from "./AddStravaLink";
 import { AddVideoModal } from "./AddVideo";
-import { RWGPSModal } from "./AddRWGPS";
 import Leaf from "./Leaf";
-import SlateDecorate from "./SlateDecorate";
 import { getActivityData } from "../../../../lib/editorApi";
 import slateApi from "../../../../lib/slateApi";
 import FloatingMenu from "./FloatingMenu";
@@ -200,16 +193,19 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, []);
 
   const getData = async () => {
+    console.log(timeSeriesFile);
     const payload = await getActivityData(timeSeriesFile);
     if (!payload) {
       console.log("no data found for post");
       return;
     }
 
-    setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
+    // setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
     setPowers && setPowers(payload.powers);
     setHearts && setHearts(payload.hearts);
-    setActivity && setActivity(payload.activity);
+    setElevations && setElevations(payload.elevation);
+    setActivity &&
+      setActivity(payload.activity?.map((item) => ({ ...item })) ?? []);
   };
 
   React.useEffect(() => {
@@ -233,7 +229,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     postLocation,
     heroImage,
     setActivity,
-    setPowerAnalysis,
     setComponents,
     setTimeInRed,
     setPowerZones,
@@ -241,6 +236,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setHeroImage,
     setPowers,
     setHearts,
+    setElevations,
   } = React.useContext(PostContext);
 
   React.useEffect(() => {
@@ -277,7 +273,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       next: async (data: any) => {
         console.log(data);
         if (data.value.type === "video.asset.ready") {
-          console.log("asseet reead");
+          // console.log("asseet reead");
           Transforms.setNodes<CustomElement>(
             editor,
             {

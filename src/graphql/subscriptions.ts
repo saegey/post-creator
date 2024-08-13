@@ -94,6 +94,7 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog(
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -162,6 +163,7 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog(
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -230,6 +232,7 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog(
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -293,6 +296,7 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
     teaser
     currentFtp
     components
+    powerAnalysis
     author
     elevationTotal
     normalizedPower
@@ -335,6 +339,7 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
       teaser
       currentFtp
       components
+      powerAnalysis
       blog {
         id
         name
@@ -418,6 +423,7 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
     teaser
     currentFtp
     components
+    powerAnalysis
     author
     elevationTotal
     normalizedPower
@@ -460,6 +466,7 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
       teaser
       currentFtp
       components
+      powerAnalysis
       blog {
         id
         name
@@ -543,6 +550,7 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
     teaser
     currentFtp
     components
+    powerAnalysis
     author
     elevationTotal
     normalizedPower
@@ -585,6 +593,7 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
       teaser
       currentFtp
       components
+      powerAnalysis
       blog {
         id
         name
@@ -669,6 +678,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     teaser
     currentFtp
     components
+    powerAnalysis
     blog {
       id
       name
@@ -700,6 +710,7 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -799,6 +810,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     teaser
     currentFtp
     components
+    powerAnalysis
     blog {
       id
       name
@@ -830,6 +842,7 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance
@@ -929,6 +942,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     teaser
     currentFtp
     components
+    powerAnalysis
     blog {
       id
       name
@@ -960,6 +974,7 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
         teaser
         currentFtp
         components
+        powerAnalysis
         elevationTotal
         normalizedPower
         distance

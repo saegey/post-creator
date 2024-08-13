@@ -25,7 +25,7 @@ const getTimeInRed = (timeInRed: number | string | undefined | null) => {
   return "---";
 };
 
-const RaceStats = ({ items }: RaceStatsProps) => {
+const ActivityOveriew = ({ items }: RaceStatsProps) => {
   return (
     <Grid
       gap={2}
@@ -104,7 +104,6 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     cadenceAnalysis,
     timeInRed,
   } = data;
-
   const units = useUnits();
 
   const items = [
@@ -219,7 +218,7 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
 
   return (
     <Box variant="boxes.figure">
-      <RaceStats
+      <ActivityOveriew
         items={items.filter((activity) =>
           selectedFields.includes(activity.title)
         )}

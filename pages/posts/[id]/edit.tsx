@@ -115,6 +115,10 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
           post.heartAnalysis && post.heartAnalysis !== null
             ? JSON.parse(post.heartAnalysis)
             : null,
+        powerAnalysis:
+          post.powerAnalysis && post.powerAnalysis !== null
+            ? JSON.parse(post.powerAnalysis)
+            : null,
         cadenceAnalysis: post.cadenceAnalysis
           ? JSON.parse(post.cadenceAnalysis)
           : null,
@@ -144,6 +148,7 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
 };
 
 const Post = ({ user, post, errorCode }: PostType) => {
+  console.log(post);
   if (errorCode) {
     return <></>;
   }
@@ -184,8 +189,7 @@ const Post = ({ user, post, errorCode }: PostType) => {
   const [images, setImages] = React.useState(post.images);
   const [currentFtp, setCurrentFtp] = React.useState(post.currentFtp);
   const [resultsUrl, setResultsUrl] = React.useState(post.resultsUrl);
-  const [powerAnalysis, setPowerAnalysis] =
-    React.useState<Array<Record<number | string, number>>>();
+  const [powerAnalysis, setPowerAnalysis] = React.useState(post.powerAnalysis);
   const [heartAnalysis, setHeartAnalysis] = React.useState(post.heartAnalysis);
   const [cadenceAnalysis, setCadenceAnalysis] = React.useState(
     post.cadenceAnalysis
@@ -228,6 +232,9 @@ const Post = ({ user, post, errorCode }: PostType) => {
   const [createdAt, setCreatedAt] = React.useState(post.createdAt);
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
+  const [elevations, setElevations] = React.useState<
+    Array<ActivityItem> | undefined
+  >();
   const [__typename] = React.useState(post.__typename);
 
   React.useEffect(() => {
@@ -353,6 +360,8 @@ const Post = ({ user, post, errorCode }: PostType) => {
         hearts,
         setHearts,
         __typename,
+        elevations,
+        setElevations,
       }}
     >
       <>

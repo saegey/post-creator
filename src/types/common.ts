@@ -314,11 +314,13 @@ declare module "slate" {
 
 export interface ActivityItem {
   c: Array<number>;
-  d: number;
-  e: number;
-  g: number;
+  d?: number;
+  e?: number;
+  g?: number;
   t: number;
   i?: number;
+  p?: number;
+  h?: number;
 }
 
 export interface PowerZoneType {
@@ -330,12 +332,13 @@ export interface PowerZoneType {
 
 export interface TimeSeriesDataType {
   coordinates: Array<[number, number, number]> | undefined;
-  elevation: number[] | undefined;
+  elevation: Array<ActivityItem> | undefined;
   distances: number[] | undefined;
   elevationGrades: number[] | undefined;
   powerAnalysis: Array<Record<number | string, number>> | undefined;
   powers: number[] | undefined;
   hearts: number[] | undefined;
+  times: number[] | undefined;
 }
 
 export interface PostViewType {
@@ -524,6 +527,7 @@ export interface PostContextType extends Post {
   activity: Array<ActivityItem> | undefined;
   powers: Array<number> | undefined;
   hearts: Array<number> | undefined;
+  elevations: Array<ActivityItem> | undefined;
   setActivity?: React.Dispatch<
     React.SetStateAction<ActivityItem[] | undefined>
   >;
@@ -615,6 +619,9 @@ export interface PostContextType extends Post {
   // >;
   setPowers: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
   setHearts: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
+  setElevations: React.Dispatch<
+    React.SetStateAction<Array<ActivityItem> | undefined>
+  >;
 }
 
 export interface RunSignupResultsType {

@@ -17,22 +17,9 @@ import { Transforms } from "slate";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import { useViewport } from "../../ViewportProvider";
-import simplify from "simplify-js";
-
-// type ActivityEvent = {
-//   c: Array<number> | Array<null>;
-//   g: number;
-//   d: number;
-//   t: number | null;
-//   e: number | null;
-// };
-
-// export interface GradeGradientActivty extends ActivityEvent {
-//   color: string;
-// }
 
 export interface ElevationGraphProps {
-  data: Array<ActivityItem>;
+  data: Array<ActivityItem> | undefined;
 
   setMarker: React.Dispatch<React.SetStateAction<ActivityItem | undefined>>;
   element: VisualOverviewType;
@@ -78,37 +65,6 @@ const ElevationGraph = ({
   }
 
   const { width } = useViewport();
-
-  // console.log(top, bottom);
-
-  // const getAxisYDomain = (
-  //   from: string | undefined,
-  //   to: string | undefined,
-  //   ref: keyof ActivityItem,
-  //   offset: number
-  // ): (number | string)[] => {
-  //   if (from && to) {
-  //     const lower = simple.findIndex((s) => s.x === Number(from));
-  //     const upper = simple.findIndex((s) => s.x === Number(to));
-  //     const refData = simple.slice(lower, upper);
-	// 		const test = refData[0].y
-
-  //     let [bottom, top] = [refData[0][ref], refData[0][ref]];
-
-  //     refData.forEach((d) => {
-  //       if (Number(d[ref]) > top) {
-  //         top = Number(d[ref]);
-  //       }
-  //       if (Number(d[ref]) < bottom) {
-  //         bottom = Number(d[ref]);
-  //       }
-  //     });
-  //     return [bottom, top + offset];
-  //   }
-
-  //   return [bottom, top];
-  // };
-
   const editor = element && !view && useSlateStatic();
   const path =
     element && !view && editor
@@ -117,14 +73,11 @@ const ElevationGraph = ({
   const themeContext = useThemeUI();
   const units = useUnits();
   const hideAxes = width > 500 ? false : true;
-
   const initialState = {
     refAreaLeft: "",
     refAreaRight: "",
   };
-
   const [zoomGraph, setZoomGraph] = React.useState(initialState);
-  // console.log(zoomGraph);
 
   const saveState = () => {
     if (editor && selection && path) {
@@ -234,13 +187,10 @@ const ElevationGraph = ({
 
   const { refAreaLeft, refAreaRight } = zoomGraph;
 
+  console.log(data);
   const points = data.map(
     (d, i) => new Object({ x: d.d, y: d.e, i: i })
   ) as Array<{ x: number; y: number; i: number }>;
-  // console.log(data.map((d) => new Object({ x: d.c[0], y: d.c[1] })));
-  // console.log(points1);
-  const simple = simplify(points, 0.01, false);
-  // console.log(simple);
 
   return (
     <Box
@@ -304,7 +254,7 @@ const ElevationGraph = ({
         <AreaChart
           height={300}
           // key={data[0].e}
-          data={simple}
+          data={points}
           onMouseDown={(e) => {
             if (selection) {
               return;
