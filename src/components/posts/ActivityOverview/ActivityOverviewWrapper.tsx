@@ -30,11 +30,8 @@ const ActivityOverviewWrapper = ({
     tempAnalysis,
     currentFtp,
   } = React.useContext(PostContext);
-  console.log("powerAnalysis", powerAnalysis);
   const { isFtpUpdating } = React.useContext(EditorContext);
-  console.log(powerAnalysis);
 
-  // const hoverAction = React.useMemo(() => {
   return (
     <HoverAction element={element}>
       <Box variant="boxes.componentCard" contentEditable={false}>
@@ -66,7 +63,7 @@ const ActivityOverviewWrapper = ({
             "Avg Speed",
             "Elapsed Time",
             "Stopped Time",
-            "Time in Red",
+            // "Time in Red",
             "Avg Cadence",
             "Avg Power",
           ]}

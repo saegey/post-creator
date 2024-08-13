@@ -16,7 +16,7 @@ type UploadParams struct {
 	PostID string
 }
 
-func UploadToS3(coordinates [][]float32, elevation []float32, powers []uint16, distances []float32, elevationGrades []float64, powerAnalysis map[string]uint16, hearts []uint8, bucket string, identityID string, s3key string) error {
+func UploadToS3(coordinates [][]float64, elevation []interface{}, bucket string, identityID string, s3key string) error {
 	fmt.Println("Uploading object to S3")
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1"),
@@ -32,13 +32,14 @@ func UploadToS3(coordinates [][]float32, elevation []float32, powers []uint16, d
 	fmt.Println("S3 key: ", s3key)
 
 	data := map[string]interface{}{
-		"coordinates":     coordinates,
-		"elevation":       elevation,
-		"powers":          powers,
-		"distances":       distances,
-		"elevationGrades": elevationGrades,
-		"powerAnalysis":   powerAnalysis,
-		"hearts":          hearts,
+		"coordinates": coordinates,
+		"elevation":   elevation,
+		// "powers":          powers,
+		// "distances":       distances,
+		// "elevationGrades": elevationGrades,
+		// "times":           times,
+		// "powerAnalysis":   powerAnalysis,
+		// "hearts": hearts,
 	}
 
 	jsonData, err := json.Marshal(data)
@@ -55,9 +56,10 @@ func UploadToS3(coordinates [][]float32, elevation []float32, powers []uint16, d
 		Bucket: aws.String(bucket),
 		Key:    aws.String(s3filename),
 	})
+	fmt.Println("Response: ", res)
 
 	if err != nil {
-		fmt.Println("failed to upload object to S3: %v", err)
+		fmt.Printf("failed to upload object to S3: %v\n", err)
 	} else {
 		fmt.Println("Response: ", res)
 		fmt.Println("Object uploaded successfully")

@@ -193,6 +193,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, []);
 
   const getData = async () => {
+    console.log(timeSeriesFile);
     const payload = await getActivityData(timeSeriesFile);
     if (!payload) {
       console.log("no data found for post");
@@ -202,7 +203,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     // setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
     setPowers && setPowers(payload.powers);
     setHearts && setHearts(payload.hearts);
-    setActivity && setActivity(payload.activity);
+    setElevations && setElevations(payload.elevation);
+    setActivity &&
+      setActivity(
+        payload.activity?.map((item) => ({ d: 0, e: 0, g: 0, ...item })) ?? []
+      );
   };
 
   React.useEffect(() => {
@@ -226,7 +231,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     postLocation,
     heroImage,
     setActivity,
-    // setPowerAnalysis,
     setComponents,
     setTimeInRed,
     setPowerZones,
@@ -234,6 +238,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setHeroImage,
     setPowers,
     setHearts,
+    setElevations,
   } = React.useContext(PostContext);
 
   React.useEffect(() => {
@@ -270,7 +275,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       next: async (data: any) => {
         console.log(data);
         if (data.value.type === "video.asset.ready") {
-          console.log("asseet reead");
+          // console.log("asseet reead");
           Transforms.setNodes<CustomElement>(
             editor,
             {

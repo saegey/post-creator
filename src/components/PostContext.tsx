@@ -44,6 +44,7 @@ const PostContext = React.createContext<PostContextType>({
   createdAt: "",
   powers: undefined,
   hearts: undefined,
+  elevations: undefined,
 
   setActivity: () => {},
   setTitle: () => {},
@@ -86,6 +87,7 @@ const PostContext = React.createContext<PostContextType>({
   // setSelection: () => {},
   setPowers: () => {},
   setHearts: () => {},
+  setElevations: () => {},
 });
 
 export { PostContext };

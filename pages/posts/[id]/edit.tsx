@@ -232,6 +232,9 @@ const Post = ({ user, post, errorCode }: PostType) => {
   const [createdAt, setCreatedAt] = React.useState(post.createdAt);
   const [powers, setPowers] = React.useState<Array<number> | undefined>();
   const [hearts, setHearts] = React.useState<Array<number> | undefined>();
+  const [elevations, setElevations] = React.useState<
+    Array<ActivityItem> | undefined
+  >();
   const [__typename] = React.useState(post.__typename);
 
   React.useEffect(() => {
@@ -357,6 +360,8 @@ const Post = ({ user, post, errorCode }: PostType) => {
         hearts,
         setHearts,
         __typename,
+        elevations,
+        setElevations,
       }}
     >
       <>

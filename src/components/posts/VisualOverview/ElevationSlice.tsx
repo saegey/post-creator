@@ -17,85 +17,73 @@ export const gradeToColor = (grade: number): string => {
 const ElevationSlice = ({
   marker,
   selection,
-  downSampledData,
+  data,
   element,
   unitOfMeasure,
 }: {
   marker: ActivityItem | undefined;
   selection: [number, number] | undefined;
-  downSampledData: any;
+  data: Array<ActivityItem> | undefined;
   element: VisualOverviewType;
   unitOfMeasure: string;
 }) => {
+  if (!data) return null;
+  // console.log(data, marker);
   const { powers, hearts } = React.useContext(PostContext);
 
   // const units = useUnits();
   const grade =
     marker && marker.i
-      ? downSampledData[marker.i].g
+      ? data[marker.i].g
       : selection
       ? (
-          (downSampledData[selection[1]].e - downSampledData[selection[0]].e) /
+          (data[selection[1]].e - data[selection[0]].e) /
           (unitOfMeasure === "metric"
-            ? (downSampledData[selection[1]].d -
-                downSampledData[selection[0]].d) *
-              1000
-            : (downSampledData[selection[1]].d -
-                downSampledData[selection[0]].d) *
-              5280)
+            ? (data[selection[1]].d - data[selection[0]].d) * 1000
+            : (data[selection[1]].d - data[selection[0]].d) * 5280)
         ).toFixed(4)
       : element && element.selectionEnd && element.selectionStart
       ? (
-          (downSampledData[element.selectionEnd].e -
-            downSampledData[element.selectionStart].e) /
+          (data[element.selectionEnd].e - data[element.selectionStart].e) /
           (unitOfMeasure === "metric"
-            ? (downSampledData[element.selectionEnd].d -
-                downSampledData[element.selectionStart].d) *
+            ? (data[element.selectionEnd].d - data[element.selectionStart].d) *
               1000
-            : (downSampledData[element.selectionEnd].d -
-                downSampledData[element.selectionStart].d) *
+            : (data[element.selectionEnd].d - data[element.selectionStart].d) *
               5280)
         ).toFixed(4)
       : "";
 
   const distance =
     marker && marker.i
-      ? downSampledData[marker.i].d.toFixed(2)
+      ? data[marker.i].d.toFixed(2)
       : selection
-      ? (
-          downSampledData[selection[1]].d - downSampledData[selection[0]].d
-        ).toFixed(2)
+      ? (data[selection[1]].d - data[selection[0]].d).toFixed(2)
       : element && element.selectionEnd && element.selectionStart
-      ? (
-          downSampledData[element.selectionEnd].d -
-          downSampledData[element.selectionStart].d
-        ).toFixed(2)
+      ? (data[element.selectionEnd].d - data[element.selectionStart].d).toFixed(
+          2
+        )
       : "";
 
   const elevation =
     marker && marker.i
-      ? downSampledData[marker.i].e.toFixed(0)
+      ? data[marker.i].e.toFixed(0)
       : selection
-      ? (
-          downSampledData[selection[1]].e - downSampledData[selection[0]].e
-        ).toFixed(2)
+      ? (data[selection[1]].e - data[selection[0]].e).toFixed(2)
       : element && element.selectionEnd && element.selectionStart
-      ? (
-          downSampledData[element.selectionEnd].e -
-          downSampledData[element.selectionStart].e
-        ).toFixed(2)
+      ? (data[element.selectionEnd].e - data[element.selectionStart].e).toFixed(
+          2
+        )
       : "";
 
   const time =
     marker && marker.i
-      ? downSampledData[marker.i].t.toFixed(0)
+      ? data[marker.i].t.toFixed(0)
       : selection
-      ? downSampledData[selection[1]].t - downSampledData[selection[0]].t
+      ? data[selection[1]].t - data[selection[0]].t
       : element && element.selectionEnd && element.selectionStart
-      ? (
-          downSampledData[element.selectionEnd].t -
-          downSampledData[element.selectionStart].t
-        ).toFixed(2)
+      ? (data[element.selectionEnd].t - data[element.selectionStart].t).toFixed(
+          2
+        )
       : "";
 
   let selectPowers;
@@ -105,10 +93,10 @@ const ElevationSlice = ({
     selectPowers = powers?.slice(element.selectionStart, element.selectionEnd);
   }
 
-  // console.log(powers[time]);
+  // console.log(marker && marker.i);
   const power =
-    marker && marker.i && powers && time
-      ? powers[time as keyof object]
+    marker && marker.i
+      ? data[marker.i].p
       : selectPowers
       ? selectPowers.reduce((a, b) => a + b) / selectPowers.length
       : undefined;
@@ -120,11 +108,9 @@ const ElevationSlice = ({
       ? hearts?.slice(element.selectionStart, element.selectionEnd)
       : undefined;
 
-  console.log(selectHearts);
-
   const heartSummary =
-    marker && marker.i && hearts && time
-      ? hearts[time as keyof object]
+    marker && marker.i
+      ? data[marker.i].h
       : selectHearts !== undefined && selectHearts.length > 0
       ? selectHearts.reduce((a, b) => a + b) / selectHearts.length
       : undefined;
@@ -179,7 +165,9 @@ const ElevationSlice = ({
       <Box>
         <Text as="p">Heart Rate</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {/* {heartSummary ? `${heartSummary ? heartSummary.toFixed(0) : "-"}` : "-"} */}
+          {heartSummary
+            ? `${heartSummary ? heartSummary.toFixed(0) : "-"}`
+            : "-"}
         </Text>
       </Box>
     </Grid>

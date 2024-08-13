@@ -24,7 +24,8 @@ const VisualOverviewWrapper = ({
   view: boolean;
   unitOfMeasure: string;
 }) => {
-  const { activity } = React.useContext(PostContext);
+  const { activity, elevations } = React.useContext(PostContext);
+  // console.log(elevations);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 
@@ -45,8 +46,6 @@ const VisualOverviewWrapper = ({
       return <></>;
     }
     console.log("visual overview render");
-
-
 
     const formatted = activity.map((a, i) => {
       return {
@@ -72,6 +71,7 @@ const VisualOverviewWrapper = ({
         >
           <VisualOverview
             activity={formatted}
+            elevations={elevations}
             token={
               "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
             }

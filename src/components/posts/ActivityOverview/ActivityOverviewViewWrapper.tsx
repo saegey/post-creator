@@ -58,7 +58,7 @@ const ActivityOverviewViewWrapper = () => {
           "Avg Speed",
           "Elapsed Time",
           "Stopped Time",
-          "Time in Red",
+          // "Time in Red",
           "Avg Cadence",
           "Avg Power",
         ]}

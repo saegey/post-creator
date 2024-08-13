@@ -94,7 +94,7 @@ func isFinite(f float64) bool {
 	return !math.IsInf(f, 0) && !math.IsNaN(f)
 }
 
-func CalcElevationGrades(coordinates [][]float32, distances []float32, elevations []float32) []float64 {
+func CalcElevationGrades(coordinates [][]float64, distances []float32, elevations []float64) []float64 {
 	grades := make([]float64, len(coordinates))
 	for index := range coordinates {
 		grade := 0.0

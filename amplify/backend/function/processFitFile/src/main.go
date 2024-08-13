@@ -7,8 +7,11 @@ import (
 	"lambda/dynamo"
 	"lambda/fitHelper"
 	"lambda/myevent"
+	powercalc "lambda/powerCalc"
 	"lambda/publish"
+	"lambda/simplify"
 	"log"
+	"math"
 	"net/url"
 	"strconv"
 	"time"
@@ -21,17 +24,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/tormoder/fit"
 )
-
-func timeIntervals() []int {
-	return []int{
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 25, 30, 35, 40, 45, 50,
-		55, 60, 70, 80, 90, 100, 110, 120, 180, 240, 300, 360, 420, 480, 540, 600,
-		660, 720, 780, 840, 900, 960, 1020, 1080, 1140, 1200, 1500, 1800, 2100, 2400,
-		2700, 3000, 3300, 3600, 4200, 4800, 5400, 6000, 6600, 7200, 7800, 8400, 9000,
-		9600, 10200, 10800, 12000, 13200, 14400, 15600, 16800, 18000, 19200, 20400,
-		21600,
-	}
-}
 
 func convertToUint16Slice(slice []uint8) []uint16 {
 	result := make([]uint16, len(slice))
@@ -82,7 +74,6 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 			fmt.Println("Error unescaping string:", err)
 		}
 		bucket = record.S3.Bucket.Name
-		// key := record.S3.Object.Key
 		log.Printf("Processing S3 object from bucket %s with key %s", bucket, sanitizedKey)
 
 		// Get the metadata of the S3 object
@@ -136,14 +127,15 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 }
 
 func processActivityRecords(activity *fit.ActivityFile, postId *string, bucket string, identityId string) {
+	// Variables for calculations and data storage
 	var totalPower int
 	var count int
 	var powers []uint16
 	var cads []uint8
 	var temps []int8
-	var coordinates [][]float32
+	var coordinates [][]float64
 	var distances []float32
-	var elevations []float32
+	var elevations []float64
 	var hearts []uint8
 	var isHeartRateValid bool
 
@@ -152,6 +144,7 @@ func processActivityRecords(activity *fit.ActivityFile, postId *string, bucket s
 	first := true
 	var stoppedTime time.Duration
 
+	// Loop through each record in the activity file
 	for i, record := range activity.Records {
 		power := record.Power
 		if i > 0 {
@@ -162,38 +155,48 @@ func processActivityRecords(activity *fit.ActivityFile, postId *string, bucket s
 			if currRecord.Distance == prevRecord.Distance {
 				stoppedTime += currRecord.Timestamp.Sub(prevRecord.Timestamp)
 			}
-			// speed := record.Speed
-			// fmt.Printf("Speed: %d\n", record.Speed1s)
 
+			// Store power data
 			if power != 65535 {
 				totalPower += int(power)
 				powers = append(powers, power)
+			} else {
+				powers = append(powers, 0)
 			}
+
+			// Store cadence data
 			if record.Cadence != 255 {
 				cads = append(cads, uint8(record.Cadence))
 			} else {
 				cads = append(cads, 0)
 			}
 
+			// Store temperature data
 			if record.Temperature != 0 {
 				temps = append(temps, record.Temperature)
 			}
 
+			// Store heart rate data
 			hearts = append(hearts, record.HeartRate)
 			if record.HeartRate != 255 {
 				isHeartRateValid = true
 			}
-			coordinates = append(coordinates, []float32{float32(record.PositionLong.Degrees()), float32(record.PositionLat.Degrees()), float32(record.EnhancedAltitude)})
+
+			// Store coordinate data
+			coordinates = append(coordinates, []float64{float64(record.PositionLong.Degrees()), float64(record.PositionLat.Degrees()), float64(record.EnhancedAltitude)})
+
+			// Store distance data
 			distances = append(distances, (float32(record.Distance) / 100)) // convert to meters
 
 			count++
 
+			// Calculate elevation gain
 			if record.Altitude != 0 {
 				altitude := record.EnhancedAltitude
 				var decodedAltitude = fitHelper.DecodeAltitude(altitude)
 
 				elevation, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", float32(decodedAltitude)*3.28084), 32)
-				elevations = append(elevations, float32(elevation))
+				elevations = append(elevations, elevation)
 
 				if !first {
 					if decodedAltitude > previousAltitude {
@@ -207,43 +210,106 @@ func processActivityRecords(activity *fit.ActivityFile, postId *string, bucket s
 			}
 		}
 	}
+
+	// Check if any records were found
 	if count == 0 {
 		fmt.Println("No records found")
 		return
 	}
 
+	// Calculate average power
 	averagePower := float64(totalPower) / float64(count)
+
+	// Calculate total distance
 	totalDistance := (float64(activity.Records[len(activity.Records)-1].Distance) / 100) / 1000
+	normalizedPower := myevent.CalcNormalizedPower(powers)
+
+	// Print calculated data
 	fmt.Printf("Total Distance: %.2f kilometers\n", totalDistance)
 	fmt.Printf("Moving Time: %.2f hours\n", float64(count)/3600)
 	fmt.Printf("Elapsed Time: %s\n", activity.Records[len(activity.Records)-1].Timestamp.Sub(activity.Records[0].Timestamp))
 	fmt.Printf("Average Power: %.2f watts\n", averagePower)
 	fmt.Printf("Average Speed: %.2f km/h\n", float64(totalDistance)/(float64(count)/3600))
-	fmt.Printf("Normalized Power: %.2f watts\n", myevent.CalcNormalizedPower(powers))
+	fmt.Printf("Normalized Power: %.2f watts\n", normalizedPower)
 	fmt.Printf("Total Elevation Gain: %.2f meters\n", totalElevationGain)
 
-	var powerResults = myevent.CalcBestPowers(timeIntervals(), powers, false)
-	var cadenceResults = myevent.CalcBestPowers(timeIntervals(), convertToUint16Slice(cads), true)
-
-	var tempResults = myevent.CalcBestPowers(timeIntervals(), convertToUint16Slice([]uint8(convertToInt8Slice(temps))), true)
-	fmt.Println("Temp Results:", tempResults)
-
-	var heartResults = myevent.CalcBestPowers(timeIntervals(), convertToUint16Slice(hearts), true)
-	var elevationGrades = myevent.CalcElevationGrades(coordinates, distances, elevations)
-	// var stoppedTime = activity.Records[len(activity.Records)-1].Timestamp.Sub(activity.Records[0].Timestamp) - activity.Records[0].Timestamp.Sub(activity.Records[0].Timestamp)
+	// Calculate best powers for different time intervals
+	var powerResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), powers, false)
+	var cadenceResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), convertToUint16Slice(cads), true)
+	var tempResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), convertToUint16Slice([]uint8(convertToInt8Slice(temps))), true)
+	var heartResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), convertToUint16Slice(hearts), true)
+	// var elevationGrades = myevent.CalcElevationGrades(coordinates, distances, elevations)
 	var elapsedTime = activity.Records[len(activity.Records)-1].Timestamp.Sub(activity.Records[0].Timestamp)
 
-	fmt.Println("Best Powers:", powerResults)
-	fmt.Println("Best Cadences:", cadenceResults)
-	s3key := fmt.Sprintf("timeseries/%s.json", uuid.New().String())
+	// Simplify the points (with a tolerance of 1)
+	var simplifiedCoordinates = simplify.SimplifyDouglasPeucker(coordinates, 0.00000001)
 
-	if isHeartRateValid {
-		S3helper.UploadToS3(coordinates, elevations, powers, distances, elevationGrades, powerResults, hearts, bucket, identityId, s3key)
-	} else {
-		S3helper.UploadToS3(coordinates, elevations, powers, distances, elevationGrades, powerResults, []uint8{}, bucket, identityId, s3key)
+	timeElevationMap := make([][]float64, len(elevations))
+	for i := range elevations {
+		timeElevationMap[i] = []float64{float64(distances[i]), float64(i)}
+	}
+	var simplifiedElevations = simplify.Simplify(timeElevationMap, 0.1, true)
+
+	// Merge distance, powers, and grades into a new map
+	mergedData := make([]interface{}, len(simplifiedElevations))
+	for i, val := range simplifiedElevations {
+		var grade float64
+		var gradeFinal float64
+		if i == 0 {
+			grade = 0
+		} else {
+			var elevationChange = elevations[int(val[1])] - elevations[int(simplifiedElevations[i-1][1])]
+			var distanceChange = float64(distances[int(val[1])] - distances[int(simplifiedElevations[i-1][1])])
+			grade = elevationChange / distanceChange
+			if math.IsNaN(grade) || math.IsInf(grade, 0) {
+				gradeFinal = 0.0
+			} else {
+				gradeFinal = grade
+			}
+			// fmt.Println("Grade:", grade)
+			// fmt.Println("Elevation Change:", elevationChange)
+			// fmt.Println("Distance Change:", distanceChange)
+		}
+
+		mergedData[i] = map[string]interface{}{
+			"p": powers[int(val[1])],
+			"d": val[0],
+			"t": val[1],
+			"e": float32(elevations[int(val[1])]),
+			"h": hearts[int(val[1])],
+			"g": gradeFinal,
+		}
 	}
 
-	dynamo.UpdateItem(*postId, tempResults, cadenceResults, totalDistance, heartResults, totalElevationGain, int(stoppedTime.Seconds()), int(elapsedTime.Seconds()), myevent.CalcNormalizedPower(powers), nil, nil, 0, s3key, powerResults)
+	// Print the merged data
+	// fmt.Println("Merged Data:", mergedData)
+
+	// fmt.Println("Original indexes of simplified points:", originalIndexes)
+	// // fmt.Println("Filtered filterDistance:", filterDistance)
+	// // fmt.Println("Filtered filterPowers:", filterPowers)
+	// // fmt.Println("Filtered filterElevation:", filterElevation)
+	// fmt.Println("Simplified Coordinates Length:", len(simplifiedCoordinates))
+	// fmt.Println("Simplified Elevation Length:", len(simplifiedElevations))
+	// fmt.Println("originalIndexes Length:", len(originalIndexes))
+	// fmt.Println("filterDistance Length:", len(filterDistance))
+
+	// Upload data to S3
+	s3key := fmt.Sprintf("timeseries/%s.json", uuid.New().String())
+
+	// Convert simplifiedElevations to []float32
+	// var simplifiedElevationsFloat32 []float32
+	// for _, elev := range simplifiedElevations {
+	// 	simplifiedElevationsFloat32 = append(simplifiedElevationsFloat32, float32(elev))
+	// }
+
+	if isHeartRateValid {
+		S3helper.UploadToS3(simplifiedCoordinates, mergedData, bucket, identityId, s3key)
+	} else {
+		S3helper.UploadToS3(simplifiedCoordinates, mergedData, bucket, identityId, s3key)
+	}
+
+	// Update DynamoDB item
+	dynamo.UpdateItem(*postId, tempResults, cadenceResults, totalDistance, heartResults, totalElevationGain, int(stoppedTime.Seconds()), int(elapsedTime.Seconds()), normalizedPower, nil, nil, 0, s3key, powerResults)
 }
 
 func main() {

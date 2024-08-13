@@ -18,9 +18,6 @@ import Image from "next/image";
 const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { heroImage, title, postLocation, date, subhead } =
     React.useContext(PostContext);
-  // console.log(cloudUrl);
-
-  console.log(heroImage);
 
   const {
     setIsHeroImageModalOpen,

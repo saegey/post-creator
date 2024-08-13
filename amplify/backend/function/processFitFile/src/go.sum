@@ -56,6 +56,8 @@ github.com/stretchr/testify v1.7.2/go.mod h1:R6va5+xMeoiuVRoj+gSkQ7d3FALtqAAGI1F
 github.com/tealeg/xlsx v1.0.3/go.mod h1:uxu5UY2ovkuRPWKQ8Q7JG0JbSivrISjdPzZQKeo74mA=
 github.com/tormoder/fit v0.15.0 h1:oW1dhvGqPIwBJdRJfWzW/jqYU705oBmLcJq4TJO7SqU=
 github.com/tormoder/fit v0.15.0/go.mod h1:J+m0+sz5qljhPaP34CgJz8uFD8Vzdsf96D3Hj99DMLQ=
+github.com/yrsh/simplify-go v0.0.0-20141205144220-b78647bd27f7 h1:nzTPALG/fBpx7Sbw2luLYfU06d11CrhxjPbmKGpp8gE=
+github.com/yrsh/simplify-go v0.0.0-20141205144220-b78647bd27f7/go.mod h1:dAObpQ3PjphiXHyyZKv7vCf6SIKofuu+Lg+D9qsW4IM=
 github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 github.com/yuin/goldmark v1.4.1/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1Zlc8k=
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
