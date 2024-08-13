@@ -7,7 +7,11 @@ backend:
         - wget https://dl.google.com/go/go1.22.5.linux-amd64.tar.gz
         - sudo tar -C /usr/local -xzf go1.22.5.linux-amd64.tar.gz
         - export PATH=$PATH:/usr/local/go/bin
-        - go version # Verify the Go installation
+        - mkdir -p $HOME/go/pkg/mod # Create a custom module cache directory
+        - export GOPATH=$HOME/go # Set GOPATH to use the custom directory
+        - export GOMODCACHE=$GOPATH/pkg/mod # Set GOMODCACHE to the custom directory
+        - go env # Print Go environment to verify
+
     build:
       commands:
         - npm install -g rimraf
