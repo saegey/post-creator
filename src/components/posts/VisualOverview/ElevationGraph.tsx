@@ -17,19 +17,6 @@ import { Transforms } from "slate";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import { useViewport } from "../../ViewportProvider";
-import simplify from "simplify-js";
-
-// type ActivityEvent = {
-//   c: Array<number> | Array<null>;
-//   g: number;
-//   d: number;
-//   t: number | null;
-//   e: number | null;
-// };
-
-// export interface GradeGradientActivty extends ActivityEvent {
-//   color: string;
-// }
 
 export interface ElevationGraphProps {
   data: Array<ActivityItem> | undefined;
@@ -204,11 +191,6 @@ const ElevationGraph = ({
   const points = data.map(
     (d, i) => new Object({ x: d.d, y: d.e, i: i })
   ) as Array<{ x: number; y: number; i: number }>;
-  // console.log(data.map((d) => new Object({ x: d.c[0], y: d.c[1] })));
-  // console.log(points1);
-  const simple = simplify(points, 0.4, false);
-  // console.log(simple);
-  console.log(points);
 
   return (
     <Box
@@ -272,7 +254,7 @@ const ElevationGraph = ({
         <AreaChart
           height={300}
           // key={data[0].e}
-          data={simple}
+          data={points}
           onMouseDown={(e) => {
             if (selection) {
               return;
