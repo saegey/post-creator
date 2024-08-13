@@ -205,9 +205,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setHearts && setHearts(payload.hearts);
     setElevations && setElevations(payload.elevation);
     setActivity &&
-      setActivity(
-        payload.activity?.map((item) => ({ d: 0, e: 0, g: 0, ...item })) ?? []
-      );
+      setActivity(payload.activity?.map((item) => ({ ...item })) ?? []);
   };
 
   React.useEffect(() => {

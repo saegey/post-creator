@@ -32,48 +32,17 @@ const ElevationSlice = ({
   const { powers, hearts } = React.useContext(PostContext);
 
   // const units = useUnits();
-  const grade =
-    marker && marker.i
-      ? data[marker.i].g
-      : selection
-      ? (
-          (data[selection[1]].e - data[selection[0]].e) /
-          (unitOfMeasure === "metric"
-            ? (data[selection[1]].d - data[selection[0]].d) * 1000
-            : (data[selection[1]].d - data[selection[0]].d) * 5280)
-        ).toFixed(4)
-      : element && element.selectionEnd && element.selectionStart
-      ? (
-          (data[element.selectionEnd].e - data[element.selectionStart].e) /
-          (unitOfMeasure === "metric"
-            ? (data[element.selectionEnd].d - data[element.selectionStart].d) *
-              1000
-            : (data[element.selectionEnd].d - data[element.selectionStart].d) *
-              5280)
-        ).toFixed(4)
-      : "";
+  const grade = marker && marker.i ? data[marker.i].g : "-";
 
   const distance =
-    marker && marker.i
-      ? data[marker.i].d.toFixed(2)
-      : selection
-      ? (data[selection[1]].d - data[selection[0]].d).toFixed(2)
-      : element && element.selectionEnd && element.selectionStart
-      ? (data[element.selectionEnd].d - data[element.selectionStart].d).toFixed(
-          2
-        )
-      : "";
+    marker && marker.i && data && data[marker.i] && data[marker.i].d
+      ? data[marker.i].d?.toFixed(2)
+      : "-";
 
   const elevation =
-    marker && marker.i
-      ? data[marker.i].e.toFixed(0)
-      : selection
-      ? (data[selection[1]].e - data[selection[0]].e).toFixed(2)
-      : element && element.selectionEnd && element.selectionStart
-      ? (data[element.selectionEnd].e - data[element.selectionStart].e).toFixed(
-          2
-        )
-      : "";
+    marker && marker.i && data && data[marker.i] && data[marker.i].e
+      ? data[marker.i].e?.toFixed(0)
+      : "-";
 
   const time =
     marker && marker.i

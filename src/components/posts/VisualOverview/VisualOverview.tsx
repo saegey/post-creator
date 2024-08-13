@@ -32,20 +32,17 @@ const VisualOverview = ({
   const coordinates =
     activity !== undefined ? activity.map((a) => a.c) : undefined;
   const elevationsSynthetic =
-    elevations &&
-    elevations.length &&
-    elevations.map((e) => ({
-      ...e,
-      e: unitOfMeasure === "metric" ? e.e / 3.28084 : e.e,
-      d:
-        unitOfMeasure === "imperial"
-          ? Number((e.d * 0.00062137121212121).toFixed(5))
-          : Number((e.d / 1000).toFixed(5)),
-      c: [],
-      // p: e.p,
-      // t: e.t,
-      // g: e.g,
-    }));
+    elevations && elevations.length
+      ? elevations.map((e) => ({
+          ...e,
+          e: unitOfMeasure === "metric" ? (e.e ?? 0) / 3.28084 : e.e,
+          d:
+            unitOfMeasure === "imperial"
+              ? Number(((e.d ?? 0) * 0.00062137121212121).toFixed(5))
+              : Number(((e.d ?? 0) / 1000).toFixed(5)),
+          c: [],
+        }))
+      : ([] as ActivityItem[]);
 
   const selectionStart = isZoomedOut
     ? 0
@@ -69,11 +66,12 @@ const VisualOverview = ({
         data={elevationsSynthetic}
         // left={selectionStart ? activity[selectionStart].d : "dataMin"}
         left={0}
-        right={
-          elevationsSynthetic
-            ? elevationsSynthetic[elevationsSynthetic.length - 1].d
-            : "dataMax"
-        }
+        // right={
+        //   elevationsSynthetic
+        //     ? elevationsSynthetic[elevationsSynthetic.length - 1].d
+        //     : "dataMax"
+        // }
+        right="dataMax"
         // bottom={
         //   (element && element.selectionEnd) || selection !== undefined
         //     ? Math.min(
@@ -82,13 +80,7 @@ const VisualOverview = ({
         //     : "dataMin"
         // }
         bottom={0}
-        top={
-          (element && element.selectionStart) || selection !== undefined
-            ? Math.max(
-                ...activity.slice(selectionStart, selectionEnd).map((d) => d.e)
-              ) + 100
-            : "dataMax"
-        }
+        top="dataMax"
         setMarker={setMarker}
         selection={selection}
         setSelection={setSelection}

@@ -20,9 +20,6 @@ const getActivity = async (post: TimeSeriesDataType) => {
       if (i % 1 === 0) {
         return {
           t: times[i],
-          // e: elevation[i] ? Number(elevation[i]) : 0,
-          // g: grades[i] ? Number(grades[i]) : 0,
-          // d: distances[i] ? distances[i] : 0,
           c: [coordinates[i][0], coordinates[i][1]],
         };
       }
