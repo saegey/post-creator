@@ -533,7 +533,7 @@ export interface PostContextType extends Post {
   >;
   setTitle?: React.Dispatch<React.SetStateAction<string>>;
   setSubhead?: React.Dispatch<React.SetStateAction<string | null | undefined>>;
-  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
+  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPostLocation?: React.Dispatch<
     React.SetStateAction<string | undefined | null>
   >;
@@ -668,4 +668,59 @@ export interface RunSignupResultsType {
 export type NotificationType = {
   message: string;
   type: "Error" | "Info";
+};
+
+export type AnalysisType = {
+  powerAnalysis?: object;
+  heartAnalysis?: object;
+  cadenceAnalysis?: object;
+  tempAnalysis?: object;
+  elevationTotal?: number;
+  normalizedPower?: number;
+};
+
+export type ResultsType = {
+  raceResults?: string;
+  webscorerResults?: string;
+  crossResults?: CrossResultsPreviewType;
+  omniResults?: OmniResultType;
+  runSignupResults?: OmniResultType;
+};
+
+export type PostStateType = {
+  id: string;
+  title: string;
+  subhead?: string;
+  postLocation?: string;
+  activity?: Array<ActivityItem>;
+  gpxFile?: string;
+  stravaUrl?: string;
+  date?: string;
+  components: Array<CustomElement>;
+  images: Array<CloudinaryImage>;
+  currentFtp?: number;
+  resultsUrl: string;
+  analysis: AnalysisType;
+  author?: string;
+  distance?: number;
+  elapsedTime?: number;
+  stoppedTime?: number;
+  timeInRed?: number;
+  powerZones: Array<any>;
+  powerZoneBuckets: Array<any>;
+  heroImage?: object;
+  shortUrl?: string;
+  __typename: string;
+  results: ResultsType;
+  timeSeriesFile?: string;
+  privacyStatus: string;
+  createdAt: string;
+  powers?: Array<number>;
+  hearts?: Array<number>;
+  elevations?: Array<ActivityItem>;
+};
+
+export type PostNewContextType = {
+  state: PostStateType;
+  setState: React.Dispatch<React.SetStateAction<PostStateType>>;
 };

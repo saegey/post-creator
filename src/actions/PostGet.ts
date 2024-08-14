@@ -7,9 +7,6 @@ function isDefined<T>(argument: T | undefined): argument is T {
 const getActivity = async (post: TimeSeriesDataType) => {
   console.log(post);
   const coordinates = post.coordinates ? post.coordinates : [];
-  const elevation = post.elevation ? post.elevation : [];
-  const distances = post.distances ? post.distances : [];
-  const grades = post.elevationGrades ? post.elevationGrades : "{}";
   const times = post.times ? post.times : [];
   if (!coordinates) {
     return undefined;

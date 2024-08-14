@@ -4,7 +4,7 @@ import { GraphQLResult } from "@aws-amplify/api";
 import { Storage, API, PubSub, Auth } from "aws-amplify";
 import { ZenObservable } from "zen-observable-ts";
 
-import { UpdatePostMutation } from "../../../API";
+import { GetPostInitialQuery, UpdatePostMutation } from "../../../API";
 import { updatePost } from "../../../graphql/mutations";
 import BlackBox from "../../layout/BlackBox";
 import { PostContext } from "../../PostContext";
@@ -17,6 +17,8 @@ import {
 import { EditorContext } from "./EditorContext";
 import { getPostInitial } from "../../../graphql/customQueries";
 import { PostContextType } from "../../../types/common";
+import { getActivityData } from "../../../../lib/editorApi";
+import { set } from "cypress/types/lodash";
 
 const UploadGpxModal = () => {
   const [fileData, setFileData] = React.useState<File>();
@@ -49,6 +51,8 @@ const UploadGpxModal = () => {
     setTimeSeriesFile,
     setPowers,
     setHearts,
+    elevations,
+    setElevations,
   }: PostContextType = React.useContext(PostContext);
 
   const { setIsGpxUploadOpen } = React.useContext(EditorContext);
@@ -61,165 +65,109 @@ const UploadGpxModal = () => {
 
     const user = await Auth.currentUserCredentials();
 
-    const result = await Storage.put(
-      `uploads/${fileData.name.replace(" ", "_")}`,
-      fileData,
-      {
-        progressCallback(progress: { loaded: number; total: number }) {
-          setProgress({ loaded: progress.loaded, total: progress.total });
-          if (progress.total === progress.loaded) {
-            setProcessingGpxStatus("File successfully uploaded");
-          }
-        },
-        metadata: {
-          postId: id ? id : "",
-          currentFtp: (currentFtp ? currentFtp : 0).toString(),
-          identityId: user.identityId,
-        },
-        contentType: fileData.type,
-        level: "private",
-      }
-    );
+    await Storage.put(`uploads/${fileData.name.replace(" ", "_")}`, fileData, {
+      progressCallback(progress: { loaded: number; total: number }) {
+        setProgress({ loaded: progress.loaded, total: progress.total });
+        if (progress.total === progress.loaded) {
+          setProcessingGpxStatus("File successfully uploaded");
+        }
+      },
+      metadata: {
+        postId: id ? id : "",
+        currentFtp: (currentFtp ? currentFtp : 0).toString(),
+        identityId: user.identityId,
+      },
+      contentType: fileData.type,
+      level: "private",
+    });
 
-    try {
-      (await API.graphql({
-        authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: updatePost,
-        variables: {
-          input: {
-            id: id,
-            gpxFile: result.key,
-          },
-        },
-      })) as GraphQLResult<UpdatePostMutation>;
-    } catch (error) {
-      console.error(error);
-      setIsUploading(false);
-    }
+    // try {
+    //   (await API.graphql({
+    //     authMode: "AMAZON_COGNITO_USER_POOLS",
+    //     query: updatePost,
+    //     variables: {
+    //       input: {
+    //         id: id,
+    //         gpxFile: result.key,
+    //       },
+    //     },
+    //   })) as GraphQLResult<UpdatePostMutation>;
+    // } catch (error) {
+    //   console.error(error);
+    //   setIsUploading(false);
+    // }
   };
 
   const getPost = async () => {
-    const { data } = (await API.graphql({
+    const res = (await API.graphql({
       query: getPostInitial,
       authMode: "AMAZON_COGNITO_USER_POOLS",
       variables: {
         id: id,
       },
-    })) as any;
-    const {
-      timeSeriesFile,
-      gpxFile,
-      elevationTotal,
-      distance,
-      elapsedTime,
-      stoppedTime,
-      normalizedPower,
-      tempAnalysis,
-      cadenceAnalysis,
-      heartAnalysis,
-      powerZones,
-      powerZoneBuckets,
-      timeInRed,
-    } = data.getPost;
-    setGpxFile && setGpxFile(gpxFile);
-    setElevationTotal && setElevationTotal(elevationTotal);
-    setDistance && setDistance(distance);
-    setElapsedTime && setElapsedTime(elapsedTime);
-    setStoppedTime && setStoppedTime(stoppedTime);
-    setTimeSeriesFile && setTimeSeriesFile(timeSeriesFile);
-    setNormalizedPower && setNormalizedPower(normalizedPower);
-    setTempAnalysis && setTempAnalysis(JSON.parse(tempAnalysis));
-    setHeartAnalysis && setHeartAnalysis(JSON.parse(heartAnalysis));
-    setCadenceAnalysis && setCadenceAnalysis(JSON.parse(cadenceAnalysis));
-    setPowerZones && setPowerZones(JSON.parse(powerZones));
-    setPowerZoneBuckets && setPowerZoneBuckets(JSON.parse(powerZoneBuckets));
-    setTimeInRed && setTimeInRed(timeInRed);
+    })) as GraphQLResult<GetPostInitialQuery>;
 
-    const result = (await Storage.get(timeSeriesFile, {
-      download: true,
-      // customPrefix: {
-      //   public: 'private/us-east-1:29b6299d-6fd7-44d5-a53e-2a94fdf5401d/',
-      // },
-      level: "private",
-    })) as unknown as { Body: string };
-    const timeSeriesData = await new Response(result.Body).json();
-    setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
-    setPowers && setPowers(timeSeriesData.powers);
-    setHearts && setHearts(timeSeriesData.hearts);
+    const post = res?.data?.getPost;
 
-    const activity = await getActivity(timeSeriesData);
+    if (!post || !post.timeSeriesFile) {
+      throw new Error("Post is undefined");
+    }
+
+    setGpxFile && setGpxFile(post.gpxFile || "");
+    setElevationTotal && setElevationTotal(post.elevationTotal);
+    setDistance && setDistance(post.distance);
+    setElapsedTime && setElapsedTime(post.elapsedTime);
+    setStoppedTime && setStoppedTime(post.stoppedTime);
+    setTimeSeriesFile && setTimeSeriesFile(post.timeSeriesFile);
+    setNormalizedPower && setNormalizedPower(post.normalizedPower);
+    setTempAnalysis &&
+      setTempAnalysis(post.tempAnalysis ? JSON.parse(post.tempAnalysis) : {});
+    setHeartAnalysis &&
+      setHeartAnalysis(
+        post.heartAnalysis ? JSON.parse(post.heartAnalysis) : {}
+      );
+    setCadenceAnalysis &&
+      setCadenceAnalysis(
+        post.cadenceAnalysis ? JSON.parse(post.cadenceAnalysis) : {}
+      );
+    setPowerZones &&
+      setPowerZones(post.powerZones ? JSON.parse(post.powerZones) : {});
+    setPowerZoneBuckets &&
+      setPowerZoneBuckets(
+        post.powerZoneBuckets ? JSON.parse(post.powerZoneBuckets) : {}
+      );
+    setTimeInRed && setTimeInRed(post.timeInRed);
+
+    // const result = (await Storage.get(post.timeSeriesFile, {
+    //   download: true,
+    //   level: "private",
+    // })) as unknown as { Body: string };
+
+    // const timeSeriesData = await new Response(result.Body).json();
+    // // setPowerAnalysis && setPowerAnalysis(timeSeriesData.powerAnalysis);
+    // // setPowers && setPowers(timeSeriesData.powers);
+    // // setHearts && setHearts(timeSeriesData.hearts);
+
+    // const activity = await getActivity(timeSeriesData);
 
     // console.log(activity);
-    setActivity && setActivity(activity);
+    // setActivity && setActivity(activity);
     // setProcessingGpxStatus("GPX file has been processed and analyzed");
+    const payload = await getActivityData(post.timeSeriesFile);
+    if (!payload) {
+      console.log("no data found for post");
+      return;
+    }
+    console.log("payload:", payload);
+
+    // setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
+    // setPowers && setPowers(payload.powers);
+    // setHearts && setHearts(payload.hearts);
+    setElevations && setElevations(payload.elevation);
+    setActivity &&
+      setActivity(payload.activity?.map((item) => ({ ...item })) ?? []);
     setIsProcessingFile(false);
   };
-
-  // const setUpSub = async () => {
-  //   if (!subPubConfigured) {
-  //     const endpoint = await getEndpoint();
-  //     await configurePubSub(endpoint);
-  //     await attachIoTPolicyToUser();
-  //     setSubPubConfigured(true);
-  //   }
-
-  //   return PubSub.subscribe(`post-${id}`).subscribe({
-  //     next: (data: any) => {
-  //       console.log("data:", data.value);
-  //       const phase = data.value.phase as string;
-  //       if (phase === "go-start-processing") {
-  //         const timestamp = new Date().toISOString();
-  //         setProcessingGpxStatus(`Processing Fit file @ ${timestamp}.`);
-  //       }
-  //       if (phase === "go-finish-processing") {
-  //         const timestamp = new Date().toISOString();
-  //         setProcessingGpxStatus(
-  //           `${processingGpxStatus}. Fit file processed. ${timestamp}`
-  //         );
-  //         getPost();
-  //       }
-  //       if (phase === "file-downloaded") {
-  //         setProcessingGpxStatus("File being downloaded for processing.");
-  //       }
-  //       if (phase === "meta-downloaded") {
-  //         setProcessingGpxStatus("File metadata being fetched.");
-  //       }
-  //       if (phase === "xml-parse") {
-  //         setProcessingGpxStatus("XML is being parsed.");
-  //       }
-
-  //       if (phase === "gpx-parse") {
-  //         setProcessingGpxStatus("GPX XML is being converted to GeoJSON.");
-  //       }
-
-  //       if (phase === "process-data") {
-  //         setProcessingGpxStatus(
-  //           "Data is being processed and calculating metrics."
-  //         );
-  //       }
-
-  //       if (phase === "update-data") {
-  //         setProcessingGpxStatus("Metrics are being saved.");
-  //         getPost();
-  //       }
-  //     },
-  //     error: (error) => console.error(error),
-  //   });
-  // };
-
-  // React.useEffect(() => {
-  //   let subUpdates: ZenObservable.Subscription;
-
-  //   setUpSub().then((sub) => {
-  //     subUpdates = sub;
-  //   });
-
-  //   return () => {
-  //     if (subUpdates) {
-  //       subUpdates.unsubscribe();
-  //     }
-  //   };
-  // }, [subPubConfigured]);
 
   const handlePhase = (phase: string) => {
     const timestamp = new Date().toISOString();

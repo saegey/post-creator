@@ -25,7 +25,7 @@ type ServerSideProps = {
   };
 };
 
-export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
+const getUserAndPost = async ({ req, params }: ServerSideProps) => {
   const SSR = withSSRContext({ req });
   let session;
   let user: IUser | null = null;
@@ -98,7 +98,6 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
       props: { errorCode: 403 },
     };
   }
-  console.log(post);
 
   return {
     props: {
@@ -147,8 +146,12 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
   };
 };
 
+export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
+  return getUserAndPost({ req, params });
+};
+
 const Post = ({ user, post, errorCode }: PostType) => {
-  console.log(post);
+  // console.log(post);
   if (errorCode) {
     return <></>;
   }
@@ -166,7 +169,9 @@ const Post = ({ user, post, errorCode }: PostType) => {
   const [activity, setActivity] = React.useState<
     Array<ActivityItem> | undefined
   >();
-  const [gpxFile, setGpxFile] = React.useState(post.gpxFile);
+  const [gpxFile, setGpxFile] = React.useState<string | undefined>(
+    post.gpxFile || ""
+  );
   const [stravaUrl, setStravaUrl] = React.useState(post.stravaUrl);
   const [components, setComponents] = React.useState(
     post.components && isNewPost(post.components)
@@ -244,7 +249,7 @@ const Post = ({ user, post, errorCode }: PostType) => {
       setSubhead(post.subhead);
       setComponents(post.components);
       setPostLocation(post.postLocation);
-      setGpxFile(post.gpxFile);
+      setGpxFile(post.gpxFile ?? undefined);
       setStravaUrl(post.stravaUrl);
       setImages(post.images);
       setCurrentFtp(post.currentFtp);
