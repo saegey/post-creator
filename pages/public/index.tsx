@@ -101,7 +101,7 @@ const Home = () => {
                 >
                   <Button
                     sx={{
-                      background: "white",
+                      background: "background",
                       borderColor: "text",
                       borderStyle: "solid",
                       borderWidth: "1px",

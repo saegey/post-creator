@@ -42,7 +42,7 @@ const PublicHeader = () => {
           borderBottomColor: "#e8e8e8",
           borderBottomStyle: "solid",
           borderBottomWidth: "1px",
-          backgroundColor: "white",
+          backgroundColor: "background",
         }}
       >
         <Grid
@@ -101,7 +101,7 @@ const PublicHeader = () => {
                       position: "absolute",
                       // height: "300px",
                       width: "300px",
-                      backgroundColor: "white",
+                      backgroundColor: "background",
                       // top: "-20px",
                       paddingTop: "20px",
                       // left: "-20px",
@@ -191,7 +191,7 @@ const PublicHeader = () => {
                       position: "absolute",
                       // height: "300px",
                       width: "300px",
-                      backgroundColor: "white",
+                      backgroundColor: "background",
                       // top: "-20px",
                       paddingTop: "20px",
                       // left: "-20px",
@@ -333,7 +333,7 @@ const PublicHeader = () => {
           paddingY: "8px",
           position: "sticky",
           top: 0,
-          backgroundColor: "white",
+          backgroundColor: "background",
           zIndex: 99,
           display: ["flex", "flex", "none"],
         }}

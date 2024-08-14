@@ -20,7 +20,7 @@ const PublicFooter = () => {
           // justifyContent: "center",
           display: ["none", "flex", "flex"],
           flexDirection: "column",
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "skeletonDark",
           // justifyContent: "center",
           // zIndex: 1,
           // position: "absolute",

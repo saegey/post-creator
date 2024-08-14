@@ -34,7 +34,7 @@ const About = () => {
             alignItems: "center",
             // zIndex: 1,
             position: "relative",
-            backgroundColor: "#f3f3f3",
+            backgroundColor: "skeletonDark",
           }}
         >
           <Flex
@@ -84,35 +84,39 @@ const About = () => {
             </Text>
           </Flex>
         </Flex>
-        <Flex sx={{ justifyContent: "center", backgroundColor: "#f3f3f3" }}>
+        <Flex
+          sx={{ justifyContent: "center", backgroundColor: "skeletonDark" }}
+        >
           <Link
             href="about?section=about"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecoration: "none", color: "text" }}
           >
             <Box
               sx={{
                 paddingX: "8px",
                 paddingBottom: "22px",
-                borderBottom: isAbout ? "2px solid black" : "none",
+                borderBottomStyle: isAbout ? "solid" : "none",
+                borderBottomColor: "text",
                 marginX: "14px",
               }}
             >
-              About
+              <Text sx={{ color: "text" }}>About</Text>
             </Box>
           </Link>
           <Link
             href="about?section=team"
-            style={{ textDecoration: "none", color: "black" }}
+            style={{ textDecoration: "none", color: "text" }}
           >
             <Box
               sx={{
                 paddingX: "8px",
                 paddingBottom: "22px",
+                borderBottomStyle: isTeam ? "solid" : "none",
+                borderBottomColor: "text",
                 marginX: "14px",
-                borderBottom: isTeam ? "2px solid black" : "none",
               }}
             >
-              Team
+              <Text sx={{ color: "text" }}>Team</Text>
             </Box>
           </Link>
           {/* <Link
