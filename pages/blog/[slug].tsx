@@ -39,6 +39,7 @@ export default function Post({ post, morePosts, preview, imageSizes }: Props) {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
+
   return (
     <>
       <Head>
@@ -51,7 +52,7 @@ export default function Post({ post, morePosts, preview, imageSizes }: Props) {
         <Flex
           sx={{
             justifyContent: "center",
-            backgroundColor: "#f9f9fa",
+            backgroundColor: "skeletonDark",
             paddingTop: "176px",
             paddingBottom: "80px",
           }}

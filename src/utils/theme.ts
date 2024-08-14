@@ -1,5 +1,7 @@
 // src/utils/theme.ts
 export default {
+  // initialColorModeName: "light", // Default mode
+  useColorSchemeMediaQuery: true, // Enables system preference detection
   colors: {
     postBorderLeft: "#cccccc",
     skeletonLight: "hsl(0, 0%, 99%)",

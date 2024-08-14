@@ -16,6 +16,7 @@ import { UserContext } from "../src/components/UserContext";
 import { IUser, NotificationType } from "../src/types/common";
 import { NotificationContext } from "../src/components/NotificationContext";
 import NotificationMessage from "../src/components/NotificationMessage";
+import ThemeChanger from "../src/components/ThemeChanger";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 
@@ -173,6 +174,7 @@ const app = ({ Component, pageProps }: AppProps) => {
           >
             <ViewportProvider>
               <ThemeUIProvider theme={theme}>
+                <ThemeChanger />
                 <UserContext.Provider value={{ user, setUser }}>
                   <Component {...pageProps} />
                 </UserContext.Provider>
