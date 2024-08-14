@@ -3,9 +3,8 @@ backend:
   phases:
     preBuild:
       commands:
-        # Install Go and add it to the PATH
-        - wget https://dl.google.com/go/go1.22.5.linux-amd64.tar.gz
-        - sudo tar -C /usr/local -xzf go1.22.5.linux-amd64.tar.gz
+        # Check if Go is already cached, if not download and extract it
+        - if [ ! -d /usr/local/go ]; then wget https://dl.google.com/go/go1.22.5.linux-amd64.tar.gz && sudo tar -C /usr/local -xzf go1.22.5.linux-amd64.tar.gz; fi
         - export PATH=$PATH:/usr/local/go/bin
         - mkdir -p $HOME/go/pkg/mod # Create a custom module cache directory
         - export GOPATH=$HOME/go # Set GOPATH to use the custom directory
@@ -36,6 +35,8 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
+      - $HOME/go/pkg/mod/**/*
+      - /usr/local/go/**/*
 test:
   phases:
     preTest:
@@ -61,3 +62,6 @@ test:
     files:
       - "**/*.png"
       - "**/*.mp4"
+  cache:
+    paths:
+      - cypress/report/mochawesome-report/*.json
