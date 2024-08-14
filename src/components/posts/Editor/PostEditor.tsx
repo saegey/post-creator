@@ -208,19 +208,19 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       setActivity(payload.activity?.map((item) => ({ ...item })) ?? []);
   };
 
-  React.useEffect(() => {
-    let subUpdates: ZenObservable.Subscription;
+  // React.useEffect(() => {
+  //   let subUpdates: ZenObservable.Subscription;
 
-    setUpSub().then((sub) => {
-      subUpdates = sub;
-    });
+  //   setUpSub().then((sub) => {
+  //     subUpdates = sub;
+  //   });
 
-    return () => {
-      if (subUpdates) {
-        subUpdates.unsubscribe();
-      }
-    };
-  }, [subPubConfigured]);
+  //   return () => {
+  //     if (subUpdates) {
+  //       subUpdates.unsubscribe();
+  //     }
+  //   };
+  // }, [subPubConfigured]);
 
   const {
     id,

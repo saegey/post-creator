@@ -22,10 +22,12 @@ const UploadGpxModal = () => {
   const [fileData, setFileData] = React.useState<File>();
   const [isUploading, setIsUploading] = React.useState(false);
   const [progress, setProgress] = React.useState({ loaded: 0, total: 0 });
-  const [processingGpxStatus, setProcessingGpxStatus] =
-    React.useState("Pending");
+
   const [processingFile, setIsProcessingFile] = React.useState(false);
+
+  const subRef = React.useRef<ZenObservable.Subscription | null>(null);
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
+  const [processingGpxStatus, setProcessingGpxStatus] = React.useState("");
 
   const {
     id,
@@ -149,67 +151,148 @@ const UploadGpxModal = () => {
 
     // console.log(activity);
     setActivity && setActivity(activity);
-    setProcessingGpxStatus("GPX file has been processed and analyzed");
+    // setProcessingGpxStatus("GPX file has been processed and analyzed");
     setIsProcessingFile(false);
   };
 
-  const setUpSub = async () => {
-    if (!subPubConfigured) {
-      const endpoint = await getEndpoint();
-      await configurePubSub(endpoint);
-      await attachIoTPolicyToUser();
-      setSubPubConfigured(true);
+  // const setUpSub = async () => {
+  //   if (!subPubConfigured) {
+  //     const endpoint = await getEndpoint();
+  //     await configurePubSub(endpoint);
+  //     await attachIoTPolicyToUser();
+  //     setSubPubConfigured(true);
+  //   }
+
+  //   return PubSub.subscribe(`post-${id}`).subscribe({
+  //     next: (data: any) => {
+  //       console.log("data:", data.value);
+  //       const phase = data.value.phase as string;
+  //       if (phase === "go-start-processing") {
+  //         const timestamp = new Date().toISOString();
+  //         setProcessingGpxStatus(`Processing Fit file @ ${timestamp}.`);
+  //       }
+  //       if (phase === "go-finish-processing") {
+  //         const timestamp = new Date().toISOString();
+  //         setProcessingGpxStatus(
+  //           `${processingGpxStatus}. Fit file processed. ${timestamp}`
+  //         );
+  //         getPost();
+  //       }
+  //       if (phase === "file-downloaded") {
+  //         setProcessingGpxStatus("File being downloaded for processing.");
+  //       }
+  //       if (phase === "meta-downloaded") {
+  //         setProcessingGpxStatus("File metadata being fetched.");
+  //       }
+  //       if (phase === "xml-parse") {
+  //         setProcessingGpxStatus("XML is being parsed.");
+  //       }
+
+  //       if (phase === "gpx-parse") {
+  //         setProcessingGpxStatus("GPX XML is being converted to GeoJSON.");
+  //       }
+
+  //       if (phase === "process-data") {
+  //         setProcessingGpxStatus(
+  //           "Data is being processed and calculating metrics."
+  //         );
+  //       }
+
+  //       if (phase === "update-data") {
+  //         setProcessingGpxStatus("Metrics are being saved.");
+  //         getPost();
+  //       }
+  //     },
+  //     error: (error) => console.error(error),
+  //   });
+  // };
+
+  // React.useEffect(() => {
+  //   let subUpdates: ZenObservable.Subscription;
+
+  //   setUpSub().then((sub) => {
+  //     subUpdates = sub;
+  //   });
+
+  //   return () => {
+  //     if (subUpdates) {
+  //       subUpdates.unsubscribe();
+  //     }
+  //   };
+  // }, [subPubConfigured]);
+
+  const handlePhase = (phase: string) => {
+    const timestamp = new Date().toISOString();
+
+    switch (phase) {
+      case "go-start-processing":
+        setProcessingGpxStatus(`Processing Fit file @ ${timestamp}.`);
+        break;
+      case "go-finish-processing":
+        setProcessingGpxStatus(
+          `${processingGpxStatus}. Fit file processed. ${timestamp}`
+        );
+        getPost();
+        break;
+      case "file-downloaded":
+        setProcessingGpxStatus("File being downloaded for processing.");
+        break;
+      case "meta-downloaded":
+        setProcessingGpxStatus("File metadata being fetched.");
+        break;
+      case "xml-parse":
+        setProcessingGpxStatus("XML is being parsed.");
+        break;
+      case "gpx-parse":
+        setProcessingGpxStatus("GPX XML is being converted to GeoJSON.");
+        break;
+      case "process-data":
+        setProcessingGpxStatus(
+          "Data is being processed and calculating metrics."
+        );
+        break;
+      case "update-data":
+        setProcessingGpxStatus("Metrics are being saved.");
+        getPost();
+        break;
+      default:
+        break;
     }
-
-    return PubSub.subscribe(`post-${id}`).subscribe({
-      next: (data: any) => {
-        console.log("data:", data.value);
-        const phase = data.value.phase as string;
-        if (phase === "hellofromgo") {
-          setProcessingGpxStatus("Processing Fit file with Golang.");
-        }
-        if (phase === "file-downloaded") {
-          setProcessingGpxStatus("File being downloaded for processing.");
-        }
-        if (phase === "meta-downloaded") {
-          setProcessingGpxStatus("File metadata being fetched.");
-        }
-        if (phase === "xml-parse") {
-          setProcessingGpxStatus("XML is being parsed.");
-        }
-
-        if (phase === "gpx-parse") {
-          setProcessingGpxStatus("GPX XML is being converted to GeoJSON.");
-        }
-
-        if (phase === "process-data") {
-          setProcessingGpxStatus(
-            "Data is being processed and calculating metrics."
-          );
-        }
-
-        if (phase === "update-data") {
-          setProcessingGpxStatus("Metrics are being saved.");
-          getPost();
-        }
-      },
-      error: (error) => console.error(error),
-    });
   };
 
   React.useEffect(() => {
-    let subUpdates: ZenObservable.Subscription;
+    const setUpSub = async () => {
+      if (!subPubConfigured) {
+        const endpoint = await getEndpoint();
+        await configurePubSub(endpoint);
+        await attachIoTPolicyToUser();
+        setSubPubConfigured(true);
+        console.log("subPubConfigured:", subPubConfigured);
+      }
 
-    setUpSub().then((sub) => {
-      subUpdates = sub;
-    });
+      if (subRef.current) {
+        console.log("unsubscribing");
+        // If a subscription already exists, unsubscribe first
+        subRef.current.unsubscribe();
+      }
+
+      subRef.current = PubSub.subscribe(`post-${id}`).subscribe({
+        next: (data: any) => {
+          console.log("data:", data.value);
+          handlePhase(data.value.phase as string);
+        },
+        error: (error) => console.error(error),
+      });
+    };
+
+    setUpSub();
 
     return () => {
-      if (subUpdates) {
-        subUpdates.unsubscribe();
+      if (subRef.current) {
+        subRef.current.unsubscribe();
       }
     };
-  }, [subPubConfigured]);
+  }, [subPubConfigured, id]);
 
   return (
     <BlackBox>
@@ -292,11 +375,7 @@ const UploadGpxModal = () => {
               </>
             )}
           </Box>
-          <Text as="span">
-            {progress.total === progress.loaded && progress.loaded !== 0
-              ? processingGpxStatus
-              : ""}
-          </Text>
+          <Text as="span">{processingGpxStatus}</Text>
         </Box>
       </Box>
     </BlackBox>
