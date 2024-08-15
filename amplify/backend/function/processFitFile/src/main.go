@@ -37,13 +37,14 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 	}
 
 	svc := s3.New(sess)
+	var metaData S3helper.MetaData
 
 	// Extract bucket and object key from the event
 	for _, record := range s3event.Records {
-		var metaData, err = S3helper.ExtractMetaData(record, svc)
+		metaData, err = S3helper.ExtractMetaData(record, svc)
 
 		// Example usage: publishing a message
-		err = publish.PublishMessage(iotClient, &metaData.PostId)
+		err = publish.PublishMessage(iotClient, &metaData.PostId, "go-start-processing")
 		if err != nil {
 			fmt.Println("Error publishing to IoT:", err)
 			break
@@ -72,6 +73,11 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 		}
 
 		ProcessActivityRecords(activity, &metaData.PostId, metaData.Bucket, metaData.IdentityId)
+	}
+
+	err = publish.PublishMessage(iotClient, &metaData.PostId, "go-finish-processing")
+	if err != nil {
+		fmt.Println("Error publishing to IoT:", err)
 	}
 
 	return fmt.Sprintf("Hello, %s!", s3event.Records[0].S3.Object.Key), nil

@@ -8,8 +8,6 @@ require (
 	github.com/tormoder/fit v0.15.0
 )
 
-require github.com/yrsh/simplify-go v0.0.0-20141205144220-b78647bd27f7 // indirect
-
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
 	github.com/client9/misspell v0.3.4 // indirect

@@ -93,7 +93,7 @@ const VisualOverview = ({
         setIsZoomedOut={setIsZoomedOut}
       />
     ),
-    [selection, unitOfMeasure]
+    [selection, unitOfMeasure, elevations]
   );
 
   return (

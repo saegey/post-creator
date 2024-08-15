@@ -533,7 +533,7 @@ export interface PostContextType extends Post {
   >;
   setTitle?: React.Dispatch<React.SetStateAction<string>>;
   setSubhead?: React.Dispatch<React.SetStateAction<string | null | undefined>>;
-  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
+  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
   setPostLocation?: React.Dispatch<
     React.SetStateAction<string | undefined | null>
   >;
@@ -668,4 +668,21 @@ export interface RunSignupResultsType {
 export type NotificationType = {
   message: string;
   type: "Error" | "Info";
+};
+
+export type AnalysisType = {
+  powerAnalysis?: object;
+  heartAnalysis?: object;
+  cadenceAnalysis?: object;
+  tempAnalysis?: object;
+  elevationTotal?: number;
+  normalizedPower?: number;
+};
+
+export type ResultsType = {
+  raceResults?: string;
+  webscorerResults?: string;
+  crossResults?: CrossResultsPreviewType;
+  omniResults?: OmniResultType;
+  runSignupResults?: OmniResultType;
 };

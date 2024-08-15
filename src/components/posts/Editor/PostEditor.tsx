@@ -154,13 +154,13 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   //   // setMobileMenu,
   // } = React.useContext(EditorContext);
 
-  React.useEffect(() => {
-    if (initialState) {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
-  }, [initialState]);
+  // React.useEffect(() => {
+  //   if (initialState) {
+  //     setTimeout(() => {
+  //       setLoading(false);
+  //     }, 1000);
+  //   }
+  // }, [initialState]);
 
   React.useEffect(() => {
     const subscription = API.graphql<
@@ -201,26 +201,26 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     }
 
     // setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
-    setPowers && setPowers(payload.powers);
-    setHearts && setHearts(payload.hearts);
+    // setPowers && setPowers(payload.powers);
+    // setHearts && setHearts(payload.hearts);
     setElevations && setElevations(payload.elevation);
     setActivity &&
       setActivity(payload.activity?.map((item) => ({ ...item })) ?? []);
   };
 
-  React.useEffect(() => {
-    let subUpdates: ZenObservable.Subscription;
+  // React.useEffect(() => {
+  //   let subUpdates: ZenObservable.Subscription;
 
-    setUpSub().then((sub) => {
-      subUpdates = sub;
-    });
+  //   setUpSub().then((sub) => {
+  //     subUpdates = sub;
+  //   });
 
-    return () => {
-      if (subUpdates) {
-        subUpdates.unsubscribe();
-      }
-    };
-  }, [subPubConfigured]);
+  //   return () => {
+  //     if (subUpdates) {
+  //       subUpdates.unsubscribe();
+  //     }
+  //   };
+  // }, [subPubConfigured]);
 
   const {
     id,
@@ -261,45 +261,45 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     });
   };
 
-  const setUpSub = async () => {
-    if (!subPubConfigured) {
-      const endpoint = await getEndpoint();
-      await configurePubSub(endpoint);
-      await attachIoTPolicyToUser();
-      setSubPubConfigured(true);
-    }
+  // const setUpSub = async () => {
+  //   if (!subPubConfigured) {
+  //     const endpoint = await getEndpoint();
+  //     await configurePubSub(endpoint);
+  //     await attachIoTPolicyToUser();
+  //     setSubPubConfigured(true);
+  //   }
 
-    return PubSub.subscribe(`post-${id}`).subscribe({
-      next: async (data: any) => {
-        console.log(data);
-        if (data.value.type === "video.asset.ready") {
-          // console.log("asseet reead");
-          Transforms.setNodes<CustomElement>(
-            editor,
-            {
-              isReady: true,
-            } as VideoEmbedType,
-            {
-              at: [],
-              match: (node) => {
-                const custom = node as CustomElement;
-                return custom.type === "videoEmbed" && custom.isReady === false;
-              },
-            }
-          );
+  //   return PubSub.subscribe(`post-${id}`).subscribe({
+  //     next: async (data: any) => {
+  //       console.log(data);
+  //       if (data.value.type === "video.asset.ready") {
+  //         // console.log("asseet reead");
+  //         Transforms.setNodes<CustomElement>(
+  //           editor,
+  //           {
+  //             isReady: true,
+  //           } as VideoEmbedType,
+  //           {
+  //             at: [],
+  //             match: (node) => {
+  //               const custom = node as CustomElement;
+  //               return custom.type === "videoEmbed" && custom.isReady === false;
+  //             },
+  //           }
+  //         );
 
-          await PostSaveComponents({
-            postId: id,
-            title: title,
-            postLocation: postLocation,
-            components: editor.children,
-            heroImage: heroImage ? JSON.stringify(heroImage) : "",
-          });
-        }
-      },
-      error: (error: any) => console.error(error),
-    });
-  };
+  //         await PostSaveComponents({
+  //           postId: id,
+  //           title: title,
+  //           postLocation: postLocation,
+  //           components: editor.children,
+  //           heroImage: heroImage ? JSON.stringify(heroImage) : "",
+  //         });
+  //       }
+  //     },
+  //     error: (error: any) => console.error(error),
+  //   });
+  // };
 
   const updateMenuPosition = React.useCallback(() => {
     const selection = editor.selection;
@@ -351,11 +351,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           editor={editor}
           initialValue={initialState}
           onChange={(newValue) => {
-            console.log(newValue);
-
             updateMenuPosition();
-
-            // console.log("on change");
             handleSelectionChange();
             setComponents && setComponents(newValue as Array<CustomElement>);
 
@@ -387,7 +383,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             spellCheck
             autoFocus
             renderElement={renderElement}
-            // decorate={SlateDecorate}
             renderLeaf={(props: RenderLeafProps) => {
               return (
                 <Leaf props={props} updateMenuPosition={updateMenuPosition} />

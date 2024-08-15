@@ -10,10 +10,12 @@ import (
 // publishMessage publishes a message using the IoT Data Plane client.
 // It takes an IoT Data Plane client as input and a postId as a string pointer.
 // The function returns an error if there was a problem publishing the message.
-func PublishMessage(iotClient *iotdataplane.IoTDataPlane, postId *string) error {
+func PublishMessage(iotClient *iotdataplane.IoTDataPlane, postId *string, message string) error {
+
+	var payload = fmt.Sprintf(`{"phase": "%s"}`, message)
 	input := &iotdataplane.PublishInput{
 		Topic:   aws.String(fmt.Sprintf("post-%s", *postId)),
-		Payload: []byte(`{"phase": "hellofromgo"}`),
+		Payload: []byte(payload),
 	}
 
 	_, err := iotClient.Publish(input)
