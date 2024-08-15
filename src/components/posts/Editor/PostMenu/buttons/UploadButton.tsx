@@ -1,0 +1,147 @@
+import { Box, Button, Flex, Input, Label, Spinner, Text } from "theme-ui";
+import React from "react";
+import { Auth, Storage } from "aws-amplify";
+import { PostContext, usePost } from "../../../../PostContext";
+import usePubSubSubscription from "../../../../../hooks/usePubSubSubscription";
+import { getPost } from "../../../../../actions/PostGet";
+
+const UploadButton = () => {
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = React.useState(false);
+  const [processingFile, setIsProcessingFile] = React.useState(false);
+  const [progress, setProgress] = React.useState({ loaded: 0, total: 0 });
+  const [processingGpxStatus, setProcessingGpxStatus] = React.useState("");
+  const { id, currentFtp, gpxFile } = React.useContext(PostContext);
+  const postCtx = usePost();
+
+  const handlePhase = async (phase: string) => {
+    switch (phase) {
+      case "go-start-processing":
+        setProcessingGpxStatus(`Analyzing Fit file`);
+        break;
+      case "go-finish-processing":
+        setProcessingGpxStatus(`Refreshing post data`);
+        await getPost(id, postCtx);
+        setProcessingGpxStatus(`Fit file processed`);
+        setIsProcessingFile(false);
+        break;
+      case "file-downloaded":
+        setProcessingGpxStatus("File being downloaded for processing.");
+        break;
+      case "meta-downloaded":
+        setProcessingGpxStatus("File metadata being fetched.");
+        break;
+      case "xml-parse":
+        setProcessingGpxStatus("XML is being parsed.");
+        break;
+      case "gpx-parse":
+        setProcessingGpxStatus("GPX XML is being converted to GeoJSON.");
+        break;
+      case "process-data":
+        setProcessingGpxStatus(
+          "Data is being processed and calculating metrics."
+        );
+        break;
+      case "update-data":
+        setProcessingGpxStatus("Metrics are being saved.");
+        setIsProcessingFile(false);
+        getPost(id, postCtx);
+        break;
+      default:
+        break;
+    }
+  };
+
+  usePubSubSubscription(id, handlePhase);
+
+  const handleButtonClick = () => {
+    fileInputRef.current!.click();
+  };
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProcessingGpxStatus("");
+    setIsProcessingFile(true);
+    const file = event.target.files?.[0];
+
+    if (!file || !file.name) {
+      console.log("no file", file);
+      return;
+    }
+
+    console.log("Selected file:", file);
+    const user = await Auth.currentUserCredentials();
+
+    await Storage.put(`uploads/${file.name.replace(" ", "_")}`, file, {
+      progressCallback(progress: { loaded: number; total: number }) {
+        setProgress({ loaded: progress.loaded, total: progress.total });
+        setProcessingGpxStatus(
+          `Uploading file - ${(
+            (progress.loaded / progress.total) *
+            100
+          ).toFixed(0)}%`
+        );
+        if (progress.total === progress.loaded) {
+          setIsUploading(false);
+        }
+      },
+      metadata: {
+        postId: id ? id : "",
+        currentFtp: (currentFtp ? currentFtp : 0).toString(),
+        identityId: user.identityId,
+      },
+      contentType: file.type,
+      level: "private",
+    });
+  };
+
+  return (
+    <>
+      <Flex sx={{ gap: "10px" }}>
+        <Label htmlFor="gpxFile" variant="defaultLabel">
+          Activity File <Text sx={{ fontSize: "15px" }}>(.fit or .gpx)</Text>
+        </Label>
+        <Text sx={{ color: "textMuted" }}>{processingGpxStatus}</Text>
+      </Flex>
+      <Flex sx={{ gap: "10px", flexDirection: ["column", "row", "row"] }}>
+        <Box sx={{ flex: 1 }}>
+          <Input
+            id="gpxFile"
+            name="gpxFile"
+            defaultValue={gpxFile ? gpxFile : ""}
+            variant={"defaultInput"}
+            readOnly={true}
+            sx={{
+              width: "100%",
+            }}
+          />
+        </Box>
+        <Input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          sx={{ display: "none" }}
+        />
+        <Button
+          type="button"
+          disabled={processingFile || progress.loaded > 0}
+          onClick={handleButtonClick}
+          sx={{
+            width: "auto",
+          }}
+          variant="primaryButton"
+        >
+          <Flex sx={{ gap: "10px" }}>
+            <Text>Upload</Text>
+            {processingFile && (
+              <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
+            )}
+          </Flex>
+        </Button>
+      </Flex>
+    </>
+  );
+};
+
+export default UploadButton;

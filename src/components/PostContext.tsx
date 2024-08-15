@@ -90,4 +90,6 @@ const PostContext = React.createContext<PostContextType>({
   setElevations: () => {},
 });
 
-export { PostContext };
+const usePost = () => React.useContext(PostContext);
+
+export { PostContext, usePost };

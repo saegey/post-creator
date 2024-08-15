@@ -229,6 +229,9 @@ export default {
       backgroundColor: "text",
       color: "background",
       fontSize: "14px",
+      paddingY: "10px",
+      paddingX: "20px",
+      lineHeight: "20px",
       fontWeight: "400",
       "&:hover": {
         backgroundColor: "primaryButtonBackgroundHover",
@@ -275,6 +278,7 @@ export default {
       backgroundColor: "transparent",
       fontSize: "16px",
       padding: "10px",
+      // height: "30px",
     },
     errorInput: {
       borderColor: "#de4747",
