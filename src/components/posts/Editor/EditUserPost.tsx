@@ -22,7 +22,6 @@ const EditUserPost = ({
 }: EditUserPostProps) => {
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
-  const [isGpxUploadOpen, setIsGpxUploadOpen] = React.useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = React.useState(false);
   const [isPhotoCaptionOpen, setIsPhotoCaptionOpen] = React.useState(false);
   const [isHeroImageModalOpen, setIsHeroImageModalOpen] = React.useState(false);
@@ -75,8 +74,6 @@ const EditUserPost = ({
             isGraphMenuOpen,
             setIsFtpUpdating,
             isFtpUpdating,
-            setIsGpxUploadOpen,
-            isGpxUploadOpen,
             isImageModalOpen,
             setIsImageModalOpen,
             isPhotoCaptionOpen,

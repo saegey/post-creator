@@ -331,7 +331,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       {isHeroImageModalOpen && (
         <AddImage setIsOpen={setIsHeroImageModalOpen} callback={addImage} />
       )}
-      {/* {isGpxUploadOpen && <UploadGpxModal />} */}
       {isShareModalOpen && <ShareModal />}
       <Box
         sx={{

@@ -26,7 +26,6 @@ import UploadButton from "./PostMenu/buttons/UploadButton";
 const PostSettings = () => {
   const {
     id,
-    gpxFile,
     setCurrentFtp,
     currentFtp,
     title,
@@ -39,20 +38,10 @@ const PostSettings = () => {
     setSubhead,
   } = React.useContext(PostContext);
 
-  const {
-    setIsFtpUpdating,
-    setIsGpxUploadOpen,
-    isSettingsModalOpen,
-    setIsSettingsModalOpen,
-  } = React.useContext(EditorContext);
+  const { setIsFtpUpdating, isSettingsModalOpen, setIsSettingsModalOpen } =
+    React.useContext(EditorContext);
 
   const [isSaving, setIsSaving] = React.useState(false);
-  // const { asPath } = useRouter();
-  // const origin =
-  //   typeof window !== "undefined" && window.location.origin
-  //     ? window.location.origin
-  //     : "";
-  // const URL = `${origin}${asPath}`;
 
   const processDeletePost = async () => {
     try {
@@ -127,7 +116,6 @@ const PostSettings = () => {
             flexDirection: "column",
             maxHeight: ["70vh", "", ""],
             overflow: "scroll",
-            // paddingTop: "10px",
           }}
         >
           {/* <Flex sx={{ gap: "10px" }}>
