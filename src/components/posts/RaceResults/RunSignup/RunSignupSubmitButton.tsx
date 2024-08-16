@@ -3,14 +3,14 @@ import React from "react";
 
 import { getRunSignupResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 import { NotificationContext } from "../../../NotificationContext";
 
 const RunSignupSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { runSignupMeta, resultsUrl, setPreviewRunSignupResults } =
     React.useContext(ResultsContext);
-  const { setRunSignupResults } = React.useContext(PostContext);
+  const { setPost } = usePost();
   const { setNotification } = React.useContext(NotificationContext);
 
   const getResults = async () => {
@@ -22,14 +22,15 @@ const RunSignupSubmitButton = () => {
       category: runSignupMeta.category,
     });
 
-    setRunSignupResults &&
-      setRunSignupResults({
+    setPost({
+      runSignupResults: {
         results: results?.data,
         selected: undefined,
         eventName: runSignupMeta.eventName,
         category: runSignupMeta.category,
         categoryName: runSignupMeta.categoryName,
-      });
+      },
+    });
     setPreviewRunSignupResults(true);
     setIsLoading(false);
   };

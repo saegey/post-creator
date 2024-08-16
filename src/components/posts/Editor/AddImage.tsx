@@ -16,7 +16,7 @@ import ImagesButton from "./PostMenu/buttons/ImagesButton";
 const AddImage = ({ path }: { path: Path }) => {
   const { setIsNewComponentMenuOpen, setMobileMenu, mobileMenu } =
     React.useContext(EditorContext);
-  const { setImages, images, id } = React.useContext(PostContext);
+  const { setPost, images, id } = React.useContext(PostContext);
   const editor = useSlateStatic();
 
   const openModal = (open: Function) => {
@@ -96,13 +96,12 @@ const AddImage = ({ path }: { path: Path }) => {
             },
           },
         }}
-        onSuccess={async (result, { widget }) => {
-          // async (d) => {
+        onSuccess={async (result) => {
           const uploadImage = result.info as CloudinaryImage;
           images?.push(result.info as CloudinaryImage);
 
           if (images) {
-            setImages && setImages([...images]);
+            setPost({ images: [...images] });
             insertImage(uploadImage);
 
             try {
@@ -120,7 +119,6 @@ const AddImage = ({ path }: { path: Path }) => {
               console.error(errors);
             }
           }
-          // widget.close();
         }}
       >
         {({ open }) => {

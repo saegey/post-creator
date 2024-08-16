@@ -113,21 +113,23 @@ const PostsAll = ({ user }: { user: IUser }) => {
   }, [status]);
 
   const createNewPost = async () => {
-    const response = (await API.graphql({
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-      query: createPost,
-      variables: {
-        input: {
-          title: "",
-          type: "Post",
-          privacyStatus: "draft",
-          components: JSON.stringify([
-            { type: "text", children: [{ text: "" }] },
-          ]),
-          postAuthorId: user?.attributes.sub,
+    var response;
+    try {
+      response = (await API.graphql({
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+        query: createPost,
+        variables: {
+          input: {
+            title: "",
+            type: "Post",
+            privacyStatus: "draft",
+            postAuthorId: user?.attributes.sub,
+          },
         },
-      },
-    })) as GraphQLResult<CreatePostMutation>;
+      })) as GraphQLResult<CreatePostMutation>;
+    } catch (e) {
+      console.error(e);
+    }
 
     if (!response || !response.data || !response.data.createPost) {
       console.error("failed to create post");

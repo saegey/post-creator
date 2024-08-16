@@ -1,8 +1,7 @@
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { Transforms, Editor } from "slate";
+import { Transforms } from "slate";
 import { Box } from "theme-ui";
 import React from "react";
-// import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PowerCurveGraph } from "./PowerCurveGraph";
 import { PostContext } from "../../PostContext";
@@ -14,13 +13,6 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
   const { powerAnalysis, currentFtp } = React.useContext(PostContext);
-
-  // const editor = useSlateStatic();
-  // const path = ReactEditor.findPath(editor, element);
-
-  // if (!powerAnalysis) {
-  //   return <></>;
-  // }
 
   const hoverAction = React.useMemo(() => {
     return (

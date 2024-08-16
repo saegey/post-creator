@@ -1,6 +1,5 @@
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
-import dynamic from "next/dynamic";
 import { Box, Spinner, Flex } from "theme-ui";
 import { Transforms } from "slate";
 
@@ -10,10 +9,6 @@ import { VisualOverviewContext } from "./VisualOverviewContext";
 import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
 import VisualOverview from "./VisualOverview";
-
-// const VisualOverview = dynamic(import("./VisualOverview"), {
-//   ssr: false,
-// }); // Async API cannot be server-side rendered
 
 const VisualOverviewWrapper = ({
   element,
@@ -25,7 +20,6 @@ const VisualOverviewWrapper = ({
   unitOfMeasure: string;
 }) => {
   const { activity, elevations } = React.useContext(PostContext);
-  // console.log(elevations);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 

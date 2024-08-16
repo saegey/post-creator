@@ -2,11 +2,11 @@ import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
 import { Transforms } from "slate";
 
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
 import { CustomEditor } from "../../../../types/common";
 import { ResultsContext } from "../ResultsContext";
-import { saveRunSignupResults, saveWebscorerResults } from "../api";
+import { saveRunSignupResults } from "../api";
 import ResultsBox from "../shared/ResultsBox";
 
 interface IObjectKeys {
@@ -25,8 +25,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { runSignupResults, id, setRunSignupResults } =
-    React.useContext(PostContext);
+  const { runSignupResults, id, setPost } = usePost();
   const { setIsRaceResultsModalOpen, menuPosition } =
     React.useContext(EditorContext);
   const { runSignupMeta, resultsUrl, setPreviewRunSignupResults } =
@@ -48,15 +47,15 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
       selected: runSignupResults?.selected,
     });
 
-    setRunSignupResults &&
-      runSignupResults &&
-      setRunSignupResults({
+    setPost({
+      runSignupResults: {
         ...runSignupResults,
         results: runSignupResults?.results,
         eventName: runSignupMeta.eventName,
         category: runSignupMeta.category,
         categoryName: runSignupMeta.categoryName,
-      });
+      },
+    });
 
     Transforms.insertNodes(
       editor,
@@ -160,21 +159,23 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     onClick={() => {
                       if (selectedRow === i) {
                         setSelectedRow(undefined);
-                        setRunSignupResults &&
-                          setRunSignupResults({
+                        setPost({
+                          runSignupResults: {
                             ...runSignupResults,
                             selected: undefined,
-                          });
+                          },
+                        });
                       } else {
                         setSelectedRow(i);
-                        setRunSignupResults &&
-                          setRunSignupResults({
+                        setPost({
+                          runSignupResults: {
                             ...runSignupResults,
                             selected:
                               runSignupResults && runSignupResults.results
                                 ? formatResults()?.results[i]
                                 : undefined,
-                          });
+                          },
+                        });
                       }
                     }}
                   >

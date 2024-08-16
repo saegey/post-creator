@@ -3,14 +3,14 @@ import React from "react";
 
 import { getResults } from "./../api";
 import { ResultsContext } from "./../ResultsContext";
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 import { NotificationContext } from "../../../NotificationContext";
 
 const RaceResultsSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { raceResultsMeta, resultsUrl, setPreviewResults } =
     React.useContext(ResultsContext);
-  const { setRaceResults, raceResults } = React.useContext(PostContext);
+  const { setPost, raceResults } = usePost();
   const { setNotification } = React.useContext(NotificationContext);
 
   const { category, key, server, division, eventName } = raceResultsMeta;
@@ -31,15 +31,16 @@ const RaceResultsSubmitButton = () => {
             url: resultsUrl,
           })
             .then((res) => {
-              setRaceResults &&
-                setRaceResults({
+              setPost({
+                raceResults: {
                   ...raceResults,
                   results: res,
                   selected: undefined,
                   category: raceResultsMeta.category,
                   division: raceResultsMeta.division,
                   eventName,
-                });
+                },
+              });
               setPreviewResults(true);
               setIsLoading(false);
             })

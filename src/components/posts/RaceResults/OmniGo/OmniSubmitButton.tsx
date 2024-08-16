@@ -2,13 +2,13 @@ import { Flex, Box, Button, Text, Spinner } from "theme-ui";
 import React from "react";
 
 import { getOmniResults } from "./../api";
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 import { ResultsContext } from "./../ResultsContext";
 
 const OmniSubmitButton = () => {
   const { resultsUrl, omniMeta, setPreviewOmniResults } =
     React.useContext(ResultsContext);
-  const { setOmniResults, omniResults } = React.useContext(PostContext);
+  const { setPost, omniResults } = usePost();
   const { category } = omniMeta;
 
   const [isLoading, setIsLoading] = React.useState(false);
@@ -24,14 +24,15 @@ const OmniSubmitButton = () => {
 
           getOmniResults({ url: resultsUrl, category }).then((r) => {
             console.log(r);
-            setOmniResults &&
-              setOmniResults({
+            setPost({
+              omniResults: {
                 ...omniResults,
                 results: r.data,
                 selected: undefined,
                 category: omniMeta.category,
                 eventName: omniMeta.eventName,
-              });
+              },
+            });
 
             setPreviewOmniResults(true);
             setIsLoading(false);

@@ -187,7 +187,6 @@ const ElevationGraph = ({
 
   const { refAreaLeft, refAreaRight } = zoomGraph;
 
-  console.log(data);
   const points = data.map(
     (d, i) => new Object({ x: d.d, y: d.e, i: i })
   ) as Array<{ x: number; y: number; i: number }>;

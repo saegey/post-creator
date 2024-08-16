@@ -5,7 +5,6 @@ import {
   useFocused,
 } from "slate-react";
 import { Transforms } from "slate";
-import { CldImage } from "next-cloudinary";
 import { Box, Button, Label, Textarea, Close, Flex, Text } from "theme-ui";
 import React from "react";
 import { getCldImageUrl } from "next-cloudinary";
@@ -19,7 +18,6 @@ import MaximizeIcon from "../../icons/MaximizeIcon";
 import ImageFullScreen from "./ImageFullScreen";
 import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
-import BlackBox from "../../layout/BlackBox";
 import StandardModal from "../../shared/StandardModal";
 
 import { useViewport } from "../../ViewportProvider";
@@ -111,10 +109,6 @@ const ImageElement = ({
         )}
         <Box
           sx={{
-            // position: "relative",
-            // width: ["100%", "900px", "900px"],
-            // maxWidth: "900px",
-            // marginX: "auto",
             marginY: ["20px", "20px", "20px"],
             height: "fit-content",
             marginBottom: "20px",
@@ -124,9 +118,7 @@ const ImageElement = ({
             <Flex
               sx={{
                 width: "100%",
-                // maxWidth: "1200px",
                 height: "auto",
-                // height: "600px",
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor: imageMeta?.colors
@@ -140,54 +132,15 @@ const ImageElement = ({
                 alt="Uploaded"
                 width={600}
                 height={500}
-                // layout="responsive"
                 style={{
                   maxWidth: "100%",
                   height: "auto",
-                  // objectFit: "cover",
-                  // width: "100%",
-                  // maxHeight: "100%",
-                  // borderRadius:
-                  //   imageMeta &&
-                  //   imageMeta.width &&
-                  //   imageMeta.height &&
-                  //   imageMeta?.width > imageMeta?.height
-                  //     ? "5px"
-                  //     : "0px",
                   boxShadow: `${
                     selected && focused ? "0 0 0 3px #B4D5FF" : "none"
                   }`,
                 }}
                 priority={true}
               />
-              {/* <CldImage
-                width={width < 690 ? width : 690}
-                height={imageMeta?.height / (imageMeta?.width / imageWidth)}
-                src={element.public_id}
-                sizes="100vw"
-                alt="race pic"
-                quality={90}
-                style={{
-                  objectFit: "cover",
-                  // width: "100%",
-                  // maxHeight: "100%",
-                  // borderRadius:
-                  //   imageMeta &&
-                  //   imageMeta.width &&
-                  //   imageMeta.height &&
-                  //   imageMeta?.width > imageMeta?.height
-                  //     ? "5px"
-                  //     : "0px",
-                  boxShadow: `${
-                    selected && focused ? "0 0 0 3px #B4D5FF" : "none"
-                  }`,
-                }}
-                config={{
-                  cloud: {
-                    cloudName: cloudUrl,
-                  },
-                }}
-              /> */}
             </Flex>
             <Box
               sx={{

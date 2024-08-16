@@ -4,7 +4,7 @@ import { useSlateStatic, ReactEditor } from "slate-react";
 import React from "react";
 
 import TimePowerZones from "./TimePowerZones";
-import { PostContext } from "../../PostContext";
+import { usePost } from "../../PostContext";
 import { CustomEditor, TimeInZonesType } from "../../../types/common";
 import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
@@ -12,10 +12,9 @@ import HoverAction from "../Editor/HoverAction";
 const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
   const editor = useSlateStatic() as CustomEditor;
   const path = ReactEditor.findPath(editor, element);
-  const { powerZones, powerZoneBuckets } = React.useContext(PostContext);
+  const { powerZones, powerZoneBuckets } = usePost();
 
   const hoverAction = React.useMemo(() => {
-    console.log("render time in zones");
     return (
       <HoverAction element={element}>
         <Box variant="boxes.componentCard" contentEditable={false}>

@@ -4,7 +4,7 @@ import { Transforms } from "slate";
 
 import { PostContext } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
-import { CustomEditor, CustomElement } from "../../../../types/common";
+import { CustomEditor } from "../../../../types/common";
 import { saveCrossResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 
@@ -12,7 +12,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { crossResults, id, setCrossResults } = React.useContext(PostContext);
+  const { crossResults, id, setPost } = React.useContext(PostContext);
   const { setIsRaceResultsModalOpen, menuPosition } =
     React.useContext(EditorContext);
   const { crossResultsMeta, setCrossResultsMeta, resultsUrl } =
@@ -79,21 +79,23 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
-                    setCrossResults &&
-                      setCrossResults({
+                    setPost({
+                      crossResults: {
                         ...crossResults,
                         selected: undefined,
-                      });
+                      },
+                    });
                   } else {
                     setSelectedRow(i);
-                    setCrossResults &&
-                      setCrossResults({
+                    setPost({
+                      crossResults: {
                         ...crossResults,
                         selected:
                           crossResults && crossResults.results
                             ? crossResults.results[i]
                             : undefined,
-                      });
+                      },
+                    });
                   }
                 }}
               >
@@ -159,13 +161,13 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   category: crossResultsMeta.category,
                 });
 
-                setCrossResults &&
-                  crossResults &&
-                  setCrossResults({
+                setPost({
+                  crossResults: {
                     ...crossResults,
                     category: crossResultsMeta.category,
                     eventName: crossResultsMeta.eventName,
-                  });
+                  },
+                });
 
                 Transforms.insertNodes(
                   editor,

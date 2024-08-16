@@ -1,10 +1,9 @@
 import { Box, Grid, Text } from "theme-ui";
 import React from "react";
 
-import { useUnits } from "../../UnitProvider";
 import { formatTime } from "../../../utils/time";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
-import { PostContext } from "../../PostContext";
+import { usePost } from "../../PostContext";
 
 export const gradeToColor = (grade: number): string => {
   if (grade > 0 && grade < 4) return "green";
@@ -28,10 +27,6 @@ const ElevationSlice = ({
   unitOfMeasure: string;
 }) => {
   if (!data) return null;
-  // console.log(data, marker);
-  const { powers, hearts } = React.useContext(PostContext);
-
-  // const units = useUnits();
   const grade = marker && marker.i ? data[marker.i].g : "-";
 
   const distance =
@@ -44,45 +39,11 @@ const ElevationSlice = ({
       ? data[marker.i].e?.toFixed(0)
       : "-";
 
-  const time =
-    marker && marker.i
-      ? data[marker.i].t.toFixed(0)
-      : selection
-      ? data[selection[1]].t - data[selection[0]].t
-      : element && element.selectionEnd && element.selectionStart
-      ? (data[element.selectionEnd].t - data[element.selectionStart].t).toFixed(
-          2
-        )
-      : "";
+  const time = marker && marker.i ? data[marker.i].t.toFixed(0) : "";
 
-  let selectPowers;
-  if (selection) {
-    selectPowers = powers?.slice(selection[0], selection[1]);
-  } else if (element && element.selectionStart && element.selectionEnd) {
-    selectPowers = powers?.slice(element.selectionStart, element.selectionEnd);
-  }
+  const power = marker && marker.i ? data[marker.i].p : undefined;
 
-  // console.log(marker && marker.i);
-  const power =
-    marker && marker.i
-      ? data[marker.i].p
-      : selectPowers
-      ? selectPowers.reduce((a, b) => a + b) / selectPowers.length
-      : undefined;
-
-  const selectHearts =
-    hearts && selection
-      ? hearts.slice(selection[0], selection[1])
-      : element && element.selectionStart && element.selectionEnd
-      ? hearts?.slice(element.selectionStart, element.selectionEnd)
-      : undefined;
-
-  const heartSummary =
-    marker && marker.i
-      ? data[marker.i].h
-      : selectHearts !== undefined && selectHearts.length > 0
-      ? selectHearts.reduce((a, b) => a + b) / selectHearts.length
-      : undefined;
+  const heartSummary = marker && marker.i ? data[marker.i].h : undefined;
 
   return (
     <Grid

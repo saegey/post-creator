@@ -2,24 +2,12 @@ import React from "react";
 import { Box, Spinner } from "theme-ui";
 import mapboxgl, { GeoJSONSource, SkyLayer } from "mapbox-gl";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
-import { PostContext } from "../../PostContext";
-import { select } from "slate";
 import { VisualOverviewContext } from "./VisualOverviewContext";
-
-// type ActivityEvent = {
-//   c: Array<number>;
-//   t: number | null;
-//   g: number;
-//   d: number;
-//   e: number | null;
-// };
 
 interface MapProps {
   coordinates: Array<any>;
   markerCoordinates: ActivityItem | undefined;
   token: string;
-  // selection: [number, number];
-  // downsampleRate: number;
   element: VisualOverviewType;
 }
 
@@ -71,8 +59,6 @@ const Map = ({
   markerCoordinates,
   token,
   element,
-  // selection,
-  // downsampleRate,
 }: MapProps): JSX.Element => {
   if (!coordinates || coordinates.length === 0) {
     return (
@@ -181,7 +167,6 @@ const Map = ({
         console.error(e);
       }
     }
-    //
 
     if (!map.current.getSource("currentPosition")) {
       map.current?.addSource("currentPosition", {

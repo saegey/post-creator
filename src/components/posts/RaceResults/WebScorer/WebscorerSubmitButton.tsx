@@ -3,13 +3,13 @@ import React from "react";
 
 import { getWebscorerResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 
 const WebscorerSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { webScorerMeta, setPreviewWebscorerResults, resultsUrl } =
     React.useContext(ResultsContext);
-  const { setWebscorerResults } = React.useContext(PostContext);
+  const { setPost } = usePost();
 
   return (
     <Box sx={{ marginLeft: "auto" }}>
@@ -22,13 +22,14 @@ const WebscorerSubmitButton = () => {
             url: resultsUrl,
             category: webScorerMeta.category,
           }).then((results) => {
-            setWebscorerResults &&
-              setWebscorerResults({
+            setPost({
+              webscorerResults: {
                 results: results.data,
                 selected: undefined,
                 eventName: webScorerMeta.eventName,
                 category: webScorerMeta.category,
-              });
+              },
+            });
             setPreviewWebscorerResults(true);
           });
           setIsLoading(false);

@@ -1,6 +1,5 @@
 import { Box, Flex, Button } from "theme-ui";
 import React from "react";
-import { CldImage } from "next-cloudinary";
 import { getCldImageUrl } from "next-cloudinary";
 
 import { PostContext } from "../../PostContext";
@@ -23,8 +22,6 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
     setIsHeroImageModalOpen,
     setIsPhotoCaptionOpen,
     isPhotoCaptionOpen,
-    setMenuPosition,
-    menuPosition,
     setMobileMenu,
   } = React.useContext(EditorContext);
 
@@ -125,10 +122,6 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                 background: "divider",
                 justifyContent: "center",
                 alignContent: "center",
-                // height: "600px",
-                // "@media (min-width: 900px)": {
-                //   height: "700px",
-                // },
               }}
             >
               <Flex>
@@ -140,18 +133,6 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   }}
                   onClick={() => {
                     setIsHeroImageModalOpen(true);
-                    // setMenuPosition({
-                    //   ...menuPosition,
-                    //   top: 0,
-                    //   left: 0,
-                    // });
-                    // setMobileMenu({
-                    //   display: false,
-                    //   top: 0,
-                    //   left: 0,
-                    //   path: [0, 0],
-                    //   isFullScreen: false,
-                    // });
                   }}
                 >
                   Add Image
@@ -166,11 +147,6 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   heroImage && heroImage.colors ? heroImage.colors[0] : "black",
                 width: ["100%", "65%", "65%"],
                 display: ["inline-block", "", ""],
-
-                // height: "600px",
-                // "@media (min-width: 900px)": {
-                //   height: "700px",
-                // },
               }}
             >
               {imageUrl && (
@@ -178,7 +154,6 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   sx={{
                     justifyContent: "center",
                     alignItems: "center",
-                    // height: "100vh",
                   }}
                 >
                   <Image
@@ -190,39 +165,11 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                     style={{
                       maxWidth: "100%",
                       height: "auto",
-                      // width: "100%",
-                      // height: "100%",
-                      // marginTop: "auto",
-                      // marginBottom: "auto",
-                      // borderRadius: "100%",
-                      // objectFit: "cover",
                     }}
                     priority={true}
                   />
                 </Flex>
               )}
-              {/* <CldImage
-                // priority={true}
-                width={heroImage.width < 690 ? heroImage.width : 690}
-                height={heroImage?.height / (heroImage?.width / imageWidth)}
-                src={heroImage.public_id}
-                // src={
-                //   typeof window !== "undefined"
-                //     ? heroImage.public_id
-                //     : `https://res.cloudinary.com/${cloudUrl}/image/upload/${heroImage.public_id}.jpg`
-                // }
-                alt="race pic"
-                style={{
-                  objectFit: "contain",
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                }}
-                config={{
-                  cloud: {
-                    cloudName: cloudUrl,
-                  },
-                }}
-              /> */}
             </Flex>
           ) : (
             <></>

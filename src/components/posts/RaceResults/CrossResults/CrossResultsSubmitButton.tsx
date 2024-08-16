@@ -2,14 +2,14 @@ import { Flex, Box, Button, Text, Spinner } from "theme-ui";
 import React from "react";
 import { getCrossResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 
 const CrossResultsSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { resultsUrl, crossResultsMeta, setPreviewCrossResults } =
     React.useContext(ResultsContext);
 
-  const { setCrossResults } = React.useContext(PostContext);
+  const { setPost } = usePost();
   const { category, eventName } = crossResultsMeta;
 
   return (
@@ -24,12 +24,13 @@ const CrossResultsSubmitButton = () => {
               .filter((row) => row["RaceCategoryName"] === category)
               .sort((a, b) => (a["Place"] > b["Place"] ? 1 : -1));
 
-            setCrossResults &&
-              setCrossResults({
+            setPost({
+              crossResults: {
                 results: catResults,
                 selected: undefined,
                 eventName: eventName,
-              });
+              },
+            });
             setPreviewCrossResults(true);
           });
           setIsLoading(false);

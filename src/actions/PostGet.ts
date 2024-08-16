@@ -51,46 +51,7 @@ const getPost = async (id: string, postCtx: PostContextType) => {
   if (!post || !post.timeSeriesFile) {
     throw new Error("Post is undefined");
   }
-  const {
-    setGpxFile,
-    setElevationTotal,
-    setDistance,
-    setElapsedTime,
-    setStoppedTime,
-    setTimeSeriesFile,
-    setNormalizedPower,
-    setTempAnalysis,
-    setHeartAnalysis,
-    setCadenceAnalysis,
-    setPowerZones,
-    setPowerZoneBuckets,
-    setTimeInRed,
-    setElevations,
-    setActivity,
-  } = postCtx;
-
-  setGpxFile && setGpxFile(post.gpxFile || "");
-  setElevationTotal && setElevationTotal(post.elevationTotal);
-  setDistance && setDistance(post.distance);
-  setElapsedTime && setElapsedTime(post.elapsedTime);
-  setStoppedTime && setStoppedTime(post.stoppedTime);
-  setTimeSeriesFile && setTimeSeriesFile(post.timeSeriesFile);
-  setNormalizedPower && setNormalizedPower(post.normalizedPower);
-  setTempAnalysis &&
-    setTempAnalysis(post.tempAnalysis ? JSON.parse(post.tempAnalysis) : {});
-  setHeartAnalysis &&
-    setHeartAnalysis(post.heartAnalysis ? JSON.parse(post.heartAnalysis) : {});
-  setCadenceAnalysis &&
-    setCadenceAnalysis(
-      post.cadenceAnalysis ? JSON.parse(post.cadenceAnalysis) : {}
-    );
-  setPowerZones &&
-    setPowerZones(post.powerZones ? JSON.parse(post.powerZones) : {});
-  setPowerZoneBuckets &&
-    setPowerZoneBuckets(
-      post.powerZoneBuckets ? JSON.parse(post.powerZoneBuckets) : {}
-    );
-  setTimeInRed && setTimeInRed(post.timeInRed);
+  const { setPost } = postCtx;
 
   const payload = await getActivityData(post.timeSeriesFile);
   if (!payload) {
@@ -99,9 +60,26 @@ const getPost = async (id: string, postCtx: PostContextType) => {
   }
   console.log("payload:", payload);
 
-  setElevations && setElevations(payload.elevation);
-  setActivity &&
-    setActivity(payload.activity?.map((item) => ({ ...item })) ?? []);
+  setPost({
+    gpxFile: post.gpxFile,
+    elevationTotal: post.elevationTotal,
+    distance: post.distance,
+    elapsedTime: post.elapsedTime,
+    timeSeriesFile: post.timeSeriesFile,
+    normalizedPower: post.normalizedPower,
+    tempAnalysis: post.tempAnalysis ? JSON.parse(post.tempAnalysis) : {},
+    heartAnalysis: post.heartAnalysis ? JSON.parse(post.heartAnalysis) : {},
+    cadenceAnalysis: post.cadenceAnalysis
+      ? JSON.parse(post.cadenceAnalysis)
+      : {},
+    powerZones: post.powerZones ? JSON.parse(post.powerZones) : {},
+    powerZoneBuckets: post.powerZoneBuckets
+      ? JSON.parse(post.powerZoneBuckets)
+      : {},
+    timeInRed: post.timeInRed,
+    elevations: payload.elevation,
+    activity: payload.activity?.map((item) => ({ ...item })) ?? [],
+  });
 };
 
 export { getActivity, getPost };

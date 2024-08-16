@@ -1,13 +1,4 @@
-import {
-  Box,
-  Flex,
-  Text,
-  Input,
-  Button,
-  Label,
-  Spinner,
-  Link as ThemeLink,
-} from "theme-ui";
+import { Box, Flex, Text, Input, Button, Label, Spinner } from "theme-ui";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -18,25 +9,17 @@ import { EditorContext } from "./EditorContext";
 import { UpdatePostMutation, DeletePostMutation } from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
 import { updatePost, deletePost } from "../../../../src/graphql/mutations";
-import Link from "next/link";
 import PreviewButton from "./PostMenu/buttons/PreviewButton";
 import ShareButton from "./PostMenu/buttons/ShareButton";
 import UploadButton from "./PostMenu/buttons/UploadButton";
+import {
+  updatePostSettings,
+  UpdatePostSettingsMutation,
+} from "../../../graphql/customMutations";
 
 const PostSettings = () => {
-  const {
-    id,
-    setCurrentFtp,
-    currentFtp,
-    title,
-    setTitle,
-    postLocation,
-    setPostLocation,
-    setDate,
-    date,
-    subhead,
-    setSubhead,
-  } = React.useContext(PostContext);
+  const { id, currentFtp, title, postLocation, date, subhead, setPost } =
+    React.useContext(PostContext);
 
   const { setIsFtpUpdating, isSettingsModalOpen, setIsSettingsModalOpen } =
     React.useContext(EditorContext);
@@ -68,16 +51,10 @@ const PostSettings = () => {
       setIsFtpUpdating(true);
     }
 
-    setCurrentFtp && setCurrentFtp(Number(newFtp));
-    setTitle && setTitle(form.get("title") as string);
-    setPostLocation && setPostLocation(form.get("postLocation") as string);
-    setDate && setDate(form.get("eventDate") as string);
-    setSubhead && setSubhead(form.get("subhead") as string);
-
     try {
       (await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: updatePost,
+        query: updatePostSettings,
         variables: {
           input: {
             currentFtp: form.get("currentFtp"),
@@ -88,13 +65,21 @@ const PostSettings = () => {
             id: id,
           },
         },
-      })) as GraphQLResult<UpdatePostMutation>;
+      })) as GraphQLResult<UpdatePostSettingsMutation>;
 
       setIsSaving(false);
       setIsSettingsModalOpen(false);
     } catch (errors) {
-      console.error(errors);
+      console.error(JSON.stringify(errors));
     }
+
+    setPost({
+      currentFtp: Number(newFtp),
+      title: form.get("title") as string,
+      postLocation: form.get("postLocation") as string,
+      date: form.get("eventDate") as string,
+      subhead: form.get("subhead") as string,
+    });
   };
 
   return (

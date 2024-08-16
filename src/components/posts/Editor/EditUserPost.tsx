@@ -6,20 +6,16 @@ import PostEditor from "./PostEditor";
 import Header from "../../shared/Header";
 import { EditorContext } from "../Editor/EditorContext";
 import { IUser } from "../../../types/common";
+import { usePost } from "../../PostContext";
 
 type EditUserPostProps = {
   user?: IUser;
-  postComponents: any;
-  postId: string;
-  author: any;
+  // postComponents: any;
+  // postId: string;
+  // author: any;
 };
 
-const EditUserPost = ({
-  user,
-  postComponents,
-  postId,
-  author,
-}: EditUserPostProps) => {
+const EditUserPost = ({ user }: EditUserPostProps) => {
   const [isGraphMenuOpen, setIsGraphMenuOpen] = React.useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = React.useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = React.useState(false);
@@ -50,9 +46,10 @@ const EditUserPost = ({
   });
   const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
   const [isRWGPSModalOpen, setIsRWGPSModalOpen] = React.useState(false);
+  const { id: postId, author, components } = usePost();
 
   React.useEffect(() => {
-    if (user && user?.attributes.sub !== author.id) {
+    if (user && user?.attributes.sub !== author?.id) {
       Router.push(`/posts/${postId}`);
     }
   }, []);
@@ -105,7 +102,7 @@ const EditUserPost = ({
           }}
         >
           {user && <Header user={user} />}
-          <PostEditor initialState={postComponents} />
+          <PostEditor initialState={components} />
         </EditorContext.Provider>
       </Box>
     </Box>
