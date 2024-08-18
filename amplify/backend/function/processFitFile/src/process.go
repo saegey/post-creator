@@ -32,7 +32,7 @@ func convertToInt8Slice(slice []int8) []uint8 {
 	return result
 }
 
-func ProcessActivityRecords(activity *fit.ActivityFile, postId *string, bucket string, identityId string) {
+func ProcessActivityRecords(activity *fit.ActivityFile, postId *string, bucket string, identityId string, gpxFileName string) {
 	// Variables for calculations and data storage
 	var totalPower int
 	var count int
@@ -216,5 +216,5 @@ func ProcessActivityRecords(activity *fit.ActivityFile, postId *string, bucket s
 	}
 
 	// Update DynamoDB item
-	dynamo.UpdateItem(*postId, tempResults, cadenceResults, totalDistance, heartResults, totalElevationGain, int(stoppedTime.Seconds()), int(elapsedTime.Seconds()), normalizedPower, nil, nil, 0, s3key, powerResults)
+	dynamo.UpdateItem(*postId, tempResults, cadenceResults, totalDistance, heartResults, totalElevationGain, int(stoppedTime.Seconds()), int(elapsedTime.Seconds()), normalizedPower, nil, nil, 0, s3key, powerResults, gpxFileName)
 }

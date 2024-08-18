@@ -43,7 +43,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     []
   );
 
-  const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
   const [selectionMenu, setSelectionMenu] = React.useState<{
@@ -208,13 +207,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     // setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
 
-    await PostSaveComponents({
-      postId: id,
-      title: title,
-      postLocation: postLocation,
-      components: editor.children,
-      heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
-    });
+    // await PostSaveComponents({
+    //   postId: id,,
+    //   components: editor.children,
+    //   heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
+    // });
   };
 
   // const setUpSub = async () => {

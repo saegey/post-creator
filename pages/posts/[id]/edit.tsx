@@ -106,7 +106,17 @@ const getUserAndPost = async ({ req, params }: ServerSideProps) => {
         ...post,
         components: post.components
           ? (JSON.parse(post.components) as Array<CustomElement>)
-          : [{ type: "heroBanner", children: [{ text: "" }], void: true }],
+          : [
+              { type: "heroBanner", children: [{ text: "" }], void: true },
+              {
+                type: "postAuthor",
+                children: [{ text: "" }],
+              },
+              {
+                type: "paragraph",
+                children: [{ text: "Discuss your activity..." }],
+              },
+            ],
         images: post.images
           ? (JSON.parse(post.images) as Array<CloudinaryImage>)
           : [],

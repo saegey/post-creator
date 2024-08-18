@@ -57,54 +57,54 @@ const EditUserPost = ({ user }: EditUserPostProps) => {
   return (
     <Box
       as="main"
-      sx={{
-        width: "100vw",
-        flexGrow: 1,
-      }}
+      sx={
+        {
+          // width: "100vw",
+          // flexGrow: 1,
+        }
+      }
     >
-      <Box>
-        <EditorContext.Provider
-          value={{
-            isNewComponentMenuOpen,
-            setIsNewComponentMenuOpen,
-            setIsGraphMenuOpen,
-            isGraphMenuOpen,
-            setIsFtpUpdating,
-            isFtpUpdating,
-            isImageModalOpen,
-            setIsImageModalOpen,
-            isPhotoCaptionOpen,
-            setIsPhotoCaptionOpen,
-            isHeroImageModalOpen,
-            setIsHeroImageModalOpen,
-            isShareModalOpen,
-            setIsShareModalOpen,
-            isRaceResultsModalOpen,
-            setIsRaceResultsModalOpen,
-            isSettingsModalOpen,
-            setIsSettingsModalOpen,
-            isSavingPost,
-            setIsSavingPost,
-            savingStatus,
-            setSavingStatus,
-            isPublishedConfirmationOpen,
-            setIsPublishedConfirmationOpen,
-            isVideoUploadOpen,
-            setIsVideoUploadOpen,
-            menuPosition,
-            setMenuPosition,
-            isStravaModalOpen,
-            setIsStravaModalOpen,
-            isRWGPSModalOpen,
-            setIsRWGPSModalOpen,
-            mobileMenu,
-            setMobileMenu,
-          }}
-        >
-          {user && <Header user={user} />}
-          <PostEditor initialState={components} />
-        </EditorContext.Provider>
-      </Box>
+      <EditorContext.Provider
+        value={{
+          isNewComponentMenuOpen,
+          setIsNewComponentMenuOpen,
+          setIsGraphMenuOpen,
+          isGraphMenuOpen,
+          setIsFtpUpdating,
+          isFtpUpdating,
+          isImageModalOpen,
+          setIsImageModalOpen,
+          isPhotoCaptionOpen,
+          setIsPhotoCaptionOpen,
+          isHeroImageModalOpen,
+          setIsHeroImageModalOpen,
+          isShareModalOpen,
+          setIsShareModalOpen,
+          isRaceResultsModalOpen,
+          setIsRaceResultsModalOpen,
+          isSettingsModalOpen,
+          setIsSettingsModalOpen,
+          isSavingPost,
+          setIsSavingPost,
+          savingStatus,
+          setSavingStatus,
+          isPublishedConfirmationOpen,
+          setIsPublishedConfirmationOpen,
+          isVideoUploadOpen,
+          setIsVideoUploadOpen,
+          menuPosition,
+          setMenuPosition,
+          isStravaModalOpen,
+          setIsStravaModalOpen,
+          isRWGPSModalOpen,
+          setIsRWGPSModalOpen,
+          mobileMenu,
+          setMobileMenu,
+        }}
+      >
+        {user && <Header user={user} />}
+        <PostEditor initialState={components} />
+      </EditorContext.Provider>
     </Box>
   );
 };

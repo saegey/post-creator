@@ -10,15 +10,9 @@ import "react-slideshow-image/dist/styles.css";
 
 const ImageFullScreen = ({
   setIsMaximized,
-  width,
-  height,
-  public_id,
   index,
 }: {
   setIsMaximized: React.Dispatch<React.SetStateAction<boolean>>;
-  width: number;
-  height: number;
-  public_id: string;
   index: number;
 }) => {
   const [currentIndex] = React.useState(index);
@@ -118,6 +112,7 @@ const ImageFullScreen = ({
                 width: "100%",
                 backgroundColor: "black",
               }}
+              key={`image-${index}`}
             >
               <CldImage
                 key={image.public_id}

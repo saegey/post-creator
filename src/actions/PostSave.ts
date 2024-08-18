@@ -8,22 +8,14 @@ import { CloudinaryImage } from "../types/common";
 
 interface PostSaveProps {
   postId: string | undefined;
-  title: string | undefined;
-  postLocation: string | undefined | null;
   components: Array<any>;
-  stravaUrl?: string;
-  resultsUrl?: string;
-  currentFtp?: string;
-  heroImage?: string;
 }
 
 const PostSaveComponents = async ({
-  postId,
-  title,
   components,
-  postLocation,
-  heroImage,
-}: PostSaveProps) => {
+  postId,
+}: // heroImage,
+PostSaveProps) => {
   try {
     const response = (await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
@@ -31,9 +23,7 @@ const PostSaveComponents = async ({
       variables: {
         input: {
           id: postId,
-          title: title,
-          postLocation: postLocation,
-          heroImage: heroImage ? heroImage : null,
+          // heroImage: heroImage ? heroImage : null,
           components: JSON.stringify(components),
         },
       },

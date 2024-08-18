@@ -95,7 +95,9 @@ const Header = ({ user }: { user: IUser }) => {
             }}
           >
             <MenuButton
-              sx={{ marginY: "auto", border: "1px solid buttonBorderColor" }}
+              sx={{
+                marginY: "auto",
+              }}
               aria-label="Toggle Menu"
             />
             {user && user.attributes && user.attributes.picture && (
@@ -112,7 +114,6 @@ const Header = ({ user }: { user: IUser }) => {
                   alt="Uploaded"
                   width={400}
                   height={300}
-                  // layout="responsive"
                   style={{
                     width: "100%",
                     height: "100%",
@@ -129,7 +130,6 @@ const Header = ({ user }: { user: IUser }) => {
           <Flex
             sx={{
               justifyContent: "end",
-              // marginLeft: "10px",
               gap: "10px",
               flexGrow: 1,
               alignItems: "center",

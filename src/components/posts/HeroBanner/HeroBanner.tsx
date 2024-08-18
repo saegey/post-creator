@@ -43,7 +43,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
     ? getCldImageUrl(
         {
           src: heroImage?.public_id,
-          width: width < 690 ? width : 690,
+          // width: width < 690 ? width : 690,
           height: heroImage?.height / (heroImage?.width / imageWidth),
         },
         {

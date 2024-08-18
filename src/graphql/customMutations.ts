@@ -4,40 +4,8 @@ export const updatePostMinimal = /* GraphQL */ `
     $condition: ModelPostConditionInput
   ) {
     updatePost(input: $input, condition: $condition) {
-      id
-      title
-      gpxFile
-      images
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      type
-      subType
-      teaser
-      currentFtp
       components
       heroImage
-      blog {
-        id
-        name
-        posts {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        owner
-        __typename
-      }
-      createdAt
-      updatedAt
-      blogPostsId
-      postRelatedId
-      owner
-      __typename
     }
   }
 `;
@@ -74,6 +42,21 @@ export const updatePostSettings = /* GraphQL */ `
       teaser
       currentFtp
       updatedAt
+    }
+  }
+`;
+
+export const createPostNew = /* GraphQL */ `
+  mutation CreatePostNew(
+    $input: CreatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    createPost(input: $input, condition: $condition) {
+      type
+      id
+      title
+      postAuthorId
+      privacyStatus
     }
   }
 `;

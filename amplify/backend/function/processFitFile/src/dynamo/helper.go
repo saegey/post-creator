@@ -16,7 +16,7 @@ type CadenceAnalysis map[string]uint16
 type HeartAnalysis map[string]uint16
 type PowerAnalysis map[string]uint16
 
-func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis CadenceAnalysis, distance float64, heartAnalysis HeartAnalysis, elevationGain float32, stoppedTime int, elapsedTime int, normalizedPower float32, zones []string, powerZoneBuckets []string, timeInRedSecs int, s3key string, powerAnalysis PowerAnalysis) error {
+func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis CadenceAnalysis, distance float64, heartAnalysis HeartAnalysis, elevationGain float32, stoppedTime int, elapsedTime int, normalizedPower float32, zones []string, powerZoneBuckets []string, timeInRedSecs int, s3key string, powerAnalysis PowerAnalysis, gpxFile string) error {
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
 	}))
@@ -66,7 +66,7 @@ func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis Cadenc
 				S: aws.String(postId),
 			},
 		},
-		UpdateExpression: aws.String("SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf, powerAnalysis = :pa"),
+		UpdateExpression: aws.String("SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf, powerAnalysis = :pa, gpxFile = :gpx"),
 		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
 			":ta": {
 				M: tempMap,
@@ -129,6 +129,9 @@ func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis Cadenc
 			},
 			":tsf": {
 				S: aws.String(s3key),
+			},
+			":gpx": {
+				S: aws.String(gpxFile),
 			},
 		},
 	}

@@ -9,12 +9,12 @@ import PostCard from "./PostCard";
 import Header from "../../shared/Header";
 import { PostType } from "../../../../pages/posts";
 import { CreatePostMutation } from "../../../API";
-import { createPost } from "../../../graphql/mutations";
 import {
   listMyPostsCustom,
   listPostsCustom,
 } from "../../../graphql/customQueries";
 import { IUser } from "../../../types/common";
+import { createPostNew } from "../../../graphql/customMutations";
 
 interface ListPostsByCreatedAtTypes {
   listPostsByCreatedAt: {
@@ -117,7 +117,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
     try {
       response = (await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: createPost,
+        query: createPostNew,
         variables: {
           input: {
             title: "",
@@ -133,11 +133,9 @@ const PostsAll = ({ user }: { user: IUser }) => {
 
     if (!response || !response.data || !response.data.createPost) {
       console.error("failed to create post");
+    } else {
+      Router.push(`/posts/${response?.data?.createPost?.id}/edit`);
     }
-
-    Router.push(`/posts/${response?.data?.createPost?.id}/edit`);
-    // window.location.href = `/posts/${response?.data?.createPost?.id}/edit`;
-    // setNewPost(true);
   };
 
   return (
@@ -299,7 +297,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
           <>
             <Grid columns={[1, 2, 3]}>
               {posts.map((post, i) => (
-                <div key={`post${i}`}>
+                <div key={`post-${i}`}>
                   <PostCard post={post} showAuthor={false} />
                 </div>
               ))}

@@ -30,7 +30,7 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
   return (
     <>
       <StandardModal
-        title={"Add Caption"}
+        title={"Add Image"}
         setIsOpen={() => setIsHeroImageModalOpen(false)}
         isOpen={isHeroImageModalOpen}
       >

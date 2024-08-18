@@ -6,12 +6,13 @@ import usePubSubSubscription from "../../../../../hooks/usePubSubSubscription";
 import { getPost } from "../../../../../actions/PostGet";
 
 const UploadButton = () => {
+  const { id, currentFtp, gpxFile } = React.useContext(PostContext);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = React.useState(false);
+  // const [filename, setFilename] = React.useState(gpxFile);
   const [processingFile, setIsProcessingFile] = React.useState(false);
   const [progress, setProgress] = React.useState({ loaded: 0, total: 0 });
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState("");
-  const { id, currentFtp, gpxFile } = React.useContext(PostContext);
   const postCtx = usePost();
 
   const handlePhase = async (phase: string) => {
@@ -63,12 +64,14 @@ const UploadButton = () => {
   ) => {
     setProcessingGpxStatus("");
     setIsProcessingFile(true);
+
     const file = event.target.files?.[0];
 
     if (!file || !file.name) {
       console.log("no file", file);
       return;
     }
+    // setFilename(file?.name);
 
     console.log("Selected file:", file);
     const user = await Auth.currentUserCredentials();
