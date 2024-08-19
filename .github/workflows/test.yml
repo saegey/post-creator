@@ -19,11 +19,10 @@ jobs:
           echo "export default {};" > src/aws-exports.js
           cp aws-exports.mock.js src/aws-exports.js
 
-      - name: Run tests
-        run: |
-          npx jest --coverage --silent | tee ./coverage.txt && exit ${PIPESTATUS[0]}
-
-      - name: Jest Coverage Comment
-        uses: MishaKav/jest-coverage-comment@main
-        with:
-          coverage-path: ./coverage.txt
+      - name: "Test"
+        run: npx vitest --coverage.enabled true
+      - name: "Report Coverage"
+        # Set if: always() to also generate the report if tests are failing
+        # Only works if you set `reportOnFailure: true` in your vite config as specified above
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2

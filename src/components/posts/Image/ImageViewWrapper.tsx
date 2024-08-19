@@ -25,9 +25,9 @@ const ImageViewWrapper = ({ node }: { node: ImageElementType }) => {
       {isMaximized && imageMeta?.height && imageMeta?.width && (
         <ImageFullScreen
           setIsMaximized={setIsMaximized}
-          width={imageMeta?.width}
-          height={imageMeta?.height}
-          public_id={imageMeta.public_id}
+          // width={imageMeta?.width}
+          // height={imageMeta?.height}
+          // public_id={imageMeta.public_id}
           index={imageMetaIndex}
         />
       )}

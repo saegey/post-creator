@@ -1,4 +1,4 @@
-import { expect, jest, test } from "@jest/globals";
+import { test, describe, expect, vi } from "vitest";
 import { NextApiRequest } from "next";
 
 import { getServerSideProps } from "../pages/index";
@@ -7,12 +7,14 @@ import Post from "../src/actions/PostExplore";
 
 describe("renders a heading", () => {
   test("redirect if no current user", async () => {
-    User.getUser = jest.fn<typeof User.getUser>().mockImplementation(() => {
+    User.getUser = vi.fn<typeof User.getUser>().mockImplementation(() => {
       return Promise.resolve(null);
     });
+
     const req: NextApiRequest = {
       url: "/",
     } as NextApiRequest;
+
     expect(await getServerSideProps({ req })).toEqual({
       redirect: {
         destination: "/login",
@@ -22,7 +24,7 @@ describe("renders a heading", () => {
   });
 
   test("return valid props", async () => {
-    User.getUser = jest.fn<typeof User.getUser>().mockImplementation(() => {
+    User.getUser = vi.fn<typeof User.getUser>().mockImplementation(() => {
       return Promise.resolve({
         userId: "fsdafs",
         email: "sfdf",
@@ -73,7 +75,8 @@ describe("renders a heading", () => {
         ],
       },
     };
-    Post.explore = jest.fn<any>().mockImplementation(() => {
+
+    Post.explore = vi.fn<any>().mockImplementation(() => {
       return Promise.resolve(props);
     });
 

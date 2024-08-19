@@ -6,7 +6,7 @@ import Header from "../../shared/Header";
 import HeaderPublic from "../../shared/HeaderPublic";
 import { CustomElement, IUser, PostViewType } from "../../../types/common";
 import EditButton from "./EditButton";
-import { Config } from "@slate-serializers/react/lib/config/types";
+import { SlateToReactConfig } from "@slate-serializers/react";
 
 const PostView = ({
   user,
@@ -16,7 +16,7 @@ const PostView = ({
 }: {
   user?: IUser | undefined;
   components: CustomElement[];
-  config: Config;
+  config: SlateToReactConfig;
   post: PostViewType;
 }) => {
   return (

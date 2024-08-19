@@ -1,23 +1,22 @@
 import { Box, Button, Flex, Input, Label, Spinner, Text } from "theme-ui";
 import React from "react";
 import { Auth, Storage } from "aws-amplify";
-import { PostContext, usePost } from "../../../../PostContext";
+import { usePost } from "../../../../PostContext";
 import usePubSubSubscription from "../../../../../hooks/usePubSubSubscription";
 import { getPost } from "../../../../../actions/PostGet";
 
 const UploadButton = () => {
-  const { id, currentFtp, gpxFile } = React.useContext(PostContext);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const [isUploading, setIsUploading] = React.useState(false);
-  // const [filename, setFilename] = React.useState(gpxFile);
   const [processingFile, setIsProcessingFile] = React.useState(false);
   const [progress, setProgress] = React.useState({ loaded: 0, total: 0 });
   const [processingGpxStatus, setProcessingGpxStatus] = React.useState("");
   const postCtx = usePost();
+  const { id, currentFtp, gpxFile } = postCtx;
 
   const handlePhase = async (phase: string) => {
     switch (phase) {
       case "go-start-processing":
+        // console.log("go start processing");
         setProcessingGpxStatus(`Analyzing Fit file`);
         break;
       case "go-finish-processing":
@@ -68,12 +67,11 @@ const UploadButton = () => {
     const file = event.target.files?.[0];
 
     if (!file || !file.name) {
-      console.log("no file", file);
+      // console.log("no file", file);
       return;
     }
-    // setFilename(file?.name);
 
-    console.log("Selected file:", file);
+    // console.log("Selected file:", file);
     const user = await Auth.currentUserCredentials();
 
     await Storage.put(`uploads/${file.name.replace(" ", "_")}`, file, {
@@ -85,9 +83,6 @@ const UploadButton = () => {
             100
           ).toFixed(0)}%`
         );
-        if (progress.total === progress.loaded) {
-          setIsUploading(false);
-        }
       },
       metadata: {
         postId: id ? id : "",
@@ -105,7 +100,9 @@ const UploadButton = () => {
         <Label htmlFor="gpxFile" variant="defaultLabel">
           Activity File <Text sx={{ fontSize: "15px" }}>(.fit or .gpx)</Text>
         </Label>
-        <Text sx={{ color: "textMuted" }}>{processingGpxStatus}</Text>
+        <Text sx={{ color: "textMuted" }} data-testid="processing-status">
+          {processingGpxStatus}
+        </Text>
       </Flex>
       <Flex sx={{ gap: "10px", flexDirection: ["column", "row", "row"] }}>
         <Box sx={{ flex: 1 }}>
@@ -121,6 +118,7 @@ const UploadButton = () => {
           />
         </Box>
         <Input
+          data-testid="gpxFile"
           type="file"
           ref={fileInputRef}
           onChange={handleFileChange}
@@ -138,7 +136,10 @@ const UploadButton = () => {
           <Flex sx={{ gap: "10px" }}>
             <Text>Upload</Text>
             {processingFile && (
-              <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
+              <Spinner
+                data-testid="spinner"
+                sx={{ size: "20px", color: "spinnerButton" }}
+              />
             )}
           </Flex>
         </Button>

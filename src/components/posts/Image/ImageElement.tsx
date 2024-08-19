@@ -89,8 +89,6 @@ const ImageElement = ({
 
     await PostSaveComponents({
       postId: id,
-      title: title,
-      postLocation: postLocation,
       components: editor.children,
     });
   };
@@ -101,10 +99,7 @@ const ImageElement = ({
         {isMaximized && imageMeta && (
           <ImageFullScreen
             setIsMaximized={setIsMaximized}
-            width={imageMeta.width}
-            height={imageMeta.height}
             index={imageMetaIndex}
-            public_id={imageMeta.public_id}
           />
         )}
         <Box
