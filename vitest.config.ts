@@ -9,7 +9,7 @@ export default defineConfig({
     environment: "happy-dom",
     setupFiles: "./src/setupTests.ts", // If you have setup files
     include: [
-      "pages/**/*.{test,spec}.{js,ts,jsx,tsx}",
+      "__tests__/**/*.{test,spec}.{js,ts,jsx,tsx}",
       "src/**/*.{test,spec}.{js,ts,jsx,tsx}",
       "amplify/backend/function/**/src/__tests__/*.{test,spec}.{js,ts}",
     ],

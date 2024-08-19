@@ -1,9 +1,9 @@
 import { test, describe, expect, vi } from "vitest";
 import { NextApiRequest } from "next";
 
-import { getServerSideProps } from "../pages/index";
-import User from "../src/actions/User";
-import Post from "../src/actions/PostExplore";
+import { getServerSideProps } from "../../pages/index";
+import User from "../../src/actions/User";
+import Post from "../../src/actions/PostExplore";
 
 describe("renders a heading", () => {
   test("redirect if no current user", async () => {
