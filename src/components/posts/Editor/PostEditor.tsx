@@ -11,7 +11,6 @@ import renderElement from "./RenderElement";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import * as subscriptions from "../../../graphql/subscriptions";
-import UploadGpxModal from "./UploadGpxModal";
 import { OnUpdatePostSubscription } from "../../../API";
 import ShareModal from "./ShareModal";
 import AddImage from "../Image/AddImage";
@@ -44,7 +43,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     []
   );
 
-  const [loading, setLoading] = React.useState(true);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const [subPubConfigured, setSubPubConfigured] = React.useState(false);
   const [selectionMenu, setSelectionMenu] = React.useState<{
@@ -53,7 +51,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   } | null>(null);
 
   const {
-    isGpxUploadOpen,
     isRaceResultsModalOpen,
     setIsFtpUpdating,
     isShareModalOpen,
@@ -79,9 +76,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     const range = selection.getRangeAt(0);
     // const parentElement =
     //   selection.anchorNode.parentElement?.getAttribute("data-slate-length");
-    console.log(editor.selection);
+    // console.log(editor.selection);
     const operations = editor.operations;
-    console.log(editor.operations);
+    // console.log(editor.operations);
     const isNewLineInserted = operations.some((op) => {
       return op.type === "split_node";
     });
@@ -96,7 +93,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
-      console.log(rect, scrollX, scrollY);
+      // console.log(rect, scrollX, scrollY);
       const adjustedTop =
         rect.bottom + scrollY + (isNewLineInserted ? 60 : -10);
       const adjustedLeft = rect.right + scrollX + 10;
@@ -115,13 +112,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           path: path,
         });
       }
-
-      // const { anchorNode } = selection;
-      // If selection exists, get the path
-      // console.log(anchor);
-      // // If selection exists, get the path
-      // const path = anchor && editor.path(anchor.path);
-      // console.log(path);
     } else {
       setMobileMenu({
         display: false,
@@ -145,23 +135,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     }
   }, [editor, width]);
 
-  // const {
-  //   setIsNewComponentMenuOpen,
-  //   isNewComponentMenuOpen,
-  //   setMenuPosition,
-  //   menuPosition,
-  //   // mobileMenu,
-  //   // setMobileMenu,
-  // } = React.useContext(EditorContext);
-
-  // React.useEffect(() => {
-  //   if (initialState) {
-  //     setTimeout(() => {
-  //       setLoading(false);
-  //     }, 1000);
-  //   }
-  // }, [initialState]);
-
   React.useEffect(() => {
     const subscription = API.graphql<
       GraphQLSubscription<OnUpdatePostSubscription>
@@ -174,14 +147,13 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         ) {
           return;
         }
-
-        setTimeInRed && setTimeInRed(value.data?.onUpdatePost?.timeInRed);
-        setPowerZoneBuckets &&
-          setPowerZoneBuckets(
-            JSON.parse(value.data?.onUpdatePost?.powerZoneBuckets)
-          );
-        setPowerZones &&
-          setPowerZones(JSON.parse(value.data?.onUpdatePost?.powerZones));
+        const { timeInRed, powerZoneBuckets, powerZones } =
+          value.data.onUpdatePost;
+        setPost({
+          timeInRed,
+          powerZoneBuckets: JSON.parse(powerZoneBuckets),
+          powerZones: JSON.parse(powerZones),
+        });
         setIsFtpUpdating(false);
       },
       error: (error) => console.warn(error),
@@ -193,19 +165,15 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, []);
 
   const getData = async () => {
-    console.log(timeSeriesFile);
     const payload = await getActivityData(timeSeriesFile);
     if (!payload) {
       console.log("no data found for post");
       return;
     }
-
-    // setPowerAnalysis && setPowerAnalysis(payload.powerAnalysis);
-    // setPowers && setPowers(payload.powers);
-    // setHearts && setHearts(payload.hearts);
-    setElevations && setElevations(payload.elevation);
-    setActivity &&
-      setActivity(payload.activity?.map((item) => ({ ...item })) ?? []);
+    setPost({
+      elevations: payload.elevation,
+      activity: payload.activity?.map((item) => ({ ...item })) ?? [],
+    });
   };
 
   // React.useEffect(() => {
@@ -222,22 +190,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   //   };
   // }, [subPubConfigured]);
 
-  const {
-    id,
-    timeSeriesFile,
-    title,
-    postLocation,
-    heroImage,
-    setActivity,
-    setComponents,
-    setTimeInRed,
-    setPowerZones,
-    setPowerZoneBuckets,
-    setHeroImage,
-    setPowers,
-    setHearts,
-    setElevations,
-  } = React.useContext(PostContext);
+  const { id, timeSeriesFile, title, postLocation, heroImage, setPost } =
+    React.useContext(PostContext);
 
   React.useEffect(() => {
     getData();
@@ -249,16 +203,15 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     selectedImage: CloudinaryImage | undefined;
   }) => {
     console.log(selectedImage);
-    setHeroImage && setHeroImage(selectedImage);
+    setPost({ heroImage: selectedImage });
+    // setHeroImage && setHeroImage(selectedImage);
     setIsHeroImageModalOpen(false);
 
-    await PostSaveComponents({
-      postId: id,
-      title: title,
-      postLocation: postLocation,
-      components: editor.children,
-      heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
-    });
+    // await PostSaveComponents({
+    //   postId: id,,
+    //   components: editor.children,
+    //   heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
+    // });
   };
 
   // const setUpSub = async () => {
@@ -314,7 +267,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
         if (parentElement) {
           const rect = parentElement.getBoundingClientRect();
-          // console.log("Bounding rect for the parent element:", rect);
           setMenuPosition({
             ...menuPosition,
             top: rect.bottom,
@@ -327,12 +279,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
   return (
     <Flex>
-      <PublishModalConfirmation />
+      {/* <PublishModalConfirmation /> */}
       {isHeroImageModalOpen && (
         <AddImage setIsOpen={setIsHeroImageModalOpen} callback={addImage} />
       )}
-      {isGpxUploadOpen && <UploadGpxModal />}
-      {isShareModalOpen && <ShareModal />}
+      {/* {isShareModalOpen && <ShareModal />} */}
       <Box
         sx={{
           minWidth: [null, null, "900px"],
@@ -343,7 +294,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           backgroundColor: "background",
           borderRadius: "10px",
           padding: "0px",
-          // paddingBottom: "200px",
           position: "relative",
         }}
       >
@@ -353,7 +303,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           onChange={(newValue) => {
             updateMenuPosition();
             handleSelectionChange();
-            setComponents && setComponents(newValue as Array<CustomElement>);
+            setPost({ components: newValue as Array<CustomElement> });
 
             slateApi.saveEditor({
               editor,
@@ -374,11 +324,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           {selectionMenu && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
-          <MobileMenu
-          // top={mobileMenu.top}
-          // left={mobileMenu.left}
-          // path={mobileMenu.path}
-          />
+          <MobileMenu />
           <Editable
             spellCheck
             autoFocus
@@ -394,7 +340,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
                 (event.key === "/" && !selection) ||
                 (event.key === "/" && selection && selection.focus.offset === 0)
               ) {
-                // event.preventDefault();
                 setIsNewComponentMenuOpen(true);
               }
             }}

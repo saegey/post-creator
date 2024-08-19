@@ -39,7 +39,7 @@ type HomeProps = {
 };
 
 const Home = ({ posts = [], user }: HomeProps) => {
-	console.log(posts);
+  console.log(posts);
   return (
     <>
       <Head>

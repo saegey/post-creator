@@ -1,14 +1,14 @@
 import MuxUploader from "@mux/mux-uploader-react";
 import { API } from "aws-amplify";
 import React from "react";
-import { CustomEditor, ParagraphElement } from "../../../types/common";
-import { Transforms, Element as SlateElement } from "slate";
-import { PostContext } from "../../PostContext";
+import { CustomEditor } from "../../../types/common";
+import { Transforms } from "slate";
+import { usePost } from "../../PostContext";
 import { EditorContext } from "../Editor/EditorContext";
 
 const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
   const [uploadId, setUploadId] = React.useState<string | undefined>();
-  const { id } = React.useContext(PostContext);
+  const { id } = usePost();
   const { menuPosition } = React.useContext(EditorContext);
 
   const getEndpoint = async () => {

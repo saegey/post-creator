@@ -4,81 +4,59 @@ export const updatePostMinimal = /* GraphQL */ `
     $condition: ModelPostConditionInput
   ) {
     updatePost(input: $input, condition: $condition) {
+      components
+      heroImage
+    }
+  }
+`;
+
+export type UpdatePostSettingsMutation = {
+  updatePost?: {
+    __typename: "Post";
+    type: string;
+    id: string;
+    title: string;
+    gpxFile?: string | null;
+    date?: string | null;
+    postLocation?: string | null;
+    subType?: string | null;
+    teaser?: string | null;
+    currentFtp?: string | null;
+    updatedAt: string;
+    owner?: string | null;
+  } | null;
+};
+
+export const updatePostSettings = /* GraphQL */ `
+  mutation UpdatePostMinimal(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
       id
       title
       gpxFile
-      images
-      # headerImage
       date
-      publishedDate
-      location
       postLocation
-      stravaUrl
-      resultsUrl
-      type
       subType
       teaser
       currentFtp
-      components
-      heroImage
-      # powerAnalysis
-      # coordinates
-      # powers
-      # elevation
-      # elevationGrades
-      # distances
-      blog {
-        id
-        name
-        posts {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        owner
-        __typename
-      }
-      # related {
-      #   items {
-      #     id
-      #     title
-      #     gpxFile
-      #     images
-      #     headerImage
-      #     date
-      #     publishedDate
-      #     location
-      #     postLocation
-      #     stravaUrl
-      #     resultsUrl
-      #     type
-      #     subType
-      #     teaser
-      #     currentFtp
-      #     components
-      #     powerAnalysis
-      #     coordinates
-      #     powers
-      #     elevation
-      #     elevationGrades
-      #     distances
-      #     createdAt
-      #     updatedAt
-      #     blogPostsId
-      #     postRelatedId
-      #     owner
-      #     __typename
-      #   }
-      #   nextToken
-      #   __typename
-      # }
-      createdAt
       updatedAt
-      blogPostsId
-      postRelatedId
-      owner
-      __typename
+    }
+  }
+`;
+
+export const createPostNew = /* GraphQL */ `
+  mutation CreatePostNew(
+    $input: CreatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    createPost(input: $input, condition: $condition) {
+      type
+      id
+      title
+      postAuthorId
+      privacyStatus
     }
   }
 `;

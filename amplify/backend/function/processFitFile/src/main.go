@@ -7,6 +7,7 @@ import (
 	"lambda/fitHelper"
 	"lambda/myevent"
 	"lambda/publish"
+	"strings"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
@@ -71,8 +72,13 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 			fmt.Println(err)
 			return "", fmt.Errorf("failed to get activity: %v", err)
 		}
+		// Split the string by "/"
+		parts := strings.Split(metaData.Key, "/")
 
-		ProcessActivityRecords(activity, &metaData.PostId, metaData.Bucket, metaData.IdentityId)
+		// Get the last element
+		fitFilename := parts[len(parts)-1]
+
+		ProcessActivityRecords(activity, &metaData.PostId, metaData.Bucket, metaData.IdentityId, fitFilename)
 	}
 
 	err = publish.PublishMessage(iotClient, &metaData.PostId, "go-finish-processing")

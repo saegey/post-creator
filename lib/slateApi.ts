@@ -51,10 +51,8 @@ const saveEditor = ({
 
     await PostSaveComponents({
       postId: id,
-      title: title,
-      postLocation: postLocation,
       components: editor.children,
-      heroImage: heroImage ? heroImage : "",
+      // heroImage: heroImage ? heroImage : "",
     });
     setSavingStatus("saved");
 

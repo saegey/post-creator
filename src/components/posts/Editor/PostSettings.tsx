@@ -1,17 +1,7 @@
-import {
-  Box,
-  Flex,
-  Text,
-  Input,
-  Button,
-  Label,
-  Spinner,
-  Link as ThemeLink,
-} from "theme-ui";
+import { Box, Flex, Text, Input, Button, Label, Spinner } from "theme-ui";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import { useRouter } from "next/router";
 import Router from "next/router";
 
 import { PostContext } from "../../PostContext";
@@ -19,44 +9,26 @@ import { EditorContext } from "./EditorContext";
 import { UpdatePostMutation, DeletePostMutation } from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
 import { updatePost, deletePost } from "../../../../src/graphql/mutations";
-import Link from "next/link";
 import PreviewButton from "./PostMenu/buttons/PreviewButton";
 import ShareButton from "./PostMenu/buttons/ShareButton";
+import UploadButton from "./PostMenu/buttons/UploadButton";
+import {
+  updatePostSettings,
+  UpdatePostSettingsMutation,
+} from "../../../graphql/customMutations";
 
 const PostSettings = () => {
-  const {
-    id,
-    gpxFile,
-    setCurrentFtp,
-    currentFtp,
-    title,
-    setTitle,
-    postLocation,
-    setPostLocation,
-    setDate,
-    date,
-    subhead,
-    setSubhead,
-  } = React.useContext(PostContext);
+  const { id, currentFtp, title, postLocation, date, subhead, setPost } =
+    React.useContext(PostContext);
 
-  const {
-    setIsFtpUpdating,
-    setIsGpxUploadOpen,
-    isSettingsModalOpen,
-    setIsSettingsModalOpen,
-  } = React.useContext(EditorContext);
+  const { setIsFtpUpdating, isSettingsModalOpen, setIsSettingsModalOpen } =
+    React.useContext(EditorContext);
 
   const [isSaving, setIsSaving] = React.useState(false);
-  const { asPath } = useRouter();
-  const origin =
-    typeof window !== "undefined" && window.location.origin
-      ? window.location.origin
-      : "";
-  const URL = `${origin}${asPath}`;
 
   const processDeletePost = async () => {
     try {
-      const response = (await API.graphql({
+      (await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
         variables: {
           input: {
@@ -65,7 +37,6 @@ const PostSettings = () => {
         },
         query: deletePost,
       })) as GraphQLResult<DeletePostMutation>;
-      // window.location.href = `/posts`;
       Router.push(`/posts`);
     } catch (errors) {
       console.error(errors);
@@ -80,16 +51,10 @@ const PostSettings = () => {
       setIsFtpUpdating(true);
     }
 
-    setCurrentFtp && setCurrentFtp(Number(newFtp));
-    setTitle && setTitle(form.get("title") as string);
-    setPostLocation && setPostLocation(form.get("postLocation") as string);
-    setDate && setDate(form.get("eventDate") as string);
-    setSubhead && setSubhead(form.get("subhead") as string);
-
     try {
-      const response = (await API.graphql({
+      (await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
-        query: updatePost,
+        query: updatePostSettings,
         variables: {
           input: {
             currentFtp: form.get("currentFtp"),
@@ -100,13 +65,21 @@ const PostSettings = () => {
             id: id,
           },
         },
-      })) as GraphQLResult<UpdatePostMutation>;
+      })) as GraphQLResult<UpdatePostSettingsMutation>;
 
       setIsSaving(false);
       setIsSettingsModalOpen(false);
     } catch (errors) {
-      console.error(errors);
+      console.error(JSON.stringify(errors));
     }
+
+    setPost({
+      currentFtp: Number(newFtp),
+      title: form.get("title") as string,
+      postLocation: form.get("postLocation") as string,
+      date: form.get("eventDate") as string,
+      subhead: form.get("subhead") as string,
+    });
   };
 
   return (
@@ -128,10 +101,9 @@ const PostSettings = () => {
             flexDirection: "column",
             maxHeight: ["70vh", "", ""],
             overflow: "scroll",
-            paddingTop: "10px",
           }}
         >
-          <Flex sx={{ gap: "10px" }}>
+          {/* <Flex sx={{ gap: "10px" }}>
             <ThemeLink
               as={Link}
               href={`/j/${id}`}
@@ -142,8 +114,8 @@ const PostSettings = () => {
               <PreviewButton />
             </ThemeLink>
             <ShareButton />
-          </Flex>
-          <Box>
+          </Flex> */}
+          <Box sx={{ marginTop: "20px" }}>
             <Label htmlFor="title" variant={"defaultLabel"}>
               Title
             </Label>
@@ -177,34 +149,7 @@ const PostSettings = () => {
             />
           </Box>
           <Box>
-            <Label htmlFor="gpxFile" variant="defaultLabel">
-              GPX File
-            </Label>
-            <Flex sx={{ gap: "10px", flexDirection: ["column", "row", "row"] }}>
-              <Box sx={{ width: "100%" }}>
-                <Input
-                  id="gpxFile"
-                  name="gpxFile"
-                  defaultValue={gpxFile ? gpxFile : ""}
-                  variant={"defaultInput"}
-                />
-              </Box>
-              <Box sx={{ width: ["", "25%", "25%"] }}>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    setIsGpxUploadOpen(true);
-                    setIsSettingsModalOpen(false);
-                  }}
-                  sx={{
-                    width: "100%",
-                  }}
-                  variant="primaryButton"
-                >
-                  Upload GPX
-                </Button>
-              </Box>
-            </Flex>
+            <UploadButton />
           </Box>
           <Box>
             <Label htmlFor="currentFtp" variant={"defaultLabel"}>

@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
 import { Path, Transforms } from "slate";
 
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
 import { CustomEditor } from "../../../../types/common";
 import { ResultsContext } from "../ResultsContext";
@@ -19,8 +19,7 @@ const WebscorerResultsPreview = ({
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { webscorerResults, id, setWebscorerResults } =
-    React.useContext(PostContext);
+  const { webscorerResults, id, setPost } = usePost();
   const { setIsRaceResultsModalOpen, mobileMenu, setMobileMenu } =
     React.useContext(EditorContext);
   const { webScorerMeta, resultsUrl } = React.useContext(ResultsContext);
@@ -47,9 +46,6 @@ const WebscorerResultsPreview = ({
         <Text as="span" sx={{ width: "300px" }}>
           Name
         </Text>
-        {/* <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
-          Time Behind
-        </Text> */}
         <Text
           as="span"
           sx={{ width: "100px", display: "flex", justifyContent: "right" }}
@@ -83,21 +79,23 @@ const WebscorerResultsPreview = ({
                   onClick={() => {
                     if (selectedRow === i) {
                       setSelectedRow(undefined);
-                      setWebscorerResults &&
-                        setWebscorerResults({
+                      setPost({
+                        webscorerResults: {
                           ...webscorerResults,
                           selected: undefined,
-                        });
+                        },
+                      });
                     } else {
                       setSelectedRow(i);
-                      setWebscorerResults &&
-                        setWebscorerResults({
+                      setPost({
+                        webscorerResults: {
                           ...webscorerResults,
                           selected:
                             webscorerResults && webscorerResults.results
                               ? webscorerResults.results[i]
                               : undefined,
-                        });
+                        },
+                      });
                     }
                   }}
                 >
@@ -110,12 +108,6 @@ const WebscorerResultsPreview = ({
                       {row.TeamName ? row.TeamName : " "}
                     </Text>
                   </Box>
-                  {/* <Text
-                    as="span"
-                    sx={{ display: ["none", "inherit", "inherit"] }}
-                  >
-                    {row.Difference}
-                  </Text> */}
                   <Text
                     as="span"
                     sx={{
@@ -157,13 +149,13 @@ const WebscorerResultsPreview = ({
                 resultsUrl: resultsUrl,
                 eventName: webScorerMeta.eventName,
               }).then((r) => {
-                setWebscorerResults &&
-                  webscorerResults &&
-                  setWebscorerResults({
+                setPost({
+                  webscorerResults: {
                     ...webscorerResults,
                     eventName: webScorerMeta.eventName,
                     category: webScorerMeta.category,
-                  });
+                  },
+                });
                 Transforms.insertNodes(
                   editor,
                   {

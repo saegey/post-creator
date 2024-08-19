@@ -8,9 +8,6 @@ export type EditorContextType = {
   isFtpUpdating: boolean;
   setIsFtpUpdating: React.Dispatch<React.SetStateAction<boolean>>;
 
-  isGpxUploadOpen: boolean;
-  setIsGpxUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
-
   isImageModalOpen: boolean;
   setIsImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -78,8 +75,6 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsGraphMenuOpen: () => {},
   isFtpUpdating: false,
   setIsFtpUpdating: () => {},
-  isGpxUploadOpen: false,
-  setIsGpxUploadOpen: () => {},
   isImageModalOpen: false,
   setIsImageModalOpen: () => {},
   isHeroImageModalOpen: false,

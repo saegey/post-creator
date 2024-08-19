@@ -35,7 +35,7 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - $HOME/go/pkg/mod/**/*
+      - $HOME/go/**/*
       - /usr/local/go/**/*
 test:
   phases:

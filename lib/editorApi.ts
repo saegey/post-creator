@@ -25,14 +25,10 @@ const getActivityData = async (timeSeriesFile: string | null | undefined) => {
   ).json()) as TimeSeriesDataType;
 
   const activity = await getActivity(timeSeriesData);
-  const { powerAnalysis, powers, hearts, times, elevation } = timeSeriesData;
+  const { elevation } = timeSeriesData;
 
   return {
-    powerAnalysis,
-    powers,
-    hearts,
     activity,
-    times,
     elevation,
   };
 };

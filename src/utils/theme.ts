@@ -1,6 +1,5 @@
 // src/utils/theme.ts
 export default {
-  // initialColorModeName: "light", // Default mode
   useColorSchemeMediaQuery: true, // Enables system preference detection
   colors: {
     postBorderLeft: "#cccccc",
@@ -72,7 +71,6 @@ export default {
         secondaryButtonBackground: "#444444",
         secondaryButtonBackgroundHover: "#525252",
         primaryButtonBackgroundHover: "#e4e4e4",
-        // secondaryButtonBackgroundHover:
         sideMenuRightBorder: "#494949",
         activityOverviewBackgroundColor: "#3a3a3a",
         sideMenuBackground: "#181818",
@@ -138,15 +136,12 @@ export default {
       fontWeight: 300,
     },
     menuItem: {
-      // textTransform: 'uppercase',
-      // letterSpacing: '.2em',
       "&:hover": {
         backgroundColor: "menuItemBackgroundHoverColor",
         borderRadius: "5px",
       },
       cursor: "pointer",
       color: "text",
-      // textDecoration: 'none',
       padding: "5px",
       width: "100%",
       fontSize: ["17px", "15px", "15px"],
@@ -163,10 +158,6 @@ export default {
       height: "32px",
       width: "32px",
       borderRadius: "5px",
-      // backgroundImage:
-      //   'linear-gradient(90deg, var(  --theme-ui-colors-iconButtonBackground) 0px, #e8e8e8 40px, var(  --theme-ui-colors-iconButtonBackground) 80px)',
-      // backgroundSize: '600px',
-      // animation: 'shine-lines 1.6s infinite linear',
     },
     sidebarMenuItem: {
       fontSize: "15px",
@@ -183,7 +174,6 @@ export default {
       },
     },
     componentCard: {
-      // marginX: "auto",
       maxWidth: "690px",
       backgroundColor: [
         "background",
@@ -219,16 +209,16 @@ export default {
   buttons: {
     iconButton: {
       borderWidth: "0px",
-      // borderStyle: 'solid',
-      // borderColor: 'buttonBorderColor',
       backgroundColor: "iconButtonBackground",
-      // backgroundColor: 'red',
       "&:hover": { backgroundColor: "buttonBackgroundHoverColor" },
     },
     primaryButton: {
       backgroundColor: "text",
       color: "background",
       fontSize: "14px",
+      paddingY: "10px",
+      paddingX: "20px",
+      lineHeight: "20px",
       fontWeight: "400",
       "&:hover": {
         backgroundColor: "primaryButtonBackgroundHover",
@@ -268,7 +258,6 @@ export default {
     defaultInput: {
       borderColor: "inputBackgroundColor",
       "&:focus": {
-        // backgroundColor: 'inputFocusBackground',
         borderColor: "inputFocusBorderColor",
         outline: "none",
       },
@@ -279,7 +268,6 @@ export default {
     errorInput: {
       borderColor: "#de4747",
       "&:focus": {
-        // backgroundColor: 'inputFocusBackground',
         borderColor: "inputFocusBorderColor",
         outline: "none",
       },

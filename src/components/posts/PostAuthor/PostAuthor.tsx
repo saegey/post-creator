@@ -13,9 +13,7 @@ import { PostContext } from "../../PostContext";
 const PostAuthor = () => {
   const { width } = useViewport();
   const { author, createdAt } = React.useContext(PostContext);
-  // console.log(author?.image);
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  // const publicId = 'sample_image';
+
   const imageUrl = author?.image
     ? getCldImageUrl(
         {
@@ -30,22 +28,17 @@ const PostAuthor = () => {
       )
     : undefined;
 
-  // console.log(`Cloudinary Cloud Name: ${cloudName}`);
   return (
     <div contentEditable={false}>
       <Box
         sx={{
           position: width < 1015 ? "relative" : "absolute",
           marginTop: ["20px", "0px", "0px"],
-          // maxWidth: "690px",
-
           "@media only screen and (max-width: 1315px) and (min-width: 1015px)":
             {
               marginX: "60px",
             },
           marginX: width < 1015 ? "auto" : "200px",
-          // width: width < 1015 ? "690px" : "150px",
-          // height: "100%",
           marginBottom: ["20px", "30px", "60px"],
         }}
       >
@@ -70,7 +63,6 @@ const PostAuthor = () => {
                   alt="Uploaded"
                   width={400}
                   height={300}
-                  // layout="responsive"
                   style={{
                     objectFit: "cover",
                     width: "100%",
@@ -82,34 +74,6 @@ const PostAuthor = () => {
                   priority={true}
                 />
               )}
-              {/* <CldImage
-                priority={true}
-                width="400"
-                height="300"
-                src={author.image}
-                // src={
-                //   typeof window !== "undefined"
-                //     ? author.image
-                //     : `https://res.cloudinary.com/${cloudName}/image/upload/${author.image}.jpg`
-                // }
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                  marginTop: "auto",
-                  marginBottom: "auto",
-                  borderRadius: "100%",
-                }}
-                // config={{
-                //   cloud: {
-                //     cloudName: cloudUrl,
-                //   },
-                // }}
-                // quality={90}
-                sizes="100vw"
-                alt="Description of my image"
-                // loading="lazy"
-              /> */}
             </Box>
           )}
           {author && !author.image && <AvatarIcon />}

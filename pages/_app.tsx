@@ -2,7 +2,7 @@
 import * as React from "react";
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import { Close, Flex, Message, Text, ThemeUIProvider } from "theme-ui";
+import { ThemeUIProvider } from "theme-ui";
 import { Amplify, Hub, Auth } from "aws-amplify";
 
 import theme from "../src/utils/theme";
@@ -72,8 +72,7 @@ const app = ({ Component, pageProps }: AppProps) => {
 
       if (sessionData) {
         const { payload } = sessionData;
-        console.log("app", payload.zoneinfo);
-        //"custom:role": role if custom attribute is added
+
         const {
           email,
           sub,
@@ -106,7 +105,6 @@ const app = ({ Component, pageProps }: AppProps) => {
     } catch (e) {
       console.log(e);
       setUser(undefined);
-      // Router.push("/login");
     }
   };
 
@@ -151,7 +149,6 @@ const app = ({ Component, pageProps }: AppProps) => {
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
           />
         </Head>
-        {/* <React.StrictMode> */}
         <NotificationContext.Provider
           value={{
             notification,
@@ -183,8 +180,6 @@ const app = ({ Component, pageProps }: AppProps) => {
           </UnitProvider.Provider>
           <NotificationMessage />
         </NotificationContext.Provider>
-
-        {/* </React.StrictMode> */}
       </>
     </ErrorBoundary>
   );

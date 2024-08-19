@@ -1,6 +1,6 @@
 import { API, Amplify, Auth } from "aws-amplify";
 import { AWSIoTProvider } from "@aws-amplify/pubsub";
-import AWS from "aws-sdk";
+import { IoTClient, DescribeEndpointCommand } from "@aws-sdk/client-iot";
 
 import awsExports from "../aws-exports";
 
@@ -19,13 +19,16 @@ const configurePubSub = async (iotEndpoint: string) => {
 const getEndpoint = async () => {
   console.log("Getting IoT Endpoint...");
   const credentials = await Auth.currentCredentials();
-  const iot = new AWS.Iot({
+  const client = new IoTClient({
     region: awsExports.aws_project_region,
     credentials: Auth.essentialCredentials(credentials),
   });
-  const response = await iot
-    .describeEndpoint({ endpointType: "iot:Data-ATS" })
-    .promise();
+
+  const command = new DescribeEndpointCommand({
+    endpointType: "iot:Data-ATS",
+  });
+
+  const response = await client.send(command);
   const endpoint = `wss://${response.endpointAddress}/mqtt`;
   // setIotEndpoint(endpoint);
   console.log(`Your IoT Endpoint is:\n ${endpoint}`);

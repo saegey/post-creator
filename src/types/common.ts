@@ -416,7 +416,7 @@ export interface Post
     | "powerZones"
     | "__typename"
   > {
-  components?: Array<CustomElement>;
+  components: Array<CustomElement>;
   images: Array<CloudinaryImage> | undefined;
   heartAnalysis: Array<Record<number | string, number>> | undefined;
   powerAnalysis: Array<Record<number | string, number>> | undefined;
@@ -430,11 +430,12 @@ export interface Post
   crossResults: CrossResultsPreviewType | undefined;
   omniResults: OmniResultType | undefined;
   runSignupResults: RunSignupType | undefined;
+  author: Author | undefined;
   __typename?: string;
 }
 
 export interface PostType {
-  post: Post;
+  postRaw: Post;
   errorCode?: number;
   user: IUser;
 }
@@ -462,8 +463,8 @@ export type RaceResultRow = {
 };
 
 export type WebscorerResultPreview = {
-  selected: WebscorerResultsRow | undefined;
-  results: Array<WebscorerResultsRow> | undefined;
+  selected?: WebscorerResultsRow | undefined;
+  results?: Array<WebscorerResultsRow> | undefined;
   category: string;
   eventName: string;
 };
@@ -480,8 +481,8 @@ export type CrossResultsPreviewRowType = {
 };
 
 export type CrossResultsPreviewType = {
-  selected: CrossResultsPreviewRowType | undefined;
-  results: Array<CrossResultsPreviewRowType> | undefined;
+  selected?: CrossResultsPreviewRowType | undefined;
+  results?: Array<CrossResultsPreviewRowType> | undefined;
   category?: string;
   eventName: string;
 };
@@ -507,121 +508,26 @@ export type OmniResultRowType = {
 };
 
 export type OmniResultType = {
-  selected: OmniResultRowType | undefined;
-  results: Array<OmniResultRowType> | undefined;
+  selected?: OmniResultRowType | undefined;
+  results?: Array<OmniResultRowType> | undefined;
   category: string;
   eventName: string;
 };
 
 export type RunSignupType = {
-  selected: RunSignupResultType | undefined;
-  results: RunSignupResultsType | undefined;
+  selected?: RunSignupResultType | undefined;
+  results?: RunSignupResultsType | undefined;
   category?: number | undefined;
   categoryName: string | undefined;
   eventName: string | undefined;
 };
 
-export type Author = { fullName: string; image: string };
+export type Author = { fullName: string; image: string; id: string };
 
 export interface PostContextType extends Post {
   activity: Array<ActivityItem> | undefined;
-  powers: Array<number> | undefined;
-  hearts: Array<number> | undefined;
   elevations: Array<ActivityItem> | undefined;
-  setActivity?: React.Dispatch<
-    React.SetStateAction<ActivityItem[] | undefined>
-  >;
-  setTitle?: React.Dispatch<React.SetStateAction<string>>;
-  setSubhead?: React.Dispatch<React.SetStateAction<string | null | undefined>>;
-  setGpxFile?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setPostLocation?: React.Dispatch<
-    React.SetStateAction<string | undefined | null>
-  >;
-  setId?: React.Dispatch<React.SetStateAction<string>>;
-  setStravaUrl?: React.Dispatch<
-    React.SetStateAction<string | undefined | null>
-  >;
-  setComponents?: React.Dispatch<
-    React.SetStateAction<Array<CustomElement> | undefined>
-  >;
-  setImages?: React.Dispatch<
-    React.SetStateAction<Array<CloudinaryImage> | undefined>
-  >;
-  setHeroImage?: React.Dispatch<CloudinaryImage | undefined>;
-  setCurrentFtp?: React.Dispatch<
-    React.SetStateAction<number | undefined | null>
-  >;
-  setResultsUrl?: React.Dispatch<
-    React.SetStateAction<string | undefined | null>
-  >;
-  setPowerAnalysis?: React.Dispatch<
-    React.SetStateAction<Array<Record<number | string, number>> | undefined>
-  >;
-  setHeartAnalysis?: React.Dispatch<
-    React.SetStateAction<Array<Record<number | string, number>> | undefined>
-  >;
-  setCadenceAnalysis?: React.Dispatch<
-    React.SetStateAction<Array<Record<number | string, number>> | undefined>
-  >;
-  setTempAnalysis?: React.Dispatch<
-    React.SetStateAction<Array<Record<number | string, number>> | undefined>
-  >;
-  setElevationTotal?: React.Dispatch<
-    React.SetStateAction<number | undefined | null>
-  >;
-  setNormalizedPower?: React.Dispatch<
-    React.SetStateAction<number | undefined | null>
-  >;
-  setDistance?: React.Dispatch<React.SetStateAction<number | undefined | null>>;
-  setElapsedTime?: React.Dispatch<
-    React.SetStateAction<number | undefined | null>
-  >;
-  setStoppedTime?: React.Dispatch<
-    React.SetStateAction<number | undefined | null>
-  >;
-  setTimeInRed?: React.Dispatch<
-    React.SetStateAction<number | undefined | null>
-  >;
-  setPowerZones?: React.Dispatch<
-    React.SetStateAction<Array<PowerZoneType> | undefined>
-  >;
-  setDate?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
-  setPowerZoneBuckets?: React.Dispatch<React.SetStateAction<Array<number>>>;
-  setShortUrl?: React.Dispatch<React.SetStateAction<string | undefined | null>>;
-
-  // race results
-  setRaceResults?: React.Dispatch<
-    React.SetStateAction<RaceResultRow | undefined>
-  >;
-  setWebscorerResults?: React.Dispatch<
-    React.SetStateAction<WebscorerResultPreview | undefined>
-  >;
-  setCrossResults?: React.Dispatch<
-    React.SetStateAction<CrossResultsPreviewType | undefined>
-  >;
-  setOmniResults?: React.Dispatch<
-    React.SetStateAction<OmniResultType | undefined>
-  >;
-  setRunSignupResults?: React.Dispatch<
-    React.SetStateAction<RunSignupType | undefined>
-  >;
-
-  setAuthor?: React.Dispatch<React.SetStateAction<Author | undefined | null>>;
-  setTimeSeriesFile?: React.Dispatch<
-    React.SetStateAction<string | undefined | null>
-  >;
-  setPrivacyStatus?: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >;
-  setCreatedAt?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  // setSelection: React.Dispatch<
-  //   React.SetStateAction<[number, number] | undefined>
-  // >;
-  setPowers: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
-  setHearts: React.Dispatch<React.SetStateAction<Array<number> | undefined>>;
-  setElevations: React.Dispatch<
-    React.SetStateAction<Array<ActivityItem> | undefined>
-  >;
+  setPost: (updates: Partial<PostContextType>) => void;
 }
 
 export interface RunSignupResultsType {

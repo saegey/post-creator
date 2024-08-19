@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
 import { Transforms, Path } from "slate";
 
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
 import { saveMyRaceResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
@@ -12,7 +12,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { raceResults, id, setRaceResults } = React.useContext(PostContext);
+  const { raceResults, id, setPost } = usePost();
   const {
     setIsRaceResultsModalOpen,
     setMobileMenu,
@@ -99,21 +99,23 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                   onClick={() => {
                     if (selectedRow === i) {
                       setSelectedRow(undefined);
-                      setRaceResults &&
-                        setRaceResults({
+                      setPost({
+                        raceResults: {
                           ...raceResults,
                           selected: undefined,
-                        });
+                        },
+                      });
                     } else {
                       setSelectedRow(i);
-                      setRaceResults &&
-                        setRaceResults({
+                      setPost({
+                        raceResults: {
                           ...raceResults,
                           selected:
                             raceResults && raceResults.results
                               ? raceResults.results[i]
                               : undefined,
-                        });
+                        },
+                      });
                     }
                   }}
                 >
@@ -173,14 +175,10 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                 category: raceResultsMeta.category,
                 division: raceResultsMeta.division,
               }).then((r) => {
-                Transforms.insertNodes(
-                  editor,
-                  {
-                    type: "raceResultsDotCom",
-                    children: [{ text: "" }],
-                  }
-                  // { at: path }
-                );
+                Transforms.insertNodes(editor, {
+                  type: "raceResultsDotCom",
+                  children: [{ text: "" }],
+                });
 
                 if (path.length > 2) {
                   Transforms.liftNodes(editor);
@@ -193,7 +191,6 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                   isFullScreen: false,
                 });
                 const selection = window.getSelection();
-                // console.log(selection)
                 selection && selection.removeAllRanges();
                 setIsNewComponentMenuOpen(false);
               });

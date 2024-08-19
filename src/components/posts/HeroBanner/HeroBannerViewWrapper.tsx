@@ -35,39 +35,20 @@ const HeroBannerViewWrapper = ({ node }: { node?: HeroBannerType }) => {
         {" "}
         <Box
           sx={{
-            // backgroundColor: heroImage ? heroImage.colors[0] : "red",
             width: ["100%", "65%", "65%"],
             display: ["inline-block", "", ""],
-            // height: "600px",
-            // height: ['400px', '600px', '600px'],
-            // '@media (max-width: 400px)': {
-            //   height: '300px',
-            // },
-
-            // '@media only screen and (max-width: 600px) and (min-width: 400px)':
-            //   {
-            //     height: '400px',
-            //   },
-            // "@media (min-width: 900px)": {
-            //   height: "700px",
-            // },
           }}
         >
           <CldImage
-            // as={CldImage}
             priority={true}
             width={heroImage.width}
             height={heroImage.height}
             src={heroImage.public_id}
-            // sizes='100vw'
             alt="race pic"
             style={{
               objectFit: "contain",
-              // height: '100%',
               maxWidth: "100%",
               maxHeight: "100%",
-              // width: '100%',
-              // width: ['100%', null, null],
             }}
             config={{
               cloud: {

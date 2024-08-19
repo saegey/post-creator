@@ -31,63 +31,20 @@ const PostContext = React.createContext<PostContextType>({
   heroImage: undefined,
   shortUrl: undefined,
   __typename: "Post",
-
   // race results
   raceResults: undefined,
   webscorerResults: undefined,
   crossResults: undefined,
   omniResults: undefined,
   runSignupResults: undefined,
-
   timeSeriesFile: undefined,
   privacyStatus: "private",
   createdAt: "",
-  powers: undefined,
-  hearts: undefined,
   elevations: undefined,
 
-  setActivity: () => {},
-  setTitle: () => {},
-  setSubhead: () => {},
-  setGpxFile: () => {},
-  setPostLocation: () => {},
-  setId: () => {},
-  setStravaUrl: () => {},
-  setComponents: () => {},
-  setImages: () => {},
-  setCurrentFtp: () => {},
-  setResultsUrl: () => {},
-  setPowerAnalysis: () => {},
-  setHeartAnalysis: () => {},
-  setElevationTotal: () => {},
-  setNormalizedPower: () => {},
-  setDistance: () => {},
-  setElapsedTime: () => {},
-  setStoppedTime: () => {},
-  setTimeInRed: () => {},
-  setCadenceAnalysis: () => {},
-  setTempAnalysis: () => {},
-  setPowerZones: () => {},
-  setPowerZoneBuckets: () => {},
-  setHeroImage: () => {},
-  setDate: () => {},
-  setShortUrl: () => {},
-
-  // race results
-  setRaceResults: () => {},
-  setWebscorerResults: () => {},
-  setCrossResults: () => {},
-  setOmniResults: () => {},
-  setRunSignupResults: () => {},
-
-  setAuthor: () => {},
-  setTimeSeriesFile: () => {},
-  setPrivacyStatus: () => {},
-  setCreatedAt: () => {},
-  // setSelection: () => {},
-  setPowers: () => {},
-  setHearts: () => {},
-  setElevations: () => {},
+  setPost: () => {},
 });
 
-export { PostContext };
+const usePost = () => React.useContext(PostContext);
+
+export { PostContext, usePost };

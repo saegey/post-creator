@@ -8,7 +8,6 @@ import WebscorerList from "./WebscorerList";
 import HoverAction from "../../Editor/HoverAction";
 import OptionsMenu from "../../Editor/OptionsMenu";
 import { CustomElement } from "../../../../types/common";
-import theme from "../../../../utils/theme";
 
 const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
   const { webscorerResults, resultsUrl } = React.useContext(PostContext);
@@ -16,7 +15,6 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
   const path = ReactEditor.findPath(editor, element);
 
   const hoverAct = React.useMemo(() => {
-    // console.log("render");
     return (
       <HoverAction element={element}>
         <Box

@@ -7,7 +7,6 @@ import { API } from "aws-amplify";
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
-import SidebarLeft from "../../shared/SidebarLeft";
 import { CloudinaryImage } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
@@ -24,18 +23,17 @@ interface AddImageProps {
 
 const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
-  const { setImages, images, id } = React.useContext(PostContext);
+  const { setPost, images, id } = React.useContext(PostContext);
   const { setIsHeroImageModalOpen, isHeroImageModalOpen } =
     React.useContext(EditorContext);
 
   return (
     <>
       <StandardModal
-        title={"Add Caption"}
+        title={"Add Image"}
         setIsOpen={() => setIsHeroImageModalOpen(false)}
         isOpen={isHeroImageModalOpen}
       >
-        {/* <SidebarLeft closeOnclick={() => setIsOpen(false)} title={"Photos"}> */}
         <Flex
           sx={{
             marginY: "15px",
@@ -67,7 +65,7 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
                 images?.push(d.info as CloudinaryImage);
 
                 if (images) {
-                  setImages && setImages([...images]);
+                  setPost({ images: [...images] });
                   try {
                     const response = (await API.graphql({
                       authMode: "AMAZON_COGNITO_USER_POOLS",
@@ -154,7 +152,6 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
           sx={{
             flex: "0 1 40px",
             display: "flex",
-            // marginY: "10px",
             paddingLeft: "0px",
             paddingTop: "10px",
             borderTopWidth: "1px",

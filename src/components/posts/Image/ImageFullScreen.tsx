@@ -2,33 +2,20 @@ import { Box, Close, Flex, Text } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Slide } from "react-slideshow-image";
-// import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 import { cloudUrl } from "../../../utils/cloudinary";
 import { PostContext } from "../../PostContext";
-import useSwipe from "../../useSwipe";
+
 import "react-slideshow-image/dist/styles.css";
 
 const ImageFullScreen = ({
   setIsMaximized,
-  width,
-  height,
-  public_id,
   index,
 }: {
   setIsMaximized: React.Dispatch<React.SetStateAction<boolean>>;
-  width: number;
-  height: number;
-  public_id: string;
   index: number;
 }) => {
-  const [currentImage, setCurrentImage] = React.useState({
-    width,
-    height,
-    public_id,
-    index,
-  });
-  const [currentIndex, setCurrentIndex] = React.useState(index);
+  const [currentIndex] = React.useState(index);
   const { images } = React.useContext(PostContext);
 
   if (!images) {
@@ -110,28 +97,23 @@ const ImageFullScreen = ({
       }}
     >
       <Box sx={{ display: "block", height: "auto", width: "100%" }}>
-        {/* <Flex sx={{ width: "100%", height: "100%" }}> */}
         <Slide
           autoplay={false}
           prevArrow={backArrow}
           nextArrow={forwardArrow}
-          // duration={1000}
           transitionDuration={500}
           defaultIndex={currentIndex}
         >
           {images.map((image, index) => (
             <Box
               sx={{
-                // height: "100vh",
                 display: "flex",
-                // alignItems: "center",
-                // justifyContent: "center",
                 height: "100%",
                 width: "100%",
                 backgroundColor: "black",
               }}
+              key={`image-${index}`}
             >
-              {/* <Box> */}
               <CldImage
                 key={image.public_id}
                 width={image.width}
@@ -144,7 +126,6 @@ const ImageFullScreen = ({
                   objectFit: "contain",
                   height: "100vh",
                   width: "100vw",
-                  // maxHeight: "100%",
                   borderRadius:
                     image.width && image.height && image.width > image.height
                       ? "5px"
@@ -156,11 +137,9 @@ const ImageFullScreen = ({
                   },
                 }}
               />
-              {/* </Box> */}
             </Box>
           ))}
         </Slide>
-        {/* </Flex> */}
       </Box>
       <Flex
         sx={{

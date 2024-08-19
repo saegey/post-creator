@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Box, Flex, Button, Spinner } from "theme-ui";
 import { Transforms } from "slate";
 
-import { PostContext } from "../../../PostContext";
+import { usePost } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
 import { CustomEditor } from "../../../../types/common";
 import { saveOmniResults } from "../api";
@@ -12,7 +12,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { omniResults, id, setOmniResults } = React.useContext(PostContext);
+  const { omniResults, id, setPost } = usePost();
   const { setIsRaceResultsModalOpen, menuPosition } =
     React.useContext(EditorContext);
   const { omniMeta, resultsUrl } = React.useContext(ResultsContext);
@@ -38,16 +38,6 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
         <Text as="span" sx={{ width: "300px", flexGrow: "2" }}>
           Name
         </Text>
-        {/* <Text
-            as="span"
-            sx={{
-              display: ["none", "inherit", "flex"],
-              width: "100px",
-              justifyContent: "right",
-            }}
-          >
-            Time Behind
-          </Text> */}
         <Text
           as="span"
           sx={{ width: "100px", display: "flex", justifyContent: "right" }}
@@ -88,21 +78,23 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
-                    setOmniResults &&
-                      setOmniResults({
+                    setPost({
+                      omniResults: {
                         ...omniResults,
                         selected: undefined,
-                      });
+                      },
+                    });
                   } else {
                     setSelectedRow(i);
-                    setOmniResults &&
-                      setOmniResults({
+                    setPost({
+                      omniResults: {
                         ...omniResults,
                         selected:
                           omniResults && omniResults.results
                             ? omniResults.results[i]
                             : undefined,
-                      });
+                      },
+                    });
                   }
                 }}
               >
@@ -157,13 +149,13 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 eventName: omniMeta.eventName,
                 id: id ? id : "",
               }).then(() => {
-                setOmniResults &&
-                  omniResults &&
-                  setOmniResults({
+                setPost({
+                  omniResults: {
                     ...omniResults,
                     category: omniMeta.category,
                     eventName: omniMeta.eventName,
-                  });
+                  },
+                });
                 Transforms.insertNodes(
                   editor,
                   {

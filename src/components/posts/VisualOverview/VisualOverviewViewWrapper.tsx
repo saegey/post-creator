@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Flex, Spinner } from "theme-ui";
 
 import VisualOverview from "./VisualOverview";
-import { PostContext } from "../../PostContext";
+import { usePost } from "../../PostContext";
 import { VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
 import { useUnits } from "../../UnitProvider";
@@ -14,7 +14,7 @@ const VisualOverviewViewWrapper = ({
   element: VisualOverviewType;
   view?: boolean;
 }) => {
-  const { activity, id, elevations } = React.useContext(PostContext);
+  const { activity, id, elevations } = usePost();
   const [selection, setSelection] = React.useState<
     [number, number] | undefined
   >(
@@ -75,9 +75,6 @@ const VisualOverviewViewWrapper = ({
                 justifyContent: "center",
                 alignItems: "center",
                 borderRadius: "5px",
-                // margin: "60px",
-                // width: "500px",
-                // height: "820px",
               }}
               className="skeleton"
             />

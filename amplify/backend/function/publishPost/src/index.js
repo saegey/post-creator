@@ -96,7 +96,7 @@ const query = /* GraphQL */ `
 `;
 
 exports.handler = async (event) => {
-  console.log(`EVENT: ${JSON.stringify(event)}`);
+  // console.log(`EVENT: ${JSON.stringify(event)}`);
   const crypto = require("@aws-crypto/sha256-js");
   const { defaultProvider } = require("@aws-sdk/credential-provider-node");
   const { SignatureV4 } = require("@aws-sdk/signature-v4");
@@ -114,11 +114,11 @@ exports.handler = async (event) => {
   const { body } = event;
   const { postId, origin } = JSON.parse(body);
 
-  console.log(
-    `postId: ${postId}, identityId: ${JSON.stringify(
-      event.requestContext.identity.cognitoIdentityId
-    )}`
-  );
+  // console.log(
+  //   `postId: ${postId}, identityId: ${JSON.stringify(
+  //     event.requestContext.identity.cognitoIdentityId
+  //   )}`
+  // );
 
   let date = new Date();
   console.log(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
@@ -148,7 +148,7 @@ exports.handler = async (event) => {
     path: endpoint.pathname,
   });
 
-  console.log(requestToBeSigned);
+  // console.log(requestToBeSigned);
 
   const signed = await signer.sign(requestToBeSigned);
   // const request = new Request(
@@ -165,11 +165,12 @@ exports.handler = async (event) => {
       process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT,
       signed
     );
-    console.log("response", response);
+
     resBody = await response.json();
+    console.log("response", resBody);
     if (resBody.errors) statusCode = 400;
   } catch (error) {
-    console.log("error", error);
+    // console.log("error", error);
     return {
       statusCode: 500,
       headers: {
@@ -193,7 +194,7 @@ exports.handler = async (event) => {
     .split(":")
     .pop();
 
-  console.log("identityId", identityId);
+  // console.log("identityId", identityId);
 
   const getParams = {
     TableName: publishedPostTable,
@@ -208,7 +209,7 @@ exports.handler = async (event) => {
     // ProjectionExpression: 'ATTRIBUTE_NAME',
   };
 
-  console.log(getParams);
+  // console.log(getParams);
 
   // Call DynamoDB to read the item from the table
 
@@ -257,12 +258,12 @@ exports.handler = async (event) => {
       console.error(e);
     }
 
-    console.log("shorturlres", resShort);
+    // console.log("shorturlres", resShort);
     shortUrl = resShort.Attributes.id;
     // shortUrl = 't';
   }
 
-  console.log(resBody);
+  // console.log(resBody);
   const privateTimeSeriesFile = await S3.getObject({
     Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
     Key: `private/${event.requestContext.identity.cognitoIdentityId}/${resBody.data.getPost.timeSeriesFile}`,
@@ -296,7 +297,7 @@ exports.handler = async (event) => {
 
   try {
     const s3res = await S3.putObject(s3Putparams).promise();
-    console.log(s3res);
+    // console.log(s3res);
   } catch (e) {
     console.error(JSON.stringify(e));
   }
@@ -405,13 +406,13 @@ exports.handler = async (event) => {
     },
     ReturnValues: "ALL_NEW",
   };
-  console.log(docParams);
+  // console.log(docParams);
 
   let res;
 
   try {
     res = await docClient.update(docParams).promise();
-    console.log(res);
+    // console.log(res);
   } catch (err) {
     console.log("Error", err);
     // console.log(JSON.stringify(err.__type));
@@ -428,7 +429,7 @@ exports.handler = async (event) => {
     },
     ReturnValues: "ALL_NEW",
   };
-  console.log(postUpdateParams);
+  // console.log(postUpdateParams);
 
   try {
     await docClient
@@ -436,7 +437,7 @@ exports.handler = async (event) => {
         if (err) {
           console.log("Error", err);
         } else {
-          console.log("Success", data);
+          // console.log("Success", data);
         }
       })
       .promise();

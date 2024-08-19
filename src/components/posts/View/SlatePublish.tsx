@@ -3,7 +3,7 @@ import {
   slateToReactConfig,
   type SlateToReactConfig,
 } from "@slate-serializers/react";
-import { Box, Flex, Text } from "theme-ui";
+import { Box, Flex } from "theme-ui";
 import MuxPlayer from "@mux/mux-player-react";
 
 import EmbedElemnt from "../Embed/EmbedElement";

@@ -1,27 +1,45 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     // "suppressImplicitAnyIndexErrors": true,
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "target": "ES6",
     "jsx": "preserve",
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "typeRoots": ["types"],
+    "typeRoots": [
+      "types"
+    ],
     "strictNullChecks": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "jest.config.js"],
-  "exclude": ["node_modules", "amplify", "cypress.config.ts"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "jest.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "amplify",
+    "cypress.config.ts"
+  ]
 }
