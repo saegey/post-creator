@@ -42,10 +42,10 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 	svc := s3.New(sess)
 	var metaData S3helper.MetaData
 
-	sess1 := session.Must(session.NewSessionWithOptions(session.Options{
+	dynamoSess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
 	}))
-	dynamoSvc := dynamodb.New(sess1)
+	dynamoSvc := dynamodb.New(dynamoSess)
 
 	// Extract bucket and object key from the event
 	for _, record := range s3event.Records {
@@ -67,25 +67,30 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 			return "", fmt.Errorf("failed to get object from S3: %v", err)
 		}
 
+		// Decode the FIT file
 		fit, err := fitHelper.DecodeFITFile(body)
 		if err != nil {
 			fmt.Println(err)
 			return "", fmt.Errorf("failed to decode object body: %v", err)
 		}
 
+		// Print the FIT file details
 		fitHelper.PrintFITFileDetails(fit)
 
+		// Get the activity from the FIT file
 		activity, err := fitHelper.GetFITFileActivity(fit)
 		if err != nil {
 			fmt.Println(err)
 			return "", fmt.Errorf("failed to get activity: %v", err)
 		}
+
 		// Split the string by "/"
 		parts := strings.Split(metaData.Key, "/")
 
 		// Get the last element
 		fitFilename := parts[len(parts)-1]
 
+		// Process the activity records
 		processedData, err := ProcessActivityRecords(ProcessActivityOptions{
 			Activity:    activity,
 			PostId:      &metaData.PostId,
@@ -98,6 +103,9 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 			fmt.Printf("Error processing activity records: %v", err)
 			// return
 		}
+		fmt.Println("Power Breakdown:", processedData.PowerResults)
+		fmt.Println("Cadence Breakdoon:", processedData.CadenceResults)
+		fmt.Println("Heart Rate Breakdown:", processedData.HeartResults)
 
 		// Upload data to S3
 		err = S3helper.UploadToS3(S3helper.UploadToS3Input{
@@ -134,6 +142,7 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 		}
 	}
 
+	// Example usage: publishing a message
 	err = publish.PublishMessage(iotClient, &metaData.PostId, "go-finish-processing")
 	if err != nil {
 		fmt.Println("Error publishing to IoT:", err)

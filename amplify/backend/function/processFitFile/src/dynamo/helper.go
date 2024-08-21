@@ -9,11 +9,10 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-type DataAnalysis map[string]float64
-type TempAnalysis map[string]uint16
-type CadenceAnalysis map[string]uint16
-type HeartAnalysis map[string]uint16
-type PowerAnalysis map[string]uint16
+type TempAnalysis map[uint16]int
+type CadenceAnalysis map[uint16]int
+type HeartAnalysis map[uint16]int
+type PowerAnalysis map[uint16]int
 
 type DynamoDBAPI interface {
 	UpdateItem(input *dynamodb.UpdateItemInput) (*dynamodb.UpdateItemOutput, error)
@@ -37,10 +36,10 @@ type UpdateItemInput struct {
 	GPXFile          string
 }
 
-func uint16MapToDynamoDBMap(input map[string]uint16) map[string]*dynamodb.AttributeValue {
+func uint16MapToDynamoDBMap(input map[uint16]int) map[string]*dynamodb.AttributeValue {
 	result := make(map[string]*dynamodb.AttributeValue)
 	for k, v := range input {
-		result[k] = &dynamodb.AttributeValue{
+		result[string(k)] = &dynamodb.AttributeValue{
 			N: aws.String(strconv.Itoa(int(v))),
 		}
 	}

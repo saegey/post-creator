@@ -149,10 +149,11 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 	normalizedPower := myevent.CalcNormalizedPower(powers)
 
 	// Calculate best powers for different time intervals
-	var powerResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), powers, false)
-	var cadenceResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), convertToUint16Slice(cads), true)
-	var tempResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), convertToUint16Slice([]uint8(convertToInt8Slice(temps))), true)
-	var heartResults = myevent.CalcBestPowers(powercalc.TimeIntervals(), convertToUint16Slice(hearts), true)
+	var timeIntervals = powercalc.GenerateIntervals(len(activity.Records))
+	var powerResults = myevent.CalculateMaxAveragePowers(timeIntervals, powers)
+	var cadenceResults = myevent.CalculateMaxAveragePowers(timeIntervals, convertToUint16Slice(cads))
+	var tempResults = myevent.CalculateMaxAveragePowers(timeIntervals, convertToUint16Slice([]uint8(convertToInt8Slice(temps))))
+	var heartResults = myevent.CalculateMaxAveragePowers(timeIntervals, convertToUint16Slice(hearts))
 	var elapsedTime = activity.Records[len(activity.Records)-1].Timestamp.Sub(activity.Records[0].Timestamp)
 
 	// Simplify the points (with a tolerance of 1)
