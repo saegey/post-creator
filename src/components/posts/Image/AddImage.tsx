@@ -3,29 +3,26 @@ import React from "react";
 import { CldImage, CldUploadButton } from "next-cloudinary";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
+import { Transforms } from "slate";
+import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
-import { CloudinaryImage } from "../../../types/common";
+import { CloudinaryImage, HeroBannerType } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
 
-interface AddImageProps {
-  callback: ({
-    selectedImage,
-  }: {
-    selectedImage: CloudinaryImage | undefined;
-  }) => Promise<void>;
-  setIsOpen: (arg0: boolean) => void;
-}
-
-const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
+const AddImage = ({ element }: { element: HeroBannerType }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
+
   const { setPost, images, id } = React.useContext(PostContext);
   const { setIsHeroImageModalOpen, isHeroImageModalOpen } =
     React.useContext(EditorContext);
+
+  const editor = useSlateStatic();
+  const path = ReactEditor.findPath(editor, element);
 
   return (
     <>
@@ -162,8 +159,19 @@ const AddImage = ({ callback, setIsOpen }: AddImageProps) => {
           <Button
             variant="primaryButton"
             onClick={async () => {
-              await callback({ selectedImage });
-              setIsOpen(false);
+              Transforms.setNodes(
+                editor,
+                {
+                  ...element,
+                  image: selectedImage,
+                } as HeroBannerType,
+                {
+                  // This path references the editor, and is expanded to a range that
+                  // will encompass all the content of the editor.
+                  at: path,
+                }
+              );
+              setIsHeroImageModalOpen(false);
             }}
             disabled={selectedImage ? false : true}
           >

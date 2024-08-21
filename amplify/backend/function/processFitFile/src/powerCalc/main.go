@@ -11,6 +11,7 @@ func GenerateIntervals(maxTime int) []uint16 {
 	for hour := 2; hour*3600 <= maxTime; hour++ {
 		baseIntervals = append(baseIntervals, uint16(hour*3600))
 	}
+	baseIntervals = append(baseIntervals, uint16(maxTime-1))
 
 	return baseIntervals
 }

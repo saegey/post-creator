@@ -116,6 +116,14 @@ const getUserAndPost = async ({ req, params }: ServerSideProps) => {
                 type: "paragraph",
                 children: [{ text: "Discuss your activity..." }],
               },
+              {
+                type: "paragraph",
+                children: [{ text: "" }],
+              },
+              {
+                type: "paragraph",
+                children: [{ text: "" }],
+              },
             ],
         images: post.images
           ? (JSON.parse(post.images) as Array<CloudinaryImage>)
