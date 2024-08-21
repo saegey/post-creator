@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"math"
 	"sort"
+	"time"
+
+	"github.com/tormoder/fit"
 )
 
 func CalcNormalizedPower(powers []uint16) float32 {
@@ -84,9 +87,6 @@ func calcPowerSlices(powers []uint16, length int) []float64 {
 		}
 	}
 	sort.Float64s(powerSums)
-	// sort.Slice(powerSums, func(i, j int) bool {
-	// 	return powerSums[i] < powerSums[j]
-	// })
 	return powerSums
 }
 
@@ -111,4 +111,28 @@ func CalcElevationGrades(coordinates [][]float64, distances []float32, elevation
 		}
 	}
 	return grades
+}
+
+func GetMaxAveragePowerForInterval(records []*fit.RecordMsg, interval time.Duration) float64 {
+	maxAverage := 0.0
+	start := 0
+	windowSum := uint64(0)
+
+	for end := 0; end < len(records); end++ {
+		// Move the start index up to maintain the interval window
+		for records[end].Timestamp.Sub(records[start].Timestamp) > interval {
+			windowSum -= uint64(records[start].Power)
+			start++
+		}
+		// Add the current record's power to the window sum
+		windowSum += uint64(records[end].Power)
+		// Calculate the average for the current window
+		currentWindowLength := end - start + 1
+		average := float64(windowSum) / float64(currentWindowLength)
+		if average > maxAverage {
+			maxAverage = average
+		}
+	}
+
+	return maxAverage
 }

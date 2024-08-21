@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"lambda/S3helper"
+	"lambda/dynamo"
 	"lambda/fitHelper"
 	"lambda/myevent"
 	"lambda/publish"
@@ -12,6 +13,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/iotdataplane"
 	"github.com/aws/aws-sdk-go/service/s3"
 )
@@ -40,17 +42,23 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 	svc := s3.New(sess)
 	var metaData S3helper.MetaData
 
+	sess1 := session.Must(session.NewSessionWithOptions(session.Options{
+		SharedConfigState: session.SharedConfigEnable,
+	}))
+	dynamoSvc := dynamodb.New(sess1)
+
 	// Extract bucket and object key from the event
 	for _, record := range s3event.Records {
 		metaData, err = S3helper.ExtractMetaData(record, svc)
+		if err != nil {
+			return "", fmt.Errorf("failed to extract metadata: %v", err)
+		}
 
 		// Example usage: publishing a message
 		err = publish.PublishMessage(iotClient, &metaData.PostId, "go-start-processing")
 		if err != nil {
 			fmt.Println("Error publishing to IoT:", err)
 			break
-		} else {
-			fmt.Printf("Message published successfully - postId: %s", metaData.PostId)
 		}
 
 		// Get the object from S3
@@ -78,7 +86,52 @@ func HandleRequest(ctx context.Context, s3event myevent.Event) (string, error) {
 		// Get the last element
 		fitFilename := parts[len(parts)-1]
 
-		ProcessActivityRecords(activity, &metaData.PostId, metaData.Bucket, metaData.IdentityId, fitFilename)
+		processedData, err := ProcessActivityRecords(ProcessActivityOptions{
+			Activity:    activity,
+			PostId:      &metaData.PostId,
+			Bucket:      metaData.Bucket,
+			IdentityId:  metaData.IdentityId,
+			GpxFileName: fitFilename,
+			Svc:         dynamoSvc,
+		})
+		if err != nil {
+			fmt.Printf("Error processing activity records: %v", err)
+			// return
+		}
+
+		// Upload data to S3
+		err = S3helper.UploadToS3(S3helper.UploadToS3Input{
+			Coordinates: processedData.SimplifiedCoordinates,
+			Elevation:   processedData.MergedData,
+			Bucket:      metaData.Bucket,
+			IdentityID:  metaData.IdentityId,
+			S3Key:       processedData.S3Key,
+		})
+		if err != nil {
+			fmt.Printf("Error uploading to S3: %v", err)
+		}
+
+		// Update DynamoDB item
+		err = dynamo.UpdateItem(dynamoSvc, dynamo.UpdateItemInput{
+			PostID:           metaData.PostId,
+			TempAnalysis:     processedData.TempResults,
+			CadenceAnalysis:  processedData.CadenceResults,
+			Distance:         processedData.TotalDistance,
+			HeartAnalysis:    processedData.HeartResults,
+			ElevationGain:    processedData.TotalElevationGain,
+			StoppedTime:      processedData.StoppedTime,
+			ElapsedTime:      processedData.ElapsedTime,
+			NormalizedPower:  processedData.NormalizedPower,
+			Zones:            nil, // Assuming you have no data for Zones
+			PowerZoneBuckets: nil, // Assuming you have no data for PowerZoneBuckets
+			TimeInRedSecs:    0,   // Assuming no time in red
+			S3Key:            processedData.S3Key,
+			PowerAnalysis:    processedData.PowerResults,
+			GPXFile:          fitFilename,
+		})
+		if err != nil {
+			fmt.Printf("Error updating DynamoDB: %v", err)
+		}
 	}
 
 	err = publish.PublishMessage(iotClient, &metaData.PostId, "go-finish-processing")
