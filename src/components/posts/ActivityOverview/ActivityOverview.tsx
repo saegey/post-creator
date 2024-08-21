@@ -77,11 +77,10 @@ type Props = {
     elevationGain?: number | null;
     distance?: number | null;
     normalizedPower?: number | null;
-    heartAnalysis?: Record<"entire" | number, number>[] | undefined;
-    // heartAnalysis: Map<"entire", number>[] | undefined;
-    tempAnalysis?: Record<string | number, number>[] | undefined;
-    powerAnalysis?: Record<string | number, number>[] | undefined;
-    cadenceAnalysis?: Record<string | number, number>[] | undefined;
+    heartAnalysis?: Record<number, number>[] | undefined;
+    tempAnalysis?: Record<number, number>[] | undefined;
+    powerAnalysis?: Record<number, number>[] | undefined;
+    cadenceAnalysis?: Record<number, number>[] | undefined;
     elapsedTime?: {
       seconds: number;
     };
@@ -105,6 +104,10 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     timeInRed,
   } = data;
   const units = useUnits();
+  const powerKeys = Object.keys(powerAnalysis as object);
+  const heartKeys = Object.keys(heartAnalysis as object);
+  const tempKeys = Object.keys(tempAnalysis as object);
+  const cadenceKeys = Object.keys(cadenceAnalysis as object);
 
   const items = [
     {
@@ -127,8 +130,12 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     {
       title: "Avg Heart Rate",
       value: heartAnalysis
-        ? `${heartAnalysis["entire" as keyof Object]} bpm`
-        : "undfined",
+        ? `${
+            heartAnalysis[
+              heartKeys[heartKeys.length - 1] as keyof typeof heartAnalysis
+            ]
+          } bpm`
+        : "HR data not available",
     },
     {
       title: "Distance",
@@ -160,14 +167,30 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
       value:
         units.unitOfMeasure === "metric"
           ? `${Number(
-              tempAnalysis ? tempAnalysis["entire" as keyof Object] : 0
+              tempAnalysis
+                ? tempAnalysis[
+                    tempKeys[
+                      Number(tempKeys.length - 1)
+                    ] as keyof typeof tempAnalysis
+                  ]
+                : 0
             ).toFixed()} °C`
-          : tempAnalysis && tempAnalysis["entire" as keyof Object]
+          : tempAnalysis &&
+            tempAnalysis[
+              tempKeys[Number(tempKeys.length - 1)] as keyof typeof tempAnalysis
+            ]
           ? `${(
-              Number(tempAnalysis["entire" as keyof Object]) * (9 / 5) +
+              Number(
+                tempAnalysis[
+                  tempKeys[
+                    Number(tempKeys.length - 1)
+                  ] as keyof typeof tempAnalysis
+                ]
+              ) *
+                (9 / 5) +
               32
             ).toFixed()} °F`
-          : "",
+          : "N/A",
     },
     {
       title: "Avg Speed",
@@ -195,7 +218,11 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     {
       title: "Avg Power",
       value: powerAnalysis
-        ? `${powerAnalysis["entire" as keyof Object]} watts`
+        ? `${
+            powerAnalysis[
+              powerKeys[powerKeys.length - 1] as keyof typeof powerAnalysis
+            ]
+          } watts`
         : "N/A",
     },
     {
@@ -207,7 +234,13 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     {
       title: "Avg Cadence",
       value: cadenceAnalysis
-        ? `${cadenceAnalysis["entire" as keyof Object]} rpm`
+        ? `${
+            cadenceAnalysis[
+              cadenceKeys[
+                cadenceKeys.length - 1
+              ] as keyof typeof cadenceAnalysis
+            ]
+          } rpm`
         : "N/A",
     },
     {

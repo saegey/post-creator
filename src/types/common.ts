@@ -208,6 +208,7 @@ export type HeroBannerType = {
   type: "heroBanner";
   children: CustomText[];
   photoCaption?: string;
+  image?: CloudinaryImage | undefined;
   void: true;
 };
 

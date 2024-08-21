@@ -6,64 +6,61 @@ import (
 	"strconv"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-type DataAnalysis map[string]float64
-type TempAnalysis map[string]uint16
-type CadenceAnalysis map[string]uint16
-type HeartAnalysis map[string]uint16
-type PowerAnalysis map[string]uint16
+type TempAnalysis map[uint16]int
+type CadenceAnalysis map[uint16]int
+type HeartAnalysis map[uint16]int
+type PowerAnalysis map[uint16]int
 
-func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis CadenceAnalysis, distance float64, heartAnalysis HeartAnalysis, elevationGain float32, stoppedTime int, elapsedTime int, normalizedPower float32, zones []string, powerZoneBuckets []string, timeInRedSecs int, s3key string, powerAnalysis PowerAnalysis, gpxFile string) error {
-	sess := session.Must(session.NewSessionWithOptions(session.Options{
-		SharedConfigState: session.SharedConfigEnable,
-	}))
+type DynamoDBAPI interface {
+	UpdateItem(input *dynamodb.UpdateItemInput) (*dynamodb.UpdateItemOutput, error)
+}
+
+type UpdateItemInput struct {
+	PostID           string
+	TempAnalysis     TempAnalysis
+	CadenceAnalysis  CadenceAnalysis
+	Distance         float64
+	HeartAnalysis    HeartAnalysis
+	ElevationGain    float32
+	StoppedTime      int
+	ElapsedTime      int
+	NormalizedPower  float32
+	Zones            []string
+	PowerZoneBuckets []string
+	TimeInRedSecs    int
+	S3Key            string
+	PowerAnalysis    PowerAnalysis
+	GPXFile          string
+}
+
+func uint16MapToDynamoDBMap(input map[uint16]int) map[string]*dynamodb.AttributeValue {
+	result := make(map[string]*dynamodb.AttributeValue)
+	for k, v := range input {
+		keyAsString := strconv.FormatUint(uint64(k), 10) // Convert uint16 key to string correctly
+		result[keyAsString] = &dynamodb.AttributeValue{
+			N: aws.String(strconv.Itoa(v)),
+		}
+	}
+	return result
+}
+
+func UpdateItem(svc DynamoDBAPI, input UpdateItemInput) error {
 	postTable := "Post-" + os.Getenv("API_NEXTJSBLOG_GRAPHQLAPIIDOUTPUT") + "-" + os.Getenv("ENV")
 	fmt.Printf("Table: %s", postTable)
 
-	tempMap := make(map[string]*dynamodb.AttributeValue)
-	for k, v := range tempAnalysis {
-		tempMap[k] = &dynamodb.AttributeValue{
-			N: aws.String(strconv.Itoa(int(v))),
-		}
-	}
+	tempMap := uint16MapToDynamoDBMap(input.TempAnalysis)
+	cadenceMap := uint16MapToDynamoDBMap(input.CadenceAnalysis)
+	heartMap := uint16MapToDynamoDBMap(input.HeartAnalysis)
+	powerMap := uint16MapToDynamoDBMap(input.PowerAnalysis)
 
-	cadenceMap := make(map[string]*dynamodb.AttributeValue)
-	for k, v := range cadenceAnalysis {
-		cadenceMap[k] = &dynamodb.AttributeValue{
-			N: aws.String(strconv.Itoa(int(v))),
-		}
-	}
-
-	heartMap := make(map[string]*dynamodb.AttributeValue)
-	for k, v := range heartAnalysis {
-		heartMap[k] = &dynamodb.AttributeValue{
-			N: aws.String(strconv.Itoa(int(v))),
-		}
-	}
-
-	powerMap := make(map[string]*dynamodb.AttributeValue)
-	for k, v := range powerAnalysis {
-		powerMap[k] = &dynamodb.AttributeValue{
-			N: aws.String(strconv.Itoa(int(v))),
-		}
-	}
-
-	svc := dynamodb.New(sess)
-
-	// cadenceJson, err := json.Marshal(cadenceAnalysis)
-	// if err != nil {
-	// 	log.Fatalf("Failed to marshal JSON: %v", err)
-	// }
-	fmt.Printf("Temp Analysis: %v", tempAnalysis["entire"])
-
-	input := &dynamodb.UpdateItemInput{
+	updateItemInput := &dynamodb.UpdateItemInput{
 		TableName: aws.String(postTable),
 		Key: map[string]*dynamodb.AttributeValue{
 			"id": {
-				S: aws.String(postId),
+				S: aws.String(input.PostID),
 			},
 		},
 		UpdateExpression: aws.String("SET distance = :dis, heartAnalysis = :hr, elevationTotal = :el, stoppedTime = :st, elapsedTime = :et, normalizedPower = :np, cadenceAnalysis = :ca, tempAnalysis = :ta, powerZones = :pz, powerZoneBuckets = :pzb, timeInRed = :red, timeSeriesFile = :tsf, powerAnalysis = :pa, gpxFile = :gpx"),
@@ -75,7 +72,7 @@ func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis Cadenc
 				M: cadenceMap,
 			},
 			":dis": {
-				N: aws.String(fmt.Sprintf("%f", distance)),
+				N: aws.String(fmt.Sprintf("%f", input.Distance)),
 			},
 			":hr": {
 				M: heartMap,
@@ -84,27 +81,22 @@ func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis Cadenc
 				M: powerMap,
 			},
 			":el": {
-				N: aws.String(fmt.Sprintf("%f", elevationGain)),
+				N: aws.String(fmt.Sprintf("%f", input.ElevationGain)),
 			},
-			// ":et": {
-			// 	M: map[string]*dynamodb.AttributeValue{
-			// 		"seconds": {N: aws.String(fmt.Sprintf("%d", elapsedTime))},
-			// 	},
-			// },
 			":st": {
-				N: aws.String(fmt.Sprintf("%d", stoppedTime)),
+				N: aws.String(fmt.Sprintf("%d", input.StoppedTime)),
 			},
 			":et": {
-				N: aws.String(fmt.Sprintf("%d", elapsedTime)),
+				N: aws.String(fmt.Sprintf("%d", input.ElapsedTime)),
 			},
 			":np": {
-				N: aws.String(fmt.Sprintf("%f", normalizedPower)),
+				N: aws.String(fmt.Sprintf("%f", input.NormalizedPower)),
 			},
 			":pz": {
 				L: func() []*dynamodb.AttributeValue {
-					if zones != nil {
+					if input.Zones != nil {
 						var attributeValues []*dynamodb.AttributeValue
-						for _, zone := range zones {
+						for _, zone := range input.Zones {
 							attributeValues = append(attributeValues, &dynamodb.AttributeValue{S: aws.String(zone)})
 						}
 						return attributeValues
@@ -114,9 +106,9 @@ func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis Cadenc
 			},
 			":pzb": {
 				L: func() []*dynamodb.AttributeValue {
-					if powerZoneBuckets != nil {
+					if input.PowerZoneBuckets != nil {
 						var attributeValues []*dynamodb.AttributeValue
-						for _, bucket := range powerZoneBuckets {
+						for _, bucket := range input.PowerZoneBuckets {
 							attributeValues = append(attributeValues, &dynamodb.AttributeValue{S: aws.String(bucket)})
 						}
 						return attributeValues
@@ -125,18 +117,18 @@ func UpdateItem(postId string, tempAnalysis TempAnalysis, cadenceAnalysis Cadenc
 				}(),
 			},
 			":red": {
-				N: aws.String(fmt.Sprintf("%d", timeInRedSecs)),
+				N: aws.String(fmt.Sprintf("%d", input.TimeInRedSecs)),
 			},
 			":tsf": {
-				S: aws.String(s3key),
+				S: aws.String(input.S3Key),
 			},
 			":gpx": {
-				S: aws.String(gpxFile),
+				S: aws.String(input.GPXFile),
 			},
 		},
 	}
 
-	result, err := svc.UpdateItem(input)
+	result, err := svc.UpdateItem(updateItemInput)
 
 	if err != nil {
 		fmt.Printf("Error: %v", err)

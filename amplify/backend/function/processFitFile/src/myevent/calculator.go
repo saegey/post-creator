@@ -1,13 +1,42 @@
 package myevent
 
 import (
-	"fmt"
 	"math"
-	"sort"
+	"time"
+
+	"github.com/tormoder/fit"
 )
 
+// CalculateMaxAveragePowers calculates the best average power over specific intervals
+func CalculateMaxAveragePowers(intervals []uint16, powers []uint16) map[uint16]int {
+	bestPowers := make(map[uint16]int)
+
+	for _, interval := range intervals {
+		maxAvg := float64(0)
+		windowSum := uint64(0)
+
+		// Sliding window approach
+		for i := uint16(0); i < uint16(len(powers)); i++ {
+			if i < interval {
+				windowSum += uint64(powers[i])
+				if i == interval-1 {
+					maxAvg = float64(windowSum) / float64(interval)
+				}
+			} else {
+				windowSum += uint64(powers[i]) - uint64(powers[i-interval])
+				avg := float64(windowSum) / float64(interval)
+				if avg > maxAvg {
+					maxAvg = avg
+				}
+			}
+		}
+		bestPowers[interval] = int(maxAvg)
+	}
+
+	return bestPowers
+}
+
 func CalcNormalizedPower(powers []uint16) float32 {
-	fmt.Println("Calculating normalized power")
 	segmentSums := make([]float64, 0)
 	cleanPowers := make([]float64, len(powers))
 	for i, p := range powers {
@@ -33,61 +62,8 @@ func CalcNormalizedPower(powers []uint16) float32 {
 		segmentTotal += math.Pow(s/30, 4)
 	}
 
-	// fmt.Printf("Segment Total: %.2f\n", segmentTotal)
-
 	average := segmentTotal / float64(len(segmentSums))
 	return float32(math.Pow(average, 1.0/4.0))
-}
-
-func CalcBestPowers(times []int, powers []uint16, removeZeros bool) map[string]uint16 {
-	filteredVals := make([]uint16, 0)
-	if removeZeros {
-		for _, val := range powers {
-			if val != 0 {
-				filteredVals = append(filteredVals, val)
-			}
-		}
-	} else {
-		filteredVals = powers
-	}
-
-	sum := uint64(0)
-	for _, p := range filteredVals {
-		sum += uint64(p)
-	}
-	averagePower := math.Round(float64(sum) / float64(len(filteredVals)))
-
-	response := make(map[string]uint16)
-	response["entire"] = uint16(averagePower)
-
-	for _, time := range times {
-		if time > len(filteredVals) {
-			continue
-		}
-		powerSlices := calcPowerSlices(filteredVals, time)
-		response[fmt.Sprintf("%d", time)] = uint16(float64(powerSlices[len(powerSlices)-1]) / float64(time))
-	}
-
-	return response
-}
-
-func calcPowerSlices(powers []uint16, length int) []float64 {
-	powerSums := make([]float64, 0)
-	for i := 0; i <= len(powers)-length; i++ {
-		nums := powers[i : i+length]
-		if len(nums) == length {
-			sum := float64(0)
-			for _, num := range nums {
-				sum += float64(num)
-			}
-			powerSums = append(powerSums, float64(sum))
-		}
-	}
-	sort.Float64s(powerSums)
-	// sort.Slice(powerSums, func(i, j int) bool {
-	// 	return powerSums[i] < powerSums[j]
-	// })
-	return powerSums
 }
 
 func isFinite(f float64) bool {
@@ -111,4 +87,28 @@ func CalcElevationGrades(coordinates [][]float64, distances []float32, elevation
 		}
 	}
 	return grades
+}
+
+func GetMaxAveragePowerForInterval(records []*fit.RecordMsg, interval time.Duration) float64 {
+	maxAverage := 0.0
+	start := 0
+	windowSum := uint64(0)
+
+	for end := 0; end < len(records); end++ {
+		// Move the start index up to maintain the interval window
+		for records[end].Timestamp.Sub(records[start].Timestamp) > interval {
+			windowSum -= uint64(records[start].Power)
+			start++
+		}
+		// Add the current record's power to the window sum
+		windowSum += uint64(records[end].Power)
+		// Calculate the average for the current window
+		currentWindowLength := end - start + 1
+		average := float64(windowSum) / float64(currentWindowLength)
+		if average > maxAverage {
+			maxAverage = average
+		}
+	}
+
+	return maxAverage
 }

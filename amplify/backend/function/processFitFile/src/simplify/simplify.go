@@ -1,6 +1,5 @@
 package simplify
 
-// -statck------------------------------------------------
 type Stack []int
 
 func (s *Stack) Push(v int) {

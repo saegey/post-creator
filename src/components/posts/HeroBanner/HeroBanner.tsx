@@ -13,16 +13,17 @@ import { cloudUrl } from "../../../utils/cloudinary";
 import { HeroBannerType } from "../../../types/common";
 import { useViewport } from "../../ViewportProvider";
 import Image from "next/image";
+import AddImage from "../Image/AddImage";
 
 const HeroBanner = ({ element }: { element: HeroBannerType }) => {
-  const { heroImage, title, postLocation, date, subhead } =
-    React.useContext(PostContext);
+  const { title, postLocation, date, subhead } = React.useContext(PostContext);
 
   const {
     setIsHeroImageModalOpen,
     setIsPhotoCaptionOpen,
     isPhotoCaptionOpen,
     setMobileMenu,
+    isHeroImageModalOpen,
   } = React.useContext(EditorContext);
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -39,12 +40,12 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { width } = useViewport();
   const imageWidth = width < 690 ? width : 690;
 
-  const imageUrl = heroImage
+  const imageUrl = element.image
     ? getCldImageUrl(
         {
-          src: heroImage?.public_id,
+          src: element.image?.public_id,
           // width: width < 690 ? width : 690,
-          height: heroImage?.height / (heroImage?.width / imageWidth),
+          height: element.image?.height / (element.image?.width / imageWidth),
         },
         {
           cloud: {
@@ -107,6 +108,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
         contentEditable={false}
       >
         {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
+        {isHeroImageModalOpen && <AddImage element={element} />}
         <Flex
           sx={{
             height: "fit-content",
@@ -114,7 +116,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
             width: "100%",
           }}
         >
-          {!heroImage && (
+          {!element.image && (
             <Flex
               sx={{
                 width: ["100%", "65%", "65%"],
@@ -140,11 +142,13 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
               </Flex>
             </Flex>
           )}
-          {heroImage && heroImage !== null ? (
+          {element.image && element !== null ? (
             <Flex
               sx={{
                 backgroundColor:
-                  heroImage && heroImage.colors ? heroImage.colors[0] : "black",
+                  element.image && element.image.colors
+                    ? element.image.colors[0]
+                    : "black",
                 width: ["100%", "65%", "65%"],
                 display: ["inline-block", "", ""],
               }}

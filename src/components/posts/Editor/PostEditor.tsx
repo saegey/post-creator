@@ -197,23 +197,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     getData();
   }, [id]);
 
-  const addImage = async ({
-    selectedImage,
-  }: {
-    selectedImage: CloudinaryImage | undefined;
-  }) => {
-    console.log(selectedImage);
-    setPost({ heroImage: selectedImage });
-    // setHeroImage && setHeroImage(selectedImage);
-    setIsHeroImageModalOpen(false);
-
-    // await PostSaveComponents({
-    //   postId: id,,
-    //   components: editor.children,
-    //   heroImage: selectedImage ? JSON.stringify(selectedImage) : "",
-    // });
-  };
-
   // const setUpSub = async () => {
   //   if (!subPubConfigured) {
   //     const endpoint = await getEndpoint();
@@ -280,9 +263,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   return (
     <Flex>
       {/* <PublishModalConfirmation /> */}
-      {isHeroImageModalOpen && (
-        <AddImage setIsOpen={setIsHeroImageModalOpen} callback={addImage} />
-      )}
       {/* {isShareModalOpen && <ShareModal />} */}
       <Box
         sx={{

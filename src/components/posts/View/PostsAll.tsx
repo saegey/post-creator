@@ -151,12 +151,81 @@ const PostsAll = ({ user }: { user: IUser }) => {
           width: "100vw",
         }}
       >
-        <Flex>
-          <Box>
-            <Text sx={{ fontSize: "28px", fontWeight: "600" }}>Your Posts</Text>
+        <Flex sx={{ width: "100%" }}>
+          <Box as="nav" sx={{ marginBottom: "10px", width: "50%" }}>
+            <NavLink
+              href="#!"
+              sx={{
+                paddingY: "8px",
+                paddingRight: "8px",
+                borderBottomWidth: "1px",
+                borderBottomStyle: "solid",
+                borderBottomColor: status === "draft" ? "text" : "divider",
+                fontWeight: "500",
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                setPosts(undefined);
+                setStatus("draft");
+                getDraftPosts();
+
+                Router.push("/posts?status=draft");
+              }}
+            >
+              Drafts
+            </NavLink>
+            <NavLink
+              href="#!"
+              p={2}
+              sx={{
+                paddingY: "8px",
+                paddingRight: "8px",
+                borderBottomWidth: "1px",
+                borderBottomStyle: "solid",
+                borderBottomColor: status === "published" ? "text" : "divider",
+                fontWeight: "500",
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                setPosts(undefined);
+                setStatus("published");
+                getPublishedPost();
+                Router.push("/posts?status=published");
+              }}
+            >
+              Published
+            </NavLink>
+            <NavLink
+              href="#!"
+              p={2}
+              sx={{
+                borderBottomWidth: "1px",
+                borderBottomStyle: "solid",
+                borderBottomColor: "divider",
+                fontWeight: "500",
+              }}
+            >
+              Unlisted
+            </NavLink>
+            <Box
+              sx={{
+                flexGrow: 1,
+                // borderBottomWidth: "1px",
+                // borderBottomStyle: "solid",
+                // borderBottomColor: "divider",
+              }}
+            ></Box>
           </Box>
           <Flex
-            sx={{ paddingBottom: "20px", flexGrow: 1, justifyContent: "right" }}
+            sx={{
+              paddingBottom: "20px",
+              // flexGrow: 1,
+              justifyContent: "right",
+              width: "50%",
+              // borderBottomWidth: "1px",
+              // borderBottomStyle: "solid",
+              // borderBottomColor: status === "draft" ? "text" : "divider",
+            }}
           >
             <Button
               onClick={() => createNewPost()}
@@ -166,71 +235,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
               New Post
             </Button>
           </Flex>
-        </Flex>
-
-        <Flex as="nav" sx={{ marginBottom: "10px" }}>
-          <NavLink
-            href="#!"
-            sx={{
-              paddingY: "8px",
-              paddingRight: "8px",
-              borderBottomWidth: "1px",
-              borderBottomStyle: "solid",
-              borderBottomColor: status === "draft" ? "text" : "divider",
-              fontWeight: "500",
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              setPosts(undefined);
-              setStatus("draft");
-              getDraftPosts();
-
-              Router.push("/posts?status=draft");
-            }}
-          >
-            Drafts
-          </NavLink>
-          <NavLink
-            href="#!"
-            p={2}
-            sx={{
-              paddingY: "8px",
-              paddingRight: "8px",
-              borderBottomWidth: "1px",
-              borderBottomStyle: "solid",
-              borderBottomColor: status === "published" ? "text" : "divider",
-              fontWeight: "500",
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              setPosts(undefined);
-              setStatus("published");
-              getPublishedPost();
-              Router.push("/posts?status=published");
-            }}
-          >
-            Published
-          </NavLink>
-          <NavLink
-            href="#!"
-            p={2}
-            sx={{
-              borderBottomWidth: "1px",
-              borderBottomStyle: "solid",
-              borderBottomColor: "divider",
-              fontWeight: "500",
-            }}
-          >
-            Unlisted
-          </NavLink>
-          <Box
-            sx={{
-              flexGrow: 1,
-              borderBottomWidth: "1px",
-              borderBottomStyle: "solid",
-              borderBottomColor: "divider",
-            }}
-          ></Box>
         </Flex>
 
         {!posts && (
