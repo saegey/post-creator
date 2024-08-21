@@ -216,7 +216,7 @@ export default {
       backgroundColor: "text",
       color: "background",
       fontSize: "14px",
-      paddingY: "10px",
+      paddingY: "6px",
       paddingX: "20px",
       lineHeight: "20px",
       fontWeight: "400",

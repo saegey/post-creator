@@ -39,8 +39,9 @@ type UpdateItemInput struct {
 func uint16MapToDynamoDBMap(input map[uint16]int) map[string]*dynamodb.AttributeValue {
 	result := make(map[string]*dynamodb.AttributeValue)
 	for k, v := range input {
-		result[string(k)] = &dynamodb.AttributeValue{
-			N: aws.String(strconv.Itoa(int(v))),
+		keyAsString := strconv.FormatUint(uint64(k), 10) // Convert uint16 key to string correctly
+		result[keyAsString] = &dynamodb.AttributeValue{
+			N: aws.String(strconv.Itoa(v)),
 		}
 	}
 	return result

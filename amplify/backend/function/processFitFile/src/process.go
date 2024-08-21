@@ -150,6 +150,7 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 
 	// Calculate best powers for different time intervals
 	var timeIntervals = powercalc.GenerateIntervals(len(activity.Records))
+
 	var powerResults = myevent.CalculateMaxAveragePowers(timeIntervals, powers)
 	var cadenceResults = myevent.CalculateMaxAveragePowers(timeIntervals, convertToUint16Slice(cads))
 	var tempResults = myevent.CalculateMaxAveragePowers(timeIntervals, convertToUint16Slice([]uint8(convertToInt8Slice(temps))))
