@@ -1,9 +1,9 @@
-// SlateEditor.js
 import React from "react";
-import HoverIcon from "../../HoverIcon";
-import { Box, Flex } from "theme-ui";
-import { EditorContext } from "./EditorContext";
 import { useSlateStatic, ReactEditor } from "slate-react";
+import { Box, Flex } from "theme-ui";
+
+import HoverIcon from "../../HoverIcon";
+import { EditorContext } from "./EditorContext";
 import { CustomElement } from "../../../types/common";
 import { useViewport } from "../../ViewportProvider";
 
@@ -20,8 +20,6 @@ const HoverAction = ({
   const { setIsNewComponentMenuOpen, setMenuPosition } =
     React.useContext(EditorContext);
   const { width } = useViewport();
-
-  // console.log(editor.selection);
 
   return (
     <Flex
@@ -43,31 +41,18 @@ const HoverAction = ({
               <HoverIcon
                 onClick={(event) => {
                   event.preventDefault();
-                  // const { selection } = editor;
-
-                  // console.log(editor.selection);
-
                   editor.deselect();
-
                   const rect = event.currentTarget.getBoundingClientRect();
                   const scrollX = window.scrollX || window.pageXOffset;
                   const scrollY = window.scrollY || window.pageYOffset;
                   const adjustedTop = rect.bottom + scrollY - 10;
                   const adjustedLeft = rect.right + scrollX + 10;
 
-                  // Transforms.select(editor, {
-                  //   anchor: selection?.anchor,
-                  //   focus: selection?.focus,
-                  // });
-
-                  // console.log(path);
                   setMenuPosition({
                     top: adjustedTop,
                     left: adjustedLeft,
                     path: path,
                   });
-
-                  // console.log(editor.selection);
                   setIsNewComponentMenuOpen(true);
                 }}
               />

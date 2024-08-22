@@ -12,8 +12,7 @@ const Menu = ({
   menuPosition: { top: number; left: number };
 }) => {
   const wrapperRef = React.useRef();
-  const { setIsNewComponentMenuOpen, isNewComponentMenuOpen } =
-    React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
 
   useClickOutside(
     wrapperRef,
@@ -22,16 +21,6 @@ const Menu = ({
       e.stopPropagation();
     }
   );
-
-  // React.useEffect(() => {
-  //   if (isNewComponentMenuOpen) {
-  //     document.body.style.overflow = "hidden";
-  //   }
-
-  //   return () => {
-  //     document.body.style.overflow = "auto";
-  //   };
-  // }, [isNewComponentMenuOpen]);
 
   return (
     <Box
@@ -45,7 +34,6 @@ const Menu = ({
         borderColor: "#ccc",
         borderWidth: "1px",
         borderStyle: "solid",
-        // border: "1px solid #ddd",
         borderRadius: "5px",
         zIndex: "4",
         boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",

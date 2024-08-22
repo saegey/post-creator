@@ -9,12 +9,14 @@ const StandardModal = ({
   setIsOpen,
   title = undefined,
   fullScreen = false,
+  onClose,
 }: {
   children: any;
   isOpen: boolean;
   setIsOpen: any;
   title?: string | undefined;
   fullScreen?: boolean;
+  onClose?: () => void;
 }) => {
   React.useEffect(() => {
     if (isOpen) {
@@ -30,13 +32,18 @@ const StandardModal = ({
     <>
       <BlackBox
         opacity={"0.7"}
-        onClick={() => setIsOpen(false)}
+        onClick={() => {
+          setIsOpen(false);
+          if (onClose) {
+            onClose();
+          }
+        }}
         zIndex={50}
         fullScreen={fullScreen}
       >
         <Box
           sx={{
-            backgroundColor: "yellow",
+            // backgroundColor: "yellow",
             maxWidth: "690px",
             display: ["flex", "inherit", "inherit"],
             position: ["fixed", "inherit", "inherit"],
@@ -48,7 +55,6 @@ const StandardModal = ({
             background: "background",
             borderRadius: [null, "5px", "5px"],
             padding: "20px",
-            // position: ['fixed', 'inherit', 'inherit'],
           }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -58,8 +64,6 @@ const StandardModal = ({
               borderBottomColor: "divider",
               borderBottomStyle: "solid",
               paddingY: "5px",
-
-              // marginBottom: '20px',
             }}
           >
             {title && (
@@ -77,6 +81,9 @@ const StandardModal = ({
             <Close
               onClick={() => {
                 setIsOpen(false);
+                if (onClose) {
+                  onClose();
+                }
               }}
               id="close-button"
               sx={{

@@ -17,6 +17,7 @@ const RaceResultsDotComListWrapper = ({
   const { raceResults, resultsUrl } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
+  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
 
   return (
     <HoverAction element={element}>
@@ -32,7 +33,11 @@ const RaceResultsDotComListWrapper = ({
               resultsUrl={resultsUrl}
             />
           )}
-          <OptionsMenu>
+          <OptionsMenu
+            isOpen={isOptionsOpen}
+            setIsOpen={setIsOptionsOpen}
+            path={path}
+          >
             <>
               <Box
                 onClick={(e) => {

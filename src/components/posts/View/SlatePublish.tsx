@@ -40,17 +40,17 @@ const SlatePublish = () => {
         powergraph: () => {
           return <PowerGraphViewWrapper key={`pow-${Math.random()}`} />;
         },
-        embed: ({ node }) => {
-          const { id } = React.useContext(PostContext);
-          return (
-            <div key={`{embed-${id}}`}>
-              <EmbedElemnt element={node} />
-            </div>
-          );
-        },
-        stravaEmbed: ({ node }) => {
-          return <StravaLink element={node} key={`embed-${Math.random()}`} />;
-        },
+        // embed: ({ node }) => {
+        //   const { id } = React.useContext(PostContext);
+        //   return (
+        //     <div key={`{embed-${id}}`}>
+        //       <EmbedElemnt children={children} element={node} />
+        //     </div>
+        //   );
+        // },
+        // stravaEmbed: ({ node }) => {
+        //   return <StravaLink element={node} key={`embed-${Math.random()}`} />;
+        // },
         visualOverview: ({ node }) => {
           // return <Box key={`viz-${Math.random()}`}></Box>;
           return (

@@ -7,6 +7,7 @@ import Header from "../../shared/Header";
 import { EditorContext } from "../Editor/EditorContext";
 import { IUser } from "../../../types/common";
 import { usePost } from "../../PostContext";
+import { Path } from "slate";
 
 type EditUserPostProps = {
   user?: IUser;
@@ -46,6 +47,9 @@ const EditUserPost = ({ user }: EditUserPostProps) => {
   });
   const [isStravaModalOpen, setIsStravaModalOpen] = React.useState(false);
   const [isRWGPSModalOpen, setIsRWGPSModalOpen] = React.useState(false);
+  const [newComponentPath, setNewComponentPath] = React.useState<
+    Path | undefined
+  >(undefined);
   const { id: postId, author, components } = usePost();
 
   React.useEffect(() => {
@@ -57,12 +61,10 @@ const EditUserPost = ({ user }: EditUserPostProps) => {
   return (
     <Box
       as="main"
-      sx={
-        {
-          // width: "100vw",
-          // flexGrow: 1,
-        }
-      }
+      sx={{
+        width: "100vw",
+        flexGrow: 1,
+      }}
     >
       <EditorContext.Provider
         value={{
@@ -100,6 +102,8 @@ const EditUserPost = ({ user }: EditUserPostProps) => {
           setIsRWGPSModalOpen,
           mobileMenu,
           setMobileMenu,
+          newComponentPath,
+          setNewComponentPath,
         }}
       >
         {user && <Header user={user} />}

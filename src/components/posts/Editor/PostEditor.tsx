@@ -36,6 +36,7 @@ import slateApi from "../../../../lib/slateApi";
 import FloatingMenu from "./FloatingMenu";
 import { useViewport } from "../../ViewportProvider";
 import MobileMenu from "./MobileMenu";
+import { RWGPSModal } from "./AddRWGPS";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = React.useMemo(
@@ -300,6 +301,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         >
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
 
+          <RWGPSModal />
           <AddVideoModal />
           {selectionMenu && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />

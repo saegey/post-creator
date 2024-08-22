@@ -1,4 +1,10 @@
-import { Editor, Element as SlateElement } from "slate";
+import {
+  Transforms,
+  Editor,
+  Element as SlateElement,
+  Node as SlateNode,
+} from "slate";
+
 import { CustomEditor } from "../types/common";
 
 // interface CustomNode extends BaseElement {
@@ -105,6 +111,41 @@ export const isBlockActive = (
   );
 
   return !!match;
+};
+
+export const moveNodeUp = (editor: CustomEditor, nodePath: number[]) => {
+  const parentPath = nodePath.slice(0, -1);
+  const index = nodePath[nodePath.length - 1];
+
+  // Ensure the node is not already at the top
+  if (index > 0) {
+    const newPath = [...parentPath, index - 1];
+
+    // Move the node up one spot
+    Transforms.moveNodes(editor, { at: nodePath, to: newPath });
+
+    // Set the selection to the new position
+    Transforms.select(editor, newPath);
+  }
+};
+
+export const moveNodeDown = (editor: CustomEditor, nodePath: number[]) => {
+  const parentPath = nodePath.slice(0, -1);
+  const index = nodePath[nodePath.length - 1];
+
+  // Get the parent node
+  const parentNode = SlateNode.parent(editor, nodePath);
+
+  // Ensure the node is not already at the bottom
+  if (parentNode.children && index < parentNode.children.length - 1) {
+    const newPath = [...parentPath, index + 1];
+
+    // Move the node down one spot
+    Transforms.moveNodes(editor, { at: nodePath, to: newPath });
+
+    // Set the selection to the new position
+    Transforms.select(editor, newPath);
+  }
 };
 
 // export const activeMark = (editor: CustomEditor, format: "bold") => {

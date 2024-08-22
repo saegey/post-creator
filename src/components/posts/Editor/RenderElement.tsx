@@ -36,22 +36,23 @@ const renderElement = (props: {
   const units = useUnits();
 
   switch (element.type) {
-    case "postAuthor":
+    case "postAuthor": // Post Author
       return <PostAuthorWrapper />;
-    case "embed":
-      return <EmbedElemnt element={element} />;
-    case "stravaEmbed":
-      return <StravaLink element={element} />;
-    case "powergraph":
-      return <PowerGraphElement element={element} />;
-    case "timeInZones":
+    case "embed": // Ridewithgps
+      return <EmbedElemnt children={children} element={element} />;
+    case "stravaEmbed": // Strava
+      return <StravaLink children={children} element={element} />;
+    case "powergraph": // Power curve graph
+      return <PowerGraphElement children={children} element={element} />;
+    case "timeInZones": // Time in zones
       return <TimePowerZonesWrapper element={element} />;
-    case "activityOverview":
-      return <ActivityOverviewWrapper element={element} />;
+    case "activityOverview": // activity metrics
+      return <ActivityOverviewWrapper children={children} element={element} />;
     case "visualOverview":
       return (
         <VisualOverviewWrapper
           element={element}
+          children={children}
           view={false}
           unitOfMeasure={units.unitOfMeasure}
         />

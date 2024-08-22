@@ -68,6 +68,9 @@ export type EditorContextType = {
       isFullScreen: boolean;
     }>
   >;
+
+  newComponentPath: Path | undefined;
+  setNewComponentPath: React.Dispatch<React.SetStateAction<Path | undefined>>;
 };
 
 const EditorContext = React.createContext<EditorContextType>({
@@ -111,6 +114,8 @@ const EditorContext = React.createContext<EditorContextType>({
     isFullScreen: false,
   },
   setMobileMenu: () => {},
+  newComponentPath: undefined,
+  setNewComponentPath: () => {},
 });
 
 export { EditorContext };
