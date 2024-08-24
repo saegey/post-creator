@@ -5,16 +5,28 @@ import OptionsButton from "../../buttons/OptionsButton";
 import Dropdown from "../../shared/Dropdown";
 import { Box, Flex } from "theme-ui";
 import { EditorContext } from "./EditorContext";
+import { Path, Transforms } from "slate";
+import { useSlateStatic } from "slate-react";
 
-const OptionsMenu = ({ children }: { children: JSX.Element }) => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+const OptionsMenu = ({
+  children,
+  isOpen,
+  setIsOpen,
+  path,
+}: {
+  children: JSX.Element;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  path: Path;
+}) => {
   const wrapperRef = React.useRef();
   const { setMobileMenu } = React.useContext(EditorContext);
+  const editor = useSlateStatic();
 
   useClickOutside(
     wrapperRef,
     (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      setIsMenuOpen(false);
+      setIsOpen(false);
       e.stopPropagation();
     }
   );
@@ -39,14 +51,13 @@ const OptionsMenu = ({ children }: { children: JSX.Element }) => {
     >
       <OptionsButton
         onClick={() => {
-          if (isMenuOpen) {
-            setIsMenuOpen(false);
-          } else {
-            setIsMenuOpen(true);
-          }
+          setIsOpen(true);
+          // Transforms.select(editor, path);
+          console.log("OptionsButton clicked");
+          console.log(path);
         }}
       />
-      <Dropdown isOpen={isMenuOpen}>
+      <Dropdown isOpen={isOpen}>
         <Flex sx={{ gap: "10px", flexDirection: "column" }}>{children}</Flex>
       </Dropdown>
     </Box>

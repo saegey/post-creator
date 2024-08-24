@@ -38,37 +38,46 @@ const SlatePublish = () => {
       elementTransforms: {
         ...slateToReactConfig.react.elementTransforms,
         powergraph: () => {
-          return <PowerGraphViewWrapper key={`pow-${Math.random()}`} />;
-        },
-        embed: ({ node }) => {
-          const { id } = React.useContext(PostContext);
           return (
-            <div key={`{embed-${id}}`}>
-              <EmbedElemnt element={node} />
-            </div>
+            <PowerGraphViewWrapper
+            // key={`pow-${Math.random()}`}
+            />
           );
         },
-        stravaEmbed: ({ node }) => {
-          return <StravaLink element={node} key={`embed-${Math.random()}`} />;
-        },
+        // embed: ({ node }) => {
+        //   const { id } = React.useContext(PostContext);
+        //   return (
+        //     <div key={`{embed-${id}}`}>
+        //       <EmbedElemnt children={children} element={node} />
+        //     </div>
+        //   );
+        // },
+        // stravaEmbed: ({ node }) => {
+        //   return <StravaLink element={node} key={`embed-${Math.random()}`} />;
+        // },
         visualOverview: ({ node }) => {
           // return <Box key={`viz-${Math.random()}`}></Box>;
           return (
             <VisualOverviewViewWrapper
               element={node}
               view={true}
-              key={`viz-${Math.random()}`}
+              // key={`viz-${Math.random()}`}
             />
           );
         },
         timeInZones: () => {
           return (
-            <TimeInZonesViewWrapper key={`timeInZones-${Math.random()}`} />
+            <TimeInZonesViewWrapper
+            // key={`timeInZones-${Math.random()}`}
+            />
           );
         },
         heroBanner: ({ node }: { node?: HeroBannerType }) => {
           return (
-            <HeroBannerViewWrapper node={node} key={`hero-${Math.random()}`} />
+            <HeroBannerViewWrapper
+              node={node}
+              // key={`hero-${Math.random()}`}
+            />
           );
         },
         activityOverview: () => {
@@ -80,7 +89,7 @@ const SlatePublish = () => {
           return (
             <BullettedListViewWrapper
               node={node}
-              key={`bullet-${Math.random()}`}
+              // key={`bullet-${Math.random()}`}
             />
           );
         },
@@ -88,7 +97,7 @@ const SlatePublish = () => {
           return (
             <ParagraphViewWrapper
               node={node}
-              key={`paragraph-${Math.random()}`}
+              // key={`paragraph-${Math.random()}`}
             />
           );
         },

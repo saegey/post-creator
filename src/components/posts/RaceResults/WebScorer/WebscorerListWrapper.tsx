@@ -13,6 +13,7 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
   const { webscorerResults, resultsUrl } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
+  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
 
   const hoverAct = React.useMemo(() => {
     return (
@@ -27,7 +28,11 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
               raceResults={webscorerResults}
               resultsUrl={resultsUrl ? resultsUrl : ""}
             />
-            <OptionsMenu>
+            <OptionsMenu
+              isOpen={isOptionsOpen}
+              setIsOpen={setIsOptionsOpen}
+              path={path}
+            >
               <>
                 <Box
                   onClick={(e) => {

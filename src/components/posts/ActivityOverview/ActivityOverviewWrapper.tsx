@@ -1,5 +1,5 @@
-import { Box } from "theme-ui";
-import { Editor, Transforms } from "slate";
+import { Box, Text } from "theme-ui";
+import { Transforms } from "slate";
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
@@ -9,11 +9,14 @@ import { EditorContext } from "../../posts/Editor/EditorContext";
 import { ActivityOverviewType } from "../../../types/common";
 import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
+import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
 
 const ActivityOverviewWrapper = ({
   element,
+  children,
 }: {
   element: ActivityOverviewType;
+  children: JSX.Element;
 }) => {
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
@@ -31,6 +34,7 @@ const ActivityOverviewWrapper = ({
     currentFtp,
   } = React.useContext(PostContext);
   const { isFtpUpdating } = React.useContext(EditorContext);
+  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
 
   return (
     <HoverAction element={element}>
@@ -63,31 +67,55 @@ const ActivityOverviewWrapper = ({
             "Avg Speed",
             "Elapsed Time",
             "Stopped Time",
-            // "Time in Red",
             "Avg Cadence",
             "Avg Power",
           ]}
         />
+        {children}
         <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-          <OptionsMenu>
-            <Box
-              onClick={() => {
-                Transforms.removeNodes(editor, { at: path });
-                const selection = window.getSelection();
-                selection && selection.removeAllRanges();
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              Remove
-            </Box>
+          <OptionsMenu
+            setIsOpen={setIsOptionsOpen}
+            isOpen={isOptionsOpen}
+            path={path}
+          >
+            <>
+              <Box
+                onClick={(e) => {
+                  moveNodeUp(editor, path);
+                  setIsOptionsOpen(false);
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>Move Up</Text>
+              </Box>
+              <Box
+                onClick={(e) => {
+                  moveNodeDown(editor, path);
+                  setIsOptionsOpen(false);
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
+                  Move Down
+                </Text>
+              </Box>
+              <Box
+                onClick={() => {
+                  Transforms.removeNodes(editor, { at: path });
+                  const selection = window.getSelection();
+                  selection && selection.removeAllRanges();
+                  setIsOptionsOpen(false);
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                Remove
+              </Box>
+            </>
           </OptionsMenu>
         </Box>
       </Box>
     </HoverAction>
   );
-  // }, [element]);
-
-  // return hoverAction;
 };
 
 export default ActivityOverviewWrapper;

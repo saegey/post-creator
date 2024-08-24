@@ -13,7 +13,7 @@ import Image from "next/image";
 import { PostSaveComponents } from "../../../actions/PostSave";
 import { PostContext } from "../../PostContext";
 import { cloudUrl } from "../../../utils/cloudinary";
-import { ImageElementType } from "../../../types/common";
+import { CustomEditor, ImageElementType } from "../../../types/common";
 import MaximizeIcon from "../../icons/MaximizeIcon";
 import ImageFullScreen from "./ImageFullScreen";
 import OptionsMenu from "../Editor/OptionsMenu";
@@ -21,6 +21,7 @@ import HoverAction from "../Editor/HoverAction";
 import StandardModal from "../../shared/StandardModal";
 
 import { useViewport } from "../../ViewportProvider";
+import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
 
 type SlateImageType = {
   type: "image";
@@ -43,9 +44,10 @@ const ImageElement = ({
   const path = ReactEditor.findPath(editor, element);
 
   const [addCaption, setAddCaption] = React.useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
   const [isMaximized, setIsMaximized] = React.useState(false);
   const { width } = useViewport();
-  const { id, title, postLocation, images } = React.useContext(PostContext);
+  const { id, images } = React.useContext(PostContext);
   const imageMetaIndex: number | undefined = images?.findIndex(
     (i) => i.public_id === element.public_id
   );
@@ -173,6 +175,7 @@ const ImageElement = ({
                 title={"Add Caption"}
                 setIsOpen={() => setAddCaption(false)}
                 isOpen={addCaption}
+                onClose={() => setIsOptionsOpen(false)}
               >
                 <Flex
                   sx={{
@@ -211,8 +214,35 @@ const ImageElement = ({
           )}
 
           {!addCaption && (
-            <OptionsMenu>
+            <OptionsMenu
+              isOpen={isOptionsOpen}
+              setIsOpen={setIsOptionsOpen}
+              path={path}
+            >
               <>
+                <Box
+                  onClick={(e) => {
+                    moveNodeUp(editor, path);
+                    setIsOptionsOpen(false);
+                  }}
+                  variant="boxes.dropdownMenuItem"
+                >
+                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
+                    Move Up
+                  </Text>
+                </Box>
+                <Box
+                  onClick={(e) => {
+                    moveNodeDown(editor, path);
+                    setIsOptionsOpen(false);
+                    // setAddCaption(false);
+                  }}
+                  variant="boxes.dropdownMenuItem"
+                >
+                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
+                    Move Down
+                  </Text>
+                </Box>
                 <Box
                   onClick={() => {
                     setAddCaption(true);
@@ -228,6 +258,7 @@ const ImageElement = ({
                     Transforms.removeNodes(editor, { at: path });
                     const selection = window.getSelection();
                     selection && selection.removeAllRanges();
+                    setIsOptionsOpen(false);
                   }}
                   variant="boxes.dropdownMenuItem"
                 >

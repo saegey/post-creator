@@ -13,6 +13,7 @@ const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
   const editor = useSlateStatic() as CustomEditor;
   const path = ReactEditor.findPath(editor, element);
   const { powerZones, powerZoneBuckets } = usePost();
+  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
 
   const hoverAction = React.useMemo(() => {
     return (
@@ -23,7 +24,11 @@ const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
             powerZones={powerZones}
           />
           <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-            <OptionsMenu>
+            <OptionsMenu
+              isOpen={isOptionsOpen}
+              setIsOpen={setIsOptionsOpen}
+              path={path}
+            >
               <Box
                 onClick={() => {
                   Transforms.removeNodes(editor, { at: path });

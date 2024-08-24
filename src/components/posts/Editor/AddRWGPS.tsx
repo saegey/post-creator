@@ -8,11 +8,15 @@ import StandardModal from "../../shared/StandardModal";
 import EmbedSettings from "../Embed/EmbedSettings";
 import { Path } from "slate";
 
-const RWGPSModal = ({ path }: { path: Path }) => {
+const RWGPSModal = () => {
   const editor = useSlateStatic();
 
-  const { setIsRWGPSModalOpen, isRWGPSModalOpen } =
+  const { setIsRWGPSModalOpen, isRWGPSModalOpen, newComponentPath } =
     React.useContext(EditorContext);
+
+  if (newComponentPath === undefined) {
+    return <></>;
+  }
 
   return isRWGPSModalOpen ? (
     <StandardModal
@@ -23,7 +27,7 @@ const RWGPSModal = ({ path }: { path: Path }) => {
       <EmbedSettings
         editor={editor}
         isModalOpen={setIsRWGPSModalOpen}
-        path={path}
+        path={newComponentPath}
       />
     </StandardModal>
   ) : (
@@ -35,19 +39,18 @@ const AddRWGPS = ({ path }: { path: Path }) => {
   const {
     setIsRWGPSModalOpen,
     setIsNewComponentMenuOpen,
-    setMobileMenu,
-    mobileMenu,
+    setNewComponentPath,
   } = React.useContext(EditorContext);
 
   const addEmbed = () => {
-    // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
+    setNewComponentPath(path);
     setIsRWGPSModalOpen(true);
-    // setIsNewComponentMenuOpen(false);
+    setIsNewComponentMenuOpen(false);
   };
 
   return (
     <>
-      <RWGPSModal path={path} />
+      {/* <RWGPSModal path={path} /> */}
       <Box
         onClick={() => {
           addEmbed();
