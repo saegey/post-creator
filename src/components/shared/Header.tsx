@@ -54,6 +54,23 @@ const Header = ({ user }: { user: IUser }) => {
     setIsPublishedConfirmationOpen(true);
   };
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const header = document.getElementById("header");
+      if (header && window.scrollY > 0) {
+        header.style.position = "fixed";
+        header.style.top = "0";
+        header.style.zIndex = "10";
+      } else if (header) {
+        header.style.position = "sticky";
+        header.style.top = "0";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <>
       {isSettingsModalOpen && <PostSettings />}
@@ -68,8 +85,16 @@ const Header = ({ user }: { user: IUser }) => {
       )}
 
       <Box
+        id="header"
         as="header"
-        sx={{ width: "100vw", position: "sticky", top: 0, zIndex: 5 }}
+        sx={{
+          width: "100vw",
+          // position: "sticky",
+          position: "-webkit-sticky",
+          top: 0,
+          zIndex: 10,
+          backgroundColor: "background",
+        }}
       >
         <Box
           sx={{
@@ -79,7 +104,7 @@ const Header = ({ user }: { user: IUser }) => {
             borderBottomWidth: "1px",
             borderBottomColor: "divider",
             borderBottomStyle: "solid",
-            backgroundColor: "background",
+            // backgroundColor: "red",
           }}
         >
           <Flex
@@ -148,15 +173,15 @@ const Header = ({ user }: { user: IUser }) => {
                     justifyContent: "center",
                   }}
                   onClick={() => {
-                    setIsImageModalOpen(false);
+                    // setIsImageModalOpen(false);
                     setIsSettingsModalOpen(true);
-                    setMobileMenu({
-                      display: false,
-                      top: 0,
-                      left: 0,
-                      isFullScreen: false,
-                      path: [0, 0],
-                    });
+                    // setMobileMenu({
+                    //   display: false,
+                    //   top: 0,
+                    //   left: 0,
+                    //   isFullScreen: false,
+                    //   path: [0, 0],
+                    // });
                   }}
                 >
                   <IconButton

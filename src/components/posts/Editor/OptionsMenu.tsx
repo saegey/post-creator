@@ -52,7 +52,7 @@ const OptionsMenu = ({
       <OptionsButton
         onClick={() => {
           setIsOpen(true);
-          Transforms.select(editor, path);
+          // Transforms.select(editor, path);
           console.log("OptionsButton clicked");
           console.log(path);
         }}

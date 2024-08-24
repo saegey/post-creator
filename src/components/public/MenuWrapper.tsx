@@ -29,7 +29,7 @@ const MenuWrapper = ({
       sx={{
         transition: "height .5s ease, opacity 1s ease",
         height: "auto",
-        overflow: "hidden",
+        // overflow: "hidden",
         opacity: isOpen ? 1 : 0,
       }}
     >

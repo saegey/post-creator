@@ -122,18 +122,39 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         isFullScreen: false,
       });
     }
+    // const selection = window.getSelection();
     if (selection.rangeCount > 0) {
-      // const range = selection.getRangeAt(0);
+      const range = selection.getRangeAt(0); // Uncomment this line
       const selectedText = range.toString();
       if (selectedText.length > 0) {
         const rect = range.getBoundingClientRect();
-        setSelectionMenu({ top: rect.bottom, left: rect.left });
+
+        // If your content is inside a scrolling container, adjust the position accordingly
+        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        setSelectionMenu({
+          top: rect.bottom + scrollY,
+          left: rect.left + scrollX,
+        });
       } else {
         setSelectionMenu(null);
       }
     } else {
       setSelectionMenu(null);
     }
+    // if (selection.rangeCount > 0) {
+    //   const range = selection.getRangeAt(0);
+    //   const selectedText = range.toString();
+    //   if (selectedText.length > 0) {
+    //     const rect = range.getBoundingClientRect();
+    //     setSelectionMenu({ top: rect.bottom, left: rect.left });
+    //   } else {
+    //     setSelectionMenu(null);
+    //   }
+    // } else {
+    //   setSelectionMenu(null);
+    // }
   }, [editor, width]);
 
   React.useEffect(() => {
@@ -266,16 +287,25 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       {/* <PublishModalConfirmation /> */}
       {/* {isShareModalOpen && <ShareModal />} */}
       <Box
+        // sx={{
+        //   minWidth: [null, null, "900px"],
+        //   marginLeft: [0, 0, "auto"],
+        //   marginRight: [0, 0, "auto"],
+        //   marginBottom: "50px",
+        //   width: ["100%", null, null],
+        //   backgroundColor: "background",
+        //   borderRadius: "10px",
+        //   padding: "0px",
+        //   position: "relative",
+        // }}
         sx={{
-          minWidth: [null, null, "900px"],
-          marginLeft: [0, 0, "auto"],
-          marginRight: [0, 0, "auto"],
-          marginBottom: "50px",
-          width: ["100%", null, null],
+          minWidth: "100%", // Simplified to avoid potential issues
+          margin: "0 auto 50px auto", // Centering and bottom margin combined
+          width: "100%",
           backgroundColor: "background",
           borderRadius: "10px",
           padding: "0px",
-          position: "relative",
+          position: "relative", // Test with and without this
         }}
       >
         <Slate
