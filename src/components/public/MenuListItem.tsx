@@ -29,8 +29,10 @@ const MenuListItem = ({
     <Text sx={{ color: textColor, fontWeight: 300 }}>{title}</Text>
   ) : (
     <Flex sx={{ gap: "10px" }}>
-      <Text sx={{ color: "#969696", fontWeight: 300 }}>{title}</Text>
-      <Badge sx={{ backgroundColor: "#cccccc" }}>Soon</Badge>
+      <Text sx={{ color: "textMuted", fontWeight: 300 }}>{title}</Text>
+      <Badge sx={{ backgroundColor: "text" }}>
+        <Text sx={{ color: "background" }}>Soon</Text>
+      </Badge>
     </Flex>
   );
 
@@ -38,6 +40,7 @@ const MenuListItem = ({
     <Flex
       sx={{
         paddingY: "16px",
+        display: isVisible ? "flex" : "none",
       }}
     >
       <Box>

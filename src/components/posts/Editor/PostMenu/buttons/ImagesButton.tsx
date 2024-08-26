@@ -1,10 +1,9 @@
-import { Box, IconButton, Text, Flex } from "theme-ui";
 import { MouseEventHandler } from "react";
 
 const ImagesButton = ({
   onClick,
 }: {
-  onClick: MouseEventHandler<HTMLDivElement>;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }) => {
   return (
     <svg

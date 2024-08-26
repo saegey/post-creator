@@ -11,7 +11,7 @@ const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
     <Box
       sx={{
         position: "absolute",
-        top: `${top - 50}px`,
+        top: `${top + 10}px`,
         left: `${left}px`,
         background: "black",
         padding: "8px",

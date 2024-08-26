@@ -29,8 +29,8 @@ export interface ElevationGraphProps {
   >;
   selection: [number, number] | undefined;
   isSaved: boolean;
-  left: number | string;
-  right: number | string;
+  left: number;
+  right: number;
   top: number | string;
   bottom: number | string;
   showZoom: boolean;
@@ -306,8 +306,9 @@ const ElevationGraph = ({
             allowDataOverflow
             dataKey="x"
             type="number"
+            // domain={[0, 100]}
             domain={left && right ? [left, right] : undefined}
-            tickCount={5}
+            // tickCount={5}
             label={{
               value: `Distance (${
                 units.unitOfMeasure === "metric" ? "km" : "mi"
@@ -316,7 +317,7 @@ const ElevationGraph = ({
               fontSize: hideAxes ? "0px" : "14px",
             }}
             allowDecimals={false}
-            tickFormatter={(t) => t.toFixed(1)}
+            // tickFormatter={(t) => t.toFixed(1)}
             tick={{
               fill: themeContext?.theme?.colors?.text as string,
               fontSize: "14px",

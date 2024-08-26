@@ -60,18 +60,29 @@ const VisualOverview = ({
     ? element.selectionEnd
     : undefined;
 
+  console.log(
+    elevationsSynthetic,
+    selectionStart,
+    selectionEnd,
+    elevationsSynthetic[selectionStart ? selectionStart : 0].d
+  );
+
   const graph = React.useMemo(
     () => (
       <ElevationGraph
         data={elevationsSynthetic}
-        // left={selectionStart ? activity[selectionStart].d : "dataMin"}
-        left={0}
-        // right={
-        //   elevationsSynthetic
-        //     ? elevationsSynthetic[elevationsSynthetic.length - 1].d
-        //     : "dataMax"
-        // }
-        right="dataMax"
+        left={
+          selectionStart
+            ? Number(elevationsSynthetic[selectionStart].d)
+            : Number(elevationsSynthetic[0].d)
+        }
+        // left={0}
+        right={
+          selectionEnd
+            ? Number(elevationsSynthetic[elevationsSynthetic.length - 1].d)
+            : Number(elevationsSynthetic[elevationsSynthetic.length - 1].d)
+        }
+        // right="dataMax"
         // bottom={
         //   (element && element.selectionEnd) || selection !== undefined
         //     ? Math.min(
