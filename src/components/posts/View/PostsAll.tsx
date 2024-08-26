@@ -152,7 +152,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
         }}
       >
         <Flex sx={{ width: "100%" }}>
-          <Box as="nav" sx={{ marginBottom: "10px", width: "50%" }}>
+          <Box as="nav" sx={{ marginBottom: "10px", flexGrow: 1 }}>
             <NavLink
               href="#!"
               sx={{
@@ -162,6 +162,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
                 borderBottomStyle: "solid",
                 borderBottomColor: status === "draft" ? "text" : "divider",
                 fontWeight: "500",
+                flexGrow: 1,
               }}
               onClick={(e) => {
                 e.preventDefault();
@@ -208,12 +209,13 @@ const PostsAll = ({ user }: { user: IUser }) => {
               Unlisted
             </NavLink>
             <Box
-              sx={{
-                flexGrow: 1,
-                // borderBottomWidth: "1px",
-                // borderBottomStyle: "solid",
-                // borderBottomColor: "divider",
-              }}
+              sx={
+                {
+                  // borderBottomWidth: "1px",
+                  // borderBottomStyle: "solid",
+                  // borderBottomColor: "divider",
+                }
+              }
             ></Box>
           </Box>
           <Flex
@@ -221,7 +223,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
               paddingBottom: "20px",
               // flexGrow: 1,
               justifyContent: "right",
-              width: "50%",
+              // width: "50%",
               // borderBottomWidth: "1px",
               // borderBottomStyle: "solid",
               // borderBottomColor: status === "draft" ? "text" : "divider",
@@ -232,7 +234,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
               id="create-new-post"
               variant="primaryButton"
             >
-              New Post
+              <Text sx={{ fontWeight: "700" }}>+</Text>
             </Button>
           </Flex>
         </Flex>

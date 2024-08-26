@@ -58,6 +58,8 @@ export default {
     videoAccent: "#3096f0",
     messagesBackGround: "#a6bccf",
     messagesBorderLeft: "#5f6870",
+    modalBackground: "rgba(0, 0, 0, 1)",
+    modalClose: "#fff",
     modes: {
       dark: {
         messagesBackGround: "#667079",
@@ -217,7 +219,7 @@ export default {
       color: "background",
       fontSize: "14px",
       paddingY: "6px",
-      paddingX: "20px",
+      paddingX: ["20px", "10px", "10px"],
       lineHeight: "20px",
       fontWeight: "400",
       "&:hover": {
@@ -283,7 +285,7 @@ export default {
     },
   },
   fonts: {
-    body: '"SF Pro Display", "inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+    body: '"SF Pro Display", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading:
       'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     monospace: "Menlo, monospace",

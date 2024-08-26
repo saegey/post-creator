@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "theme-ui";
+import { Box, Flex, Text, useThemeUI } from "theme-ui";
 import React from "react";
 import { useSlateStatic } from "slate-react";
 import { GraphQLResult } from "@aws-amplify/api";
@@ -17,16 +17,25 @@ const AddImage = ({ path }: { path: Path }) => {
   const { setIsNewComponentMenuOpen, setMobileMenu, mobileMenu } =
     React.useContext(EditorContext);
   const { setPost, images, id } = React.useContext(PostContext);
+  const [isOpen, setIsOpen] = React.useState(false);
   const editor = useSlateStatic();
 
   const openModal = (open: Function) => {
-    // setIsNewComponentMenuOpen(false);
-    // setMobileMenu({ ...mobileMenu, display: false });
+    setIsOpen(true);
     open();
   };
 
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   const insertImage = (selectedImage: CloudinaryImage) => {
-    // console.log(path);
     Transforms.insertNodes(
       editor,
       {
@@ -37,8 +46,8 @@ const AddImage = ({ path }: { path: Path }) => {
         void: true,
         photoCaption: "",
         caption: "",
-      }
-      // { at: path }
+      },
+      { at: path }
     );
     if (path.length > 2) {
       Transforms.liftNodes(editor);
@@ -53,46 +62,40 @@ const AddImage = ({ path }: { path: Path }) => {
     });
     setIsNewComponentMenuOpen(false);
     const selection = window.getSelection();
-    // console.log(selection)
     selection && selection.removeAllRanges();
+    setIsOpen(false);
   };
+  const { theme } = useThemeUI();
 
   return (
     <>
+      {/* https://demo.cloudinary.com/uw/#/ */}
       <CldUploadWidget
         uploadPreset="epcsmymp"
         options={{
-          // sources: [
-          //   "local",
-          //   "url",
-          //   "camera",
-          //   "image_search",
-          //   "google_drive",
-          //   // 'facebook',
-          //   "dropbox",
-          //   "instagram",
-          // ],
+          sources: ["local", "url", "camera", "image_search", "instagram"],
           styles: {
-            frame: {
-              background: "black",
-            },
             palette: {
-              window: "#FFF",
-              windowBorder: "black",
-              tabIcon: "black",
-              menuIcons: "black",
+              window: theme.rawColors?.background,
+              windowBorder: theme.rawColors?.text,
+              tabIcon: theme.rawColors?.text,
+              menuIcons: "#5A616A",
               textDark: "#000000",
               textLight: "#FFFFFF",
-              link: "black",
-              action: "black",
-              inactiveTabIcon: "#888888",
+              link: theme.rawColors?.primary,
+              action: "#FF620C",
+              inactiveTabIcon: theme.rawColors?.textMuted,
               error: "#F44235",
               inProgress: "#0078FF",
               complete: "#20B832",
-              sourceBg: "#e4e4e4",
+              sourceBg: theme.rawColors?.editorBackground,
+            },
+            frame: {
+              background: `rgba(${theme.rawColors?.blackBoxColor}, 0.7)`,
             },
             fonts: {
-              Inter: "",
+              "'SF Pro Display', 'Inter'":
+                "https://fonts.googleapis.com/css2?family=Inter",
             },
           },
         }}
@@ -122,7 +125,6 @@ const AddImage = ({ path }: { path: Path }) => {
         }}
       >
         {({ open }) => {
-          console.log(open);
           return (
             <Box
               onClick={() => openModal(open)}
@@ -138,11 +140,7 @@ const AddImage = ({ path }: { path: Path }) => {
                     height: "auto",
                   }}
                 >
-                  <ImagesButton
-                    onClick={() => {
-                      console.log("clicked");
-                    }}
-                  />
+                  <ImagesButton />
                 </Box>
                 <Text
                   as="span"

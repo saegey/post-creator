@@ -26,7 +26,7 @@ const ImageFullScreen = ({
     <Box
       sx={{
         padding: ["5px", "5px", "5px"],
-        backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.4})`,
+        backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.7})`,
         cursor: "pointer",
       }}
     >
@@ -91,7 +91,7 @@ const ImageFullScreen = ({
         height: "100%",
         width: "100%",
         left: "0",
-        backgroundColor: "text",
+        backgroundColor: "blackBoxColor",
         zIndex: 200,
         display: "flex",
       }}
@@ -110,7 +110,7 @@ const ImageFullScreen = ({
                 display: "flex",
                 height: "100%",
                 width: "100%",
-                backgroundColor: "black",
+                backgroundColor: "modalBackground",
               }}
               key={`image-${index}`}
             >
@@ -154,7 +154,7 @@ const ImageFullScreen = ({
           onClick={() => {
             setIsMaximized(false);
           }}
-          sx={{ color: "background" }}
+          sx={{ color: "modalClose" }}
         />
       </Flex>
     </Box>

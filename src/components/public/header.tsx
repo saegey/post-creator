@@ -156,11 +156,11 @@ const PublicHeader = () => {
                 )}
               </NavLink>
               <NavLink
-                sx={{ fontWeight: "400" }}
+                sx={{ fontWeight: "400", cursor: "pointer" }}
                 p={2}
                 href="https://monopad.productlane.com/changelog"
               >
-                Changelog
+                <Text sx={{ color: "text" }}>Changelog</Text>
               </NavLink>
               <NavLink
                 sx={{ fontWeight: "400", cursor: "pointer" }}
@@ -380,7 +380,11 @@ const PublicHeader = () => {
         <Flex
           as="nav"
           role="navigation"
-          sx={{ width: "100%", flexDirection: "column" }}
+          sx={{
+            width: "100%",
+            flexDirection: "column",
+            backgroundColor: "background",
+          }}
         >
           <Box sx={{ marginX: "16px" }}>
             <MenuHeadingItem
@@ -409,12 +413,12 @@ const PublicHeader = () => {
                 />
               </>
             </MenuWrapper>
-            <Flex sx={{ paddingY: "16px" }}>
+            <Flex sx={{ paddingY: "16px", lineHeight: "24px" }}>
               <ThemeLink
                 href="https://monopad.productlane.com/changelog"
                 sx={{ textDecoration: "none", color: "black" }}
               >
-                <Text sx={{ fontWeight: "500" }}>Changelog</Text>
+                <Text sx={{ fontWeight: "500", color: "text" }}>Changelog</Text>
                 <Flex
                   sx={{
                     flexGrow: 1,
