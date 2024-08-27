@@ -163,11 +163,11 @@ const MobileMenu = () => {
       <Flex
         sx={{
           position: "absolute",
-          top: `${mobileMenu.top - 30}px`,
+          top: `${mobileMenu.top - 60}px`,
           left: "10px",
           border: "1px solid #ccc",
           backgroundColor: "background",
-          width: "calc(100% - 20px)",
+          // width: "calc(100% - 20px)",
           zIndex: "300",
           borderRadius: "5px",
           boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
