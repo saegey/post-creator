@@ -25,10 +25,7 @@ const OptionsMenu = ({
     wrapperRef,
     (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
       setIsOpen(false);
-      // e.preventDefault();
-      // (document.activeElement as HTMLElement)?.blur();
-
-      // e.stopPropagation();
+      e.stopPropagation();
     }
   );
 
