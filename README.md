@@ -14,34 +14,34 @@ To get started with Monopad Journal, follow these steps:
 
 1. **Clone the Repository**:
 
-   \`\`\`bash
+   ```bash
    git clone https://github.com/saegey/monopad-journal.git
    cd monopad-journal
-   \`\`\`
+   ```
 
 2. **Install Dependencies**:
 
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
+   ```
 
 3. **Configuration**:
 
    Set up the necessary environment variables for MUX, Mapbox, Cloudinary, and AWS keys.
 
-   \`\`\`bash
+   ```bash
    NEXT_PUBLIC_MUX_API_KEY=your-mux-api-key
    NEXT_PUBLIC_MAPBOX_API_KEY=your-mapbox-api-key
    NEXT_PUBLIC_CLOUDINARY_API_KEY=your-cloudinary-api-key
    AWS_ACCESS_KEY_ID=your-aws-access-key-id
    AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
-   \`\`\`
+   ```
 
 4. **Run the Development Server**:
 
-   \`\`\`bash
+   ```
    npm run dev
-   \`\`\`
+   ```
 
    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
@@ -60,7 +60,7 @@ This project uses **Vitest** for unit testing and **Cypress** for end-to-end tes
 
 To run the tests:
 
-\`\`\`bash
+```bash
 
 # Run Vitest tests
 
@@ -69,7 +69,7 @@ npm run test
 # Run Cypress tests
 
 npm run cypress:open
-\`\`\`
+```
 
 ## Contribution Guidelines
 
@@ -101,7 +101,7 @@ You can reach me at [your-email@example.com](mailto:your-email@example.com).
 
 Monopad Journal relies on the following key dependencies:
 
-\`\`\`json
+```json
 "dependencies": {
 "@aws-sdk/client-iot": "^3.632.0",
 "@cloudinary-util/url-loader": "^5.6.0",
@@ -157,7 +157,7 @@ Monopad Journal relies on the following key dependencies:
 "vi-fetch": "^0.8.0",
 "vitest": "^2.0.5"
 }
-\`\`\`
+```
 
 ## Badges
 
