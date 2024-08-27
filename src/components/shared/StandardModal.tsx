@@ -56,7 +56,9 @@ const StandardModal = ({
             borderRadius: [null, "5px", "5px"],
             padding: "20px",
           }}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           <Flex
             sx={{
@@ -79,11 +81,18 @@ const StandardModal = ({
             )}
 
             <Close
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
+                (document.activeElement as HTMLElement)?.blur();
+
                 setIsOpen(false);
                 if (onClose) {
                   onClose();
                 }
+              }}
+              onTouchStart={(e) => {
+                e.preventDefault();
+                (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
               }}
               id="close-button"
               sx={{

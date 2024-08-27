@@ -1,12 +1,11 @@
 import React from "react";
+import { Path } from "slate";
 
 import { useClickOutside } from "../../../utils/ux";
 import OptionsButton from "../../buttons/OptionsButton";
 import Dropdown from "../../shared/Dropdown";
 import { Box, Flex } from "theme-ui";
 import { EditorContext } from "./EditorContext";
-import { Path, Transforms } from "slate";
-import { useSlateStatic } from "slate-react";
 
 const OptionsMenu = ({
   children,
@@ -21,7 +20,6 @@ const OptionsMenu = ({
 }) => {
   const wrapperRef = React.useRef();
   const { setMobileMenu } = React.useContext(EditorContext);
-  const editor = useSlateStatic();
 
   useClickOutside(
     wrapperRef,

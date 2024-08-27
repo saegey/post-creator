@@ -56,8 +56,15 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
     : undefined;
 
   const menu = (
-    <Box sx={{ position: "absolute", right: "10px", top: "20px" }}>
-      <Box sx={{ position: "relative" }} ref={wrapperRef}>
+    <Box
+      sx={{ position: "absolute", right: "10px", top: "20px" }}
+      contentEditable={false}
+    >
+      <Box
+        sx={{ position: "relative" }}
+        ref={wrapperRef}
+        contentEditable={false}
+      >
         <OptionsButton
           onClick={() => {
             if (isMenuOpen) {
@@ -69,16 +76,33 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
         />
         <Dropdown isOpen={isMenuOpen}>
           <Box
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault(); // Prevent the default focus behavior
+              (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
+              setMobileMenu({
+                display: false,
+                top: 0,
+                left: 0,
+                path: [0, 0],
+                isFullScreen: false,
+              });
+
               setIsPhotoCaptionOpen(true);
               setIsMenuOpen(false);
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
             }}
             variant="boxes.dropdownMenuItem"
           >
             Photo Caption
           </Box>
           <Box
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault(); // Prevent the default focus behavior
+              (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
+
               setIsHeroImageModalOpen(true);
               setIsMenuOpen(false);
               setMobileMenu({
@@ -88,6 +112,10 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                 path: [0, 0],
                 isFullScreen: false,
               });
+            }}
+            onTouchStart={(e) => {
+              e.preventDefault();
+              (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
             }}
             variant="boxes.dropdownMenuItem"
           >
@@ -120,7 +148,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
             <Flex
               sx={{
                 width: ["100%", "65%", "65%"],
-
+                height: "200px",
                 background: "divider",
                 justifyContent: "center",
                 alignContent: "center",
@@ -133,7 +161,10 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   sx={{
                     marginY: "auto",
                   }}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent the default focus behavior
+                    (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
+
                     setIsHeroImageModalOpen(true);
                   }}
                 >
