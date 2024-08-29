@@ -51,8 +51,8 @@ const OptionsMenu = ({
         onClick={() => {
           setIsOpen(true);
           // Transforms.select(editor, path);
-          console.log("OptionsButton clicked");
-          console.log(path);
+          // console.log("OptionsButton clicked");
+          // console.log(path);
         }}
       />
       <Dropdown isOpen={isOpen}>

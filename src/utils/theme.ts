@@ -207,6 +207,21 @@ export default {
         color: "text",
       },
     },
+    profileMenuText: {
+      color: "text",
+      fontSize: ["17px", "15px", "15px"],
+    },
+    profileMenuLink: {
+      "&:hover": {
+        backgroundColor: "menuItemBackgroundHoverColor",
+        borderRadius: "5px",
+      },
+      textDecoration: "none",
+      color: "text",
+      padding: "5px",
+      width: "100%",
+      fontSize: ["17px", "15px", "15px"],
+    },
   },
   buttons: {
     iconButton: {
@@ -301,4 +316,4 @@ export default {
       maxWidth: "1100px",
     },
   },
-};
+} as Theme;

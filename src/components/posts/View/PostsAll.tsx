@@ -6,7 +6,7 @@ import Router from "next/router";
 import { useSearchParams } from "next/navigation";
 
 import PostCard from "./PostCard";
-import Header from "../../shared/Header";
+import Header from "../../shared/Header/Header";
 import { PostType } from "../../../../pages/posts";
 import { CreatePostMutation } from "../../../API";
 import {

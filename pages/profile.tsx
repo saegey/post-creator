@@ -6,7 +6,7 @@ import { NextApiRequest } from "next";
 
 import EditProfile from "../src/components/user/EditProfile";
 import { IUser } from "../src/types/common";
-import Header from "../src/components/shared/Header";
+import Header from "../src/components/shared/Header/Header";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });

@@ -39,6 +39,49 @@ const VisualOverviewWrapper = ({
     element && element.selectionStart ? true : false
   );
 
+  const optionsMenuMemo = React.useMemo(() => {
+    return (
+      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
+        <OptionsMenu
+          isOpen={isOptionsOpen}
+          setIsOpen={setIsOptionsOpen}
+          path={path}
+        >
+          <>
+            <Box
+              onClick={(e) => {
+                moveNodeUp(editor, path);
+                setIsOptionsOpen(false);
+              }}
+              variant="boxes.dropdownMenuItem"
+            >
+              <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>Move Up</Text>
+            </Box>
+            <Box
+              onClick={(e) => {
+                moveNodeDown(editor, path);
+                setIsOptionsOpen(false);
+                // setAddCaption(false);
+              }}
+              variant="boxes.dropdownMenuItem"
+            >
+              <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>Move Down</Text>
+            </Box>
+            <Box
+              onClick={() => {
+                Transforms.removeNodes(editor, { at: path });
+                // setIsMenuOpen(false);
+              }}
+              variant="boxes.dropdownMenuItem"
+            >
+              Remove
+            </Box>
+          </>
+        </OptionsMenu>
+      </Box>
+    );
+  }, [isOptionsOpen]);
+
   const renderMap = React.useMemo(() => {
     console.log("render map");
     const formatted =
@@ -98,48 +141,7 @@ const VisualOverviewWrapper = ({
             contentEditable={false}
           >
             {renderMap}
-            <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-              <OptionsMenu
-                isOpen={isOptionsOpen}
-                setIsOpen={setIsOptionsOpen}
-                path={path}
-              >
-                <>
-                  <Box
-                    onClick={(e) => {
-                      moveNodeUp(editor, path);
-                      setIsOptionsOpen(false);
-                    }}
-                    variant="boxes.dropdownMenuItem"
-                  >
-                    <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                      Move Up
-                    </Text>
-                  </Box>
-                  <Box
-                    onClick={(e) => {
-                      moveNodeDown(editor, path);
-                      setIsOptionsOpen(false);
-                      // setAddCaption(false);
-                    }}
-                    variant="boxes.dropdownMenuItem"
-                  >
-                    <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                      Move Down
-                    </Text>
-                  </Box>
-                  <Box
-                    onClick={() => {
-                      Transforms.removeNodes(editor, { at: path });
-                      // setIsMenuOpen(false);
-                    }}
-                    variant="boxes.dropdownMenuItem"
-                  >
-                    Remove
-                  </Box>
-                </>
-              </OptionsMenu>
-            </Box>
+            {optionsMenuMemo}
           </Box>
           {children}
         </>

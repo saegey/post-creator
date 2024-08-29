@@ -3,7 +3,7 @@ import React from "react";
 import Router from "next/router";
 
 import PostCard from "./PostCard";
-import Header from "../../shared/Header";
+import Header from "../../shared/Header/Header";
 import { CloudinaryImage, IUser } from "../../../types/common";
 
 export type PostType = Array<{

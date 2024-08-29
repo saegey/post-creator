@@ -2,7 +2,7 @@ import { Box, Container, Link as ThemeLink } from "theme-ui";
 import { SlateToReact } from "@slate-serializers/react";
 import Link from "next/link";
 
-import Header from "../../shared/Header";
+import Header from "../../shared/Header/Header";
 import HeaderPublic from "../../shared/HeaderPublic";
 import { CustomElement, IUser, PostViewType } from "../../../types/common";
 import EditButton from "./EditButton";

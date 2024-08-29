@@ -3,12 +3,13 @@ import { API } from "aws-amplify";
 
 import { updatePost } from "../../src/graphql/mutations";
 import { UpdatePostMutation } from "../../src/API";
-import { updatePostMinimal } from "../graphql/customMutations";
+import { updatePostComponents } from "../graphql/customMutations";
 import { CloudinaryImage } from "../types/common";
 
 interface PostSaveProps {
   postId: string | undefined;
   components: Array<any>;
+  // heroImage: string | null;
 }
 
 const PostSaveComponents = async ({
@@ -19,7 +20,7 @@ PostSaveProps) => {
   try {
     const response = (await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
-      query: updatePostMinimal,
+      query: updatePostComponents,
       variables: {
         input: {
           id: postId,
@@ -51,6 +52,7 @@ const PostSaveImages = async ({
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
+    console.log(results);
   } catch (error) {
     console.error(error);
   }

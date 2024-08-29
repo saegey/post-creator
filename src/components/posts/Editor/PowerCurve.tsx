@@ -9,15 +9,13 @@ import { EditorContext } from "./EditorContext";
 
 const AddPowerCurve = ({ path }: { path: Path }) => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen, setMobileMenu, mobileMenu } =
+  const { setIsNewComponentMenuOpen, setMobileMenu } =
     React.useContext(EditorContext);
 
   const editor = useSlateStatic();
 
   const addPowerCurve = () => {
     if (gpxFile) {
-      console.log(path);
-
       Transforms.insertNodes(
         editor,
         {
@@ -42,10 +40,7 @@ const AddPowerCurve = ({ path }: { path: Path }) => {
 
       setIsNewComponentMenuOpen(false);
       const selection = window.getSelection();
-      // console.log(selection)
       selection && selection.removeAllRanges();
-
-      // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
     }
   };
   return (

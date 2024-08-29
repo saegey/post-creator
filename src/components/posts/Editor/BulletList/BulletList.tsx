@@ -25,8 +25,9 @@ const BulletList = ({
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 
-  return (
-    <HoverAction element={element}>
+  const bulletListMemo = React.useMemo(() => {
+    console.log("bulletListMemo");
+    return (
       <Box
         as="ul"
         sx={{
@@ -93,8 +94,10 @@ const BulletList = ({
           </OptionsMenu>
         </Box>
       </Box>
-    </HoverAction>
-  );
+    );
+  }, [element, isOptionsOpen]);
+
+  return <HoverAction element={element}>{bulletListMemo}</HoverAction>;
 };
 
 export default BulletList;

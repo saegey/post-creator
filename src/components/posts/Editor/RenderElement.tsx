@@ -26,6 +26,7 @@ import RunSignupListWrapper from "../RaceResults/RunSignup/RunSignupListWrapper"
 import ParagraphElement from "../../ParagraphElement";
 import BulletList from "./BulletList/BulletList";
 import Heading from "./Heading";
+import { Text } from "theme-ui";
 
 const renderElement = (props: {
   attributes: object;
@@ -37,8 +38,10 @@ const renderElement = (props: {
 
   switch (element.type) {
     case "postAuthor": // Post Author
+      // console.log("postAuthor");
       return <PostAuthorWrapper />;
     case "embed": // Ridewithgps
+      // console.log("embed");
       return <EmbedElemnt children={children} element={element} />;
     case "stravaEmbed": // Strava
       return <StravaLink children={children} element={element} />;
@@ -49,15 +52,17 @@ const renderElement = (props: {
     case "activityOverview": // activity metrics
       return <ActivityOverviewWrapper children={children} element={element} />;
     case "visualOverview":
-      return (
-        <VisualOverviewWrapper
-          element={element}
-          children={children}
-          view={false}
-          unitOfMeasure={units.unitOfMeasure}
-        />
-      );
+      return <></>;
+    // return (
+    //   <VisualOverviewWrapper
+    //     element={element}
+    //     children={children}
+    //     view={false}
+    //     unitOfMeasure={units.unitOfMeasure}
+    //   />
+    // );
     case "image":
+      // console.log("image");
       return <ImageElement children={children} element={element} />;
     case "heroBanner":
       return <HeroBanner element={element} />;
@@ -93,6 +98,7 @@ const renderElement = (props: {
     case "runSignupResults":
       return <RunSignupListWrapper element={props.element} />;
     case "paragraph":
+      // return <></>;
       return (
         <ParagraphElement
           children={props.children}
@@ -101,10 +107,13 @@ const renderElement = (props: {
       );
     default:
       return (
-        <ParagraphElement
-          children={props.children}
-          element={props.element as ParagraphElementType}
-        />
+        <>
+          <Text>this is deefuaat</Text>
+          <ParagraphElement
+            children={props.children}
+            element={props.element as ParagraphElementType}
+          />
+        </>
       );
   }
 };

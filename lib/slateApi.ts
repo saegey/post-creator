@@ -34,6 +34,7 @@ const saveEditor = ({
     }
     return false;
   });
+  console.log(ops);
 
   if (ops && ops.length === 0) {
     return;
@@ -48,12 +49,20 @@ const saveEditor = ({
   timeoutHandle = setTimeout(async () => {
     setIsSavingPost(true);
     setSavingStatus("saving...");
+    console.log(
+      JSON.stringify({
+        postId: id,
+        components: editor.children,
+        // heroImage: heroImage ? heroImage : "",
+      })
+    );
 
     await PostSaveComponents({
       postId: id,
       components: editor.children,
       // heroImage: heroImage ? heroImage : "",
     });
+
     setSavingStatus("saved");
 
     setIsSavingPost(false);

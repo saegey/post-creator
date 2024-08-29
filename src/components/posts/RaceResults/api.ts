@@ -292,11 +292,11 @@ export const saveCrossResults = async ({
   category,
   eventName,
 }: {
-  crossResults?: CrossResultsPreviewType;
-  id?: string;
-  resultsUrl?: string;
+  crossResults: CrossResultsPreviewType;
+  id: string;
+  resultsUrl: string;
   category: string;
-  eventName?: string;
+  eventName: string;
 }) => {
   try {
     const response = await API.graphql({

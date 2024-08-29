@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box } from "theme-ui";
+import { Text, Box, ThemeUIStyleObject, Theme } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import { Transforms } from "slate";
 
@@ -18,63 +18,93 @@ const ParagraphElement = ({
   const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-
-  return (
-    <HoverAction element={element}>
-      <>
-        <Text
-          as="p"
-          sx={{
+  const textMemo = React.useMemo(() => {
+    console.log("ParagraphElementMemoo path:", path);
+    return (
+      <Text
+        as="div"
+        sx={
+          {
             fontSize: ["16px", "19px", "19px"],
             marginX: ["10px", "0px", "0px"],
-          }}
+          } as ThemeUIStyleObject<Theme>
+        }
+      >
+        {children}
+        <Box
+          sx={
+            {
+              position: "absolute",
+              top: "-15px",
+              right: "10px",
+            } as ThemeUIStyleObject<Theme>
+          }
         >
-          {children}
-          <Box sx={{ position: "absolute", top: "-15px", right: "10px" }}>
-            <OptionsMenu
-              isOpen={isOptionsOpen}
-              setIsOpen={setIsOptionsOpen}
-              path={path}
-            >
-              <>
-                <Box
-                  onClick={(e) => {
-                    moveNodeUp(editor, path);
-                    setIsOptionsOpen(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
+          <OptionsMenu
+            isOpen={isOptionsOpen}
+            setIsOpen={setIsOptionsOpen}
+            path={path}
+          >
+            <>
+              <Box
+                onClick={(e) => {
+                  moveNodeUp(editor, path);
+                  setIsOptionsOpen(false);
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                <Text
+                  sx={
+                    {
+                      fontSize: ["14px", "16px", "16px"],
+                    } as ThemeUIStyleObject<Theme>
+                  }
                 >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    Move Up
-                  </Text>
-                </Box>
-                <Box
-                  onClick={(e) => {
-                    moveNodeDown(editor, path);
-                    setIsOptionsOpen(false);
-                    // setAddCaption(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
+                  Move Up
+                </Text>
+              </Box>
+              <Box
+                onClick={(e) => {
+                  moveNodeDown(editor, path);
+                  setIsOptionsOpen(false);
+                  // setAddCaption(false);
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                <Text
+                  sx={
+                    {
+                      fontSize: ["14px", "16px", "16px"],
+                    } as ThemeUIStyleObject<Theme>
+                  }
                 >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    Move Down
-                  </Text>
-                </Box>
-                <Box
-                  onClick={() => {
-                    Transforms.removeNodes(editor, { at: path });
-                  }}
-                  variant="boxes.dropdownMenuItem"
+                  Move Down
+                </Text>
+              </Box>
+              <Box
+                onClick={() => {
+                  Transforms.removeNodes(editor, { at: path });
+                }}
+                variant="boxes.dropdownMenuItem"
+              >
+                <Text
+                  sx={
+                    {
+                      fontSize: ["14px", "16px", "16px"],
+                    } as ThemeUIStyleObject<Theme>
+                  }
                 >
                   Remove
-                </Box>
-              </>
-            </OptionsMenu>
-          </Box>
-        </Text>
-      </>
-    </HoverAction>
-  );
+                </Text>
+              </Box>
+            </>
+          </OptionsMenu>
+        </Box>
+      </Text>
+    );
+  }, [isOptionsOpen, element]);
+
+  return <HoverAction element={element}>{textMemo}</HoverAction>;
 };
 
 export default ParagraphElement;

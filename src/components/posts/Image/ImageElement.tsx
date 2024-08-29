@@ -1,3 +1,4 @@
+import React, { useState, useCallback, useContext } from "react";
 import {
   useSlateStatic,
   ReactEditor,
@@ -5,95 +6,130 @@ import {
   useFocused,
 } from "slate-react";
 import { Transforms } from "slate";
-import { Box, Button, Label, Textarea, Close, Flex, Text } from "theme-ui";
-import React from "react";
+import { Box, Text } from "theme-ui";
 import { getCldImageUrl } from "next-cloudinary";
-import Image from "next/image";
 
-import { PostSaveComponents } from "../../../actions/PostSave";
 import { PostContext } from "../../PostContext";
 import { cloudUrl } from "../../../utils/cloudinary";
-import { CustomEditor, ImageElementType } from "../../../types/common";
-import MaximizeIcon from "../../icons/MaximizeIcon";
 import ImageFullScreen from "./ImageFullScreen";
 import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
-import StandardModal from "../../shared/StandardModal";
 
 import { useViewport } from "../../ViewportProvider";
 import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
-
-type SlateImageType = {
-  type: "image";
-  src: string;
-  asset_id: string;
-  public_id: string;
-  children: Array<{ text: string }>;
-  void: true;
-  caption?: string;
-};
+import ImageCaption from "./ImageCaption";
+import { CloudinaryImage, ImageElementType } from "../../../types/common";
+import CloudImage from "./CloudImage";
 
 const ImageElement = ({
   children,
   element,
 }: {
-  children: JSX.Element;
   element: ImageElementType;
+  children: JSX.Element;
 }) => {
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 
-  const [addCaption, setAddCaption] = React.useState(false);
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
-  const [isMaximized, setIsMaximized] = React.useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const { width } = useViewport();
-  const { id, images } = React.useContext(PostContext);
-  const imageMetaIndex: number | undefined = images?.findIndex(
-    (i) => i.public_id === element.public_id
-  );
-  if (imageMetaIndex === undefined) {
-    return;
-  }
-  const imageMeta = images ? images[imageMetaIndex] : undefined;
-  const imageWidth = width < 690 ? width : 690;
-  if (!imageMeta?.height || !imageMeta.width) {
-    return <></>;
-  }
+  const { images } = useContext(PostContext);
 
-  const imageUrl = getCldImageUrl(
-    {
-      src: element.public_id,
-      width: width < 690 ? width : 690,
-      height: imageMeta?.height / (imageMeta?.width / imageWidth),
-    },
-    {
-      cloud: {
-        cloudName: cloudUrl,
-      },
+  const { imageMeta, imageUrl, imageMetaIndex } = React.useMemo(() => {
+    const imageMetaIndex = images?.findIndex(
+      (i) => i.public_id === element.public_id
+    );
+    if (imageMetaIndex === undefined || imageMetaIndex === -1) {
+      return null;
     }
-  );
+
+    const imageMeta = images ? images[imageMetaIndex] : undefined;
+    const imageWidth = width < 690 ? width : 690;
+    if (!imageMeta?.height || !imageMeta.width) {
+      return null;
+    }
+
+    const imageUrl = getCldImageUrl(
+      {
+        src: element.public_id,
+        width: imageWidth,
+        height: imageMeta.height / (imageMeta.width / imageWidth),
+      },
+      {
+        cloud: {
+          cloudName: cloudUrl,
+        },
+      }
+    );
+    return { imageMeta, imageUrl, imageMetaIndex };
+  }, [images, element, width]) as {
+    imageMeta: CloudinaryImage;
+    imageUrl: string;
+    imageMetaIndex: number;
+  };
 
   const selected = useSelected();
   const focused = useFocused();
 
-  const saveCaption = async (event: any) => {
-    event.preventDefault();
-    const form = new FormData(event.target);
+  const handleMaximize = useCallback(() => {
+    setIsMaximized(true);
+  }, []);
 
-    setAddCaption(false);
-    Transforms.setNodes(
-      editor,
-      {
-        caption: form.get("caption"),
-      } as SlateImageType,
-      { at: [path as any] }
+  const cloudImageMemo = React.useMemo(() => {
+    return (
+      <CloudImage
+        imageUrl={imageUrl}
+        imageMeta={imageMeta}
+        selected={selected}
+        focused={focused}
+        onMaximize={handleMaximize}
+      />
     );
+  }, [imageUrl, imageMeta]);
 
-    await PostSaveComponents({
-      postId: id,
-      components: editor.children,
-    });
-  };
+  const optionsMenu = React.useMemo(() => {
+    console.log("rendering optionsMenu");
+    return (
+      <OptionsMenu
+        isOpen={isOptionsOpen}
+        setIsOpen={setIsOptionsOpen}
+        path={path}
+      >
+        <>
+          <Box
+            onClick={() => {
+              moveNodeUp(editor, path);
+              setIsOptionsOpen(false);
+            }}
+            variant="boxes.dropdownMenuItem"
+          >
+            <Text sx={{ fontSize: ["14px", "16px"] }}>Move Up</Text>
+          </Box>
+          <Box
+            onClick={() => {
+              moveNodeDown(editor, path);
+              setIsOptionsOpen(false);
+            }}
+            variant="boxes.dropdownMenuItem"
+          >
+            <Text sx={{ fontSize: ["14px", "16px"] }}>Move Down</Text>
+          </Box>
+          <Box
+            onClick={() => {
+              setIsOptionsOpen(false);
+              Transforms.removeNodes(editor, { at: path });
+              const selection = window.getSelection();
+              selection && selection.removeAllRanges();
+            }}
+            variant="boxes.dropdownMenuItem"
+          >
+            <Text sx={{ fontSize: ["14px", "16px"] }}>Delete</Text>
+          </Box>
+        </>
+      </OptionsMenu>
+    );
+  }, [isOptionsOpen]);
 
   return (
     <HoverAction element={element}>
@@ -106,169 +142,14 @@ const ImageElement = ({
         )}
         <Box
           sx={{
-            marginY: ["20px", "20px", "20px"],
+            marginY: ["20px"],
             height: "fit-content",
             marginBottom: "20px",
           }}
         >
-          <figure>
-            <Flex
-              sx={{
-                width: "100%",
-                height: "auto",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: imageMeta?.colors
-                  ? imageMeta?.colors[0]
-                  : "white",
-                borderRadius: [0, "5px", "5px"],
-              }}
-            >
-              <Image
-                src={imageUrl}
-                alt="Uploaded"
-                width={600}
-                height={500}
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                  boxShadow: `${
-                    selected && focused ? "0 0 0 3px #B4D5FF" : "none"
-                  }`,
-                }}
-                priority={true}
-              />
-            </Flex>
-            <Box
-              sx={{
-                position: "absolute",
-                left: "10px",
-                top: "10px",
-              }}
-            >
-              <Box
-                sx={{ width: "30px", height: "auto", cursor: "pointer" }}
-                onClick={() => {
-                  setIsMaximized(true);
-                }}
-              >
-                <MaximizeIcon />
-              </Box>
-            </Box>
-          </figure>
-          {element.caption && (
-            <Text
-              as="figcaption"
-              sx={{
-                fontSize: "14px",
-                marginTop: "5px",
-                paddingX: [0, 0, 0],
-              }}
-            >
-              {element.caption}
-            </Text>
-          )}
-
-          {addCaption && (
-            <>
-              <StandardModal
-                title={"Add Caption"}
-                setIsOpen={() => setAddCaption(false)}
-                isOpen={addCaption}
-                onClose={() => setIsOptionsOpen(false)}
-              >
-                <Flex
-                  sx={{
-                    gap: "10px",
-                    flexDirection: "row",
-                    marginTop: "15px",
-                  }}
-                >
-                  <form onSubmit={saveCaption} style={{ flexGrow: 1 }}>
-                    <Flex sx={{ gap: "20px", flexDirection: "column" }}>
-                      <Label sx={{ color: "text" }} htmlFor="caption">
-                        Caption
-                      </Label>
-                      <Textarea
-                        sx={{ background: "inputBackgroundColor" }}
-                        name="caption"
-                        id="caption"
-                        rows={6}
-                        mb={3}
-                      >
-                        {element.caption}
-                      </Textarea>
-                      <Flex>
-                        <Button
-                          variant="primaryButton"
-                          sx={{ alignSelf: "flex-end" }}
-                        >
-                          Save
-                        </Button>
-                      </Flex>
-                    </Flex>
-                  </form>
-                </Flex>
-              </StandardModal>
-            </>
-          )}
-
-          {!addCaption && (
-            <OptionsMenu
-              isOpen={isOptionsOpen}
-              setIsOpen={setIsOptionsOpen}
-              path={path}
-            >
-              <>
-                <Box
-                  onClick={(e) => {
-                    moveNodeUp(editor, path);
-                    setIsOptionsOpen(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    Move Up
-                  </Text>
-                </Box>
-                <Box
-                  onClick={(e) => {
-                    moveNodeDown(editor, path);
-                    setIsOptionsOpen(false);
-                    // setAddCaption(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    Move Down
-                  </Text>
-                </Box>
-                <Box
-                  onClick={() => {
-                    setAddCaption(true);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    {element.caption ? "Edit" : "Add"} Caption
-                  </Text>
-                </Box>
-                <Box
-                  onClick={(e) => {
-                    Transforms.removeNodes(editor, { at: path });
-                    const selection = window.getSelection();
-                    selection && selection.removeAllRanges();
-                    setIsOptionsOpen(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    Delete
-                  </Text>
-                </Box>
-              </>
-            </OptionsMenu>
-          )}
+          {cloudImageMemo}
+          <ImageCaption element={element} path={path} />
+          {optionsMenu}
         </Box>
         {children}
       </Box>

@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useColorMode } from "theme-ui";
-// import { theme } from "./theme"; // Adjust to your actual theme path
 
 // A TypeScript component to handle color mode changes
 const ColorModeScript: React.FC = () => {
-  const [colorMode, setColorMode] = useColorMode();
+  const [_, setColorMode] = useColorMode();
 
   useEffect(() => {
     const darkModeMediaQuery = window.matchMedia(

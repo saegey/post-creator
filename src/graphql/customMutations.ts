@@ -1,14 +1,14 @@
-export const updatePostMinimal = /* GraphQL */ `
-  mutation UpdatePostMinimal(
-    $input: UpdatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    updatePost(input: $input, condition: $condition) {
-      components
-      heroImage
-    }
-  }
-`;
+// export const updatePostMinimal = /* GraphQL */ `
+//   mutation UpdatePostMinimal(
+//     $input: UpdatePostInput!
+//     $condition: ModelPostConditionInput
+//   ) {
+//     updatePost(input: $input, condition: $condition) {
+//       components
+//       heroImage
+//     }
+//   }
+// `;
 
 export type UpdatePostSettingsMutation = {
   updatePost?: {
@@ -57,6 +57,18 @@ export const createPostNew = /* GraphQL */ `
       title
       postAuthorId
       privacyStatus
+    }
+  }
+`;
+
+export const updatePostComponents = /* GraphQL */ `
+  mutation UpdatePostComponents(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      components
     }
   }
 `;

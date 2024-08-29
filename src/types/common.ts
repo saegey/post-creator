@@ -418,27 +418,27 @@ export interface Post
     | "__typename"
   > {
   components: Array<CustomElement>;
-  images: Array<CloudinaryImage> | undefined;
-  heartAnalysis: Array<Record<number | string, number>> | undefined;
-  powerAnalysis: Array<Record<number | string, number>> | undefined;
-  cadenceAnalysis: Array<Record<number | string, number>> | undefined;
-  tempAnalysis: Array<Record<number | string, number>> | undefined;
-  powerZones: Array<PowerZoneType> | undefined;
-  heroImage: CloudinaryImage | undefined;
-  powerZoneBuckets: Array<number>;
-  raceResults: RaceResultRow | undefined;
-  webscorerResults: WebscorerResultPreview | undefined;
-  crossResults: CrossResultsPreviewType | undefined;
-  omniResults: OmniResultType | undefined;
-  runSignupResults: RunSignupType | undefined;
-  author: Author | undefined;
+  images: Array<CloudinaryImage> | null;
+  heartAnalysis: Record<string, number> | null;
+  powerAnalysis: Record<string, number> | null;
+  cadenceAnalysis: Record<string, number> | null;
+  tempAnalysis: Record<string, number> | null;
+  powerZones: Array<PowerZoneType> | null;
+  heroImage: CloudinaryImage | null;
+  powerZoneBuckets: Array<number> | null;
+  raceResults?: RaceResultRow | null;
+  webscorerResults?: WebscorerResultPreview | null;
+  crossResults?: CrossResultsPreviewType | null;
+  omniResults?: OmniResultType | null;
+  runSignupResults?: RunSignupType | null;
+  author: Author | null;
   __typename?: string;
 }
 
 export interface PostType {
-  postRaw: Post;
-  errorCode?: number;
-  user: IUser;
+  postRaw: Post | null;
+  errorCode?: number | null;
+  user: IUser | null;
 }
 
 export type RaceResultRowType = {
@@ -526,8 +526,8 @@ export type RunSignupType = {
 export type Author = { fullName: string; image: string; id: string };
 
 export interface PostContextType extends Post {
-  activity: Array<ActivityItem> | undefined;
-  elevations: Array<ActivityItem> | undefined;
+  activity: Array<ActivityItem> | null;
+  elevations: Array<ActivityItem> | null;
   setPost: (updates: Partial<PostContextType>) => void;
 }
 
