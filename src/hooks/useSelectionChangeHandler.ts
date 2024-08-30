@@ -38,7 +38,7 @@ const useSelectionChangeHandler = (editor: Editor) => {
           path,
           isFullScreen: false,
         });
-        setMenuPosition({ path });
+        setMenuPosition((prevPosition) => ({ ...prevPosition, path }));
       }
     } else {
       setMobileMenu({

@@ -1,4 +1,5 @@
 // src/utils/theme.ts
+import { Theme } from "theme-ui";
 export default {
   useColorSchemeMediaQuery: true, // Enables system preference detection
   colors: {
@@ -316,4 +317,4 @@ export default {
       maxWidth: "1100px",
     },
   },
-} as Theme;
+} as unknown as Theme;

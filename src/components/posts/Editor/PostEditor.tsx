@@ -19,7 +19,7 @@ import MobileMenu from "./MobileMenu";
 import { RWGPSModal } from "./AddRWGPS";
 
 import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler";
-import usePostSubscription from "../../../hooks/usePostSubscription";
+// import usePostSubscription from "../../../hooks/usePostSubscription";
 import useFetchData from "../../../hooks/useFetchData";
 import { CustomElement } from "../../../types/common";
 
@@ -45,7 +45,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setIsSavingPost,
   } = useContext(EditorContext);
 
-  usePostSubscription();
+  // usePostSubscription();
   useFetchData();
 
   const updateMenuPosition = useCallback(() => {

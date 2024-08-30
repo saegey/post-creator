@@ -143,7 +143,9 @@ const WebscorerResultsPreview = ({
             onClick={() => {
               setIsLoading(true);
               saveWebscorerResults({
-                webscorerResults,
+                webscorerResults: webscorerResults
+                  ? webscorerResults
+                  : undefined,
                 id,
                 category: webScorerMeta.category,
                 resultsUrl: resultsUrl,

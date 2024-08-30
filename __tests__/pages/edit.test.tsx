@@ -1,11 +1,11 @@
 import { vi, describe, it, expect, render } from "vitest";
 import React from "react";
 import { render as renderComponent, screen } from "@testing-library/react";
-import Post, { getServerSideProps } from "./edit";
-import { fetchUserAndPost } from "../../../src/utils/fetchUserAndPost";
+import Post, { getServerSideProps } from "../../pages/posts/[id]/edit";
+import { fetchUserAndPost } from "../../src/utils/fetchUserAndPost";
 
-import { PostContext } from "../../../src/components/PostContext";
-import { IUser } from "../../../src/types/common";
+import { PostContext } from "../../src/components/PostContext";
+import { IUser } from "../../src/types/common";
 
 // Mocking dependencies
 vi.mock("next/head", () => ({

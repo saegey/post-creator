@@ -1,6 +1,6 @@
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { Box, Spinner, Flex, Text } from "theme-ui";
+import { Box, Spinner, Flex, Text, ThemeUIStyleObject, Theme } from "theme-ui";
 import { Transforms } from "slate";
 
 import { PostContext } from "../../PostContext";
@@ -10,6 +10,7 @@ import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
 import VisualOverview from "./VisualOverview";
 import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
+import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 
 const VisualOverviewWrapper = ({
   element,
@@ -25,7 +26,7 @@ const VisualOverviewWrapper = ({
   const { activity, elevations } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
+  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const [selection, setSelection] = React.useState<
     [number, number] | undefined
@@ -40,46 +41,7 @@ const VisualOverviewWrapper = ({
   );
 
   const optionsMenuMemo = React.useMemo(() => {
-    return (
-      <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-        <OptionsMenu
-          isOpen={isOptionsOpen}
-          setIsOpen={setIsOptionsOpen}
-          path={path}
-        >
-          <>
-            <Box
-              onClick={(e) => {
-                moveNodeUp(editor, path);
-                setIsOptionsOpen(false);
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>Move Up</Text>
-            </Box>
-            <Box
-              onClick={(e) => {
-                moveNodeDown(editor, path);
-                setIsOptionsOpen(false);
-                // setAddCaption(false);
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>Move Down</Text>
-            </Box>
-            <Box
-              onClick={() => {
-                Transforms.removeNodes(editor, { at: path });
-                // setIsMenuOpen(false);
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              Remove
-            </Box>
-          </>
-        </OptionsMenu>
-      </Box>
-    );
+    return optionsMenu;
   }, [isOptionsOpen]);
 
   const renderMap = React.useMemo(() => {
@@ -104,7 +66,7 @@ const VisualOverviewWrapper = ({
     return (
       <VisualOverview
         activity={formatted}
-        elevations={elevations}
+        elevations={elevations ? elevations : []}
         token={
           "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
         }
@@ -118,18 +80,21 @@ const VisualOverviewWrapper = ({
   if (!activity || activity.length === 0 || !unitOfMeasure) {
     return (
       <Flex
-        sx={{
-          width: "900px",
-          marginX: "auto",
-          backgroundColor: "divider",
-          borderRadius: "5px",
-        }}
+        sx={
+          {
+            width: "900px",
+            marginX: "auto",
+            backgroundColor: "divider",
+            borderRadius: "5px",
+          } as ThemeUIStyleObject<Theme>
+        }
       >
-        <Spinner sx={{ margin: "auto" }} />
+        <Spinner sx={{ margin: "auto" } as ThemeUIStyleObject<Theme>} />
       </Flex>
     );
   }
   console.log("rendering visual overview wrapper");
+
   return (
     <VisualOverviewContext.Provider
       value={{ selection, setSelection, isSaved, setIsSaved }}
@@ -137,7 +102,13 @@ const VisualOverviewWrapper = ({
       <HoverAction element={element}>
         <>
           <Box
-            sx={{ position: "relative", maxWidth: "690px", marginX: "auto" }}
+            sx={
+              {
+                position: "relative",
+                maxWidth: "690px",
+                marginX: "auto",
+              } as ThemeUIStyleObject<Theme>
+            }
             contentEditable={false}
           >
             {renderMap}

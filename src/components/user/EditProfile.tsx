@@ -4,7 +4,6 @@ import { CldImage } from "next-cloudinary";
 import Router from "next/router";
 import { Auth, API } from "aws-amplify";
 
-import Header from "../shared/Header";
 import EditAvatar from "./EditAvatar";
 import { IUser } from "../../types/common";
 import { updateUser } from "../../graphql/mutations";
