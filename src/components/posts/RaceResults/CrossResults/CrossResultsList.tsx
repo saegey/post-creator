@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Link,
-  Text,
-  ThemeUIStyleObject,
-  Theme,
-} from "theme-ui";
+import { Box, Flex, Text, ThemeUIStyleObject, Theme } from "theme-ui";
 
 import { CrossResultsPreviewType } from "../../../../types/common";
+import ResultsListHeader from "../shared/ResultsListHeader";
+import ResultsListContainer from "../shared/ResultsListContainer";
 
 const CrossResultsList = ({
   raceResults,
@@ -20,28 +14,12 @@ const CrossResultsList = ({
 }) => {
   return (
     <>
-      <Flex>
-        <Flex sx={{ flexGrow: 1 } as ThemeUIStyleObject<Theme>}>
-          <Text as="h2">Results</Text>
-        </Flex>
-        <Flex sx={{ justifyContent: "right" } as ThemeUIStyleObject<Theme>}>
-          <Link target="_blank" href={resultsUrl}>
-            <Button variant="primaryButton">Link to results</Button>
-          </Link>
-        </Flex>
-      </Flex>
-      <Text>
-        {raceResults?.eventName} - {raceResults?.category}
-      </Text>
-      <Box
-        sx={
-          {
-            height: "500px",
-            overflowY: "scroll",
-            paddingTop: "10px",
-          } as ThemeUIStyleObject<Theme>
-        }
-      >
+      <ResultsListHeader
+        headerText={`${raceResults?.eventName}`}
+        subText={`${raceResults?.category}`}
+        resultsUrl={resultsUrl}
+      />
+      <ResultsListContainer>
         {raceResults &&
           raceResults?.results?.map((row, i) => {
             return (
@@ -104,7 +82,7 @@ const CrossResultsList = ({
               </Flex>
             );
           })}
-      </Box>
+      </ResultsListContainer>
     </>
   );
 };

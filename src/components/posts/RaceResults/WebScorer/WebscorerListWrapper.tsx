@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "theme-ui";
+import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { Transforms } from "slate";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
@@ -21,11 +21,15 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
         <Box
           variant="boxes.componentCard"
           contentEditable={false}
-          sx={{ backgroundColor: "activityOverviewBackgroundColor" }}
+          sx={
+            {
+              backgroundColor: "activityOverviewBackgroundColor",
+            } as ThemeUIStyleObject<Theme>
+          }
         >
-          <Box sx={{ position: "relative" }}>
+          <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
             <WebscorerList
-              raceResults={webscorerResults}
+              raceResults={webscorerResults ? webscorerResults : undefined}
               resultsUrl={resultsUrl ? resultsUrl : ""}
             />
             <OptionsMenu

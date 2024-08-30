@@ -1,4 +1,14 @@
-import { Box, Flex, Text, Input, Button, Label, Spinner } from "theme-ui";
+import {
+  Box,
+  Flex,
+  Text,
+  Input,
+  Button,
+  Label,
+  Spinner,
+  ThemeUIStyleObject,
+  Theme,
+} from "theme-ui";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -86,8 +96,8 @@ const PostSettings = () => {
     <StandardModal
       isOpen={isSettingsModalOpen}
       setIsOpen={setIsSettingsModalOpen}
-      title={"Post Settings"}
-      fullScreen={true}
+      title={"Settings"}
+      fullScreen={false}
     >
       <form
         onSubmit={(event) => {
@@ -96,12 +106,14 @@ const PostSettings = () => {
         }}
       >
         <Flex
-          sx={{
-            gap: "15px",
-            flexDirection: "column",
-            maxHeight: ["70vh", "", ""],
-            overflow: "scroll",
-          }}
+          sx={
+            {
+              gap: "15px",
+              flexDirection: "column",
+              maxHeight: ["70vh", "", ""],
+              overflow: "scroll",
+            } as ThemeUIStyleObject<Theme>
+          }
         >
           {/* <Flex sx={{ gap: "10px" }}>
             <ThemeLink
