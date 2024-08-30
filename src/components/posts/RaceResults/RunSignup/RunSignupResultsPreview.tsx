@@ -74,7 +74,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
     if (runSignupResults === undefined) {
       return;
     }
-    const { results } = runSignupResults;
+    const { results } = runSignupResults || {};
     const divisionId = results?.divisions[0].race_division_id;
     return {
       divisionId: divisionId,

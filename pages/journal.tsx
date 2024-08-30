@@ -1,19 +1,7 @@
 import Head from "next/head";
 import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Link as ThemeLink,
-  NavLink,
-  Text,
-  Badge,
-} from "theme-ui";
-import Link from "next/link";
+import { Box, Flex, Text } from "theme-ui";
 
-import Logo from "../src/components/shared/Logo";
-import Image from "next/image";
 import PublicHeader from "../src/components/public/header";
 import PublicFooter from "../src/components/public/footer";
 

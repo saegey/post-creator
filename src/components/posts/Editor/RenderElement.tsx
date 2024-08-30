@@ -23,9 +23,10 @@ import OmniResultsListWrapper from "../RaceResults/OmniGo/OmniResultsListWrapper
 import WebscorerListWrapper from "../RaceResults/WebScorer/WebscorerListWrapper";
 import RaceResultsDotComListWrapper from "../RaceResults/RaceResults/RaceResultsDotComListWrapper";
 import RunSignupListWrapper from "../RaceResults/RunSignup/RunSignupListWrapper";
-import ParagraphElement from "../../ParagraphElement";
+import ParagraphElement from "../Text/ParagraphElement";
 import BulletList from "./BulletList/BulletList";
-import Heading from "./Heading";
+import Heading from "../Text/Heading";
+import { Text } from "theme-ui";
 
 const renderElement = (props: {
   attributes: object;
@@ -43,7 +44,7 @@ const renderElement = (props: {
     case "stravaEmbed": // Strava
       return <StravaLink children={children} element={element} />;
     case "powergraph": // Power curve graph
-      return <PowerGraphElement children={children} element={element} />;
+      return <PowerGraphElement element={element} />;
     case "timeInZones": // Time in zones
       return <TimePowerZonesWrapper element={element} />;
     case "activityOverview": // activity metrics
@@ -101,10 +102,13 @@ const renderElement = (props: {
       );
     default:
       return (
-        <ParagraphElement
-          children={props.children}
-          element={props.element as ParagraphElementType}
-        />
+        <>
+          <Text>This is default</Text>
+          <ParagraphElement
+            children={props.children}
+            element={props.element as ParagraphElementType}
+          />
+        </>
       );
   }
 };

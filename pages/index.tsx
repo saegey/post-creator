@@ -3,7 +3,7 @@ import React from "react";
 import { NextApiRequest } from "next";
 
 import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
-import { CloudinaryImage, IUser, ListPostsCustom } from "../src/types/common";
+import { CloudinaryImage, IUser } from "../src/types/common";
 import User from "../src/actions/User";
 import Post from "../src/actions/PostExplore";
 
@@ -39,7 +39,6 @@ type HomeProps = {
 };
 
 const Home = ({ posts = [], user }: HomeProps) => {
-  console.log(posts);
   return (
     <>
       <Head>

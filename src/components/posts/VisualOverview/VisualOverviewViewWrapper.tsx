@@ -83,7 +83,7 @@ const VisualOverviewViewWrapper = ({
               unitOfMeasure={units.unitOfMeasure}
               element={element}
               activity={fixedData}
-              elevations={elevations}
+              elevations={elevations ? elevations : []}
               token={
                 "pk.eyJ1Ijoic2FlZ2V5IiwiYSI6ImNsYmU1amxuYTA3emEzbm81anNmdXo4YnIifQ.uxutNvuagvWbw1h-RBfmPg"
               }

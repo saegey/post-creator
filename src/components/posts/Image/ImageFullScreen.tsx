@@ -21,6 +21,7 @@ const ImageFullScreen = ({
   if (!images) {
     throw Error("musts have images");
   }
+  // console.log("rendering ImageFullScreen");
 
   const backArrow = (
     <Box

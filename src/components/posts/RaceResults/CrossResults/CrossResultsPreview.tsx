@@ -1,5 +1,13 @@
 import React from "react";
-import { Text, Box, Flex, Button, Spinner } from "theme-ui";
+import {
+  Text,
+  Box,
+  Flex,
+  Button,
+  Spinner,
+  ThemeUIStyleObject,
+  Theme,
+} from "theme-ui";
 import { Transforms } from "slate";
 
 import { PostContext } from "../../../PostContext";
@@ -20,38 +28,47 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
 
   return (
     <>
-      <Box sx={{ marginY: "10px" }}>
+      <Box sx={{ marginY: "10px" } as ThemeUIStyleObject<Theme>}>
         <Text as="h3">
           {crossResultsMeta.eventName} - {crossResultsMeta.category}
         </Text>
 
         <Text>{resultsUrl}</Text>
       </Box>
-      <Flex sx={{ width: "100%" }}>
+      <Flex sx={{ width: "100%" } as ThemeUIStyleObject<Theme>}>
         <Text
           as="span"
-          sx={{
-            width: ["30px", "60px", "100px"],
-            visibility: ["hidden", "visible", "visible"],
-          }}
+          sx={
+            {
+              width: ["30px", "60px", "100px"],
+              visibility: ["hidden", "visible", "visible"],
+            } as ThemeUIStyleObject<Theme>
+          }
         >
           Place
         </Text>
-        <Text as="span" sx={{ width: "300px" }}>
+        <Text as="span" sx={{ width: "300px" } as ThemeUIStyleObject<Theme>}>
           Name
         </Text>
-        <Flex sx={{ width: "100%", justifyContent: "right" }}>
+        <Flex
+          sx={
+            {
+              width: "100%",
+              justifyContent: "right",
+            } as ThemeUIStyleObject<Theme>
+          }
+        >
           <Text as="span">Time</Text>
         </Flex>
       </Flex>
       <Box
-        sx={{
-          overflowY: "auto",
-          height: ["80%", "300px", "300px"],
-          // backgroundColor: "activityOverviewBackgroundColor",
-          // padding: "5px",
-          borderRadius: "5px",
-        }}
+        sx={
+          {
+            overflowY: "auto",
+            height: ["80%", "300px", "300px"],
+            borderRadius: "5px",
+          } as ThemeUIStyleObject<Theme>
+        }
       >
         {crossResults &&
           crossResults.results &&
@@ -59,23 +76,25 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             return (
               <Flex
                 key={`race-result-row-${i}`}
-                sx={{
-                  backgroundColor:
-                    selectedRow === i ? "selectedBackground" : null,
-                  color: selectedRow === i ? "selectedBackgroundText" : null,
-                  borderRadius: selectedRow === i ? "5px" : null,
-                  width: "100%",
-                  cursor: "pointer",
-                  "&:hover": {
+                sx={
+                  {
                     backgroundColor:
-                      selectedRow === i
-                        ? "selectedBackground"
-                        : "inputBorderColor",
-                    borderRadius: "5px",
-                  },
-                  paddingX: "5px",
-                  paddingY: "2px",
-                }}
+                      selectedRow === i ? "selectedBackground" : null,
+                    color: selectedRow === i ? "selectedBackgroundText" : null,
+                    borderRadius: selectedRow === i ? "5px" : null,
+                    width: "100%",
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor:
+                        selectedRow === i
+                          ? "selectedBackground"
+                          : "inputBorderColor",
+                      borderRadius: "5px",
+                    },
+                    paddingX: "5px",
+                    paddingY: "2px",
+                  } as unknown as ThemeUIStyleObject<Theme>
+                }
                 onClick={() => {
                   if (selectedRow === i) {
                     setSelectedRow(undefined);
@@ -89,7 +108,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     setSelectedRow(i);
                     setPost({
                       crossResults: {
-                        ...crossResults,
+                        ...crossResults!,
                         selected:
                           crossResults && crossResults.results
                             ? crossResults.results[i]
@@ -99,30 +118,58 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   }
                 }}
               >
-                <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
+                <Text
+                  as="span"
+                  sx={
+                    {
+                      width: ["30px", "60px", "60px"],
+                    } as ThemeUIStyleObject<Theme>
+                  }
+                >
                   {row.Place}
                 </Text>
-                <Box sx={{ width: "300px", flexGrow: "2" }}>
+                <Box
+                  sx={
+                    {
+                      width: "300px",
+                      flexGrow: "2",
+                    } as ThemeUIStyleObject<Theme>
+                  }
+                >
                   <Text as="div">
                     {row.FirstName} {row.LastName}
                   </Text>
-                  <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                  <Text
+                    as="div"
+                    sx={
+                      {
+                        fontSize: "13px",
+                        minHeight: "13px",
+                      } as ThemeUIStyleObject<Theme>
+                    }
+                  >
                     {row.TeamName}
                   </Text>
                 </Box>
                 <Text
                   as="span"
-                  sx={{ display: ["none", "inherit", "inherit"] }}
+                  sx={
+                    {
+                      display: ["none", "inherit", "inherit"],
+                    } as ThemeUIStyleObject<Theme>
+                  }
                 >
                   {/* {row.TeamName} */}
                 </Text>
                 <Text
                   as="span"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "right",
-                    width: "100px",
-                  }}
+                  sx={
+                    {
+                      display: "flex",
+                      justifyContent: "right",
+                      width: "100px",
+                    } as ThemeUIStyleObject<Theme>
+                  }
                 >
                   {row.RaceTime}
                 </Text>
@@ -131,61 +178,75 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           })}
       </Box>
       <Box
-        sx={{
-          paddingTop: "15px",
-          marginTop: "15px",
-          borderTopColor: "divider",
-          borderTopStyle: "solid",
-          borderTopWidth: "1px",
-        }}
+        sx={
+          {
+            paddingTop: "15px",
+            marginTop: "15px",
+            borderTopColor: "divider",
+            borderTopStyle: "solid",
+            borderTopWidth: "1px",
+          } as ThemeUIStyleObject<Theme>
+        }
       >
         <Flex>
           <Button
             title="Save"
-            sx={{
-              marginLeft: "auto",
-              backgroundColor: selectedRow ? null : "gray",
-            }}
+            sx={
+              {
+                marginLeft: "auto",
+                backgroundColor: selectedRow ? null : "gray",
+              } as ThemeUIStyleObject<Theme>
+            }
             disabled={selectedRow ? false : true}
             onClick={() => {
               setIsLoading(true);
-              saveCrossResults({
-                crossResults,
-                id,
-                resultsUrl,
-                eventName: crossResultsMeta.eventName,
-                category: crossResultsMeta.category,
-              }).then((r) => {
-                setCrossResultsMeta({
-                  ...crossResultsMeta,
+              crossResults &&
+                saveCrossResults({
+                  crossResults,
+                  id,
+                  resultsUrl,
+                  eventName: crossResultsMeta.eventName,
                   category: crossResultsMeta.category,
-                });
-
-                setPost({
-                  crossResults: {
-                    ...crossResults,
+                }).then(() => {
+                  setCrossResultsMeta({
+                    ...crossResultsMeta,
                     category: crossResultsMeta.category,
-                    eventName: crossResultsMeta.eventName,
-                  },
+                  });
+
+                  setPost({
+                    crossResults: {
+                      ...crossResults,
+                      category: crossResultsMeta.category,
+                      eventName: crossResultsMeta.eventName,
+                    },
+                  });
+
+                  Transforms.insertNodes(
+                    editor,
+                    {
+                      type: "crossResults",
+                      children: [{ text: "" }],
+                    },
+                    { at: menuPosition.path }
+                  );
+
+                  setIsLoading(false);
+                  setIsRaceResultsModalOpen(false);
                 });
-
-                Transforms.insertNodes(
-                  editor,
-                  {
-                    type: "crossResults",
-                    children: [{ text: "" }],
-                  },
-                  { at: menuPosition.path }
-                );
-
-                setIsLoading(false);
-                setIsRaceResultsModalOpen(false);
-              });
             }}
           >
-            <Flex sx={{ gap: "10px" }}>
+            <Flex sx={{ gap: "10px" } as ThemeUIStyleObject<Theme>}>
               <Text as="span">Save</Text>
-              {isLoading && <Spinner sx={{ size: "20px", color: "white" }} />}
+              {isLoading && (
+                <Spinner
+                  sx={
+                    {
+                      size: "20px",
+                      color: "white",
+                    } as ThemeUIStyleObject<Theme>
+                  }
+                />
+              )}
             </Flex>
           </Button>
         </Flex>

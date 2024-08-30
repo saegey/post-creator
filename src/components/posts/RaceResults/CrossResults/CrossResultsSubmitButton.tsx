@@ -1,5 +1,14 @@
-import { Flex, Box, Button, Text, Spinner } from "theme-ui";
+import {
+  Flex,
+  Box,
+  Button,
+  Text,
+  Spinner,
+  ThemeUIStyleObject,
+  Theme,
+} from "theme-ui";
 import React from "react";
+
 import { getCrossResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { usePost } from "../../../PostContext";
@@ -13,7 +22,7 @@ const CrossResultsSubmitButton = () => {
   const { category, eventName } = crossResultsMeta;
 
   return (
-    <Box sx={{ marginLeft: "auto" }}>
+    <Box sx={{ marginLeft: "auto" } as ThemeUIStyleObject<Theme>}>
       <Button
         disabled={isLoading ? true : false}
         variant="primaryButton"
@@ -36,10 +45,17 @@ const CrossResultsSubmitButton = () => {
           setIsLoading(false);
         }}
       >
-        <Flex sx={{ gap: "10px" }}>
+        <Flex sx={{ gap: "10px" } as ThemeUIStyleObject<Theme>}>
           <Text as="span">Import</Text>
           {isLoading && (
-            <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
+            <Spinner
+              sx={
+                {
+                  size: "20px",
+                  color: "spinnerButton",
+                } as ThemeUIStyleObject<Theme>
+              }
+            />
           )}
         </Flex>
       </Button>

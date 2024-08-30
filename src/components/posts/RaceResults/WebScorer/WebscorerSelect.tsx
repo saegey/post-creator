@@ -1,30 +1,27 @@
-import { Box, Label, Select } from "theme-ui";
-import { ResultsContext } from "../ResultsContext";
 import React from "react";
+
+import { ResultsContext } from "../ResultsContext";
+import CategorySelect from "../shared/CategorySelect";
 
 const WebscorerSelect = () => {
   const { webScorerMeta, setWebScorerMeta } = React.useContext(ResultsContext);
   const { categories } = webScorerMeta;
+
+  const handleCategoryChange = (value: string) => {
+    setWebScorerMeta({
+      ...webScorerMeta,
+      category: value,
+    });
+  };
+
   return (
-    <>
-      <Box>
-        <Label htmlFor="url" variant="defaultLabel">
-          Category
-        </Label>
-        <Select
-          id="category"
-          variant={"defaultInput"}
-          onChange={(e) => {
-            setWebScorerMeta({ ...webScorerMeta, category: e.target.value });
-          }}
-        >
-          <option></option>
-          {categories.map((c: string, i: number) => (
-            <option key={`category-${i}`}>{c}</option>
-          ))}
-        </Select>
-      </Box>
-    </>
+    <CategorySelect
+      label="Category"
+      categories={categories.map((c, i) => ({ value: c, label: c }))}
+      selectedCategory={webScorerMeta.category || ""}
+      onCategoryChange={handleCategoryChange}
+      id="category"
+    />
   );
 };
 

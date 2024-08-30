@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import { ThemeUIProvider } from "theme-ui";
-import theme from "../../utils/theme";
+import theme from "../../../utils/theme";
 
 describe("<Header />", () => {
   it("renders", () => {

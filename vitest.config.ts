@@ -11,6 +11,7 @@ export default defineConfig({
     include: [
       "__tests__/**/*.{test,spec}.{js,ts,jsx,tsx}",
       "src/**/*.{test,spec}.{js,ts,jsx,tsx}",
+      "pages/**/*.{test,spec}.{js,ts,jsx,tsx}",
       "amplify/backend/function/**/src/__tests__/*.{test,spec}.{js,ts}",
     ],
     exclude: [...configDefaults.exclude, "*/amplify/#current-cloud-backend/**"],

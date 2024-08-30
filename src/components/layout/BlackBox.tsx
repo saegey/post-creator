@@ -1,15 +1,7 @@
 import { Box } from "theme-ui";
 import React from "react";
 
-const BlackBox = ({
-  children,
-  opacity = ".7",
-  onClick = () => {},
-  zIndex = 30,
-  fullScreen = false,
-  noModal = false,
-  noBackground = false,
-}: {
+interface BlackBoxProps {
   children: JSX.Element;
   opacity?: string;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -17,29 +9,46 @@ const BlackBox = ({
   fullScreen?: boolean;
   noModal?: boolean;
   noBackground?: boolean;
-}) => (
-  <Box
-    className="blackbox"
-    sx={{
-      position: "fixed",
-      top: "0",
-      height: "100dvh",
-      width: "100%",
-      left: "0",
-      backgroundColor: noBackground
-        ? "unset"
-        : fullScreen
-        ? "background"
-        : `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`,
-      zIndex: zIndex,
-      display: "flex",
-      justifyContent: !noModal || fullScreen ? "center" : "",
-      alignItems: !noModal || fullScreen ? "center" : "",
-    }}
-    onClick={onClick}
-  >
-    {children}
-  </Box>
-);
+}
+
+const BlackBox: React.FC<BlackBoxProps> = ({
+  children,
+  opacity = ".7",
+  onClick,
+  zIndex = 30,
+  fullScreen = false,
+  noModal = false,
+  noBackground = false,
+}) => {
+  const justifyContent = !noModal || fullScreen ? "center" : "unset";
+  const alignItems = !noModal || fullScreen ? "center" : "unset";
+  const backgroundColor = noBackground
+    ? "unset"
+    : fullScreen
+    ? "background"
+    : `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`;
+
+  return (
+    <Box
+      role="presentation"
+      className="blackbox"
+      sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        height: "100dvh",
+        width: "100%",
+        backgroundColor,
+        zIndex,
+        display: "flex",
+        justifyContent,
+        alignItems,
+      }}
+      onClick={onClick}
+    >
+      {children}
+    </Box>
+  );
+};
 
 export default BlackBox;

@@ -1,13 +1,12 @@
 import React from "react";
-import { Box } from "theme-ui";
-import { Transforms } from "slate";
+import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../../PostContext";
 import RaceResultsDotComList from "./RaceResultsDotComList";
-import OptionsMenu from "../../Editor/OptionsMenu";
 import { CustomElement } from "../../../../types/common";
 import HoverAction from "../../Editor/HoverAction";
+import useOptionsMenu from "../../../../hooks/useSlateOptionsMenu";
 
 const RaceResultsDotComListWrapper = ({
   element,
@@ -17,42 +16,25 @@ const RaceResultsDotComListWrapper = ({
   const { raceResults, resultsUrl } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
 
-  return (
-    <HoverAction element={element}>
-      <Box
-        variant="boxes.componentCard"
-        contentEditable={false}
-        sx={{ backgroundColor: "activityOverviewBackgroundColor" }}
-      >
-        <Box sx={{ position: "relative" }}>
-          {resultsUrl && (
+  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
+  const hoverAct = React.useMemo(() => {
+    return (
+      <HoverAction element={element}>
+        <Box variant="boxes.componentCard" contentEditable={false}>
+          <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
             <RaceResultsDotComList
-              raceResults={raceResults}
-              resultsUrl={resultsUrl}
+              raceResults={raceResults ? raceResults : undefined}
+              resultsUrl={resultsUrl ? resultsUrl : ""}
             />
-          )}
-          <OptionsMenu
-            isOpen={isOptionsOpen}
-            setIsOpen={setIsOptionsOpen}
-            path={path}
-          >
-            <>
-              <Box
-                onClick={(e) => {
-                  Transforms.removeNodes(editor, { at: path });
-                }}
-                variant="boxes.dropdownMenuItem"
-              >
-                Delete
-              </Box>
-            </>
-          </OptionsMenu>
+          </Box>
+          {optionsMenu}
         </Box>
-      </Box>
-    </HoverAction>
-  );
+      </HoverAction>
+    );
+  }, [raceResults, isOptionsOpen]);
+
+  return hoverAct;
 };
 
 export default RaceResultsDotComListWrapper;

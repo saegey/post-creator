@@ -156,7 +156,6 @@ const About = () => {
           <Box
             sx={{
               margin: "16px",
-              // display: isAbout ? "" : "none",
               opacity: isPress ? 1 : 0,
               transition: "opacity 300ms ease 0s",
               display: isPress ? "inherit" : "none",

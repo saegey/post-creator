@@ -1,96 +1,16 @@
-import { Box, Text, Grid } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 
-import { useUnits } from "../../UnitProvider";
+import { UnitContextType, useUnits } from "../../UnitProvider";
+import { formatTime, formatValue, formatAnalysis } from "./helper";
+import ActivityOverviewTemplate from "./ActivityOverviewTemplate";
+import { ActivityData, ActivityItem } from "./types";
 
-interface Item {
-  title: string;
-  value: string;
-}
-
-type RaceStatsProps = {
-  items: Item[];
-};
-
-const getTimeInRed = (timeInRed: number | string | undefined | null) => {
-  if (timeInRed === "....") {
-    return "....";
-  }
-  if (timeInRed === 0 || timeInRed === null) {
-    return "no power data";
-  }
-  if (typeof timeInRed === "number") {
-    return `${new Date(timeInRed * 1000).toISOString().substr(11, 8)}`;
-  }
-  return "---";
-};
-
-const ActivityOveriew = ({ items }: RaceStatsProps) => {
-  return (
-    <Grid
-      gap={2}
-      columns={[2, 2, 3]}
-      sx={{
-        borderRadius: "4px",
-        gap: ["10px", "5px 100px", "5px"],
-      }}
-    >
-      {items.map((item, index) => {
-        return (
-          <Box key={`box-${index}`}>
-            <>
-              <Text
-                sx={{
-                  fontWeight: "500",
-                  textTransform: "uppercase",
-                  fontSize: ["12px", "13px", "13px"],
-                  color: "text",
-                  marginBottom: "3px",
-                }}
-                as="div"
-              >
-                {item.title}
-              </Text>
-              <Text
-                as="div"
-                sx={{
-                  fontFamily: "body",
-                  fontSize: ["20px", "24px", "24px"],
-                  lineHeight: ["20px", "24px", "24px"],
-                  fontWeight: ["600", "600", "600"],
-                  marginBottom: "10px",
-                  // lineHeight: ['30px', '50px', '60px'],
-                }}
-              >
-                {item.value}
-              </Text>
-            </>
-          </Box>
-        );
-      })}
-    </Grid>
-  );
-};
-
-type Props = {
-  data: {
-    elevationGain?: number | null;
-    distance?: number | null;
-    normalizedPower?: number | null;
-    heartAnalysis?: Record<number, number>[] | undefined;
-    tempAnalysis?: Record<number, number>[] | undefined;
-    powerAnalysis?: Record<number, number>[] | undefined;
-    cadenceAnalysis?: Record<number, number>[] | undefined;
-    elapsedTime?: {
-      seconds: number;
-    };
-    stoppedTime?: number | null;
-    timeInRed?: number | string | undefined | null;
-  };
-  selectedFields: string[];
-};
-
-const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
+const getItemData = (
+  data: ActivityData,
+  units: UnitContextType,
+  selectedFields: string[]
+): ActivityItem[] => {
   const {
     normalizedPower,
     elevationGain,
@@ -101,92 +21,54 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     stoppedTime,
     powerAnalysis,
     cadenceAnalysis,
-    timeInRed,
+    // timeInRed,
   } = data;
-  const units = useUnits();
-  const powerKeys = Object.keys(powerAnalysis as object);
-  const heartKeys = Object.keys(heartAnalysis as object);
-  const tempKeys = Object.keys(tempAnalysis as object);
-  const cadenceKeys = Object.keys(cadenceAnalysis as object);
 
-  const items = [
+  const items: ActivityItem[] = [
     {
       title: "Normalized Power",
-      value: `${normalizedPower ? normalizedPower.toFixed() : ""} watts`,
+      value: normalizedPower ? `${normalizedPower.toFixed()} watts` : "no data",
     },
     {
       title: "Elevation Gain",
-      value:
-        units.unitOfMeasure === "metric"
-          ? `${elevationGain && elevationGain.toFixed(0)} meters`
-          : `${
-              elevationGain &&
-              (elevationGain * 3.280839895).toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              })
-            } ft`,
+      value: elevationGain
+        ? formatValue(elevationGain, units.unitOfMeasure)
+        : "N/A",
     },
     {
       title: "Avg Heart Rate",
       value: heartAnalysis
-        ? `${
-            heartAnalysis[
-              heartKeys[heartKeys.length - 1] as keyof typeof heartAnalysis
-            ]
-          } bpm`
-        : "HR data not available",
+        ? `${formatAnalysis(heartAnalysis, Object.keys(heartAnalysis))} bpm`
+        : "N/A",
     },
     {
       title: "Distance",
       value:
         units.unitOfMeasure === "metric"
-          ? `${distance && distance.toFixed(2)} km`
-          : `${distance && (distance * 0.621371).toFixed()} miles`,
+          ? `${distance?.toFixed(2)} km`
+          : `${(distance! * 0.621371).toFixed()} miles`,
     },
     {
       title: "Elapsed Time",
-      value: `${
-        elapsedTime &&
-        new Date(elapsedTime.seconds * 1000).toISOString().substr(11, 8)
-      }`,
+      value: elapsedTime ? formatTime(elapsedTime?.seconds) : "N/A",
     },
     {
       title: "Moving Time",
       value:
-        elapsedTime && elapsedTime.seconds
-          ? `${new Date(
-              (elapsedTime.seconds - (stoppedTime ? stoppedTime : 0)) * 1000
-            )
-              .toISOString()
-              .substr(11, 8)}`
-          : "",
+        elapsedTime && stoppedTime
+          ? `${formatTime(elapsedTime?.seconds - stoppedTime)}`
+          : "N/A",
     },
     {
       title: "Avg Temperature",
       value:
-        units.unitOfMeasure === "metric"
+        units.unitOfMeasure === "metric" && tempAnalysis
           ? `${Number(
-              tempAnalysis
-                ? tempAnalysis[
-                    tempKeys[
-                      Number(tempKeys.length - 1)
-                    ] as keyof typeof tempAnalysis
-                  ]
-                : 0
+              formatAnalysis(tempAnalysis, Object.keys(tempAnalysis))
             ).toFixed()} °C`
-          : tempAnalysis &&
-            tempAnalysis[
-              tempKeys[Number(tempKeys.length - 1)] as keyof typeof tempAnalysis
-            ]
+          : units.unitOfMeasure === "imperial" && tempAnalysis
           ? `${(
-              Number(
-                tempAnalysis[
-                  tempKeys[
-                    Number(tempKeys.length - 1)
-                  ] as keyof typeof tempAnalysis
-                ]
-              ) *
+              Number(formatAnalysis(tempAnalysis, Object.keys(tempAnalysis))) *
                 (9 / 5) +
               32
             ).toFixed()} °F`
@@ -195,19 +77,21 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     {
       title: "Avg Speed",
       value:
-        units.unitOfMeasure === "metric"
+        units.unitOfMeasure === "metric" &&
+        distance &&
+        elapsedTime?.seconds &&
+        stoppedTime
           ? `${
               distance &&
-              elapsedTime &&
+              elapsedTime?.seconds &&
               (
-                ((distance * 1000) /
-                  (elapsedTime.seconds - (stoppedTime ? stoppedTime : 0))) *
+                ((distance! * 1000) / (elapsedTime.seconds - stoppedTime)) *
                 3.6
               ).toFixed(2)
             } km/h`
           : `${
               distance &&
-              elapsedTime &&
+              elapsedTime?.seconds &&
               stoppedTime &&
               (
                 (distance / (elapsedTime.seconds - stoppedTime)) *
@@ -218,46 +102,56 @@ const RaceOverview: React.FC<Props> = ({ data, selectedFields = [] }) => {
     {
       title: "Avg Power",
       value: powerAnalysis
-        ? `${
-            powerAnalysis[
-              powerKeys[powerKeys.length - 1] as keyof typeof powerAnalysis
-            ]
-          } watts`
+        ? formatAnalysis(powerAnalysis, Object.keys(powerAnalysis)) + " watts"
         : "N/A",
     },
     {
       title: "Time Stopped",
-      value: stoppedTime
-        ? new Date(stoppedTime * 1000).toISOString().substr(11, 8)
-        : "",
+      value: stoppedTime ? formatTime(stoppedTime) : "N/A",
     },
     {
       title: "Avg Cadence",
       value: cadenceAnalysis
-        ? `${
-            cadenceAnalysis[
-              cadenceKeys[
-                cadenceKeys.length - 1
-              ] as keyof typeof cadenceAnalysis
-            ]
-          } rpm`
+        ? `${formatAnalysis(cadenceAnalysis, Object.keys(cadenceAnalysis))} rpm`
         : "N/A",
     },
-    {
-      title: "Time in Red",
-      value: getTimeInRed(timeInRed),
-    },
+    // { title: "Time in Red", value: getTimeInRed(timeInRed) },
   ];
+
+  return items.filter((item) => selectedFields.includes(item.title));
+};
+
+const ActivityOverview = ({
+  data,
+  selectedFields,
+}: {
+  data: ActivityData;
+  selectedFields: Array<
+    | "Normalized Power"
+    | "Avg Heart Rate"
+    | "Distance"
+    | "Elevation Gain"
+    | "Avg Temperature"
+    | "Avg Speed"
+    | "Elapsed Time"
+    | "Stopped Time"
+    | "Avg Cadence"
+    | "Avg Power"
+  >;
+}) => {
+  const units = useUnits();
+
+  const items = React.useMemo(
+    () => getItemData(data, units, selectedFields),
+    [data, units, selectedFields]
+  );
 
   return (
     <Box variant="boxes.figure">
-      <ActivityOveriew
-        items={items.filter((activity) =>
-          selectedFields.includes(activity.title)
-        )}
-      />
+      <ActivityOverviewTemplate items={items} />
     </Box>
   );
 };
 
-export default RaceOverview;
+export default ActivityOverview;
+export { getItemData };

@@ -20,25 +20,10 @@ const TimePowerZonesWrapper = ({ element }: { element: TimeInZonesType }) => {
       <HoverAction element={element}>
         <Box variant="boxes.componentCard" contentEditable={false}>
           <TimePowerZones
-            powerZoneBuckets={powerZoneBuckets}
-            powerZones={powerZones}
+            powerZoneBuckets={powerZoneBuckets ? powerZoneBuckets : []}
+            powerZones={powerZones ? powerZones : []}
           />
-          <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-            <OptionsMenu
-              isOpen={isOptionsOpen}
-              setIsOpen={setIsOptionsOpen}
-              path={path}
-            >
-              <Box
-                onClick={() => {
-                  Transforms.removeNodes(editor, { at: path });
-                }}
-                variant="boxes.dropdownMenuItem"
-              >
-                Remove
-              </Box>
-            </OptionsMenu>
-          </Box>
+          <Box sx={{ position: "absolute", top: "10px", right: "10px" }}></Box>
         </Box>
       </HoverAction>
     );

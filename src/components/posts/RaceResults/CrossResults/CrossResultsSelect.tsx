@@ -1,34 +1,26 @@
-import { Box, Label, Select } from "theme-ui";
 import React from "react";
+
 import { ResultsContext } from "../ResultsContext";
+import CategorySelect from "../shared/CategorySelect";
 
 const CrossResultsSelect = () => {
   const { setCrossResultsMeta, crossResultsMeta } =
     React.useContext(ResultsContext);
 
-  const { categories } = crossResultsMeta;
+  const handleCategoryChange = (category: string) => {
+    setCrossResultsMeta({
+      ...crossResultsMeta,
+      category,
+    });
+  };
 
   return (
-    <Box>
-      <Label htmlFor="url" variant="defaultLabel">
-        Category
-      </Label>
-      <Select
-        id="category"
-        variant={"defaultInput"}
-        onChange={(e) => {
-          setCrossResultsMeta({
-            ...crossResultsMeta,
-            category: e.target.value,
-          });
-        }}
-      >
-        <option></option>
-        {Array.from(categories).map((c: string, i: number) => (
-          <option key={`category-${i}`}>{c}</option>
-        ))}
-      </Select>
-    </Box>
+    <CategorySelect
+      label="Category"
+      categories={Array.from(crossResultsMeta.categories)}
+      selectedCategory={crossResultsMeta.category || ""}
+      onCategoryChange={handleCategoryChange}
+    />
   );
 };
 

@@ -4,7 +4,7 @@ import { Path } from "slate";
 import { useClickOutside } from "../../../utils/ux";
 import OptionsButton from "../../buttons/OptionsButton";
 import Dropdown from "../../shared/Dropdown";
-import { Box, Flex } from "theme-ui";
+import { Box, Flex, Theme, ThemeUIStyleObject } from "theme-ui";
 import { EditorContext } from "./EditorContext";
 
 const OptionsMenu = ({
@@ -31,18 +31,20 @@ const OptionsMenu = ({
 
   return (
     <Box
-      sx={{
-        position: "absolute",
-        right: "10px",
-        top: "10px",
-      }}
+      sx={
+        {
+          position: "absolute",
+          right: "10px",
+          top: "10px",
+        } as ThemeUIStyleObject<Theme>
+      }
       ref={wrapperRef}
       onClick={() => {
         setMobileMenu({
           display: false,
           left: 0,
           top: 0,
-          path: [0, 0],
+          path: path,
           isFullScreen: false,
         });
       }}
@@ -50,13 +52,19 @@ const OptionsMenu = ({
       <OptionsButton
         onClick={() => {
           setIsOpen(true);
-          // Transforms.select(editor, path);
-          console.log("OptionsButton clicked");
-          console.log(path);
         }}
       />
       <Dropdown isOpen={isOpen}>
-        <Flex sx={{ gap: "10px", flexDirection: "column" }}>{children}</Flex>
+        <Flex
+          sx={
+            {
+              gap: "10px",
+              flexDirection: "column",
+            } as ThemeUIStyleObject<Theme>
+          }
+        >
+          {children}
+        </Flex>
       </Dropdown>
     </Box>
   );

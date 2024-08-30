@@ -23,11 +23,11 @@ const GraphSelectorMenu = () => {
         <AddImage path={menuPosition.path} />
         <AddPowerCurve path={menuPosition.path} />
         <AddActivityOverview path={menuPosition.path} />
-        <AddTimeZones path={menuPosition.path} />
+        {/* <AddTimeZones path={menuPosition.path} /> */}
         <AddStravaLink path={menuPosition.path} />
         <AddRWGPS path={menuPosition.path} />
-        <AddRaceResults path={menuPosition.path}/>
-        <AddRouteOverview path={menuPosition.path}/>
+        <AddRaceResults path={menuPosition.path} />
+        <AddRouteOverview path={menuPosition.path} />
         <AddVideo />
       </Flex>
     </>

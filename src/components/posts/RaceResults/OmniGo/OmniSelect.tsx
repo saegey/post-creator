@@ -1,31 +1,25 @@
-import { Box, Label, Select } from "theme-ui";
 import React from "react";
 
 import { ResultsContext } from "../ResultsContext";
+import CategorySelect from "../shared/CategorySelect";
 
 const OmniSelect = () => {
   const { omniMeta, setOmniMeta } = React.useContext(ResultsContext);
 
+  const handleCategoryChange = (category: string) => {
+    setOmniMeta({
+      ...omniMeta,
+      category,
+    });
+  };
+
   return (
-    <>
-      <Box>
-        <Label htmlFor="url" variant="defaultLabel">
-          Category
-        </Label>
-        <Select
-          id="category"
-          variant={"defaultInput"}
-          onChange={(e) => {
-            setOmniMeta({ ...omniMeta, category: e.target.value });
-          }}
-        >
-          <option></option>
-          {Array.from(omniMeta.categories).map((c: string, i: number) => (
-            <option key={`category-${i}`}>{c}</option>
-          ))}
-        </Select>
-      </Box>
-    </>
+    <CategorySelect
+      label="Category"
+      categories={Array.from(omniMeta.categories)}
+      selectedCategory={omniMeta.category || ""}
+      onCategoryChange={handleCategoryChange}
+    />
   );
 };
 

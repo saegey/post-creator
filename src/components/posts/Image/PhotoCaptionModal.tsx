@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, Textarea, Button, Box } from "theme-ui";
+import { Label, Textarea, Button, Flex } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import { Transforms } from "slate";
 
@@ -24,9 +24,9 @@ const PhotoCaptionModal = ({
         isOpen={isPhotoCaptionOpen}
         setIsOpen={setIsPhotoCaptionOpen}
       >
-        <Box
+        <Flex
           sx={{
-            width: "80%",
+            width: "100%",
             marginY: "auto",
             marginX: "auto",
             height: "80%",
@@ -53,7 +53,7 @@ const PhotoCaptionModal = ({
               setIsPhotoCaptionOpen(false);
             }}
           >
-            <Label sx={{ color: "text" }} htmlFor="caption">
+            <Label sx={{ color: "text", marginY: "10px" }} htmlFor="caption">
               Caption
             </Label>
             <Textarea
@@ -61,17 +61,19 @@ const PhotoCaptionModal = ({
                 borderColor: "inputBorderColor",
                 borderWidth: "1px",
                 borderStyle: "solid",
+                width: "100%",
               }}
               name="caption"
               id="caption"
               rows={6}
               mb={3}
-              defaultValue={element.photoCaption}
+              value={"sfdf"}
+              // defaultValue={element.photoCaption}
             ></Textarea>
 
             <Button sx={{ backgroundColor: "primary" }}>Save</Button>
           </form>
-        </Box>
+        </Flex>
       </StandardModal>
     </>
   );

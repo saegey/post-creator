@@ -112,7 +112,7 @@ const MobileMenu = () => {
             >
               <AddActivityOverview path={mobileMenu.path} />
             </Box>
-            <Box
+            {/* <Box
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
@@ -120,7 +120,7 @@ const MobileMenu = () => {
               }}
             >
               <AddTimeZones path={mobileMenu.path} />
-            </Box>
+            </Box> */}
             <Box
               sx={{
                 borderBottomWidth: "1px",

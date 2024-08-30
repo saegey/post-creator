@@ -1,62 +1,43 @@
-import { Box, Label, Select } from "theme-ui";
 import React from "react";
 
-import { ResultsContext } from "./../ResultsContext";
+import { ResultsContext } from "../ResultsContext";
+import CategorySelect from "../shared/CategorySelect";
 
 const RaceResultsSelect = () => {
   const { raceResultsMeta, setRaceResultsMeta } =
     React.useContext(ResultsContext);
   const { categories } = raceResultsMeta;
 
+  const handleCategoryChange = (category: string) => {
+    setRaceResultsMeta({
+      ...raceResultsMeta,
+      category,
+    });
+  };
+
+  const handleDivisionChange = (division: string) => {
+    setRaceResultsMeta({
+      ...raceResultsMeta,
+      division,
+    });
+  };
+
   return (
     <>
-      <Box>
-        <Label htmlFor="url" variant="defaultLabel">
-          Category
-        </Label>
-        <Select
-          id="category"
-          variant={"defaultInput"}
-          onChange={(e) => {
-            setRaceResultsMeta({
-              ...raceResultsMeta,
-              category: e.target.value,
-            });
-          }}
-        >
-          <option></option>
-          {categories.data?.filterValues.length > 0 &&
-            categories.data?.filterValues[0]["Values"].map(
-              (c: string, i: number) => (
-                <option key={`category-${i}`}>{c}</option>
-              )
-            )}
-        </Select>
-      </Box>
-      <Box>
-        <Label htmlFor="url" variant="defaultLabel">
-          Division
-        </Label>
-        <Select
-          variant={"defaultInput"}
-          onChange={(e) => {
-            setRaceResultsMeta({
-              ...raceResultsMeta,
-              division: e.target.value,
-            });
-            // setDivision(e.target.value);
-          }}
-          id="division"
-        >
-          <option></option>
-          {categories.data?.filterValues.length > 0 &&
-            categories.data?.filterValues[1]["Values"].map(
-              (c: string, i: number) => (
-                <option key={`category-${i}`}>{c}</option>
-              )
-            )}
-        </Select>
-      </Box>
+      <CategorySelect
+        label="Category"
+        categories={categories.data?.filterValues[0]?.Values || []}
+        selectedCategory={raceResultsMeta.category || ""}
+        onCategoryChange={handleCategoryChange}
+        id="category" // Ensure this id matches the label's htmlFor
+      />
+      <CategorySelect
+        label="Division"
+        categories={categories.data?.filterValues[1]?.Values || []}
+        selectedCategory={raceResultsMeta.division || ""}
+        onCategoryChange={handleDivisionChange}
+        id="division" // Ensure this id matches the label's htmlFor
+      />
     </>
   );
 };

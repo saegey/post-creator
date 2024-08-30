@@ -1,5 +1,5 @@
 import { MouseEventHandler } from "react";
-import { Text } from "theme-ui";
+import { Text, ThemeUIStyleObject, Theme } from "theme-ui";
 
 const HoverIcon = ({
   onClick,
@@ -9,16 +9,18 @@ const HoverIcon = ({
   return (
     <Text
       className="hoverIcon"
-      sx={{
-        position: "absolute",
-        top: `0px`,
-        left: `-35px`,
-        cursor: "pointer",
-        border: "1px solid #e1e1e1",
-        paddingY: "3px",
-        paddingX: "4px",
-        borderRadius: "3px",
-      }}
+      sx={
+        {
+          position: "absolute",
+          top: `0px`,
+          left: `-35px`,
+          cursor: "pointer",
+          border: "1px solid #e1e1e1",
+          paddingY: "3px",
+          paddingX: "4px",
+          borderRadius: "3px",
+        } as ThemeUIStyleObject<Theme>
+      }
       onClick={onClick}
       contentEditable={false}
     >

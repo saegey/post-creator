@@ -1,13 +1,11 @@
-import { Box, Flex, Text } from "theme-ui";
+import { Box, Flex, Theme, ThemeUIStyleObject } from "theme-ui";
 import React from "react";
-import { Transforms } from "slate";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { StravaEmbed } from "../../../types/common";
 import HoverAction from "../Editor/HoverAction";
-import OptionsMenu from "../Editor/OptionsMenu";
-import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
 import { PostContext } from "../../PostContext";
+import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 
 const StravaLink = ({
   element,
@@ -20,7 +18,8 @@ const StravaLink = ({
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
+
+  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   React.useEffect(() => {
     const resizeParentToIframe = (event: MessageEvent) => {
@@ -50,9 +49,11 @@ const StravaLink = ({
     console.log("stravaEmbed");
     return (
       <Box
-        sx={{
-          position: "relative",
-        }}
+        sx={
+          {
+            position: "relative",
+          } as ThemeUIStyleObject<Theme>
+        }
       >
         <iframe
           src={`https://strava-embeds.com/activity/${element.activityId}`}
@@ -74,50 +75,10 @@ const StravaLink = ({
           contentEditable={false}
           variant="boxes.componentCard"
           key="strava-link"
-          sx={{ justifyContent: "center" }}
+          sx={{ justifyContent: "center" } as ThemeUIStyleObject<Theme>}
         >
           {stravaEmbed}
-          <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-            <OptionsMenu
-              isOpen={isOptionsOpen}
-              setIsOpen={setIsOptionsOpen}
-              path={path}
-            >
-              <>
-                <Box
-                  onClick={(e) => {
-                    moveNodeUp(editor, path);
-                    setIsOptionsOpen(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    Move Up
-                  </Text>
-                </Box>
-                <Box
-                  onClick={(e) => {
-                    moveNodeDown(editor, path);
-                    setIsOptionsOpen(false);
-                    // setAddCaption(false);
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  <Text sx={{ fontSize: ["14px", "16px", "16px"] }}>
-                    Move Down
-                  </Text>
-                </Box>
-                <Box
-                  onClick={() => {
-                    Transforms.removeNodes(editor, { at: path });
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  Remove
-                </Box>
-              </>
-            </OptionsMenu>
-          </Box>
+          {optionsMenu}
         </Flex>
         {children}
       </>

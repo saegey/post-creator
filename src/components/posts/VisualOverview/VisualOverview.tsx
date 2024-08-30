@@ -60,12 +60,12 @@ const VisualOverview = ({
     ? element.selectionEnd
     : undefined;
 
-  console.log(
-    elevationsSynthetic,
-    selectionStart,
-    selectionEnd,
-    elevationsSynthetic[selectionStart ? selectionStart : 0].d
-  );
+  // console.log(
+  //   elevationsSynthetic,
+  //   selectionStart,
+  //   selectionEnd,
+  //   elevationsSynthetic[selectionStart ? selectionStart : 0].d
+  // );
 
   const graph = React.useMemo(
     () => (
