@@ -1,12 +1,6 @@
 import React from "react"; // Add this import
 import { describe, it, expect, beforeEach, afterEach, vi, Mock } from "vitest";
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  act,
-} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import UploadButton from "./UploadButton";
 import { usePost } from "../../../../PostContext";
 import { Auth, Storage } from "aws-amplify";

@@ -16,11 +16,9 @@ import Router from "next/router";
 
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
-import { UpdatePostMutation, DeletePostMutation } from "../../../../src/API";
+import { DeletePostMutation } from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
-import { updatePost, deletePost } from "../../../../src/graphql/mutations";
-import PreviewButton from "./PostMenu/buttons/PreviewButton";
-import ShareButton from "./PostMenu/buttons/ShareButton";
+import { deletePost } from "../../../../src/graphql/mutations";
 import UploadButton from "./PostMenu/buttons/UploadButton";
 import {
   updatePostSettings,
@@ -115,19 +113,7 @@ const PostSettings = () => {
             } as ThemeUIStyleObject<Theme>
           }
         >
-          {/* <Flex sx={{ gap: "10px" }}>
-            <ThemeLink
-              as={Link}
-              href={`/j/${id}`}
-              rel="noopener noreferrer"
-              target="_blank"
-              sx={{ textDecoration: "none", textDecorationThickness: 0 }}
-            >
-              <PreviewButton />
-            </ThemeLink>
-            <ShareButton />
-          </Flex> */}
-          <Box sx={{ marginTop: "20px" }}>
+          <Box sx={{ marginTop: "20px" } as ThemeUIStyleObject<Theme>}>
             <Label htmlFor="title" variant={"defaultLabel"}>
               Title
             </Label>
@@ -187,16 +173,23 @@ const PostSettings = () => {
           </Box>
           <Box>
             <Flex>
-              <Box sx={{ width: "70%" }}>
+              <Box sx={{ width: "70%" } as ThemeUIStyleObject<Theme>}>
                 <Text as="p" sx={{ fontWeight: "700", fontSize: "15px" }}>
                   Delete this post
                 </Text>
-                <Text sx={{ fontSize: "15px" }}>
+                <Text sx={{ fontSize: "15px" } as ThemeUIStyleObject<Theme>}>
                   Once you delete a post, there is no going back. Please be
                   certain.
                 </Text>
               </Box>
-              <Box sx={{ marginLeft: "auto", marginY: "auto" }}>
+              <Box
+                sx={
+                  {
+                    marginLeft: "auto",
+                    marginY: "auto",
+                  } as ThemeUIStyleObject<Theme>
+                }
+              >
                 <Button
                   id="delete-post"
                   variant="dangerButton"
@@ -210,20 +203,30 @@ const PostSettings = () => {
           </Box>
         </Flex>
         <Flex
-          sx={{
-            borderTopWidth: "1px",
-            borderTopColor: "divider",
-            borderTopStyle: "solid",
-            marginTop: "10px",
-            paddingTop: "10px",
-            position: ["fixed", "inherit", "inherit"],
-            bottom: ["0", "", ""],
-            width: "100%",
-            marginY: "20px",
-          }}
+          sx={
+            {
+              borderTopWidth: "1px",
+              borderTopColor: "divider",
+              borderTopStyle: "solid",
+              marginTop: "10px",
+              paddingTop: "10px",
+              position: ["fixed", "inherit", "inherit"],
+              bottom: ["0", "", ""],
+              width: "100%",
+              marginY: "20px",
+            } as ThemeUIStyleObject<Theme>
+          }
         >
-          <Box sx={{ marginLeft: ["", "auto", "auto"] }}>
-            <Flex sx={{ gap: "10px", marginTop: "10px" }}>
+          <Box
+            sx={
+              { marginLeft: ["", "auto", "auto"] } as ThemeUIStyleObject<Theme>
+            }
+          >
+            <Flex
+              sx={
+                { gap: "10px", marginTop: "10px" } as ThemeUIStyleObject<Theme>
+              }
+            >
               <Button
                 type="button"
                 variant="secondaryButton"
@@ -232,10 +235,17 @@ const PostSettings = () => {
                 Cancel
               </Button>
               <Button variant="primaryButton">
-                <Flex sx={{ gap: "10px" }}>
+                <Flex sx={{ gap: "10px" } as ThemeUIStyleObject<Theme>}>
                   <Text as="span">Save</Text>
                   {isSaving && (
-                    <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
+                    <Spinner
+                      sx={
+                        {
+                          size: "20px",
+                          color: "spinnerButton",
+                        } as ThemeUIStyleObject<Theme>
+                      }
+                    />
                   )}
                 </Flex>
               </Button>

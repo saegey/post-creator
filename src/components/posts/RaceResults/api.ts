@@ -1,5 +1,5 @@
 import { API } from "aws-amplify";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
 import {
   ApiRes,
@@ -15,6 +15,10 @@ import {
 
 import { updatePost } from "../../../graphql/mutations";
 import { RunSignupResultType } from "./RunSignup/RunSignupResultsPreview";
+import {
+  updateCrossResults,
+  updateRaceResults,
+} from "../../../graphql/customMutations";
 
 export const getWebScorerCategories = async ({ url }: { url: string }) => {
   const paramsRaw = `?${url.split("?")[1]}`;
@@ -242,7 +246,7 @@ export const saveMyRaceResults = async ({
   try {
     const response = await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
-      query: updatePost,
+      query: updateRaceResults,
       variables: {
         input: {
           raceResults: JSON.stringify({
@@ -299,20 +303,22 @@ export const saveCrossResults = async ({
   eventName: string;
 }) => {
   try {
+    const payload = {
+      crossResults: JSON.stringify({
+        ...crossResults,
+        category: category,
+        eventName: eventName,
+      }),
+      raceResultsProvider: "crossresults",
+      id: id,
+      resultsUrl: resultsUrl,
+    };
+    console.log(payload.crossResults);
     const response = await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
-      query: updatePost,
+      query: updateCrossResults,
       variables: {
-        input: {
-          crossResults: JSON.stringify({
-            ...crossResults,
-            category: category,
-            eventName: eventName,
-          }),
-          raceResultsProvider: "crossresults",
-          id: id,
-          resultsUrl: resultsUrl,
-        },
+        input: payload,
       },
     });
     return response;

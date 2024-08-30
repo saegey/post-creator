@@ -16,6 +16,7 @@ import Head from "next/head";
 import Logo from "../src/components/shared/Logo";
 import Link from "next/link";
 import { NotificationContext } from "../src/components/NotificationContext";
+import LogoBlock from "../src/components/public/LogoBlock";
 
 export interface ErrorType {
   message: string;
@@ -131,25 +132,10 @@ const RegisterPage: React.FC = () => {
         }}
       >
         <Flex sx={{ justifyContent: "center" }}>
-          <Box
-            sx={{
-              width: ["50px", "50px", "80px"],
-              height: ["50px", "50px", "80px"],
-            }}
-          >
-            <Logo />
-          </Box>
+          <Flex sx={{ justifyContent: "center" }}>
+            <LogoBlock />
+          </Flex>
         </Flex>
-        <Text
-          as="div"
-          sx={{
-            // justifyContent: "center",
-            fontSize: "30px",
-            fontWeight: 500,
-          }}
-        >
-          Create an account
-        </Text>
         <Box
           sx={{
             borderColor: "inputBackgroundColor",

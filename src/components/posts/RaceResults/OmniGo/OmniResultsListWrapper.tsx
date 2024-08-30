@@ -1,19 +1,19 @@
 import React from "react";
 import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
-import { Transforms } from "slate";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../../PostContext";
-import OptionsMenu from "../../Editor/OptionsMenu";
 import OmniResultsList from "./OmniResultsList";
 import HoverAction from "../../Editor/HoverAction";
 import { CustomElement } from "../../../../types/common";
+import useOptionsMenu from "../../../../hooks/useSlateOptionsMenu";
 
 const OmniResultsListWrapper = ({ element }: { element: CustomElement }) => {
   const { omniResults, resultsUrl } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
+
+  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const hoverAct = React.useMemo(() => {
     return (
@@ -32,23 +32,8 @@ const OmniResultsListWrapper = ({ element }: { element: CustomElement }) => {
               raceResults={omniResults ? omniResults : undefined}
               resultsUrl={resultsUrl ? resultsUrl : ""}
             />
-            <OptionsMenu
-              isOpen={isOptionsOpen}
-              setIsOpen={setIsOptionsOpen}
-              path={path}
-            >
-              <>
-                <Box
-                  onClick={(e) => {
-                    Transforms.removeNodes(editor, { at: path });
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  Delete
-                </Box>
-              </>
-            </OptionsMenu>
           </Box>
+          {optionsMenu}
         </Box>
       </HoverAction>
     );

@@ -4,6 +4,8 @@ import { Box, Flex, Text, Theme, ThemeUIStyleObject } from "theme-ui";
 import { RunSignupResultType } from "./RunSignupResultsPreview";
 import { RunSignupType } from "../../../../types/common";
 import ResultsListHeader from "../shared/ResultsListHeader";
+import ResultsRow from "../shared/ResultsRow";
+import ResultsListContainer from "../shared/ResultsListContainer";
 
 const RunSignupList = ({
   raceResults,
@@ -43,70 +45,23 @@ const RunSignupList = ({
         subText={`${raceResults?.categoryName}`}
         resultsUrl={resultsUrl}
       />
-      <Box
-        sx={
-          {
-            maxHeight: "500px",
-            overflowY: "scroll",
-            paddingTop: "10px",
-          } as ThemeUIStyleObject<Theme>
-        }
-      >
+      <ResultsListContainer>
         {raceResults &&
           formatResults()?.results.map((row, i) => {
+            // return <pre>{JSON.stringify(row)}</pre>;
             return (
-              <Flex
-                key={`result-${i}`}
-                sx={
-                  {
-                    paddingY: "2px",
-                    paddingX: "5px",
-                    backgroundColor:
-                      row.name === raceResults?.selected?.name
-                        ? "selectedBackground"
-                        : null,
-                    color:
-                      row.name === raceResults?.selected?.name
-                        ? "selectedBackgroundText"
-                        : null,
-                    borderRadius: "5px",
-                    fontSize: ["15px", "16px", "16px"],
-                    // justifyContent: "space-around",
-                    flexFlow: "row wrap",
-                    // alignItems: "stretch",
-                  } as ThemeUIStyleObject<Theme>
+              <ResultsRow
+                place={String(row.race_placement)}
+                isSelected={
+                  row.name === raceResults?.selected?.name ? true : false
                 }
-              >
-                <Text
-                  as="span"
-                  sx={{ width: "60px" } as ThemeUIStyleObject<Theme>}
-                >
-                  {row.race_placement}
-                </Text>
-                <Box sx={{ flexGrow: 2 }}>
-                  <Text as="span">{row.name}</Text>
-                  <Text
-                    as="span"
-                    sx={{
-                      display: "block",
-                      fontSize: "12px",
-                      height: "15px",
-                      flexGrow: 2,
-                    }}
-                  >
-                    {row.city} {row.state}
-                  </Text>
-                </Box>
-                {/* <Text as="span" sx={{ marginLeft: "15px" }}>
-                  {row.Difference}
-                </Text> */}
-                <Text as="span" sx={{ marginLeft: "15px" }}>
-                  {row.chip_time}
-                </Text>
-              </Flex>
+                racerName={row.name}
+                racerTeam={`${row.city} ${row.state}`}
+                racerTime={String(row.clock_time)}
+              />
             );
           })}
-      </Box>
+      </ResultsListContainer>
     </>
   );
 };

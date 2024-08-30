@@ -5,21 +5,19 @@ import {
   useSelected,
   useFocused,
 } from "slate-react";
-import { Transforms } from "slate";
-import { Box, Text } from "theme-ui";
+import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { getCldImageUrl } from "next-cloudinary";
 
 import { PostContext } from "../../PostContext";
 import { cloudUrl } from "../../../utils/cloudinary";
 import ImageFullScreen from "./ImageFullScreen";
-import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
 
 import { useViewport } from "../../ViewportProvider";
-import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
 import ImageCaption from "./ImageCaption";
 import { CloudinaryImage, ImageElementType } from "../../../types/common";
 import CloudImage from "./CloudImage";
+import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 
 const ImageElement = ({
   children,
@@ -31,10 +29,10 @@ const ImageElement = ({
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const { width } = useViewport();
   const { images } = useContext(PostContext);
+  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const { imageMeta, imageUrl, imageMetaIndex } = React.useMemo(() => {
     const imageMetaIndex = images?.findIndex(
@@ -88,47 +86,8 @@ const ImageElement = ({
     );
   }, [imageUrl, imageMeta]);
 
-  const optionsMenu = React.useMemo(() => {
-    console.log("rendering optionsMenu");
-    return (
-      <OptionsMenu
-        isOpen={isOptionsOpen}
-        setIsOpen={setIsOptionsOpen}
-        path={path}
-      >
-        <>
-          <Box
-            onClick={() => {
-              moveNodeUp(editor, path);
-              setIsOptionsOpen(false);
-            }}
-            variant="boxes.dropdownMenuItem"
-          >
-            <Text sx={{ fontSize: ["14px", "16px"] }}>Move Up</Text>
-          </Box>
-          <Box
-            onClick={() => {
-              moveNodeDown(editor, path);
-              setIsOptionsOpen(false);
-            }}
-            variant="boxes.dropdownMenuItem"
-          >
-            <Text sx={{ fontSize: ["14px", "16px"] }}>Move Down</Text>
-          </Box>
-          <Box
-            onClick={() => {
-              setIsOptionsOpen(false);
-              Transforms.removeNodes(editor, { at: path });
-              const selection = window.getSelection();
-              selection && selection.removeAllRanges();
-            }}
-            variant="boxes.dropdownMenuItem"
-          >
-            <Text sx={{ fontSize: ["14px", "16px"] }}>Delete</Text>
-          </Box>
-        </>
-      </OptionsMenu>
-    );
+  const optionsMenuMemo = React.useMemo(() => {
+    return optionsMenu;
   }, [isOptionsOpen]);
 
   return (
@@ -141,15 +100,17 @@ const ImageElement = ({
           />
         )}
         <Box
-          sx={{
-            marginY: ["20px"],
-            height: "fit-content",
-            marginBottom: "20px",
-          }}
+          sx={
+            {
+              marginY: ["20px"],
+              height: "fit-content",
+              marginBottom: "20px",
+            } as ThemeUIStyleObject<Theme>
+          }
         >
           {cloudImageMemo}
           <ImageCaption element={element} path={path} />
-          {optionsMenu}
+          {optionsMenuMemo}
         </Box>
         {children}
       </Box>

@@ -3,6 +3,7 @@ import {
   Editor,
   Element as SlateElement,
   Node as SlateNode,
+  Path,
 } from "slate";
 
 import { CustomEditor } from "../types/common";
@@ -113,7 +114,7 @@ export const isBlockActive = (
   return !!match;
 };
 
-export const moveNodeUp = (editor: CustomEditor, nodePath: number[]) => {
+export const moveNodeUp = (editor: CustomEditor, nodePath: Path) => {
   const parentPath = nodePath.slice(0, -1);
   const index = nodePath[nodePath.length - 1];
 
@@ -125,7 +126,7 @@ export const moveNodeUp = (editor: CustomEditor, nodePath: number[]) => {
     Transforms.moveNodes(editor, { at: nodePath, to: newPath });
 
     // Set the selection to the new position
-    Transforms.select(editor, newPath);
+    // Transforms.select(editor, newPath);
   }
 };
 
@@ -144,7 +145,7 @@ export const moveNodeDown = (editor: CustomEditor, nodePath: number[]) => {
     Transforms.moveNodes(editor, { at: nodePath, to: newPath });
 
     // Set the selection to the new position
-    Transforms.select(editor, newPath);
+    // Transforms.select(editor, newPath);
   }
 };
 

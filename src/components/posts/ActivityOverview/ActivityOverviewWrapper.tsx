@@ -1,5 +1,4 @@
-import { Box, Text, ThemeUIStyleObject, Theme } from "theme-ui";
-import { Transforms } from "slate";
+import { Box } from "theme-ui";
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
@@ -7,9 +6,8 @@ import ActivityOverview from "./ActivityOverview";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "../../posts/Editor/EditorContext";
 import { ActivityOverviewType } from "../../../types/common";
-import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
-import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
+import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 
 const ActivityOverviewWrapper = ({
   element,
@@ -34,7 +32,7 @@ const ActivityOverviewWrapper = ({
     currentFtp,
   } = React.useContext(PostContext);
   const { isFtpUpdating } = React.useContext(EditorContext);
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
+  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const activityData = React.useMemo(() => {
     return {
@@ -70,72 +68,8 @@ const ActivityOverviewWrapper = ({
   ]);
 
   const menuMemo = React.useMemo(() => {
-    return (
-      <Box
-        sx={
-          {
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-          } as ThemeUIStyleObject<Theme>
-        }
-      >
-        <OptionsMenu
-          setIsOpen={setIsOptionsOpen}
-          isOpen={isOptionsOpen}
-          path={path}
-        >
-          <>
-            <Box
-              onClick={(e) => {
-                moveNodeUp(editor, path);
-                setIsOptionsOpen(false);
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              <Text
-                sx={
-                  {
-                    fontSize: ["14px", "16px", "16px"],
-                  } as ThemeUIStyleObject<Theme>
-                }
-              >
-                Move Up
-              </Text>
-            </Box>
-            <Box
-              onClick={(e) => {
-                moveNodeDown(editor, path);
-                setIsOptionsOpen(false);
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              <Text
-                sx={
-                  {
-                    fontSize: ["14px", "16px", "16px"],
-                  } as ThemeUIStyleObject<Theme>
-                }
-              >
-                Move Down
-              </Text>
-            </Box>
-            <Box
-              onClick={() => {
-                Transforms.removeNodes(editor, { at: path });
-                const selection = window.getSelection();
-                selection && selection.removeAllRanges();
-                setIsOptionsOpen(false);
-              }}
-              variant="boxes.dropdownMenuItem"
-            >
-              Remove
-            </Box>
-          </>
-        </OptionsMenu>
-      </Box>
-    );
-  }, [isOptionsOpen, setIsOptionsOpen, path]);
+    return optionsMenu;
+  }, [isOptionsOpen]);
 
   return (
     <HoverAction element={element}>

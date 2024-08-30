@@ -46,6 +46,34 @@ export const updatePostSettings = /* GraphQL */ `
   }
 `;
 
+export const updateRaceResults = /* GraphQL */ `
+  mutation UpdatePostRaceResults(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      raceResults
+      raceResultsProvider
+      resultsUrl
+    }
+  }
+`;
+
+export const updateCrossResults = /* GraphQL */ `
+  mutation UpdateCrossResults(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      crossResults
+      raceResultsProvider
+      resultsUrl
+    }
+  }
+`;
+
 export const createPostNew = /* GraphQL */ `
   mutation CreatePostNew(
     $input: CreatePostInput!

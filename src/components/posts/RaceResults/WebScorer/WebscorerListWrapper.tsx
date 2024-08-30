@@ -1,19 +1,18 @@
 import React from "react";
 import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
-import { Transforms } from "slate";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../../PostContext";
 import WebscorerList from "./WebscorerList";
 import HoverAction from "../../Editor/HoverAction";
-import OptionsMenu from "../../Editor/OptionsMenu";
 import { CustomElement } from "../../../../types/common";
+import useOptionsMenu from "../../../../hooks/useSlateOptionsMenu";
 
 const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
   const { webscorerResults, resultsUrl } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
+  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const hoverAct = React.useMemo(() => {
     return (
@@ -32,27 +31,12 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
               raceResults={webscorerResults ? webscorerResults : undefined}
               resultsUrl={resultsUrl ? resultsUrl : ""}
             />
-            <OptionsMenu
-              isOpen={isOptionsOpen}
-              setIsOpen={setIsOptionsOpen}
-              path={path}
-            >
-              <>
-                <Box
-                  onClick={(e) => {
-                    Transforms.removeNodes(editor, { at: path });
-                  }}
-                  variant="boxes.dropdownMenuItem"
-                >
-                  Delete
-                </Box>
-              </>
-            </OptionsMenu>
           </Box>
+          {optionsMenu}
         </Box>
       </HoverAction>
     );
-  }, [element]);
+  }, [isOptionsOpen, webscorerResults]);
 
   return hoverAct;
 };
