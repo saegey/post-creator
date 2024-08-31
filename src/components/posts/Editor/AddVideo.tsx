@@ -13,6 +13,8 @@ const AddVideoModal = () => {
   const { setIsVideoUploadOpen, isVideoUploadOpen } =
     React.useContext(EditorContext);
 
+  console.log("AddVideoModal");
+
   const editor = useSlateStatic();
   return isVideoUploadOpen ? (
     <StandardModal

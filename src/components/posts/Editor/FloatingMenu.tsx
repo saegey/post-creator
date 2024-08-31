@@ -7,6 +7,7 @@ import LinkButton from "./PostMenu/buttons/LinkButton";
 
 const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
   const editor = useSlateStatic();
+  console.log("rendering floating menu");
   return (
     <Box
       sx={{

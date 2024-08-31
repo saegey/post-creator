@@ -10,6 +10,7 @@ const Leaf = ({
   // children?: JSX.Element;
   updateMenuPosition: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
+  console.log("Leaf");
   return (
     <Box
       as="span"

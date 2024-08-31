@@ -33,7 +33,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     []
   );
 
-  const { handleSelectionChange, selectionMenu } =
+  const { handleSelectionChange, selectionMenu, isChangingQuickly } =
     useSelectionChangeHandler(editor);
   const { id, title, postLocation, setPost } = useContext(PostContext);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
@@ -49,6 +49,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   useFetchData();
 
   const updateMenuPosition = useCallback(() => {
+    console.log("updateMenuPosition");
     const selection = editor.selection;
     if (selection) {
       const domSelection = window.getSelection();
@@ -102,12 +103,12 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           }}
         >
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
-          <RWGPSModal />
-          <AddVideoModal />
-          {selectionMenu && (
+          {/* <RWGPSModal /> */}
+          {/* <AddVideoModal /> */}
+          {selectionMenu && !isChangingQuickly && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
-          <MobileMenu />
+          {/* <MobileMenu /> */}
           <Editable
             spellCheck
             autoFocus

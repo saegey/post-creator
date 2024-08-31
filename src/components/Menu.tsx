@@ -13,6 +13,7 @@ const Menu = ({
 }) => {
   const wrapperRef = React.useRef();
   const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  console.log("Menu");
 
   useClickOutside(
     wrapperRef,
@@ -27,7 +28,7 @@ const Menu = ({
       ref={wrapperRef}
       sx={{
         position: "absolute",
-        top: menuPosition.top - 50,
+        top: menuPosition.top - 18,
         left: menuPosition.left,
         padding: "10px",
         background: "background",

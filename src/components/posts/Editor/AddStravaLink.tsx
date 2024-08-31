@@ -31,17 +31,15 @@ const StravaModal = ({ path }: { path: Path }) => {
 };
 
 const AddStravaLink = ({ path }: { path: Path }) => {
-  const {
-    setIsStravaModalOpen,
-    isStravaModalOpen,
-  } = React.useContext(EditorContext);
+  const { setIsStravaModalOpen, isStravaModalOpen } =
+    React.useContext(EditorContext);
 
   const addStravaLink = () => {
     setIsStravaModalOpen(true);
     // setIsNewComponentMenuOpen(false);
     // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
   };
-
+  console.log("AddStravaLink");
   return (
     <>
       {isStravaModalOpen && <StravaModal path={path} />}

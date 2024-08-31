@@ -1,10 +1,10 @@
 import { Flex } from "theme-ui";
 import React from "react";
 
-import AddPowerCurve from "./PowerCurve";
+import AddPowerCurve from "./AddPowerCurve";
 import AddStravaLink from "./AddStravaLink";
 import AddActivityOverview from "./AddActivityOverview";
-import AddTimeZones from "./AddTimeZones";
+// import AddTimeZones from "./AddTimeZones";
 import AddVideo from "./AddVideo";
 import AddRaceResults from "./AddRaceResults";
 import AddRWGPS from "./AddRWGPS";

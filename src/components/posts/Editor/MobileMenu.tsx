@@ -2,12 +2,11 @@ import { Box, Flex, Grid, Text } from "theme-ui";
 import React from "react";
 
 import CaretDown from "../../icons/CaretDown";
-import AddTimeZones from "./AddTimeZones";
+// import AddTimeZones from "./AddTimeZones";
 import AddImage from "./AddImage";
-import { Path } from "slate";
 import { EditorContext } from "./EditorContext";
 import AddText from "./AddText";
-import AddPowerCurve from "./PowerCurve";
+import AddPowerCurve from "./AddPowerCurve";
 import AddActivityOverview from "./AddActivityOverview";
 import AddStravaLink from "./AddStravaLink";
 import AddRWGPS from "./AddRWGPS";
@@ -16,6 +15,7 @@ import AddRouteOverview from "./AddRouteOverview";
 
 const MobileMenu = () => {
   const { mobileMenu, setMobileMenu } = React.useContext(EditorContext);
+  console.log("MobileMenu");
 
   React.useEffect(() => {
     if (mobileMenu.isFullScreen) {

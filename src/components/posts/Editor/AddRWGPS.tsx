@@ -13,6 +13,7 @@ const RWGPSModal = () => {
 
   const { setIsRWGPSModalOpen, isRWGPSModalOpen, newComponentPath } =
     React.useContext(EditorContext);
+  console.log("RWGPSModal");
 
   if (newComponentPath === undefined) {
     return <></>;
