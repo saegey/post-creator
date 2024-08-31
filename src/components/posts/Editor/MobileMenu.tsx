@@ -83,7 +83,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddText path={mobileMenu.path} />
+              <AddText />
             </Box>
             <Box
               sx={{
@@ -92,7 +92,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddImage path={mobileMenu.path} />
+              <AddImage />
             </Box>
             <Box
               sx={{
@@ -101,7 +101,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddPowerCurve path={mobileMenu.path} />
+              <AddPowerCurve />
             </Box>
             <Box
               sx={{
@@ -110,7 +110,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddActivityOverview path={mobileMenu.path} />
+              <AddActivityOverview />
             </Box>
             {/* <Box
               sx={{
@@ -128,7 +128,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddStravaLink path={mobileMenu.path} />
+              <AddStravaLink />
             </Box>
             <Box
               sx={{
@@ -137,7 +137,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddRWGPS path={mobileMenu.path} />
+              <AddRWGPS />
             </Box>
             <Box
               sx={{
@@ -146,7 +146,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddRouteOverview path={mobileMenu.path} />
+              <AddRouteOverview />
             </Box>
             <Box
               sx={{
@@ -155,7 +155,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddRaceResults path={mobileMenu.path} />
+              <AddRaceResults />
             </Box>
           </Flex>
         </Flex>
