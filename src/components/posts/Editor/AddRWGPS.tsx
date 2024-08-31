@@ -1,6 +1,5 @@
 import { Flex, Text, Box } from "theme-ui";
 import React from "react";
-import { useSlateStatic } from "slate-react";
 
 import { EditorContext } from "./EditorContext";
 import EmbedIcon from "../../icons/EmbedIcon";
@@ -37,12 +36,14 @@ const RWGPSModal = () => {
   );
 };
 
-const AddRWGPS = ({ path }: { path: Path }) => {
+const AddRWGPS = () => {
   const {
     setIsRWGPSModalOpen,
     setIsNewComponentMenuOpen,
     setNewComponentPath,
+    menuPosition,
   } = React.useContext(EditorContext);
+  const { path } = menuPosition;
 
   const addEmbed = () => {
     setNewComponentPath(path);
@@ -52,7 +53,6 @@ const AddRWGPS = ({ path }: { path: Path }) => {
 
   return (
     <>
-      {/* <RWGPSModal path={path} /> */}
       <Box
         onClick={() => {
           addEmbed();

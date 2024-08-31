@@ -15,10 +15,11 @@ import { CloudinaryImage } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
 
-const AddImage = ({ path }: { path: Path }) => {
+const AddImage = () => {
   const { setPost, images, id } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen, setMobileMenu } =
+  const { setIsNewComponentMenuOpen, setMobileMenu, menuPosition } =
     React.useContext(EditorContext);
+  const { path } = menuPosition;
   // const editor = useSlateStatic();
   const { editor } = useSlateContext();
 
@@ -84,7 +85,6 @@ const AddImage = ({ path }: { path: Path }) => {
           }
         }
       }}
-      // insertNode={() => {}}
       renderButton={(openModal) => {
         return (
           <Box

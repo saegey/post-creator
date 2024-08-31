@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "theme-ui";
 import React from "react";
 import { Path } from "slate";
-import { useSlateStatic } from "slate-react";
+
 import { EditorContext } from "./EditorContext";
 import { CustomEditor } from "../../../types/common";
 import ComponentButton from "./ComponentButton";
@@ -24,7 +24,6 @@ const AddComponentButton = ({
   onClick,
   isDisabled = false,
 }: AddComponentButtonProps) => {
-  // const editor = useSlateStatic();
   const { editor } = useSlateContext();
   if (!editor) {
     return;

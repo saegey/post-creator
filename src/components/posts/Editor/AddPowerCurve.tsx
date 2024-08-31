@@ -1,14 +1,16 @@
-import React from "react";
 import { Path, Transforms } from "slate";
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 import PowerGraphIcon from "../../icons/PowerGraphIcon";
 import { PostContext } from "../../PostContext";
 import AddComponentButton from "./AddComponentButton";
 import { CustomEditor } from "../../../types/common";
+import { EditorContext } from "./EditorContext";
 
-const AddPowerCurve = ({ path }: { path: Path }) => {
+const AddPowerCurve = () => {
   const { gpxFile } = useContext(PostContext);
+  const { menuPosition } = useContext(EditorContext);
+  const { path } = menuPosition;
 
   const insertPowerGraphNode = (editor: CustomEditor, path: Path) => {
     if (gpxFile) {

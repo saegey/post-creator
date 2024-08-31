@@ -3,8 +3,11 @@ import { Path, Transforms } from "slate";
 import AddComponentButton from "./AddComponentButton";
 import { Text } from "theme-ui";
 import { CustomEditor } from "../../../types/common";
+import { EditorContext } from "./EditorContext";
 
-const AddText = ({ path }: { path: Path }) => {
+const AddText = () => {
+  const { menuPosition } = React.useContext(EditorContext);
+
   const insertTextNode = (editor: CustomEditor, path: Path) => {
     Transforms.insertNodes(
       editor,
@@ -19,7 +22,7 @@ const AddText = ({ path }: { path: Path }) => {
 
   return (
     <AddComponentButton
-      path={path}
+      path={menuPosition.path}
       label="Text"
       icon={<Text sx={{ fontFamily: "serif", fontSize: "20px" }}>T</Text>}
       insertNode={insertTextNode}

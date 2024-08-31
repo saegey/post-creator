@@ -7,10 +7,12 @@ import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
 
-const AddActivityOverview = ({ path }: { path: Path }) => {
+const AddActivityOverview = () => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen, menuPosition } =
+    React.useContext(EditorContext);
   const { setMobileMenu } = React.useContext(EditorContext);
+  const { path } = menuPosition;
 
   const { editor } = useSlateContext();
 

@@ -23,6 +23,7 @@ import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler"
 // import usePostSubscription from "../../../hooks/usePostSubscription";
 import useFetchData from "../../../hooks/useFetchData";
 import { CustomElement } from "../../../types/common";
+import RaceResultsImport from "../RaceResults/RaceResultsImport";
 
 // import PublishModalConfirmation from "./PublishModalConfirmation";
 // import ShareModal from "./ShareModal";
@@ -44,6 +45,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setMenuPosition,
     setSavingStatus,
     setIsSavingPost,
+    isRaceResultsModalOpen,
   } = useContext(EditorContext);
 
   // usePostSubscription();
@@ -82,6 +84,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         }
       >
         <SlateProvider editor={editor}>
+          {isRaceResultsModalOpen && <RaceResultsImport />}
           <RWGPSModal />
           <MobileMenu />
           <AddVideoModal />

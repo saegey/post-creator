@@ -20,7 +20,7 @@ import {
 import RunSignUpResultsPreview from "./RunSignup/RunSignupResultsPreview";
 import { useSlateContext } from "../../SlateContext";
 
-const RaceResultsImport = ({ path }: { path: Path }) => {
+const RaceResultsImport = () => {
   const [previewResults, setPreviewResults] = React.useState(false);
   const [previewWebscorerResults, setPreviewWebscorerResults] =
     React.useState(false);
@@ -29,6 +29,10 @@ const RaceResultsImport = ({ path }: { path: Path }) => {
   const [previewRunSignupResults, setPreviewRunSignupResults] =
     React.useState(false);
   const { editor } = useSlateContext();
+
+  if (!editor) {
+    return;
+  }
 
   const [resultsUrl, setResultsUrl] = React.useState<string>("");
 
@@ -68,8 +72,9 @@ const RaceResultsImport = ({ path }: { path: Path }) => {
     categoryName: "",
   });
 
-  const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =
+  const { isRaceResultsModalOpen, setIsRaceResultsModalOpen, menuPosition } =
     React.useContext(EditorContext);
+  const { path } = menuPosition;
 
   const isPreview = () => {
     return (

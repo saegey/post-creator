@@ -4,7 +4,6 @@ import { CldImage, CldUploadButton } from "next-cloudinary";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { Transforms } from "slate";
-import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
@@ -19,13 +18,11 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
 
   const { setPost, images, id } = React.useContext(PostContext);
-  const { setIsHeroImageModalOpen, isHeroImageModalOpen } =
+  const { setIsHeroImageModalOpen, isHeroImageModalOpen, menuPosition } =
     React.useContext(EditorContext);
 
-  // const editor = useSlateStatic();
-  // const path = ReactEditor.findPath(editor, element);
-  const { editor, currentPath: path } = useSlateContext();
-  if (!editor && path) {
+  const { editor } = useSlateContext();
+  if (!editor && menuPosition.path) {
     return;
   }
 
@@ -165,7 +162,7 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
             variant="primaryButton"
             onClick={async () => {
               editor &&
-                path &&
+                menuPosition.path &&
                 Transforms.setNodes(
                   editor,
                   {
@@ -175,7 +172,7 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
                   {
                     // This path references the editor, and is expanded to a range that
                     // will encompass all the content of the editor.
-                    at: path,
+                    at: menuPosition.path,
                   }
                 );
               setIsHeroImageModalOpen(false);
