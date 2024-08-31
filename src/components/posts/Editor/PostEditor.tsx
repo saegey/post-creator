@@ -14,6 +14,7 @@ import Menu from "../../Menu";
 import { AddVideoModal } from "./AddVideo";
 import Leaf from "./Leaf";
 import slateApi from "../../../../lib/slateApi";
+import { SlateProvider } from "../../SlateContext";
 import FloatingMenu from "./FloatingMenu";
 import MobileMenu from "./MobileMenu";
 import { RWGPSModal } from "./AddRWGPS";
@@ -80,45 +81,48 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           } as ThemeUIStyleObject<Theme>
         }
       >
-        <Slate
-          editor={editor}
-          initialValue={initialState}
-          onChange={(newValue) => {
-            console.log(newValue);
-            updateMenuPosition();
-            handleSelectionChange();
-            setPost({ components: newValue as Array<CustomElement> });
+        <SlateProvider editor={editor}>
+          <RWGPSModal />
+          <MobileMenu />
+          <AddVideoModal />
 
-            slateApi.saveEditor({
-              editor,
-              id,
-              title,
-              postLocation,
-              setSavingStatus,
-              setIsSavingPost,
-              timeoutLink,
-              setTimeoutLink,
-              heroImage: JSON.stringify(""),
-            });
-          }}
-        >
-          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
-          {/* <RWGPSModal /> */}
-          {/* <AddVideoModal /> */}
           {selectionMenu && !isChangingQuickly && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
-          {/* <MobileMenu /> */}
-          <Editable
-            spellCheck
-            autoFocus
-            renderElement={renderElement}
-            renderLeaf={(props: RenderLeafProps) => (
-              <Leaf props={props} updateMenuPosition={updateMenuPosition} />
-            )}
-            contentEditable="true"
-          />
-        </Slate>
+          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+          <Slate
+            editor={editor}
+            initialValue={initialState}
+            onChange={(newValue) => {
+              console.log(newValue);
+              updateMenuPosition();
+              handleSelectionChange();
+              setPost({ components: newValue as Array<CustomElement> });
+
+              slateApi.saveEditor({
+                editor,
+                id,
+                title,
+                postLocation,
+                setSavingStatus,
+                setIsSavingPost,
+                timeoutLink,
+                setTimeoutLink,
+                heroImage: JSON.stringify(""),
+              });
+            }}
+          >
+            <Editable
+              spellCheck
+              autoFocus
+              renderElement={renderElement}
+              renderLeaf={(props: RenderLeafProps) => (
+                <Leaf props={props} updateMenuPosition={updateMenuPosition} />
+              )}
+              contentEditable="true"
+            />
+          </Slate>
+        </SlateProvider>
       </Box>
     </Flex>
   );

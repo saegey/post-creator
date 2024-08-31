@@ -13,12 +13,18 @@ import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
 import { CloudinaryImage } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
+import { useSlateContext } from "../../SlateContext";
 
 const AddImage = ({ path }: { path: Path }) => {
   const { setPost, images, id } = React.useContext(PostContext);
   const { setIsNewComponentMenuOpen, setMobileMenu } =
     React.useContext(EditorContext);
-  const editor = useSlateStatic();
+  // const editor = useSlateStatic();
+  const { editor } = useSlateContext();
+
+  if (!editor) {
+    return;
+  }
 
   const insertImage = (selectedImage: CloudinaryImage) => {
     Transforms.insertNodes(

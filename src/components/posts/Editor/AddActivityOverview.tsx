@@ -1,18 +1,22 @@
 import { Flex, Text, Box } from "theme-ui";
 import React from "react";
 import { Path, Transforms } from "slate";
-import { useSlateStatic } from "slate-react";
 
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
+import { useSlateContext } from "../../SlateContext";
 
 const AddActivityOverview = ({ path }: { path: Path }) => {
   const { gpxFile } = React.useContext(PostContext);
   const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
   const { setMobileMenu } = React.useContext(EditorContext);
 
-  const editor = useSlateStatic();
+  const { editor } = useSlateContext();
+
+  if (!editor) {
+    return;
+  }
 
   const addActivityOverview = () => {
     if (gpxFile) {

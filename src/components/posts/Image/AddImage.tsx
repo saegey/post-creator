@@ -13,6 +13,7 @@ import { CloudinaryImage, HeroBannerType } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
+import { useSlateContext } from "../../SlateContext";
 
 const AddImage = ({ element }: { element: HeroBannerType }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
@@ -21,8 +22,12 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
   const { setIsHeroImageModalOpen, isHeroImageModalOpen } =
     React.useContext(EditorContext);
 
-  const editor = useSlateStatic();
-  const path = ReactEditor.findPath(editor, element);
+  // const editor = useSlateStatic();
+  // const path = ReactEditor.findPath(editor, element);
+  const { editor, currentPath: path } = useSlateContext();
+  if (!editor && path) {
+    return;
+  }
 
   return (
     <>
@@ -159,18 +164,20 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
           <Button
             variant="primaryButton"
             onClick={async () => {
-              Transforms.setNodes(
-                editor,
-                {
-                  ...element,
-                  image: selectedImage,
-                } as HeroBannerType,
-                {
-                  // This path references the editor, and is expanded to a range that
-                  // will encompass all the content of the editor.
-                  at: path,
-                }
-              );
+              editor &&
+                path &&
+                Transforms.setNodes(
+                  editor,
+                  {
+                    ...element,
+                    image: selectedImage,
+                  } as HeroBannerType,
+                  {
+                    // This path references the editor, and is expanded to a range that
+                    // will encompass all the content of the editor.
+                    at: path,
+                  }
+                );
               setIsHeroImageModalOpen(false);
             }}
             disabled={selectedImage ? false : true}

@@ -5,6 +5,7 @@ import { useSlateStatic } from "slate-react";
 import { EditorContext } from "./EditorContext";
 import { CustomEditor } from "../../../types/common";
 import ComponentButton from "./ComponentButton";
+import { useSlateContext } from "../../SlateContext";
 
 type AddComponentButtonProps = {
   path: Path;
@@ -23,7 +24,11 @@ const AddComponentButton = ({
   onClick,
   isDisabled = false,
 }: AddComponentButtonProps) => {
-  const editor = useSlateStatic();
+  // const editor = useSlateStatic();
+  const { editor } = useSlateContext();
+  if (!editor) {
+    return;
+  }
   const { setIsNewComponentMenuOpen, setMobileMenu } =
     React.useContext(EditorContext);
 

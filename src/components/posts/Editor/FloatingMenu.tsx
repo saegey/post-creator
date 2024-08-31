@@ -1,12 +1,16 @@
 import { Box } from "theme-ui";
 import BoldButton from "./PostMenu/buttons/BoldButton";
-import { useSlateStatic } from "slate-react";
 import HeadingButton from "./PostMenu/buttons/HeadingButton";
 import BulletListButton from "./PostMenu/buttons/BulletListButton";
 import LinkButton from "./PostMenu/buttons/LinkButton";
+import { useSlateContext } from "../../SlateContext";
 
 const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
-  const editor = useSlateStatic();
+  const { editor } = useSlateContext();
+
+  if (!editor) {
+    return <></>;
+  }
   console.log("rendering floating menu");
   return (
     <Box

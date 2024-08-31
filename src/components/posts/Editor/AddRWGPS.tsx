@@ -7,19 +7,20 @@ import EmbedIcon from "../../icons/EmbedIcon";
 import StandardModal from "../../shared/StandardModal";
 import EmbedSettings from "../Embed/EmbedSettings";
 import { Path } from "slate";
+import { useSlateContext } from "../../SlateContext";
 
 const RWGPSModal = () => {
-  const editor = useSlateStatic();
+  const { editor } = useSlateContext();
 
   const { setIsRWGPSModalOpen, isRWGPSModalOpen, newComponentPath } =
     React.useContext(EditorContext);
-  console.log("RWGPSModal");
 
   if (newComponentPath === undefined) {
     return <></>;
   }
+  console.log("RWGPSModal");
 
-  return isRWGPSModalOpen ? (
+  return isRWGPSModalOpen && editor ? (
     <StandardModal
       title={"Embed"}
       setIsOpen={setIsRWGPSModalOpen}

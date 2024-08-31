@@ -5,12 +5,18 @@ import { useSlateStatic } from "slate-react";
 
 import { EditorContext } from "./EditorContext";
 import { PostContext } from "../../PostContext";
+import { useSlateContext } from "../../SlateContext";
 
 const AddRouteOverview = ({ path }: { path: Path }) => {
-  const editor = useSlateStatic();
+  // const editor = useSlateStatic();
+  const { editor } = useSlateContext();
   const { gpxFile } = React.useContext(PostContext);
   const { setIsNewComponentMenuOpen, menuPosition, setMobileMenu } =
     React.useContext(EditorContext);
+
+  if (!editor) {
+    return;
+  }
 
   const addMap = () => {
     if (gpxFile) {

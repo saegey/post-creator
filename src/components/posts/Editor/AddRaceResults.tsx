@@ -5,7 +5,7 @@ import { Path } from "slate";
 import { EditorContext } from "./EditorContext";
 import ResultsIcon from "../../icons/ResultsIcon";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
-import { useSlateStatic } from "slate-react";
+import { useSlateContext } from "../../SlateContext";
 
 const AddRaceResults = ({ path }: { path: Path }) => {
   const {
@@ -14,7 +14,8 @@ const AddRaceResults = ({ path }: { path: Path }) => {
     setIsNewComponentMenuOpen,
     setMobileMenu,
   } = React.useContext(EditorContext);
-  const editor = useSlateStatic();
+
+  // const { editor } = useSlateContext();
 
   const addResults = () => {
     setIsRaceResultsModalOpen(true);
