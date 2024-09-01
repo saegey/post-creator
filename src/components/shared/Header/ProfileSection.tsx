@@ -37,7 +37,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
       sx={
         {
           justifyContent: "end",
-          backgroundColor: ["none", "divider", "divider"],
+          // backgroundColor: ["none", "divider", "divider"],
           borderRadius: "100px",
           padding: "3px 10px 3px 10px",
         } as ThemeUIStyleObject<Theme>
@@ -51,7 +51,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
         sx={{ marginY: "auto" } as ThemeUIStyleObject<Theme>}
         aria-label="Toggle Menu"
       />
-      {user.attributes.picture ? (
+      {/* {user.attributes.picture ? (
         <Box
           sx={
             {
@@ -79,7 +79,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
         </Box>
       ) : (
         <AvatarIcon />
-      )}
+      )} */}
       <UserProfileMenu
         setProfileOpen={setProfileOpen}
         profileOpen={profileOpen}

@@ -29,26 +29,18 @@ const OptionsDropdown = () => {
             moveNodeUp(editor, path);
             setIsOptionsOpen(false);
           }}
-          variant="boxes.dropdownMenuItem"
+          variant="boxes.sidebarMenuItem"
         >
-          <Text
-            sx={{ fontSize: ["14px", "16px"] } as ThemeUIStyleObject<Theme>}
-          >
-            Move Up
-          </Text>
+          <Text>Move Up</Text>
         </Box>
         <Box
           onClick={() => {
             moveNodeDown(editor, path);
             setIsOptionsOpen(false);
           }}
-          variant="boxes.dropdownMenuItem"
+          variant="boxes.sidebarMenuItem"
         >
-          <Text
-            sx={{ fontSize: ["14px", "16px"] } as ThemeUIStyleObject<Theme>}
-          >
-            Move Down
-          </Text>
+          <Text>Move Down</Text>
         </Box>
         <Box
           onClick={() => {
@@ -57,9 +49,9 @@ const OptionsDropdown = () => {
             const selection = window.getSelection();
             selection && selection.removeAllRanges();
           }}
-          variant="boxes.dropdownMenuItem"
+          variant="boxes.sidebarMenuItem"
         >
-          Delete
+          <Text>Delete</Text>
         </Box>
       </>
     </OptionsMenu>

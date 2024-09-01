@@ -15,7 +15,7 @@ import { CMS_NAME } from "../../lib/constants";
 import markdownToHtml from "../../lib/markdownToHtml";
 import type PostType from "../../interfaces/post";
 import PublicHeader from "../../src/components/public/header";
-import PublicFooter from "../../src/components/public/footer";
+import PublicFooter from "../../src/components/public/Footer/Footer";
 import SocialShare from "../../src/components/public/SocialShare";
 import ChevronLeft from "../../src/components/icons/ChevronLeft";
 import TOCLink from "../../src/components/public/TOCLink";
@@ -52,7 +52,7 @@ export default function Post({ post, morePosts, preview, imageSizes }: Props) {
         <Flex
           sx={{
             justifyContent: "center",
-            backgroundColor: "skeletonDark",
+            backgroundColor: "blogHeaderBackground",
             paddingTop: "176px",
             paddingBottom: "80px",
           }}
@@ -149,7 +149,11 @@ export default function Post({ post, morePosts, preview, imageSizes }: Props) {
           </Box>
         </Flex>
         <Flex
-          sx={{ justifyContent: "center", marginTop: ["40px", "80px", "80px"] }}
+          sx={{
+            justifyContent: "center",
+            marginTop: ["40px", "80px", "80px"],
+            backgroundColor: "publicBackground",
+          }}
         >
           <Box sx={{ maxWidth: "1280px", width: "100%" }}>
             <Grid

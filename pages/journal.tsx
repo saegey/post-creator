@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Flex, Text } from "theme-ui";
 
 import PublicHeader from "../src/components/public/header";
-import PublicFooter from "../src/components/public/footer";
+import PublicFooter from "../src/components/public/Footer/Footer";
 
 const Journal = () => {
   return (

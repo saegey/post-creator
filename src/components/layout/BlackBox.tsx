@@ -1,4 +1,5 @@
 import { Box } from "theme-ui";
+import { transparentize } from "@theme-ui/color";
 import React from "react";
 
 interface BlackBoxProps {
@@ -25,13 +26,13 @@ const BlackBox: React.FC<BlackBoxProps> = ({
   const backgroundColor = noBackground
     ? "unset"
     : fullScreen
-    ? "background"
-    : `rgba(var(--theme-ui-colors-blackBoxColor), ${opacity})`;
+    ? "modalBackground"
+    : transparentize("modalBackground", 0.4);
 
   return (
     <Box
       role="presentation"
-      className="blackbox"
+      // className="blackbox"
       sx={{
         position: "fixed",
         top: 0,

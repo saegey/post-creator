@@ -55,6 +55,7 @@ const StandardModal = ({
               background: "background",
               borderRadius: [null, "5px", "5px"],
               padding: "20px",
+              zIndex: 51,
             } as ThemeUIStyleObject<Theme>
           }
           onClick={(e) => {

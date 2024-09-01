@@ -22,12 +22,13 @@ const BoldButton = ({ editor }: { editor: CustomEditor }) => {
       }}
     >
       <svg
-        className="menu-button"
-        fill={
-          isMarkActive(editor, "bold")
-            ? "var(--theme-ui-colors-background)"
-            : "var(--theme-ui-colors-iconButtonDisabled)"
-        }
+        fill="currentColor"
+        // className="menu-button"
+        // fill={
+        //   isMarkActive(editor, "bold")
+        //     ? "var(--theme-ui-colors-blue)"
+        //     : "var(--theme-ui-colors-iconButtonDisabled)"
+        // }
         width="100%"
         height="100%"
         viewBox="0 0 24 24"

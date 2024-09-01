@@ -1,11 +1,11 @@
 import Head from "next/head";
 import React from "react";
-import { Box, Flex, Grid, Link as ThemeLink, Text } from "theme-ui";
+import { Box, Flex, Text } from "theme-ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import PublicHeader from "../src/components/public/header";
-import PublicFooter from "../src/components/public/footer";
+import PublicFooter from "../src/components/public/Footer/Footer";
 import AboutUs from "../src/components/public/About";
 import Team from "../src/components/public/Team";
 import Timeline from "../src/components/public/Timeline";

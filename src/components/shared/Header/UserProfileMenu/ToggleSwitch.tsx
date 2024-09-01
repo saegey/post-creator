@@ -19,8 +19,10 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
     as="li"
     sx={
       {
-        paddingLeft: "10px",
-        paddingY: "10px",
+        // paddingLeft: "10px",
+        fontWeight: 500,
+        fontSize: "15px",
+        paddingY: "5px",
         margin: "5px",
       } as ThemeUIStyleObject<Theme>
     }

@@ -39,10 +39,10 @@ const PublicHeader = () => {
           width: "100%",
           justifyContent: "center",
           display: ["none", "none", "flex"],
-          borderBottomColor: "#e8e8e8",
+          borderBottomColor: "menuBorder",
           borderBottomStyle: "solid",
           borderBottomWidth: "1px",
-          backgroundColor: "background",
+          backgroundColor: "publicMenuBackground",
         }}
       >
         <Grid
@@ -55,10 +55,8 @@ const PublicHeader = () => {
             alignItems: "center",
             marginY: "14px",
             marginX: "20px",
-            // margin: "14px 20px 14px 20px",
             width: "calc(100% - 40px)",
             maxWidth: "1280px",
-            // height: "60px",
           }}
         >
           <Box sx={{ gridArea: "1/1/2/2" }}>
@@ -88,8 +86,6 @@ const PublicHeader = () => {
                       height: "20px",
                       transform: isProductMenuOpen ? "rotate(180deg)" : "none",
                       transitionDuration: isProductMenuOpen ? "500ms" : "unset",
-                      // marginTop: isResourcesMenuOpen ? "5px" : "0px",
-                      // position: 'absolut'
                     }}
                   >
                     <CaretDown />
@@ -97,20 +93,14 @@ const PublicHeader = () => {
                 </Flex>
                 {isProductMenuOpen && (
                   <Box
+                    variant="boxes.menuItem"
                     sx={{
                       position: "absolute",
-                      // height: "300px",
                       width: "300px",
-                      backgroundColor: "background",
-                      // top: "-20px",
                       paddingTop: "20px",
-                      // left: "-20px",
                       marginLeft: "-10px",
-                      borderRadius: "5px",
                       padding: "20px",
-                      // display: isProductMenuOpen ? "absolute" : "none",
-                      boxShadow:
-                        "0 8px 8px rgba(23,22,24,.04), 0 4px 4px rgba(23,22,24,.04), 0 2px 2px rgba(23,22,24,.04)",
+                      display: isProductMenuOpen ? "absolute" : "none",
                     }}
                   >
                     <Flex sx={{ flexDirection: "column", gap: "20px" }}>
@@ -301,7 +291,7 @@ const PublicHeader = () => {
                   fontSize: ["17px", "15px", "15px"],
                 }}
               >
-                Login
+                Sign In
               </ThemeLink>
               <ThemeLink
                 href={`/register`}

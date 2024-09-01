@@ -21,19 +21,10 @@ const useOptionsMenu = (editor: CustomEditor, path: any) => {
       sx={
         {
           position: "absolute",
-          right: "10px",
-          top: "10px",
+          right: "-30px",
+          top: "0px",
         } as ThemeUIStyleObject<Theme>
       }
-      // onClick={() => {
-      //   // setMobileMenu({
-      //   //   display: false,
-      //   //   left: 0,
-      //   //   top: 0,
-      //   //   path: path,
-      //   //   isFullScreen: false,
-      //   // });
-      // }}
       onClick={(event) => {
         event.preventDefault();
         editor.deselect();
@@ -48,6 +39,14 @@ const useOptionsMenu = (editor: CustomEditor, path: any) => {
           top: adjustedTop,
           left: adjustedLeft,
           path: path,
+        });
+
+        setMobileMenu({
+          display: false,
+          left: 0,
+          top: 0,
+          path: path,
+          isFullScreen: false,
         });
 
         console.log(adjustedTop, adjustedLeft, path);

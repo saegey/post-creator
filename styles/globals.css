@@ -201,13 +201,6 @@ input {
   display: flex;
 }
 
-svg.menu-button:hover {
-  /* fill: #0e1a25; */
-  /* background: #45abff; */
-  transform: scale(1.1);
-  transition: background 0.5s, transform 0.5s ease-out, fill 0.5s;
-}
-
 .skeleton {
   animation: skeleton-loading 1s linear infinite alternate;
 }
