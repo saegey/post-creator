@@ -2,7 +2,6 @@ import React from "react";
 import { Path } from "slate";
 
 import { useClickOutside } from "../../../utils/ux";
-import OptionsButton from "../../buttons/OptionsButton";
 import Dropdown from "../../shared/Dropdown";
 import { Box, Flex, Theme, ThemeUIStyleObject } from "theme-ui";
 import { EditorContext } from "./EditorContext";

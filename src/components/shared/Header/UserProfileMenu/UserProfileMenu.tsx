@@ -72,24 +72,20 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
               position: "relative",
               top: ["", "53px", "53px"],
               left: ["", "10px", "10px"],
-              backgroundColor: "background",
-              animation: "fadeIn .2s;",
-              borderRadius: [0, "10px", "10px"],
-              borderStyle: ["none", "solid", "solid"],
-              borderColor: "divider",
-              borderWidth: [0, "1px", "1px"],
-              boxShadow:
-                "0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05)",
             } as ThemeUIStyleObject<Theme>
           }
+          variant="boxes.menuItem"
         >
           <ProfileHeader user={user} onClose={() => setProfileOpen(false)} />
-          <Box sx={{ padding: ["10px", 0, 0] } as ThemeUIStyleObject<Theme>}>
+          <Box sx={{ paddingY: ["10px", 0, 0] } as ThemeUIStyleObject<Theme>}>
             <Box
               as="ul"
               sx={
                 {
                   listStyleType: "none",
+                  li: {
+                    paddingY: "5px",
+                  },
                 } as ThemeUIStyleObject<Theme>
               }
             >

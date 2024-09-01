@@ -1,22 +1,13 @@
-import { useRouter } from "next/router";
-import ErrorPage from "next/error";
-// import Container from "../../components/container";
-// import PostBody from "../../components/post-body";
-// import Header from "../../components/header";
-// import PostHeader from "../../components/post-header";
-// import Layout from "../../components/layout";
-import { getPostBySlug, getAllPosts } from "../../lib/api";
-// import PostTitle from "../../components/post-title";
-import Head from "next/head";
-import { CMS_NAME } from "../../lib/constants";
-import markdownToHtml from "../../lib/markdownToHtml";
-import type PostType from "../../interfaces/post";
 import { Avatar, Box, Flex, Grid, Text, Link as ThemeLink } from "theme-ui";
-import PublicHeader from "../../src/components/public/header";
+import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
-import PublicFooter from "../../src/components/public/footer";
+
+import { getAllPosts } from "../../lib/api";
+import type PostType from "../../interfaces/post";
+import PublicHeader from "../../src/components/public/header";
+import PublicFooter from "../../src/components/public/Footer/Footer";
 
 type Props = {
   allPosts: Array<PostType>;
@@ -30,12 +21,19 @@ export default function Post({ allPosts }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Box as="main" sx={{ width: "100vw", height: "fit-content" }}>
+      <Box
+        as="main"
+        sx={{
+          width: "100vw",
+          height: "fit-content",
+          backgroundColor: "publicBackground",
+        }}
+      >
         <PublicHeader />
         <Flex
           sx={{
             // height: "100vh",
-            marginX: ["16px", "16px", ""],
+            marginX: ["16px", "0px", "0px"],
             justifyContent: "center",
             alignItems: "center",
             // zIndex: 1,

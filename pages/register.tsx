@@ -129,6 +129,7 @@ const RegisterPage: React.FC = () => {
           flexDirection: "column",
           height: ["fit-content", "100dvh", "100dvh"],
           overflow: ["scroll", "", ""],
+          backgroundColor: "loginBackground",
         }}
       >
         <Flex sx={{ justifyContent: "center" }}>
@@ -138,7 +139,7 @@ const RegisterPage: React.FC = () => {
         </Flex>
         <Box
           sx={{
-            borderColor: "inputBackgroundColor",
+            borderColor: "loginBorder",
             borderWidth: "1px",
             borderStyle: "solid",
             borderRadius: "5px",
@@ -263,7 +264,7 @@ const RegisterPage: React.FC = () => {
         </Box>
         <Box
           sx={{
-            borderColor: "inputBackgroundColor",
+            borderColor: "loginBorder",
             borderWidth: "1px",
             borderStyle: "solid",
             borderRadius: "5px",

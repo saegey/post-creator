@@ -19,7 +19,7 @@ const StravaLink = ({
   const path = ReactEditor.findPath(editor, element);
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
 
-  const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
+  const { optionsMenu } = useOptionsMenu(editor, path);
 
   React.useEffect(() => {
     const resizeParentToIframe = (event: MessageEvent) => {

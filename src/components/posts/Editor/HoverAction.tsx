@@ -21,6 +21,24 @@ const HoverAction = ({
     React.useContext(EditorContext);
   const { width } = useViewport();
 
+  const onClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    editor.deselect();
+    const rect = event.currentTarget.getBoundingClientRect();
+    const scrollX = window.scrollX || window.pageXOffset;
+    const scrollY = window.scrollY || window.pageYOffset;
+    const adjustedTop = rect.bottom + scrollY - 10;
+    const adjustedLeft = rect.right + scrollX + 10;
+
+    setMenuPosition({
+      top: adjustedTop,
+      left: adjustedLeft,
+      path: path,
+    });
+    setIsNewComponentMenuOpen(true);
+    return;
+  };
+
   return (
     <Flex
       onMouseEnter={() => setHoverIcon(true)}
@@ -38,24 +56,7 @@ const HoverAction = ({
         <Box sx={{ position: "relative" }}>
           {width > 500 && hoverIcon && (
             <Box sx={{ display: "inherit" }}>
-              <HoverIcon
-                onClick={(event) => {
-                  event.preventDefault();
-                  editor.deselect();
-                  const rect = event.currentTarget.getBoundingClientRect();
-                  const scrollX = window.scrollX || window.pageXOffset;
-                  const scrollY = window.scrollY || window.pageYOffset;
-                  const adjustedTop = rect.bottom + scrollY - 10;
-                  const adjustedLeft = rect.right + scrollX + 10;
-
-                  setMenuPosition({
-                    top: adjustedTop,
-                    left: adjustedLeft,
-                    path: path,
-                  });
-                  setIsNewComponentMenuOpen(true);
-                }}
-              />
+              <HoverIcon onClick={onClick} />
             </Box>
           )}
           {children}

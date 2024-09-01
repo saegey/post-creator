@@ -15,7 +15,7 @@ import Link from "next/link";
 import Logo from "../src/components/shared/Logo";
 import Image from "next/image";
 import PublicHeader from "../src/components/public/header";
-import PublicFooter from "../src/components/public/footer";
+import PublicFooter from "../src/components/public/Footer/Footer";
 
 const Manifesto = () => {
   return (

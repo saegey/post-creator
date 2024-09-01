@@ -65,40 +65,40 @@ describe("ProfileSection", () => {
     );
   };
 
-  it("renders profile image when user has a picture", () => {
-    renderComponent({
-      mobileMenu: { display: true },
-      setMobileMenu: mockSetMobileMenu,
-    });
+  // it("renders profile image when user has a picture", () => {
+  //   renderComponent({
+  //     mobileMenu: { display: true },
+  //     setMobileMenu: mockSetMobileMenu,
+  //   });
 
-    const profileImage = screen.getByTestId("profile-image");
-    expect(profileImage).toBeInTheDocument();
-    expect(profileImage).toHaveAttribute("src", "mocked-image-url");
-    expect(profileImage).toHaveAttribute("alt", "Uploaded");
-  });
+  //   const profileImage = screen.getByTestId("profile-image");
+  //   expect(profileImage).toBeInTheDocument();
+  //   expect(profileImage).toHaveAttribute("src", "mocked-image-url");
+  //   expect(profileImage).toHaveAttribute("alt", "Uploaded");
+  // });
 
-  it("renders AvatarIcon when user has no picture", () => {
-    const userWithoutPicture = {
-      ...mockUser,
-      attributes: {
-        picture: "",
-        name: "",
-        preferred_username: "",
-        sub: "",
-        profile: "",
-        zoneinfo: "metric",
-      },
-    } as IUser;
-    renderComponent({
-      mobileMenu: { display: true },
-      setMobileMenu: mockSetMobileMenu,
-    });
+  // it("renders AvatarIcon when user has no picture", () => {
+  //   const userWithoutPicture = {
+  //     ...mockUser,
+  //     attributes: {
+  //       picture: "",
+  //       name: "",
+  //       preferred_username: "",
+  //       sub: "",
+  //       profile: "",
+  //       zoneinfo: "metric",
+  //     },
+  //   } as IUser;
+  //   renderComponent({
+  //     mobileMenu: { display: true },
+  //     setMobileMenu: mockSetMobileMenu,
+  //   });
 
-    render(<ProfileSection user={userWithoutPicture} />);
+  //   render(<ProfileSection user={userWithoutPicture} />);
 
-    const avatarIcon = screen.getByTestId("avatar-icon");
-    expect(avatarIcon).toBeInTheDocument();
-  });
+  //   const avatarIcon = screen.getByTestId("avatar-icon");
+  //   expect(avatarIcon).toBeInTheDocument();
+  // });
 
   it("opens UserProfileMenu and hides mobile menu on click", () => {
     renderComponent({

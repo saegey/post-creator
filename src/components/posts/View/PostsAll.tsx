@@ -208,15 +208,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
             >
               Unlisted
             </NavLink>
-            <Box
-              sx={
-                {
-                  // borderBottomWidth: "1px",
-                  // borderBottomStyle: "solid",
-                  // borderBottomColor: "divider",
-                }
-              }
-            ></Box>
           </Box>
           <Flex
             sx={{

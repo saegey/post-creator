@@ -1,11 +1,11 @@
 import Head from "next/head";
 import React from "react";
-import { Box, Flex, Grid, Link as ThemeLink, Text } from "theme-ui";
+import { Box, Flex, Text } from "theme-ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 import PublicHeader from "../src/components/public/header";
-import PublicFooter from "../src/components/public/footer";
+import PublicFooter from "../src/components/public/Footer/Footer";
 import AboutUs from "../src/components/public/About";
 import Team from "../src/components/public/Team";
 import Timeline from "../src/components/public/Timeline";
@@ -25,7 +25,14 @@ const About = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Box as="main" sx={{ width: "100vw", height: "fit-content" }}>
+      <Box
+        as="main"
+        sx={{
+          width: "100vw",
+          height: "fit-content",
+          backgroundColor: "publicBackground",
+        }}
+      >
         <PublicHeader />
         <Flex
           sx={{
@@ -34,7 +41,7 @@ const About = () => {
             alignItems: "center",
             // zIndex: 1,
             position: "relative",
-            backgroundColor: "skeletonDark",
+            backgroundColor: "publicHeaderBackground",
           }}
         >
           <Flex
@@ -85,7 +92,10 @@ const About = () => {
           </Flex>
         </Flex>
         <Flex
-          sx={{ justifyContent: "center", backgroundColor: "skeletonDark" }}
+          sx={{
+            justifyContent: "center",
+            backgroundColor: "publicHeaderBackground",
+          }}
         >
           <Link
             href="about?section=about"
@@ -119,36 +129,6 @@ const About = () => {
               <Text sx={{ color: "text" }}>Team</Text>
             </Box>
           </Link>
-          {/* <Link
-            href="about?section=story"
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <Box
-              sx={{
-                paddingX: "8px",
-                paddingBottom: "22px",
-                marginX: "14px",
-                borderBottom: isStory ? "2px solid black" : "none",
-              }}
-            >
-              Our Story
-            </Box>
-          </Link> */}
-          {/* <Link
-            href="about?section=press"
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <Box
-              sx={{
-                paddingX: "8px",
-                paddingBottom: "22px",
-                marginX: "14px",
-                borderBottom: isPress ? "2px solid black" : "none",
-              }}
-            >
-              Press
-            </Box>
-          </Link> */}
         </Flex>
         <Flex sx={{ justifyContent: "center" }}>
           <AboutUs show={isAbout} />

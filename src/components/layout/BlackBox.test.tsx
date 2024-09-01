@@ -3,6 +3,10 @@ import { describe, it, expect, vi } from "vitest";
 
 import BlackBox from "./BlackBox";
 
+vi.mock("@theme-ui/color", () => ({
+  transparentize: vi.fn((color, opacity) => `rgba(${color}, ${opacity})`),
+}));
+
 describe("BlackBox Component", () => {
   it("should render children correctly", () => {
     render(

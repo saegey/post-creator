@@ -32,7 +32,7 @@ const SettingsSection = () => {
       >
         <IconButton
           aria-label="Open settings"
-          variant="iconButton"
+          // variant="iconButton"
           type="button"
           id="settings-button"
         >
