@@ -25,6 +25,7 @@ const useSelectionChangeHandler = (editor: Editor) => {
 
     const newTimerId = setTimeout(() => {
       const range = selection.getRangeAt(0);
+      if (!range) return;
       const operations = editor.operations;
 
       const isNewLineInserted = operations.some(

@@ -5,60 +5,57 @@ import { Box, Text, ThemeUIStyleObject, Theme } from "theme-ui";
 import { CustomEditor } from "../types/common";
 import OptionsMenu from "../components/posts/Editor/OptionsMenu";
 import { moveNodeDown, moveNodeUp } from "../utils/SlateUtilityFunctions";
+import { EditorContext } from "../components/posts/Editor/EditorContext";
+import OptionsButton from "../components/buttons/OptionsButton";
 
 const useOptionsMenu = (editor: CustomEditor, path: any) => {
-  const [isOptionsOpen, setIsOptionsOpen] = React.useState(false);
+  const { isOptionsOpen, setIsOptionsOpen, setMobileMenu, setMenuPosition } =
+    React.useContext(EditorContext);
 
   const toggleOptionsMenu = () => {
     setIsOptionsOpen((prev) => !prev);
   };
 
   const optionsMenu = (
-    <OptionsMenu
-      isOpen={isOptionsOpen}
-      setIsOpen={setIsOptionsOpen}
-      path={path}
+    <Box
+      sx={
+        {
+          position: "absolute",
+          right: "10px",
+          top: "10px",
+        } as ThemeUIStyleObject<Theme>
+      }
+      // onClick={() => {
+      //   // setMobileMenu({
+      //   //   display: false,
+      //   //   left: 0,
+      //   //   top: 0,
+      //   //   path: path,
+      //   //   isFullScreen: false,
+      //   // });
+      // }}
+      onClick={(event) => {
+        event.preventDefault();
+        editor.deselect();
+        const rect = event.currentTarget.getBoundingClientRect();
+        console.log("rect", rect);
+        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
+        const adjustedTop = rect.bottom + scrollY - 10;
+        const adjustedLeft = rect.right + scrollX + 10;
+
+        setMenuPosition({
+          top: adjustedTop,
+          left: adjustedLeft,
+          path: path,
+        });
+
+        console.log(adjustedTop, adjustedLeft, path);
+        setIsOptionsOpen(true);
+      }}
     >
-      <>
-        <Box
-          onClick={() => {
-            moveNodeUp(editor, path);
-            setIsOptionsOpen(false);
-          }}
-          variant="boxes.dropdownMenuItem"
-        >
-          <Text
-            sx={{ fontSize: ["14px", "16px"] } as ThemeUIStyleObject<Theme>}
-          >
-            Move Up
-          </Text>
-        </Box>
-        <Box
-          onClick={() => {
-            moveNodeDown(editor, path);
-            setIsOptionsOpen(false);
-          }}
-          variant="boxes.dropdownMenuItem"
-        >
-          <Text
-            sx={{ fontSize: ["14px", "16px"] } as ThemeUIStyleObject<Theme>}
-          >
-            Move Down
-          </Text>
-        </Box>
-        <Box
-          onClick={() => {
-            setIsOptionsOpen(false);
-            Transforms.removeNodes(editor, { at: path });
-            const selection = window.getSelection();
-            selection && selection.removeAllRanges();
-          }}
-          variant="boxes.dropdownMenuItem"
-        >
-          Delete
-        </Box>
-      </>
-    </OptionsMenu>
+      <OptionsButton />
+    </Box>
   );
 
   return {
