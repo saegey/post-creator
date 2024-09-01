@@ -19,7 +19,7 @@ const OptionsMenu = ({
   path: Path;
 }) => {
   const wrapperRef = React.useRef();
-  const { setMobileMenu } = React.useContext(EditorContext);
+  const { setMobileMenu, menuPosition } = React.useContext(EditorContext);
 
   useClickOutside(
     wrapperRef,
@@ -28,14 +28,15 @@ const OptionsMenu = ({
       e.stopPropagation();
     }
   );
+  console.log("menuPosition", menuPosition);
 
   return (
     <Box
       sx={
         {
           position: "absolute",
-          right: "10px",
-          top: "10px",
+          top: menuPosition.top - 20,
+          left: menuPosition.left - 40,
         } as ThemeUIStyleObject<Theme>
       }
       ref={wrapperRef}
@@ -49,11 +50,6 @@ const OptionsMenu = ({
         });
       }}
     >
-      <OptionsButton
-        onClick={() => {
-          setIsOpen(true);
-        }}
-      />
       <Dropdown isOpen={isOpen}>
         <Flex
           sx={

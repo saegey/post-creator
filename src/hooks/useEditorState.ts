@@ -54,6 +54,8 @@ type EditorState = {
   setIsRWGPSModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   newComponentPath: Path | undefined;
   setNewComponentPath: React.Dispatch<React.SetStateAction<Path | undefined>>;
+  isOptionsOpen: boolean;
+  setIsOptionsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const useEditorState = (): EditorState => {
@@ -92,6 +94,7 @@ const useEditorState = (): EditorState => {
   const [newComponentPath, setNewComponentPath] = useState<Path | undefined>(
     undefined
   );
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   return {
     isGraphMenuOpen,
@@ -130,6 +133,8 @@ const useEditorState = (): EditorState => {
     setIsRWGPSModalOpen,
     newComponentPath,
     setNewComponentPath,
+    isOptionsOpen,
+    setIsOptionsOpen,
   };
 };
 

@@ -2,6 +2,9 @@ import React from "react";
 import { Path } from "slate";
 
 export type EditorContextType = {
+  isOptionsOpen: boolean;
+  setIsOptionsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   isGraphMenuOpen: boolean;
   setIsGraphMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
@@ -116,6 +119,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setMobileMenu: () => {},
   newComponentPath: undefined,
   setNewComponentPath: () => {},
+  isOptionsOpen: false,
+  setIsOptionsOpen: () => {},
 });
 
 export { EditorContext };

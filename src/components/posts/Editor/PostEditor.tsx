@@ -24,6 +24,7 @@ import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler"
 import useFetchData from "../../../hooks/useFetchData";
 import { CustomElement } from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
+import OptionsDropdown from "../../OptionsDropdown";
 
 // import PublishModalConfirmation from "./PublishModalConfirmation";
 // import ShareModal from "./ShareModal";
@@ -46,6 +47,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setSavingStatus,
     setIsSavingPost,
     isRaceResultsModalOpen,
+    isOptionsOpen,
   } = useContext(EditorContext);
 
   // usePostSubscription();
@@ -76,6 +78,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             minWidth: "100%",
             margin: "0 auto 50px auto",
             width: "100%",
+
             backgroundColor: "background",
             borderRadius: "10px",
             padding: "0px",
@@ -88,11 +91,13 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           <RWGPSModal />
           <MobileMenu />
           <AddVideoModal />
+          {isOptionsOpen && <OptionsDropdown />}
 
           {selectionMenu && !isChangingQuickly && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+
           <Slate
             editor={editor}
             initialValue={initialState}
