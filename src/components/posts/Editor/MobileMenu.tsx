@@ -2,12 +2,11 @@ import { Box, Flex, Grid, Text } from "theme-ui";
 import React from "react";
 
 import CaretDown from "../../icons/CaretDown";
-import AddTimeZones from "./AddTimeZones";
+// import AddTimeZones from "./AddTimeZones";
 import AddImage from "./AddImage";
-import { Path } from "slate";
 import { EditorContext } from "./EditorContext";
 import AddText from "./AddText";
-import AddPowerCurve from "./PowerCurve";
+import AddPowerCurve from "./AddPowerCurve";
 import AddActivityOverview from "./AddActivityOverview";
 import AddStravaLink from "./AddStravaLink";
 import AddRWGPS from "./AddRWGPS";
@@ -16,6 +15,7 @@ import AddRouteOverview from "./AddRouteOverview";
 
 const MobileMenu = () => {
   const { mobileMenu, setMobileMenu } = React.useContext(EditorContext);
+  console.log("MobileMenu");
 
   React.useEffect(() => {
     if (mobileMenu.isFullScreen) {
@@ -83,7 +83,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddText path={mobileMenu.path} />
+              <AddText />
             </Box>
             <Box
               sx={{
@@ -92,7 +92,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddImage path={mobileMenu.path} />
+              <AddImage />
             </Box>
             <Box
               sx={{
@@ -101,7 +101,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddPowerCurve path={mobileMenu.path} />
+              <AddPowerCurve />
             </Box>
             <Box
               sx={{
@@ -110,7 +110,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddActivityOverview path={mobileMenu.path} />
+              <AddActivityOverview />
             </Box>
             {/* <Box
               sx={{
@@ -128,7 +128,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddStravaLink path={mobileMenu.path} />
+              <AddStravaLink />
             </Box>
             <Box
               sx={{
@@ -137,7 +137,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddRWGPS path={mobileMenu.path} />
+              <AddRWGPS />
             </Box>
             <Box
               sx={{
@@ -146,7 +146,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddRouteOverview path={mobileMenu.path} />
+              <AddRouteOverview />
             </Box>
             <Box
               sx={{
@@ -155,7 +155,7 @@ const MobileMenu = () => {
                 borderBottomColor: "divider",
               }}
             >
-              <AddRaceResults path={mobileMenu.path} />
+              <AddRaceResults />
             </Box>
           </Flex>
         </Flex>

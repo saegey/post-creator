@@ -1,15 +1,12 @@
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { Box, Spinner, Flex, Text, ThemeUIStyleObject, Theme } from "theme-ui";
-import { Transforms } from "slate";
+import { Box, Spinner, Flex, ThemeUIStyleObject, Theme } from "theme-ui";
 
 import { PostContext } from "../../PostContext";
 import { VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
-import OptionsMenu from "../Editor/OptionsMenu";
 import HoverAction from "../Editor/HoverAction";
 import VisualOverview from "./VisualOverview";
-import { moveNodeDown, moveNodeUp } from "../../../utils/SlateUtilityFunctions";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 
 const VisualOverviewWrapper = ({
@@ -93,7 +90,13 @@ const VisualOverviewWrapper = ({
       </Flex>
     );
   }
-  console.log("rendering visual overview wrapper");
+
+  // const vizOverviewMemo = React.useMemo(() => {
+  //   console.log("rendering visual overview wrapper memo");
+  //   return (
+
+  //   );
+  // }, [selection, activity, elevations]);
 
   return (
     <VisualOverviewContext.Provider

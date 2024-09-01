@@ -1,11 +1,11 @@
 import { Text } from "theme-ui";
 import React from "react";
+import { Path } from "slate";
 
 import { EditorContext } from "../Editor/EditorContext";
 import RaceResultsPreview from "./RaceResults/RaceResultsPreview";
 import WebscorerResultsPreview from "./WebScorer/WebscorerResultsPreview";
 import StandardModal from "../../shared/StandardModal";
-import { CustomEditor } from "../../../types/common";
 import CrossResultsPreview from "./CrossResults/CrossResultsPreview";
 import OmniResultsPreview from "./OmniGo/OmniResultsPreview";
 import RaceImportForm from "./RaceImportForm";
@@ -18,10 +18,9 @@ import {
   WebScorerMetaType,
 } from "./ResultsContext";
 import RunSignUpResultsPreview from "./RunSignup/RunSignupResultsPreview";
-import { Path } from "slate";
-import { useSlateStatic } from "slate-react";
+import { useSlateContext } from "../../SlateContext";
 
-const RaceResultsImport = ({ path }: { path: Path }) => {
+const RaceResultsImport = () => {
   const [previewResults, setPreviewResults] = React.useState(false);
   const [previewWebscorerResults, setPreviewWebscorerResults] =
     React.useState(false);
@@ -29,7 +28,11 @@ const RaceResultsImport = ({ path }: { path: Path }) => {
   const [previewOmniResults, setPreviewOmniResults] = React.useState(false);
   const [previewRunSignupResults, setPreviewRunSignupResults] =
     React.useState(false);
-  const editor = useSlateStatic();
+  const { editor } = useSlateContext();
+
+  if (!editor) {
+    return;
+  }
 
   const [resultsUrl, setResultsUrl] = React.useState<string>("");
 
@@ -69,8 +72,9 @@ const RaceResultsImport = ({ path }: { path: Path }) => {
     categoryName: "",
   });
 
-  const { isRaceResultsModalOpen, setIsRaceResultsModalOpen } =
+  const { isRaceResultsModalOpen, setIsRaceResultsModalOpen, menuPosition } =
     React.useContext(EditorContext);
+  const { path } = menuPosition;
 
   const isPreview = () => {
     return (

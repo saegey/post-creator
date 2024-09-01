@@ -8,12 +8,20 @@ import { EditorContext } from "./EditorContext";
 import VideoIcon from "../../icons/VideoIcon";
 import StandardModal from "../../shared/StandardModal";
 import VideoUploader from "../VideoEmbed/VideoUploader";
+import { useSlateContext } from "../../SlateContext";
 
 const AddVideoModal = () => {
   const { setIsVideoUploadOpen, isVideoUploadOpen } =
     React.useContext(EditorContext);
 
-  const editor = useSlateStatic();
+  console.log("AddVideoModal");
+
+  const { editor } = useSlateContext();
+
+  if (!editor) {
+    return <></>;
+  }
+
   return isVideoUploadOpen ? (
     <StandardModal
       title={"Upload Video"}

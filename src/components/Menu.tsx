@@ -13,6 +13,7 @@ const Menu = ({
 }) => {
   const wrapperRef = React.useRef();
   const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  console.log("Menu");
 
   useClickOutside(
     wrapperRef,
@@ -22,26 +23,30 @@ const Menu = ({
     }
   );
 
-  return (
-    <Box
-      ref={wrapperRef}
-      sx={{
-        position: "absolute",
-        top: menuPosition.top - 50,
-        left: menuPosition.left,
-        padding: "10px",
-        background: "background",
-        borderColor: "#ccc",
-        borderWidth: "1px",
-        borderStyle: "solid",
-        borderRadius: "5px",
-        zIndex: "4",
-        boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
-      }}
-    >
-      <GraphSelectorMenu />
-    </Box>
-  );
+  const menuMemo = React.useMemo(() => {
+    return (
+      <Box
+        ref={wrapperRef}
+        sx={{
+          position: "absolute",
+          top: menuPosition.top - 18,
+          left: menuPosition.left,
+          padding: "10px",
+          background: "background",
+          borderColor: "#ccc",
+          borderWidth: "1px",
+          borderStyle: "solid",
+          borderRadius: "5px",
+          zIndex: "4",
+          boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
+        }}
+      >
+        <GraphSelectorMenu />
+      </Box>
+    );
+  }, [menuPosition.top, menuPosition.left]);
+
+  return menuMemo;
 };
 
 export default Menu;

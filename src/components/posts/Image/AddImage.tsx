@@ -4,7 +4,6 @@ import { CldImage, CldUploadButton } from "next-cloudinary";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { Transforms } from "slate";
-import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
@@ -13,16 +12,19 @@ import { CloudinaryImage, HeroBannerType } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
+import { useSlateContext } from "../../SlateContext";
 
 const AddImage = ({ element }: { element: HeroBannerType }) => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
 
   const { setPost, images, id } = React.useContext(PostContext);
-  const { setIsHeroImageModalOpen, isHeroImageModalOpen } =
+  const { setIsHeroImageModalOpen, isHeroImageModalOpen, menuPosition } =
     React.useContext(EditorContext);
 
-  const editor = useSlateStatic();
-  const path = ReactEditor.findPath(editor, element);
+  const { editor } = useSlateContext();
+  if (!editor && menuPosition.path) {
+    return;
+  }
 
   return (
     <>
@@ -159,18 +161,20 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
           <Button
             variant="primaryButton"
             onClick={async () => {
-              Transforms.setNodes(
-                editor,
-                {
-                  ...element,
-                  image: selectedImage,
-                } as HeroBannerType,
-                {
-                  // This path references the editor, and is expanded to a range that
-                  // will encompass all the content of the editor.
-                  at: path,
-                }
-              );
+              editor &&
+                menuPosition.path &&
+                Transforms.setNodes(
+                  editor,
+                  {
+                    ...element,
+                    image: selectedImage,
+                  } as HeroBannerType,
+                  {
+                    // This path references the editor, and is expanded to a range that
+                    // will encompass all the content of the editor.
+                    at: menuPosition.path,
+                  }
+                );
               setIsHeroImageModalOpen(false);
             }}
             disabled={selectedImage ? false : true}

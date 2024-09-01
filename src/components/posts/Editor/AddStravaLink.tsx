@@ -4,16 +4,21 @@ import React from "react";
 import StravaIcon from "../../icons/StravaIcon";
 import StandardModal from "../../shared/StandardModal";
 import StravaEmbed from "../Embed/StravaEmbed";
-import { useSlateStatic } from "slate-react";
 import { EditorContext } from "./EditorContext";
-import { Path } from "slate";
+import { useSlateContext } from "../../SlateContext";
 
-const StravaModal = ({ path }: { path: Path }) => {
+const StravaModal = () => {
   const { isStravaModalOpen, setIsStravaModalOpen } =
     React.useContext(EditorContext);
-  const editor = useSlateStatic();
+  const { menuPosition } = React.useContext(EditorContext);
+  const { path } = menuPosition;
 
-  return isStravaModalOpen ? (
+  const { editor } = useSlateContext();
+  if (!editor || isStravaModalOpen === undefined) {
+    return;
+  }
+
+  return (
     <StandardModal
       title={"Strava Embed"}
       setIsOpen={setIsStravaModalOpen}
@@ -25,26 +30,22 @@ const StravaModal = ({ path }: { path: Path }) => {
         path={path}
       />
     </StandardModal>
-  ) : (
-    <></>
   );
 };
 
-const AddStravaLink = ({ path }: { path: Path }) => {
-  const {
-    setIsStravaModalOpen,
-    isStravaModalOpen,
-  } = React.useContext(EditorContext);
+const AddStravaLink = () => {
+  const { setIsStravaModalOpen, isStravaModalOpen } =
+    React.useContext(EditorContext);
 
   const addStravaLink = () => {
     setIsStravaModalOpen(true);
     // setIsNewComponentMenuOpen(false);
     // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
   };
-
+  console.log("AddStravaLink");
   return (
     <>
-      {isStravaModalOpen && <StravaModal path={path} />}
+      {isStravaModalOpen && <StravaModal />}
       <Box
         onClick={() => addStravaLink()}
         variant="boxes.sidebarMenuItem"

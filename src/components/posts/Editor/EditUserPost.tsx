@@ -11,13 +11,7 @@ import useEditorState from "../../../hooks/useEditorState";
 
 const EditUserPost = ({ user }: { user: IUser }) => {
   const editorState = useEditorState();
-  const { author, components } = usePost();
-
-  // React.useEffect(() => {
-  //   if (user && user?.attributes.sub !== author?.id) {
-  //     Router.push(`/posts/`);
-  //   }
-  // }, []);
+  const { components } = usePost();
 
   return (
     <Box

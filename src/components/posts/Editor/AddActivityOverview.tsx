@@ -1,21 +1,26 @@
-import { Flex, Text, Box, Button } from "theme-ui";
+import { Flex, Text, Box } from "theme-ui";
 import React from "react";
 import { Path, Transforms } from "slate";
-import { useSlateStatic } from "slate-react";
 
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
+import { useSlateContext } from "../../SlateContext";
 
-const AddActivityOverview = ({ path }: { path: Path }) => {
+const AddActivityOverview = () => {
   const { gpxFile } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
+  const { setIsNewComponentMenuOpen, menuPosition } =
+    React.useContext(EditorContext);
   const { setMobileMenu } = React.useContext(EditorContext);
+  const { path } = menuPosition;
 
-  const editor = useSlateStatic();
+  const { editor } = useSlateContext();
+
+  if (!editor) {
+    return;
+  }
 
   const addActivityOverview = () => {
-    // console.log(path);
     if (gpxFile) {
       Transforms.insertNodes(
         editor,
@@ -24,7 +29,7 @@ const AddActivityOverview = ({ path }: { path: Path }) => {
           children: [{ text: "" }],
           void: true,
         },
-        // { at: path }
+        { at: path }
       );
 
       if (path.length > 2) {
@@ -38,9 +43,10 @@ const AddActivityOverview = ({ path }: { path: Path }) => {
         path: path,
         isFullScreen: false,
       });
+
       setIsNewComponentMenuOpen(false);
       const selection = window.getSelection();
-      // console.log(selection)
+
       selection && selection.removeAllRanges();
     }
   };
