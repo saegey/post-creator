@@ -18,15 +18,7 @@ const OmniResultsListWrapper = ({ element }: { element: CustomElement }) => {
   const hoverAct = React.useMemo(() => {
     return (
       <HoverAction element={element}>
-        <Box
-          variant="boxes.componentCard"
-          contentEditable={false}
-          sx={
-            {
-              backgroundColor: "activityOverviewBackgroundColor",
-            } as ThemeUIStyleObject<Theme>
-          }
-        >
+        <Box variant="boxes.componentCard" contentEditable={false}>
           <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
             <OmniResultsList
               raceResults={omniResults ? omniResults : undefined}

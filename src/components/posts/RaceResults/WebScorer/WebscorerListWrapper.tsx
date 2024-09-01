@@ -20,11 +20,7 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
         <Box
           variant="boxes.componentCard"
           contentEditable={false}
-          sx={
-            {
-              backgroundColor: "activityOverviewBackgroundColor",
-            } as ThemeUIStyleObject<Theme>
-          }
+          sx={{ backgroundColor: "background" }}
         >
           <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
             <WebscorerList

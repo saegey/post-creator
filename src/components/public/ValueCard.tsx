@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, Grid, Link as ThemeLink, Text } from "theme-ui";
+import { Box, Text } from "theme-ui";
 import Image from "next/image";
 
 const ValueCard = ({
@@ -17,7 +17,8 @@ const ValueCard = ({
         padding: "40px",
         boxShadow: "-2px 24px 64px rgba(20,25,26,.04)",
         marginBottom: "24px",
-        backgroundColor: "skeletonDark",
+        backgroundColor: "publicHeaderBackground",
+        borderRadius: "8px",
       }}
     >
       <Image

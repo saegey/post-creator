@@ -201,11 +201,11 @@ input {
   display: flex;
 }
 
-.skeleton {
+/* .skeleton {
   animation: skeleton-loading 1s linear infinite alternate;
-}
+} */
 
-@keyframes skeleton-loading {
+/* @keyframes skeleton-loading {
   0% {
     background-color: var(--theme-ui-colors-skeletonDark);
   }
@@ -213,7 +213,7 @@ input {
   100% {
     background-color: var(--theme-ui-colors-skeletonLight);
   }
-}
+} */
 
 @media screen and (max-width: 480px) {
   body {

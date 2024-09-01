@@ -61,7 +61,14 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <Flex sx={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}>
+    <Flex
+      sx={{
+        flexGrow: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "loginBackground",
+      }}
+    >
       <Box sx={{ maxWidth: "400px", width: "400px", margin: "20px" }}>
         <form onSubmit={handleSubmit}>
           <Flex sx={{ flexDirection: "column", gap: "15px" }}>
@@ -130,6 +137,15 @@ const LoginPage: React.FC = () => {
                     sx={{
                       paddingX: "10px",
                       backgroundColor: "inputBackgroundColor",
+                      borderRightColor: "inputBorderColor",
+                      borderRightWidth: "1px",
+                      borderRightStyle: "solid",
+                      borderTopColor: "inputBorderColor",
+                      borderTopWidth: "1px",
+                      borderTopStyle: "solid",
+                      borderBottomColor: "inputBorderColor",
+                      borderBottomWidth: "1px",
+                      borderBottomStyle: "solid",
                       borderTopRightRadius: "5px",
                       borderBottomRightRadius: "5px",
                       cursor: "pointer",

@@ -21,7 +21,11 @@ const RaceResultsDotComListWrapper = ({
   const hoverAct = React.useMemo(() => {
     return (
       <HoverAction element={element}>
-        <Box variant="boxes.componentCard" contentEditable={false}>
+        <Box
+          variant="boxes.componentCard"
+          contentEditable={false}
+          sx={{ backgroundColor: "background" }}
+        >
           <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
             <RaceResultsDotComList
               raceResults={raceResults ? raceResults : undefined}
