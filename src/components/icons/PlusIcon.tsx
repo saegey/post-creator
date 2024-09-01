@@ -1,11 +1,10 @@
-import { MouseEventHandler } from "react";
-
+import React from "react";
 import { IconButton } from "theme-ui";
 
 const PlusIcon = ({
   onClick,
 }: {
-  onClick: () => MouseEventHandler<HTMLDivElement>;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }) => {
   return (
     <IconButton onClick={onClick} sx={{ color: "iconColor" }}>
@@ -16,7 +15,7 @@ const PlusIcon = ({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect width="24" height="24" />
+        <rect width="24" height="24" fill="white" />
         <path
           fill-rule="evenodd"
           clip-rule="evenodd"

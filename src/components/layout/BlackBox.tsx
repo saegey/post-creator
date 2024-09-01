@@ -32,7 +32,7 @@ const BlackBox: React.FC<BlackBoxProps> = ({
   return (
     <Box
       role="presentation"
-      // className="blackbox"
+      className="blackbox"
       sx={{
         position: "fixed",
         top: 0,
