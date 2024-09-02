@@ -1,13 +1,15 @@
 import React from "react";
-import { IconButton } from "theme-ui";
+import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
 const PlusIcon = ({
   onClick,
+  sx,
 }: {
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  sx?: ThemeUIStyleObject | undefined;
 }) => {
   return (
-    <IconButton onClick={onClick} sx={{ color: "iconColor" }}>
+    <IconButton onClick={onClick} sx={sx}>
       <svg
         height="100%"
         width="100%"

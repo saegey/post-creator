@@ -6,6 +6,7 @@ import StandardModal from "../../shared/StandardModal";
 import StravaEmbed from "../Embed/StravaEmbed";
 import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
+import GenericMenuItem from "../../GenericMenuItem";
 
 const StravaModal = () => {
   const { isStravaModalOpen, setIsStravaModalOpen } =
@@ -54,17 +55,7 @@ const AddStravaLink = () => {
         }}
       >
         <Flex sx={{ alignItems: "center", gap: "20px" }}>
-          <Box
-            sx={{
-              width: "16px",
-              height: "auto",
-            }}
-          >
-            <StravaIcon color={"var(--theme-ui-colors-text)"} />
-          </Box>
-          <Text as="span" sx={{ fontSize: "14px" }}>
-            Embed Strava activity
-          </Text>
+          <GenericMenuItem label="Add Strava Link" icon={<StravaIcon />} />
         </Flex>
       </Box>
     </>

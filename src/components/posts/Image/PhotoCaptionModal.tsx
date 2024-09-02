@@ -71,7 +71,7 @@ const PhotoCaptionModal = ({
               // defaultValue={element.photoCaption}
             ></Textarea>
 
-            <Button sx={{ backgroundColor: "primary" }}>Save</Button>
+            <Button>Save</Button>
           </form>
         </Flex>
       </StandardModal>

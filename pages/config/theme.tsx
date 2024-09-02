@@ -7,8 +7,13 @@ import {
   Switch,
   ThemeUIStyleObject,
   Theme,
+  Grid,
+  // Link,
 } from "theme-ui";
-import RaceOverview from "../src/components/posts/ActivityOverview/ActivityOverview";
+import RaceOverview from "../../src/components/posts/ActivityOverview/ActivityOverview";
+import Link from "next/link";
+import { palette } from "../../src/utils/theme";
+import ColorInfo from "../../src/components/shared/ColorInfo";
 
 const ThemePreview = () => {
   const { theme } = useThemeUI();
@@ -30,7 +35,9 @@ const ThemePreview = () => {
       }
     >
       <Box sx={{ width: "900px", padding: 4 } as ThemeUIStyleObject<Theme>}>
+        <Link href="/config/icons">Icons</Link>
         <h2>Colors</h2>
+        <Text as="pre">{JSON.stringify(palette, null, 2)}</Text>
         <Flex
           sx={
             {
@@ -58,48 +65,33 @@ const ThemePreview = () => {
             />
           </Box>
         </Flex>
-        <ul>
-          {Object.keys(theme.colors ?? {}).map((color) => (
-            <Box
-              as="li"
-              key={color}
-              sx={
-                {
-                  display: "flex",
-                  width: "100%",
-                  paddingY: "5px",
-                  gap: "10px",
-                } as ThemeUIStyleObject<Theme>
-              }
-            >
-              <Box
-                sx={
-                  {
-                    backgroundColor: theme.rawColors?.[color] ?? "",
-                    width: "30px",
-                    borderWidth: "1px",
-                    borderColor: "text",
-                    borderStyle: "solid",
-                    height: "30px",
-                    alignItems: "center",
-                    justifyItems: "center",
-                  } as ThemeUIStyleObject<Theme>
-                }
+        <h2>Colors</h2>
+        <Grid gap={2} columns={[2, 2, 3]}>
+          {Object.keys(palette).map((color) => {
+            if (!palette) return null;
+            return (
+              <ColorInfo
+                name={color}
+                color={palette[color]}
+                rawColor={palette[color]}
               />
-              <Flex
-                sx={
-                  {
-                    gap: "10px",
-                    justifyItems: "center",
-                  } as ThemeUIStyleObject<Theme>
-                }
-              >
-                <Text as="span">{color}</Text>
-                <Text>{JSON.stringify(theme.rawColors?.[color])}</Text>
-              </Flex>
-            </Box>
-          ))}
-        </ul>
+            );
+          })}
+        </Grid>
+
+        <h2>Config</h2>
+        <Grid gap={2} columns={[2, 2, 3]}>
+          {Object.keys(theme.colors ?? {}).map((color) => {
+            if (!theme.colors || !theme.rawColors) return null;
+            return (
+              <ColorInfo
+                name={color}
+                color={theme.colors[color] as string}
+                rawColor={theme.rawColors[color] as string}
+              />
+            );
+          })}
+        </Grid>
 
         <h2>Fonts</h2>
         <pre>{JSON.stringify(theme.fonts, null, 2)}</pre>

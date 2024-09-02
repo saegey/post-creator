@@ -31,6 +31,8 @@ const Menu = ({
           position: "absolute",
           top: menuPosition.top - 18,
           left: menuPosition.left,
+          // backgroundColor: "yellow",
+          width: "200px",
         }}
         variant="boxes.menuItem"
       >

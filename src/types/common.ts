@@ -593,3 +593,5 @@ export type ResultsType = {
   omniResults?: OmniResultType;
   runSignupResults?: OmniResultType;
 };
+
+export type ThemeUIColor = string;

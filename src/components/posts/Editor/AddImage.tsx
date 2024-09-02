@@ -1,26 +1,24 @@
 import { Box } from "theme-ui";
 import React from "react";
-import { Path, Transforms } from "slate";
-import { useSlateStatic } from "slate-react";
+import { Transforms } from "slate";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 
-import ImagesButton from "./PostMenu/buttons/ImagesButton";
 import AddMediaComponent from "./AddMediaComponent";
-import ComponentButton from "./ComponentButton";
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
 import { CloudinaryImage } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
+import GenericMenuItem from "../../GenericMenuItem";
+import ImagesIcon from "../../icons/ImagesIcon";
 
 const AddImage = () => {
   const { setPost, images, id } = React.useContext(PostContext);
   const { setIsNewComponentMenuOpen, setMobileMenu, menuPosition } =
     React.useContext(EditorContext);
   const { path } = menuPosition;
-  // const editor = useSlateStatic();
   const { editor } = useSlateContext();
 
   if (!editor) {
@@ -94,19 +92,7 @@ const AddImage = () => {
               cursor: "pointer",
             }}
           >
-            <ComponentButton
-              label={"Image"}
-              icon={
-                <Box
-                  sx={{
-                    width: "16px",
-                    height: "auto",
-                  }}
-                >
-                  <ImagesButton />
-                </Box>
-              }
-            />
+            <GenericMenuItem label="Image" icon={<ImagesIcon />} />
           </Box>
         );
       }}

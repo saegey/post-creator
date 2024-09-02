@@ -9,6 +9,7 @@ import VideoIcon from "../../icons/VideoIcon";
 import StandardModal from "../../shared/StandardModal";
 import VideoUploader from "../VideoEmbed/VideoUploader";
 import { useSlateContext } from "../../SlateContext";
+import GenericMenuItem from "../../GenericMenuItem";
 
 const AddVideoModal = () => {
   const { setIsVideoUploadOpen, isVideoUploadOpen } =
@@ -52,26 +53,7 @@ const AddVideo = () => {
         cursor: "pointer",
       }}
     >
-      <Flex sx={{ alignItems: "center", gap: "20px" }}>
-        <Box
-          sx={{
-            width: "16px",
-            height: "auto",
-            // marginRight: "10px",
-          }}
-        >
-          <VideoIcon />
-        </Box>
-        <Text
-          as="span"
-          sx={{
-            color: "text",
-            fontSize: "14px",
-          }}
-        >
-          Embed Video
-        </Text>
-      </Flex>
+      <GenericMenuItem icon={<VideoIcon />} label="Embed Video" />
     </Box>
   );
 };

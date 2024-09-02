@@ -6,6 +6,7 @@ import { EditorContext } from "./EditorContext";
 import { CustomEditor } from "../../../types/common";
 import ComponentButton from "./ComponentButton";
 import { useSlateContext } from "../../SlateContext";
+import GenericMenuItem from "../../GenericMenuItem";
 
 type AddComponentButtonProps = {
   path: Path;
@@ -66,7 +67,13 @@ const AddComponentButton = ({
         cursor: isDisabled ? "not-allowed" : "pointer",
       }}
     >
-      <ComponentButton label={label} icon={icon} />
+      <GenericMenuItem
+        label={label}
+        icon={icon}
+        isDisabled={isDisabled}
+        // onClick={handleClick}
+      />
+      {/* <ComponentButton label={label} icon={icon} /> */}
     </Box>
   );
 };

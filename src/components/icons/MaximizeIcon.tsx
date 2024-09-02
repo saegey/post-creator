@@ -1,13 +1,14 @@
-import { Box, IconButton } from "theme-ui";
+import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
-const MaximizeIcon = () => {
+const MaximizeIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => {
   return (
     <IconButton
-      sx={{
-        backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.4})`,
-      }}
+      // sx={{
+      //   backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.4})`,
+      // }}
+      sx={sx}
     >
-      <svg viewBox="0 0 14 14" width="25px" height="25px">
+      <svg viewBox="0 0 14 14" width="100%" height="100%">
         <g
           fill="none"
           fillRule="evenodd"
@@ -16,7 +17,7 @@ const MaximizeIcon = () => {
           strokeWidth="1"
         >
           <g
-            fill="var(--theme-ui-colors-background)"
+            fill="currentcolor"
             id="Core"
             transform="translate(-215.000000, -257.000000)"
           >

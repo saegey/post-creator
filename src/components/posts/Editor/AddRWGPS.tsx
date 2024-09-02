@@ -7,6 +7,7 @@ import StandardModal from "../../shared/StandardModal";
 import EmbedSettings from "../Embed/EmbedSettings";
 import { Path } from "slate";
 import { useSlateContext } from "../../SlateContext";
+import GenericMenuItem from "../../GenericMenuItem";
 
 const RWGPSModal = () => {
   const { editor } = useSlateContext();
@@ -63,24 +64,7 @@ const AddRWGPS = () => {
         }}
       >
         <Flex sx={{ alignItems: "center", gap: "20px" }}>
-          <Box
-            sx={{
-              width: "16px",
-              height: "auto",
-              // marginRight: "10px",
-            }}
-          >
-            <EmbedIcon />
-          </Box>
-          <Text
-            as="span"
-            sx={{
-              color: "text",
-              fontSize: "14px",
-            }}
-          >
-            Embed RWGPS Route
-          </Text>
+          <GenericMenuItem label="RWGPS Route" icon={<EmbedIcon />} />
         </Flex>
       </Box>
     </>

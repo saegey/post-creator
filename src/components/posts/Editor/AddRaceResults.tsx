@@ -1,17 +1,14 @@
-import { Flex, Text, Box } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 
 import { EditorContext } from "./EditorContext";
 import ResultsIcon from "../../icons/ResultsIcon";
 import ComponentButton from "./ComponentButton";
+import GenericMenuItem from "../../GenericMenuItem";
 
 const AddRaceResults = () => {
-  const {
-    isRaceResultsModalOpen,
-    setIsRaceResultsModalOpen,
-    menuPosition,
-    setIsNewComponentMenuOpen,
-  } = React.useContext(EditorContext);
+  const { setIsRaceResultsModalOpen, menuPosition, setIsNewComponentMenuOpen } =
+    React.useContext(EditorContext);
   const { path } = menuPosition;
 
   if (!path) {
@@ -33,19 +30,7 @@ const AddRaceResults = () => {
         }}
         id="add-race-results"
       >
-        <ComponentButton
-          label={"Race Results"}
-          icon={
-            <Box
-              sx={{
-                width: "16px",
-                height: "auto",
-              }}
-            >
-              <ResultsIcon />
-            </Box>
-          }
-        />
+        <GenericMenuItem label={"Race Results"} icon={<ResultsIcon />} />
       </Box>
     </>
   );

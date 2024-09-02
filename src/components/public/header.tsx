@@ -73,23 +73,28 @@ const PublicHeader = () => {
           >
             <Flex as="nav" sx={{ gap: "10px" }}>
               <NavLink
-                sx={{ fontWeight: "400", cursor: "pointer" }}
+                sx={{
+                  fontWeight: "400",
+                  cursor: "pointer",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
                 p={2}
                 onMouseEnter={() => setIsProductMenuOpen(true)}
                 onMouseLeave={() => setIsProductMenuOpen(false)}
               >
                 <Flex sx={{ gap: "2px", alignItems: "center" }}>
                   Product
-                  <Box
+                  {/* <Box> */}
+                  <CaretDown
                     sx={{
-                      width: "20px",
-                      height: "20px",
+                      width: "30px",
+                      height: "30px",
                       transform: isProductMenuOpen ? "rotate(180deg)" : "none",
                       transitionDuration: isProductMenuOpen ? "500ms" : "unset",
                     }}
-                  >
-                    <CaretDown />
-                  </Box>
+                  />
+                  {/* </Box> */}
                 </Flex>
                 {isProductMenuOpen && (
                   <Box
@@ -146,21 +151,31 @@ const PublicHeader = () => {
                 )}
               </NavLink>
               <NavLink
-                sx={{ fontWeight: "400", cursor: "pointer" }}
+                sx={{
+                  fontWeight: "400",
+                  cursor: "pointer",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
                 p={2}
                 href="https://monopad.productlane.com/changelog"
               >
                 <Text sx={{ color: "text" }}>Changelog</Text>
               </NavLink>
               <NavLink
-                sx={{ fontWeight: "400", cursor: "pointer" }}
+                sx={{
+                  fontWeight: "400",
+                  cursor: "pointer",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
                 p={2}
                 onMouseEnter={() => setIsResourcesMenuOpen(true)}
                 onMouseLeave={() => setIsResourcesMenuOpen(false)}
               >
                 <Flex sx={{ gap: "2px", alignItems: "center" }}>
                   <Text>Resources</Text>
-                  <Box
+                  {/* <Box
                     sx={{
                       width: "20px",
                       height: "20px",
@@ -171,9 +186,20 @@ const PublicHeader = () => {
                         ? "500ms"
                         : "unset",
                     }}
-                  >
-                    <CaretDown />
-                  </Box>
+                  > */}
+                  <CaretDown
+                    sx={{
+                      width: "30px",
+                      // height: "30px",
+                      transform: isResourcesMenuOpen
+                        ? "rotate(180deg)"
+                        : "none",
+                      transitionDuration: isResourcesMenuOpen
+                        ? "500ms"
+                        : "unset",
+                    }}
+                  />
+                  {/* </Box> */}
                 </Flex>
                 {isResourcesMenuOpen && (
                   <Box

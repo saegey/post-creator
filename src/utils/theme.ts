@@ -17,14 +17,26 @@ const palette = {
   yellow: "#ffd700",
 };
 
+export { palette };
+
 export default {
   useColorSchemeMediaQuery: true, // Enables system preference detection
   colors: {
-    primary: palette.black,
+    // primary: palette.black,
     iconColor: palette.grayDark,
-    secondary: palette.grayDarker,
+    // secondary: palette.grayDarker,
     publicHeaderBackground: palette.grayLight,
+
     background: palette.white,
+    mobileMenuBackground: palette.white,
+
+    linkButtonBackground: palette.white,
+    linkButtonBorder: palette.grayMedium,
+
+    floatingMenuBackground: palette.grayDarker,
+    floatingMenuIcon: palette.grayLight,
+    floatingMenuIconActive: palette.blue,
+
     text: palette.black,
     muted: palette.grayLight,
     highlight: palette.yellow,
@@ -82,8 +94,7 @@ export default {
     messagesBorderLeft: palette.grayMedium,
     modalBackground: palette.black,
     modalClose: palette.white,
-    floatingMenuBackground: palette.grayDarker,
-    floatingMenuIcon: palette.grayLight,
+
     footerMenuLink: palette.grayDark,
     footerBackground: palette.grayLight,
     blogHeaderBackground: palette.grayLight,
@@ -96,9 +107,15 @@ export default {
         footerBackground: palette.grayDarkness,
         menuBorder: palette.grayDark,
         iconColor: palette.grayLight,
-        primary: palette.grayLight,
-        secondary: palette.blue,
+
         background: palette.grayDarker,
+        mobileMenuBackground: palette.grayDarker,
+        linkButtonBackground: palette.grayDarker,
+        linkButtonBorder: palette.grayMedium,
+
+        floatingMenuBackground: palette.black,
+        floatingMenuIcon: "red",
+
         text: palette.white,
         muted: palette.grayDark,
         highlight: palette.yellow,
@@ -142,8 +159,7 @@ export default {
         chartAxes: palette.white,
         dropdownMenuBackground: palette.grayDark,
         dropdownMenuHoverBackground: palette.grayDarker,
-        floatingMenuBackground: palette.black,
-        floatingMenuIcon: "red",
+
         footerMenuLink: palette.grayLight,
         blogHeaderBackground: palette.grayDarkness,
         publicMenuBackground: palette.grayDarkest,
@@ -186,7 +202,8 @@ export default {
       },
       cursor: "pointer",
       color: "text",
-      padding: "5px",
+      backgroundColor: "purple",
+      // padding: "5px",
       width: "100%",
       fontSize: ["17px", "15px", "15px"],
       textDecoration: "none",
@@ -204,7 +221,7 @@ export default {
       borderRadius: "5px",
     },
     menuItem: {
-      padding: "10px",
+      padding: "5px",
       background: "background",
       borderColor: "menuBorder",
       borderWidth: "1px",
@@ -219,8 +236,8 @@ export default {
     // },
     sidebarMenuItem: {
       fontSize: "15px",
-      paddingLeft: "15px",
-      paddingY: "10px",
+      // paddingLeft: "15px",
+      paddingY: "5px",
       borderRadius: "5px",
       width: "100%",
       "&:hover": {
