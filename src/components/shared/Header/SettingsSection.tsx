@@ -1,8 +1,9 @@
 import React from "react";
 import { Box, IconButton, ThemeUIStyleObject, Theme } from "theme-ui";
-import SettingsIcon from "../../posts/Editor/PostMenu/buttons/SettingsIcon";
+// import SettingsIcon from "../../posts/Editor/PostMenu/buttons/SettingsIcon";
 import { EditorContext } from "../../posts/Editor/EditorContext";
 import PostSettings from "../../posts/Editor/PostSettings";
+import SettingsIcon from "../../icons/SettingsIcon";
 
 const SettingsSection = () => {
   const {
@@ -30,14 +31,7 @@ const SettingsSection = () => {
           setIsSettingsModalOpen(true);
         }}
       >
-        <IconButton
-          aria-label="Open settings"
-          // variant="iconButton"
-          type="button"
-          id="settings-button"
-        >
-          <SettingsIcon />
-        </IconButton>
+        <SettingsIcon />
       </Box>
       {isSettingsModalOpen && <PostSettings />}
     </>

@@ -35,7 +35,10 @@ import MaximizeIcon from "../../src/components/icons/MaximizeIcon";
 import RouteIcon from "../../src/components/icons/RouteIcon";
 import VideoIcon from "../../src/components/icons/VideoIcon";
 import ImagesIcon from "../../src/components/icons/ImagesIcon";
+import SettingsIcon from "../../src/components/icons/SettingsIcon";
 import Link from "next/link";
+import ShareIcon from "../../src/components/icons/ShareIcon";
+import OptionsIcon from "../../src/components/icons/OptionsIcon";
 
 const icons = [
   BulletListIcon,
@@ -63,10 +66,13 @@ const icons = [
   RouteIcon,
   VideoIcon,
   ImagesIcon,
+  SettingsIcon,
+  ShareIcon,
+  OptionsIcon,
 ];
 
 const ThemePreview = () => {
-  const { theme } = useThemeUI();
+  // const { theme } = useThemeUI();
   const [mode, setMode] = useColorMode();
 
   return (
@@ -85,7 +91,14 @@ const ThemePreview = () => {
       }
     >
       <Box sx={{ width: "900px", padding: 4 } as ThemeUIStyleObject<Theme>}>
-        <Link href="/config/theme">Theme</Link>
+        <Flex sx={{ gap: "10px" }}>
+          <Box>
+            <Link href="/config/theme">Theme</Link>
+          </Box>
+          <Box>
+            <Link href="/config/widgets">Widgets</Link>
+          </Box>
+        </Flex>
         <h2>Icons</h2>
         <Flex
           sx={

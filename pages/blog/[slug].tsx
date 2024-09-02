@@ -11,7 +11,6 @@ import { join } from "path";
 import { Avatar, Box, Flex, Grid, Text, Link as ThemeLink } from "theme-ui";
 
 import { getPostBySlug, getAllPosts } from "../../lib/api";
-import { CMS_NAME } from "../../lib/constants";
 import markdownToHtml from "../../lib/markdownToHtml";
 import type PostType from "../../interfaces/post";
 import PublicHeader from "../../src/components/public/header";
@@ -35,7 +34,7 @@ type Props = {
 
 export default function Post({ post, morePosts, preview, imageSizes }: Props) {
   const router = useRouter();
-  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`;
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
@@ -152,19 +151,28 @@ export default function Post({ post, morePosts, preview, imageSizes }: Props) {
           sx={{
             justifyContent: "center",
             marginTop: ["40px", "80px", "80px"],
-            backgroundColor: "publicBackground",
+            // backgroundColor: "publicBackground",
+            // backgroundColor: "red",
           }}
         >
-          <Box sx={{ maxWidth: "1280px", width: "100%" }}>
+          <Box
+            sx={{
+              maxWidth: "1280px",
+              width: "100%",
+            }}
+          >
             <Grid
               columns={["1fr", "1fr", "1fr 280px"]}
               gap={["16px", "16px", "120px"]}
+              // sx={{ backgroundColor: "red" }}
             >
               <Box
                 sx={{
-                  borderBottom: "1px solid #d7d7d7",
+                  borderBottomColor: "publicBlogDivider",
+                  borderBottomWidth: "1px",
+                  borderBottomStyle: "solid",
+
                   paddingBottom: "20px",
-                  // maxWidth: "1280px",
                   marginX: ["16px", "16px", "16px"],
                   marginBottom: "20px",
                   height: "48px",
@@ -346,7 +354,10 @@ export default function Post({ post, morePosts, preview, imageSizes }: Props) {
                       lineHeight: "20px",
                       marginBottom: "16px",
                       height: "48px",
-                      borderBottom: "1px solid #d7d7d7",
+                      borderBottomColor: "publicBlogDivider",
+                      borderBottomWidth: "1px",
+                      borderBottomStyle: "solid",
+                      // borderBottom: "1px solid #d7d7d7",
                     }}
                   >
                     Contents

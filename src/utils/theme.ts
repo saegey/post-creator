@@ -26,6 +26,8 @@ export default {
     iconColor: palette.grayDark,
     // secondary: palette.grayDarker,
     publicHeaderBackground: palette.grayLight,
+    publicSocialIcon: palette.grayDark,
+    publicBlogDivider: palette.grayMedium,
 
     background: palette.white,
     mobileMenuBackground: palette.white,
@@ -103,7 +105,6 @@ export default {
     publicBackground: palette.white,
     modes: {
       dark: {
-        publicHeaderBackground: palette.grayDarkness,
         footerBackground: palette.grayDarkness,
         menuBorder: palette.grayDark,
         iconColor: palette.grayLight,
@@ -115,6 +116,10 @@ export default {
 
         floatingMenuBackground: palette.black,
         floatingMenuIcon: "red",
+
+        publicSocialIcon: palette.grayLight,
+        publicHeaderBackground: palette.grayDarkness,
+        publicBlogDivider: palette.grayDark,
 
         text: palette.white,
         muted: palette.grayDark,
@@ -250,11 +255,6 @@ export default {
     },
     componentCard: {
       maxWidth: "690px",
-      // backgroundColor: [
-      //   "background",
-      //   "activityOverviewBackgroundColor",
-      //   "activityOverviewBackgroundColor",
-      // ],
       borderColor: [
         "background",
         "activityOverviewBackgroundColor",

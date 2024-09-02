@@ -15,6 +15,7 @@ import {
 } from "../../../graphql/customQueries";
 import { IUser } from "../../../types/common";
 import { createPostNew } from "../../../graphql/customMutations";
+import ShareIcon from "../../icons/ShareIcon";
 
 interface ListPostsByCreatedAtTypes {
   listPostsByCreatedAt: {
@@ -267,17 +268,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
                 marginTop: "40px",
               }}
             >
-              <Box sx={{ width: "75px", height: "auto" }}>
-                <svg
-                  fill="var(--theme-ui-colors-text)"
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M21,1H3A1,1,0,0,0,2,2V22a1,1,0,0,0,1,1H17a1.011,1.011,0,0,0,.383-.077,1,1,0,0,0,.325-.217l4-4A1.131,1.131,0,0,0,22,18V2A1,1,0,0,0,21,1ZM16,18v3H4V3H20V17H17A1,1,0,0,0,16,18Zm1-8a1,1,0,0,1-1,1H8A1,1,0,0,1,8,9h8A1,1,0,0,1,17,10Zm-4,4a1,1,0,0,1-1,1H8a1,1,0,0,1,0-2h4A1,1,0,0,1,13,14Z" />
-                </svg>
-              </Box>
+              <ShareIcon sx={{ width: "205px", height: "auto" }} />
               <Text sx={{ fontSize: "32px", fontWeight: "700" }}>
                 Share Posts
               </Text>
