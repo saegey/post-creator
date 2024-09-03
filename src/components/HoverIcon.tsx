@@ -18,7 +18,6 @@ const HoverIcon = ({
           cursor: "pointer",
         } as ThemeUIStyleObject<Theme>
       }
-      // onClick={onClick}
       contentEditable={false}
     >
       <PlusIcon onClick={onClick} sx={{ color: "blue" }} />

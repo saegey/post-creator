@@ -126,7 +126,11 @@ const LoginPage: React.FC = () => {
                 </Box>
               </Box>
               <Flex sx={{ justifyContent: "right" }}>
-                <AuthButton type="submit" disabled={isLoading}>
+                <AuthButton
+                  type="submit"
+                  disabled={isLoading}
+                  id="submit-login"
+                >
                   {isLoading ? "Signing in..." : "Sign In"}
                 </AuthButton>
               </Flex>

@@ -3,6 +3,7 @@ import { Button } from "theme-ui";
 
 type AuthButtonProps = {
   children: React.ReactNode;
+  id?: string;
   [x: string]: any;
 };
 
