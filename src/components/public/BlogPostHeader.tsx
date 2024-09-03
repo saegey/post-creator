@@ -11,9 +11,8 @@ const BlogPostHeader = ({ post }: { post: PostType }) => {
     <Flex
       sx={{
         justifyContent: "center",
-        backgroundColor: "blogHeaderBackground",
-        paddingTop: "176px",
-        paddingBottom: "80px",
+        paddingTop: ["60px", "176px", "176px"],
+        paddingBottom: ["0px", "80px", "80px"],
       }}
     >
       <Box
@@ -22,7 +21,7 @@ const BlogPostHeader = ({ post }: { post: PostType }) => {
           maxWidth: "1280px",
           width: "100%",
           marginTop: [0, 0, 0],
-          marginBottom: "60px",
+          // marginBottom: "60px",
         }}
       >
         <Flex
@@ -34,44 +33,17 @@ const BlogPostHeader = ({ post }: { post: PostType }) => {
         >
           <ThemeLink as={Link} href="/blog" sx={{ textDecoration: "none" }}>
             <Flex>
-              <ChevronLeft sx={{ color: "text" }} />
-              <Text
-                as="div"
-                sx={{
-                  marginBottom: "58px",
-                  lineHeight: "34px",
-                  fontWeight: 400,
-                  fontSize: "26px",
-                  color: "text",
-                }}
-              >
+              <ChevronLeft sx={{ color: "publicBlogHeaderBackIcon" }} />
+              <Text as="div" variant="publicBlogHeaderBack">
                 Blog
               </Text>
             </Flex>
           </ThemeLink>
-          <Text
-            as="h1"
-            sx={{
-              marginBottom: "16px",
-              fontSize: ["40px", "40px", "56px"],
-              fontWeight: 400,
-              lineHeight: ["48px", "48px", "64px"],
-              letterSpacing: "-2px",
-            }}
-          >
+          <Text as="h1" variant="publicBlogHeaderText">
             {post.title}
           </Text>
 
-          <Text
-            as="p"
-            sx={{
-              marginBottom: "30px",
-              paddingTop: "16px",
-              fontSize: "16px",
-              lineHeight: "28px",
-              fontWeight: 300,
-            }}
-          >
+          <Text as="p" variant="publicBlogHeaderExcerpt">
             {post.excerpt}
           </Text>
           <Flex
@@ -82,24 +54,10 @@ const BlogPostHeader = ({ post }: { post: PostType }) => {
           >
             <Avatar src={post.author.picture} />
             <Box>
-              <Text
-                as="div"
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                }}
-              >
+              <Text as="div" variant="publicBlogAuthorName">
                 {post.author.name}
               </Text>
-              <Text
-                as="div"
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                }}
-              >
+              <Text as="div" variant="publicHeaderDate">
                 {moment(post.date).format("MMMM D, YYYY")}
               </Text>
             </Box>

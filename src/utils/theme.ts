@@ -27,7 +27,22 @@ export default {
     // secondary: palette.grayDarker,
     publicHeaderBackground: palette.grayLight,
     publicSocialIcon: palette.grayDark,
+
     publicBlogDivider: palette.grayMedium,
+    publicBlogHeaderBackIcon: palette.grayDark,
+    publicBlogHeaderText: palette.grayDark,
+
+    publicMenuBackground: palette.white,
+    publicMenuItemTitle: palette.grayDark,
+    publicMenuItemTitleDisabled: palette.grayMedium,
+    publicMenuItemBadge: palette.grayDark,
+
+    publicBackground: palette.white,
+    publicBlogTOCHeading: palette.grayDark,
+    publicBlogTOCHeadingSelected: palette.grayDarkest,
+    publicBlogTOCHeadingHover: palette.grayDark,
+
+    publicBlogContentLink: palette.black,
 
     background: palette.white,
     mobileMenuBackground: palette.white,
@@ -101,8 +116,7 @@ export default {
     footerBackground: palette.grayLight,
     blogHeaderBackground: palette.grayLight,
     textMuted: palette.grayDark,
-    publicMenuBackground: palette.white,
-    publicBackground: palette.white,
+
     modes: {
       dark: {
         footerBackground: palette.grayDarkness,
@@ -120,6 +134,20 @@ export default {
         publicSocialIcon: palette.grayLight,
         publicHeaderBackground: palette.grayDarkness,
         publicBlogDivider: palette.grayDark,
+        publicBlogHeaderBackIcon: palette.grayLight,
+        publicBlogHeaderText: palette.grayLight,
+        publicMenuBackground: palette.grayDarkest,
+        publicBackground: palette.grayDarkest,
+
+        publicMenuItemTitle: palette.grayLight,
+        publicMenuItemTitleDisabled: palette.grayDark,
+        publicMenuItemBadge: palette.grayDark,
+
+        publicBlogContentLink: palette.white,
+
+        publicBlogTOCHeading: palette.grayDark,
+        publicBlogTOCHeadingSelected: palette.grayLight,
+        publicBlogTOCHeadingHover: palette.grayDark,
 
         text: palette.white,
         muted: palette.grayDark,
@@ -167,8 +195,6 @@ export default {
 
         footerMenuLink: palette.grayLight,
         blogHeaderBackground: palette.grayDarkness,
-        publicMenuBackground: palette.grayDarkest,
-        publicBackground: palette.grayDarkest,
       },
     },
   },
@@ -179,6 +205,48 @@ export default {
     },
   },
   text: {
+    publicBlogTOCHeader: {
+      textTransform: "uppercase",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "20px",
+      marginBottom: "16px",
+      height: "48px",
+      borderBottomColor: "publicBlogDivider",
+      borderBottomWidth: "1px",
+      borderBottomStyle: "solid",
+    },
+    publicBlogHeaderText: {
+      marginBottom: "16px",
+      fontSize: ["33px", "40px", "46px"],
+      fontWeight: 400,
+      lineHeight: ["48px", "48px", "64px"],
+      letterSpacing: "-2px",
+    },
+    publicBlogHeaderBack: {
+      marginBottom: "58px",
+      lineHeight: "34px",
+      fontWeight: 400,
+      fontSize: "26px",
+      color: "publicBlogHeaderText",
+    },
+    publicBlogAuthorName: {
+      fontWeight: "400",
+      fontSize: "16px",
+      lineHeight: "24px",
+    },
+    publicBlogHeaderExcerpt: {
+      marginBottom: "30px",
+      paddingTop: "16px",
+      fontSize: "16px",
+      lineHeight: "28px",
+      fontWeight: 300,
+    },
+    publicHeaderDate: {
+      fontWeight: "400",
+      fontSize: "14px",
+      lineHeight: "24px",
+    },
     aboutHeader: {
       fontWeight: 400,
       fontSize: "40px",
@@ -225,6 +293,30 @@ export default {
       width: "32px",
       borderRadius: "5px",
     },
+    publicMenuDropdown: {
+      position: "absolute",
+      width: "300px",
+      padding: "20px",
+      marginLeft: "-10px",
+      borderRadius: "5px",
+      backgroundColor: "publicMenuBackground",
+      borderColor: "menuBorder",
+      borderWidth: "1px",
+      borderStyle: "solid",
+      boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
+    },
+    publicShareSection: {
+      marginTop: "16px",
+      gap: "16px",
+      marginBottom: "200px",
+      maxWidth: "1280px",
+      marginX: ["16px", "16px", "16px"],
+      borderTopColor: "publicBlogDivider",
+      borderTopStyle: "solid",
+      borderTopWidth: "1px",
+      paddingTop: "24px",
+      flexDirection: ["column", "row", "row"],
+    },
     menuItem: {
       padding: "5px",
       background: "background",
@@ -236,9 +328,6 @@ export default {
       boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
       animation: "fadeIn .2s;",
     },
-    // figure: {
-    //   backgroundColor: "red",
-    // },
     sidebarMenuItem: {
       fontSize: "15px",
       // paddingLeft: "15px",

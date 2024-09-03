@@ -1,23 +1,13 @@
 import React from "react";
 import { Avatar, Box, Flex, Text } from "theme-ui";
-
-import SocialShare from "./SocialShare";
 import moment from "moment";
 
-const BlogPostShare = () => {
+import SocialShare from "./SocialShare";
+import PostType from "../../../interfaces/post";
+
+const BlogPostShare = ({ post }: { post: PostType }) => {
   return (
-    <Flex
-      sx={{
-        marginTop: "16px",
-        gap: "16px",
-        marginBottom: "200px",
-        maxWidth: "1280px",
-        marginX: ["16px", "16px", "16px"],
-        borderTop: "1px solid #e7e8eb",
-        paddingTop: "24px",
-        flexDirection: ["column", "row", "row"],
-      }}
-    >
+    <Flex variant="boxes.publicShareSection">
       <Flex sx={{ width: "100%", gap: "16px" }}>
         <Avatar
           src={post.author.picture}

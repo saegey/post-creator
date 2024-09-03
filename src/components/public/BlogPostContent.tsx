@@ -10,7 +10,7 @@ type PostContentProps = {
   imageSizes: Record<string, { width: number; height: number }>;
 };
 
-const PostContent = ({ post, imageSizes }: PostContentProps) => {
+const BlogPostContent = ({ post, imageSizes }: PostContentProps) => {
   return (
     <Box
       sx={{
@@ -51,15 +51,17 @@ const PostContent = ({ post, imageSizes }: PostContentProps) => {
             fontWeight: 300,
           },
           a: {
-            color: "#14191a",
-            borderBottom: "1px solid #14191a",
+            color: "publicBlogContentLink",
+            borderBottomColor: "publicBlogContentLink",
+            borderBottomStyle: "solid",
+            borderBottomWidth: "1px",
             fontWeight: 400,
             textDecoration: "none",
             transition: "all .2s",
           },
           "a:hover": {
-            color: "rgba(20,25,26,.5)",
-            borderBottomColor: "rgba(20,25,26,.5)",
+            color: "publicBlogContentLink",
+            borderBottomColor: "publicBlogContentLink",
           },
           img: {
             width: "100%",
@@ -114,4 +116,4 @@ const PostContent = ({ post, imageSizes }: PostContentProps) => {
   );
 };
 
-export default PostContent;
+export default BlogPostContent;

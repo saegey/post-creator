@@ -2,12 +2,9 @@ import React from "react";
 import { Box, Flex, Text } from "theme-ui";
 
 import TOCLink from "./TOCLink";
+import { TransformType } from "../../../lib/markdownToHtml";
 
-const BlogPostTOC = ({
-  toc,
-}: {
-  toc: Array<{ id: string; title: string }>;
-}) => {
+const BlogPostTOC = ({ toc }: { toc: TransformType[] }) => {
   return (
     <Box
       sx={{
@@ -17,20 +14,7 @@ const BlogPostTOC = ({
       }}
     >
       <Box sx={{ top: "120px", position: "sticky" }}>
-        <Text
-          as="h6"
-          sx={{
-            textTransform: "uppercase",
-            fontSize: "14px",
-            fontWeight: 400,
-            lineHeight: "20px",
-            marginBottom: "16px",
-            height: "48px",
-            borderBottomColor: "publicBlogDivider",
-            borderBottomWidth: "1px",
-            borderBottomStyle: "solid",
-          }}
-        >
+        <Text as="h6" variant={"publicBlogTOCHeader"}>
           Contents
         </Text>
         <Flex sx={{ flexDirection: "column" }}>

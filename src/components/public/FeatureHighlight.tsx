@@ -35,17 +35,13 @@ const FeatureHiglight = ({
       }}
     >
       <Image
-        // src="/p-1600.webp"
         src={imagePath}
         alt="text"
-        // layout="fill"
-        // objectFit="contain"
         style={{
           width: "100%",
           height: "auto",
           borderRadius: "5px",
         }}
-        // style={{ position: "relative" }}
         width={800}
         height={800}
       />
@@ -131,7 +127,6 @@ const FeatureHiglight = ({
             <Button>Learn More</Button>
           </Box>
         </Box>
-        {/* {imagePosition === "right" && featureImage} */}
       </Grid>
     </Flex>
   );

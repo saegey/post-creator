@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { Box, Flex, Text } from "theme-ui";
 
-import PublicHeader from "../src/components/public/header";
+import PublicHeader from "../src/components/public/Header/PublicHeader";
 import PublicFooter from "../src/components/public/Footer/Footer";
 
 const Manifesto = () => {

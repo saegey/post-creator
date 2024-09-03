@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { Box, Button, Flex, Text, Link as ThemeLink } from "theme-ui";
 
-import PublicHeader from "../../src/components/public/header";
+import PublicHeader from "../../src/components/public/Header/PublicHeader";
 import PublicFooter from "../../src/components/public/Footer/Footer";
 import VideoIcon from "../../src/components/icons/VideoIcon";
 import ResultsIcon from "../../src/components/icons/ResultsIcon";

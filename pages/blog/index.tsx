@@ -1,16 +1,30 @@
-import { Avatar, Box, Flex, Grid, Text, Link as ThemeLink } from "theme-ui";
+import { Box, Flex, Text } from "theme-ui";
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
-import moment from "moment";
 
 import { getAllPosts } from "../../lib/api";
 import type PostType from "../../interfaces/post";
-import PublicHeader from "../../src/components/public/header";
+import PublicHeader from "../../src/components/public/Header/PublicHeader";
 import PublicFooter from "../../src/components/public/Footer/Footer";
+import BlogPostList from "../../src/components/public/BlogPostList";
 
 type Props = {
   allPosts: Array<PostType>;
+};
+
+export const getStaticProps = async () => {
+  const allPosts = getAllPosts([
+    "title",
+    "date",
+    "slug",
+    "author",
+    "coverImage",
+    "excerpt",
+    "topic",
+  ]);
+
+  return {
+    props: { allPosts },
+  };
 };
 
 export default function Post({ allPosts }: Props) {
@@ -32,11 +46,9 @@ export default function Post({ allPosts }: Props) {
         <PublicHeader />
         <Flex
           sx={{
-            // height: "100vh",
             marginX: ["16px", "0px", "0px"],
             justifyContent: "center",
             alignItems: "center",
-            // zIndex: 1,
             position: "relative",
             flexDirection: "column",
           }}
@@ -61,94 +73,7 @@ export default function Post({ allPosts }: Props) {
               Stay up to date by subscribing to our newsletter.
             </Text>
             <Flex sx={{ flexDirection: "column", gap: "80px" }}>
-              {allPosts.map((post) => (
-                <Grid
-                  columns={["1fr", ".85fr 1fr", ".85fr 1fr"]}
-                  // gap="24px"
-                  sx={{ rowGap: ["30px", "30px", "64px"] }}
-                >
-                  <Link href={`/blog/${post.slug}`}>
-                    <Image
-                      src={post.coverImage}
-                      alt="cover image"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderRadius: "5px",
-                      }}
-                      width={800}
-                      height={400}
-                    />
-                  </Link>
-                  <Box>
-                    <Text
-                      as="div"
-                      sx={{
-                        marginBottom: "24px",
-                        textTransform: "uppercase",
-                        fontSize: "14px",
-                        lineHeight: "20px",
-                        fontWeight: "400",
-                      }}
-                    >
-                      {post.topic}
-                    </Text>
-                    <ThemeLink
-                      as={Link}
-                      href={`/blog/${post.slug}`}
-                      sx={{ textDecoration: "none" }}
-                    >
-                      <Text
-                        as="h3"
-                        sx={{
-                          color: "text",
-                          fontSize: "26px",
-                          lineHeight: "34px",
-                          fontWeight: "400",
-                        }}
-                      >
-                        {post.title}
-                      </Text>
-                    </ThemeLink>
-                    <Text
-                      as="div"
-                      sx={{
-                        fontSize: "16px",
-                        lineHeight: "28px",
-                        paddingTop: "16px",
-                        marginBottom: "30px",
-                      }}
-                    >
-                      {post.excerpt}
-                    </Text>
-                    <Flex sx={{ gap: "16px" }}>
-                      <Avatar src={post.author.picture} />
-                      <Box>
-                        <Text
-                          as="div"
-                          sx={{
-                            fontWeight: "400",
-                            fontSize: "16px",
-                            lineHeight: "24px",
-                          }}
-                        >
-                          {post.author.name}
-                        </Text>
-                        <Text
-                          as="div"
-                          sx={{
-                            fontWeight: "400",
-                            fontSize: "16px",
-                            lineHeight: "24px",
-                          }}
-                        >
-                          {moment(post.date).format("MMMM D, YYYY")}
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </Box>
-                </Grid>
-              ))}
+              <BlogPostList allPosts={allPosts} />
             </Flex>
           </Flex>
         </Flex>
@@ -157,19 +82,3 @@ export default function Post({ allPosts }: Props) {
     </>
   );
 }
-
-export const getStaticProps = async () => {
-  const allPosts = getAllPosts([
-    "title",
-    "date",
-    "slug",
-    "author",
-    "coverImage",
-    "excerpt",
-    "topic",
-  ]);
-
-  return {
-    props: { allPosts },
-  };
-};
