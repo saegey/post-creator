@@ -1,5 +1,6 @@
 import { Box } from "theme-ui";
 import { Transforms, Editor, Element as SlateElement } from "slate";
+
 import { isBlockActive } from "../../../../../utils/SlateUtilityFunctions";
 import { CustomEditor } from "../../../../../types/common";
 import HeadingIcon from "../../../../icons/HeadingIcon";
@@ -8,7 +9,6 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
   const { selection } = editor;
   return (
     <Box
-      // aria-label="Toggle header"
       onMouseDown={(e) => {
         e.preventDefault();
         console.log(selection);
@@ -42,11 +42,11 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
       key="headingtwo"
     >
       <HeadingIcon
-        color={
-          isBlockActive(editor, "heading-two")
+        sx={{
+          color: isBlockActive(editor, "heading-two")
             ? "floatingMenuIconActive"
-            : "floatingMenuIcon"
-        }
+            : "floatingMenuIcon",
+        }}
       />
     </Box>
   );

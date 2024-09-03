@@ -3,7 +3,6 @@ import React from "react";
 
 import { EditorContext } from "./EditorContext";
 import ResultsIcon from "../../icons/ResultsIcon";
-import ComponentButton from "./ComponentButton";
 import GenericMenuItem from "../../GenericMenuItem";
 
 const AddRaceResults = () => {

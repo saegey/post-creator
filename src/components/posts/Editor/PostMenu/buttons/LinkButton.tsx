@@ -47,7 +47,7 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
         toggleLink(e)
       }
     >
-      <LinkIcon color={"floatingMenuIcon"} />
+      <LinkIcon sx={{ color: "floatingMenuIcon" }} />
       {showPopup && (
         <Box
           sx={{

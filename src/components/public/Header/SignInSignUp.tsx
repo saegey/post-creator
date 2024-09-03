@@ -2,7 +2,10 @@ import React from "react";
 import { Flex, Button, Link as ThemeLink } from "theme-ui";
 
 const SignInSignUp = () => {
-  const handleExternalLink = (e, path) => {
+  const handleExternalLink = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    path: string
+  ): void => {
     e.preventDefault();
     window.open(
       location.protocol +
@@ -13,7 +16,7 @@ const SignInSignUp = () => {
               .slice(1, location.host.split(".").length)
               .join(".")
           : location.host) +
-        "/register"
+        `${path}`
     );
   };
 

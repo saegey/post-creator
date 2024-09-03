@@ -1,6 +1,7 @@
 import React from "react";
 import { Flex, Button, Input, Label } from "theme-ui";
-import ReCAPTCHAComponent from "./RECAPTCHAComponent";
+
+import ReCAPTCHAComponent from "./ReCAPTCHAComponent";
 
 type RegisterFormProps = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;

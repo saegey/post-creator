@@ -72,8 +72,8 @@ const ThemePreview = () => {
             return (
               <ColorInfo
                 name={color}
-                color={palette[color]}
-                rawColor={palette[color]}
+                color={palette[color as keyof typeof palette] as string}
+                rawColor={palette[color as keyof typeof palette] as string}
               />
             );
           })}

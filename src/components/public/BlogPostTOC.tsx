@@ -19,7 +19,7 @@ const BlogPostTOC = ({ toc }: { toc: TransformType[] }) => {
         </Text>
         <Flex sx={{ flexDirection: "column" }}>
           {toc.map((node) => (
-            <TOCLink key={node.id} node={node} />
+            <TOCLink node={node} />
           ))}
         </Flex>
       </Box>

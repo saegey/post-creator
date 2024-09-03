@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Flex, Link as ThemeLink, Text, Label, Box } from "theme-ui";
 import Link from "next/link";
 import Router from "next/router";
-import AuthPageLayout from "../src/components/auth/AuthPageLayout";
+
 import AuthInput from "../src/components/auth/AuthInput";
 import AuthButton from "../src/components/auth/AuthButton";
 import { NotificationContext } from "../src/components/NotificationContext";

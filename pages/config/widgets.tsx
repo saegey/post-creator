@@ -203,14 +203,13 @@ const ThemePreview = () => {
             }
           >
             <CloudImage
-              // selected={}
-              // imageUrl={""}
               imageUrl="http://res.cloudinary.com/dprifih4o/image/upload/v1725137432/dxrbs3nzmvodmn9xbyxl.jpg"
               imageMeta={imageMeta}
               focused={false}
               onMaximize={function (): void {
                 throw new Error("Function not implemented.");
               }}
+              selected={false}
             />
           </Box>
           <Box variant="boxes.componentCard" contentEditable={false}>

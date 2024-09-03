@@ -46,7 +46,7 @@ const RegisterPage: React.FC = () => {
       });
 
       setUsername(email);
-      setNotification({ type: "Success", message: "Registered successfully!" });
+      // setNotification({ type: "Success", message: "Registered successfully!" });
     } catch (error) {
       handleError(error);
     } finally {
@@ -68,7 +68,7 @@ const RegisterPage: React.FC = () => {
     }
   };
 
-  const handleError = (error: ErrorType) => {
+  const handleError = (error: any) => {
     if (error.code === "InvalidPasswordException") {
       setNotification({ type: "Error", message: error.message });
     }

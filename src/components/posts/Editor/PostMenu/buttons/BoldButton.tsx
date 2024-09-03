@@ -5,7 +5,7 @@ import {
   isMarkActive,
   toggleMark,
 } from "../../../../../utils/SlateUtilityFunctions";
-import { CustomEditor } from "../../../../../types/common";
+import { CustomEditor, ThemeUIColor } from "../../../../../types/common";
 import BoldIcon from "../../../../icons/BoldIcon";
 
 const BoldButton = ({ editor }: { editor: CustomEditor }) => {
@@ -23,11 +23,11 @@ const BoldButton = ({ editor }: { editor: CustomEditor }) => {
       }}
     >
       <BoldIcon
-        color={
-          isMarkActive(editor, "bold")
+        sx={{
+          color: isMarkActive(editor, "bold")
             ? "floatingMenuIconActive"
-            : "floatingMenuIcon"
-        }
+            : "floatingMenuIcon",
+        }}
       />
     </Box>
   );

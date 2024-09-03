@@ -6,7 +6,7 @@ import Router from "next/router";
 import AuthInput from "../src/components/auth/AuthInput";
 import AuthButton from "../src/components/auth/AuthButton";
 import { resetPassword, requestPasswordReset } from "../src/utils/authActions";
-import ReCAPTCHAComponent from "../src/components/auth/RECAPTCHAComponent";
+import ReCAPTCHAComponent from "../src/components/auth/ReCAPTCHAComponent";
 import Head from "next/head";
 import LogoBlock from "../src/components/public/LogoBlock";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
