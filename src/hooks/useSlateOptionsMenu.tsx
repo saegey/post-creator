@@ -1,12 +1,9 @@
 import React from "react";
-import { Transforms } from "slate";
-import { Box, Text, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Box, ThemeUIStyleObject, Theme } from "theme-ui";
 
 import { CustomEditor } from "../types/common";
-import OptionsMenu from "../components/posts/Editor/OptionsMenu";
-import { moveNodeDown, moveNodeUp } from "../utils/SlateUtilityFunctions";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
-import OptionsButton from "../components/buttons/OptionsButton";
+import OptionsIcon from "../components/icons/OptionsIcon";
 
 const useOptionsMenu = (editor: CustomEditor, path: any) => {
   const { isOptionsOpen, setIsOptionsOpen, setMobileMenu, setMenuPosition } =
@@ -53,7 +50,7 @@ const useOptionsMenu = (editor: CustomEditor, path: any) => {
         setIsOptionsOpen(true);
       }}
     >
-      <OptionsButton />
+      <OptionsIcon />
     </Box>
   );
 

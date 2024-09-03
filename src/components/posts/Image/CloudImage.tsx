@@ -19,7 +19,7 @@ const CloudImage = ({
   focused,
   onMaximize,
 }: MemoizedImageProps) => {
-  console.log("rendering CloudImage");
+  console.log("rendering CloudImage", imageMeta);
   return (
     <figure>
       <Flex
@@ -48,7 +48,7 @@ const CloudImage = ({
       <Box
         sx={{
           position: "absolute",
-          left: "10px",
+          right: "10px",
           top: "10px",
           cursor: "pointer",
         }}

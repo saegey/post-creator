@@ -1,11 +1,12 @@
-import { Flex, Text, Box } from "theme-ui";
+import { Flex, Box } from "theme-ui";
 import React from "react";
-import { Path, Transforms } from "slate";
+import { Transforms } from "slate";
 
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
+import GenericMenuItem from "../../GenericMenuItem";
 
 const AddActivityOverview = () => {
   const { gpxFile } = React.useContext(PostContext);
@@ -56,22 +57,11 @@ const AddActivityOverview = () => {
       onClick={() => addActivityOverview()}
       variant="boxes.sidebarMenuItem"
       sx={{
+        // padding: "10px",
         cursor: gpxFile ? "pointer" : "not-allowed",
       }}
     >
-      <Flex sx={{ alignItems: "center", gap: "20px" }}>
-        <Box
-          sx={{
-            width: "16px",
-            height: "auto",
-          }}
-        >
-          <ActivityOverviewIcon />
-        </Box>
-        <Text as="span" sx={{ fontSize: "14px" }}>
-          Activity Overview
-        </Text>
-      </Flex>
+      <GenericMenuItem label="Metrics" icon={<ActivityOverviewIcon />} />
     </Box>
   );
 };

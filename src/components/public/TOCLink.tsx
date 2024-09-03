@@ -31,17 +31,17 @@ const useHighlighted = (id: string) => {
 };
 
 const TOCLink = ({ node }: { node: TransformType }) => {
-  // const fontSizes = { 2: "base", 3: "sm", 4: "xs" };
   const id = node?.data?.hProperties?.id as string;
   const [highlighted, setHighlighted] = useHighlighted(id);
   return (
     <ThemeLink
       href={`#${id}`}
       sx={{
-        color: highlighted ? "text" : "#898c8c",
+        color: highlighted
+          ? "publicBlogTOCHeadingSelected"
+          : "publicBlogTOCHeading",
         marginTop: "4px",
         marginBottom: "12px",
-        // fontWeight: [500, 0, 0],
         textDecoration: "none",
         fontWeight: [
           500,
@@ -50,7 +50,7 @@ const TOCLink = ({ node }: { node: TransformType }) => {
         ],
         ":hover": {
           fontWeight: 500,
-          color: "text",
+          color: "publicBlogTOCHeadingHover",
         },
       }}
       onClick={(e) => {

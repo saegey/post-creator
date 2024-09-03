@@ -8,7 +8,7 @@ import {
 } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import PowerGraphElement from "../PowerGraph/PowerGraphElement";
-import ImageElement from "../Image/ImageElement";
+import ImageWrapper from "../Image/ImageWrapper";
 import VisualOverviewWrapper from "../VisualOverview/VisualOverviewWrapper";
 import ActivityOverviewWrapper from "../ActivityOverview/ActivityOverviewWrapper";
 import TimePowerZonesWrapper from "../TimeInZones/TimePowerZonesWrapper";
@@ -59,7 +59,7 @@ const renderElement = (props: {
         />
       );
     case "image":
-      return <ImageElement children={children} element={element} />;
+      return <ImageWrapper children={children} element={element} />;
     case "heroBanner":
       return <HeroBanner element={element} />;
     case "link":

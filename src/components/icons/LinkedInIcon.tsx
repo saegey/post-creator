@@ -1,8 +1,8 @@
-import { IconButton } from "theme-ui";
+import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
-const LinkedinIcon = () => {
+const LinkedinIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => {
   return (
-    <IconButton aria-label="Share on Linkedin" sx={{ color: "#9e9e9e" }}>
+    <IconButton aria-label="Share on Linkedin" sx={sx}>
       <svg
         width="100%"
         height="100%"

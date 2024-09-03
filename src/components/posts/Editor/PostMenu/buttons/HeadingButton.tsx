@@ -1,13 +1,14 @@
-import { IconButton } from "theme-ui";
+import { Box } from "theme-ui";
 import { Transforms, Editor, Element as SlateElement } from "slate";
+
 import { isBlockActive } from "../../../../../utils/SlateUtilityFunctions";
 import { CustomEditor } from "../../../../../types/common";
+import HeadingIcon from "../../../../icons/HeadingIcon";
 
 const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
   const { selection } = editor;
   return (
-    <IconButton
-      aria-label="Toggle header"
+    <Box
       onMouseDown={(e) => {
         e.preventDefault();
         console.log(selection);
@@ -34,29 +35,20 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
         }
       }}
       sx={{
-        // width: "24px",
-        // height: "auto",
         marginX: ["5px", 0, 0],
         marginBottom: ["5px", 0, 0],
         verticalAlign: "top",
       }}
       key="headingtwo"
     >
-      <svg
-        className="menu-button"
-        fill={
-          isBlockActive(editor, "heading-two")
-            ? "var(--theme-ui-colors-text)"
-            : "var(--theme-ui-colors-iconButtonDisabled)"
-        }
-        width="100%"
-        height="100%"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M18 20V4h-3v6H9V4H6v16h3v-7h6v7z" />
-      </svg>
-    </IconButton>
+      <HeadingIcon
+        sx={{
+          color: isBlockActive(editor, "heading-two")
+            ? "floatingMenuIconActive"
+            : "floatingMenuIcon",
+        }}
+      />
+    </Box>
   );
 };
 

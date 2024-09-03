@@ -17,14 +17,44 @@ const palette = {
   yellow: "#ffd700",
 };
 
+export { palette };
+
 export default {
   useColorSchemeMediaQuery: true, // Enables system preference detection
   colors: {
-    primary: palette.black,
+    // primary: palette.black,
     iconColor: palette.grayDark,
-    secondary: palette.grayDarker,
+    // secondary: palette.grayDarker,
     publicHeaderBackground: palette.grayLight,
+    publicSocialIcon: palette.grayDark,
+
+    publicBlogDivider: palette.grayMedium,
+    publicBlogHeaderBackIcon: palette.grayDark,
+    publicBlogHeaderText: palette.grayDark,
+
+    publicMenuBackground: palette.white,
+    publicMenuItemTitle: palette.grayDark,
+    publicMenuItemTitleDisabled: palette.grayMedium,
+    publicMenuItemBadge: palette.grayDark,
+
+    publicBackground: palette.white,
+    publicBlogTOCHeading: palette.grayDark,
+    publicBlogTOCHeadingSelected: palette.grayDarkest,
+    publicBlogTOCHeadingHover: palette.grayDark,
+    publicMobileNavBackground: palette.white,
+
+    publicBlogContentLink: palette.black,
+
     background: palette.white,
+    mobileMenuBackground: palette.white,
+
+    linkButtonBackground: palette.white,
+    linkButtonBorder: palette.grayMedium,
+
+    floatingMenuBackground: palette.grayDarker,
+    floatingMenuIcon: palette.grayLight,
+    floatingMenuIconActive: palette.blue,
+
     text: palette.black,
     muted: palette.grayLight,
     highlight: palette.yellow,
@@ -33,7 +63,7 @@ export default {
     // skeletonLight: palette.grayLight,
     // skeletonDark: palette.grayMedium,
     loginBackground: palette.white,
-    loginBorder: palette.grayMediumLight,
+    loginBorder: palette.grayMedium,
 
     menuBorder: palette.grayMedium,
     inputBackgroundColor: palette.grayLighter,
@@ -82,29 +112,52 @@ export default {
     messagesBorderLeft: palette.grayMedium,
     modalBackground: palette.black,
     modalClose: palette.white,
-    floatingMenuBackground: palette.grayDarker,
-    floatingMenuIcon: palette.grayLight,
+
     footerMenuLink: palette.grayDark,
     footerBackground: palette.grayLight,
     blogHeaderBackground: palette.grayLight,
     textMuted: palette.grayDark,
-    publicMenuBackground: palette.white,
-    publicBackground: palette.white,
+
     modes: {
       dark: {
-        publicHeaderBackground: palette.grayDarkness,
         footerBackground: palette.grayDarkness,
         menuBorder: palette.grayDark,
         iconColor: palette.grayLight,
-        primary: palette.grayLight,
-        secondary: palette.blue,
+
         background: palette.grayDarker,
+        mobileMenuBackground: palette.grayDarker,
+        linkButtonBackground: palette.grayDarker,
+        linkButtonBorder: palette.grayMedium,
+
+        floatingMenuBackground: palette.black,
+        floatingMenuIcon: "red",
+
+        publicSocialIcon: palette.grayLight,
+        publicHeaderBackground: palette.grayDarkness,
+        publicBlogDivider: palette.grayDark,
+        publicBlogHeaderBackIcon: palette.grayLight,
+        publicBlogHeaderText: palette.grayLight,
+        publicMenuBackground: palette.grayDarkest,
+        publicBackground: palette.grayDarkest,
+        publicMobileNavBackground: palette.grayDarkest,
+
+        publicMenuItemTitle: palette.grayLight,
+        publicMenuItemTitleDisabled: palette.grayDark,
+        publicMenuItemBadge: palette.grayDark,
+
+        publicBlogContentLink: palette.white,
+
+        publicBlogTOCHeading: palette.grayDark,
+        publicBlogTOCHeadingSelected: palette.grayLight,
+        publicBlogTOCHeadingHover: palette.grayDark,
+
         text: palette.white,
         muted: palette.grayDark,
         highlight: palette.yellow,
         accent: palette.blue,
         gray: palette.grayDark,
-        loginBackground: palette.grayDarkness,
+        loginBackground: palette.grayDarkest,
+        loginBorder: palette.grayDark,
         // skeletonLight: palette.grayDarker,
         // skeletonDark: palette.black,
         inputFocusBorderColor: palette.white,
@@ -142,12 +195,9 @@ export default {
         chartAxes: palette.white,
         dropdownMenuBackground: palette.grayDark,
         dropdownMenuHoverBackground: palette.grayDarker,
-        floatingMenuBackground: palette.black,
-        floatingMenuIcon: "red",
+
         footerMenuLink: palette.grayLight,
         blogHeaderBackground: palette.grayDarkness,
-        publicMenuBackground: palette.grayDarkest,
-        publicBackground: palette.grayDarkest,
       },
     },
   },
@@ -158,6 +208,48 @@ export default {
     },
   },
   text: {
+    publicBlogTOCHeader: {
+      textTransform: "uppercase",
+      fontSize: "14px",
+      fontWeight: 400,
+      lineHeight: "20px",
+      marginBottom: "16px",
+      height: "48px",
+      borderBottomColor: "publicBlogDivider",
+      borderBottomWidth: "1px",
+      borderBottomStyle: "solid",
+    },
+    publicBlogHeaderText: {
+      marginBottom: "16px",
+      fontSize: ["33px", "40px", "46px"],
+      fontWeight: 400,
+      lineHeight: ["48px", "48px", "64px"],
+      letterSpacing: "-2px",
+    },
+    publicBlogHeaderBack: {
+      marginBottom: "58px",
+      lineHeight: "34px",
+      fontWeight: 400,
+      fontSize: "26px",
+      color: "publicBlogHeaderText",
+    },
+    publicBlogAuthorName: {
+      fontWeight: "400",
+      fontSize: "16px",
+      lineHeight: "24px",
+    },
+    publicBlogHeaderExcerpt: {
+      marginBottom: "30px",
+      paddingTop: "16px",
+      fontSize: "16px",
+      lineHeight: "28px",
+      fontWeight: 300,
+    },
+    publicHeaderDate: {
+      fontWeight: "400",
+      fontSize: "14px",
+      lineHeight: "24px",
+    },
     aboutHeader: {
       fontWeight: 400,
       fontSize: "40px",
@@ -186,7 +278,8 @@ export default {
       },
       cursor: "pointer",
       color: "text",
-      padding: "5px",
+      backgroundColor: "purple",
+      // padding: "5px",
       width: "100%",
       fontSize: ["17px", "15px", "15px"],
       textDecoration: "none",
@@ -203,8 +296,32 @@ export default {
       width: "32px",
       borderRadius: "5px",
     },
+    publicMenuDropdown: {
+      position: "absolute",
+      width: "300px",
+      padding: "20px",
+      marginLeft: "-10px",
+      borderRadius: "5px",
+      backgroundColor: "publicMenuBackground",
+      borderColor: "menuBorder",
+      borderWidth: "1px",
+      borderStyle: "solid",
+      boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
+    },
+    publicShareSection: {
+      marginTop: "16px",
+      gap: "16px",
+      marginBottom: "200px",
+      maxWidth: "1280px",
+      marginX: ["16px", "16px", "16px"],
+      borderTopColor: "publicBlogDivider",
+      borderTopStyle: "solid",
+      borderTopWidth: "1px",
+      paddingTop: "24px",
+      flexDirection: ["column", "row", "row"],
+    },
     menuItem: {
-      padding: "10px",
+      padding: "5px",
       background: "background",
       borderColor: "menuBorder",
       borderWidth: "1px",
@@ -214,13 +331,10 @@ export default {
       boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
       animation: "fadeIn .2s;",
     },
-    // figure: {
-    //   backgroundColor: "red",
-    // },
     sidebarMenuItem: {
       fontSize: "15px",
-      paddingLeft: "15px",
-      paddingY: "10px",
+      // paddingLeft: "15px",
+      paddingY: "5px",
       borderRadius: "5px",
       width: "100%",
       "&:hover": {
@@ -233,11 +347,6 @@ export default {
     },
     componentCard: {
       maxWidth: "690px",
-      // backgroundColor: [
-      //   "background",
-      //   "activityOverviewBackgroundColor",
-      //   "activityOverviewBackgroundColor",
-      // ],
       borderColor: [
         "background",
         "activityOverviewBackgroundColor",

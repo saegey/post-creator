@@ -5,7 +5,7 @@ import React from "react";
 
 import MatchesBurned from "./MatchesBurned";
 import Dropdown from "../../shared/Dropdown";
-import OptionsButton from "../../buttons/OptionsButton";
+import OptionsIcon from "../../icons/OptionsIcon";
 import { useClickOutside } from "../../../utils/ux";
 import { MatchesBurnedType } from "../../../types/common";
 
@@ -71,7 +71,7 @@ const MatchesBurnedWrapper = ({ element }: { element: MatchesBurnedType }) => {
         />
       </Box>
       <Box sx={{ position: "absolute", top: "10px", right: "10px" }}>
-        <OptionsButton
+        <OptionsIcon
           onClick={() => {
             if (isMenuOpen) {
               setIsMenuOpen(false);

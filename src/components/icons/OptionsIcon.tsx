@@ -1,19 +1,24 @@
-import { IconButton } from "theme-ui";
+import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
-const OptionsButton = ({ onClick = () => {} }) => (
+const OptionsIcon = ({
+  onClick,
+  sx,
+}: {
+  onClick?: () => void;
+  sx?: ThemeUIStyleObject | undefined;
+}) => (
   <IconButton
     aria-label="Toggle options"
     variant="iconButton"
     onClick={onClick}
     type="button"
-    sx={{ color: "iconColor" }}
+    sx={sx}
     onMouseDown={(e) => e.preventDefault()} // Prevent the default behavior
     onTouchStart={(e) => e.preventDefault()} // Prevent on touch devices
   >
     <svg
-      fill={"currentColor"}
-      // fill="var(--theme-ui-colors-text)"
-      className="menu-button"
+      fill={"currentcolor"}
+      // className="menu-button"
       width="100%"
       height="100%"
       viewBox="0 0 32 32"
@@ -23,4 +28,4 @@ const OptionsButton = ({ onClick = () => {} }) => (
   </IconButton>
 );
 
-export default OptionsButton;
+export default OptionsIcon;

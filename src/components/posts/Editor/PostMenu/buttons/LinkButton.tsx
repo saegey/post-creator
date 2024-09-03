@@ -1,10 +1,11 @@
 import React from "react";
-import { insertLink } from "../../../../../utils/link";
-
 import { Box, Input, Checkbox, Flex, Label, IconButton } from "theme-ui";
-import usePopup from "../../../../usePopup";
 import { BaseSelection, Transforms } from "slate";
+
+import { insertLink } from "../../../../../utils/link";
+import usePopup from "../../../../usePopup";
 import { CustomEditor } from "../../../../../types/common";
+import LinkIcon from "../../../../icons/LinkIcon";
 
 const LinkButton = ({ editor }: { editor: CustomEditor }) => {
   const linkInputRef = React.useRef<HTMLDivElement>(null);
@@ -24,7 +25,7 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
     setShowInNewTab(false);
   };
 
-  const toggleLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const toggleLink = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     setSelection(editor.selection);
     setShowPopup((prev) => !prev);
@@ -39,49 +40,32 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
   };
 
   return (
-    <Box ref={linkInputRef} sx={{ position: "relative", display: "inline" }}>
-      <IconButton
-        onMouseDown={(e) => toggleLink(e)}
-        title={"Toggle Bold Text"}
-        // variant="iconButton"
-        sx={{
-          marginX: ["5px", 0, 0],
-          marginBottom: ["5px", 0, 0],
-          verticalAlign: "top",
-        }}
-      >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10 8H6C4.34315 8 3 9.34315 3 11V13C3 14.6569 4.34315 16 6 16H10M9 12H15M14 8H18C19.6569 8 21 9.34315 21 11V13C21 14.6569 19.6569 16 18 16H14"
-            stroke="var(--theme-ui-colors-iconButtonDisabled)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </IconButton>
+    <Box
+      ref={linkInputRef}
+      sx={{ position: "relative", display: "inline" }}
+      onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+        toggleLink(e)
+      }
+    >
+      <LinkIcon sx={{ color: "floatingMenuIcon" }} />
       {showPopup && (
         <Box
           sx={{
             position: "absolute",
             top: "40px",
-            left: "-85px",
+            left: "-105px",
             width: "300px",
-            backgroundColor: "background",
+            backgroundColor: "linkButtonBackground",
+            borderColor: "linkButtonBorder",
+            borderWidth: "1px",
+            borderStyle: "solid",
             height: "fit-content",
-            border: "1px solid lightgray",
             padding: "5px",
             borderRadius: "5px",
             zIndex: 1,
           }}
         >
-          <div style={{ display: "flex", gap: "4px", margin: "5px 2px" }}>
+          <Box sx={{ display: "flex", gap: "4px", margin: "5px 2px" }}>
             <Input
               id="url"
               name="url"
@@ -90,7 +74,7 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
               variant={"defaultInput"}
               onChange={(e) => handleInputChange(e)}
             />
-            <div onClick={() => handleInsertLink()}>
+            <Box onClick={() => handleInsertLink()}>
               <IconButton>
                 <svg
                   width="100%"
@@ -131,8 +115,8 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
                   </g>
                 </svg>
               </IconButton>
-            </div>
-          </div>
+            </Box>
+          </Box>
           <Flex>
             <Label>
               <Checkbox onChange={handleInputChange} />

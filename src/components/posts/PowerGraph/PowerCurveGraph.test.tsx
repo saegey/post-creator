@@ -33,7 +33,7 @@ describe("PowerCurveChart", () => {
     { x: 300, y: 180 },
   ];
 
-  const defaultProps: PowerCurveChartProps = {
+  const defaultProps = {
     data: mockData,
     ftp: 200,
   };

@@ -41,7 +41,7 @@ const MobileMenu = () => {
             top: `0px`,
             left: "0px",
             // border: "1px solid #ccc",
-            backgroundColor: "background",
+            backgroundColor: "mobileMenuBackground",
             width: "100%",
             height: "100dvh",
             zIndex: "301",

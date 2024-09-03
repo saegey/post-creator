@@ -15,24 +15,20 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const powerGraph = React.useMemo(() => {
-    return (
-      <PowerCurveGraph
-        ftp={currentFtp ? Number(currentFtp) : 0}
-        data={
-          Object.keys(powerAnalysis ? powerAnalysis : [])
-            .map((k, _) => {
-              if (Number(k) > 0) {
-                return {
-                  x: Number(k),
-                  y: powerAnalysis
-                    ? powerAnalysis[k as keyof Object]
-                    : undefined,
-                };
-              }
-            })
-            .filter((p) => p !== undefined) as any
+    const data = Object.keys(powerAnalysis ? powerAnalysis : [])
+      .map((k, _) => {
+        if (Number(k) > 0) {
+          return {
+            x: Number(k),
+            y: powerAnalysis ? powerAnalysis[k as keyof Object] : undefined,
+          };
         }
-      />
+      })
+      .filter((p) => p !== undefined) as any;
+
+    console.log("data", data);
+    return (
+      <PowerCurveGraph ftp={currentFtp ? Number(currentFtp) : 0} data={data} />
     );
   }, [powerAnalysis, currentFtp]);
 

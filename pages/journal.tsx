@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { Box, Flex, Text } from "theme-ui";
 
-import PublicHeader from "../src/components/public/header";
+import PublicHeader from "../src/components/public/Header/PublicHeader";
 import PublicFooter from "../src/components/public/Footer/Footer";
 
 const Journal = () => {
@@ -20,6 +20,7 @@ const Journal = () => {
             height: "600px",
             justifyContent: "center",
             alignItems: "center",
+            backgroundColor: "publicBackground",
             // zIndex: 1,
             position: "relative",
           }}

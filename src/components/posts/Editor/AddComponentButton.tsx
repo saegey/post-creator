@@ -1,11 +1,11 @@
-import { Box, Flex, Text } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 import { Path } from "slate";
 
 import { EditorContext } from "./EditorContext";
 import { CustomEditor } from "../../../types/common";
-import ComponentButton from "./ComponentButton";
 import { useSlateContext } from "../../SlateContext";
+import GenericMenuItem from "../../GenericMenuItem";
 
 type AddComponentButtonProps = {
   path: Path;
@@ -66,7 +66,7 @@ const AddComponentButton = ({
         cursor: isDisabled ? "not-allowed" : "pointer",
       }}
     >
-      <ComponentButton label={label} icon={icon} />
+      <GenericMenuItem label={label} icon={icon} isDisabled={isDisabled} />
     </Box>
   );
 };

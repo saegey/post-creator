@@ -20,17 +20,17 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
 }) => {
   const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
   const { mobileMenu, setMobileMenu } = React.useContext(EditorContext);
-  const imageUrl = getCldImageUrl(
-    {
-      src: user.attributes.picture,
-      width: 100,
-    },
-    {
-      cloud: {
-        cloudName: cloudUrl,
-      },
-    }
-  );
+  // const imageUrl = getCldImageUrl(
+  //   {
+  //     src: user.attributes.picture,
+  //     width: 100,
+  //   },
+  //   {
+  //     cloud: {
+  //       cloudName: cloudUrl,
+  //     },
+  //   }
+  // );
 
   return (
     <Flex

@@ -1,11 +1,12 @@
 import React from "react";
 import { Transforms } from "slate";
-import { Box, Text, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Box } from "theme-ui";
 
 import OptionsMenu from "../components/posts/Editor/OptionsMenu";
 import { moveNodeDown, moveNodeUp } from "../utils/SlateUtilityFunctions";
 import { EditorContext } from "./posts/Editor/EditorContext";
 import { useSlateContext } from "./SlateContext";
+import GenericMenuItem from "./GenericMenuItem";
 
 const OptionsDropdown = () => {
   const { isOptionsOpen, setIsOptionsOpen } = React.useContext(EditorContext);
@@ -24,34 +25,35 @@ const OptionsDropdown = () => {
       path={path}
     >
       <>
-        <Box
-          onClick={() => {
-            moveNodeUp(editor, path);
-            setIsOptionsOpen(false);
-          }}
-          variant="boxes.sidebarMenuItem"
-        >
-          <Text>Move Up</Text>
+        <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+          <GenericMenuItem
+            onClick={() => {
+              moveNodeUp(editor, path);
+              setIsOptionsOpen(false);
+            }}
+            label="Move Up"
+          />
         </Box>
-        <Box
-          onClick={() => {
-            moveNodeDown(editor, path);
-            setIsOptionsOpen(false);
-          }}
-          variant="boxes.sidebarMenuItem"
-        >
-          <Text>Move Down</Text>
+        <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+          <GenericMenuItem
+            onClick={() => {
+              moveNodeDown(editor, path);
+              setIsOptionsOpen(false);
+            }}
+            label="Move Down"
+          />
         </Box>
-        <Box
-          onClick={() => {
-            setIsOptionsOpen(false);
-            Transforms.removeNodes(editor, { at: path });
-            const selection = window.getSelection();
-            selection && selection.removeAllRanges();
-          }}
-          variant="boxes.sidebarMenuItem"
-        >
-          <Text>Delete</Text>
+        <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+          <GenericMenuItem
+            onClick={() => {
+              Transforms.removeNodes(editor, { at: path });
+
+              setIsOptionsOpen(false);
+              const selection = window.getSelection();
+              selection && selection.removeAllRanges();
+            }}
+            label="Delete"
+          />
         </Box>
       </>
     </OptionsMenu>

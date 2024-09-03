@@ -25,7 +25,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onClose }) => (
   >
     <Flex sx={{ gap: "10px", width: "100%" } as ThemeUIStyleObject<Theme>}>
       <Box sx={{ width: "40px", height: "40px" } as ThemeUIStyleObject<Theme>}>
-        {user.attributes.picture ? (
+        {user.attributes && user.attributes.picture ? (
           <CldImage
             width="400"
             height="400"

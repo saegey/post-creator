@@ -38,6 +38,7 @@ const getHeadings = (root: Node) => {
 };
 
 export interface TransformType {
+  id: string;
   value: string;
   depth: 1 | 2 | 3 | 4 | 5 | 6;
   data: HeadingData | undefined;
@@ -50,6 +51,7 @@ const transformNode = (
   indexMap: Record<string, TransformType>
 ) => {
   const transformedNode = {
+    id: "", // Add the id property here
     value: toString(node),
     depth: node.depth,
     data: node.data,

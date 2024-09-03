@@ -4,7 +4,7 @@ import { Box, Flex, Text } from "theme-ui";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import PublicHeader from "../src/components/public/header";
+import PublicHeader from "../src/components/public/Header/PublicHeader";
 import PublicFooter from "../src/components/public/Footer/Footer";
 import AboutUs from "../src/components/public/About";
 import Team from "../src/components/public/Team";

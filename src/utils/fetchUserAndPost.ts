@@ -26,11 +26,11 @@ export const fetchUserAndPost = async (req: object, postId: string) => {
       email: payload.email,
       email_verified: payload.email_verified,
       attributes: {
-        picture: payload.picture,
+        picture: payload.picture ? payload.picture : null,
         name: payload.name,
         preferred_username: payload.preferred_username,
         sub: payload.sub,
-        profile: payload.profile,
+        profile: payload.profile ? payload.profile : null,
         zoneinfo: payload.zoneinfo,
       },
     };

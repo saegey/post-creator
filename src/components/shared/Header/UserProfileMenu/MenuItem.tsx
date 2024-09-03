@@ -23,11 +23,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => (
   <Flex
     as="li"
-    // variant="profileMenuItem"
     sx={
       {
-        // padding: "5px",
-        // margin: "5px",
         fontSize: "15px",
         fontWeight: 500,
       } as ThemeUIStyleObject<Theme>

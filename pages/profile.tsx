@@ -44,11 +44,11 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
     email_verified: email_verified,
     // role: role,
     attributes: {
-      picture,
+      picture: picture ? picture : null,
       name,
       preferred_username,
       sub,
-      profile,
+      profile: profile ? profile : null,
       zoneinfo,
     },
   };

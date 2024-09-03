@@ -14,7 +14,13 @@ import AddText from "./AddText";
 const GraphSelectorMenu = () => {
   return (
     <>
-      <Flex sx={{ flexDirection: "column", margin: "0px" }}>
+      <Flex
+        sx={{
+          flexDirection: "column",
+          margin: "0px",
+          width: "100%",
+        }}
+      >
         <AddText />
         <AddImage />
         <AddPowerCurve />

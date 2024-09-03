@@ -2,8 +2,6 @@ import React from "react";
 import { Box, Link as ThemeLink, Text, Flex } from "theme-ui";
 import Link from "next/link";
 
-import Logo from "../shared/Logo";
-
 const LogoBlock = ({
   size,
   inheritColor = false,

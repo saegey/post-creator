@@ -6,7 +6,6 @@ const AboutUs = ({ show }: { show: boolean }) => {
       sx={{
         margin: "16px",
         marginTop: "80px",
-        // display: isAbout ? "" : "none",
         opacity: show ? 1 : 0,
         transition: "opacity 300ms ease 0s",
         display: show ? "block" : "none",
