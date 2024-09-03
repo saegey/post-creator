@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeUIStyleObject, Theme, Box } from "theme-ui";
 import PlusIcon from "./icons/PlusIcon";
+import { lighten } from "@theme-ui/color";
 
 const HoverIcon = ({
   onClick,
@@ -20,7 +21,10 @@ const HoverIcon = ({
       }
       contentEditable={false}
     >
-      <PlusIcon onClick={onClick} sx={{ color: "accent" }} />
+      <PlusIcon
+        onClick={onClick}
+        sx={{ color: lighten("accent", 0.2), "&:hover": { color: "accent" } }}
+      />
     </Box>
   );
 };

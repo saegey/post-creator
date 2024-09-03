@@ -5,6 +5,7 @@ import { CustomEditor } from "../types/common";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
 import OptionsIcon from "../components/icons/OptionsIcon";
 import { Path } from "slate";
+import { darken, lighten } from "@theme-ui/color";
 
 const useOptionsMenu = (
   editor: CustomEditor,
@@ -61,7 +62,7 @@ const useOptionsMenu = (
         sx={{
           backgroundColor: "muted",
           color: "background",
-          "&:hover": { backgroundColor: "accent" },
+          "&:hover": { backgroundColor: lighten("muted", 0.2) },
         }}
       />
     </Box>

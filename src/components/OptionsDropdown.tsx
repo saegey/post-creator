@@ -9,7 +9,8 @@ import { useSlateContext } from "./SlateContext";
 import GenericMenuItem from "./GenericMenuItem";
 
 const OptionsDropdown = () => {
-  const { isOptionsOpen, setIsOptionsOpen } = React.useContext(EditorContext);
+  const { isOptionsOpen, setIsOptionsOpen, setIsHeroImageModalOpen } =
+    React.useContext(EditorContext);
 
   const { menuPosition } = React.useContext(EditorContext);
   const { editor } = useSlateContext();
@@ -53,6 +54,15 @@ const OptionsDropdown = () => {
               selection && selection.removeAllRanges();
             }}
             label="Delete"
+          />
+        </Box>
+
+        <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+          <GenericMenuItem
+            onClick={() => {
+              setIsHeroImageModalOpen(true);
+            }}
+            label="Change"
           />
         </Box>
       </>

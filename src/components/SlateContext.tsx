@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import { Editor, Path } from "slate";
+import { Path } from "slate";
 import { CustomEditor } from "../types/common";
 
 type SlateContextType = {

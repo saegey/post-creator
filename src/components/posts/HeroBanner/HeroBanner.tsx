@@ -11,10 +11,13 @@ import { useSlateContext } from "../../SlateContext";
 import DefaultImage from "./DefaultImage";
 import HeroImage from "./HeroImage";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
+import AddImage from "../Image/AddImage";
+import { EditorContext } from "../Editor/EditorContext";
 
 const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { title, postLocation, date, subhead } = React.useContext(PostContext);
   const { editor, currentPath: path } = useSlateContext();
+  const { isHeroImageModalOpen } = React.useContext(EditorContext);
   if (!editor) {
     return <></>;
   }
@@ -60,7 +63,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
             {element.image && element !== null && imageUrl ? (
               <HeroImage element={element} imageUrl={imageUrl} />
             ) : (
-              <DefaultImage />
+              <DefaultImage element={element} />
             )}
 
             <PostHeaderTextBlock
@@ -84,8 +87,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
 
   return (
     <>
-      {/* {isPhotoCaptionOpen && <PhotoCaptionModal element={element} />}
-      {isHeroImageModalOpen && <AddImage element={element} />} */}
+      {isHeroImageModalOpen && <AddImage element={element} />}
       {heroBannerMemo}
       {optionsMenu}
     </>

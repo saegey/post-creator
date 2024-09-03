@@ -30,6 +30,7 @@ export default {
     background: palette.white,
     backgroundOpaque: "rgba(0, 0, 0, 0.7)",
     backgroundTransparent: "rgba(255, 255, 255, 0.1)",
+    primaryAccent: lighten(palette.black, 0.3),
     text: palette.black,
     muted: palette.grayDark,
     surface: palette.grayMediumLight,
@@ -283,7 +284,7 @@ export default {
     iconButton: {
       borderWidth: "0px",
       backgroundColor: "primary",
-      "&:hover": { backgroundColor: "accent" },
+      "&:hover": { backgroundColor: darken("primary", 0.3) },
       width: "24px",
       height: "24px",
     },
@@ -296,7 +297,7 @@ export default {
       lineHeight: "20px",
       fontWeight: "400",
       "&:hover": {
-        backgroundColor: "accent",
+        backgroundColor: "primaryAccent",
         cursor: "pointer",
       },
       "&:disabled": {
