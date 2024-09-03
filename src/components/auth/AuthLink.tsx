@@ -2,7 +2,15 @@ import React from "react";
 import { Box, Flex, Text, Link as ThemeLink } from "theme-ui";
 import Link from "next/link";
 
-const AuthLink = () => {
+const AuthLink = ({
+  text,
+  linkText,
+  href,
+}: {
+  text: string;
+  linkText: string;
+  href: string;
+}) => {
   return (
     <Flex
       sx={{
@@ -18,18 +26,19 @@ const AuthLink = () => {
       }}
     >
       <Text sx={{ fontWeight: "400", fontSize: "15px" }}>
-        Already have an account?
+        {/* Already have an account? */}
+        {text}
       </Text>
       <ThemeLink
         as={Link}
-        href="/login"
+        href={href}
         sx={{
           textDecoration: "none",
           color: "text",
           "&:hover": { textDecoration: "underline" },
         }}
       >
-        <Text sx={{ fontSize: "16px", fontWeight: "600" }}>Sign in →</Text>
+        <Text sx={{ fontSize: "16px", fontWeight: "600" }}>{linkText}</Text>
       </ThemeLink>
     </Flex>
   );

@@ -2,18 +2,18 @@ import React from "react";
 import { Flex } from "theme-ui";
 import Router from "next/router";
 import Head from "next/head";
-import { Auth } from "aws-amplify";
-
 import { NotificationContext } from "../src/components/NotificationContext";
 import LogoBlock from "../src/components/public/LogoBlock";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import RegisterForm from "../src/components/auth/RegisterForm";
 import VerifyAccountForm from "../src/components/auth/VerifyAccountForm";
 import AuthLink from "../src/components/auth/AuthLink";
+import { registerUser, verifyUser } from "../src/utils/authActions"; // Import from centralized actions
 
-export interface ErrorType {
-  message: string;
+interface ErrorType {
   code: string;
+  message: string;
+  type: string;
 }
 
 const RegisterPage: React.FC = () => {
@@ -22,20 +22,8 @@ const RegisterPage: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { setNotification } = React.useContext(NotificationContext);
 
-  const verifyUser = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (!username) return;
-    const form = new FormData(event.target as HTMLFormElement);
-    const code = form.get("code") as string;
-
-    try {
-      const result = await Auth.confirmSignUp(username, code);
-      Router.push("/login");
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  const registerUser = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsLoading(true);
     const form = new FormData(event.target as HTMLFormElement);
     const email = form.get("email") as string;
@@ -51,23 +39,32 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      const result = await Auth.signUp({
-        username: email,
-        password,
-        attributes: {
-          name,
-          preferred_username: username,
-          zoneinfo: "imperial",
-        },
+      const result = await registerUser(email, password, {
+        name,
+        preferred_username: username,
+        zoneinfo: "imperial",
       });
 
       setUsername(email);
       setNotification({ type: "Success", message: "Registered successfully!" });
-      return result;
-    } catch (error: any) {
+    } catch (error) {
       handleError(error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const verifyAccount = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!username) return;
+    const form = new FormData(event.target as HTMLFormElement);
+    const code = form.get("code") as string;
+
+    try {
+      await verifyUser(username, code);
+      Router.push("/login");
+    } catch (error) {
+      handleError(error);
     }
   };
 
@@ -75,23 +72,13 @@ const RegisterPage: React.FC = () => {
     if (error.code === "InvalidPasswordException") {
       setNotification({ type: "Error", message: error.message });
     }
-    if (error.code === "Network error") {
+    if (error.code === "NetworkError") {
       setNotification({ type: "Error", message: "Network Error" });
     }
     if (error.code === "UsernameExistsException") {
       setNotification({ type: "Error", message: error.message });
     }
     console.error("Error:", error);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    registerUser(event);
-  };
-
-  const verifyAccount = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    verifyUser(event);
   };
 
   return (
@@ -129,7 +116,11 @@ const RegisterPage: React.FC = () => {
             <VerifyAccountForm onSubmit={verifyAccount} isLoading={isLoading} />
           )}
         </AuthFormContainer>
-        <AuthLink />
+        <AuthLink
+          text={"alread have account?"}
+          linkText={"Sign in →"}
+          href="/login"
+        />
       </Flex>
     </>
   );

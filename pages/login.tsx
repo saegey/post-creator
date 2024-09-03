@@ -1,109 +1,115 @@
-import React from "react";
-import { Auth } from "aws-amplify";
-import {
-  Box,
-  Button,
-  Flex,
-  Input,
-  Label,
-  Text,
-  Link as ThemeLink,
-} from "theme-ui";
+import React, { useState, useContext } from "react";
+import { Flex, Link as ThemeLink, Text, Label, Box } from "theme-ui";
 import Link from "next/link";
 import Router from "next/router";
-
+import AuthPageLayout from "../src/components/auth/AuthPageLayout";
+import AuthInput from "../src/components/auth/AuthInput";
+import AuthButton from "../src/components/auth/AuthButton";
 import { NotificationContext } from "../src/components/NotificationContext";
+import { loginUser } from "../src/utils/authActions";
 import EyeIcon from "../src/components/icons/EyeIcon";
 import EyeHideIcon from "../src/components/icons/EyeHideIcon";
+import AuthLink from "../src/components/auth/AuthLink";
+import Head from "next/head";
+import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import LogoBlock from "../src/components/public/LogoBlock";
 
 const LoginPage: React.FC = () => {
-  const { setNotification } = React.useContext(NotificationContext);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
+  const { setNotification } = useContext(NotificationContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const loginUser = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
     const form = new FormData(event.target as HTMLFormElement);
     const email = form.get("email") as string;
     const password = form.get("password") as string;
 
-    const authUser = await Auth.signIn(email, password);
-    console.log("User logged in:", JSON.stringify(authUser));
-    Router.push("/");
+    try {
+      await loginUser(email, password);
+      Router.push("/");
+    } catch (error: any) {
+      handleLoginError(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsLoading(true);
-    loginUser(event)
-      .catch((err: { code: string; name: string }) => {
-        if (err.code === "UserNotFoundException") {
-          setNotification({ message: "User not found", type: "Error" });
-        }
-        if (err.code === "NotAuthorizedException") {
-          setNotification({
-            message: "Email and/or password invalid.",
-            type: "Error",
-          });
-        }
-
-        if (err.code === "NetworkError") {
-          setNotification({
-            message: "Network Error",
-            type: "Error",
-          });
-        }
-
-        console.log(JSON.stringify(err));
-      })
-      .then(() => setIsLoading(false));
+  const handleLoginError = (error: { code: string }) => {
+    switch (error.code) {
+      case "UserNotFoundException":
+        setNotification({ message: "User not found", type: "Error" });
+        break;
+      case "NotAuthorizedException":
+        setNotification({
+          message: "Email and/or password invalid.",
+          type: "Error",
+        });
+        break;
+      case "NetworkError":
+        setNotification({ message: "Network Error", type: "Error" });
+        break;
+      default:
+        console.error(error);
+    }
   };
 
   return (
-    <Flex
-      sx={{
-        flexGrow: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "loginBackground",
-      }}
-    >
-      <Box sx={{ maxWidth: "400px", width: "400px", margin: "20px" }}>
-        <form onSubmit={handleSubmit}>
-          <Flex sx={{ flexDirection: "column", gap: "15px" }}>
-            <Flex sx={{ justifyContent: "center" }}>
-              <LogoBlock />
-            </Flex>
-            <Box
+    <>
+      <Head>
+        <title>Login</title>
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
+        />
+      </Head>
+      <Flex
+        sx={{
+          flexGrow: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          height: ["fit-content", "100dvh", "100dvh"],
+          overflow: ["scroll", "", ""],
+          backgroundColor: "loginBackground",
+        }}
+      >
+        <Flex sx={{ justifyContent: "center" }}>
+          <LogoBlock />
+        </Flex>
+        <AuthFormContainer>
+          <form onSubmit={handleSubmit}>
+            <Flex
               sx={{
-                borderColor: "loginBorder",
-                borderWidth: "1px",
-                borderStyle: "solid",
-                borderRadius: "5px",
-                padding: "20px",
+                flexDirection: "column",
+                marginBottom: "10px",
+                gap: "30px",
               }}
             >
-              <Flex sx={{ flexDirection: "column", marginBottom: "20px" }}>
-                <Label htmlFor="email" variant="defaultLabel">
-                  Email
-                </Label>
-
-                <Input
-                  id="email"
-                  variant="defaultInput"
-                  type="email"
-                  name="email"
-                  // value={user.email}
-                  // onChange={handleInputChange}
+              <AuthInput
+                id="email"
+                label="Email"
+                type="email"
+                name="email"
+                required
+              />
+              <Box>
+                <AuthInput
+                  label="Password"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
                   required
                 />
-              </Flex>
-              <Flex sx={{ flexDirection: "column", marginBottom: "20px" }}>
-                <Flex>
-                  <Label htmlFor="password" variant="defaultLabel">
-                    Password
-                  </Label>
-                  <Flex sx={{ flexGrow: 1, justifyContent: "right" }}>
+                <Box>
+                  <Flex
+                    sx={{
+                      justifyContent: "right",
+                      alignItems: "center",
+                      marginTop: "10px",
+                    }}
+                  >
                     <ThemeLink
                       as={Link}
                       href="/reset"
@@ -117,98 +123,24 @@ const LoginPage: React.FC = () => {
                       Forgot Password?
                     </ThemeLink>
                   </Flex>
-                </Flex>
-                <Flex>
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    variant="defaultInput"
-                    name="password"
-                    sx={{
-                      borderTopRightRadius: "0px",
-                      borderBottomRightRadius: "0px",
-                    }}
-                    // value={user.password}
-                    // onChange={handleInputChange}
-                    required
-                  />
-                  <Flex
-                    sx={{
-                      paddingX: "10px",
-                      backgroundColor: "inputBackgroundColor",
-                      borderRightColor: "inputBorderColor",
-                      borderRightWidth: "1px",
-                      borderRightStyle: "solid",
-                      borderTopColor: "inputBorderColor",
-                      borderTopWidth: "1px",
-                      borderTopStyle: "solid",
-                      borderBottomColor: "inputBorderColor",
-                      borderBottomWidth: "1px",
-                      borderBottomStyle: "solid",
-                      borderTopRightRadius: "5px",
-                      borderBottomRightRadius: "5px",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    <Box
-                      sx={{
-                        width: "24px",
-                        height: "100%",
-                        alignSelf: "center",
-                        placeSelf: "end",
-                        // gridArea: "1/1",
-                        // marginRight: "10px",
-                      }}
-                    >
-                      {showPassword ? <EyeHideIcon /> : <EyeIcon />}
-                    </Box>
-                  </Flex>
-                </Flex>
+                </Box>
+              </Box>
+              <Flex sx={{ justifyContent: "right" }}>
+                <AuthButton type="submit" disabled={isLoading}>
+                  {isLoading ? "Signing in..." : "Sign In"}
+                </AuthButton>
               </Flex>
-              <Flex>
-                <Button
-                  id="submit-login"
-                  type="submit"
-                  variant="primaryButton"
-                  sx={{ width: "100%" }}
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Signing in ..." : "Sign In"}
-                </Button>
-              </Flex>
-            </Box>
-            <Flex
-              sx={{
-                borderColor: "loginBorder",
-                borderWidth: "1px",
-                borderStyle: "solid",
-                padding: "20px",
-                borderRadius: "5px",
-                gap: "10px",
-              }}
-            >
-              <Text sx={{ fontWeight: "400", fontSize: "15px" }}>
-                New to Monopad?{" "}
-              </Text>
-              <ThemeLink
-                as={Link}
-                href="/register"
-                sx={{
-                  textDecoration: "none",
-                  color: "text",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
-                <Text sx={{ fontSize: "16px", fontWeight: "600" }}>
-                  Create an account
-                </Text>
-              </ThemeLink>
             </Flex>
-          </Flex>
-        </form>
-      </Box>
-    </Flex>
+          </form>
+        </AuthFormContainer>
+        <AuthLink
+          text={"Need an account?"}
+          linkText={"Sign Up"}
+          href="/register"
+        />
+      </Flex>
+    </>
   );
 };
+
 export default LoginPage;

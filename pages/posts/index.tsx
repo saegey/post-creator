@@ -32,6 +32,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
 
     const sessionData = session.getIdToken();
     const { payload } = sessionData;
+    console.log(payload);
     //"custom:role": role if custom attribute is added
     const {
       email,
@@ -51,14 +52,15 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
       email_verified: email_verified,
       // role: role,
       attributes: {
-        picture,
+        picture: picture ? picture : null,
         name,
         preferred_username,
         sub,
-        profile,
+        profile: profile ? profile : null,
         zoneinfo,
       },
     };
+    console.log(user);
   } catch (e) {
     console.log(e);
     return {

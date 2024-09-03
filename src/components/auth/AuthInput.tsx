@@ -17,7 +17,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
   ...props
 }) => {
   return (
-    <Box sx={{ marginBottom: "20px" }}>
+    <Box>
       <Label htmlFor={id} variant="defaultLabel">
         {label}
       </Label>
