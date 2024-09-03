@@ -41,6 +41,7 @@ export default {
     publicBlogTOCHeading: palette.grayDark,
     publicBlogTOCHeadingSelected: palette.grayDarkest,
     publicBlogTOCHeadingHover: palette.grayDark,
+    publicMobileNavBackground: palette.white,
 
     publicBlogContentLink: palette.black,
 
@@ -62,7 +63,7 @@ export default {
     // skeletonLight: palette.grayLight,
     // skeletonDark: palette.grayMedium,
     loginBackground: palette.white,
-    loginBorder: palette.grayMediumLight,
+    loginBorder: palette.grayMedium,
 
     menuBorder: palette.grayMedium,
     inputBackgroundColor: palette.grayLighter,
@@ -138,6 +139,7 @@ export default {
         publicBlogHeaderText: palette.grayLight,
         publicMenuBackground: palette.grayDarkest,
         publicBackground: palette.grayDarkest,
+        publicMobileNavBackground: palette.grayDarkest,
 
         publicMenuItemTitle: palette.grayLight,
         publicMenuItemTitleDisabled: palette.grayDark,
@@ -154,7 +156,8 @@ export default {
         highlight: palette.yellow,
         accent: palette.blue,
         gray: palette.grayDark,
-        loginBackground: palette.grayDarkness,
+        loginBackground: palette.grayDarkest,
+        loginBorder: palette.grayDark,
         // skeletonLight: palette.grayDarker,
         // skeletonDark: palette.black,
         inputFocusBorderColor: palette.white,

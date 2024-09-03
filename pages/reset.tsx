@@ -12,9 +12,10 @@ import { Auth } from "aws-amplify";
 import React from "react";
 import Router from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
-
-import Logo from "../src/components/shared/Logo";
 import Link from "next/link";
+
+// import Logo from "../src/components/shared/Logo";
+import LogoBlock from "../src/components/public/LogoBlock";
 
 const Reset: React.FC = () => {
   const [isSubmit, setIsSubmit] = React.useState<boolean>(false);
@@ -73,11 +74,12 @@ const Reset: React.FC = () => {
             <Flex sx={{ justifyContent: "center" }}>
               <Box
                 sx={{
-                  width: ["40px", "50px", "80px"],
+                  // width: ["40px", "50px", "80px"],
                   height: ["40px", "50px", "80px"],
+                  width: "auto",
                 }}
               >
-                <Logo />
+                {/* <LogoBlock /> */}
               </Box>
             </Flex>
             <Flex
@@ -93,21 +95,21 @@ const Reset: React.FC = () => {
                   display: "flex",
                   alignSelf: "center",
                   // justifyContent: "center",
-                  fontSize: "30px",
+                  fontSize: "20px",
                   fontWeight: 500,
                 }}
               >
                 Reset Password
               </Text>
-              <Text sx={{ display: "flex", textAlign: "center" }}>
+              {/* <Text sx={{ display: "flex", textAlign: "center" }}>
                 Enter the email address you used when you joined and we’ll send
                 you instructions to reset your password.
-              </Text>
+              </Text> */}
             </Flex>
             <form onSubmit={handleRequest}>
               <Box
                 sx={{
-                  borderColor: "inputBackgroundColor",
+                  borderColor: "loginBorder",
                   borderWidth: "1px",
                   borderStyle: "solid",
                   borderRadius: "5px",
@@ -197,7 +199,7 @@ const Reset: React.FC = () => {
               </Flex>
               <Box
                 sx={{
-                  borderColor: "inputBackgroundColor",
+                  borderColor: "loginBorder",
                   borderWidth: "1px",
                   borderStyle: "solid",
                   borderRadius: "5px",

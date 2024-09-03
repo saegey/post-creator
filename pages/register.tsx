@@ -1,43 +1,38 @@
 import React from "react";
-import { Auth } from "aws-amplify";
-import {
-  Box,
-  Button,
-  Flex,
-  Input,
-  Label,
-  Text,
-  Link as ThemeLink,
-} from "theme-ui";
+import { Flex } from "theme-ui";
 import Router from "next/router";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useThemeUI } from "theme-ui";
 import Head from "next/head";
-import Logo from "../src/components/shared/Logo";
-import Link from "next/link";
+import { Auth } from "aws-amplify";
+
 import { NotificationContext } from "../src/components/NotificationContext";
 import LogoBlock from "../src/components/public/LogoBlock";
+import AuthFormContainer from "../src/components/auth/AuthFormContainer";
+import RegisterForm from "../src/components/auth/RegisterForm";
+import VerifyAccountForm from "../src/components/auth/VerifyAccountForm";
+import AuthLink from "../src/components/auth/AuthLink";
 
 export interface ErrorType {
   message: string;
   code: string;
 }
+
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = React.useState<string>();
   const [isRobot, setIsRobot] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState(false);
-  const { colorMode } = useThemeUI();
   const { setNotification } = React.useContext(NotificationContext);
 
   const verifyUser = async (event: React.FormEvent<HTMLFormElement>) => {
-    if (!username) {
-      return;
-    }
+    if (!username) return;
     const form = new FormData(event.target as HTMLFormElement);
     const code = form.get("code") as string;
 
-    const result = await Auth.confirmSignUp(username, code);
-    Router.push("/login");
+    try {
+      const result = await Auth.confirmSignUp(username, code);
+      Router.push("/login");
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   const registerUser = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -51,65 +46,52 @@ const RegisterPage: React.FC = () => {
 
     if (password !== password2) {
       setNotification({ type: "Error", message: "Passwords don't match" });
+      setIsLoading(false);
+      return;
     }
 
     try {
       const result = await Auth.signUp({
         username: email,
-        password: password,
-        // email: email,
-        // if custom attribute is added
+        password,
         attributes: {
-          // "custom:role": "user",
-          name: name,
+          name,
           preferred_username: username,
           zoneinfo: "imperial",
         },
       });
 
-      // Auth.confirmSignUp()
-      console.log("User registered:", result);
       setUsername(email);
+      setNotification({ type: "Success", message: "Registered successfully!" });
       return result;
     } catch (error: any) {
-      if (error.code === "InvalidPasswordException") {
-        setNotification({ type: "Error", message: error.message });
-        console.log("Invaid password");
-      }
-      if (error.code === "Network error") {
-        setNotification({ type: "Error", message: "Network Error" });
-      }
-      if (error.code === "UsernameExistsException") {
-        setNotification({ type: "Error", message: error.message });
-      }
-      console.error("Error registering user:", error);
+      handleError(error);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleError = (error: ErrorType) => {
+    if (error.code === "InvalidPasswordException") {
+      setNotification({ type: "Error", message: error.message });
+    }
+    if (error.code === "Network error") {
+      setNotification({ type: "Error", message: "Network Error" });
+    }
+    if (error.code === "UsernameExistsException") {
+      setNotification({ type: "Error", message: error.message });
+    }
+    console.error("Error:", error);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    registerUser(event)
-      .catch((err) => JSON.stringify(err))
-      .then(() => {
-        console.log("done");
-        setIsLoading(false);
-      });
+    registerUser(event);
   };
 
   const verifyAccount = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true);
-    verifyUser(event)
-      .catch((err) => {
-        if (err.code === "CodeMismatchException") {
-          setNotification({ type: "Error", message: "Code is not valid" });
-        }
-        console.log(JSON.stringify(err));
-      })
-      .then(() => {
-        console.log("done");
-        setIsLoading(false);
-      });
+    verifyUser(event);
   };
 
   return (
@@ -133,163 +115,24 @@ const RegisterPage: React.FC = () => {
         }}
       >
         <Flex sx={{ justifyContent: "center" }}>
-          <Flex sx={{ justifyContent: "center" }}>
-            <LogoBlock />
-          </Flex>
+          <LogoBlock />
         </Flex>
-        <Box
-          sx={{
-            borderColor: "loginBorder",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            borderRadius: "5px",
-            maxWidth: "400px",
-            width: ["", "400px", "400px"],
-            margin: "20px",
-            padding: "20px",
-          }}
-        >
-          {!username && (
-            <form onSubmit={handleSubmit}>
-              <Flex sx={{ flexDirection: "column", gap: "15px" }}>
-                <Flex sx={{ flexDirection: "column" }}>
-                  <Label htmlFor="email" variant="defaultLabel">
-                    Email
-                  </Label>
-
-                  <Input
-                    id="email"
-                    variant="defaultInput"
-                    type="email"
-                    name="email"
-                    // value={user.email}
-                    // onChange={handleInputChange}
-                    required
-                  />
-                </Flex>
-                <Flex sx={{ flexDirection: "column" }}>
-                  <Label htmlFor="password" variant="defaultLabel">
-                    Password
-                  </Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    variant="defaultInput"
-                    name="password"
-                    // value={user.password}
-                    // onChange={handleInputChange}
-                    required
-                  />
-                </Flex>
-                <Flex sx={{ flexDirection: "column" }}>
-                  <Label htmlFor="password" variant="defaultLabel">
-                    Confirm Password
-                  </Label>
-                  <Input
-                    id="password2"
-                    type="password"
-                    variant="defaultInput"
-                    name="password2"
-                    required
-                  />
-                </Flex>
-                <Flex sx={{ flexDirection: "column" }}>
-                  <Label htmlFor="name" variant="defaultLabel">
-                    Name
-                  </Label>
-                  <Input
-                    id="name"
-                    variant="defaultInput"
-                    name="name"
-                    // value={user.name}
-                    // onChange={handleInputChange}
-                    required
-                  />
-                </Flex>
-                <Flex sx={{ flexDirection: "column" }}>
-                  <Label htmlFor="username" variant="defaultLabel">
-                    Username
-                  </Label>
-                  <Input
-                    id="username"
-                    variant="defaultInput"
-                    name="username"
-                    // value={user.name}
-                    // onChange={handleInputChange}
-                    required
-                  />
-                </Flex>
-                <Flex sx={{ justifyContent: "center" }}>
-                  <ReCAPTCHA
-                    sitekey="6LdW_CUpAAAAAOC--lA01wOnW1UA3RlZyc_LgX_0"
-                    onChange={() => setIsRobot(false)}
-                    theme={colorMode === "dark" ? "dark" : "light"}
-                  />
-                </Flex>
-
-                <Button
-                  type="submit"
-                  variant="primaryButton"
-                  disabled={isRobot || isLoading}
-                >
-                  {isLoading ? "Registering..." : "Register"}
-                </Button>
-              </Flex>
-            </form>
+        <AuthFormContainer>
+          {!username ? (
+            <RegisterForm
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+              isRobot={isRobot}
+              setIsRobot={setIsRobot}
+            />
+          ) : (
+            <VerifyAccountForm onSubmit={verifyAccount} isLoading={isLoading} />
           )}
-          {username && (
-            <form onSubmit={verifyAccount}>
-              <Flex sx={{ flexDirection: "column", gap: "15px" }}>
-                <Flex sx={{ flexDirection: "column" }}>
-                  <Label htmlFor="email" variant="defaultLabel">
-                    Email Verify Code
-                  </Label>
-
-                  <Input
-                    id="code"
-                    variant="defaultInput"
-                    // type="code"/
-                    name="code"
-                    // value={user.email}
-                    // onChange={handleInputChange}
-                    required
-                  />
-                </Flex>
-                <Button type="submit" variant="primaryButton">
-                  {isLoading ? "Verifying..." : "Verify"}
-                </Button>
-              </Flex>
-            </form>
-          )}
-        </Box>
-        <Box
-          sx={{
-            borderColor: "loginBorder",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            borderRadius: "5px",
-            maxWidth: "400px",
-            width: ["calc(100% - 40px)", "400px", "400px"],
-            margin: "20px",
-            padding: "20px",
-          }}
-        >
-          Already have an account?{" "}
-          <ThemeLink
-            as={Link}
-            href="/login"
-            sx={{
-              // fontSize: "13px",
-              textDecoration: "none",
-              color: "text",
-              "&:hover": { textDecoration: "underline" },
-            }}
-          >
-            Sign in →
-          </ThemeLink>
-        </Box>
+        </AuthFormContainer>
+        <AuthLink />
       </Flex>
     </>
   );
 };
+
 export default RegisterPage;

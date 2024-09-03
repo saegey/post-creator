@@ -13,6 +13,13 @@ const MobileNav = ({
   setIsMenuOpen,
   setIsProductMenuOpen,
   setIsResourcesMenuOpen,
+}: {
+  isMenuOpen: boolean;
+  isProductMenuOpen: boolean;
+  isResourcesMenuOpen: boolean;
+  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsProductMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsResourcesMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   return (
     <Box
@@ -27,7 +34,6 @@ const MobileNav = ({
         right: "0px",
         height: "calc(100vh - 48px)",
         zIndex: 100,
-        backgroundColor: "white",
       }}
     >
       <Flex
@@ -36,7 +42,7 @@ const MobileNav = ({
         sx={{
           width: "100%",
           flexDirection: "column",
-          backgroundColor: "background",
+          backgroundColor: "publicMobileNavBackground",
         }}
       >
         <Box sx={{ marginX: "16px" }}>

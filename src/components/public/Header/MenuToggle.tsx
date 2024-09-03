@@ -1,7 +1,13 @@
 import React from "react";
 import { Flex, MenuButton, Close } from "theme-ui";
 
-const MenuToggle = ({ isMenuOpen, toggleMenu }) => {
+const MenuToggle = ({
+  isMenuOpen,
+  toggleMenu,
+}: {
+  isMenuOpen: boolean;
+  toggleMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   return (
     <Flex sx={{ flexGrow: 1, justifyContent: "right" }}>
       <MenuButton

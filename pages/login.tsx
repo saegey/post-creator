@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   Flex,
-  Grid,
   Input,
   Label,
   Text,
@@ -12,8 +11,8 @@ import {
 } from "theme-ui";
 import Link from "next/link";
 import Router from "next/router";
+
 import { NotificationContext } from "../src/components/NotificationContext";
-import Logo from "../src/components/shared/Logo";
 import EyeIcon from "../src/components/icons/EyeIcon";
 import EyeHideIcon from "../src/components/icons/EyeHideIcon";
 import LogoBlock from "../src/components/public/LogoBlock";
@@ -77,7 +76,7 @@ const LoginPage: React.FC = () => {
             </Flex>
             <Box
               sx={{
-                borderColor: "inputBackgroundColor",
+                borderColor: "loginBorder",
                 borderWidth: "1px",
                 borderStyle: "solid",
                 borderRadius: "5px",
@@ -179,18 +178,19 @@ const LoginPage: React.FC = () => {
                 </Button>
               </Flex>
             </Box>
-            <Box
+            <Flex
               sx={{
-                borderColor: "inputBackgroundColor",
+                borderColor: "loginBorder",
                 borderWidth: "1px",
                 borderStyle: "solid",
-                // border: "1px solid red",
                 padding: "20px",
                 borderRadius: "5px",
+                gap: "10px",
               }}
             >
-              {/* <Flex sx={{ gap: "20px" }}> */}
-              <Text>New to Monopad? </Text>
+              <Text sx={{ fontWeight: "400", fontSize: "15px" }}>
+                New to Monopad?{" "}
+              </Text>
               <ThemeLink
                 as={Link}
                 href="/register"
@@ -200,10 +200,11 @@ const LoginPage: React.FC = () => {
                   "&:hover": { textDecoration: "underline" },
                 }}
               >
-                Create an account
+                <Text sx={{ fontSize: "16px", fontWeight: "600" }}>
+                  Create an account
+                </Text>
               </ThemeLink>
-              {/* </Flex> */}
-            </Box>
+            </Flex>
           </Flex>
         </form>
       </Box>
