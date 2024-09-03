@@ -4,8 +4,13 @@ import { Box, ThemeUIStyleObject, Theme } from "theme-ui";
 import { CustomEditor } from "../types/common";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
 import OptionsIcon from "../components/icons/OptionsIcon";
+import { Path } from "slate";
 
-const useOptionsMenu = (editor: CustomEditor, path: any) => {
+const useOptionsMenu = (
+  editor: CustomEditor,
+  path: Path,
+  sx?: ThemeUIStyleObject
+) => {
   const { isOptionsOpen, setIsOptionsOpen, setMobileMenu, setMenuPosition } =
     React.useContext(EditorContext);
 
@@ -16,11 +21,13 @@ const useOptionsMenu = (editor: CustomEditor, path: any) => {
   const optionsMenu = (
     <Box
       sx={
-        {
-          position: "absolute",
-          right: "-30px",
-          top: "0px",
-        } as ThemeUIStyleObject<Theme>
+        sx
+          ? sx
+          : ({
+              position: "absolute",
+              right: "-30px",
+              top: "0px",
+            } as ThemeUIStyleObject<Theme>)
       }
       onClick={(event) => {
         event.preventDefault();
@@ -50,7 +57,13 @@ const useOptionsMenu = (editor: CustomEditor, path: any) => {
         setIsOptionsOpen(true);
       }}
     >
-      <OptionsIcon />
+      <OptionsIcon
+        sx={{
+          backgroundColor: "muted",
+          color: "background",
+          "&:hover": { backgroundColor: "accent" },
+        }}
+      />
     </Box>
   );
 

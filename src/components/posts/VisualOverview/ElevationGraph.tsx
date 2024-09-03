@@ -289,9 +289,7 @@ const ElevationGraph = ({
           margin={{ top: 10, right: 0, left: hideAxes ? 0 : 20, bottom: 30 }}
         >
           {!hideAxes && (
-            <CartesianGrid
-              stroke={String(themeContext.theme.colors?.divider)}
-            />
+            <CartesianGrid stroke={String(themeContext.theme.colors?.border)} />
           )}
 
           <Tooltip active={false} cursor={<CustomCursor />} content={<></>} />
@@ -319,11 +317,11 @@ const ElevationGraph = ({
             allowDecimals={false}
             // tickFormatter={(t) => t.toFixed(1)}
             tick={{
-              fill: themeContext?.theme?.colors?.text as string,
+              fill: themeContext?.theme?.colors?.primary as string,
               fontSize: "14px",
             }}
             // hide={hideAxes}
-            stroke={themeContext?.theme?.colors?.chartAxes as string}
+            stroke={themeContext?.theme?.colors?.primary as string}
           />
           {/* )} */}
           {/* {!hideAxes && ( */}
@@ -346,7 +344,7 @@ const ElevationGraph = ({
               fontSize: "14px",
             }}
             tickFormatter={(t) => t.toFixed(0)}
-            stroke={themeContext?.theme?.colors?.chartAxes as string}
+            stroke={themeContext?.theme?.colors?.primary as string}
             hide={hideAxes}
           />
           {/* )} */}

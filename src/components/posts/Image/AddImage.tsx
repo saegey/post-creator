@@ -51,7 +51,7 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
                 fontSize: "14px",
                 fontWeight: "600",
                 "&:hover": {
-                  backgroundColor: "primaryButtonBackgroundHover",
+                  backgroundColor: "accent",
                 },
               },
             }}
@@ -99,7 +99,7 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
                   return (
                     <Box
                       sx={{
-                        backgroundColor: "activityOverviewBackgroundColor",
+                        backgroundColor: "background",
                         height: "100%",
                         flexDirection: "row",
                         borderRadius: "5px",
@@ -155,7 +155,7 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
             paddingTop: "10px",
             borderTopWidth: "1px",
             borderTopStyle: "solid",
-            borderTopColor: "divider",
+            borderTopColor: "border",
           }}
         >
           <Button

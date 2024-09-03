@@ -42,10 +42,10 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
             height: "240px",
             borderStyle: "solid",
             borderWidth: "1px",
-            borderColor: "postCardBorder",
+            borderColor: "border",
             borderTopLeftRadius: "5px",
             borderTopRightRadius: "5px",
-            backgroundColor: "postCardDefaultImage",
+            backgroundColor: "surface",
           }}
         >
           {post.imagesObj && post.imagesObj.length > 0 && (
@@ -83,24 +83,27 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
         </Flex>
         <Box
           sx={{
-            backgroundColor: "postCardTextBackground",
+            backgroundColor: "surface",
             padding: "10px",
             borderBottomLeftRadius: "5px",
             borderBottomRightRadius: "5px",
             borderBottomStyle: "solid",
             borderBottomWidth: "1px",
-            borderBottomColor: "postCardBorder",
+            borderBottomColor: "border",
             borderLeftStyle: "solid",
             borderLeftWidth: "1px",
-            borderLeftColor: "postCardBorder",
+            borderLeftColor: "border",
             borderRightStyle: "solid",
             borderRightWidth: "1px",
-            borderRightColor: "postCardBorder",
+            borderRightColor: "border",
           }}
         >
           <Text
             as="div"
-            sx={{ fontWeight: 600, color: post.title ? "text" : "gray" }}
+            sx={{
+              fontWeight: 600,
+              color: post.title ? "text" : "disabledText",
+            }}
           >
             {post.title ? post.title : "Untitled"}
           </Text>
@@ -137,7 +140,7 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
                     sx={{
                       width: "100%",
                       height: "100%",
-                      backgroundColor: "defaultAvatarBackground",
+                      backgroundColor: "primary",
                       borderRadius: "100%",
                     }}
                   />

@@ -20,7 +20,7 @@ const Journal = () => {
             height: "600px",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "publicBackground",
+            backgroundColor: "background",
             // zIndex: 1,
             position: "relative",
           }}

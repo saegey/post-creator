@@ -59,7 +59,7 @@ const ImageCaption = ({
                   Caption
                 </Label>
                 <Textarea
-                  sx={{ background: "inputBackgroundColor" }}
+                  sx={{ background: "surface" }}
                   name="caption"
                   id="caption"
                   rows={6}

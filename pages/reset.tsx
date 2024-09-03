@@ -61,7 +61,7 @@ const Reset: React.FC = () => {
           flexDirection: "column",
           height: ["fit-content", "100dvh", "100dvh"],
           overflow: ["scroll", "", ""],
-          backgroundColor: "loginBackground",
+          backgroundColor: "background",
         }}
       >
         <Flex sx={{ justifyContent: "center" }}>

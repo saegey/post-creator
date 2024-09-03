@@ -92,7 +92,7 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
               <MenuItem href="/profile">Profile</MenuItem>
               <MenuItem href="/posts">My Posts</MenuItem>
               <MenuItem href="/">Explore</MenuItem>
-              <Divider sx={{ color: "divider" } as ThemeUIStyleObject<Theme>} />
+              <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
               <ToggleSwitch
                 label="Dark Mode"
                 isChecked={mode === "dark"}
@@ -104,7 +104,7 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
                 isChecked={unitOfMeasure !== "imperial"}
                 onChange={toggleUnit}
               />
-              <Divider sx={{ color: "divider" } as ThemeUIStyleObject<Theme>} />
+              <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
               <MenuItem href="https://monopad.gitbook.io/docs/">Docs</MenuItem>
               <MenuItem href="http://monopad.app/support">Support</MenuItem>
               <MenuItem href="https://monopad.productlane.com/roadmap">

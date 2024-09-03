@@ -9,6 +9,7 @@ const OptionsIcon = ({
 }) => (
   <IconButton
     aria-label="Toggle options"
+    // sx={{ backgroundColor: "surface" }}
     variant="iconButton"
     onClick={onClick}
     type="button"

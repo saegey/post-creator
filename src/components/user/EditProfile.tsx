@@ -129,9 +129,7 @@ const EditProfile = ({ user }: { user?: IUser }) => {
                     <Flex sx={{ gap: "10px" }}>
                       <Text as="span">Save</Text>
                       {isSaving && (
-                        <Spinner
-                          sx={{ size: "20px", color: "spinnerButton" }}
-                        />
+                        <Spinner sx={{ size: "20px", color: "secondary" }} />
                       )}
                     </Flex>
                   </Button>

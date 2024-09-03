@@ -52,7 +52,7 @@ const CrossResultsSubmitButton = () => {
               sx={
                 {
                   size: "20px",
-                  color: "spinnerButton",
+                  color: "secondary",
                 } as ThemeUIStyleObject<Theme>
               }
             />

@@ -51,8 +51,8 @@ const BlogPostContent = ({ post, imageSizes }: PostContentProps) => {
             fontWeight: 300,
           },
           a: {
-            color: "publicBlogContentLink",
-            borderBottomColor: "publicBlogContentLink",
+            color: "link",
+            borderBottomColor: "link",
             borderBottomStyle: "solid",
             borderBottomWidth: "1px",
             fontWeight: 400,
@@ -60,8 +60,8 @@ const BlogPostContent = ({ post, imageSizes }: PostContentProps) => {
             transition: "all .2s",
           },
           "a:hover": {
-            color: "publicBlogContentLink",
-            borderBottomColor: "publicBlogContentLink",
+            color: "link",
+            borderBottomColor: "link",
           },
           img: {
             width: "100%",

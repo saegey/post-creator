@@ -58,7 +58,7 @@ const PhotoCaptionModal = ({
             </Label>
             <Textarea
               sx={{
-                borderColor: "inputBorderColor",
+                borderColor: "border",
                 borderWidth: "1px",
                 borderStyle: "solid",
                 width: "100%",

@@ -206,7 +206,7 @@ const PostSettings = () => {
           sx={
             {
               borderTopWidth: "1px",
-              borderTopColor: "divider",
+              borderTopColor: "border",
               borderTopStyle: "solid",
               marginTop: "10px",
               paddingTop: "10px",
@@ -242,7 +242,7 @@ const PostSettings = () => {
                       sx={
                         {
                           size: "20px",
-                          color: "spinnerButton",
+                          color: "secondary",
                         } as ThemeUIStyleObject<Theme>
                       }
                     />

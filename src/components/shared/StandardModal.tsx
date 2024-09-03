@@ -66,7 +66,7 @@ const StandardModal = ({
             sx={
               {
                 borderBottomWidth: title ? "1px" : "0px",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
                 borderBottomStyle: "solid",
                 paddingY: "5px",
               } as ThemeUIStyleObject<Theme>

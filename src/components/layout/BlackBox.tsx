@@ -26,8 +26,8 @@ const BlackBox: React.FC<BlackBoxProps> = ({
   const backgroundColor = noBackground
     ? "unset"
     : fullScreen
-    ? "modalBackground"
-    : transparentize("modalBackground", 0.4);
+    ? "primary"
+    : transparentize("primary", 0.4);
 
   return (
     <Box

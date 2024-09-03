@@ -10,7 +10,7 @@ const BlogPostLayout = ({ children }: { children: React.ReactNode }) => {
       sx={{
         height: "fit-content",
         width: "100vw",
-        backgroundColor: "publicBackground",
+        backgroundColor: "background",
       }}
     >
       <PublicHeader />

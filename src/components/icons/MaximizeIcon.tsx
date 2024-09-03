@@ -2,12 +2,7 @@ import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
 const MaximizeIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => {
   return (
-    <IconButton
-      // sx={{
-      //   backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.4})`,
-      // }}
-      sx={sx}
-    >
+    <IconButton sx={sx}>
       <svg viewBox="0 0 14 14" width="100%" height="100%">
         <g
           fill="none"

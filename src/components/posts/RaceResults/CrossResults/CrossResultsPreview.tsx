@@ -85,10 +85,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     width: "100%",
                     cursor: "pointer",
                     "&:hover": {
-                      backgroundColor:
-                        selectedRow === i
-                          ? "selectedBackground"
-                          : "inputBorderColor",
+                      backgroundColor: selectedRow === i ? "accent" : "border",
                       borderRadius: "5px",
                     },
                     paddingX: "5px",
@@ -182,7 +179,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           {
             paddingTop: "15px",
             marginTop: "15px",
-            borderTopColor: "divider",
+            borderTopColor: "border",
             borderTopStyle: "solid",
             borderTopWidth: "1px",
           } as ThemeUIStyleObject<Theme>
@@ -194,7 +191,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             sx={
               {
                 marginLeft: "auto",
-                backgroundColor: selectedRow ? null : "gray",
+                backgroundColor: selectedRow ? null : "disabledBackground",
               } as ThemeUIStyleObject<Theme>
             }
             disabled={selectedRow ? false : true}

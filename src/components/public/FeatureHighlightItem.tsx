@@ -17,7 +17,7 @@ const FeatureHighlightItem = ({
           flex: "none",
         }}
       >
-        <Flex sx={{ width: "24px", height: "24px" }}>{icon}</Flex>
+        <Flex sx={{ width: "32px", height: "32px" }}>{icon}</Flex>
       </Box>
       <Text as="p" sx={{ fontSize: "16px", lineHeight: "24px" }}>
         {content}

@@ -5,8 +5,9 @@ import { Slide } from "react-slideshow-image";
 
 import { cloudUrl } from "../../../utils/cloudinary";
 import { PostContext } from "../../PostContext";
-
 import "react-slideshow-image/dist/styles.css";
+import BackIcon from "../../icons/BackIcon";
+import ForwardIcon from "../../icons/ForwardIcon";
 
 const ImageFullScreen = ({
   setIsMaximized,
@@ -21,38 +22,22 @@ const ImageFullScreen = ({
   if (!images) {
     throw Error("musts have images");
   }
-  // console.log("rendering ImageFullScreen");
 
   const backArrow = (
     <Box
       sx={{
         padding: ["5px", "5px", "5px"],
-        backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.7})`,
+        backgroundColor: "backgroundTransparent",
         cursor: "pointer",
       }}
     >
-      <Box
+      <BackIcon
         sx={{
           width: ["20px", "20px", "30px"],
-          height: ["20px", "20px", "30px"],
+          height: "auto",
+          color: "secondary",
         }}
-      >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 6L9 12L15 18"
-            stroke="var(--theme-ui-colors-background)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </Box>
+      />
     </Box>
   );
 
@@ -60,27 +45,17 @@ const ImageFullScreen = ({
     <Box
       sx={{
         padding: ["5px", "5px", "5px"],
-        backgroundColor: `rgba(var(--theme-ui-colors-blackBoxColor), ${0.4})`,
+        backgroundColor: "backgroundTransparent",
         cursor: "pointer",
       }}
     >
-      <Box sx={{ width: ["20px", "20px", "30px"], height: "auto" }}>
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 6L15 12L9 18"
-            stroke="var(--theme-ui-colors-background)"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </Box>
+      <ForwardIcon
+        sx={{
+          width: ["20px", "20px", "30px"],
+          height: "auto",
+          color: "secondary",
+        }}
+      />
     </Box>
   );
 
@@ -92,7 +67,7 @@ const ImageFullScreen = ({
         height: "100%",
         width: "100%",
         left: "0",
-        backgroundColor: "blackBoxColor",
+        backgroundColor: "backgroundTransparent",
         zIndex: 200,
         display: "flex",
       }}
@@ -111,7 +86,7 @@ const ImageFullScreen = ({
                 display: "flex",
                 height: "100%",
                 width: "100%",
-                backgroundColor: "modalBackground",
+                backgroundColor: "primary",
               }}
               key={`image-${index}`}
             >
@@ -155,7 +130,7 @@ const ImageFullScreen = ({
           onClick={() => {
             setIsMaximized(false);
           }}
-          sx={{ color: "modalClose" }}
+          sx={{ color: "secondary" }}
         />
       </Flex>
     </Box>

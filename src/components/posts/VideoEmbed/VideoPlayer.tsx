@@ -38,7 +38,7 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
                   video_title: "Bick Buck Bunny",
                   viewer_user_id: "user-id-bc-789",
                 }}
-                accentColor={theme?.colors?.videoAccent as string}
+                accentColor={theme?.colors?.accent as string}
                 streamType="on-demand"
               />
             )}

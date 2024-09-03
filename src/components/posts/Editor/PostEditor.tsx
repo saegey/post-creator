@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useContext } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { createEditor } from "slate";
-import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
+import { Flex, Box, Theme, ThemeUIStyleObject, Button } from "theme-ui";
 import { withHistory } from "slate-history";
 
 import renderElement from "./RenderElement";
@@ -26,7 +26,6 @@ import { CustomElement } from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
 
-// import PublishModalConfirmation from "./PublishModalConfirmation";
 // import ShareModal from "./ShareModal";
 // import AddImage from "../Image/AddImage";
 
@@ -48,10 +47,12 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setIsSavingPost,
     isRaceResultsModalOpen,
     isOptionsOpen,
+    isHeroImageModalOpen,
   } = useContext(EditorContext);
 
   // usePostSubscription();
   useFetchData();
+  console.log("initialState", initialState);
 
   const updateMenuPosition = useCallback(() => {
     console.log("updateMenuPosition");

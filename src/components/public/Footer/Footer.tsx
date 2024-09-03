@@ -22,7 +22,7 @@ const PublicFooter = () => {
           width: "100%",
           display: ["none", "flex", "flex"],
           flexDirection: "column",
-          backgroundColor: "footerBackground",
+          backgroundColor: "surface",
         }}
       >
         <Box

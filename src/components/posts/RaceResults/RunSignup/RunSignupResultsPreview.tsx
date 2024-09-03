@@ -128,7 +128,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
         sx={{
           overflowY: "auto",
           height: ["60vh", "300px", "300px"],
-          backgroundColor: "activityOverviewBackgroundColor",
+          backgroundColor: "background",
           padding: "5px",
           borderRadius: "5px",
         }}
@@ -213,7 +213,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
         sx={{
           paddingTop: "15px",
           marginTop: "15px",
-          borderTopColor: "divider",
+          borderTopColor: "border",
           borderTopStyle: "solid",
           borderTopWidth: "1px",
         }}
@@ -225,7 +225,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           <Button
             title="Save"
             sx={{
-              backgroundColor: selectedRow ? null : "gray",
+              backgroundColor: selectedRow ? null : "disabledBackground",
             }}
             disabled={selectedRow ? false : true}
             onClick={() => {

@@ -2,6 +2,7 @@ import { Box, Link as ThemeLink, Flex, Text } from "theme-ui";
 import React from "react";
 import Link from "next/link";
 import { CldImage } from "next-cloudinary";
+import { darken, lighten } from "@theme-ui/color";
 
 import { CloudinaryImage } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
@@ -42,10 +43,11 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
             height: "240px",
             borderStyle: "solid",
             borderWidth: "1px",
-            borderColor: "postCardBorder",
+            borderColor: "surface",
             borderTopLeftRadius: "5px",
             borderTopRightRadius: "5px",
-            backgroundColor: "postCardDefaultImage",
+            borderBottomWidth: "0px",
+            backgroundColor: lighten("surface", 0.1),
           }}
         >
           {post.imagesObj && post.imagesObj.length > 0 && (
@@ -83,24 +85,27 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
         </Flex>
         <Box
           sx={{
-            backgroundColor: "postCardTextBackground",
+            backgroundColor: "surface",
             padding: "10px",
             borderBottomLeftRadius: "5px",
             borderBottomRightRadius: "5px",
             borderBottomStyle: "solid",
             borderBottomWidth: "1px",
-            borderBottomColor: "postCardBorder",
+            borderBottomColor: "surface",
             borderLeftStyle: "solid",
             borderLeftWidth: "1px",
-            borderLeftColor: "postCardBorder",
+            borderLeftColor: "surface",
             borderRightStyle: "solid",
             borderRightWidth: "1px",
-            borderRightColor: "postCardBorder",
+            borderRightColor: "surface",
           }}
         >
           <Text
             as="div"
-            sx={{ fontWeight: 600, color: post.title ? "text" : "gray" }}
+            sx={{
+              fontWeight: 600,
+              color: post.title ? "text" : "disabledText",
+            }}
           >
             {post.title ? post.title : "Untitled"}
           </Text>
@@ -137,7 +142,7 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
                     sx={{
                       width: "100%",
                       height: "100%",
-                      backgroundColor: "defaultAvatarBackground",
+                      backgroundColor: "primary",
                       borderRadius: "100%",
                     }}
                   />

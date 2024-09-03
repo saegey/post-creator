@@ -20,7 +20,7 @@ const HoverIcon = ({
       }
       contentEditable={false}
     >
-      <PlusIcon onClick={onClick} sx={{ color: "blue" }} />
+      <PlusIcon onClick={onClick} sx={{ color: "accent" }} />
     </Box>
   );
 };

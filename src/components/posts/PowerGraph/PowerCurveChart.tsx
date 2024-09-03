@@ -1,4 +1,4 @@
-import { useThemeUI } from "theme-ui";
+import { Box, Text, useThemeUI } from "theme-ui";
 import * as React from "react";
 import {
   ResponsiveContainer,
@@ -84,19 +84,19 @@ const PowerCurveGraph = ({ data, ftp }: PowerCurveGraphProps) => {
           content={({ payload }) => {
             if (!payload || payload.length < 1) return <></>;
             return (
-              <div
-                style={{
-                  backgroundColor: theme?.colors
-                    ?.chartTooltipBackground as string,
+              <Box
+                sx={{
+                  backgroundColor: "surface",
                   padding: "5px",
                   borderRadius: "5px",
+                  color: "text",
                 }}
               >
-                <p style={{ fontSize: "13px" }}>
+                <Text as="p" sx={{ fontSize: "13px" }}>
                   {formatTime(payload[0].payload.x)}
-                </p>
+                </Text>
                 <p style={{ fontSize: "13px" }}>{payload[0].payload.y} watts</p>
-              </div>
+              </Box>
             );
           }}
         />

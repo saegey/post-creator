@@ -40,7 +40,7 @@ export default function Post({ allPosts }: Props) {
         sx={{
           width: "100vw",
           height: "fit-content",
-          backgroundColor: "publicBackground",
+          backgroundColor: "background",
         }}
       >
         <PublicHeader />

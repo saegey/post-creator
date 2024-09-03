@@ -18,7 +18,7 @@ const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
         position: "absolute",
         top: `${top + 10}px`,
         left: `${left}px`,
-        background: "floatingMenuBackground",
+        background: "primary",
         padding: "8px",
         zIndex: "300",
         borderRadius: "5px",

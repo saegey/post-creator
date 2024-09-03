@@ -19,7 +19,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onClose }) => (
         padding: "10px",
         borderBottomStyle: "solid",
         borderBottomWidth: "1px",
-        borderBottomColor: "divider",
+        borderBottomColor: "border",
       } as ThemeUIStyleObject<Theme>
     }
   >

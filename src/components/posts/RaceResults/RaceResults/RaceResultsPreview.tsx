@@ -40,7 +40,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
         sx={{
           flexGrow: 1,
           overflowY: "auto",
-          backgroundColor: "activityOverviewBackgroundColor",
+          backgroundColor: "background",
           padding: "5px",
           borderRadius: "5px",
         }}
@@ -153,7 +153,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
         sx={{
           paddingTop: "15px",
           marginTop: "15px",
-          borderTopColor: "divider",
+          borderTopColor: "border",
           borderTopStyle: "solid",
           borderTopWidth: "1px",
         }}
@@ -163,7 +163,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
             title="Save"
             sx={{
               marginLeft: "auto",
-              backgroundColor: selectedRow ? null : "gray",
+              backgroundColor: selectedRow ? null : "disabledBackground",
             }}
             disabled={selectedRow ? false : true}
             onClick={() => {

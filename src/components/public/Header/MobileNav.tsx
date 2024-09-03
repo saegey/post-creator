@@ -42,7 +42,7 @@ const MobileNav = ({
         sx={{
           width: "100%",
           flexDirection: "column",
-          backgroundColor: "publicMobileNavBackground",
+          backgroundColor: "background",
         }}
       >
         <Box sx={{ marginX: "16px" }}>

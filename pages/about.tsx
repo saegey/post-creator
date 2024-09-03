@@ -30,7 +30,7 @@ const About = () => {
         sx={{
           width: "100vw",
           height: "fit-content",
-          backgroundColor: "publicBackground",
+          backgroundColor: "background",
         }}
       >
         <PublicHeader />
@@ -41,7 +41,7 @@ const About = () => {
             alignItems: "center",
             // zIndex: 1,
             position: "relative",
-            backgroundColor: "publicHeaderBackground",
+            backgroundColor: "background",
           }}
         >
           <Flex
@@ -94,7 +94,7 @@ const About = () => {
         <Flex
           sx={{
             justifyContent: "center",
-            backgroundColor: "publicHeaderBackground",
+            backgroundColor: "background",
           }}
         >
           <Link

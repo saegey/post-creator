@@ -46,14 +46,14 @@ const AddMediaComponent = ({
             textLight: "#FFFFFF",
             link: theme.rawColors?.primary,
             action: "#FF620C",
-            inactiveTabIcon: theme.rawColors?.textMuted,
+            inactiveTabIcon: theme.rawColors?.muted,
             error: "#F44235",
             inProgress: "#0078FF",
             complete: "#20B832",
-            sourceBg: theme.rawColors?.editorBackground,
+            sourceBg: theme.rawColors?.background,
           },
           frame: {
-            background: `rgba(${theme.rawColors?.blackBoxColor}, 0.7)`,
+            background: "#00000080",
           },
           fonts: {
             "'SF Pro Display', 'Inter'":

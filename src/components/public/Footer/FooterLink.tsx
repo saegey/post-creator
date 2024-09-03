@@ -15,7 +15,7 @@ const FooterLink = ({ href, external = false, children }: FooterLinkProps) => {
       <ThemeLink
         href={href}
         sx={{
-          color: "footerMenuLink",
+          color: "link",
           textDecoration: "none",
           marginY: "5px",
           fontWeight: 500,
@@ -33,7 +33,7 @@ const FooterLink = ({ href, external = false, children }: FooterLinkProps) => {
       as={Link}
       href={href}
       sx={{
-        color: "footerMenuLink",
+        color: "link",
         textDecoration: "none",
         marginY: "5px",
         fontWeight: 500,

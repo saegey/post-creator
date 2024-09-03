@@ -13,11 +13,7 @@ const TimeInZonesViewWrapper = () => {
           marginY: ["20px", "60px", "60px"],
           marginX: "auto",
           maxWidth: "690px",
-          backgroundColor: [
-            null,
-            "activityOverviewBackgroundColor",
-            "activityOverviewBackgroundColor",
-          ],
+          backgroundColor: [null, "background", "background"],
           padding: ["10px", "30px", "30px"],
           borderRadius: "5px",
         } as ThemeUIStyleObject<Theme>

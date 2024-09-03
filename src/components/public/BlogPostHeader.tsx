@@ -2,9 +2,9 @@ import React from "react";
 import { Avatar, Box, Flex, Text, Link as ThemeLink } from "theme-ui";
 import Link from "next/link";
 
-import ChevronLeft from "../icons/ChevronLeft";
 import moment from "moment";
 import PostType from "../../../interfaces/post";
+import BackIcon from "../icons/BackIcon";
 
 const BlogPostHeader = ({ post }: { post: PostType }) => {
   return (
@@ -33,7 +33,7 @@ const BlogPostHeader = ({ post }: { post: PostType }) => {
         >
           <ThemeLink as={Link} href="/blog" sx={{ textDecoration: "none" }}>
             <Flex>
-              <ChevronLeft sx={{ color: "publicBlogHeaderBackIcon" }} />
+              <BackIcon sx={{ color: "muted" }} />
               <Text as="div" variant="publicBlogHeaderBack">
                 Blog
               </Text>

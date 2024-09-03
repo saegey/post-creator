@@ -38,10 +38,8 @@ const AddText = () => {
       <GenericMenuItem
         label="Text"
         icon={
-          <IconButton sx={{ width: "32px", background: "yellow" }}>
-            <Text
-              sx={{ fontFamily: "serif", fontSize: "20px", color: "iconColor" }}
-            >
+          <IconButton sx={{ width: "32px" }}>
+            <Text sx={{ fontFamily: "serif", fontSize: "20px", color: "text" }}>
               T
             </Text>
           </IconButton>

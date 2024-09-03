@@ -37,9 +37,7 @@ const WebscorerSubmitButton = () => {
       >
         <Flex sx={{ gap: "10px" }}>
           <Text as="span">Import</Text>
-          {isLoading && (
-            <Spinner sx={{ size: "20px", color: "spinnerButton" }} />
-          )}
+          {isLoading && <Spinner sx={{ size: "20px", color: "secondary" }} />}
         </Flex>
       </Button>
     </Box>

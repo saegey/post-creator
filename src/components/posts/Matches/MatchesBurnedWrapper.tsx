@@ -26,7 +26,7 @@ const MatchesBurnedWrapper = ({ element }: { element: MatchesBurnedType }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "activityOverviewBackgroundColor",
+        backgroundColor: "background",
         borderRadius: "5px",
         padding: ["10px", "30px", "30px"],
         position: "relative",

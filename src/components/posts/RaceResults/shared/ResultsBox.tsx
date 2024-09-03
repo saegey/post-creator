@@ -8,7 +8,7 @@ const ResultsBox = ({ children }: { children?: JSX.Element }) => {
           overflowY: "auto",
           height: ["unset", "300px", "300px"],
           flexGrow: [1, "inherit", "inherit"],
-          backgroundColor: "activityOverviewBackgroundColor",
+          backgroundColor: "background",
           padding: "5px",
           borderRadius: "5px",
         } as ThemeUIStyleObject<Theme>

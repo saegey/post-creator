@@ -17,7 +17,7 @@ const ValueCard = ({
         padding: "40px",
         boxShadow: "-2px 24px 64px rgba(20,25,26,.04)",
         marginBottom: "24px",
-        backgroundColor: "publicHeaderBackground",
+        backgroundColor: "background",
         borderRadius: "8px",
       }}
     >

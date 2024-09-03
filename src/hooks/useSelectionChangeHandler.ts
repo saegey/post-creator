@@ -24,7 +24,10 @@ const useSelectionChangeHandler = (editor: Editor) => {
     }
 
     const newTimerId = setTimeout(() => {
-      const range = selection.getRangeAt(0);
+      const range =
+        selection && selection.rangeCount > 0
+          ? selection.getRangeAt(0)
+          : undefined;
       if (!range) return;
       const operations = editor.operations;
 

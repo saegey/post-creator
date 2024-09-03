@@ -77,6 +77,7 @@ const FeatureHiglight = ({
               marginBottom: "16px",
               fontSize: "16px",
               lineHeight: "24px",
+              color: "muted",
             }}
             as="div"
           >
@@ -97,7 +98,7 @@ const FeatureHiglight = ({
             as="p"
             sx={{
               fontSize: ["16px", "18px", "18px"],
-              fontStyle: "italic",
+              // fontStyle: "italic",
               lineHeight: ["24px", "27px", "27px"],
               marginBottom: ["20px", "24px", "24px"],
             }}
@@ -123,9 +124,9 @@ const FeatureHiglight = ({
                 />
               ))}
           </Grid>
-          <Box sx={{ marginTop: "32px" }}>
-            <Button>Learn More</Button>
-          </Box>
+          {/* <Box sx={{ marginTop: "32px" }}>
+            <Button variant="secondaryButton">Learn More</Button>
+          </Box> */}
         </Box>
       </Grid>
     </Flex>
