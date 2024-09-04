@@ -1,7 +1,7 @@
 import React from "react";
 import { Path } from "slate";
 
-import { useClickOutside } from "../../../utils/ux";
+import useClickOutside from "../../../hooks/useClickOutside";
 import Dropdown from "../../shared/Dropdown";
 import { Box, Flex, Theme, ThemeUIStyleObject } from "theme-ui";
 import { EditorContext } from "./EditorContext";

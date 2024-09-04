@@ -1,7 +1,8 @@
 import React from "react";
 import { ThemeUIStyleObject, Theme, Box } from "theme-ui";
-import PlusIcon from "./icons/PlusIcon";
 import { lighten } from "@theme-ui/color";
+
+import PlusIcon from "./icons/PlusIcon";
 
 const HoverIcon = ({
   onClick,

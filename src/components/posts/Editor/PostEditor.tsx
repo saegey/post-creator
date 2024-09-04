@@ -1,7 +1,7 @@
-import React, { useMemo, useCallback, useContext } from "react";
+import React, { useMemo, useCallback, useContext, useRef } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { createEditor } from "slate";
-import { Flex, Box, Theme, ThemeUIStyleObject, Button } from "theme-ui";
+import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { withHistory } from "slate-history";
 
 import renderElement from "./RenderElement";
@@ -20,19 +20,21 @@ import MobileMenu from "./MobileMenu";
 import { RWGPSModal } from "./AddRWGPS";
 
 import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler";
-// import usePostSubscription from "../../../hooks/usePostSubscription";
 import useFetchData from "../../../hooks/useFetchData";
 import { CustomElement } from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
-// import ShareModal from "./ShareModal";
-// import AddImage from "../Image/AddImage";
+import AddImage from "../Image/AddImage";
+import UploadImage from "../UploadImage";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
     () => withLayout(withHistory(withLinks(withReact(createEditor())))),
     []
   );
+
+  const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
+  const addMediaRef = React.useRef<any>(null);
 
   const { handleSelectionChange, selectionMenu, isChangingQuickly } =
     useSelectionChangeHandler(editor);
@@ -47,9 +49,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isRaceResultsModalOpen,
     isOptionsOpen,
     isHeroImageModalOpen,
+    isImageUploadOpen,
   } = useContext(EditorContext);
 
-  // usePostSubscription();
   useFetchData();
   console.log("initialState", initialState);
 
@@ -78,7 +80,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             minWidth: "100%",
             margin: "0 auto 50px auto",
             width: "100%",
-
             backgroundColor: "background",
             borderRadius: "10px",
             padding: "0px",
@@ -86,18 +87,18 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           } as ThemeUIStyleObject<Theme>
         }
       >
-        <SlateProvider editor={editor}>
+        <SlateProvider editor={editor} ref={slateRef}>
           {isRaceResultsModalOpen && <RaceResultsImport />}
           <RWGPSModal />
           <MobileMenu />
           <AddVideoModal />
           {isOptionsOpen && <OptionsDropdown />}
-
           {selectionMenu && !isChangingQuickly && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
+          {isHeroImageModalOpen && <AddImage />}
+          {isImageUploadOpen && <h1>test</h1>}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
-
           <Slate
             editor={editor}
             initialValue={initialState}

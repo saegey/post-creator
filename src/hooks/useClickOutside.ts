@@ -3,15 +3,15 @@ import React from "react";
 /**
  * This Hook can be used for detecting clicks outside the Opened Menu
  */
-function useClickOutside(
+const useClickOutside = (
   ref: React.MutableRefObject<HTMLElement | undefined>,
   onClickOutside: (e: any) => void
-) {
+) => {
   React.useEffect(() => {
     /**
      * Invoke Function onClick outside of element
      */
-    function handleClickOutside(event: any) {
+    const handleClickOutside = (event: any) => {
       if (
         !ref.current ||
         !ref.current.contains ||
@@ -22,7 +22,7 @@ function useClickOutside(
       if (ref.current && !ref.current.contains(event.target)) {
         onClickOutside(event);
       }
-    }
+    };
     // Bind
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -30,6 +30,6 @@ function useClickOutside(
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref, onClickOutside]);
-}
+};
 
-export { useClickOutside };
+export default useClickOutside;

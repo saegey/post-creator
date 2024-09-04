@@ -1,30 +1,42 @@
 import { Box, Flex, Button } from "theme-ui";
 import React from "react";
-import { CldImage, CldUploadButton } from "next-cloudinary";
+import { CldImage } from "next-cloudinary";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import { Transforms } from "slate";
+import { Transforms, Node, Editor } from "slate";
 
 import { PostContext } from "../../PostContext";
-import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
 import { CloudinaryImage, HeroBannerType } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
 import { useSlateContext } from "../../SlateContext";
+import AddMediaComponent from "../Editor/AddMediaComponent";
+import { updatePostImages } from "../../../graphql/customMutations";
+import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
 
-const AddImage = ({ element }: { element: HeroBannerType }) => {
+const AddImage = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
+  const addMediaRef = React.useRef<any>(null);
 
   const { setPost, images, id } = React.useContext(PostContext);
   const { setIsHeroImageModalOpen, isHeroImageModalOpen, menuPosition } =
     React.useContext(EditorContext);
 
-  const { editor } = useSlateContext();
+  const { editor, slateRef } = useSlateContext();
+
   if (!editor && menuPosition.path) {
     return;
   }
+
+  const handleButtonClick = () => {
+    if (addMediaRef.current) {
+      addMediaRef.current.openModal(); // Programmatically trigger the widget
+    }
+  };
+
+  console.log("slateRef", slateRef);
 
   return (
     <>
@@ -42,24 +54,13 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
             overflowY: "scroll",
           }}
         >
-          <Box
-            sx={{
-              ".cloudButton": {
-                backgroundColor: "text",
-                borderRadius: "5px",
-                color: "background",
-                fontSize: "14px",
-                fontWeight: "600",
-                "&:hover": {
-                  backgroundColor: "accent",
-                },
-              },
-            }}
-          >
-            <CldUploadButton
-              className="cloudButton"
+          <Box>
+            <Button onClick={handleButtonClick} variant="primaryButton">
+              Add Image
+            </Button>
+            <AddMediaComponent
+              ref={addMediaRef}
               uploadPreset="epcsmymp"
-              options={{ cropping: true }}
               onSuccess={async (d) => {
                 images?.push(d.info as CloudinaryImage);
 
@@ -68,7 +69,7 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
                   try {
                     const response = (await API.graphql({
                       authMode: "AMAZON_COGNITO_USER_POOLS",
-                      query: updatePost,
+                      query: updatePostImages,
                       variables: {
                         input: {
                           images: JSON.stringify(images),
@@ -161,21 +162,36 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
           <Button
             variant="primaryButton"
             onClick={async () => {
-              editor &&
-                menuPosition.path &&
-                Transforms.setNodes(
-                  editor,
-                  {
-                    ...element,
-                    image: selectedImage,
-                  } as HeroBannerType,
-                  {
-                    // This path references the editor, and is expanded to a range that
-                    // will encompass all the content of the editor.
-                    at: menuPosition.path,
-                  }
+              console.log("selectedImage", selectedImage);
+              if (editor && menuPosition.path) {
+                // Fetch the existing node data at the specific path
+                // const existingNode = Node.get(editor, menuPosition.path);
+                // Get the node at the specified path
+                const [node] = Editor.node(editor, menuPosition.path);
+
+                // If you're targeting a specific child node (like the heroBanner), ensure you're at the correct path
+                const heroBannerElement = node.children?.find(
+                  (child) => child.type === "heroBanner"
                 );
-              setIsHeroImageModalOpen(false);
+                console.log(heroBannerElement, menuPosition.path);
+
+                if (heroBannerElement === undefined) {
+                  throw new Error("Hero banner element not found");
+                }
+
+                if (selectedImage === undefined) {
+                  throw new Error("No image selected");
+                }
+
+                updateHeroImage({
+                  editor,
+                  element: heroBannerElement,
+                  path: menuPosition.path.length == 0 ? [0] : menuPosition.path,
+                  image: selectedImage,
+                });
+
+                setIsHeroImageModalOpen(false); // Close the modal
+              }
             }}
             disabled={selectedImage ? false : true}
           >

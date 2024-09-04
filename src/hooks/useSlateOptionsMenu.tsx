@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Path } from "slate";
+import { darken, lighten } from "@theme-ui/color";
 
 import { CustomEditor } from "../types/common";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
 import OptionsIcon from "../components/icons/OptionsIcon";
-import { Path } from "slate";
-import { darken, lighten } from "@theme-ui/color";
 
 const useOptionsMenu = (
   editor: CustomEditor,

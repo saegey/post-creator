@@ -56,6 +56,8 @@ type EditorState = {
   setNewComponentPath: React.Dispatch<React.SetStateAction<Path | undefined>>;
   isOptionsOpen: boolean;
   setIsOptionsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isImageUploadOpen: boolean;
+  setIsImageUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const useEditorState = (): EditorState => {
@@ -95,6 +97,7 @@ const useEditorState = (): EditorState => {
     undefined
   );
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isImageUploadOpen, setIsImageUploadOpen] = useState(false);
 
   return {
     isGraphMenuOpen,
@@ -135,6 +138,8 @@ const useEditorState = (): EditorState => {
     setNewComponentPath,
     isOptionsOpen,
     setIsOptionsOpen,
+    isImageUploadOpen,
+    setIsImageUploadOpen,
   };
 };
 

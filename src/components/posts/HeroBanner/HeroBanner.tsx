@@ -77,7 +77,6 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
                   ? element.photoCaption
                   : "Enter caption here"
               }
-              // height="100%"
             />
           </Flex>
         </Box>

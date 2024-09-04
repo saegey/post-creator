@@ -1,7 +1,7 @@
 // Menu.js
 import React from "react";
 import { Box } from "theme-ui";
-import { useClickOutside } from "../utils/ux";
+import useClickOutside from "../hooks/useClickOutside";
 
 import GraphSelectorMenu from "./posts/Editor/NewComponentSelectorMenu";
 import { EditorContext } from "./posts/Editor/EditorContext";
@@ -22,6 +22,7 @@ const Menu = ({
       e.stopPropagation();
     }
   );
+  console.log("menu positiion", menuPosition);
 
   const menuMemo = React.useMemo(() => {
     return (

@@ -50,6 +50,9 @@ export type EditorContextType = {
   isRWGPSModalOpen: boolean;
   setIsRWGPSModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
+  isImageUploadOpen: boolean;
+  setIsImageUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   menuPosition: { top: number; left: number; path: Path };
   setMenuPosition: React.Dispatch<
     React.SetStateAction<{ top: number; left: number; path: Path }>
@@ -121,6 +124,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setNewComponentPath: () => {},
   isOptionsOpen: false,
   setIsOptionsOpen: () => {},
+  isImageUploadOpen: false,
+  setIsImageUploadOpen: () => {},
 });
 
 export { EditorContext };

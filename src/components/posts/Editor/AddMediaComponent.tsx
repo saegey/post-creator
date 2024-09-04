@@ -1,71 +1,86 @@
 import { useThemeUI } from "theme-ui";
-import React from "react";
-import { CldUploadWidget } from "next-cloudinary";
+import React, { useImperativeHandle, useRef, forwardRef } from "react";
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 
 type AddMediaComponentProps = {
   uploadPreset: string;
-  renderButton: (openModal: () => void) => React.ReactElement<any, any>; // Updated prop type
-  onSuccess: (result: any) => void;
+  onSuccess: (result: CloudinaryUploadWidgetResults) => void;
 };
 
-const AddMediaComponent = ({
-  uploadPreset,
-  renderButton, // Use the new render prop here
-  onSuccess,
-}: AddMediaComponentProps) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const { theme } = useThemeUI();
+const AddMediaComponent = forwardRef(
+  ({ uploadPreset, onSuccess }: AddMediaComponentProps, ref) => {
+    const { theme } = useThemeUI();
+    const [isOpen, setIsOpen] = React.useState(false);
+    const widgetOpenRef = useRef<() => void | null>(null); // Ref to store the open function
 
-  const openModal = (open: Function) => {
-    setIsOpen(true);
-    open();
-  };
+    // Expose the `openModal` function to the parent component
+    useImperativeHandle(ref, () => ({
+      openModal: () => {
+        if (widgetOpenRef.current) {
+          setIsOpen(true);
+          console.log(widgetOpenRef.current);
+          widgetOpenRef.current(); // Call the widget's open function
+        } else {
+          console.error("Widget open function is not availabl1e");
+        }
+      },
+    }));
 
-  React.useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    }
+    React.useEffect(() => {
+      if (isOpen) {
+        document.body.style.overflow = "hidden";
+      }
 
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isOpen]);
+      return () => {
+        document.body.style.overflow = "auto";
+      };
+    }, [isOpen]);
 
-  return (
-    <CldUploadWidget
-      uploadPreset={uploadPreset}
-      options={{
-        sources: ["local", "url", "camera", "image_search", "instagram"],
-        styles: {
-          palette: {
-            window: theme.rawColors?.background,
-            windowBorder: theme.rawColors?.text,
-            tabIcon: theme.rawColors?.text,
-            menuIcons: "#5A616A",
-            textDark: "#000000",
-            textLight: "#FFFFFF",
-            link: theme.rawColors?.primary,
-            action: "#FF620C",
-            inactiveTabIcon: theme.rawColors?.muted,
-            error: "#F44235",
-            inProgress: "#0078FF",
-            complete: "#20B832",
-            sourceBg: theme.rawColors?.background,
+    console.log("add media component");
+
+    return (
+      <CldUploadWidget
+        uploadPreset={uploadPreset}
+        options={{
+          cropping: true,
+          sources: ["local", "url", "camera", "image_search", "instagram"],
+          styles: {
+            palette: {
+              window: theme.rawColors?.background,
+              windowBorder: theme.rawColors?.text,
+              tabIcon: theme.rawColors?.text,
+              menuIcons: "#5A616A",
+              textDark: "#000000",
+              textLight: "#FFFFFF",
+              link: theme.rawColors?.primary,
+              action: "#FF620C",
+              inactiveTabIcon: theme.rawColors?.muted,
+              error: "#F44235",
+              inProgress: "#0078FF",
+              complete: "#20B832",
+              sourceBg: theme.rawColors?.background,
+            },
+            frame: {
+              background: "#00000080",
+            },
+            fonts: {
+              "'SF Pro Display', 'Inter'":
+                "https://fonts.googleapis.com/css2?family=Inter",
+            },
           },
-          frame: {
-            background: "#00000080",
-          },
-          fonts: {
-            "'SF Pro Display', 'Inter'":
-              "https://fonts.googleapis.com/css2?family=Inter",
-          },
-        },
-      }}
-      onSuccess={onSuccess}
-    >
-      {({ open }) => renderButton(() => openModal(open))}
-    </CldUploadWidget>
-  );
-};
+        }}
+        onSuccess={onSuccess}
+      >
+        {({ open }) => {
+          widgetOpenRef.current = open; // Store the open function in the ref
+          return null; // No button rendering here, since it will be triggered externally
+        }}
+      </CldUploadWidget>
+    );
+  }
+);
 
 export default AddMediaComponent;

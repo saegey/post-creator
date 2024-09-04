@@ -5,17 +5,28 @@ import { API } from "aws-amplify";
 
 import AddMediaComponent from "../Editor/AddMediaComponent";
 import { useSlateContext } from "../../SlateContext";
-import useEditorState from "../../../hooks/useEditorState";
 import { EditorContext } from "../Editor/EditorContext";
-import { Transforms } from "slate";
 import { CloudinaryImage, HeroBannerType } from "../../../types/common";
 import { PostContext } from "../../PostContext";
 import { updatePost } from "../../../graphql/mutations";
 import { UpdatePostMutation } from "../../../API";
+import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
+import { updatePostImages } from "../../../graphql/customMutations";
 
 const DefaultImage = ({ element }: { element: HeroBannerType }) => {
   const { editor, currentPath } = useSlateContext();
   const { images, setPost, id } = React.useContext(PostContext);
+  const { isImageUploadOpen, setIsImageUploadOpen } =
+    React.useContext(EditorContext);
+  const addMediaRef = React.useRef<any>(null);
+
+  const handleButtonClick = () => {
+    setIsImageUploadOpen(true);
+    console.log("addMediaRef", addMediaRef);
+    if (addMediaRef.current) {
+      addMediaRef.current.openModal(); // Programmatically trigger the widget
+    }
+  };
 
   const { menuPosition } = React.useContext(EditorContext);
   return (
@@ -30,54 +41,9 @@ const DefaultImage = ({ element }: { element: HeroBannerType }) => {
     >
       <Flex sx={{ alignItems: "center" }}>
         <Box>
-          <AddMediaComponent
-            uploadPreset="epcsmymp"
-            onSuccess={async (result) => {
-              console.log(result, menuPosition, currentPath);
-              if (!editor || !menuPosition.path) {
-                throw new Error("Editor or path not found");
-              }
-              // setSelectedImage();
-
-              Transforms.setNodes(
-                editor,
-                {
-                  ...element,
-                  image: result.info,
-                } as HeroBannerType,
-                {
-                  at: menuPosition.path,
-                }
-              );
-
-              images?.push(result.info as CloudinaryImage);
-
-              if (images) {
-                setPost({ images: [...images] });
-                try {
-                  const response = (await API.graphql({
-                    authMode: "AMAZON_COGNITO_USER_POOLS",
-                    query: updatePost,
-                    variables: {
-                      input: {
-                        images: JSON.stringify(images),
-                        id: id,
-                      },
-                    },
-                  })) as GraphQLResult<UpdatePostMutation>;
-                } catch (errors) {
-                  console.error(errors);
-                }
-              }
-            }}
-            renderButton={(open) => {
-              return (
-                <Button onClick={open} variant="primaryButton">
-                  Add Image
-                </Button>
-              );
-            }}
-          />
+          <Button onClick={handleButtonClick} variant="primaryButton">
+            Add Image
+          </Button>
         </Box>
       </Flex>
     </Flex>
