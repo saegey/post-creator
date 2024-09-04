@@ -1,4 +1,10 @@
-import React, { useMemo, useCallback, useContext, useRef } from "react";
+import React, {
+  useMemo,
+  useCallback,
+  useContext,
+  useRef,
+  useEffect,
+} from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { createEditor } from "slate";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
@@ -21,11 +27,12 @@ import { RWGPSModal } from "./AddRWGPS";
 
 import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler";
 import useFetchData from "../../../hooks/useFetchData";
-import { CustomElement } from "../../../types/common";
+import { CloudinaryImage, CustomElement } from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
 import AddImage from "../Image/AddImage";
-import UploadImage from "../UploadImage";
+import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddMediaComponent
+import { updateImages } from "../../../utils/editorActions";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -34,11 +41,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   );
 
   const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
-  const addMediaRef = React.useRef<any>(null);
+  const addMediaRef = useRef<any>(null); // Ref for AddMediaComponent
 
   const { handleSelectionChange, selectionMenu, isChangingQuickly } =
     useSelectionChangeHandler(editor);
-  const { id, title, postLocation, setPost } = useContext(PostContext);
+  const { id, title, postLocation, setPost, images } = useContext(PostContext);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const {
     isNewComponentMenuOpen,
@@ -49,7 +56,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isRaceResultsModalOpen,
     isOptionsOpen,
     isHeroImageModalOpen,
-    isImageUploadOpen,
+    isImageUploadOpen, // Trigger for Image Upload
+    setIsImageUploadOpen,
   } = useContext(EditorContext);
 
   useFetchData();
@@ -71,6 +79,13 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       }
     }
   }, [editor]);
+
+  // Trigger AddMediaComponent when isImageUploadOpen is true
+  useEffect(() => {
+    if (isImageUploadOpen && addMediaRef.current) {
+      addMediaRef.current.openModal(); // Programmatically open the widget
+    }
+  }, [isImageUploadOpen]);
 
   return (
     <Flex>
@@ -97,8 +112,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
           {isHeroImageModalOpen && <AddImage />}
-          {isImageUploadOpen && <h1>test</h1>}
+          {/* {isImageUploadOpen && <h1>Triggering Media Upload</h1>} */}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+
           <Slate
             editor={editor}
             initialValue={initialState}
@@ -131,6 +147,24 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               contentEditable="true"
             />
           </Slate>
+
+          {/* AddMediaComponent */}
+          <AddMediaComponent
+            ref={addMediaRef} // Attach the ref to AddMediaComponent
+            uploadPreset="epcsmymp"
+            onSuccess={async (result) => {
+              console.log("Media uploaded successfully", result);
+
+              images?.push(result.info as CloudinaryImage);
+              if (images) {
+                setPost({ images: [...images] });
+                updateImages(id, images);
+              }
+            }}
+            onClose={() => {
+              setIsImageUploadOpen(false);
+            }} // Close the modal
+          />
         </SlateProvider>
       </Box>
     </Flex>

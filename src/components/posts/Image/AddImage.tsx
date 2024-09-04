@@ -1,20 +1,17 @@
 import { Box, Flex, Button } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import { Transforms, Node, Editor } from "slate";
+import { Editor } from "slate";
 
 import { PostContext } from "../../PostContext";
-import { UpdatePostMutation } from "../../../API";
-import { CloudinaryImage, HeroBannerType } from "../../../types/common";
+import { CloudinaryImage } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
 import { useSlateContext } from "../../SlateContext";
 import AddMediaComponent from "../Editor/AddMediaComponent";
-import { updatePostImages } from "../../../graphql/customMutations";
 import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
+import { updateImages } from "../../../utils/editorActions";
 
 const AddImage = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
@@ -59,6 +56,7 @@ const AddImage = () => {
               Add Image
             </Button>
             <AddMediaComponent
+              onClose={() => console.log("close media")}
               ref={addMediaRef}
               uploadPreset="epcsmymp"
               onSuccess={async (d) => {
@@ -66,20 +64,7 @@ const AddImage = () => {
 
                 if (images) {
                   setPost({ images: [...images] });
-                  try {
-                    const response = (await API.graphql({
-                      authMode: "AMAZON_COGNITO_USER_POOLS",
-                      query: updatePostImages,
-                      variables: {
-                        input: {
-                          images: JSON.stringify(images),
-                          id: id,
-                        },
-                      },
-                    })) as GraphQLResult<UpdatePostMutation>;
-                  } catch (errors) {
-                    console.error(errors);
-                  }
+                  updateImages(id, images);
                 }
               }}
             />

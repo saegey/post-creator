@@ -8,38 +8,25 @@ import {
 type AddMediaComponentProps = {
   uploadPreset: string;
   onSuccess: (result: CloudinaryUploadWidgetResults) => void;
+  onClose: () => void; // Add a callback to handle the modal close
 };
 
 const AddMediaComponent = forwardRef(
-  ({ uploadPreset, onSuccess }: AddMediaComponentProps, ref) => {
+  ({ uploadPreset, onSuccess, onClose }: AddMediaComponentProps, ref) => {
     const { theme } = useThemeUI();
-    const [isOpen, setIsOpen] = React.useState(false);
     const widgetOpenRef = useRef<() => void | null>(null); // Ref to store the open function
 
     // Expose the `openModal` function to the parent component
     useImperativeHandle(ref, () => ({
       openModal: () => {
-        if (widgetOpenRef.current) {
-          setIsOpen(true);
+        try {
           console.log(widgetOpenRef.current);
-          widgetOpenRef.current(); // Call the widget's open function
-        } else {
-          console.error("Widget open function is not availabl1e");
+          widgetOpenRef && widgetOpenRef.current(); // Call the widget's open function
+        } catch (e) {
+          console.error("Widget open function is not available", e);
         }
       },
     }));
-
-    React.useEffect(() => {
-      if (isOpen) {
-        document.body.style.overflow = "hidden";
-      }
-
-      return () => {
-        document.body.style.overflow = "auto";
-      };
-    }, [isOpen]);
-
-    console.log("add media component");
 
     return (
       <CldUploadWidget
@@ -73,6 +60,10 @@ const AddMediaComponent = forwardRef(
           },
         }}
         onSuccess={onSuccess}
+        onClose={() => {
+          console.log("Image upload widget closed");
+          onClose && onClose(); // Call the passed `onClose` callback when the widget closes
+        }}
       >
         {({ open }) => {
           widgetOpenRef.current = open; // Store the open function in the ref
