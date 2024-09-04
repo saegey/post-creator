@@ -5,7 +5,7 @@ import { UpdatePostMutation } from "../API";
 import { updatePostImages } from "../graphql/customMutations";
 import { CloudinaryImage } from "../types/common";
 
-const updateImages = async (id: string, images: CloudinaryImage[]) => {
+const updateImages = async (postId: string, images: CloudinaryImage[]) => {
   try {
     const response = (await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
@@ -13,7 +13,7 @@ const updateImages = async (id: string, images: CloudinaryImage[]) => {
       variables: {
         input: {
           images: JSON.stringify(images),
-          id: id,
+          id: postId,
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
