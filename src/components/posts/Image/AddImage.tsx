@@ -24,7 +24,7 @@ const AddImage = () => {
   const { editor, slateRef } = useSlateContext();
 
   if (!editor && menuPosition.path) {
-    return;
+    throw new Error("Editor is not defined");
   }
 
   const handleButtonClick = () => {

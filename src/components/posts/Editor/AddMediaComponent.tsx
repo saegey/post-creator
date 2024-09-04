@@ -59,7 +59,10 @@ const AddMediaComponent = forwardRef(
             },
           },
         }}
-        onSuccess={onSuccess}
+        onSuccess={(result) => {
+          console.log("Image upload widget success", result);
+          onSuccess(result);
+        }}
         onClose={() => {
           console.log("Image upload widget closed");
           onClose && onClose(); // Call the passed `onClose` callback when the widget closes

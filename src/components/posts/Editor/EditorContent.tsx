@@ -7,18 +7,39 @@ import slateApi from "../../../../lib/slateApi";
 import Leaf from "./Leaf";
 import renderElement from "./RenderElement";
 import { CustomEditor, CustomElement } from "../../../types/common";
+import { EditorContext } from "./EditorContext";
 
 const EditorContent = ({
   editor,
   initialState,
-  updateMenuPosition,
-}: {
+}: // updateMenuPosition,
+{
   editor: CustomEditor;
   initialState: CustomElement[];
-  updateMenuPosition: () => void;
+  // updateMenuPosition: () => void;
 }) => {
   const { id, title, postLocation, setPost } = useContext(PostContext);
+  const { setSavingStatus, setIsSavingPost, setMenuPosition } =
+    useContext(EditorContext);
+  const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const { handleSelectionChange } = useSelectionChangeHandler(editor);
+
+  const updateMenuPosition = useCallback(() => {
+    console.log("updateMenuPosition2", editor.selection);
+    const selection = editor.selection;
+    if (selection) {
+      const domSelection = window.getSelection();
+      if (!domSelection) return;
+
+      if (domSelection.anchorNode) {
+        const parentElement = domSelection.anchorNode.parentElement;
+        if (parentElement) {
+          const rect = parentElement.getBoundingClientRect();
+          setMenuPosition({ top: rect.bottom, left: rect.left, path: [] });
+        }
+      }
+    }
+  }, [editor]);
 
   return (
     <Slate
@@ -34,6 +55,11 @@ const EditorContent = ({
           id,
           title,
           postLocation,
+          setSavingStatus,
+          setIsSavingPost,
+          timeoutLink,
+          setTimeoutLink,
+          heroImage: JSON.stringify(""),
         });
       }}
     >
@@ -44,6 +70,7 @@ const EditorContent = ({
         renderLeaf={(props: RenderLeafProps) => (
           <Leaf props={props} updateMenuPosition={updateMenuPosition} />
         )}
+        contentEditable="true"
       />
     </Slate>
   );

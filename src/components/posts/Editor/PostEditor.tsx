@@ -1,25 +1,47 @@
 // PostEditor.tsx
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useContext } from "react";
 import { createEditor } from "slate";
 import { withReact } from "slate-react";
 import { withHistory } from "slate-history";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
+
 import withLayout from "../../plugins/withLayout";
 import withLinks from "../../plugins/withLinks";
 import EditorContent from "./EditorContent";
-import ModalManager from "./ModalManager";
-import MediaUploadHandler from "./MediaUploadHandler";
 
-const PostEditor = ({ initialState }) => {
+import MediaUploadHandler from "./MediaUploadHandler";
+import { SlateProvider } from "../../SlateContext";
+import { CustomElement } from "../../../types/common";
+import { RWGPSModal } from "./AddRWGPS";
+import RaceResultsImport from "../RaceResults/RaceResultsImport";
+import MobileMenu from "./MobileMenu";
+import { AddVideoModal } from "./AddVideo";
+import OptionsDropdown from "../../OptionsDropdown";
+import AddImage from "../Image/AddImage";
+import FloatingMenu from "./FloatingMenu";
+import Menu from "../../Menu";
+import { EditorContext } from "./EditorContext";
+import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler";
+
+const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
     () => withLayout(withHistory(withLinks(withReact(createEditor())))),
     []
   );
+  const { selectionMenu, isChangingQuickly } =
+    useSelectionChangeHandler(editor);
 
-  const updateMenuPosition = useCallback(() => {
-    // Your logic for updating menu position
-  }, [editor]);
-
+  const {
+    isRaceResultsModalOpen,
+    isOptionsOpen,
+    isHeroImageModalOpen,
+    isNewComponentMenuOpen,
+    // selectionMenu,
+    // isChangingQuickly,
+    menuPosition,
+    setMenuPosition,
+  } = useContext(EditorContext);
+  console.log("sekection:", selectionMenu);
   return (
     <Flex>
       <Box
@@ -35,15 +57,23 @@ const PostEditor = ({ initialState }) => {
           } as ThemeUIStyleObject<Theme>
         }
       >
-        <EditorContent
-          editor={editor}
-          initialState={initialState}
-          updateMenuPosition={updateMenuPosition}
-        />
+        {/* SlateProvider wrapping the editor */}
+        <SlateProvider editor={editor}>
+          <EditorContent editor={editor} initialState={initialState} />
 
-        <ModalManager />
+          {isRaceResultsModalOpen && <RaceResultsImport />}
+          <RWGPSModal />
+          <MobileMenu />
+          <AddVideoModal />
+          {isOptionsOpen && <OptionsDropdown />}
+          {selectionMenu && !isChangingQuickly && (
+            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
+          )}
+          {isHeroImageModalOpen && <AddImage />}
+          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
 
-        <MediaUploadHandler />
+          <MediaUploadHandler />
+        </SlateProvider>
       </Box>
     </Flex>
   );
