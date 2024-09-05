@@ -7,23 +7,26 @@ import {
 
 type AddMediaComponentProps = {
   uploadPreset: string;
-  onSuccess: (result: CloudinaryUploadWidgetResults) => void;
-  onClose: () => void; // Add a callback to handle the modal close
+  onSuccess: (
+    result: CloudinaryUploadWidgetResults,
+    realPath?: number[]
+  ) => void;
+  onClose: () => void; // A callback to handle the modal close
 };
 
 const AddMediaComponent = forwardRef(
   ({ uploadPreset, onSuccess, onClose }: AddMediaComponentProps, ref) => {
     const { theme } = useThemeUI();
-    const widgetOpenRef = useRef<() => void | null>(null); // Ref to store the open function
+    const widgetOpenRef = useRef(null); // Ref to store the open function
 
-    // Expose the `openModal` function to the parent component
+    // Use imperative handle to expose openModal function to parent
     useImperativeHandle(ref, () => ({
       openModal: () => {
-        try {
-          console.log(widgetOpenRef.current);
-          widgetOpenRef && widgetOpenRef.current(); // Call the widget's open function
-        } catch (e) {
-          console.error("Widget open function is not available", e);
+        // Trigger the Cloudinary widget to open
+        if (widgetOpenRef.current) {
+          widgetOpenRef.current();
+        } else {
+          console.error("Widget is not initialized");
         }
       },
     }));
@@ -59,15 +62,15 @@ const AddMediaComponent = forwardRef(
             },
           },
         }}
-        onSuccess={onSuccess}
-        onClose={() => {
-          console.log("Image upload widget closed");
-          onClose && onClose(); // Call the passed `onClose` callback when the widget closes
+        onSuccess={(result) => {
+          // Handle success - pass result back to parent component
+          onSuccess(result);
         }}
+        onClose={onClose} // Handle widget close
       >
         {({ open }) => {
           widgetOpenRef.current = open; // Store the open function in the ref
-          return null; // No button rendering here, since it will be triggered externally
+          return null; // No button rendering here, as it's triggered programmatically
         }}
       </CldUploadWidget>
     );

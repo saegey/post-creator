@@ -58,6 +58,9 @@ export type EditorContextType = {
     React.SetStateAction<{ top: number; left: number; path: Path }>
   >;
 
+  isNewPostImageUploadOpen: boolean;
+  setIsNewPostImageUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
+
   mobileMenu: {
     top: number;
     left: number;
@@ -126,6 +129,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsOptionsOpen: () => {},
   isImageUploadOpen: false,
   setIsImageUploadOpen: () => {},
+  isNewPostImageUploadOpen: false,
+  setIsNewPostImageUploadOpen: () => {},
 });
 
 export { EditorContext };

@@ -1,66 +1,8 @@
 import React, { useState } from "react";
 import { Path } from "slate";
+import { EditorContextType } from "../components/posts/Editor/EditorContext";
 
-type EditorState = {
-  isGraphMenuOpen: boolean;
-  setIsGraphMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isFtpUpdating: boolean;
-  setIsFtpUpdating: React.Dispatch<React.SetStateAction<boolean>>;
-  isImageModalOpen: boolean;
-  setIsImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isPhotoCaptionOpen: boolean;
-  setIsPhotoCaptionOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isHeroImageModalOpen: boolean;
-  setIsHeroImageModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isShareModalOpen: boolean;
-  setIsShareModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isRaceResultsModalOpen: boolean;
-  setIsRaceResultsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isSettingsModalOpen: boolean;
-  setIsSettingsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isSavingPost: boolean;
-  setIsSavingPost: React.Dispatch<React.SetStateAction<boolean>>;
-  savingStatus: string;
-  setSavingStatus: React.Dispatch<React.SetStateAction<string>>;
-  isPublishedConfirmationOpen: boolean;
-  setIsPublishedConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isVideoUploadOpen: boolean;
-  setIsVideoUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isNewComponentMenuOpen: boolean;
-  setIsNewComponentMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  menuPosition: { top: number; left: number; path: Path };
-  setMenuPosition: React.Dispatch<
-    React.SetStateAction<{ top: number; left: number; path: Path }>
-  >;
-  mobileMenu: {
-    display: boolean;
-    top: number;
-    left: number;
-    path: Path;
-    isFullScreen: boolean;
-  };
-  setMobileMenu: React.Dispatch<
-    React.SetStateAction<{
-      display: boolean;
-      top: number;
-      left: number;
-      path: Path;
-      isFullScreen: boolean;
-    }>
-  >;
-  isStravaModalOpen: boolean;
-  setIsStravaModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isRWGPSModalOpen: boolean;
-  setIsRWGPSModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  newComponentPath: Path | undefined;
-  setNewComponentPath: React.Dispatch<React.SetStateAction<Path | undefined>>;
-  isOptionsOpen: boolean;
-  setIsOptionsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isImageUploadOpen: boolean;
-  setIsImageUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const useEditorState = (): EditorState => {
+const useEditorState = (): EditorContextType => {
   const [isGraphMenuOpen, setIsGraphMenuOpen] = useState(false);
   const [isFtpUpdating, setIsFtpUpdating] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -98,6 +40,8 @@ const useEditorState = (): EditorState => {
   );
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isImageUploadOpen, setIsImageUploadOpen] = useState(false);
+  const [isNewPostImageUploadOpen, setIsNewPostImageUploadOpen] =
+    useState(false);
 
   return {
     isGraphMenuOpen,
@@ -140,6 +84,8 @@ const useEditorState = (): EditorState => {
     setIsOptionsOpen,
     isImageUploadOpen,
     setIsImageUploadOpen,
+    isNewPostImageUploadOpen,
+    setIsNewPostImageUploadOpen,
   };
 };
 

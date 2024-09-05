@@ -15,7 +15,7 @@ import AddRouteOverview from "./AddRouteOverview";
 
 const MobileMenu = () => {
   const { mobileMenu, setMobileMenu } = React.useContext(EditorContext);
-  console.log("MobileMenu");
+  // console.log("MobileMenu");
 
   React.useEffect(() => {
     if (mobileMenu.isFullScreen) {

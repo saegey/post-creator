@@ -6,9 +6,12 @@ import React, {
   useEffect,
 } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { createEditor } from "slate";
+import { createEditor, Path, Transforms } from "slate";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { withHistory } from "slate-history";
+import { GraphQLResult } from "@aws-amplify/api";
+import { API } from "aws-amplify";
+import { UpdatePostMutation } from "../../../API";
 
 import renderElement from "./RenderElement";
 import { PostContext } from "../../PostContext";
@@ -33,6 +36,7 @@ import OptionsDropdown from "../../OptionsDropdown";
 import AddImage from "../Image/AddImage";
 import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddMediaComponent
 import { updateImages } from "../../../utils/editorActions";
+import { updatePostImages } from "../../../graphql/customMutations";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -42,6 +46,10 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
   const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
   const addMediaRef = useRef<any>(null); // Ref for AddMediaComponent
+  const newMediaRef = useRef<any>(null); // Ref for AddMediaComponent
+
+  // Store the path in a ref
+  const realPathRef = useRef<number[] | null>(null); // Use ref to hold realPath
 
   const { handleSelectionChange, selectionMenu, isChangingQuickly } =
     useSelectionChangeHandler(editor);
@@ -56,8 +64,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isRaceResultsModalOpen,
     isOptionsOpen,
     isHeroImageModalOpen,
-    isImageUploadOpen, // Trigger for Image Upload
-    setIsImageUploadOpen,
+    isNewPostImageUploadOpen,
+    setIsNewPostImageUploadOpen,
   } = useContext(EditorContext);
 
   useFetchData();
@@ -80,12 +88,68 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     }
   }, [editor]);
 
-  // Trigger AddMediaComponent when isImageUploadOpen is true
-  useEffect(() => {
-    if (isImageUploadOpen && addMediaRef.current) {
-      addMediaRef.current.openModal(); // Programmatically open the widget
+  // Open modal on button click
+  const openImageUploadModal = () => {
+    capturePath();
+    if (newMediaRef.current) {
+      newMediaRef.current.openModal(); // Open Cloudinary widget
     }
-  }, [isImageUploadOpen]);
+  };
+
+  React.useEffect(() => {
+    if (isNewPostImageUploadOpen) {
+      openImageUploadModal();
+    }
+  }, [isNewPostImageUploadOpen]);
+
+  // Function to capture and store the current Slate editor path
+  const capturePath = useCallback(() => {
+    if (isNewComponentMenuOpen) {
+      console.log("Captured realPath:", menuPosition.path);
+      realPathRef.current = [...menuPosition.path]; // Update the ref instead of state
+    }
+  }, [isNewPostImageUploadOpen]);
+
+  // Handle success when an image is uploaded
+  const handleImageUploadSuccess = (result) => {
+    const newImage = result.info; // The uploaded image result from Cloudinary
+    console.log("Uploaded image:", newImage, "At path:", realPathRef.current); // Now realPathRef.current has the latest path
+
+    // Insert image into the editor at the captured path
+    if (realPathRef.current) {
+      images?.push(newImage as CloudinaryImage);
+      setPost({ images: [...images] });
+      updateImages(id, images);
+
+      //   Transforms.insertNodes(
+      //     editor,
+      //     {
+      //       type: "image",
+      //       url: newImage.secure_url,
+      //       children: [{ text: "" }],
+      //     },
+      //     { at: realPathRef.current }
+      //   );
+      // }
+
+      Transforms.insertNodes(
+        editor,
+        {
+          type: "image",
+          asset_id: newImage?.asset_id,
+          public_id: newImage?.public_id,
+          children: [{ text: "" }],
+          void: true,
+          photoCaption: "",
+          caption: "",
+        },
+        { at: realPathRef.current }
+      );
+    }
+
+    // Reset the state
+    setIsNewPostImageUploadOpen(false);
+  };
 
   return (
     <Flex>
@@ -112,7 +176,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
           {isHeroImageModalOpen && <AddImage />}
-          {/* {isImageUploadOpen && <h1>Triggering Media Upload</h1>} */}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
 
           <Slate
@@ -147,23 +210,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               contentEditable="true"
             />
           </Slate>
-
-          {/* AddMediaComponent */}
           <AddMediaComponent
-            ref={addMediaRef} // Attach the ref to AddMediaComponent
+            ref={newMediaRef}
             uploadPreset="epcsmymp"
-            onSuccess={async (result) => {
-              console.log("Media uploaded successfully", result);
-
-              images?.push(result.info as CloudinaryImage);
-              if (images) {
-                setPost({ images: [...images] });
-                updateImages(id, images);
-              }
-            }}
-            onClose={() => {
-              setIsImageUploadOpen(false);
-            }} // Close the modal
+            onSuccess={handleImageUploadSuccess}
+            onClose={() => setIsNewPostImageUploadOpen(false)}
           />
         </SlateProvider>
       </Box>

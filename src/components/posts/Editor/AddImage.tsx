@@ -16,8 +16,13 @@ import ImagesIcon from "../../icons/ImagesIcon";
 
 const AddImage = () => {
   const { setPost, images, id } = React.useContext(PostContext);
-  const { setIsNewComponentMenuOpen, setMobileMenu, menuPosition } =
-    React.useContext(EditorContext);
+  const {
+    setIsNewComponentMenuOpen,
+    setMobileMenu,
+    menuPosition,
+    setIsNewPostImageUploadOpen,
+    setNewComponentPath,
+  } = React.useContext(EditorContext);
   const { path } = menuPosition;
   const { editor } = useSlateContext();
 
@@ -25,78 +30,18 @@ const AddImage = () => {
     return;
   }
 
-  const insertImage = (selectedImage: CloudinaryImage) => {
-    Transforms.insertNodes(
-      editor,
-      {
-        type: "image",
-        asset_id: selectedImage?.asset_id,
-        public_id: selectedImage?.public_id,
-        children: [{ text: "" }],
-        void: true,
-        photoCaption: "",
-        caption: "",
-      },
-      { at: path }
-    );
-    if (path.length > 2) {
-      Transforms.liftNodes(editor);
-    }
-
-    setMobileMenu({
-      top: 0,
-      left: 0,
-      display: false,
-      path: path,
-      isFullScreen: false,
-    });
-    setIsNewComponentMenuOpen(false);
-    const selection = window.getSelection();
-    selection && selection.removeAllRanges();
-    // setIsOpen(false);
-  };
-
   return (
-    <AddMediaComponent
-      uploadPreset="epcsmymp"
-      onSuccess={async (result) => {
-        const uploadImage = result.info as CloudinaryImage;
-        images?.push(result.info as CloudinaryImage);
-
-        if (images) {
-          setPost({ images: [...images] });
-          insertImage(uploadImage);
-
-          try {
-            const response = (await API.graphql({
-              authMode: "AMAZON_COGNITO_USER_POOLS",
-              query: updatePost,
-              variables: {
-                input: {
-                  images: JSON.stringify(images),
-                  id: id,
-                },
-              },
-            })) as GraphQLResult<UpdatePostMutation>;
-          } catch (errors) {
-            console.error(errors);
-          }
-        }
+    <Box
+      onClick={() => {
+        setIsNewPostImageUploadOpen(true);
       }}
-      renderButton={(openModal) => {
-        return (
-          <Box
-            onClick={() => openModal()}
-            variant="boxes.sidebarMenuItem"
-            sx={{
-              cursor: "pointer",
-            }}
-          >
-            <GenericMenuItem label="Image" icon={<ImagesIcon />} />
-          </Box>
-        );
+      variant="boxes.sidebarMenuItem"
+      sx={{
+        cursor: "pointer",
       }}
-    />
+    >
+      <GenericMenuItem label="Image" icon={<ImagesIcon />} />
+    </Box>
   );
 };
 
