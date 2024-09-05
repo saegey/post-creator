@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { createEditor, Path, Transforms } from "slate";
+import { createEditor, Transforms } from "slate";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { withHistory } from "slate-history";
 import { GraphQLResult } from "@aws-amplify/api";
@@ -37,6 +37,7 @@ import AddImage from "../Image/AddImage";
 import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddMediaComponent
 import { updateImages } from "../../../utils/editorActions";
 import { updatePostImages } from "../../../graphql/customMutations";
+import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -111,26 +112,25 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, [isNewPostImageUploadOpen]);
 
   // Handle success when an image is uploaded
-  const handleImageUploadSuccess = (result) => {
+  const handleImageUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
     const newImage = result.info; // The uploaded image result from Cloudinary
     console.log("Uploaded image:", newImage, "At path:", realPathRef.current); // Now realPathRef.current has the latest path
+    if (images === undefined || images === null) {
+      throw new Error("Images is undefined");
+    }
+    if (
+      newImage === undefined ||
+      newImage === null ||
+      typeof newImage === "string"
+    ) {
+      throw new Error("New image is invalid");
+    }
 
     // Insert image into the editor at the captured path
     if (realPathRef.current) {
       images?.push(newImage as CloudinaryImage);
       setPost({ images: [...images] });
       updateImages(id, images);
-
-      //   Transforms.insertNodes(
-      //     editor,
-      //     {
-      //       type: "image",
-      //       url: newImage.secure_url,
-      //       children: [{ text: "" }],
-      //     },
-      //     { at: realPathRef.current }
-      //   );
-      // }
 
       Transforms.insertNodes(
         editor,
