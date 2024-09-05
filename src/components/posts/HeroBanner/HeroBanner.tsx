@@ -26,6 +26,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
     right: "10px",
     top: "10px",
   });
+
   const { width } = useViewport();
   const imageWidth = width < 690 ? width : 690;
 
@@ -86,7 +87,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
 
   return (
     <>
-      {isHeroImageModalOpen && <AddImage element={element} />}
+      {/* {isHeroImageModalOpen && <AddImage element={element} />} */}
       {heroBannerMemo}
       {optionsMenu}
     </>

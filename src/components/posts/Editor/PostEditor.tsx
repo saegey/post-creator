@@ -1,22 +1,12 @@
-import React, {
-  useMemo,
-  useCallback,
-  useContext,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useMemo, useCallback, useContext, useRef } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { createEditor, Transforms } from "slate";
+import { createEditor, Editor, Transforms } from "slate";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { withHistory } from "slate-history";
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import { UpdatePostMutation } from "../../../API";
 
 import renderElement from "./RenderElement";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
-
 import withLinks from "../../plugins/withLinks";
 import withLayout from "../../plugins/withLayout";
 import Menu from "../../Menu";
@@ -27,17 +17,19 @@ import { SlateProvider } from "../../SlateContext";
 import FloatingMenu from "./FloatingMenu";
 import MobileMenu from "./MobileMenu";
 import { RWGPSModal } from "./AddRWGPS";
-
 import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler";
 import useFetchData from "../../../hooks/useFetchData";
-import { CloudinaryImage, CustomElement } from "../../../types/common";
+import {
+  CloudinaryImage,
+  CustomElement,
+  HeroBannerType,
+} from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
-import AddImage from "../Image/AddImage";
 import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddMediaComponent
 import { updateImages } from "../../../utils/editorActions";
-import { updatePostImages } from "../../../graphql/customMutations";
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
+import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -46,7 +38,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   );
 
   const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
-  const addMediaRef = useRef<any>(null); // Ref for AddMediaComponent
+  const heroMediaRef = useRef<any>(null); // Ref for AddMediaComponent
   const newMediaRef = useRef<any>(null); // Ref for AddMediaComponent
 
   // Store the path in a ref
@@ -65,6 +57,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isRaceResultsModalOpen,
     isOptionsOpen,
     isHeroImageModalOpen,
+    setIsHeroImageModalOpen,
     isNewPostImageUploadOpen,
     setIsNewPostImageUploadOpen,
   } = useContext(EditorContext);
@@ -97,11 +90,24 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     }
   };
 
+  const openHeroImageModal = () => {
+    if (heroMediaRef.current) {
+      heroMediaRef.current.openModal();
+    }
+  };
+
   React.useEffect(() => {
     if (isNewPostImageUploadOpen) {
       openImageUploadModal();
     }
   }, [isNewPostImageUploadOpen]);
+
+  React.useEffect(() => {
+    console.log("isHeroImageModalOpen", isHeroImageModalOpen);
+    if (isHeroImageModalOpen) {
+      openHeroImageModal();
+    }
+  }, [isHeroImageModalOpen]);
 
   // Function to capture and store the current Slate editor path
   const capturePath = useCallback(() => {
@@ -167,17 +173,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
         }
       >
         <SlateProvider editor={editor} ref={slateRef}>
-          {isRaceResultsModalOpen && <RaceResultsImport />}
-          <RWGPSModal />
-          <MobileMenu />
-          <AddVideoModal />
-          {isOptionsOpen && <OptionsDropdown />}
-          {selectionMenu && !isChangingQuickly && (
-            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
-          )}
-          {isHeroImageModalOpen && <AddImage />}
-          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
-
           <Slate
             editor={editor}
             initialValue={initialState}
@@ -210,11 +205,47 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               contentEditable="true"
             />
           </Slate>
+          {isRaceResultsModalOpen && <RaceResultsImport />}
+          <RWGPSModal />
+          <MobileMenu />
+          <AddVideoModal />
+          {isOptionsOpen && <OptionsDropdown />}
+          {selectionMenu && !isChangingQuickly && (
+            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
+          )}
+          {/* {isHeroImageModalOpen && <AddImage />} */}
+          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+
           <AddMediaComponent
             ref={newMediaRef}
             uploadPreset="epcsmymp"
             onSuccess={handleImageUploadSuccess}
             onClose={() => setIsNewPostImageUploadOpen(false)}
+          />
+          <AddMediaComponent
+            onClose={() => {
+              console.log("close media");
+              setIsHeroImageModalOpen(false);
+            }}
+            ref={heroMediaRef}
+            uploadPreset="epcsmymp"
+            onSuccess={async (d) => {
+              images?.push(d.info as CloudinaryImage);
+
+              if (images) {
+                setPost({ images: [...images] });
+                updateImages(id, images);
+              }
+              const [node] = Editor.node(editor, [0]);
+              console.log(node);
+
+              updateHeroImage({
+                editor,
+                element: node as HeroBannerType,
+                path: [0],
+                image: d.info as CloudinaryImage,
+              });
+            }}
           />
         </SlateProvider>
       </Box>

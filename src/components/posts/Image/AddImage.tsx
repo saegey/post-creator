@@ -15,7 +15,6 @@ import { updateImages } from "../../../utils/editorActions";
 
 const AddImage = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
-  const addMediaRef = React.useRef<any>(null);
 
   const { setPost, images, id } = React.useContext(PostContext);
   const { setIsHeroImageModalOpen, isHeroImageModalOpen, menuPosition } =
@@ -26,12 +25,6 @@ const AddImage = () => {
   if (!editor && menuPosition.path) {
     return;
   }
-
-  const handleButtonClick = () => {
-    if (addMediaRef.current) {
-      addMediaRef.current.openModal(); // Programmatically trigger the widget
-    }
-  };
 
   console.log("slateRef", slateRef);
 
@@ -52,10 +45,16 @@ const AddImage = () => {
           }}
         >
           <Box>
-            <Button onClick={handleButtonClick} variant="primaryButton">
+            <Button
+              onClick={() => {
+                console.log("open modal");
+                setIsHeroImageModalOpen(true);
+              }}
+              variant="primaryButton"
+            >
               Add Image
             </Button>
-            <AddMediaComponent
+            {/* <AddMediaComponent
               onClose={() => console.log("close media")}
               ref={addMediaRef}
               uploadPreset="epcsmymp"
@@ -67,7 +66,7 @@ const AddImage = () => {
                   updateImages(id, images);
                 }
               }}
-            />
+            /> */}
           </Box>
           <Box sx={{ height: "calc(100% + 0px)" }}>
             <Flex

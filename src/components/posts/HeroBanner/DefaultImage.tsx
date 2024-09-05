@@ -4,7 +4,7 @@ import React from "react";
 import { EditorContext } from "../Editor/EditorContext";
 
 const DefaultImage = () => {
-  const { setIsImageUploadOpen } = React.useContext(EditorContext);
+  const { setIsHeroImageModalOpen } = React.useContext(EditorContext);
 
   return (
     <Flex
@@ -19,7 +19,10 @@ const DefaultImage = () => {
       <Flex sx={{ alignItems: "center" }}>
         <Box>
           <Button
-            onClick={() => setIsImageUploadOpen(true)}
+            onClick={() => {
+              setIsHeroImageModalOpen(true);
+              console.log("default image clicked");
+            }}
             variant="primaryButton"
           >
             Add Image
