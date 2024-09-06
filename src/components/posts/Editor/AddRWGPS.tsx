@@ -18,7 +18,7 @@ const RWGPSModal = () => {
   if (newComponentPath === undefined) {
     return <></>;
   }
-  console.log("RWGPSModal");
+  // console.log("RWGPSModal");
 
   return isRWGPSModalOpen && editor ? (
     <StandardModal

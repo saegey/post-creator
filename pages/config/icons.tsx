@@ -20,7 +20,6 @@ import LinkedinIcon from "../../src/components/icons/LinkedInIcon";
 import PlusIcon from "../../src/components/icons/PlusIcon";
 import StravaIcon from "../../src/components/icons/StravaIcon";
 import AvatarIcon from "../../src/components/icons/AvatarIcon";
-import ChevronLeft from "../../src/components/icons/ChevronLeft";
 import FacebookIcon from "../../src/components/icons/FacebookIcon";
 import PowerGraphIcon from "../../src/components/icons/PowerGraphIcon";
 import TimePowerZonesIcon from "../../src/components/icons/TimePowerZonesIcon";
@@ -39,6 +38,8 @@ import SettingsIcon from "../../src/components/icons/SettingsIcon";
 import Link from "next/link";
 import ShareIcon from "../../src/components/icons/ShareIcon";
 import OptionsIcon from "../../src/components/icons/OptionsIcon";
+import BackIcon from "../../src/components/icons/BackIcon";
+import ForwardIcon from "../../src/components/icons/ForwardIcon";
 
 const icons = [
   BulletListIcon,
@@ -51,7 +52,6 @@ const icons = [
   PlusIcon,
   StravaIcon,
   AvatarIcon,
-  ChevronLeft,
   FacebookIcon,
   PowerGraphIcon,
   TimePowerZonesIcon,
@@ -69,6 +69,8 @@ const icons = [
   SettingsIcon,
   ShareIcon,
   OptionsIcon,
+  BackIcon,
+  ForwardIcon,
 ];
 
 const ThemePreview = () => {
@@ -136,7 +138,7 @@ const ThemePreview = () => {
                   color: "text",
                   width: "32px",
                   height: "auto",
-                  backgroundColor: "muted",
+                  backgroundColor: "surface",
                 }}
                 onClick={() => {}}
               />

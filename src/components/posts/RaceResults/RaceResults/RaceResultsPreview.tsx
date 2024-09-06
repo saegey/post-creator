@@ -7,6 +7,7 @@ import { EditorContext } from "../../Editor/EditorContext";
 import { saveMyRaceResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { useSlateStatic } from "slate-react";
+import { useSlateContext } from "../../../SlateContext";
 
 const RaceResultsPreview = ({ path }: { path: Path }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
@@ -20,7 +21,10 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
     setIsNewComponentMenuOpen,
   } = React.useContext(EditorContext);
   const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
-  const editor = useSlateStatic();
+  const { editor } = useSlateContext();
+  if (!editor) {
+    throw new Error("Editor is not defined");
+  }
 
   return (
     <Flex
@@ -40,7 +44,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
         sx={{
           flexGrow: 1,
           overflowY: "auto",
-          backgroundColor: "activityOverviewBackgroundColor",
+          backgroundColor: "background",
           padding: "5px",
           borderRadius: "5px",
         }}
@@ -153,7 +157,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
         sx={{
           paddingTop: "15px",
           marginTop: "15px",
-          borderTopColor: "divider",
+          borderTopColor: "border",
           borderTopStyle: "solid",
           borderTopWidth: "1px",
         }}
@@ -163,7 +167,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
             title="Save"
             sx={{
               marginLeft: "auto",
-              backgroundColor: selectedRow ? null : "gray",
+              backgroundColor: selectedRow ? null : "disabledBackground",
             }}
             disabled={selectedRow ? false : true}
             onClick={() => {

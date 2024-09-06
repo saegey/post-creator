@@ -1,13 +1,12 @@
-import React, { useMemo, useCallback, useContext } from "react";
+import React, { useMemo, useCallback, useContext, useRef } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { createEditor } from "slate";
+import { createEditor, Editor, Transforms } from "slate";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { withHistory } from "slate-history";
 
 import renderElement from "./RenderElement";
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
-
 import withLinks from "../../plugins/withLinks";
 import withLayout from "../../plugins/withLayout";
 import Menu from "../../Menu";
@@ -18,17 +17,21 @@ import { SlateProvider } from "../../SlateContext";
 import FloatingMenu from "./FloatingMenu";
 import MobileMenu from "./MobileMenu";
 import { RWGPSModal } from "./AddRWGPS";
-
 import useSelectionChangeHandler from "../../../hooks/useSelectionChangeHandler";
-// import usePostSubscription from "../../../hooks/usePostSubscription";
 import useFetchData from "../../../hooks/useFetchData";
-import { CustomElement } from "../../../types/common";
+import {
+  CloudinaryImage,
+  CustomElement,
+  HeroBannerType,
+} from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
-
-// import PublishModalConfirmation from "./PublishModalConfirmation";
-// import ShareModal from "./ShareModal";
-// import AddImage from "../Image/AddImage";
+import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddMediaComponent
+import { updateImages } from "../../../utils/editorActions";
+import { CloudinaryUploadWidgetResults } from "next-cloudinary";
+import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
+import AddImage from "../Image/AddImage";
+import { StravaModal } from "./AddStravaLink";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -36,9 +39,16 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     []
   );
 
+  const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
+  const heroMediaRef = useRef<any>(null); // Ref for AddMediaComponent
+  const newMediaRef = useRef<any>(null); // Ref for AddMediaComponent
+
+  // Store the path in a ref
+  const realPathRef = useRef<number[] | null>(null); // Use ref to hold realPath
+
   const { handleSelectionChange, selectionMenu, isChangingQuickly } =
     useSelectionChangeHandler(editor);
-  const { id, title, postLocation, setPost } = useContext(PostContext);
+  const { id, title, postLocation, setPost, images } = useContext(PostContext);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
   const {
     isNewComponentMenuOpen,
@@ -48,10 +58,16 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setIsSavingPost,
     isRaceResultsModalOpen,
     isOptionsOpen,
+    isHeroImageModalOpen,
+    setIsHeroImageModalOpen,
+    isNewPostImageUploadOpen,
+    setIsNewPostImageUploadOpen,
+    isChangeImageModalOpen,
+    isStravaModalOpen,
   } = useContext(EditorContext);
 
-  // usePostSubscription();
   useFetchData();
+  console.log("initialState", initialState);
 
   const updateMenuPosition = useCallback(() => {
     console.log("updateMenuPosition");
@@ -70,6 +86,81 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     }
   }, [editor]);
 
+  // Open modal on button click
+  const openImageUploadModal = () => {
+    capturePath();
+    if (newMediaRef.current) {
+      newMediaRef.current.openModal(); // Open Cloudinary widget
+    }
+  };
+
+  const openHeroImageModal = () => {
+    if (heroMediaRef.current) {
+      heroMediaRef.current.openModal();
+    }
+  };
+
+  React.useEffect(() => {
+    if (isNewPostImageUploadOpen) {
+      openImageUploadModal();
+    }
+  }, [isNewPostImageUploadOpen]);
+
+  React.useEffect(() => {
+    console.log("isHeroImageModalOpen", isHeroImageModalOpen);
+    if (isHeroImageModalOpen) {
+      openHeroImageModal();
+    }
+  }, [isHeroImageModalOpen]);
+
+  // Function to capture and store the current Slate editor path
+  const capturePath = useCallback(() => {
+    if (isNewComponentMenuOpen) {
+      console.log("Captured realPath:", menuPosition.path);
+      realPathRef.current = [...menuPosition.path]; // Update the ref instead of state
+    }
+  }, [isNewPostImageUploadOpen]);
+
+  // Handle success when an image is uploaded
+  const handleImageUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
+    const newImage = result.info; // The uploaded image result from Cloudinary
+    console.log("Uploaded image:", newImage, "At path:", realPathRef.current); // Now realPathRef.current has the latest path
+    if (images === undefined || images === null) {
+      throw new Error("Images is undefined");
+    }
+    if (
+      newImage === undefined ||
+      newImage === null ||
+      typeof newImage === "string"
+    ) {
+      throw new Error("New image is invalid");
+    }
+
+    // Insert image into the editor at the captured path
+    if (realPathRef.current) {
+      images?.push(newImage as CloudinaryImage);
+      setPost({ images: [...images] });
+      updateImages(id, images);
+
+      Transforms.insertNodes(
+        editor,
+        {
+          type: "image",
+          asset_id: newImage?.asset_id,
+          public_id: newImage?.public_id,
+          children: [{ text: "" }],
+          void: true,
+          photoCaption: "",
+          caption: "",
+        },
+        { at: realPathRef.current }
+      );
+    }
+
+    // Reset the state
+    setIsNewPostImageUploadOpen(false);
+  };
+
   return (
     <Flex>
       <Box
@@ -78,7 +169,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             minWidth: "100%",
             margin: "0 auto 50px auto",
             width: "100%",
-
             backgroundColor: "background",
             borderRadius: "10px",
             padding: "0px",
@@ -86,18 +176,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           } as ThemeUIStyleObject<Theme>
         }
       >
-        <SlateProvider editor={editor}>
-          {isRaceResultsModalOpen && <RaceResultsImport />}
-          <RWGPSModal />
-          <MobileMenu />
-          <AddVideoModal />
-          {isOptionsOpen && <OptionsDropdown />}
-
-          {selectionMenu && !isChangingQuickly && (
-            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
-          )}
-          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
-
+        <SlateProvider editor={editor} ref={slateRef}>
           <Slate
             editor={editor}
             initialValue={initialState}
@@ -130,6 +209,51 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               contentEditable="true"
             />
           </Slate>
+          {isRaceResultsModalOpen && <RaceResultsImport />}
+          <RWGPSModal />
+          {isStravaModalOpen && <StravaModal />}
+          <MobileMenu />
+          <AddVideoModal />
+          {isOptionsOpen && <OptionsDropdown />}
+          {selectionMenu && !isChangingQuickly && (
+            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
+          )}
+          {/* {isHeroImageModalOpen && <AddImage />} */}
+          {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+
+          {isChangeImageModalOpen && <AddImage />}
+
+          <AddMediaComponent
+            ref={newMediaRef}
+            uploadPreset="epcsmymp"
+            onSuccess={handleImageUploadSuccess}
+            onClose={() => setIsNewPostImageUploadOpen(false)}
+          />
+          <AddMediaComponent
+            onClose={() => {
+              console.log("close media");
+              setIsHeroImageModalOpen(false);
+            }}
+            ref={heroMediaRef}
+            uploadPreset="epcsmymp"
+            onSuccess={async (d) => {
+              images?.push(d.info as CloudinaryImage);
+
+              if (images) {
+                setPost({ images: [...images] });
+                updateImages(id, images);
+              }
+              const [node] = Editor.node(editor, [0]);
+              console.log(node);
+
+              updateHeroImage({
+                editor,
+                element: node as HeroBannerType,
+                path: [0],
+                image: d.info as CloudinaryImage,
+              });
+            }}
+          />
         </SlateProvider>
       </Box>
     </Flex>

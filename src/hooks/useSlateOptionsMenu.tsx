@@ -1,11 +1,17 @@
 import React from "react";
 import { Box, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Path } from "slate";
+import { darken, lighten } from "@theme-ui/color";
 
 import { CustomEditor } from "../types/common";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
 import OptionsIcon from "../components/icons/OptionsIcon";
 
-const useOptionsMenu = (editor: CustomEditor, path: any) => {
+const useOptionsMenu = (
+  editor: CustomEditor,
+  path: Path,
+  sx?: ThemeUIStyleObject
+) => {
   const { isOptionsOpen, setIsOptionsOpen, setMobileMenu, setMenuPosition } =
     React.useContext(EditorContext);
 
@@ -16,11 +22,13 @@ const useOptionsMenu = (editor: CustomEditor, path: any) => {
   const optionsMenu = (
     <Box
       sx={
-        {
-          position: "absolute",
-          right: "-30px",
-          top: "0px",
-        } as ThemeUIStyleObject<Theme>
+        sx
+          ? sx
+          : ({
+              position: "absolute",
+              right: "-30px",
+              top: "0px",
+            } as ThemeUIStyleObject<Theme>)
       }
       onClick={(event) => {
         event.preventDefault();
@@ -50,7 +58,13 @@ const useOptionsMenu = (editor: CustomEditor, path: any) => {
         setIsOptionsOpen(true);
       }}
     >
-      <OptionsIcon />
+      <OptionsIcon
+        sx={{
+          backgroundColor: "muted",
+          color: "background",
+          "&:hover": { backgroundColor: lighten("muted", 0.2) },
+        }}
+      />
     </Box>
   );
 

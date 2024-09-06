@@ -43,9 +43,7 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
     >
       <HeadingIcon
         sx={{
-          color: isBlockActive(editor, "heading-two")
-            ? "floatingMenuIconActive"
-            : "floatingMenuIcon",
+          color: isBlockActive(editor, "heading-two") ? "accent" : "secondary",
         }}
       />
     </Box>

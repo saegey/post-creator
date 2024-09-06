@@ -14,7 +14,7 @@ const AuthLink = ({
   return (
     <Flex
       sx={{
-        borderColor: "loginBorder",
+        borderColor: "border",
         borderWidth: "1px",
         borderStyle: "solid",
         borderRadius: "5px",

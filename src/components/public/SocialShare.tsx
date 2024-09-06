@@ -62,7 +62,7 @@ const SocialShare = () => {
             title={social.title}
             onClick={social.onClick}
           >
-            <Icon sx={{ color: "publicSocialIcon" }} />
+            <Icon sx={{ color: "muted" }} />
           </ThemeLink>
         );
       })}

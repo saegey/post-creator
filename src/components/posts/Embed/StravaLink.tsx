@@ -23,7 +23,7 @@ const StravaLink = ({
 
   React.useEffect(() => {
     const resizeParentToIframe = (event: MessageEvent) => {
-      console.log(event, event.data[2]);
+      // console.log(event, event.data[2]);
       if (event.origin !== "https://strava-embeds.com") return;
       // Change to match the origin of the iframe content
 
@@ -46,7 +46,7 @@ const StravaLink = ({
   console.log("render StravaLink");
 
   const stravaEmbed = React.useMemo(() => {
-    console.log("stravaEmbed");
+    console.log("stravaEmbed", element.activityId);
     return (
       <Box
         sx={
@@ -55,7 +55,15 @@ const StravaLink = ({
           } as ThemeUIStyleObject<Theme>
         }
       >
-        <iframe
+        <div
+          className="strava-embed-placeholder"
+          data-embed-type="activity"
+          data-embed-id={element.activityId}
+          data-style="standard"
+          data-from-embed="false"
+        ></div>
+        <script src="https://strava-embeds.com/embed.js"></script>
+        {/* <iframe
           src={`https://strava-embeds.com/activity/${element.activityId}`}
           style={{
             height: "100%",
@@ -63,7 +71,7 @@ const StravaLink = ({
             border: "none",
           }}
           ref={iframeRef}
-        />
+        /> */}
       </Box>
     );
   }, [stravaUrl]);

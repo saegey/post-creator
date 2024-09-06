@@ -16,6 +16,7 @@ import {
 import { IUser } from "../../../types/common";
 import { createPostNew } from "../../../graphql/customMutations";
 import ShareIcon from "../../icons/ShareIcon";
+import BlackBox from "../../layout/BlackBox";
 
 interface ListPostsByCreatedAtTypes {
   listPostsByCreatedAt: {
@@ -57,6 +58,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
 
   const [status, setStatus] = React.useState<string | undefined>();
   const [posts, setPosts] = React.useState<PostType>();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const searchParams = useSearchParams();
 
@@ -114,6 +116,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
   }, [status]);
 
   const createNewPost = async () => {
+    setIsLoading(true);
     var response;
     try {
       response = (await API.graphql({
@@ -140,7 +143,12 @@ const PostsAll = ({ user }: { user: IUser }) => {
   };
 
   return (
-    <Box as="main" sx={{ backgroundColor: "background", height: "100vw" }}>
+    <Box as="main" sx={{ height: "100vw" }}>
+      {isLoading && (
+        <BlackBox>
+          <Text>Loading</Text>
+        </BlackBox>
+      )}
       <Header user={user} />
       <Box
         sx={{
@@ -161,7 +169,8 @@ const PostsAll = ({ user }: { user: IUser }) => {
                 paddingRight: "8px",
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: status === "draft" ? "text" : "divider",
+                borderBottomColor:
+                  status === "draft" ? "text" : "disabledBackground",
                 fontWeight: "500",
                 flexGrow: 1,
               }}
@@ -184,7 +193,8 @@ const PostsAll = ({ user }: { user: IUser }) => {
                 paddingRight: "8px",
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: status === "published" ? "text" : "divider",
+                borderBottomColor:
+                  status === "published" ? "text" : "disabledBackground",
                 fontWeight: "500",
               }}
               onClick={(e) => {
@@ -197,28 +207,23 @@ const PostsAll = ({ user }: { user: IUser }) => {
             >
               Published
             </NavLink>
-            <NavLink
+            {/* <NavLink
               href="#!"
               p={2}
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
                 fontWeight: "500",
               }}
             >
               Unlisted
-            </NavLink>
+            </NavLink> */}
           </Box>
           <Flex
             sx={{
               paddingBottom: "20px",
-              // flexGrow: 1,
               justifyContent: "right",
-              // width: "50%",
-              // borderBottomWidth: "1px",
-              // borderBottomStyle: "solid",
-              // borderBottomColor: status === "draft" ? "text" : "divider",
             }}
           >
             <Button
@@ -230,33 +235,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
             </Button>
           </Flex>
         </Flex>
-
-        {!posts && (
-          <Grid columns={[1, 2, 3]}>
-            <Flex
-              sx={{
-                height: "240px",
-                borderRadius: "5px",
-              }}
-              className="skeleton"
-            ></Flex>
-            <Flex
-              sx={{
-                height: "240px",
-                borderRadius: "5px",
-              }}
-              className="skeleton"
-            ></Flex>
-            <Flex
-              sx={{
-                height: "240px",
-
-                borderRadius: "5px",
-              }}
-              className="skeleton"
-            ></Flex>
-          </Grid>
-        )}
 
         {posts && posts.length === 0 && (
           <>

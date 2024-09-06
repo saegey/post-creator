@@ -60,6 +60,18 @@ export const updateRaceResults = /* GraphQL */ `
   }
 `;
 
+export const updatePostImages = /* GraphQL */ `
+  mutation UpdatePostImages(
+    $input: UpdatePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    updatePost(input: $input, condition: $condition) {
+      id
+      images
+    }
+  }
+`;
+
 export const updateCrossResults = /* GraphQL */ `
   mutation UpdateCrossResults(
     $input: UpdatePostInput!

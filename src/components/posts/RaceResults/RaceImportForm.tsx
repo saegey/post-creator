@@ -193,10 +193,10 @@ const RaceImportForm = () => {
                     fontWeight: 600,
                     cursor: "pointer",
                     "&:hover": {
-                      backgroundColor: "#3d3d3d",
+                      backgroundColor: "accent",
                     },
                     "&:disabled": {
-                      backgroundColor: "gray",
+                      backgroundColor: "disabledBackground",
                       cursor: "not-allowed",
                     },
                   }}
@@ -289,9 +289,7 @@ const RaceImportForm = () => {
                     <Flex sx={{ gap: "10px" }}>
                       <Text as="span">Import</Text>
                       {isLoading && (
-                        <Spinner
-                          sx={{ size: "20px", color: "spinnerButton" }}
-                        />
+                        <Spinner sx={{ size: "20px", color: "secondary" }} />
                       )}
                     </Flex>
                   </Button>

@@ -37,9 +37,7 @@ const TOCLink = ({ node }: { node: TransformType }) => {
     <ThemeLink
       href={`#${id}`}
       sx={{
-        color: highlighted
-          ? "publicBlogTOCHeadingSelected"
-          : "publicBlogTOCHeading",
+        color: highlighted ? "accent" : "muted",
         marginTop: "4px",
         marginBottom: "12px",
         textDecoration: "none",
@@ -50,7 +48,7 @@ const TOCLink = ({ node }: { node: TransformType }) => {
         ],
         ":hover": {
           fontWeight: 500,
-          color: "publicBlogTOCHeadingHover",
+          color: "accent",
         },
       }}
       onClick={(e) => {

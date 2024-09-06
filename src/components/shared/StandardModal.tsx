@@ -10,6 +10,8 @@ const StandardModal = ({
   title = undefined,
   fullScreen = false,
   onClose,
+  heading = undefined,
+  topRight = undefined,
 }: {
   children: any;
   isOpen: boolean;
@@ -17,6 +19,8 @@ const StandardModal = ({
   title?: string | undefined;
   fullScreen?: boolean;
   onClose?: () => void;
+  heading?: React.ReactNode;
+  topRight?: React.ReactNode;
 }) => {
   React.useEffect(() => {
     if (isOpen) {
@@ -31,7 +35,7 @@ const StandardModal = ({
   return (
     <>
       <BlackBox
-        opacity={"0.7"}
+        opacity={0.7}
         onClick={() => {
           setIsOpen(false);
           if (onClose) {
@@ -66,13 +70,15 @@ const StandardModal = ({
             sx={
               {
                 borderBottomWidth: title ? "1px" : "0px",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
                 borderBottomStyle: "solid",
                 paddingY: "5px",
               } as ThemeUIStyleObject<Theme>
             }
           >
-            {title && (
+            {heading ? (
+              heading
+            ) : (
               <Text
                 as="div"
                 sx={
@@ -86,29 +92,43 @@ const StandardModal = ({
               </Text>
             )}
 
-            <Close
-              onClick={(e) => {
-                e.preventDefault();
-                (document.activeElement as HTMLElement)?.blur();
-
-                setIsOpen(false);
-                if (onClose) {
-                  onClose();
+            {topRight ? (
+              <Box
+                sx={
+                  {
+                    alignItems: "center",
+                    height: "100%",
+                    marginLeft: "auto",
+                  } as ThemeUIStyleObject<Theme>
                 }
-              }}
-              onTouchStart={(e) => {
-                e.preventDefault();
-                (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
-              }}
-              id="close-button"
-              sx={
-                {
-                  alignItems: "center",
-                  height: "100%",
-                  marginLeft: "auto",
-                } as ThemeUIStyleObject<Theme>
-              }
-            />
+              >
+                {topRight}
+              </Box>
+            ) : (
+              <Close
+                onClick={(e) => {
+                  e.preventDefault();
+                  (document.activeElement as HTMLElement)?.blur();
+
+                  setIsOpen(false);
+                  if (onClose) {
+                    onClose();
+                  }
+                }}
+                onTouchStart={(e) => {
+                  e.preventDefault();
+                  (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
+                }}
+                id="close-button"
+                sx={
+                  {
+                    alignItems: "center",
+                    height: "100%",
+                    marginLeft: "auto",
+                  } as ThemeUIStyleObject<Theme>
+                }
+              />
+            )}
           </Flex>
           {children}
         </Box>

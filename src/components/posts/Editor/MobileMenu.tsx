@@ -15,7 +15,7 @@ import AddRouteOverview from "./AddRouteOverview";
 
 const MobileMenu = () => {
   const { mobileMenu, setMobileMenu } = React.useContext(EditorContext);
-  console.log("MobileMenu");
+  // console.log("MobileMenu");
 
   React.useEffect(() => {
     if (mobileMenu.isFullScreen) {
@@ -40,8 +40,7 @@ const MobileMenu = () => {
             position: "fixed",
             top: `0px`,
             left: "0px",
-            // border: "1px solid #ccc",
-            backgroundColor: "mobileMenuBackground",
+            backgroundColor: "background",
             width: "100%",
             height: "100dvh",
             zIndex: "301",
@@ -57,7 +56,7 @@ const MobileMenu = () => {
               paddingY: "15px",
               borderBottomWidth: "1px",
               borderBottomStyle: "solid",
-              borderBottomColor: "divider",
+              borderBottomColor: "border",
               position: "sticky",
             }}
           >
@@ -80,7 +79,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddText />
@@ -89,7 +88,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddImage />
@@ -98,7 +97,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddPowerCurve />
@@ -107,7 +106,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddActivityOverview />
@@ -116,7 +115,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddTimeZones path={mobileMenu.path} />
@@ -125,7 +124,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddStravaLink />
@@ -134,7 +133,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddRWGPS />
@@ -143,7 +142,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddRouteOverview />
@@ -152,7 +151,7 @@ const MobileMenu = () => {
               sx={{
                 borderBottomWidth: "1px",
                 borderBottomStyle: "solid",
-                borderBottomColor: "divider",
+                borderBottomColor: "border",
               }}
             >
               <AddRaceResults />
@@ -177,7 +176,7 @@ const MobileMenu = () => {
           sx={{
             alignItems: "center",
             borderRightWidth: "1px",
-            borderRightColor: "divider",
+            borderRightColor: "border",
             borderRightStyle: "solid",
             padding: "8px",
           }}

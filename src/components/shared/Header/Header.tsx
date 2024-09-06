@@ -36,7 +36,7 @@ const Header: React.FC<HeaderLayoutProps> = ({ user }) => {
             flexDirection: "row",
             padding: "10px",
             borderBottomWidth: "1px",
-            borderBottomColor: "divider",
+            borderBottomColor: "border",
             borderBottomStyle: "solid",
           } as ThemeUIStyleObject<Theme>
         }

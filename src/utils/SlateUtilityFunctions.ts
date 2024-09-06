@@ -6,84 +6,13 @@ import {
   Path,
 } from "slate";
 
-import { CustomEditor } from "../types/common";
+import {
+  CloudinaryImage,
+  CustomEditor,
+  CustomElement,
+  HeroBannerType,
+} from "../types/common";
 
-// interface CustomNode extends BaseElement {
-//   type: boolean;
-// }
-// interface CustomElement extends BaseElement {
-//   type: string | boolean;
-// }
-// interface CustomStringElement extends BaseElement {
-//   type: string;
-// }
-
-// const alignment = ["alignLeft", "alignRight", "alignCenter"];
-// const list_types = ["orderedList", "bulleted-list"];
-// export const sizeMap = {
-//   small: "0.75em",
-//   normal: "1em",
-//   medium: "1.75em",
-//   huge: "2.5em",
-// };
-// export const fontFamilyMap = {
-//   sans: 'Helvetica,Arial, sans serif',
-//   serif: 'Georgia, Times New Roaman,serif',
-//   monospace: 'Monaco, Courier New,monospace',
-// };
-
-// export const toggleBlock = (editor, format) => {
-//   const isActive = isBlockActive(editor, format);
-//   const isList = list_types.includes(format);
-//   const isIndent = alignment.includes(format);
-//   const isAligned = alignment.some((alignmentType) =>
-//     isBlockActive(editor, alignmentType)
-//   );
-
-/*If the node is already aligned and change in indent is called we should unwrap it first and split the node to prevent
-    messy, nested DOM structure and bugs due to that.*/
-// if (isAligned && isIndent) {
-//   Transforms.unwrapNodes(editor, {
-//     match: (n: CustomStringElement) =>
-//       alignment.includes(
-//         !Editor.isEditor(n) && SlateElement.isElement(n) && n.type
-//       ),
-//     split: true,
-//   });
-// }
-
-/* Wraping the nodes for alignment, to allow it to co-exist with other block level operations*/
-//   if (isIndent) {
-//     Transforms.wrapNodes(editor, {
-//       type: format,
-//       children: [],
-//     } as CustomNode);
-//     return;
-//   }
-
-//   Transforms.unwrapNodes(editor, {
-//     match: (n: CustomStringElement) =>
-//       !Editor.isEditor(n) &&
-//       SlateElement.isElement(n) &&
-//       list_types.includes(n.type),
-//     split: true,
-//   });
-
-//   Transforms.setNodes(editor, {
-//     type: isActive ? 'paragraph' : isList ? 'list-item' : format,
-//   } as CustomElement);
-
-//   if (isList && !isActive) {
-//     Transforms.wrapNodes(editor, {
-//       type: format,
-//       children: [],
-//     } as CustomElement);
-//   }
-// };
-
-// export const addMarkData = (editor: CustomEditor, data) => {
-//   Editor.addMark(editor, data.format, data.value);
-// };
 export const toggleMark = (editor: CustomEditor, format: "bold") => {
   const isActive = isMarkActive(editor, format);
 
@@ -149,14 +78,26 @@ export const moveNodeDown = (editor: CustomEditor, nodePath: number[]) => {
   }
 };
 
-// export const activeMark = (editor: CustomEditor, format: "bold") => {
-//   const defaultMarkData = {
-//     color: "black",
-//     bgColor: "black",
-//     fontSize: "normal",
-//     fontFamily: "sans",
-//   };
-//   const marks = Editor.marks(editor);
-//   const defaultValue = defaultMarkData[format];
-//   return marks?.[format] ?? defaultValue;
-// };
+export const updateHeroImage = ({
+  editor,
+  element,
+  path,
+  image,
+}: {
+  editor: CustomEditor;
+  element: CustomElement;
+  path: Path;
+  image: CloudinaryImage;
+}) => {
+  console.log("element", element);
+  Transforms.setNodes(
+    editor,
+    {
+      ...element,
+      image: image,
+    } as HeroBannerType,
+    {
+      at: path,
+    }
+  );
+};

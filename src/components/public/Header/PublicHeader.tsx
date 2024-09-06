@@ -24,10 +24,10 @@ const PublicHeader = () => {
           width: "100%",
           justifyContent: "center",
           display: ["none", "none", "flex"],
-          borderBottomColor: "menuBorder",
+          borderBottomColor: "border",
           borderBottomStyle: "solid",
           borderBottomWidth: "1px",
-          backgroundColor: "publicMenuBackground",
+          backgroundColor: "background",
         }}
       >
         <Grid

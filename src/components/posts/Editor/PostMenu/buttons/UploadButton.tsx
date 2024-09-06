@@ -138,7 +138,7 @@ const UploadButton = () => {
             {processingFile && (
               <Spinner
                 data-testid="spinner"
-                sx={{ size: "20px", color: "spinnerButton" }}
+                sx={{ size: "20px", color: "secondary" }}
               />
             )}
           </Flex>

@@ -25,7 +25,7 @@ const GraphSelectorMenu = () => {
         <AddImage />
         <AddPowerCurve />
         <AddActivityOverview />
-        <AddStravaLink />
+        {/* <AddStravaLink /> */}
         <AddRWGPS />
         <AddRaceResults />
         <AddRouteOverview />

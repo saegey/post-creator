@@ -27,7 +27,7 @@ const SignInSignUp = () => {
         href={`/login`}
         sx={{
           "&:hover": {
-            color: "gray",
+            color: "accent",
           },
           textDecoration: "none",
           color: "text",

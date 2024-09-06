@@ -112,7 +112,7 @@ const Home = () => {
                     Sign Up
                   </Button>
                 </ThemeLink>
-                <Button>Watch Demo</Button>
+                <Button variant="secondaryButton">Watch Demo</Button>
               </Flex>
             </Box>
           </Flex>
@@ -180,7 +180,7 @@ const Home = () => {
             imagePosition="left"
             highlights={[
               {
-                icon: <TimePowerZonesIcon sx={{ backgroundColor: "black" }} />,
+                icon: <TimePowerZonesIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Automatically embed and display your race results within
@@ -189,9 +189,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: (
-                  <ActivityOverviewIcon sx={{ backgroundColor: "black" }} />
-                ),
+                icon: <ActivityOverviewIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Streamlined integration keeps your race history organized
@@ -200,7 +198,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <StravaIcon sx={{ backgroundColor: "black" }} />,
+                icon: <StravaIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Instantly view your performance metrics, rankings, and
@@ -210,7 +208,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <StravaIcon sx={{ backgroundColor: "black" }} />,
+                icon: <StravaIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Eliminates the need to search through external sources,
@@ -243,7 +241,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <HeroBannerIcon sx={{ backgroundColor: "black" }} />,
+                icon: <HeroBannerIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Public Visibility. Opt for public sharing to inspire and
@@ -252,7 +250,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <EyeIcon sx={{ backgroundColor: "black" }} />,
+                icon: <EyeIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Effortlessly publish and share your journal entries from
@@ -262,7 +260,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <EyeIcon sx={{ backgroundColor: "black" }} />,
+                icon: <EyeIcon sx={{ height: "auto", color: "primary" }} />,
                 content: (
                   <>
                     Capture Moments Together. Collaboratively share experiences

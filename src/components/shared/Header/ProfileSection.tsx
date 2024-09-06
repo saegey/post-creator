@@ -37,7 +37,6 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
       sx={
         {
           justifyContent: "end",
-          // backgroundColor: ["none", "divider", "divider"],
           borderRadius: "100px",
           padding: "3px 10px 3px 10px",
         } as ThemeUIStyleObject<Theme>

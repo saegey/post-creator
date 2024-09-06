@@ -4,7 +4,7 @@ import React from "react";
 
 interface BlackBoxProps {
   children: JSX.Element;
-  opacity?: string;
+  opacity?: number;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   zIndex?: number;
   fullScreen?: boolean;
@@ -14,7 +14,7 @@ interface BlackBoxProps {
 
 const BlackBox: React.FC<BlackBoxProps> = ({
   children,
-  opacity = ".7",
+  opacity = 0.7,
   onClick,
   zIndex = 30,
   fullScreen = false,
@@ -26,8 +26,8 @@ const BlackBox: React.FC<BlackBoxProps> = ({
   const backgroundColor = noBackground
     ? "unset"
     : fullScreen
-    ? "modalBackground"
-    : transparentize("modalBackground", 0.4);
+    ? "primary"
+    : transparentize("primary", opacity);
 
   return (
     <Box

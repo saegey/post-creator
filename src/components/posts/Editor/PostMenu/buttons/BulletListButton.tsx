@@ -35,8 +35,8 @@ const BulletListButton = ({ editor }: { editor: CustomEditor }) => {
         <BulletListIcon
           sx={{
             color: isBlockActive(editor, "bulleted-list")
-              ? "floatingMenuIconActive"
-              : "floatingMenuIcon",
+              ? "accent"
+              : "secondary",
             width: "24px",
           }}
         />

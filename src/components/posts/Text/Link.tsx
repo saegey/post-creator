@@ -5,15 +5,7 @@ import { Box, Close, Link as ThemeLink } from "theme-ui";
 import { removeLink } from "../../../utils/link";
 import { LinkType } from "../../../types/common";
 
-const Link = ({
-  // attributes,
-  element,
-  children,
-}: {
-  // attributes: any;
-  element: LinkType;
-  children?: any;
-}) => {
+const Link = ({ element, children }: { element: LinkType; children?: any }) => {
   const editor = useSlateStatic();
   const selected = useSelected();
   const focused = useFocused();
@@ -23,8 +15,6 @@ const Link = ({
       <ThemeLink
         sx={{ textDecorationColor: "text", color: "text", cursor: "pointer" }}
         href={element.href}
-        // {...attributes}
-        // {...element.attr}
         target={element.target}
       >
         {children}
@@ -40,7 +30,9 @@ const Link = ({
             padding: "6px 10px",
             gap: "10px",
             borderRadius: "5px",
-            border: "1px solid lightgray",
+            borderWidth: "1px",
+            borderStyle: "solid",
+            borderColor: "border",
             width: "fit-content",
             zIndex: "1",
           }}

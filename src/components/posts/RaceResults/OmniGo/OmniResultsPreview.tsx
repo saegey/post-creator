@@ -49,7 +49,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
         sx={{
           overflowY: "auto",
           height: ["80%", "300px", "300px"],
-          backgroundColor: "activityOverviewBackgroundColor",
+          backgroundColor: "background",
           padding: "5px",
           borderRadius: "5px",
         }}
@@ -127,7 +127,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
         sx={{
           paddingTop: "15px",
           marginTop: "15px",
-          borderTopColor: "divider",
+          borderTopColor: "border",
           borderTopStyle: "solid",
           borderTopWidth: "1px",
         }}

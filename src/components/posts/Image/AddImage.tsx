@@ -1,37 +1,72 @@
-import { Box, Flex, Button } from "theme-ui";
+import { Box, Flex, Button, Text, ThemeUIStyleObject, Theme } from "theme-ui";
 import React from "react";
-import { CldImage, CldUploadButton } from "next-cloudinary";
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import { Transforms } from "slate";
+import { CldImage } from "next-cloudinary";
+import { Editor } from "slate";
 
 import { PostContext } from "../../PostContext";
-import { updatePost } from "../../../graphql/mutations";
-import { UpdatePostMutation } from "../../../API";
-import { CloudinaryImage, HeroBannerType } from "../../../types/common";
+import { CloudinaryImage, CustomElement } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
 import { useSlateContext } from "../../SlateContext";
+import AddMediaComponent from "../Editor/AddMediaComponent";
+import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
+import { updateImages } from "../../../utils/editorActions";
 
-const AddImage = ({ element }: { element: HeroBannerType }) => {
+const AddImage = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
-
   const { setPost, images, id } = React.useContext(PostContext);
-  const { setIsHeroImageModalOpen, isHeroImageModalOpen, menuPosition } =
-    React.useContext(EditorContext);
+  const {
+    setIsHeroImageModalOpen,
+    isHeroImageModalOpen,
+    menuPosition,
+    setIsChangeImageModalOpen,
+    isChangeImageModalOpen,
+  } = React.useContext(EditorContext);
 
-  const { editor } = useSlateContext();
+  const { editor, slateRef } = useSlateContext();
+
   if (!editor && menuPosition.path) {
     return;
   }
 
+  console.log("slateRef", slateRef);
+
   return (
     <>
       <StandardModal
-        title={"Add Image"}
+        title={"Media"}
+        onClose={() => setIsChangeImageModalOpen(false)}
         setIsOpen={() => setIsHeroImageModalOpen(false)}
         isOpen={isHeroImageModalOpen}
+        topRight={
+          <Box>
+            <Button
+              onClick={() => {
+                console.log("open modal");
+                setIsHeroImageModalOpen(true);
+              }}
+              variant="primaryButton"
+            >
+              Upload
+            </Button>
+          </Box>
+        }
+        heading={
+          <Flex sx={{ flexDirection: "row" }}>
+            <Text
+              as="div"
+              sx={
+                {
+                  fontSize: "20px",
+                  fontWeight: 600,
+                } as ThemeUIStyleObject<Theme>
+              }
+            >
+              Images
+            </Text>
+          </Flex>
+        }
       >
         <Flex
           sx={{
@@ -42,47 +77,6 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
             overflowY: "scroll",
           }}
         >
-          <Box
-            sx={{
-              ".cloudButton": {
-                backgroundColor: "text",
-                borderRadius: "5px",
-                color: "background",
-                fontSize: "14px",
-                fontWeight: "600",
-                "&:hover": {
-                  backgroundColor: "primaryButtonBackgroundHover",
-                },
-              },
-            }}
-          >
-            <CldUploadButton
-              className="cloudButton"
-              uploadPreset="epcsmymp"
-              options={{ cropping: true }}
-              onSuccess={async (d) => {
-                images?.push(d.info as CloudinaryImage);
-
-                if (images) {
-                  setPost({ images: [...images] });
-                  try {
-                    const response = (await API.graphql({
-                      authMode: "AMAZON_COGNITO_USER_POOLS",
-                      query: updatePost,
-                      variables: {
-                        input: {
-                          images: JSON.stringify(images),
-                          id: id,
-                        },
-                      },
-                    })) as GraphQLResult<UpdatePostMutation>;
-                  } catch (errors) {
-                    console.error(errors);
-                  }
-                }
-              }}
-            />
-          </Box>
           <Box sx={{ height: "calc(100% + 0px)" }}>
             <Flex
               sx={{
@@ -99,7 +93,7 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
                   return (
                     <Box
                       sx={{
-                        backgroundColor: "activityOverviewBackgroundColor",
+                        backgroundColor: "background",
                         height: "100%",
                         flexDirection: "row",
                         borderRadius: "5px",
@@ -147,41 +141,71 @@ const AddImage = ({ element }: { element: HeroBannerType }) => {
             </Flex>
           </Box>
         </Flex>
-        <Box
+        <Flex
           sx={{
-            flex: "0 1 40px",
-            display: "flex",
-            paddingLeft: "0px",
             paddingTop: "10px",
             borderTopWidth: "1px",
             borderTopStyle: "solid",
-            borderTopColor: "divider",
+            borderTopColor: "border",
+            justifyContent: "right",
+            gap: "10px",
           }}
         >
           <Button
+            variant="secondaryButton"
+            onClick={() => setIsChangeImageModalOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
             variant="primaryButton"
             onClick={async () => {
-              editor &&
-                menuPosition.path &&
-                Transforms.setNodes(
-                  editor,
-                  {
-                    ...element,
-                    image: selectedImage,
-                  } as HeroBannerType,
-                  {
-                    // This path references the editor, and is expanded to a range that
-                    // will encompass all the content of the editor.
-                    at: menuPosition.path,
-                  }
+              console.log("selectedImage", selectedImage);
+              if (editor && menuPosition.path) {
+                // Fetch the existing node data at the specific path
+                // const existingNode = Node.get(editor, menuPosition.path);
+                // Get the node at the specified path
+                const [node] = Editor.node(editor, menuPosition.path);
+
+                // If you're targeting a specific child node (like the heroBanner), ensure you're at the correct path
+                // const heroBannerElement = node.children?.find(
+                //   (child) => "type" in child && child.type === "heroBanner"
+                // );
+
+                const heroBannerElement = (
+                  node.children as CustomElement[]
+                ).find(
+                  (child) => "type" in child && child.type === "heroBanner"
                 );
-              setIsHeroImageModalOpen(false);
+                if (!heroBannerElement) {
+                  throw new Error("Hero banner element not found");
+                }
+
+                console.log(heroBannerElement, menuPosition.path);
+
+                if (heroBannerElement === undefined) {
+                  throw new Error("Hero banner element not found");
+                }
+
+                if (selectedImage === undefined) {
+                  throw new Error("No image selected");
+                }
+
+                updateHeroImage({
+                  editor,
+                  element: heroBannerElement,
+                  path: menuPosition.path.length == 0 ? [0] : menuPosition.path,
+                  image: selectedImage,
+                });
+
+                setIsChangeImageModalOpen(false); // Close the modal
+              }
             }}
             disabled={selectedImage ? false : true}
           >
-            Choose
+            Select
           </Button>
-        </Box>
+        </Flex>
       </StandardModal>
     </>
   );

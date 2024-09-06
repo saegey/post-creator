@@ -31,9 +31,7 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
                   as="div"
                   sx={{
                     fontWeight: item.disabled ? "400" : "600",
-                    color: item.disabled
-                      ? "publicMenuItemTitleDisabled"
-                      : "publicMenuItemTitle",
+                    color: item.disabled ? "disabledText" : "link",
                     marginBottom: "5px",
                     cursor: item.disabled ? "not-allowed" : "pointer",
                   }}
@@ -41,17 +39,13 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
                 >
                   {item.title}{" "}
                   {item.soon && (
-                    <Badge sx={{ backgroundColor: "publicMenuItemBadge" }}>
-                      Soon
-                    </Badge>
+                    <Badge sx={{ backgroundColor: "primary" }}>Soon</Badge>
                   )}
                 </Text>
                 <Text
                   sx={{
                     fontSize: "14px",
-                    color: item.disabled
-                      ? "publicMenuItemTitleDisabled"
-                      : "publicMenuItemTitle",
+                    color: item.disabled ? "disabledText" : "link",
                   }}
                 >
                   {item.description}
@@ -61,15 +55,15 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
               <Text
                 sx={{
                   fontWeight: "600",
-                  color: item.disabled
-                    ? "publicMenuItemTitleDisabled"
-                    : "publicMenuItemTitle",
+                  color: item.disabled ? "disabledText" : "link",
                   marginBottom: "5px",
                 }}
               >
                 {item.title}{" "}
                 {item.soon && (
-                  <Badge sx={{ backgroundColor: "publicMenuItemBadge" }}>
+                  <Badge
+                    sx={{ backgroundColor: "primary", color: "secondary" }}
+                  >
                     Soon
                   </Badge>
                 )}

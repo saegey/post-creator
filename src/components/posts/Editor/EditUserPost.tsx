@@ -12,6 +12,7 @@ import useEditorState from "../../../hooks/useEditorState";
 const EditUserPost = ({ user }: { user: IUser }) => {
   const editorState = useEditorState();
   const { components } = usePost();
+  console.log("components", components);
 
   return (
     <Box
@@ -25,7 +26,48 @@ const EditUserPost = ({ user }: { user: IUser }) => {
     >
       <EditorContext.Provider value={editorState}>
         <Header user={user} />
-        <PostEditor initialState={components} />
+        <PostEditor
+          initialState={
+            components.length === 0
+              ? [
+                  {
+                    children: [
+                      {
+                        text: "",
+                      },
+                    ],
+                    photoCaption: "this is a new captiin",
+                    type: "heroBanner",
+                    void: true,
+                  },
+                  {
+                    children: [
+                      {
+                        text: "",
+                      },
+                    ],
+                    type: "postAuthor",
+                  },
+                  {
+                    children: [
+                      {
+                        text: "Discuss your activity...",
+                      },
+                    ],
+                    type: "paragraph",
+                  },
+                  {
+                    children: [
+                      {
+                        text: "",
+                      },
+                    ],
+                    type: "paragraph",
+                  },
+                ]
+              : components
+          }
+        />
       </EditorContext.Provider>
     </Box>
   );

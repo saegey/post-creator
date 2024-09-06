@@ -7,7 +7,7 @@ const AuthFormContainer: React.FC<{ children: React.ReactNode }> = ({
   return (
     <Box
       sx={{
-        borderColor: "loginBorder",
+        borderColor: "border",
         borderWidth: "1px",
         borderStyle: "solid",
         borderRadius: "5px",

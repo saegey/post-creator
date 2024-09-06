@@ -19,7 +19,7 @@ const CloudImage = ({
   focused,
   onMaximize,
 }: MemoizedImageProps) => {
-  console.log("rendering CloudImage", imageMeta);
+  // console.log("rendering CloudImage", imageMeta);
   return (
     <figure>
       <Flex

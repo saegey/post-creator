@@ -7,7 +7,6 @@ Amplify.configure({ ...awsconfig, ssr: true });
 
 class User {
   static getUser = async ({ req }: { req: NextApiRequest }) => {
-    // console.log(JSON.stringify(withSSRContext({ req })));
     const SSR = withSSRContext({ req });
     let session;
 
@@ -16,7 +15,7 @@ class User {
 
       const sessionData = session.getIdToken();
       const { payload } = sessionData;
-      //"custom:role": role if custom attribute is added
+
       const {
         email,
         sub,
@@ -45,7 +44,6 @@ class User {
       };
     } catch (e) {
       console.log(e);
-      // console.log("error");
       return null;
     }
   };

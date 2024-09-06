@@ -39,8 +39,8 @@ const EmbedSettings = ({
               void: true,
               url: finalUrl,
               children: [{ text: "" }],
-            }
-            // { at: path }
+            },
+            { at: path }
           );
           if (path.length > 2) {
             Transforms.liftNodes(editor);
@@ -57,7 +57,6 @@ const EmbedSettings = ({
           const selection = window.getSelection();
           // console.log(selection)
           selection && selection.removeAllRanges();
-
         }}
         style={{ width: "100%" }}
       >

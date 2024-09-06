@@ -81,7 +81,7 @@ const VisualOverviewWrapper = ({
           {
             width: "900px",
             marginX: "auto",
-            backgroundColor: "divider",
+            backgroundColor: "border",
             borderRadius: "5px",
           } as ThemeUIStyleObject<Theme>
         }

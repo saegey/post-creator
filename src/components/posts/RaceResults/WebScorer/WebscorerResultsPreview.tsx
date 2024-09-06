@@ -127,7 +127,7 @@ const WebscorerResultsPreview = ({
         sx={{
           paddingTop: "15px",
           marginTop: "15px",
-          borderTopColor: "divider",
+          borderTopColor: "border",
           borderTopStyle: "solid",
           borderTopWidth: "1px",
         }}
@@ -137,7 +137,7 @@ const WebscorerResultsPreview = ({
             title="Save"
             sx={{
               marginLeft: "auto",
-              backgroundColor: selectedRow ? null : "gray",
+              backgroundColor: selectedRow ? null : "disabledBackground",
             }}
             disabled={selectedRow ? false : true}
             onClick={() => {

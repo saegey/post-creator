@@ -3,7 +3,6 @@ import { SlateToReact } from "@slate-serializers/react";
 import Link from "next/link";
 
 import Header from "../../shared/Header/Header";
-import HeaderPublic from "../../shared/HeaderPublic";
 import { CustomElement, IUser, PostViewType } from "../../../types/common";
 import EditButton from "./EditButton";
 import { SlateToReactConfig } from "@slate-serializers/react";
@@ -22,7 +21,6 @@ const PostView = ({
   return (
     <Box as="main">
       {user && <Header user={user} />}
-      {!user && <HeaderPublic />}
 
       <Container
         as="article"
