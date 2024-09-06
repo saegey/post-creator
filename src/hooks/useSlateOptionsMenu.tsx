@@ -60,6 +60,8 @@ const useOptionsMenu = (
     >
       <OptionsIcon
         sx={{
+          width: "22px",
+          height: "22px",
           backgroundColor: "muted",
           color: "background",
           "&:hover": { backgroundColor: lighten("muted", 0.2) },

@@ -112,9 +112,9 @@ const UploadButton = () => {
             defaultValue={gpxFile ? gpxFile : ""}
             variant={"defaultInput"}
             readOnly={true}
-            sx={{
-              width: "100%",
-            }}
+            // sx={{
+            //   width: "100%",
+            // }}
           />
         </Box>
         <Input
@@ -128,9 +128,9 @@ const UploadButton = () => {
           type="button"
           disabled={processingFile || progress.loaded > 0}
           onClick={handleButtonClick}
-          sx={{
-            width: "auto",
-          }}
+          // sx={{
+          //   width: "auto",
+          // }}
           variant="primaryButton"
         >
           <Flex sx={{ gap: "10px" }}>

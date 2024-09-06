@@ -11,16 +11,15 @@ import { useSlateContext } from "../../SlateContext";
 import DefaultImage from "./DefaultImage";
 import HeroImage from "./HeroImage";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
-import AddImage from "../Image/AddImage";
-import { EditorContext } from "../Editor/EditorContext";
 
 const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { title, postLocation, date, subhead } = React.useContext(PostContext);
   const { editor, currentPath: path } = useSlateContext();
-  const { isHeroImageModalOpen } = React.useContext(EditorContext);
+
   if (!editor) {
-    return <></>;
+    throw new Error("Editor is not defined");
   }
+
   const { optionsMenu } = useOptionsMenu(editor, path ? path : [], {
     position: "absolute",
     right: "10px",
@@ -51,6 +50,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
           sx={{
             width: "100%",
             marginBottom: "60px",
+            backgroundColor: "surface",
           }}
           contentEditable={false}
         >
@@ -73,21 +73,16 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
               teaser={subhead ? subhead : "Subhead"}
               date={date ? date : "Event date"}
               location={postLocation ? postLocation : "Location"}
-              headerImageCaption={
-                element.photoCaption
-                  ? element.photoCaption
-                  : "Enter caption here"
-              }
+              headerImageCaption={element.photoCaption}
             />
           </Flex>
         </Box>
       </>
     );
-  }, [title, postLocation, date, subhead, element.image]);
+  }, [title, postLocation, date, subhead, element.image, element.photoCaption]);
 
   return (
     <>
-      {/* {isHeroImageModalOpen && <AddImage element={element} />} */}
       {heroBannerMemo}
       {optionsMenu}
     </>

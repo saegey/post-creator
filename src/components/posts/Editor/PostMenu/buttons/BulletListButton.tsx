@@ -8,7 +8,7 @@ import BulletListIcon from "../../../../icons/BulletListIcon";
 
 const BulletListButton = ({ editor }: { editor: CustomEditor }) => {
   return (
-    <IconButton
+    <Box
       onMouseDown={(e) => {
         e.preventDefault();
 
@@ -29,19 +29,21 @@ const BulletListButton = ({ editor }: { editor: CustomEditor }) => {
           Transforms.wrapNodes(editor, { type: "bulleted-list", children: [] });
         }
       }}
+      variant="boxes.floatingMenu"
+      key="bulletedlist"
       title={"Toggle bullet list"}
     >
-      <Box sx={{ padding: "2px", marginY: "auto" }}>
-        <BulletListIcon
-          sx={{
-            color: isBlockActive(editor, "bulleted-list")
-              ? "accent"
-              : "secondary",
-            width: "24px",
-          }}
-        />
-      </Box>
-    </IconButton>
+      {/* <Box sx={{ padding: "2px", marginY: "auto" }}> */}
+      <BulletListIcon
+        sx={{
+          color: isBlockActive(editor, "bulleted-list")
+            ? "accent"
+            : "secondary",
+          width: "24px",
+        }}
+      />
+      {/* </Box> */}
+    </Box>
   );
 };
 

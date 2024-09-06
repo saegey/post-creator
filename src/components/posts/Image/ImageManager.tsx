@@ -1,4 +1,13 @@
-import { Box, Flex, Button, Text, ThemeUIStyleObject, Theme } from "theme-ui";
+import {
+  Box,
+  Flex,
+  Button,
+  Text,
+  ThemeUIStyleObject,
+  Theme,
+  IconButton,
+  Grid,
+} from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Editor } from "slate";
@@ -9,19 +18,18 @@ import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
 import { useSlateContext } from "../../SlateContext";
-import AddMediaComponent from "../Editor/AddMediaComponent";
 import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
-import { updateImages } from "../../../utils/editorActions";
+import UploadIcon from "../../icons/UploadIcon";
+import { lighten } from "@theme-ui/color";
 
-const AddImage = () => {
+const ImageManager = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
-  const { setPost, images, id } = React.useContext(PostContext);
+  const { images } = React.useContext(PostContext);
   const {
-    setIsHeroImageModalOpen,
-    isHeroImageModalOpen,
     menuPosition,
     setIsChangeImageModalOpen,
     isChangeImageModalOpen,
+    setIsHeroImageModalOpen,
   } = React.useContext(EditorContext);
 
   const { editor, slateRef } = useSlateContext();
@@ -29,28 +37,30 @@ const AddImage = () => {
   if (!editor && menuPosition.path) {
     return;
   }
-
-  console.log("slateRef", slateRef);
+  const boxesData = [1, 2, 3, 4];
 
   return (
     <>
       <StandardModal
         title={"Media"}
         onClose={() => setIsChangeImageModalOpen(false)}
-        setIsOpen={() => setIsHeroImageModalOpen(false)}
-        isOpen={isHeroImageModalOpen}
+        setIsOpen={setIsChangeImageModalOpen}
+        isOpen={isChangeImageModalOpen}
         topRight={
-          <Box>
-            <Button
-              onClick={() => {
-                console.log("open modal");
-                setIsHeroImageModalOpen(true);
-              }}
-              variant="primaryButton"
-            >
-              Upload
-            </Button>
-          </Box>
+          <IconButton
+            onClick={() => {
+              console.log("open modal");
+              setIsHeroImageModalOpen(true);
+            }}
+            sx={{
+              color: "primary",
+              backgroundColor: "surface",
+              "&:hover": { backgroundColor: lighten("surface", 0.05) },
+              marginBottom: "5px",
+            }}
+          >
+            <UploadIcon />
+          </IconButton>
         }
         heading={
           <Flex sx={{ flexDirection: "row" }}>
@@ -77,7 +87,7 @@ const AddImage = () => {
             overflowY: "scroll",
           }}
         >
-          <Box sx={{ height: "calc(100% + 0px)" }}>
+          <Box sx={{ height: "calc(100% + 0px)", maxHeight: "500px" }}>
             <Flex
               sx={{
                 flex: "1 1 auto",
@@ -88,56 +98,69 @@ const AddImage = () => {
                 flexDirection: "column",
               }}
             >
-              {images &&
-                images.map((image, i) => {
-                  return (
-                    <Box
-                      sx={{
-                        backgroundColor: "background",
-                        height: "100%",
-                        flexDirection: "row",
-                        borderRadius: "5px",
-                        border:
-                          selectedImage &&
-                          image.secure_url === selectedImage.secure_url
-                            ? "2px solid blue"
-                            : "none",
-                      }}
-                      key={`image-media-${i}`}
-                      onClick={() => {
-                        setSelectedImage(image);
-                      }}
-                    >
-                      <Flex
-                        sx={{
-                          marginX: "auto",
-                        }}
-                        key={`image-${i}`}
-                      >
-                        <Box sx={{ margin: "auto", height: "fit-content" }}>
-                          <CldImage
-                            width={(image.width / image.height) * 250}
-                            height={250}
-                            src={image.public_id}
-                            underlay={image.public_id}
-                            quality={90}
-                            sizes="100vw"
-                            alt="Description of my image"
-                            style={{
-                              height: "auto",
-                              maxWidth: "100%",
+              <Grid gap={2} columns={[2, 3, 4]}>
+                {images && images.length > 0
+                  ? images.map((image, i) => {
+                      return (
+                        <Box
+                          sx={{
+                            backgroundColor: "background",
+                            height: "100%",
+                            flexDirection: "row",
+                            borderRadius: "5px",
+                            border:
+                              selectedImage &&
+                              image.secure_url === selectedImage.secure_url
+                                ? "2px solid blue"
+                                : "none",
+                          }}
+                          key={`image-media-${i}`}
+                          onClick={() => {
+                            setSelectedImage(image);
+                          }}
+                        >
+                          <Flex
+                            sx={{
+                              marginX: "auto",
                             }}
-                            config={{
-                              cloud: {
-                                cloudName: cloudUrl,
-                              },
-                            }}
-                          />
+                            key={`image-${i}`}
+                          >
+                            <Box sx={{ margin: "auto", height: "fit-content" }}>
+                              <CldImage
+                                width={250}
+                                height={250}
+                                src={image.public_id}
+                                underlay={image.public_id}
+                                quality={90}
+                                sizes="100vw"
+                                alt="Description of my image"
+                                style={{
+                                  height: "auto",
+                                  maxWidth: "100%",
+                                }}
+                                config={{
+                                  cloud: {
+                                    cloudName: cloudUrl,
+                                  },
+                                }}
+                              />
+                            </Box>
+                          </Flex>
                         </Box>
-                      </Flex>
-                    </Box>
-                  );
-                })}
+                      );
+                    })
+                  : boxesData.map((box, index) => (
+                      <Box
+                        key={index} // It's a good idea to provide a unique key
+                        sx={{
+                          width: "100%",
+                          height: "150px",
+                          backgroundColor: "surface",
+                          borderRadius: "5px",
+                        }}
+                      />
+                    ))}
+              </Grid>
             </Flex>
           </Box>
         </Flex>
@@ -211,4 +234,4 @@ const AddImage = () => {
   );
 };
 
-export default AddImage;
+export default ImageManager;

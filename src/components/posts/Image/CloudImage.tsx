@@ -38,9 +38,9 @@ const CloudImage = ({
           width={600}
           height={500}
           style={{
-            maxWidth: "100%",
+            // maxWidth: "100%",
             height: "auto",
-            boxShadow: selected && focused ? "0 0 0 3px #B4D5FF" : "none",
+            // boxShadow: selected && focused ? "0 0 0 3px #B4D5FF" : "none",
           }}
           priority={true}
         />

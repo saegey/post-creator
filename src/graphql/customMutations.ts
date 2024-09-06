@@ -112,3 +112,15 @@ export const updatePostComponents = /* GraphQL */ `
     }
   }
 `;
+
+export const deletePost = /* GraphQL */ `
+  mutation DeletePost(
+    $input: DeletePostInput!
+    $condition: ModelPostConditionInput
+  ) {
+    deletePost(input: $input, condition: $condition) {
+      id
+      __typename
+    }
+  }
+`;

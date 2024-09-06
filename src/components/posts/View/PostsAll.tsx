@@ -1,4 +1,4 @@
-import { Grid, Box, Button, Flex, Text, NavLink } from "theme-ui";
+import { Grid, Box, Button, Flex, Text, NavLink, IconButton } from "theme-ui";
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import React from "react";
@@ -17,6 +17,7 @@ import { IUser } from "../../../types/common";
 import { createPostNew } from "../../../graphql/customMutations";
 import ShareIcon from "../../icons/ShareIcon";
 import BlackBox from "../../layout/BlackBox";
+import AddIcon from "../../icons/AddIcon";
 
 interface ListPostsByCreatedAtTypes {
   listPostsByCreatedAt: {
@@ -143,7 +144,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
   };
 
   return (
-    <Box as="main" sx={{ height: "100vw" }}>
+    <Box as="main" sx={{ minHeight: "100vw" }}>
       {isLoading && (
         <BlackBox>
           <Text>Loading</Text>
@@ -226,13 +227,14 @@ const PostsAll = ({ user }: { user: IUser }) => {
               justifyContent: "right",
             }}
           >
-            <Button
+            <IconButton
               onClick={() => createNewPost()}
               id="create-new-post"
-              variant="primaryButton"
+              sx={{ color: "background", backgroundColor: "primary" }}
+              // variant="primaryButton"
             >
-              <Text sx={{ fontWeight: "700" }}>+</Text>
-            </Button>
+              <AddIcon />
+            </IconButton>
           </Flex>
         </Flex>
 
@@ -250,12 +252,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
               <Text sx={{ fontSize: "32px", fontWeight: "700" }}>
                 Share Posts
               </Text>
-              When you share posts, they will appear on your profile.
-              <Box>
-                <Button variant="primaryButton" onClick={() => createNewPost()}>
-                  Share your first post
-                </Button>
-              </Box>
+              When you publish a post, they will appear on your profile.
             </Flex>
           </>
         )}

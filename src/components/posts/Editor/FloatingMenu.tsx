@@ -16,17 +16,20 @@ const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
     <Box
       sx={{
         position: "absolute",
-        top: `${top + 10}px`,
-        left: `${left}px`,
+        top: `${top - 50}px`,
+        left: `${left - 5}px`,
 
         width: "fit-content",
+        justifyItems: "center",
         background: "primary",
         padding: "8px",
         zIndex: "300",
         borderRadius: "5px",
+        boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
+        animation: "fadeIn .2s;",
       }}
     >
-      <Flex>
+      <Flex sx={{ gap: "5px" }}>
         <BoldButton editor={editor} />
         <HeadingButton editor={editor} />
         <BulletListButton editor={editor} />

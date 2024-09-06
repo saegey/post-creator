@@ -147,7 +147,7 @@ const ActivityOverview = ({
   );
 
   return (
-    <Box variant="boxes.figure">
+    <Box>
       <ActivityOverviewTemplate items={items} />
     </Box>
   );

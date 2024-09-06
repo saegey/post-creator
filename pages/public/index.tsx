@@ -15,25 +15,48 @@ import EyeIcon from "../../src/components/icons/EyeIcon";
 import HeroBannerIcon from "../../src/components/icons/HeroBannerIcon";
 import AvatarIcon from "../../src/components/icons/AvatarIcon";
 import Link from "next/link";
+import FavIcon from "../../src/components/shared/FavIcon";
+import { lighten } from "@theme-ui/color";
 
 const Home = () => {
   return (
     <>
       <Head>
         <title>Monopad - Home</title>
-        <link rel="icon" href="/favicon.ico" />
+        <FavIcon />
       </Head>
 
       <Box as="main" sx={{ width: "100vw", height: "fit-content" }}>
         <PublicHeader />
         <Flex
           sx={{
-            height: ["fit-content", "100vh", "100vh"],
-            paddingTop: "64px",
+            height: ["fit-content", "calc(100vh - 48px)", "calc(100vh)"],
+            // paddingTop: "64px",
+            // backgroundColor: "red",
             justifyContent: "center",
             alignItems: "center",
+            marginBottom: "50px",
             // zIndex: 1,
             position: "relative",
+            ":before": {
+              content: '""', // Required to render the pseudo-element
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: -1,
+              filter: "grayscale(100%) blur(200px) brightness(150%)",
+              // filter:
+              //   "brightness(150%) blur(200px) saturate(3000%) blur(200px) ",
+
+              // background: blur(5px);
+              //   "conic-gradient(from 90deg at 50% 50%, #fafafa, #eaeaea, #d9d9d9, #c9c9c9, #fafafa);",
+              background:
+                "conic-gradient(red 0deg 120deg,yellow 120deg 240deg,blue 240deg 360deg)",
+              // filter: "blur(150px)",
+              // backdropFilter: "blur(100px)",
+            },
           }}
         >
           <Flex sx={{ justifyItems: "center", flexDirection: "column" }}>
@@ -63,8 +86,8 @@ const Home = () => {
                   marginBottom: "20px",
                   lineHeight: ["24px", "27px", "27px"],
                   fontSize: ["16px", "18px", "18px"],
-                  fontStyle: "italic",
-                  textAlign: "center",
+                  // fontStyle: "italic",
+                  // textAlign: "center",
                 }}
               >
                 Effortlessly craft a comprehensive bike race recap within
@@ -74,7 +97,7 @@ const Home = () => {
               </Text>
               <Flex
                 sx={{
-                  gap: "20px",
+                  gap: "10px",
                   justifyContent: "center",
                   flexDirection: ["column", "row", "row"],
                 }}
@@ -106,13 +129,29 @@ const Home = () => {
                       borderStyle: "solid",
                       borderWidth: "1px",
                       color: "text",
+                      padding: "10px",
+                      fontSize: "16px",
                       width: ["100%", "fit-content", "fit-content"],
+                      cursor: "pointer",
+                      "&:hover": {
+                        background: lighten("background", 0.05),
+                      },
                     }}
                   >
                     Sign Up
                   </Button>
                 </ThemeLink>
-                <Button variant="secondaryButton">Watch Demo</Button>
+                <Button
+                  variant="primaryButton"
+                  sx={{
+                    width: ["100%", "fit-content", "fit-content"],
+                    padding: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Watch Demo
+                </Button>
               </Flex>
             </Box>
           </Flex>

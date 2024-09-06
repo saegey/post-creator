@@ -13,6 +13,7 @@ import AuthLink from "../src/components/auth/AuthLink";
 import Head from "next/head";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import LogoBlock from "../src/components/public/LogoBlock";
+import FavIcon from "../src/components/shared/FavIcon";
 
 const LoginPage: React.FC = () => {
   const { setNotification } = useContext(NotificationContext);
@@ -59,10 +60,7 @@ const LoginPage: React.FC = () => {
     <>
       <Head>
         <title>Login</title>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
-        />
+        <FavIcon />
       </Head>
       <Flex
         sx={{

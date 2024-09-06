@@ -6,6 +6,7 @@ import { NextApiRequest } from "next";
 import awsconfig from "../../src/aws-exports";
 import PostsAll from "../../src/components/posts/View/PostsAll";
 import { CloudinaryImage, IUser } from "../../src/types/common";
+import FavIcon from "../../src/components/shared/FavIcon";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 
@@ -82,8 +83,8 @@ const MyPosts = ({ user }: { user: IUser }) => {
   return (
     <>
       <Head>
-        <title>My Posts</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Monopad - My Posts</title>
+        <FavIcon />
       </Head>
       {user && <PostsAll user={user} />}
     </>

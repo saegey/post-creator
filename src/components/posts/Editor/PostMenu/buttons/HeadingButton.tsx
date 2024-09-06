@@ -34,11 +34,7 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
           Transforms.setNodes<SlateElement>(editor, newProperties);
         }
       }}
-      sx={{
-        marginX: ["5px", 0, 0],
-        marginBottom: ["5px", 0, 0],
-        verticalAlign: "top",
-      }}
+      variant="boxes.floatingMenu"
       key="headingtwo"
     >
       <HeadingIcon

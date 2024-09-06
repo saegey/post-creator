@@ -30,14 +30,18 @@ import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddM
 import { updateImages } from "../../../utils/editorActions";
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
-import AddImage from "../Image/AddImage";
+import ImageManager from "../Image/ImageManager";
 import { StravaModal } from "./AddStravaLink";
+import PostSettings from "./PostSettings";
+import PhotoCaptionModal from "../Image/PhotoCaptionModal";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
     () => withLayout(withHistory(withLinks(withReact(createEditor())))),
     []
   );
+
+  // const [isFocused, setIsFocused] = React.useState(false);
 
   const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
   const heroMediaRef = useRef<any>(null); // Ref for AddMediaComponent
@@ -64,6 +68,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setIsNewPostImageUploadOpen,
     isChangeImageModalOpen,
     isStravaModalOpen,
+    isSettingsModalOpen,
+    isPhotoCaptionOpen,
   } = useContext(EditorContext);
 
   useFetchData();
@@ -115,10 +121,10 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
   // Function to capture and store the current Slate editor path
   const capturePath = useCallback(() => {
-    if (isNewComponentMenuOpen) {
-      console.log("Captured realPath:", menuPosition.path);
-      realPathRef.current = [...menuPosition.path]; // Update the ref instead of state
-    }
+    // if (isNewComponentMenuOpen) {
+    console.log("Captured realPath:", menuPosition.path);
+    realPathRef.current = [...menuPosition.path]; // Update the ref instead of state
+    // }/
   }, [isNewPostImageUploadOpen]);
 
   // Handle success when an image is uploaded
@@ -166,13 +172,10 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
       <Box
         sx={
           {
-            minWidth: "100%",
-            margin: "0 auto 50px auto",
             width: "100%",
             backgroundColor: "background",
-            borderRadius: "10px",
-            padding: "0px",
             position: "relative",
+            minHeight: "100vh",
           } as ThemeUIStyleObject<Theme>
         }
       >
@@ -199,15 +202,29 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               });
             }}
           >
-            <Editable
-              spellCheck
-              autoFocus
-              renderElement={renderElement}
-              renderLeaf={(props: RenderLeafProps) => (
-                <Leaf props={props} updateMenuPosition={updateMenuPosition} />
-              )}
-              contentEditable="true"
-            />
+            <Box
+              sx={{
+                borderWidth: "0px",
+                borderStyle: "solid",
+                outline: "none",
+                transition: "border-color 0.3s ease",
+              }}
+            >
+              <Editable
+                spellCheck
+                autoFocus
+                renderElement={renderElement}
+                renderLeaf={(props: RenderLeafProps) => (
+                  <Leaf props={props} updateMenuPosition={updateMenuPosition} />
+                )}
+                contentEditable="true"
+                style={{
+                  outline: "none", // Removes default blue outline
+                  boxShadow: "none", // Removes any shadow applied on focus
+                  WebkitTapHighlightColor: "transparent", // Removes mobile tap highlight
+                }}
+              />
+            </Box>
           </Slate>
           {isRaceResultsModalOpen && <RaceResultsImport />}
           <RWGPSModal />
@@ -218,11 +235,11 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           {selectionMenu && !isChangingQuickly && (
             <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
           )}
-          {/* {isHeroImageModalOpen && <AddImage />} */}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
 
-          {isChangeImageModalOpen && <AddImage />}
-
+          {isChangeImageModalOpen && <ImageManager />}
+          {isSettingsModalOpen && <PostSettings />}
+          {isPhotoCaptionOpen && <PhotoCaptionModal />}
           <AddMediaComponent
             ref={newMediaRef}
             uploadPreset="epcsmymp"

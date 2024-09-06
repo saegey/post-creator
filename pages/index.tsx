@@ -6,6 +6,7 @@ import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
 import { CloudinaryImage, IUser } from "../src/types/common";
 import User from "../src/actions/User";
 import Post from "../src/actions/PostExplore";
+import FavIcon from "../src/components/shared/FavIcon";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const user = await User.getUser({ req });
@@ -43,7 +44,7 @@ const Home = ({ posts = [], user }: HomeProps) => {
     <>
       <Head>
         <title>Home</title>
-        <link rel="icon" href="/favicon.ico" />
+        <FavIcon />
       </Head>
       <PostsAllUsers posts={posts} user={user} />
     </>

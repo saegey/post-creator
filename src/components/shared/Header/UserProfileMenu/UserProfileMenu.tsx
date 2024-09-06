@@ -90,8 +90,8 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
               }
             >
               <MenuItem href="/profile">Profile</MenuItem>
-              <MenuItem href="/posts">My Posts</MenuItem>
-              <MenuItem href="/">Explore</MenuItem>
+              <MenuItem href="/posts">Posts</MenuItem>
+              {/* <MenuItem href="/">Explore</MenuItem> */}
               <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
               <ToggleSwitch
                 label="Dark Mode"
@@ -110,6 +110,7 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
               <MenuItem href="https://monopad.productlane.com/roadmap">
                 Roadmap
               </MenuItem>
+              <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
               <MenuItem href="/logout">Sign Out</MenuItem>
             </Box>
           </Box>

@@ -67,7 +67,7 @@ const ImageFullScreen = ({
         height: "100%",
         width: "100%",
         left: "0",
-        backgroundColor: "backgroundTransparent",
+        backgroundColor: "modalBackground",
         zIndex: 200,
         display: "flex",
       }}
@@ -86,7 +86,7 @@ const ImageFullScreen = ({
                 display: "flex",
                 height: "100%",
                 width: "100%",
-                backgroundColor: "primary",
+                // backgroundColor: "primary",
               }}
               key={`image-${index}`}
             >

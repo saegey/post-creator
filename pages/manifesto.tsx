@@ -4,13 +4,14 @@ import { Box, Flex, Text } from "theme-ui";
 
 import PublicHeader from "../src/components/public/Header/PublicHeader";
 import PublicFooter from "../src/components/public/Footer/Footer";
+import FavIcon from "../src/components/shared/FavIcon";
 
 const Manifesto = () => {
   return (
     <>
       <Head>
         <title>Monopad - Manifesto</title>
-        <link rel="icon" href="/favicon.ico" />
+        <FavIcon />
       </Head>
 
       <Box as="main" sx={{ width: "100vw" }}>

@@ -32,6 +32,27 @@ const StandardModal = ({
     };
   }, [isOpen]);
 
+  React.useEffect(() => {
+    // console.log("escape key eevent");
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // console.log("escape key eevent", event);
+      if (event.key === "Escape") {
+        // closeModal(); // Close modal on Escape key
+        console.log("escape key pressed");
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    // Cleanup: Remove event listener when modal is closed
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
   return (
     <>
       <BlackBox
@@ -72,7 +93,7 @@ const StandardModal = ({
                 borderBottomWidth: title ? "1px" : "0px",
                 borderBottomColor: "border",
                 borderBottomStyle: "solid",
-                paddingY: "5px",
+                // paddingY: "5px",
               } as ThemeUIStyleObject<Theme>
             }
           >
@@ -105,29 +126,38 @@ const StandardModal = ({
                 {topRight}
               </Box>
             ) : (
-              <Close
-                onClick={(e) => {
-                  e.preventDefault();
-                  (document.activeElement as HTMLElement)?.blur();
+              <Flex
+                sx={{
+                  justifyContent: "right",
+                  flexGrow: 1,
+                  verticalAlign: "top",
+                }}
+              >
+                <Close
+                  onClick={(e) => {
+                    e.preventDefault();
+                    (document.activeElement as HTMLElement)?.blur();
 
-                  setIsOpen(false);
-                  if (onClose) {
-                    onClose();
+                    setIsOpen(false);
+                    if (onClose) {
+                      onClose();
+                    }
+                  }}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
+                  }}
+                  id="close-button"
+                  sx={
+                    {
+                      padding: "0px",
+                      // alignItems: "center",
+                      // height: "100%",
+                      // marginLeft: "auto",
+                    } as ThemeUIStyleObject<Theme>
                   }
-                }}
-                onTouchStart={(e) => {
-                  e.preventDefault();
-                  (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
-                }}
-                id="close-button"
-                sx={
-                  {
-                    alignItems: "center",
-                    height: "100%",
-                    marginLeft: "auto",
-                  } as ThemeUIStyleObject<Theme>
-                }
-              />
+                />
+              </Flex>
             )}
           </Flex>
           {children}

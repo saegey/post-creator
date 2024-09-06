@@ -3,6 +3,12 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import ToggleSwitch from "./ToggleSwitch";
 
+// Mock the `@theme-ui/color` module
+vi.mock("@theme-ui/color", () => ({
+  darken: vi.fn(),
+  lighten: vi.fn(),
+}));
+
 describe("ToggleSwitch", () => {
   const mockOnChange = vi.fn();
 

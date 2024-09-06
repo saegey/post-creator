@@ -5,6 +5,7 @@ import { PostContext } from "../../../src/components/PostContext";
 import EditUserPost from "../../../src/components/posts/Editor/EditUserPost";
 import { PostType, PostContextType } from "../../../src/types/common";
 import { fetchUserAndPost } from "../../../src/utils/fetchUserAndPost";
+import FavIcon from "../../../src/components/shared/FavIcon";
 
 type ServerSideProps = {
   req: object;
@@ -41,7 +42,7 @@ const Post = ({ user, postRaw, errorCode }: PostType) => {
     <PostContext.Provider value={post}>
       <Head>
         <title>{post.title}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <FavIcon />
       </Head>
       <EditUserPost user={user} />
     </PostContext.Provider>
