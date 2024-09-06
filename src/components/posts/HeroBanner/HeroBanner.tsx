@@ -68,7 +68,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
             )}
 
             <PostHeaderTextBlock
-              type={"Race"}
+              type={""}
               title={title ? title : "Title"}
               teaser={subhead ? subhead : "Subhead"}
               date={date ? date : "Event date"}

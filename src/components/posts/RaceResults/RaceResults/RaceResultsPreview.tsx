@@ -7,6 +7,7 @@ import { EditorContext } from "../../Editor/EditorContext";
 import { saveMyRaceResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { useSlateStatic } from "slate-react";
+import { useSlateContext } from "../../../SlateContext";
 
 const RaceResultsPreview = ({ path }: { path: Path }) => {
   const [selectedRow, setSelectedRow] = React.useState<number>();
@@ -20,7 +21,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
     setIsNewComponentMenuOpen,
   } = React.useContext(EditorContext);
   const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
-  const editor = useSlateStatic();
+  const { editor } = useSlateContext();
 
   return (
     <Flex

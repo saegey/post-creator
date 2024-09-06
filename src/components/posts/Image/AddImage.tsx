@@ -1,4 +1,4 @@
-import { Box, Flex, Button } from "theme-ui";
+import { Box, Flex, Button, Text, ThemeUIStyleObject, Theme } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Editor } from "slate";
@@ -15,10 +15,14 @@ import { updateImages } from "../../../utils/editorActions";
 
 const AddImage = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
-
   const { setPost, images, id } = React.useContext(PostContext);
-  const { setIsHeroImageModalOpen, isHeroImageModalOpen, menuPosition } =
-    React.useContext(EditorContext);
+  const {
+    setIsHeroImageModalOpen,
+    isHeroImageModalOpen,
+    menuPosition,
+    setIsChangeImageModalOpen,
+    isChangeImageModalOpen,
+  } = React.useContext(EditorContext);
 
   const { editor, slateRef } = useSlateContext();
 
@@ -31,9 +35,38 @@ const AddImage = () => {
   return (
     <>
       <StandardModal
-        title={"Add Image"}
+        title={"Media"}
+        onClose={() => setIsChangeImageModalOpen(false)}
         setIsOpen={() => setIsHeroImageModalOpen(false)}
         isOpen={isHeroImageModalOpen}
+        topRight={
+          <Box>
+            <Button
+              onClick={() => {
+                console.log("open modal");
+                setIsHeroImageModalOpen(true);
+              }}
+              variant="primaryButton"
+            >
+              Upload
+            </Button>
+          </Box>
+        }
+        heading={
+          <Flex sx={{ flexDirection: "row" }}>
+            <Text
+              as="div"
+              sx={
+                {
+                  fontSize: "20px",
+                  fontWeight: 600,
+                } as ThemeUIStyleObject<Theme>
+              }
+            >
+              Images
+            </Text>
+          </Flex>
+        }
       >
         <Flex
           sx={{
@@ -44,30 +77,6 @@ const AddImage = () => {
             overflowY: "scroll",
           }}
         >
-          <Box>
-            <Button
-              onClick={() => {
-                console.log("open modal");
-                setIsHeroImageModalOpen(true);
-              }}
-              variant="primaryButton"
-            >
-              Add Image
-            </Button>
-            {/* <AddMediaComponent
-              onClose={() => console.log("close media")}
-              ref={addMediaRef}
-              uploadPreset="epcsmymp"
-              onSuccess={async (d) => {
-                images?.push(d.info as CloudinaryImage);
-
-                if (images) {
-                  setPost({ images: [...images] });
-                  updateImages(id, images);
-                }
-              }}
-            /> */}
-          </Box>
           <Box sx={{ height: "calc(100% + 0px)" }}>
             <Flex
               sx={{
@@ -132,17 +141,22 @@ const AddImage = () => {
             </Flex>
           </Box>
         </Flex>
-        <Box
+        <Flex
           sx={{
-            flex: "0 1 40px",
-            display: "flex",
-            paddingLeft: "0px",
             paddingTop: "10px",
             borderTopWidth: "1px",
             borderTopStyle: "solid",
             borderTopColor: "border",
+            justifyContent: "right",
+            gap: "10px",
           }}
         >
+          <Button
+            variant="secondaryButton"
+            onClick={() => setIsChangeImageModalOpen(false)}
+          >
+            Cancel
+          </Button>
           <Button
             variant="primaryButton"
             onClick={async () => {
@@ -179,9 +193,9 @@ const AddImage = () => {
             }}
             disabled={selectedImage ? false : true}
           >
-            Choose
+            Select
           </Button>
-        </Box>
+        </Flex>
       </StandardModal>
     </>
   );

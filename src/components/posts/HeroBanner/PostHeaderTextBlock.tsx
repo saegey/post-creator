@@ -29,14 +29,16 @@ const PostHeaderTextBlock = ({
         onClick={() => setIsSettingsModalOpen(true)}
         contentEditable={false}
       >
-        <Text
-          variant="postHeaderType"
-          sx={{
-            padding: "2px 10px 2px 10px",
-          }}
-        >
-          {type}
-        </Text>
+        {type === "" ? null : (
+          <Text
+            variant="postHeaderType"
+            sx={{
+              padding: "2px 10px 2px 10px",
+            }}
+          >
+            {type}
+          </Text>
+        )}
         <Text
           as="h1"
           variant="postTitle"

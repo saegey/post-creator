@@ -43,6 +43,8 @@ const useEditorState = (): EditorContextType => {
   const [isNewPostImageUploadOpen, setIsNewPostImageUploadOpen] =
     useState(false);
 
+  const [isChangeImageModalOpen, setIsChangeImageModalOpen] = useState(false);
+
   return {
     isGraphMenuOpen,
     setIsGraphMenuOpen,
@@ -86,6 +88,8 @@ const useEditorState = (): EditorContextType => {
     setIsImageUploadOpen,
     isNewPostImageUploadOpen,
     setIsNewPostImageUploadOpen,
+    isChangeImageModalOpen,
+    setIsChangeImageModalOpen,
   };
 };
 

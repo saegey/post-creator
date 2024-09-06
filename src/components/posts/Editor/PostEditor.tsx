@@ -30,6 +30,7 @@ import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddM
 import { updateImages } from "../../../utils/editorActions";
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
+import AddImage from "../Image/AddImage";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -60,6 +61,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     setIsHeroImageModalOpen,
     isNewPostImageUploadOpen,
     setIsNewPostImageUploadOpen,
+    isChangeImageModalOpen,
   } = useContext(EditorContext);
 
   useFetchData();
@@ -215,6 +217,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           )}
           {/* {isHeroImageModalOpen && <AddImage />} */}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
+
+          {isChangeImageModalOpen && <AddImage />}
 
           <AddMediaComponent
             ref={newMediaRef}
