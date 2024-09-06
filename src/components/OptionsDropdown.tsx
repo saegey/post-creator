@@ -1,5 +1,5 @@
 import React from "react";
-import { Transforms } from "slate";
+import { Path, Transforms } from "slate";
 import { Box } from "theme-ui";
 import { Editor } from "slate";
 
@@ -8,26 +8,24 @@ import { moveNodeDown, moveNodeUp } from "../utils/SlateUtilityFunctions";
 import { EditorContext } from "./posts/Editor/EditorContext";
 import { useSlateContext } from "./SlateContext";
 import GenericMenuItem from "./GenericMenuItem";
+import { CustomElement } from "../types/common";
 
 const OptionsDropdown = () => {
-  const {
-    isOptionsOpen,
-    setIsOptionsOpen,
-    setIsHeroImageModalOpen,
-    setIsChangeImageModalOpen,
-  } = React.useContext(EditorContext);
+  const { isOptionsOpen, setIsOptionsOpen, setIsChangeImageModalOpen } =
+    React.useContext(EditorContext);
   console.log("isOptionsOpen", isOptionsOpen);
   const { menuPosition } = React.useContext(EditorContext);
   const { editor } = useSlateContext();
   const { path } = menuPosition;
-  // if (!editor) {
-  //   return;
-  // }
+
   if (!editor) {
     throw new Error("Editor is not defined");
   }
 
-  const [node] = Editor.node(editor, menuPosition.path);
+  const [node] = Editor.node(editor, menuPosition.path) as [
+    CustomElement,
+    Path
+  ];
   console.log("node", JSON.stringify(path), JSON.stringify([2]));
 
   return (

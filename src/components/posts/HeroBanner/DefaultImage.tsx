@@ -25,7 +25,7 @@ const DefaultImage = () => {
             }}
             variant="primaryButton"
           >
-            Add Image
+            Upload Image
           </Button>
         </Box>
       </Flex>

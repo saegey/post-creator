@@ -37,10 +37,17 @@ const AddVideoModal = () => {
 };
 
 const AddVideo = () => {
-  const { setIsVideoUploadOpen, setIsNewComponentMenuOpen } =
-    React.useContext(EditorContext);
+  const {
+    setIsVideoUploadOpen,
+    setIsNewComponentMenuOpen,
+    menuPosition,
+    setNewComponentPath,
+  } = React.useContext(EditorContext);
+
+  const { path } = menuPosition;
 
   const embedVideo = () => {
+    setNewComponentPath(path);
     setIsVideoUploadOpen(true);
     setIsNewComponentMenuOpen(false);
   };

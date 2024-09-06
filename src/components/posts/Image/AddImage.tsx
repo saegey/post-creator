@@ -4,7 +4,7 @@ import { CldImage } from "next-cloudinary";
 import { Editor } from "slate";
 
 import { PostContext } from "../../PostContext";
-import { CloudinaryImage } from "../../../types/common";
+import { CloudinaryImage, CustomElement } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
@@ -168,9 +168,19 @@ const AddImage = () => {
                 const [node] = Editor.node(editor, menuPosition.path);
 
                 // If you're targeting a specific child node (like the heroBanner), ensure you're at the correct path
-                const heroBannerElement = node.children?.find(
-                  (child) => child.type === "heroBanner"
+                // const heroBannerElement = node.children?.find(
+                //   (child) => "type" in child && child.type === "heroBanner"
+                // );
+
+                const heroBannerElement = (
+                  node.children as CustomElement[]
+                ).find(
+                  (child) => "type" in child && child.type === "heroBanner"
                 );
+                if (!heroBannerElement) {
+                  throw new Error("Hero banner element not found");
+                }
+
                 console.log(heroBannerElement, menuPosition.path);
 
                 if (heroBannerElement === undefined) {
@@ -188,7 +198,7 @@ const AddImage = () => {
                   image: selectedImage,
                 });
 
-                setIsHeroImageModalOpen(false); // Close the modal
+                setIsChangeImageModalOpen(false); // Close the modal
               }
             }}
             disabled={selectedImage ? false : true}

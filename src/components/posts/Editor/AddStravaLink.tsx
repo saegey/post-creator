@@ -35,18 +35,25 @@ const StravaModal = () => {
 };
 
 const AddStravaLink = () => {
-  const { setIsStravaModalOpen, isStravaModalOpen } =
-    React.useContext(EditorContext);
+  const {
+    setIsStravaModalOpen,
+    isStravaModalOpen,
+    setIsNewComponentMenuOpen,
+    setNewComponentPath,
+    menuPosition,
+  } = React.useContext(EditorContext);
+
+  const { path } = menuPosition;
 
   const addStravaLink = () => {
+    setNewComponentPath(path);
     setIsStravaModalOpen(true);
-    // setIsNewComponentMenuOpen(false);
+    setIsNewComponentMenuOpen(false);
     // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
   };
-  console.log("AddStravaLink");
+  // console.log("AddStravaLink");
   return (
     <>
-      {isStravaModalOpen && <StravaModal />}
       <Box
         onClick={() => addStravaLink()}
         variant="boxes.sidebarMenuItem"

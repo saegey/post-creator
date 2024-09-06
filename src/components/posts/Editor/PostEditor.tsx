@@ -31,6 +31,7 @@ import { updateImages } from "../../../utils/editorActions";
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
 import AddImage from "../Image/AddImage";
+import { StravaModal } from "./AddStravaLink";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -62,6 +63,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isNewPostImageUploadOpen,
     setIsNewPostImageUploadOpen,
     isChangeImageModalOpen,
+    isStravaModalOpen,
   } = useContext(EditorContext);
 
   useFetchData();
@@ -209,6 +211,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           </Slate>
           {isRaceResultsModalOpen && <RaceResultsImport />}
           <RWGPSModal />
+          {isStravaModalOpen && <StravaModal />}
           <MobileMenu />
           <AddVideoModal />
           {isOptionsOpen && <OptionsDropdown />}

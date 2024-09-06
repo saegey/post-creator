@@ -22,6 +22,9 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
   } = React.useContext(EditorContext);
   const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
   const { editor } = useSlateContext();
+  if (!editor) {
+    throw new Error("Editor is not defined");
+  }
 
   return (
     <Flex

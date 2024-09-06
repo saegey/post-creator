@@ -1,4 +1,4 @@
-import { Box } from "theme-ui";
+import { Box, Flex } from "theme-ui";
 import BoldButton from "./PostMenu/buttons/BoldButton";
 import HeadingButton from "./PostMenu/buttons/HeadingButton";
 import BulletListButton from "./PostMenu/buttons/BulletListButton";
@@ -18,16 +18,20 @@ const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
         position: "absolute",
         top: `${top + 10}px`,
         left: `${left}px`,
+
+        width: "fit-content",
         background: "primary",
         padding: "8px",
         zIndex: "300",
         borderRadius: "5px",
       }}
     >
-      <BoldButton editor={editor} />
-      <HeadingButton editor={editor} />
-      <BulletListButton editor={editor} />
-      <LinkButton editor={editor} />
+      <Flex>
+        <BoldButton editor={editor} />
+        <HeadingButton editor={editor} />
+        <BulletListButton editor={editor} />
+        <LinkButton editor={editor} />
+      </Flex>
     </Box>
   );
 };

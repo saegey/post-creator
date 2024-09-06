@@ -3,7 +3,7 @@ import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 
-import { CloudinaryImage } from "../../types/common";
+import { CloudinaryImage, CustomElement } from "../../types/common";
 
 import { UpdatePostMutation } from "../../API";
 import { updateHeroImage } from "../../utils/SlateUtilityFunctions";
@@ -12,7 +12,7 @@ import AddMediaComponent from "./Editor/AddMediaComponent";
 import { EditorContext } from "./Editor/EditorContext";
 import { useSlateContext } from "../SlateContext";
 import { PostContext } from "../PostContext";
-import { Editor } from "slate";
+import { Editor, Path } from "slate";
 import { useImperativeHandle, useRef, forwardRef } from "react";
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 
@@ -32,13 +32,17 @@ const UploadImage = forwardRef(
       <AddMediaComponent
         uploadPreset="epcsmymp"
         ref={addMediaRef}
+        onClose={() => console.log("close")}
         onSuccess={async (result) => {
           if (!editor || !menuPosition.path) {
             throw new Error("Editor or path not found");
           }
-          const [node] = Editor.node(editor, menuPosition.path);
-          const heroBannerElement = node.children?.find(
-            (child) => child.type === "heroBanner"
+          const [node] = Editor.node(editor, menuPosition.path) as [
+            CustomElement,
+            Path
+          ];
+          const heroBannerElement = (node.children as CustomElement[]).find(
+            (child) => "type" in child && child.type === "heroBanner"
           );
           console.log(heroBannerElement, menuPosition.path);
           if (heroBannerElement === undefined) {

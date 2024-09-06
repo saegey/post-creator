@@ -17,6 +17,7 @@ import { useViewport } from "../../ViewportProvider";
 import { PostContext } from "../../PostContext";
 
 const PostAuthor = () => {
+  return <></>;
   const { width } = useViewport();
   const { author, createdAt } = React.useContext(PostContext);
 

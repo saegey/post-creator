@@ -5,16 +5,23 @@ import { useThemeUI } from "theme-ui";
 
 import { VideoEmbedType } from "../../../types/common";
 import HoverAction from "../Editor/HoverAction";
+import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
+import { ReactEditor, useSlateStatic } from "slate-react";
 
 const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
   const { theme } = useThemeUI();
+  const editor = useSlateStatic();
+  const path = ReactEditor.findPath(editor, element);
+
+  const { optionsMenu } = useOptionsMenu(editor, path);
 
   const videoPlayer = React.useMemo(() => {
     return (
       <HoverAction element={element}>
-        <Flex sx={{ width: "100%", justifyContent: "center" }}>
-          <Box>
-            {!element.isReady && (
+        <Box contentEditable={false}>
+          <Flex sx={{ width: "100%", justifyContent: "center" }}>
+            <Box>
+              {/* {!element.isReady && (
               <AspectRatio
                 ratio={16 / 9}
                 sx={{
@@ -28,8 +35,8 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
               >
                 <Heading>Processing video</Heading>
               </AspectRatio>
-            )}
-            {element.isReady && (
+            )} */}
+              {/* {element.isReady && ( */}
               <MuxPlayer
                 // style={}
                 playbackId={element.playbackId}
@@ -41,9 +48,11 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
                 accentColor={theme?.colors?.accent as string}
                 streamType="on-demand"
               />
-            )}
-          </Box>
-        </Flex>
+              {/* )} */}
+              {optionsMenu}
+            </Box>
+          </Flex>
+        </Box>
       </HoverAction>
     );
   }, [element]);

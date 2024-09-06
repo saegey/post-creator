@@ -64,7 +64,7 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
             {element.image && element !== null && imageUrl ? (
               <HeroImage element={element} imageUrl={imageUrl} />
             ) : (
-              <DefaultImage element={element} />
+              <DefaultImage />
             )}
 
             <PostHeaderTextBlock

@@ -17,7 +17,7 @@ type AddMediaComponentProps = {
 const AddMediaComponent = forwardRef(
   ({ uploadPreset, onSuccess, onClose }: AddMediaComponentProps, ref) => {
     const { theme } = useThemeUI();
-    const widgetOpenRef = useRef(null); // Ref to store the open function
+    const widgetOpenRef = useRef<() => void | null>(); // Ref to store the open function
 
     // Use imperative handle to expose openModal function to parent
     useImperativeHandle(ref, () => ({
@@ -70,7 +70,9 @@ const AddMediaComponent = forwardRef(
       >
         {({ open }) => {
           widgetOpenRef.current = open; // Store the open function in the ref
-          return null; // No button rendering here, as it's triggered programmatically
+          // return null; // No button rendering here, as it's triggered programmatically
+
+          return <></>;
         }}
       </CldUploadWidget>
     );

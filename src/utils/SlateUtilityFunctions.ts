@@ -6,7 +6,12 @@ import {
   Path,
 } from "slate";
 
-import { CloudinaryImage, CustomEditor, HeroBannerType } from "../types/common";
+import {
+  CloudinaryImage,
+  CustomEditor,
+  CustomElement,
+  HeroBannerType,
+} from "../types/common";
 
 export const toggleMark = (editor: CustomEditor, format: "bold") => {
   const isActive = isMarkActive(editor, format);
@@ -80,7 +85,7 @@ export const updateHeroImage = ({
   image,
 }: {
   editor: CustomEditor;
-  element: HeroBannerType;
+  element: CustomElement;
   path: Path;
   image: CloudinaryImage;
 }) => {

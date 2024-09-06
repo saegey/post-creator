@@ -35,7 +35,7 @@ const StandardModal = ({
   return (
     <>
       <BlackBox
-        opacity={"0.7"}
+        opacity={0.7}
         onClick={() => {
           setIsOpen(false);
           if (onClose) {
