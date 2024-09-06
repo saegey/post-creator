@@ -6,6 +6,7 @@ import type PostType from "../../interfaces/post";
 import PublicHeader from "../../src/components/public/Header/PublicHeader";
 import PublicFooter from "../../src/components/public/Footer/Footer";
 import BlogPostList from "../../src/components/public/BlogPostList";
+import FavIcon from "../../src/components/shared/FavIcon";
 
 type Props = {
   allPosts: Array<PostType>;
@@ -32,7 +33,7 @@ export default function Post({ allPosts }: Props) {
     <>
       <Head>
         <title>Monopad - Blog</title>
-        <link rel="icon" href="/favicon.ico" />
+        <FavIcon />
       </Head>
 
       <Box

@@ -30,8 +30,8 @@ const Menu = ({
         ref={wrapperRef}
         sx={{
           position: "absolute",
-          top: menuPosition.top - 18,
-          left: menuPosition.left,
+          top: menuPosition.top - 45,
+          left: menuPosition.left - 35,
           width: "200px",
         }}
         variant="boxes.menuItem"

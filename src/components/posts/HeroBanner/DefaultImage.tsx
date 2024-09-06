@@ -1,7 +1,8 @@
-import { Box, Flex, Button } from "theme-ui";
+import { Box, Flex, Button, IconButton } from "theme-ui";
 import React from "react";
 
 import { EditorContext } from "../Editor/EditorContext";
+import UploadIcon from "../../icons/UploadIcon";
 
 const DefaultImage = () => {
   const { setIsHeroImageModalOpen } = React.useContext(EditorContext);
@@ -18,15 +19,19 @@ const DefaultImage = () => {
     >
       <Flex sx={{ alignItems: "center" }}>
         <Box>
-          <Button
+          <IconButton
             onClick={() => {
               setIsHeroImageModalOpen(true);
               console.log("default image clicked");
             }}
-            variant="primaryButton"
+            sx={{
+              backgroundColor: "primary",
+              color: "background",
+              "&:hover": { backgroundColor: "primaryHover" },
+            }}
           >
-            Upload Image
-          </Button>
+            <UploadIcon />
+          </IconButton>
         </Box>
       </Flex>
     </Flex>

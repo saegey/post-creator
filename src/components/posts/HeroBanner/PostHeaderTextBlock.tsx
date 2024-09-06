@@ -16,19 +16,13 @@ const PostHeaderTextBlock = ({
   title: string;
   teaser: string;
   date: string;
-  headerImageCaption: string;
+  headerImageCaption: string | undefined;
   location: string;
   height?: string | null;
 }) => {
-  const { setIsSettingsModalOpen } = React.useContext(EditorContext);
-
   return (
     <Box sx={{ width: ["100%", "35%", "35%"] }}>
-      <Flex
-        variant="text.postHeaderBackground"
-        onClick={() => setIsSettingsModalOpen(true)}
-        contentEditable={false}
-      >
+      <Flex variant="text.postHeaderBackground" contentEditable={false}>
         {type === "" ? null : (
           <Text
             variant="postHeaderType"
@@ -41,10 +35,10 @@ const PostHeaderTextBlock = ({
         )}
         <Text
           as="h1"
-          variant="postTitle"
+          // variant="postTitle"
           sx={{
-            color: title === "Title" ? "textMuted" : "text",
-            lineHeight: "38px",
+            color: title === "Title" || title === "" ? "muted" : "text",
+            lineHeight: "45px",
           }}
         >
           {title}
@@ -53,7 +47,7 @@ const PostHeaderTextBlock = ({
         <Text
           as="p"
           sx={{
-            color: teaser === "Subhead" ? "textMuted" : "text",
+            color: teaser === "Subhead" ? "muted" : "text",
             fontWeight: "500",
             fontSize: "16px",
             lineHeight: "22px",
@@ -62,18 +56,18 @@ const PostHeaderTextBlock = ({
           {teaser}
         </Text>
         <Text sx={{ fontSize: "15px", fontWeight: "400" }}>
-          <Text sx={{ color: date === "Event date" ? "textMuted" : "text" }}>
+          <Text sx={{ color: date === "Event date" ? "muted" : "text" }}>
             {date}
           </Text>{" "}
           —{" "}
-          <Text sx={{ color: location === "Location" ? "textMuted" : "text" }}>
+          <Text sx={{ color: location === "Location" ? "muted" : "text" }}>
             {location}
           </Text>
         </Text>
         <Text
           sx={{
             color:
-              headerImageCaption === "Enter caption here"
+              headerImageCaption === undefined || headerImageCaption === ""
                 ? "textMuted"
                 : "text",
             marginTop: "auto",

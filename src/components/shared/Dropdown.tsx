@@ -16,7 +16,7 @@ const Dropdown = ({
         minWidth: "190px",
         zIndex: 1,
         left: "-158px",
-        top: "35px",
+        top: "-20px",
       }}
       variant="boxes.menuItem"
       className={"dropdown-content"}

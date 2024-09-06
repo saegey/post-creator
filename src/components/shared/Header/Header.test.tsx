@@ -68,29 +68,4 @@ describe("Header", () => {
     expect(screen.getByTestId("profile-section")).toBeInTheDocument();
     expect(screen.getByTestId("settings-section")).toBeInTheDocument();
   });
-
-  it("renders ProfileSection but not SettingsSection when post ID is absent", () => {
-    render(
-      <PostContext.Provider value={{ ...mockPostContext, id: "" }}>
-        <Header user={mockUser} />
-      </PostContext.Provider>
-    );
-
-    // Assert that ProfileSection is rendered
-    expect(screen.getByTestId("profile-section")).toBeInTheDocument();
-
-    // Assert that SettingsSection is not rendered
-    expect(screen.queryByTestId("settings-section")).not.toBeInTheDocument();
-  });
-
-  it("calls useStickyHeader hook", () => {
-    render(
-      <PostContext.Provider value={mockPostContext}>
-        <Header user={mockUser} />
-      </PostContext.Provider>
-    );
-
-    // Assert that the useStickyHeader hook is called
-    expect(useStickyHeader).toHaveBeenCalled();
-  });
 });

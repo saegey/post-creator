@@ -1,6 +1,7 @@
 // src/utils/theme.ts
 import { darken, lighten } from "@theme-ui/color";
 import { Theme } from "theme-ui";
+import FloatingMenu from "../components/posts/Editor/FloatingMenu";
 
 const palette = {
   white: "#ffffff",
@@ -25,12 +26,13 @@ export default {
   useColorSchemeMediaQuery: true,
   colors: {
     primary: palette.black,
-    secondary: palette.grayMedium,
+    primaryHover: lighten(palette.black, 0.2),
+    secondary: palette.white,
     highlight: palette.yellow,
     background: palette.white,
     backgroundOpaque: "rgba(0, 0, 0, 0.7)",
     backgroundTransparent: "rgba(255, 255, 255, 0.1)",
-    primaryAccent: lighten(palette.black, 0.3),
+    primaryAccent: lighten(palette.black, 0.2),
     text: palette.black,
     muted: palette.grayDark,
     surface: palette.grayMediumLight,
@@ -39,8 +41,9 @@ export default {
     border: palette.grayMedium,
     disabledBackground: palette.grayMedium,
     disabledText: palette.grayMediumDark,
+    modalBackground: palette.black,
     success: "#28A745",
-    error: "#DC3545",
+    error: palette.red,
     warning: "#FFC107",
     info: "#17A2B8",
     link: palette.grayDarker,
@@ -50,6 +53,7 @@ export default {
     modes: {
       dark: {
         primary: palette.white,
+        primaryHover: darken(palette.white, 0.2),
         secondary: palette.grayDark,
         highlight: palette.yellow,
         background: palette.grayDarkest,
@@ -88,7 +92,7 @@ export default {
     postHeaderBackground: {
       width: ["fit-content", "100%", "100%"],
       marginX: ["10px", "0", "0"],
-      bg: ["surface", "surface", "surface"],
+      // bg: ["surface", "surface", "surface"],
       paddingY: ["10px", "20px", "20px"],
       paddingX: [0, "20px", "20px"],
       gap: "10px",
@@ -96,9 +100,9 @@ export default {
       justifyContent: "center",
       alignContent: "center",
       position: "relative",
-      borderBottomColor: "muted",
-      borderBottomWidth: ["1px", 0, 0],
-      borderBottomStyle: "solid",
+      // borderBottomColor: "muted",
+      // borderBottomWidth: ["1px", 0, 0],
+      // borderBottomStyle: "solid",
       height: "100%",
       cursor: "text",
     },
@@ -187,6 +191,20 @@ export default {
       height: "32px",
       width: "32px",
       borderRadius: "5px",
+    },
+    floatingMenu: {
+      marginX: ["5px", 0, 0],
+      marginBottom: ["5px", 0, 0],
+      width: "30px",
+      verticalAlign: "top",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "primary",
+      "&:hover": {
+        backgroundColor: lighten("primary", 0.2),
+        borderRadius: "5px",
+      },
     },
     publicMenuDropdown: {
       position: "absolute",
@@ -290,6 +308,11 @@ export default {
     },
     primaryButton: {
       backgroundColor: "text",
+      width: "104px",
+      // width: 104px;
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       color: "background",
       fontSize: "14px",
       paddingY: "6px",
@@ -297,7 +320,7 @@ export default {
       lineHeight: "20px",
       fontWeight: "400",
       "&:hover": {
-        backgroundColor: "primaryAccent",
+        backgroundColor: "primaryHover",
         cursor: "pointer",
       },
       "&:disabled": {
@@ -307,25 +330,28 @@ export default {
     },
     secondaryButton: {
       backgroundColor: "secondary",
+      borderColor: lighten("primary", 0.2),
+      borderStyle: "solid",
+      width: "104px",
+      fontSize: "14px",
+      borderWidth: "1px",
       color: "text",
       fontWeight: "400",
       "&:hover": {
-        backgroundColor: darken("secondary", 0.1),
+        backgroundColor: darken("secondary", 0.05),
       },
     },
     dangerButton: {
-      paddingY: "6px",
-      background: "danger",
-      borderColor: "danger",
-      borderWidth: "1px",
+      backgroundColor: "error",
+      borderColor: lighten("error", 0.2),
       borderStyle: "solid",
-      color: "red",
-      fontSize: "15px",
-      fontWeight: "600",
+      width: "104px",
+      fontSize: "14px",
+      borderWidth: "1px",
+      color: palette.white,
+      fontWeight: "400",
       "&:hover": {
-        backgroundColor: "danger",
-        color: "white",
-        borderColor: "danger",
+        backgroundColor: darken("error", 0.05),
       },
     },
   },
@@ -336,7 +362,7 @@ export default {
         borderColor: "accent",
         outline: "none",
       },
-      backgroundColor: "surface",
+      backgroundColor: lighten("surface", 0.1),
       fontSize: "16px",
       padding: "10px",
     },

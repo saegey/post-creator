@@ -1,13 +1,14 @@
 import Head from "next/head";
 import React from "react";
 import { Box, Flex, Link as ThemeLink, Text } from "theme-ui";
+import FavIcon from "../src/components/shared/FavIcon";
 
 const Manifesto = () => {
   return (
     <>
       <Head>
         <title>Monopad - Terms of Service</title>
-        <link rel="icon" href="/favicon.ico" />
+        <FavIcon />
       </Head>
 
       <Flex

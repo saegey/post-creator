@@ -9,10 +9,16 @@ import { EditorContext } from "./posts/Editor/EditorContext";
 import { useSlateContext } from "./SlateContext";
 import GenericMenuItem from "./GenericMenuItem";
 import { CustomElement } from "../types/common";
+import { set } from "cypress/types/lodash";
 
 const OptionsDropdown = () => {
-  const { isOptionsOpen, setIsOptionsOpen, setIsChangeImageModalOpen } =
-    React.useContext(EditorContext);
+  const {
+    isOptionsOpen,
+    setIsOptionsOpen,
+    setIsChangeImageModalOpen,
+    setIsSettingsModalOpen,
+    setIsPhotoCaptionOpen,
+  } = React.useContext(EditorContext);
   console.log("isOptionsOpen", isOptionsOpen);
   const { menuPosition } = React.useContext(EditorContext);
   const { editor } = useSlateContext();
@@ -35,6 +41,17 @@ const OptionsDropdown = () => {
       path={path}
     >
       <>
+        {node.type === "image" && (
+          <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+            <GenericMenuItem
+              onClick={() => {
+                setIsPhotoCaptionOpen(true);
+                setIsOptionsOpen(false);
+              }}
+              label="Edit Caption"
+            />
+          </Box>
+        )}
         {node.type !== undefined &&
           JSON.stringify(path) !== JSON.stringify([2]) && (
             <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
@@ -73,14 +90,36 @@ const OptionsDropdown = () => {
           </Box>
         )}
         {node.type === undefined && (
-          <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
-            <GenericMenuItem
-              onClick={() => {
-                setIsChangeImageModalOpen(true);
-              }}
-              label="Change"
-            />
-          </Box>
+          <>
+            <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+              <GenericMenuItem
+                onClick={() => {
+                  setIsChangeImageModalOpen(true);
+                  setIsOptionsOpen(false);
+                }}
+                label="Change Image"
+              />
+            </Box>
+            <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+              <GenericMenuItem
+                onClick={() => {
+                  setIsSettingsModalOpen(true);
+                  setIsOptionsOpen(false);
+                }}
+                label="Settings"
+              />
+            </Box>
+
+            <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+              <GenericMenuItem
+                onClick={() => {
+                  setIsPhotoCaptionOpen(true);
+                  setIsOptionsOpen(false);
+                }}
+                label="Edit Caption"
+              />
+            </Box>
+          </>
         )}
       </>
     </OptionsMenu>

@@ -40,6 +40,8 @@ import ShareIcon from "../../src/components/icons/ShareIcon";
 import OptionsIcon from "../../src/components/icons/OptionsIcon";
 import BackIcon from "../../src/components/icons/BackIcon";
 import ForwardIcon from "../../src/components/icons/ForwardIcon";
+import UploadIcon from "../../src/components/icons/UploadIcon";
+import AddIcon from "../../src/components/icons/AddIcon";
 
 const icons = [
   BulletListIcon,
@@ -71,6 +73,8 @@ const icons = [
   OptionsIcon,
   BackIcon,
   ForwardIcon,
+  UploadIcon,
+  AddIcon,
 ];
 
 const ThemePreview = () => {

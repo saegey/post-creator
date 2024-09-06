@@ -29,7 +29,9 @@ const AddVideoModal = () => {
       setIsOpen={setIsVideoUploadOpen}
       isOpen={isVideoUploadOpen}
     >
-      <VideoUploader editor={editor} />
+      <Box sx={{ paddingTop: "20px" }}>
+        <VideoUploader editor={editor} />
+      </Box>
     </StandardModal>
   ) : (
     <></>

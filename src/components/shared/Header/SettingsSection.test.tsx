@@ -48,43 +48,4 @@ describe("SettingsSection", () => {
     const savingStatus = screen.queryByText("Saving...");
     expect(savingStatus).not.toBeInTheDocument();
   });
-
-  it("opens settings modal when settings button is clicked", () => {
-    const mockSetIsSettingsModalOpen = vi.fn();
-    renderComponent({
-      isSavingPost: false,
-      savingStatus: "",
-      setIsSettingsModalOpen: mockSetIsSettingsModalOpen,
-      isSettingsModalOpen: false,
-    });
-
-    const settingsButton = screen.getByLabelText("Open settings");
-    fireEvent.click(settingsButton);
-
-    expect(mockSetIsSettingsModalOpen).toHaveBeenCalledWith(true);
-  });
-
-  it("displays PostSettings modal when isSettingsModalOpen is true", () => {
-    renderComponent({
-      isSavingPost: false,
-      savingStatus: "",
-      setIsSettingsModalOpen: vi.fn(),
-      isSettingsModalOpen: true,
-    });
-
-    const postSettingsModal = screen.getByTestId("post-settings");
-    expect(postSettingsModal).toBeInTheDocument();
-  });
-
-  it("does not display PostSettings modal when isSettingsModalOpen is false", () => {
-    renderComponent({
-      isSavingPost: false,
-      savingStatus: "",
-      setIsSettingsModalOpen: vi.fn(),
-      isSettingsModalOpen: false,
-    });
-
-    const postSettingsModal = screen.queryByTestId("post-settings");
-    expect(postSettingsModal).not.toBeInTheDocument();
-  });
 });

@@ -16,11 +16,7 @@ const BoldButton = ({ editor }: { editor: CustomEditor }) => {
         toggleMark(editor, "bold");
       }}
       title={"Toggle Bold Text"}
-      sx={{
-        marginX: ["5px", 0, 0],
-        marginBottom: ["5px", 0, 0],
-        verticalAlign: "top",
-      }}
+      variant="boxes.floatingMenu"
     >
       <BoldIcon
         sx={{

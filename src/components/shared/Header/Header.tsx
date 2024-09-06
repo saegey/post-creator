@@ -4,7 +4,6 @@ import { Box, Flex, ThemeUIStyleObject, Theme } from "theme-ui";
 import { IUser } from "../../../types/common";
 import ProfileSection from "./ProfileSection";
 import SettingsSection from "./SettingsSection";
-import useStickyHeader from "../../../hooks/useStickyHeader";
 import { usePost } from "../../PostContext";
 
 type HeaderLayoutProps = {
@@ -12,7 +11,7 @@ type HeaderLayoutProps = {
 };
 
 const Header: React.FC<HeaderLayoutProps> = ({ user }) => {
-  useStickyHeader();
+  // useStickyHeader();
   const { id } = usePost();
 
   return (
@@ -22,7 +21,8 @@ const Header: React.FC<HeaderLayoutProps> = ({ user }) => {
       sx={
         {
           width: "100vw",
-          position: "-webkit-sticky",
+          // width: "100%",
+          position: "sticky",
           top: 0,
           zIndex: 10,
           backgroundColor: "background",
@@ -42,20 +42,21 @@ const Header: React.FC<HeaderLayoutProps> = ({ user }) => {
         }
       >
         <ProfileSection user={user} />
-        {id && (
-          <Flex
-            sx={
-              {
-                justifyContent: "end",
-                gap: "10px",
-                flexGrow: 1,
-                alignItems: "center",
-              } as ThemeUIStyleObject<Theme>
-            }
-          >
-            <SettingsSection />
-          </Flex>
-        )}
+
+        <Flex
+          sx={
+            {
+              justifyContent: "end",
+              gap: "10px",
+              flexGrow: 1,
+              alignItems: "center",
+            } as ThemeUIStyleObject<Theme>
+          }
+        >
+          <SettingsSection />
+        </Flex>
+
+        {/* <pre>hola</pre> */}
       </Box>
     </Box>
   );

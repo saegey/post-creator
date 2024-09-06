@@ -15,61 +15,66 @@ const EditUserPost = ({ user }: { user: IUser }) => {
   console.log("components", components);
 
   return (
-    <Box
-      as="main"
-      sx={
-        {
-          width: "100vw",
-          flexGrow: 1,
-        } as ThemeUIStyleObject<Theme>
-      }
-    >
-      <EditorContext.Provider value={editorState}>
-        <Header user={user} />
-        <PostEditor
-          initialState={
-            components.length === 0
-              ? [
-                  {
-                    children: [
-                      {
-                        text: "",
-                      },
-                    ],
-                    photoCaption: "this is a new captiin",
-                    type: "heroBanner",
-                    void: true,
-                  },
-                  {
-                    children: [
-                      {
-                        text: "",
-                      },
-                    ],
-                    type: "postAuthor",
-                  },
-                  {
-                    children: [
-                      {
-                        text: "Discuss your activity...",
-                      },
-                    ],
-                    type: "paragraph",
-                  },
-                  {
-                    children: [
-                      {
-                        text: "",
-                      },
-                    ],
-                    type: "paragraph",
-                  },
-                ]
-              : components
-          }
-        />
-      </EditorContext.Provider>
-    </Box>
+    <>
+      <Box
+        as="main"
+        sx={
+          {
+            width: "100%",
+            // backgroundColor: "red",
+            // flexGrow: 1,
+            // height: "100vh",
+            minHeight: "100%",
+          } as ThemeUIStyleObject<Theme>
+        }
+      >
+        <EditorContext.Provider value={editorState}>
+          <Header user={user} />
+          <PostEditor
+            initialState={
+              components.length === 0
+                ? [
+                    {
+                      children: [
+                        {
+                          text: "",
+                        },
+                      ],
+                      photoCaption: "this is a new captiin",
+                      type: "heroBanner",
+                      void: true,
+                    },
+                    {
+                      children: [
+                        {
+                          text: "",
+                        },
+                      ],
+                      type: "postAuthor",
+                    },
+                    {
+                      children: [
+                        {
+                          text: "Discuss your activity...",
+                        },
+                      ],
+                      type: "paragraph",
+                    },
+                    {
+                      children: [
+                        {
+                          text: "",
+                        },
+                      ],
+                      type: "paragraph",
+                    },
+                  ]
+                : components
+            }
+          />
+        </EditorContext.Provider>
+      </Box>
+    </>
   );
 };
 

@@ -40,14 +40,17 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
   };
 
   return (
-    <Box
-      ref={linkInputRef}
-      sx={{ position: "relative", display: "inline" }}
-      onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-        toggleLink(e)
-      }
-    >
-      <LinkIcon sx={{ color: "secondary" }} />
+    <>
+      <Box
+        ref={linkInputRef}
+        variant="boxes.floatingMenu"
+        // sx={{ position: "relative", display: "inline" }}
+        onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+          toggleLink(e)
+        }
+      >
+        <LinkIcon sx={{ color: "secondary" }} />
+      </Box>
       {showPopup && (
         <Box
           sx={{
@@ -125,7 +128,7 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
           </Flex>
         </Box>
       )}
-    </Box>
+    </>
   );
 };
 

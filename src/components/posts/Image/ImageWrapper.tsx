@@ -81,9 +81,9 @@ const ImageElement = ({
         <Box
           sx={
             {
-              marginY: ["20px"],
-              height: "fit-content",
-              marginBottom: "20px",
+              // marginY: ["20px"],
+              // height: "fit-content",
+              // marginBottom: "20px",
             } as ThemeUIStyleObject<Theme>
           }
         >

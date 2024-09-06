@@ -18,9 +18,10 @@ import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import { DeletePostMutation } from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
-import { deletePost } from "../../../../src/graphql/mutations";
+// import { deletePost } from "../../../../src/graphql/mutations";
 import UploadButton from "./PostMenu/buttons/UploadButton";
 import {
+  deletePost,
   updatePostSettings,
   UpdatePostSettingsMutation,
 } from "../../../graphql/customMutations";
@@ -108,8 +109,9 @@ const PostSettings = () => {
             {
               gap: "15px",
               flexDirection: "column",
-              maxHeight: ["70vh", "", ""],
-              overflow: "scroll",
+              maxHeight: ["", "600px", "70vh"],
+              height: ["calc(100vh - 120px)", "", ""], // dynamically fill height on mobile
+              overflow: "auto", // make the content scrollable
             } as ThemeUIStyleObject<Theme>
           }
         >
@@ -172,8 +174,8 @@ const PostSettings = () => {
             />
           </Box>
           <Box>
-            <Flex>
-              <Box sx={{ width: "70%" } as ThemeUIStyleObject<Theme>}>
+            <Flex sx={{ flexDirection: ["column", "row", "row"] }}>
+              <Box>
                 <Text as="p" sx={{ fontWeight: "700", fontSize: "15px" }}>
                   Delete this post
                 </Text>
@@ -185,19 +187,25 @@ const PostSettings = () => {
               <Box
                 sx={
                   {
-                    marginLeft: "auto",
-                    marginY: "auto",
+                    flexGrow: 1,
                   } as ThemeUIStyleObject<Theme>
                 }
               >
-                <Button
-                  id="delete-post"
-                  variant="dangerButton"
-                  type="button"
-                  onClick={processDeletePost}
+                <Flex
+                  sx={{
+                    width: "100%",
+                    justifyContent: ["inherit", "right", "right"],
+                  }}
                 >
-                  Delete
-                </Button>
+                  <Button
+                    id="delete-post"
+                    variant="dangerButton"
+                    type="button"
+                    onClick={processDeletePost}
+                  >
+                    Delete
+                  </Button>
+                </Flex>
               </Box>
             </Flex>
           </Box>
@@ -208,12 +216,13 @@ const PostSettings = () => {
               borderTopWidth: "1px",
               borderTopColor: "border",
               borderTopStyle: "solid",
-              marginTop: "10px",
-              paddingTop: "10px",
+              backgroundColor: "background",
+              marginTop: "5px",
+              paddingTop: "5px",
               position: ["fixed", "inherit", "inherit"],
               bottom: ["0", "", ""],
               width: "100%",
-              marginY: "20px",
+              marginBottom: ["20px", "0px", "0px"],
             } as ThemeUIStyleObject<Theme>
           }
         >

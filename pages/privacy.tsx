@@ -16,13 +16,14 @@ import Logo from "../src/components/shared/Logo";
 import Image from "next/image";
 import PublicHeader from "../src/components/public/Header/PublicHeader";
 import PublicFooter from "../src/components/public/Footer/Footer";
+import FavIcon from "../src/components/shared/FavIcon";
 
 const Manifesto = () => {
   return (
     <>
       <Head>
         <title>Monopad - Policy</title>
-        <link rel="icon" href="/favicon.ico" />
+        <FavIcon />
       </Head>
 
       <Box as="main" sx={{ width: "100vw" }}>

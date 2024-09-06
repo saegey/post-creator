@@ -46,7 +46,7 @@ const GenericMenuItem: React.FC<MenuItemProps> = ({
         as="span"
         sx={{
           color: "text",
-          fontSize: "14px",
+          fontSize: "13px",
           alignContent: "center",
         }}
       >

@@ -7,6 +7,7 @@ import { NextApiRequest } from "next";
 import EditProfile from "../src/components/user/EditProfile";
 import { IUser } from "../src/types/common";
 import Header from "../src/components/shared/Header/Header";
+import FavIcon from "../src/components/shared/FavIcon";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
@@ -64,7 +65,7 @@ const Profile = ({ user }: { user: IUser }) => {
       >
         <Head>
           <title>Profile</title>
-          <link rel="icon" href="/favicon.ico" />
+          <FavIcon />
         </Head>
         {user && (
           <main>

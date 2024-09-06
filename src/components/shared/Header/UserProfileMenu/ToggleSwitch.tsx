@@ -1,3 +1,4 @@
+import { darken, lighten } from "@theme-ui/color";
 import React from "react";
 import { Flex, Box, Text, Switch, ThemeUIStyleObject, Theme } from "theme-ui";
 
@@ -33,14 +34,28 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       {mutedText && (
         <Text
           as="span"
-          sx={{ color: "textMuted" } as ThemeUIStyleObject<Theme>}
+          sx={{ color: lighten("muted", 0.2) } as ThemeUIStyleObject<Theme>}
         >
           {mutedText}
         </Text>
       )}
     </Text>
     <Box sx={{ marginLeft: "auto" } as ThemeUIStyleObject<Theme>}>
-      <Switch checked={isChecked} onChange={onChange} />
+      <Switch
+        checked={isChecked}
+        onChange={onChange}
+        sx={{
+          backgroundColor: "surface",
+          // This will not be visible since the input is hidden
+          // '&:checked': {
+          //   backgroundColor: 'primary'
+          // },
+          // This will be visible
+          "input:checked ~ &": {
+            backgroundColor: darken("surface", 0.4),
+          },
+        }}
+      />
     </Box>
   </Flex>
 );
