@@ -595,3 +595,54 @@ export type ResultsType = {
 };
 
 export type ThemeUIColor = string;
+
+export interface VideoAssetEvent {
+  type: string;
+  request_id: string | null;
+  object: {
+    type: string;
+    id: string;
+  };
+  id: string;
+  environment: {
+    name: string;
+    id: string;
+  };
+  data: {
+    video_quality: string;
+    upload_id: string;
+    tracks: Array<{
+      type: string;
+      primary?: boolean;
+      max_channels?: number;
+      max_channel_layout?: string;
+      id: string;
+      duration: number;
+      max_width?: number;
+      max_height?: number;
+      max_frame_rate?: number;
+    }>;
+    status: string;
+    resolution_tier: string;
+    playback_ids: Array<{
+      policy: string;
+      id: string;
+    }>;
+    passthrough: string;
+    mp4_support: string;
+    max_stored_resolution: string;
+    max_stored_frame_rate: number;
+    max_resolution_tier: string;
+    master_access: string;
+    ingest_type: string;
+    id: string;
+    encoding_tier: string;
+    duration: number;
+    created_at: number;
+    aspect_ratio: string;
+  };
+  created_at: string;
+  attempts: Array<any>;
+  accessor_source: any | null;
+  accessor: any | null;
+}

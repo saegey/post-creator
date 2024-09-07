@@ -16,12 +16,12 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
   const { optionsMenu } = useOptionsMenu(editor, path);
 
   const videoPlayer = React.useMemo(() => {
+    console.log("element", element);
     return (
       <HoverAction element={element}>
         <Box contentEditable={false}>
-          <Flex sx={{ width: "100%", justifyContent: "center" }}>
-            <Box>
-              {/* {!element.isReady && (
+          <Box>
+            {!element.isReady && (
               <AspectRatio
                 ratio={16 / 9}
                 sx={{
@@ -29,14 +29,14 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "text",
+                  color: "background",
+                  bg: "primary",
                 }}
-                className="skeleton"
               >
-                <Heading>Processing video</Heading>
+                <h1>Processing Video</h1>
               </AspectRatio>
-            )} */}
-              {/* {element.isReady && ( */}
+            )}
+            {element.isReady && (
               <MuxPlayer
                 // style={}
                 playbackId={element.playbackId}
@@ -48,10 +48,9 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
                 accentColor={theme?.colors?.accent as string}
                 streamType="on-demand"
               />
-              {/* )} */}
-              {optionsMenu}
-            </Box>
-          </Flex>
+            )}
+            {optionsMenu}
+          </Box>
         </Box>
       </HoverAction>
     );

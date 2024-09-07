@@ -13,7 +13,8 @@ const UploadButton = () => {
   const postCtx = usePost();
   const { id, currentFtp, gpxFile } = postCtx;
 
-  const handlePhase = async (phase: string) => {
+  const handlePhase = async (payload: { phase: string }) => {
+    const { phase } = payload;
     switch (phase) {
       case "go-start-processing":
         // console.log("go start processing");

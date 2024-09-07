@@ -8,7 +8,7 @@ import {
 
 const usePubSubSubscription = (
   postId: string,
-  handlePhase: (phase: string) => void
+  handlePhase: (payload: any) => void
 ) => {
   const [subPubConfigured, setSubPubConfigured] = useState(false);
   const subRef = useRef<any>(null);
@@ -33,7 +33,7 @@ const usePubSubSubscription = (
       subRef.current = PubSub.subscribe(`post-${postId}`).subscribe({
         next: (data: any) => {
           console.log("data:", data.value);
-          handlePhase(data.value.phase as string);
+          handlePhase(data.value);
         },
         error: (error) => console.error(error),
       });

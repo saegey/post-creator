@@ -18,7 +18,6 @@ import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import { DeletePostMutation } from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
-// import { deletePost } from "../../../../src/graphql/mutations";
 import UploadButton from "./PostMenu/buttons/UploadButton";
 import {
   deletePost,

@@ -23,6 +23,8 @@ import {
   CloudinaryImage,
   CustomElement,
   HeroBannerType,
+  VideoAssetEvent,
+  VideoEmbedType,
 } from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
@@ -34,6 +36,7 @@ import ImageManager from "../Image/ImageManager";
 import { StravaModal } from "./AddStravaLink";
 import PostSettings from "./PostSettings";
 import PhotoCaptionModal from "../Image/PhotoCaptionModal";
+import usePubSubSubscription from "../../../hooks/usePubSubSubscription";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
@@ -54,6 +57,31 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     useSelectionChangeHandler(editor);
   const { id, title, postLocation, setPost, images } = useContext(PostContext);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
+
+  usePubSubSubscription(id, (payload: VideoAssetEvent) => {
+    console.log("video payload", payload);
+    if (payload.type === "video.asset.ready") {
+      console.log("asseet reead");
+      Transforms.setNodes<CustomElement>(
+        editor,
+        {
+          isReady: true,
+        } as VideoEmbedType,
+        {
+          at: [],
+          match: (node) => {
+            const custom = node as CustomElement;
+            return (
+              custom.type === "videoEmbed" &&
+              custom.isReady === false &&
+              custom.assetId === payload.object.id
+            );
+          },
+        }
+      );
+    }
+  });
+
   const {
     isNewComponentMenuOpen,
     menuPosition,
