@@ -63,9 +63,10 @@ const saveEditor = ({
       // heroImage: heroImage ? heroImage : "",
     });
 
-    setSavingStatus("saved");
-
-    setIsSavingPost(false);
+    setTimeout(() => {
+      setSavingStatus("saved");
+      setIsSavingPost(false);
+    }, 2000);
   }, 2000);
 
   setTimeoutLink(timeoutHandle);

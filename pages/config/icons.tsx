@@ -42,6 +42,8 @@ import BackIcon from "../../src/components/icons/BackIcon";
 import ForwardIcon from "../../src/components/icons/ForwardIcon";
 import UploadIcon from "../../src/components/icons/UploadIcon";
 import AddIcon from "../../src/components/icons/AddIcon";
+import RefreshIcon from "../../src/components/icons/RefreshIcon";
+import CloudCheck from "../../src/components/icons/CloudCheck";
 
 const icons = [
   BulletListIcon,
@@ -75,6 +77,8 @@ const icons = [
   ForwardIcon,
   UploadIcon,
   AddIcon,
+  RefreshIcon,
+  CloudCheck,
 ];
 
 const ThemePreview = () => {

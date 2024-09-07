@@ -14,6 +14,7 @@ import Head from "next/head";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import LogoBlock from "../src/components/public/LogoBlock";
 import FavIcon from "../src/components/shared/FavIcon";
+import { darken } from "@theme-ui/color";
 
 const LoginPage: React.FC = () => {
   const { setNotification } = useContext(NotificationContext);
@@ -59,87 +60,97 @@ const LoginPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Monopad - Sign In</title>
         <FavIcon />
       </Head>
       <Flex
         sx={{
-          flexGrow: 1,
-          justifyContent: "center",
           alignItems: "center",
-          flexDirection: "column",
-          height: ["fit-content", "100dvh", "100dvh"],
-          overflow: ["scroll", "", ""],
-          backgroundColor: "background",
+          width: "100%",
+          backgroundColor: darken("background", 0.04),
         }}
       >
-        <Flex sx={{ justifyContent: "center" }}>
-          <LogoBlock />
-        </Flex>
-        <AuthFormContainer>
-          <form onSubmit={handleSubmit}>
-            <Flex
-              sx={{
-                flexDirection: "column",
-                marginBottom: "10px",
-                gap: "30px",
-              }}
-            >
-              <AuthInput
-                id="email"
-                label="Email"
-                type="email"
-                name="email"
-                required
-              />
-              <Box>
+        <Flex
+          sx={{
+            flexGrow: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            height: ["fit-content", "100dvh", "100dvh"],
+            overflow: ["scroll", "", ""],
+            // backgroundColor: "background",
+            width: "100%",
+            padding: ["20px", "0", "0"],
+          }}
+        >
+          <Flex sx={{ justifyContent: "center" }}>
+            <LogoBlock />
+          </Flex>
+          <AuthFormContainer>
+            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+              <Flex
+                sx={{
+                  flexDirection: "column",
+                  marginBottom: "10px",
+                  gap: "30px",
+                }}
+              >
                 <AuthInput
-                  label="Password"
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
+                  id="email"
+                  label="Email"
+                  type="email"
+                  name="email"
                   required
                 />
                 <Box>
-                  <Flex
-                    sx={{
-                      justifyContent: "right",
-                      alignItems: "center",
-                      marginTop: "10px",
-                    }}
-                  >
-                    <ThemeLink
-                      as={Link}
-                      href="/reset"
+                  <AuthInput
+                    label="Password"
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    required
+                  />
+                  <Box>
+                    <Flex
                       sx={{
-                        fontSize: "13px",
-                        textDecoration: "none",
-                        color: "text",
-                        "&:hover": { textDecoration: "underline" },
+                        justifyContent: "right",
+                        alignItems: "center",
+                        marginTop: "10px",
                       }}
                     >
-                      Forgot Password?
-                    </ThemeLink>
-                  </Flex>
+                      <ThemeLink
+                        as={Link}
+                        href="/reset"
+                        sx={{
+                          fontSize: "13px",
+                          textDecoration: "none",
+                          color: "text",
+                          "&:hover": { textDecoration: "underline" },
+                        }}
+                      >
+                        Forgot Password?
+                      </ThemeLink>
+                    </Flex>
+                  </Box>
                 </Box>
-              </Box>
-              <Flex sx={{ justifyContent: "right" }}>
-                <AuthButton
-                  type="submit"
-                  disabled={isLoading}
-                  id="submit-login"
-                >
-                  {isLoading ? "Signing in..." : "Sign In"}
-                </AuthButton>
+                <Flex sx={{ justifyContent: "right" }}>
+                  <AuthButton
+                    type="submit"
+                    disabled={isLoading}
+                    id="submit-login"
+                  >
+                    {isLoading ? "Signing in..." : "Sign In"}
+                  </AuthButton>
+                </Flex>
               </Flex>
-            </Flex>
-          </form>
-        </AuthFormContainer>
-        <AuthLink
-          text={"Need an account?"}
-          linkText={"Sign Up"}
-          href="/register"
-        />
+            </form>
+          </AuthFormContainer>
+          <AuthLink
+            text={"Need an account?"}
+            linkText={"Sign Up"}
+            href="/register"
+          />
+        </Flex>
       </Flex>
     </>
   );
