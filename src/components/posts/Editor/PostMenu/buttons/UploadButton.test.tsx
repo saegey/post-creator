@@ -134,7 +134,7 @@ describe("UploadButton", () => {
         // handlePhase("go-start-processing");
         // Simulate subscription callback
         setTimeout(() => {
-          callback("go-start-processing");
+          callback({ phase: "go-start-processing" });
         }, 0); // Ensure it runs asynchronously
 
         return () => {}; // Return a cleanup function as expected
