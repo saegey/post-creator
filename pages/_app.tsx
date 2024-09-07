@@ -149,37 +149,38 @@ const app = ({ Component, pageProps }: AppProps) => {
             content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
           />
         </Head>
-        <NotificationContext.Provider
+
+        <UnitProvider.Provider
           value={{
-            notification,
-            setNotification,
+            unitOfMeasure,
+            toggleUnit: async () => {
+              const newUnit =
+                unitOfMeasure === "imperial" ? "metric" : "imperial";
+              setUnitOfMeasure(newUnit);
+              const cUser: IUser = await Auth.currentAuthenticatedUser();
+              await Auth.updateUserAttributes(cUser, {
+                zoneinfo: newUnit,
+              });
+            },
           }}
         >
-          <UnitProvider.Provider
-            value={{
-              unitOfMeasure,
-              toggleUnit: async () => {
-                const newUnit =
-                  unitOfMeasure === "imperial" ? "metric" : "imperial";
-                setUnitOfMeasure(newUnit);
-                const cUser: IUser = await Auth.currentAuthenticatedUser();
-                await Auth.updateUserAttributes(cUser, {
-                  zoneinfo: newUnit,
-                });
-              },
-            }}
-          >
-            <ViewportProvider>
-              <ThemeUIProvider theme={theme}>
+          <ViewportProvider>
+            <ThemeUIProvider theme={theme}>
+              <NotificationContext.Provider
+                value={{
+                  notification,
+                  setNotification,
+                }}
+              >
                 <ThemeChanger />
                 <UserContext.Provider value={{ user, setUser }}>
                   <Component {...pageProps} />
                 </UserContext.Provider>
-              </ThemeUIProvider>
-            </ViewportProvider>
-          </UnitProvider.Provider>
-          <NotificationMessage />
-        </NotificationContext.Provider>
+                <NotificationMessage />
+              </NotificationContext.Provider>
+            </ThemeUIProvider>
+          </ViewportProvider>
+        </UnitProvider.Provider>
       </>
     </ErrorBoundary>
   );

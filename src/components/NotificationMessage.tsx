@@ -27,7 +27,7 @@ const NotificationMessage = () => {
           width: ["100vw", "400px", "400px"],
           padding: ["20px", "10px", "10px"],
           color: "white",
-          backgroundColor: "#cc2020",
+          backgroundColor: "error",
           borderRadius: ["0px", "5px", "5px"],
           borderLeftWidth: ["0px", "5px", "5px"],
           borderLeftColor: "#970808",

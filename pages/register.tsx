@@ -9,12 +9,7 @@ import RegisterForm from "../src/components/auth/RegisterForm";
 import VerifyAccountForm from "../src/components/auth/VerifyAccountForm";
 import AuthLink from "../src/components/auth/AuthLink";
 import { registerUser, verifyUser } from "../src/utils/authActions"; // Import from centralized actions
-
-interface ErrorType {
-  code: string;
-  message: string;
-  type: string;
-}
+import FavIcon from "../src/components/shared/FavIcon";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = React.useState<string>();
@@ -84,11 +79,8 @@ const RegisterPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Create account</title>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
-        />
+        <title>Monopad - Create account</title>
+        <FavIcon />
       </Head>
       <Flex
         sx={{

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Flex, Text, Link as ThemeLink } from "theme-ui";
 import Link from "next/link";
+import { darken } from "@theme-ui/color";
 
 const AuthLink = ({
   text,
@@ -18,11 +19,14 @@ const AuthLink = ({
         borderWidth: "1px",
         borderStyle: "solid",
         borderRadius: "5px",
-        maxWidth: "400px",
-        width: ["calc(100% - 40px)", "400px", "400px"],
-        margin: "20px",
+        // maxWidth: "400px",
+        maxWidth: ["100%", "400px", "400px"],
+        width: ["100%", "400px", "400px"],
+        // width: ["calc(100% - 40px)", "400px", "400px"],
+        // margin: "20px",
         padding: "20px",
         gap: "10px",
+        backgroundColor: "background",
       }}
     >
       <Text sx={{ fontWeight: "400", fontSize: "15px" }}>

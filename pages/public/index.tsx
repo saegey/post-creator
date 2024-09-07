@@ -30,7 +30,7 @@ const Home = () => {
         <PublicHeader />
         <Flex
           sx={{
-            height: ["fit-content", "calc(100vh - 48px)", "calc(100vh)"],
+            height: ["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh)"],
             // paddingTop: "64px",
             // backgroundColor: "red",
             justifyContent: "center",
