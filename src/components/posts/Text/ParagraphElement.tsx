@@ -26,6 +26,7 @@ const ParagraphElement = ({
           {
             fontSize: ["16px", "19px", "19px"],
             marginX: ["10px", "0px", "0px"],
+            lineHeight: "1.5",
           } as ThemeUIStyleObject<Theme>
         }
       >

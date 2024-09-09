@@ -291,12 +291,12 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
               const [node] = Editor.node(editor, [0]);
               console.log(node);
 
-              updateHeroImage({
-                editor,
-                element: node as HeroBannerType,
-                path: [0],
-                image: d.info as CloudinaryImage,
-              });
+              // updateHeroImage({
+              //   editor,
+              //   element: node as HeroBannerType,
+              //   path: [0],
+              //   image: d.info as CloudinaryImage,
+              // });
             }}
           />
         </SlateProvider>

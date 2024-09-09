@@ -110,7 +110,9 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
               <MenuItem href="https://monopad.productlane.com/changelog">
                 Changelog
               </MenuItem>
-              <MenuItem href="http://monopad.app/support">Support</MenuItem>
+              <MenuItem href="https://monopad.productlane.com/roadmap">
+                Support
+              </MenuItem>
               <MenuItem href="https://monopad.productlane.com/roadmap">
                 Roadmap
               </MenuItem>

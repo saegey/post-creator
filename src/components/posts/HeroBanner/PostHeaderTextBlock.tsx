@@ -22,7 +22,11 @@ const PostHeaderTextBlock = ({
 }) => {
   return (
     <Box sx={{ width: ["100%", "35%", "35%"] }}>
-      <Flex variant="text.postHeaderBackground" contentEditable={false}>
+      <Flex
+        variant="text.postHeaderBackground"
+        contentEditable={false}
+        sx={{ gap: "20px", justifyItems: "center", height: "100%" }}
+      >
         {type === "" ? null : (
           <Text
             variant="postHeaderType"
