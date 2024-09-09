@@ -28,7 +28,7 @@ beforeEach(() => {
       cy.get("#password").type(`yy*Em*jTLfw2v@6o_`);
       cy.get("#submit-login").click();
       cy.wait(5000);
-      cy.location("pathname").should("eq", "/");
+      cy.location("pathname").should("eq", "/posts");
     },
     {
       cacheAcrossSpecs: true,
