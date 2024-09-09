@@ -11,14 +11,13 @@ const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
   if (!editor) {
     return <></>;
   }
-  console.log("rendering floating menu");
+
   return (
     <Box
       sx={{
         position: "absolute",
         top: `${top - 50}px`,
         left: `${left - 5}px`,
-
         width: "fit-content",
         justifyItems: "center",
         background: "primary",

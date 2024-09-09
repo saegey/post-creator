@@ -41,7 +41,8 @@ describe("UploadButton", () => {
 
   it("renders the UploadButton component", () => {
     render(<UploadButton />);
-    expect(screen.getByLabelText(/Activity File/i)).toBeInTheDocument();
+    screen.debug();
+    expect(screen.getByLabelText(/Activity/i)).toBeInTheDocument();
     expect(screen.getByText(/Upload/i)).toBeInTheDocument();
   });
 

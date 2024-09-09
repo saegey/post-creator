@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import { NextApiRequest } from "next";
+import Router from "next/router";
 
 import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
 import { CloudinaryImage, IUser } from "../src/types/common";
@@ -40,10 +41,14 @@ type HomeProps = {
 };
 
 const Home = ({ posts = [], user }: HomeProps) => {
+  React.useEffect(() => {
+    Router.push("/posts");
+  }, []);
+
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Monopad - Home</title>
         <FavIcon />
       </Head>
       <PostsAllUsers posts={posts} user={user} />

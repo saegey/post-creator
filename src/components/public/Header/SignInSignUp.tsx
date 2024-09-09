@@ -34,13 +34,35 @@ const SignInSignUp = () => {
           fontSize: ["17px", "15px", "15px"],
         }}
       >
-        Sign In
+        <Button
+          variant="primaryButton"
+          sx={{
+            backgroundColor: "unset",
+            color: "text",
+            "&:hover": { backgroundColor: "surface" },
+            width: "fit-content",
+          }}
+        >
+          Sign In
+        </Button>
       </ThemeLink>
       <ThemeLink
         href={`/register`}
         onClick={(e) => handleExternalLink(e, "/register")}
+        sx={{
+          textDecoration: "none",
+        }}
       >
-        <Button variant="primaryButton">Sign Up</Button>
+        <Button
+          variant="primaryButton"
+          sx={{
+            // color: "red",
+            // "&:hover": { backgroundColor: "surface" },
+            width: "fit-content",
+          }}
+        >
+          Sign Up
+        </Button>
       </ThemeLink>
     </Flex>
   );

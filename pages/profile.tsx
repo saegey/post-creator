@@ -64,7 +64,7 @@ const Profile = ({ user }: { user: IUser }) => {
         sx={{ width: "100%", height: "100vw", backgroundColor: "background" }}
       >
         <Head>
-          <title>Profile</title>
+          <title>Monopad - Profile</title>
           <FavIcon />
         </Head>
         {user && (

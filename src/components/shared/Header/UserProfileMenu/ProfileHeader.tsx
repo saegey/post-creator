@@ -50,7 +50,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onClose }) => (
           <AvatarIcon />
         )}
       </Box>
-      <Box>
+      <Flex sx={{ flexDirection: "column", gap: "5px" }}>
         <Text as="div" variant="profileMenuLink">
           {user.attributes.name}
         </Text>
@@ -63,7 +63,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ user, onClose }) => (
         >
           {user.attributes.preferred_username}
         </Text>
-      </Box>
+      </Flex>
     </Flex>
     <Close
       data-testid="close-profile"

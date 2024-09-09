@@ -8,12 +8,10 @@ import { usePost } from "../../PostContext";
 
 type HeaderLayoutProps = {
   user: IUser;
+  right?: React.ReactNode;
 };
 
-const Header: React.FC<HeaderLayoutProps> = ({ user }) => {
-  // useStickyHeader();
-  const { id } = usePost();
-
+const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
   return (
     <Box
       id="header"
@@ -53,10 +51,8 @@ const Header: React.FC<HeaderLayoutProps> = ({ user }) => {
             } as ThemeUIStyleObject<Theme>
           }
         >
-          <SettingsSection />
+          {right}
         </Flex>
-
-        {/* <pre>hola</pre> */}
       </Box>
     </Box>
   );

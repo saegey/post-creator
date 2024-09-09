@@ -12,6 +12,7 @@ const AddImage = () => {
     setIsNewComponentMenuOpen,
     menuPosition,
     setIsNewPostImageUploadOpen,
+    setIsChangeImageModalOpen,
   } = React.useContext(EditorContext);
   const { editor } = useSlateContext();
 
@@ -23,7 +24,8 @@ const AddImage = () => {
     <Box
       onClick={() => {
         setIsNewComponentMenuOpen(false);
-        setIsNewPostImageUploadOpen(true);
+        // setIsNewPostImageUploadOpen(true);
+        setIsChangeImageModalOpen(true);
       }}
       variant="boxes.sidebarMenuItem"
       sx={{

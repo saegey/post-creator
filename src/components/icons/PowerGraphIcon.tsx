@@ -3,35 +3,15 @@ import { IconButton, ThemeUIStyleObject } from "theme-ui";
 const PowerGraphIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => (
   <IconButton sx={sx}>
     <svg
+      fill="currentcolor"
       width="100%"
       height="100%"
-      viewBox="0 0 236 246"
-      // className="childButton"
-      fill="none"
+      viewBox="0 0 32 32"
+      version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        d="M30 16L30 1L6.55671e-07 0.999999L0 16L30 16ZM0 16L-9.17939e-06 226L30 226L30 16L0 16Z"
-        fill="currentcolor"
-      />
-      <path
-        d="M220 246H235V216H220V246ZM220 216L-2.38419e-06 216V246L220 246V216Z"
-        fill="currentcolor"
-      />
-      <path
-        d="M49 10C153.5 111 119.5 194.5 225.5 198"
-        stroke="currentcolor"
-        strokeWidth="20"
-        strokeMiterlimit="11.4737"
-        strokeLinecap="round"
-      />
-      <path
-        d="M180 24L160 62.5H188.5L167 97"
-        stroke="currentcolor"
-        strokeWidth="20"
-        strokeMiterlimit="11.4737"
-        strokeLinecap="round"
-      />
+      <title>graph</title>
+      <path d="M0 25.406h22.406v-1.75h-20.656v-17.063h-1.75v18.813zM3.063 21.969h19.25v-13.813l-4.063 3.719-3.781-1.375-4 4.563-4.094-1.469-3.313 3.438v4.938z"></path>
     </svg>
   </IconButton>
 );

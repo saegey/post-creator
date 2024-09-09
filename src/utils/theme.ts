@@ -209,7 +209,7 @@ export default {
     publicMenuDropdown: {
       position: "absolute",
       width: "300px",
-      padding: "20px",
+      padding: "10px",
       marginLeft: "-10px",
       borderRadius: "5px",
       backgroundColor: "background",
@@ -287,7 +287,7 @@ export default {
     },
     profileMenuLink: {
       "&:hover": {
-        backgroundColor: "background",
+        background: "surface",
         borderRadius: "5px",
       },
       backgroundColor: "background",
@@ -340,6 +340,7 @@ export default {
       "&:hover": {
         backgroundColor: darken("secondary", 0.05),
       },
+      cursor: "pointer",
     },
     dangerButton: {
       backgroundColor: "error",
@@ -353,6 +354,7 @@ export default {
       "&:hover": {
         backgroundColor: darken("error", 0.05),
       },
+      cursor: "pointer",
     },
   },
   forms: {

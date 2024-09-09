@@ -152,7 +152,7 @@ const PostSettings = () => {
           </Box>
           <Box>
             <Label htmlFor="currentFtp" variant={"defaultLabel"}>
-              Event FTP
+              FTP
             </Label>
             <Input
               id="currentFtp"
@@ -163,7 +163,7 @@ const PostSettings = () => {
           </Box>
           <Box>
             <Label htmlFor="eventDate" variant={"defaultLabel"}>
-              Event Date
+              Date
             </Label>
             <Input
               id="eventDate"

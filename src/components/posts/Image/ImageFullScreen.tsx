@@ -1,4 +1,4 @@
-import { Box, Close, Flex, Text } from "theme-ui";
+import { Box, Close, Flex, IconButton, Text } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Slide } from "react-slideshow-image";
@@ -31,13 +31,15 @@ const ImageFullScreen = ({
         cursor: "pointer",
       }}
     >
-      <BackIcon
+      <IconButton
         sx={{
           width: ["20px", "20px", "30px"],
           height: "auto",
           color: "secondary",
         }}
-      />
+      >
+        <BackIcon />
+      </IconButton>
     </Box>
   );
 

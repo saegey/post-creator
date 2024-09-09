@@ -230,7 +230,12 @@ const PostsAll = ({ user }: { user: IUser }) => {
             <IconButton
               onClick={() => createNewPost()}
               id="create-new-post"
-              sx={{ color: "background", backgroundColor: "primary" }}
+              sx={{
+                color: "background",
+                backgroundColor: "primary",
+                "&:hover": { backgroundColor: "primaryHover" },
+                cursor: "pointer",
+              }}
               // variant="primaryButton"
             >
               <AddIcon />

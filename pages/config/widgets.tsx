@@ -106,7 +106,7 @@ const ThemePreview = () => {
       }
     >
       <Box sx={{ width: "900px", padding: 4 } as ThemeUIStyleObject<Theme>}>
-        <Flex sx={{ gap: "10px" }}>
+        <Flex sx={{ gap: "10px", marginBottom: "20px" }}>
           <Box>
             <ThemeUILink as={Link} href="/config/theme">
               Theme
@@ -124,6 +124,7 @@ const ThemePreview = () => {
               gap: "10px",
               // padding: "5px",
               alignItems: "center",
+              marginBottom: "20px",
               paddingY: "10px",
               flexDirection: "row",
             } as ThemeUIStyleObject<Theme>
@@ -193,7 +194,7 @@ const ThemePreview = () => {
           />
         </Box>
         <Box>
-          <Box
+          {/* <Box
             sx={
               {
                 marginY: ["20px"],
@@ -211,7 +212,7 @@ const ThemePreview = () => {
               }}
               selected={false}
             />
-          </Box>
+          </Box> */}
           <Box variant="boxes.componentCard" contentEditable={false}>
             <Box
               sx={

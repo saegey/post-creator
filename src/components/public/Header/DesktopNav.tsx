@@ -10,7 +10,7 @@ const DesktopNav = () => {
 
   const productMenuItems = [
     {
-      title: "Race Journal",
+      title: "Journal",
       description: "Capture the experience of your competition",
       href: "/journal",
     },
@@ -29,9 +29,14 @@ const DesktopNav = () => {
       href: "/blog",
     },
     {
+      title: "Changelog",
+      description: "Updates and new features",
+      href: "https://monopad.productlane.com/changelog",
+    },
+    {
       title: "Docs",
       description: "Become a Monopad expert",
-      externalHref: "https://monopad.gitbook.io/docs-1/v/1/",
+      href: "https://monopad.gitbook.io/docs-1/v/1/",
     },
     {
       title: "API",
@@ -69,18 +74,6 @@ const DesktopNav = () => {
           items={productMenuItems}
           onItemClick={() => setIsProductMenuOpen(false)}
         />
-      </NavLink>
-      <NavLink
-        sx={{
-          fontWeight: "400",
-          cursor: "pointer",
-          justifyContent: "center",
-          alignContent: "center",
-        }}
-        p={2}
-        href="https://monopad.productlane.com/changelog"
-      >
-        Changelog
       </NavLink>
       <NavLink
         sx={{

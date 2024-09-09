@@ -1,4 +1,4 @@
-import { Box, Flex } from "theme-ui";
+import { AspectRatio, Box, Flex } from "theme-ui";
 import Image from "next/image";
 
 import { CloudinaryImage } from "../../../types/common";
@@ -22,10 +22,11 @@ const CloudImage = ({
   // console.log("rendering CloudImage", imageMeta);
   return (
     <figure>
-      <Flex
+      <AspectRatio
+        ratio={16 / 9}
         sx={{
-          width: "100%",
-          height: "auto",
+          // width: "100%",
+          // height: "auto",
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: imageMeta?.colors ? imageMeta.colors[0] : "white",
@@ -39,12 +40,15 @@ const CloudImage = ({
           height={500}
           style={{
             // maxWidth: "100%",
-            height: "auto",
+            // height: "auto",
+            height: "100%",
+            width: "100%",
+            objectFit: "contain",
             // boxShadow: selected && focused ? "0 0 0 3px #B4D5FF" : "none",
           }}
           priority={true}
         />
-      </Flex>
+      </AspectRatio>
       <Box
         sx={{
           position: "absolute",

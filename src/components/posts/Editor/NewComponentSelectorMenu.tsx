@@ -23,13 +23,13 @@ const GraphSelectorMenu = () => {
       >
         <AddText />
         <AddImage />
-        <AddPowerCurve />
-        <AddActivityOverview />
-        {/* <AddStravaLink /> */}
+        <AddVideo />
         <AddRWGPS />
         <AddRaceResults />
+        <AddPowerCurve />
+        <AddActivityOverview />
         <AddRouteOverview />
-        <AddVideo />
+        {/* <AddStravaLink /> */}
       </Flex>
     </>
   );

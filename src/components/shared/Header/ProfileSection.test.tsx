@@ -18,6 +18,11 @@ vi.mock("next/image", () => ({
   ),
 }));
 
+vi.mock("@theme-ui/color", () => ({
+  darken: vi.fn(),
+  lighten: vi.fn(),
+}));
+
 vi.mock("../../icons/AvatarIcon", () => ({
   __esModule: true,
   default: () => <div data-testid="avatar-icon">Avatar Icon</div>,

@@ -10,10 +10,14 @@ import {
 } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
-import { Editor } from "slate";
+import { Editor, Transforms } from "slate";
 
 import { PostContext } from "../../PostContext";
-import { CloudinaryImage, CustomElement } from "../../../types/common";
+import {
+  CloudinaryImage,
+  CustomElement,
+  ImageElementType,
+} from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
@@ -49,10 +53,11 @@ const ImageManager = () => {
         topRight={
           <IconButton
             onClick={() => {
-              console.log("open modal");
+              // console.log("open modal");
               setIsHeroImageModalOpen(true);
             }}
             sx={{
+              cursor: "pointer",
               color: "primary",
               backgroundColor: "surface",
               "&:hover": { backgroundColor: lighten("surface", 0.05) },
@@ -149,7 +154,7 @@ const ImageManager = () => {
                         </Box>
                       );
                     })
-                  : boxesData.map((box, index) => (
+                  : boxesData.map((_, index) => (
                       <Box
                         key={index} // It's a good idea to provide a unique key
                         sx={{
@@ -184,6 +189,9 @@ const ImageManager = () => {
             variant="primaryButton"
             onClick={async () => {
               console.log("selectedImage", selectedImage);
+              if (!selectedImage) {
+                throw new Error("No image selected");
+              }
               if (editor && menuPosition.path) {
                 // Fetch the existing node data at the specific path
                 // const existingNode = Node.get(editor, menuPosition.path);
@@ -200,26 +208,39 @@ const ImageManager = () => {
                 ).find(
                   (child) => "type" in child && child.type === "heroBanner"
                 );
-                if (!heroBannerElement) {
-                  throw new Error("Hero banner element not found");
+
+                if (heroBannerElement) {
+                  updateHeroImage({
+                    editor,
+                    element: heroBannerElement,
+                    path:
+                      menuPosition.path.length == 0 ? [0] : menuPosition.path,
+                    image: selectedImage,
+                  });
+                } else {
+                  console.log({
+                    ...node,
+                    asset_id: selectedImage.asset_id,
+                    public_id: selectedImage.public_id,
+                  });
+                  Transforms.insertNodes(
+                    editor,
+                    {
+                      type: "image",
+                      asset_id: selectedImage.asset_id,
+                      public_id: selectedImage.public_id,
+                      children: [{ text: "" }],
+                      void: true,
+                      photoCaption: "",
+                    } as ImageElementType,
+                    {
+                      at:
+                        menuPosition.path.length === 0
+                          ? [0]
+                          : menuPosition.path,
+                    }
+                  );
                 }
-
-                console.log(heroBannerElement, menuPosition.path);
-
-                if (heroBannerElement === undefined) {
-                  throw new Error("Hero banner element not found");
-                }
-
-                if (selectedImage === undefined) {
-                  throw new Error("No image selected");
-                }
-
-                updateHeroImage({
-                  editor,
-                  element: heroBannerElement,
-                  path: menuPosition.path.length == 0 ? [0] : menuPosition.path,
-                  image: selectedImage,
-                });
 
                 setIsChangeImageModalOpen(false); // Close the modal
               }

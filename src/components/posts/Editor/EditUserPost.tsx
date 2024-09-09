@@ -8,6 +8,7 @@ import { EditorContext } from "../Editor/EditorContext";
 import { IUser } from "../../../types/common";
 import { usePost } from "../../PostContext";
 import useEditorState from "../../../hooks/useEditorState";
+import SettingsSection from "../../shared/Header/SettingsSection";
 
 const EditUserPost = ({ user }: { user: IUser }) => {
   const editorState = useEditorState();
@@ -29,7 +30,7 @@ const EditUserPost = ({ user }: { user: IUser }) => {
         }
       >
         <EditorContext.Provider value={editorState}>
-          <Header user={user} />
+          <Header user={user} right={<SettingsSection />} />
           <PostEditor
             initialState={
               components.length === 0
@@ -40,7 +41,7 @@ const EditUserPost = ({ user }: { user: IUser }) => {
                           text: "",
                         },
                       ],
-                      photoCaption: "this is a new captiin",
+                      photoCaption: "",
                       type: "heroBanner",
                       void: true,
                     },

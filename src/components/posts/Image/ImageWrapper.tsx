@@ -78,15 +78,7 @@ const ImageElement = ({
             index={imageMetaIndex}
           />
         )}
-        <Box
-          sx={
-            {
-              // marginY: ["20px"],
-              // height: "fit-content",
-              // marginBottom: "20px",
-            } as ThemeUIStyleObject<Theme>
-          }
-        >
+        <Box>
           <CloudImageMemo
             imageUrl={imageUrl}
             imageMeta={imageMeta}

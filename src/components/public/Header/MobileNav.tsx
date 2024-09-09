@@ -59,7 +59,7 @@ const MobileNav = ({
                   setIsProductMenuOpen(false);
                 }}
                 isVisible={isProductMenuOpen}
-                title="Race Journal"
+                title="Journal"
                 href="/journal"
                 textColor="text"
               />
