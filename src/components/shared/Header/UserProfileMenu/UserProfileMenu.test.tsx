@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import UserProfileMenu from "./UserProfileMenu";
 import { useColorMode } from "theme-ui";
+import { IUser } from "../../../../types/common";
 
 // Mock theme-ui and other dependencies globally
 const mockToggleDarkMode = vi.fn();
@@ -87,11 +88,17 @@ vi.mock("./ToggleSwitch", () => ({
 
 describe("UserProfileMenu", () => {
   const mockSetProfileOpen = vi.fn();
-  const mockUser = {
+  const mockUser: IUser = {
+    userId: "user-id",
+    email: "user@example.com",
+    email_verified: true,
     attributes: {
       name: "John Doe",
       preferred_username: "johndoe",
       picture: "profile-picture-url",
+      zoneinfo: "metric",
+      sub: "",
+      profile: "",
     },
   };
   const mockSetColorMode = vi.fn();
@@ -121,7 +128,7 @@ describe("UserProfileMenu", () => {
     expect(screen.getByTestId("profile-header")).toBeInTheDocument();
     expect(screen.getAllByTestId("divider").length).toBeGreaterThan(0);
     expect(screen.getAllByTestId("Dark Mode").length).toBe(1);
-    expect(screen.getAllByTestId("Units").length).toBe(1);
+    expect(screen.getAllByTestId("Metric Units").length).toBe(1);
   });
 
   it("calls setProfileOpen(false) when the BlackBox is clicked", () => {
@@ -155,7 +162,7 @@ describe("UserProfileMenu", () => {
 
   it("toggles units of measurement", () => {
     renderComponent(true);
-    const unitToggle = screen.getByTestId("Units");
+    const unitToggle = screen.getByTestId("Metric Units");
     fireEvent.click(unitToggle);
     expect(mockToggleUnit).toHaveBeenCalled();
   });
