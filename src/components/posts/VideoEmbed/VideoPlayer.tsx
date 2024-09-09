@@ -37,17 +37,34 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
               </AspectRatio>
             )}
             {element.isReady && (
-              <MuxPlayer
-                // style={}
-                playbackId={element.playbackId}
-                metadata={{
-                  video_id: "video-id-123456",
-                  video_title: "Bick Buck Bunny",
-                  viewer_user_id: "user-id-bc-789",
+              <AspectRatio
+                ratio={16 / 9}
+                sx={{
+                  // p: 4,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "background",
+                  bg: "primary",
                 }}
-                accentColor={theme?.colors?.accent as string}
-                streamType="on-demand"
-              />
+              >
+                <MuxPlayer
+                  // style={}
+                  playbackId={element.playbackId}
+                  metadata={{
+                    video_id: "video-id-123456",
+                    video_title: "Bick Buck Bunny",
+                    viewer_user_id: "user-id-bc-789",
+                  }}
+                  accentColor={theme?.colors?.accent as string}
+                  streamType="on-demand"
+                  style={{
+                    width: "100%", // Make sure the player fills the available width
+                    height: "100%", // Make sure the player fills the available height
+                    objectFit: "cover", // Ensure the video scales without distortion
+                  }}
+                />
+              </AspectRatio>
             )}
             {optionsMenu}
           </Box>

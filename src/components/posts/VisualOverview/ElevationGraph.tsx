@@ -9,7 +9,7 @@ import {
   ReferenceArea,
   Rectangle,
 } from "recharts";
-import { Box, Button, Flex, Spinner, useThemeUI } from "theme-ui";
+import { Box, Button, Flex, IconButton, Spinner, useThemeUI } from "theme-ui";
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import { Transforms } from "slate";
@@ -17,6 +17,47 @@ import { Transforms } from "slate";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import { useViewport } from "../../ViewportProvider";
+import ZoomOut from "../../icons/ZoomOut";
+import SaveIcon from "../../icons/SaveIcon";
+import BackIcon from "../../icons/BackIcon";
+
+const getNiceTickValues = (left: number, right: number) => {
+  const range = right - left;
+
+  // Define "nice" intervals (1, 10, 50, 100, 200, etc.)
+  const intervals = [1, 10, 20, 50, 100, 200, 500, 1000];
+
+  // Find an appropriate interval based on the range
+  const roughInterval = range / 4; // Targeting 4 intervals, which gives 5 ticks
+  const niceInterval =
+    intervals.find((interval) => interval >= roughInterval) || intervals[0];
+
+  // Generate the tick values based on the selected interval
+  const ticks = [];
+  for (let i = left; i <= right; i += niceInterval) {
+    ticks.push(i);
+  }
+
+  return ticks;
+};
+
+const getNiceTickValuesY = (min: number, max: number) => {
+  const intervals = [10, 50, 100, 200, 500, 1000, 2000, 5000]; // Define possible intervals
+  const range = Math.max(1000, max) - min; // Ensure max is at least 1000
+
+  // Calculate the rough interval based on the range
+  const roughInterval = range / 4; // Targeting 4 intervals for 5 ticks
+  const niceInterval =
+    intervals.find((interval) => interval >= roughInterval) || intervals[0];
+
+  // Generate ticks starting from min and stepping by niceInterval
+  const ticks = [];
+  for (let i = min; i <= Math.max(1000, max); i += niceInterval) {
+    ticks.push(i);
+  }
+
+  return ticks;
+};
 
 export interface ElevationGraphProps {
   data: Array<ActivityItem> | undefined;
@@ -209,25 +250,27 @@ const ElevationGraph = ({
           marginX: ["10px", "0px", "0px"],
         }}
       >
-        <Button
+        <IconButton
           variant="primaryButton"
           sx={{
             display: showZoomOut ? "inherit" : "none",
+            width: "fit-content",
           }}
           onClick={() => zoomOut()}
         >
-          Zoom Out
-        </Button>
+          <ZoomOut />
+        </IconButton>
 
-        <Button
+        <IconButton
           variant="primaryButton"
           sx={{
             display: isSaved && !showSaveButton ? "inherit" : "none",
+            width: "fit-content",
           }}
           onClick={() => backToSegment()}
         >
-          Back to Segment
-        </Button>
+          <BackIcon />
+        </IconButton>
 
         <Button
           variant="primaryButton"
@@ -238,16 +281,18 @@ const ElevationGraph = ({
         >
           Clear Selection
         </Button>
-        <Button
+        <IconButton
           variant="primaryButton"
           sx={{
+            width: "fit-content",
+            // color: "red",
             visibility:
               selection && !view && showSaveButton ? "visible" : "hidden",
           }}
           onClick={() => saveState()}
         >
-          Save Selection
-        </Button>
+          <SaveIcon />
+        </IconButton>
       </Flex>
       <ResponsiveContainer width={"100%"} height={"100%"}>
         <AreaChart
@@ -315,11 +360,12 @@ const ElevationGraph = ({
               fontSize: hideAxes ? "0px" : "14px",
             }}
             allowDecimals={false}
-            // tickFormatter={(t) => t.toFixed(1)}
+            tickFormatter={(t) => t.toFixed(0)}
             tick={{
               fill: themeContext?.theme?.colors?.primary as string,
               fontSize: "14px",
             }}
+            ticks={left && right ? getNiceTickValues(left, right) : undefined} // Use calculated tick values
             // hide={hideAxes}
             stroke={themeContext?.theme?.colors?.primary as string}
           />
@@ -327,7 +373,7 @@ const ElevationGraph = ({
           {/* {!hideAxes && ( */}
           <YAxis
             allowDataOverflow
-            domain={[bottom, top]}
+            domain={[bottom, Number(top) + 100]}
             type="number"
             label={{
               value: `Elevation (${
@@ -343,7 +389,8 @@ const ElevationGraph = ({
               fill: themeContext?.theme?.colors?.text as string,
               fontSize: "14px",
             }}
-            tickFormatter={(t) => t.toFixed(0)}
+            ticks={getNiceTickValuesY(Number(bottom), Number(top))} // Generate tick values
+            // tickFormatter={(t) => t.toFixed(0)}
             stroke={themeContext?.theme?.colors?.primary as string}
             hide={hideAxes}
           />

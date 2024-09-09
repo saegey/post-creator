@@ -1,6 +1,9 @@
 import Head from "next/head";
 import React from "react";
 import { Box, Button, Flex, Text, Link as ThemeLink } from "theme-ui";
+import Link from "next/link";
+// import MuxPlayer from "@mux/mux-player-react";
+import { lighten } from "@theme-ui/color";
 
 import PublicHeader from "../../src/components/public/Header/PublicHeader";
 import PublicFooter from "../../src/components/public/Footer/Footer";
@@ -8,23 +11,25 @@ import VideoIcon from "../../src/components/icons/VideoIcon";
 import ResultsIcon from "../../src/components/icons/ResultsIcon";
 import PowerGraphIcon from "../../src/components/icons/PowerGraphIcon";
 import FeatureHiglight from "../../src/components/public/FeatureHighlight";
-import StravaIcon from "../../src/components/icons/StravaIcon";
-import ActivityOverviewIcon from "../../src/components/icons/ActivityOverviewIcon";
-import TimePowerZonesIcon from "../../src/components/icons/TimePowerZonesIcon";
 import EyeIcon from "../../src/components/icons/EyeIcon";
 import HeroBannerIcon from "../../src/components/icons/HeroBannerIcon";
 import AvatarIcon from "../../src/components/icons/AvatarIcon";
-import Link from "next/link";
 import FavIcon from "../../src/components/shared/FavIcon";
-import { lighten } from "@theme-ui/color";
+import VideoModal from "../../src/components/VideoModal";
+import ForwardIcon from "../../src/components/icons/ForwardIcon";
 
 const Home = () => {
+  const [isDemoVideo, setIsDemoVideo] = React.useState(false);
   return (
     <>
       <Head>
         <title>Monopad - Home</title>
         <FavIcon />
       </Head>
+
+      {/* {isDemoVideo && ( */}
+      <VideoModal isOpen={isDemoVideo} setIsOpen={setIsDemoVideo} />
+      {/* )} */}
 
       <Box as="main" sx={{ width: "100vw", height: "fit-content" }}>
         <PublicHeader />
@@ -78,7 +83,8 @@ const Home = () => {
                   textAlign: "center",
                 }}
               >
-                Track, Trek, Triumph: Your Journey, Your Journal..
+                {/* Track, Trek, Triumph: Your Journey, Your Journal.. */}
+                Write, Reflect, Achieve: Your Adventure, Your Journal
               </Text>
               <Text
                 as="p"
@@ -131,7 +137,7 @@ const Home = () => {
                       color: "text",
                       padding: "10px",
                       fontSize: "16px",
-                      width: ["100%", "fit-content", "fit-content"],
+                      width: ["100%", "130px", "130px"],
                       cursor: "pointer",
                       "&:hover": {
                         background: lighten("background", 0.05),
@@ -142,9 +148,12 @@ const Home = () => {
                   </Button>
                 </ThemeLink>
                 <Button
+                  onClick={() => {
+                    setIsDemoVideo(true);
+                  }}
                   variant="primaryButton"
                   sx={{
-                    width: ["100%", "fit-content", "fit-content"],
+                    width: ["100%", "130px", "130px"],
                     padding: "10px",
                     fontSize: "16px",
                     cursor: "pointer",
@@ -159,7 +168,7 @@ const Home = () => {
         <Box sx={{ marginTop: ["80px", "0px", "0px"] }}>
           <FeatureHiglight
             featureName="Activity Analytics"
-            imagePath="https://placehold.co/800x800"
+            imagePath="/RaceResults-4.png"
             headline={<>Explore insightful analytics for your race activity.</>}
             subHeadline={
               <>
@@ -171,7 +180,7 @@ const Home = () => {
             imagePosition="right"
             highlights={[
               {
-                icon: <ResultsIcon />,
+                icon: <ForwardIcon />,
                 content: (
                   <>
                     Zones time breakdown in a race is essential for strategic
@@ -181,7 +190,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <PowerGraphIcon />,
+                icon: <ForwardIcon />,
                 content: (
                   <>
                     Explore your performance evolution with our app's power
@@ -193,7 +202,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <VideoIcon />,
+                icon: <ForwardIcon />,
                 content: (
                   <>
                     Analyze your race intensity with a feature showcasing a
@@ -206,20 +215,20 @@ const Home = () => {
           />
           <FeatureHiglight
             featureName="Race Results"
-            imagePath="https://placehold.co/800x800"
+            imagePath="/RaceResults-7.png"
             subHeadline={
               <>
-                Effortlessly integrate and display race results within each
-                journal post, creating a centralized hub for your complete
-                racing history, instantly accessible and providing a
-                comprehensive snapshot of your performance journey.
+                Seamlessly integrate and showcase race results in each journal
+                post, offering a complete hub for your racing history. Instantly
+                accessible, it gives you a detailed snapshot of your performance
+                journey.
               </>
             }
             headline={<>Embed race results</>}
             imagePosition="left"
             highlights={[
               {
-                icon: <TimePowerZonesIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Automatically embed and display your race results within
@@ -228,7 +237,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ActivityOverviewIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Streamlined integration keeps your race history organized
@@ -237,7 +246,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <StravaIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Instantly view your performance metrics, rankings, and
@@ -247,7 +256,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <StravaIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Eliminates the need to search through external sources,
@@ -271,7 +280,7 @@ const Home = () => {
             imagePosition="right"
             highlights={[
               {
-                icon: <AvatarIcon />,
+                icon: <ForwardIcon />,
                 content: (
                   <>
                     Invite-Only Access. Control access by sharing through
@@ -280,7 +289,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <HeroBannerIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Public Visibility. Opt for public sharing to inspire and
@@ -289,21 +298,12 @@ const Home = () => {
                 ),
               },
               {
-                icon: <EyeIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "primary" }} />,
                 content: (
                   <>
                     Effortlessly publish and share your journal entries from
                     within the app. Keep your audience engaged with instant,
                     real-time updates on your racing journey.
-                  </>
-                ),
-              },
-              {
-                icon: <EyeIcon sx={{ height: "auto", color: "primary" }} />,
-                content: (
-                  <>
-                    Capture Moments Together. Collaboratively share experiences
-                    by inviting others to contribute to your journal entries.
                   </>
                 ),
               },

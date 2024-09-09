@@ -18,14 +18,21 @@ type MenuDropdownProps = {
 const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
   return isOpen ? (
     <Box variant="boxes.publicMenuDropdown">
-      <Flex sx={{ flexDirection: "column", gap: "20px" }}>
+      <Flex sx={{ flexDirection: "column", gap: "10px" }}>
         {items.map((item, index) => (
           <Flex sx={{ flexDirection: "column" }} key={index}>
             {item.href ? (
               <ThemeLink
                 as={Link}
                 href={item.href}
-                sx={{ textDecoration: "none" }}
+                sx={{
+                  textDecoration: "none",
+                  padding: "5px",
+                  "&:hover": {
+                    backgroundColor: "surface",
+                    borderRadius: "5px",
+                  },
+                }}
               >
                 <Text
                   as="div"
@@ -52,22 +59,36 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
                 </Text>
               </ThemeLink>
             ) : (
-              <Text
-                sx={{
-                  fontWeight: "600",
-                  color: item.disabled ? "disabledText" : "link",
-                  marginBottom: "5px",
-                }}
-              >
-                {item.title}{" "}
-                {item.soon && (
-                  <Badge
-                    sx={{ backgroundColor: "primary", color: "secondary" }}
-                  >
-                    Soon
-                  </Badge>
-                )}
-              </Text>
+              <Flex sx={{ padding: "5px", flexDirection: "column" }}>
+                <Text
+                  sx={{
+                    fontWeight: "600",
+                    color: item.disabled ? "disabledText" : "link",
+                    marginBottom: "5px",
+                  }}
+                >
+                  {item.title}{" "}
+                  {item.soon && (
+                    <Badge
+                      sx={{
+                        backgroundColor: "primary",
+                        color: "secondary",
+                        padding: "2px 4px",
+                      }}
+                    >
+                      Coming Soon
+                    </Badge>
+                  )}
+                </Text>
+                <Text
+                  sx={{
+                    fontSize: "14px",
+                    color: item.disabled ? "disabledText" : "link",
+                  }}
+                >
+                  {item.description}
+                </Text>
+              </Flex>
             )}
           </Flex>
         ))}

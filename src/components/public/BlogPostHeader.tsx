@@ -1,5 +1,12 @@
 import React from "react";
-import { Avatar, Box, Flex, Text, Link as ThemeLink } from "theme-ui";
+import {
+  Avatar,
+  Box,
+  Flex,
+  IconButton,
+  Text,
+  Link as ThemeLink,
+} from "theme-ui";
 import Link from "next/link";
 
 import moment from "moment";
@@ -33,7 +40,10 @@ const BlogPostHeader = ({ post }: { post: PostType }) => {
         >
           <ThemeLink as={Link} href="/blog" sx={{ textDecoration: "none" }}>
             <Flex>
-              <BackIcon sx={{ color: "muted" }} />
+              <IconButton sx={{ color: "muted" }}>
+                <BackIcon />
+              </IconButton>
+
               <Text as="div" variant="publicBlogHeaderBack">
                 Blog
               </Text>

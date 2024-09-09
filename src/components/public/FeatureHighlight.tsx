@@ -1,8 +1,17 @@
 import React from "react";
-import { Box, Button, Flex, Grid, Text, Link as ThemeLink } from "theme-ui";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Text,
+  Link as ThemeLink,
+  Image as ThemeImage,
+} from "theme-ui";
 import Image from "next/image";
 
 import FeatureHighlightItem from "./FeatureHighlightItem";
+import Theme from "../../utils/theme";
 
 const FeatureHiglight = ({
   featureName,
@@ -34,13 +43,17 @@ const FeatureHiglight = ({
         gridRowStart: [2, "inherit", imagePosition === "right" ? 1 : "inherit"],
       }}
     >
-      <Image
+      <ThemeImage
+        as={Image}
         src={imagePath}
         alt="text"
-        style={{
+        sx={{
+          borderColor: "border",
+          borderWidth: "2px",
+          borderStyle: "solid",
           width: "100%",
           height: "auto",
-          borderRadius: "5px",
+          borderRadius: "10px",
         }}
         width={800}
         height={800}
@@ -77,7 +90,7 @@ const FeatureHiglight = ({
               marginBottom: "16px",
               fontSize: "16px",
               lineHeight: "24px",
-              color: "muted",
+              color: "accent",
             }}
             as="div"
           >

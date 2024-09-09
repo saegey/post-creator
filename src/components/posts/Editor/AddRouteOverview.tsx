@@ -7,6 +7,7 @@ import { PostContext } from "../../PostContext";
 import { useSlateContext } from "../../SlateContext";
 import RouteIcon from "../../icons/RouteIcon";
 import GenericMenuItem from "../../GenericMenuItem";
+import Tooltip from "../../shared/Tooltip";
 
 const AddRouteOverview = () => {
   const { editor } = useSlateContext();
@@ -43,15 +44,30 @@ const AddRouteOverview = () => {
     }
   };
 
-  return (
+  return !gpxFile ? (
+    <Tooltip text="Upload an activity file in settings to Enable">
+      <Box
+        sx={{
+          cursor: "not-allowed",
+        }}
+        variant="boxes.sidebarMenuItem"
+      >
+        <GenericMenuItem
+          icon={<RouteIcon />}
+          label="Route Overview"
+          isDisabled={gpxFile ? false : true}
+        />
+      </Box>
+    </Tooltip>
+  ) : (
     <Box
       onClick={addMap}
       sx={{
-        cursor: gpxFile ? "pointer" : "not-allowed",
+        cursor: "pointer",
       }}
       variant="boxes.sidebarMenuItem"
     >
-      <GenericMenuItem icon={<RouteIcon />} label="Route Overview" />
+      <GenericMenuItem icon={<RouteIcon />} label="Map" />
     </Box>
   );
 };

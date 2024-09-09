@@ -6,6 +6,7 @@ import { EditorContext } from "../Editor/EditorContext";
 import StandardModal from "../../shared/StandardModal";
 import { HeroBannerType, ImageElementType } from "../../../types/common";
 import { useSlateContext } from "../../SlateContext";
+import { lighten } from "@theme-ui/color";
 
 const PhotoCaptionModal = () => {
   const { editor } = useSlateContext();
@@ -87,7 +88,7 @@ const PhotoCaptionModal = () => {
               sx={{
                 borderColor: "border",
                 borderWidth: "1px",
-                backgroundColor: "surface",
+                backgroundColor: lighten("surface", 0.1),
                 borderStyle: "solid",
                 width: "100%", // Ensures the textarea spans the full width
                 flexGrow: 1, // Ensure it grows to fill the available space in flex containers

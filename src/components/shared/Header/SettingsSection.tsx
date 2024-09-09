@@ -7,6 +7,10 @@ import RefreshIcon from "../../icons/RefreshIcon";
 const SettingsSection = () => {
   const { isSavingPost, savingStatus } = React.useContext(EditorContext);
 
+  if (!isSavingPost && !savingStatus) {
+    return <></>;
+  }
+
   return (
     <>
       <pre>{isSavingPost}</pre>

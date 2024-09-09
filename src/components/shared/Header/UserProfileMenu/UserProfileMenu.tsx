@@ -82,6 +82,7 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
               as="ul"
               sx={
                 {
+                  marginTop: "10px",
                   listStyleType: "none",
                   li: {
                     paddingY: "5px",
@@ -99,13 +100,16 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
                 onChange={() => setMode(mode === "dark" ? "light" : "dark")}
               />
               <ToggleSwitch
-                label="Units"
-                mutedText="imperial/metric"
+                label="Metric Units"
+                // mutedText="imperial/metric"
                 isChecked={unitOfMeasure !== "imperial"}
                 onChange={toggleUnit}
               />
               <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
               <MenuItem href="https://monopad.gitbook.io/docs/">Docs</MenuItem>
+              <MenuItem href="https://monopad.productlane.com/changelog">
+                Changelog
+              </MenuItem>
               <MenuItem href="http://monopad.app/support">Support</MenuItem>
               <MenuItem href="https://monopad.productlane.com/roadmap">
                 Roadmap

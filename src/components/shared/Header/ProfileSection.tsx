@@ -8,6 +8,7 @@ import UserProfileMenu from "./UserProfileMenu/UserProfileMenu";
 import { IUser } from "../../../types/common";
 import { cloudUrl } from "../../../utils/cloudinary";
 import { EditorContext } from "../../posts/Editor/EditorContext";
+import { lighten } from "@theme-ui/color";
 
 type ProfileSectionProps = {
   user: IUser;
@@ -37,8 +38,9 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
       sx={
         {
           justifyContent: "end",
-          borderRadius: "100px",
-          padding: "3px 10px 3px 10px",
+          borderRadius: "5px",
+          backgroundColor: lighten("background", 0.05),
+          padding: "1px 1px 1px 1px",
         } as ThemeUIStyleObject<Theme>
       }
       onClick={() => {
@@ -47,7 +49,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
       }}
     >
       <MenuButton
-        sx={{ marginY: "auto" } as ThemeUIStyleObject<Theme>}
+        sx={{ marginY: "auto", cursor: "pointer" } as ThemeUIStyleObject<Theme>}
         aria-label="Toggle Menu"
       />
       {/* {user.attributes.picture ? (

@@ -49,10 +49,11 @@ const ImageManager = () => {
         topRight={
           <IconButton
             onClick={() => {
-              console.log("open modal");
+              // console.log("open modal");
               setIsHeroImageModalOpen(true);
             }}
             sx={{
+              cursor: "pointer",
               color: "primary",
               backgroundColor: "surface",
               "&:hover": { backgroundColor: lighten("surface", 0.05) },

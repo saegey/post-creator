@@ -16,6 +16,11 @@ vi.mock("theme-ui", async () => {
   };
 });
 
+vi.mock("@theme-ui/color", () => ({
+  darken: vi.fn(),
+  lighten: vi.fn(),
+}));
+
 vi.mock("../../../layout/BlackBox", () => ({
   __esModule: true,
   default: ({

@@ -7,6 +7,7 @@ import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
 import GenericMenuItem from "../../GenericMenuItem";
+import Tooltip from "../../shared/Tooltip";
 
 const AddActivityOverview = () => {
   const { gpxFile } = React.useContext(PostContext);
@@ -52,13 +53,27 @@ const AddActivityOverview = () => {
     }
   };
 
-  return (
+  return !gpxFile ? (
+    <Tooltip text="Upload an activity file in settings to Enable">
+      <Box
+        variant="boxes.sidebarMenuItem"
+        sx={{
+          cursor: gpxFile ? "pointer" : "not-allowed",
+        }}
+      >
+        <GenericMenuItem
+          label="Metrics"
+          icon={<ActivityOverviewIcon />}
+          isDisabled={true}
+        />
+      </Box>
+    </Tooltip>
+  ) : (
     <Box
       onClick={() => addActivityOverview()}
       variant="boxes.sidebarMenuItem"
       sx={{
-        // padding: "10px",
-        cursor: gpxFile ? "pointer" : "not-allowed",
+        cursor: "pointer",
       }}
     >
       <GenericMenuItem label="Metrics" icon={<ActivityOverviewIcon />} />

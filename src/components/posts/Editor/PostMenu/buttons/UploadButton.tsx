@@ -99,7 +99,7 @@ const UploadButton = () => {
     <>
       <Flex sx={{ gap: "10px" }}>
         <Label htmlFor="gpxFile" variant="defaultLabel">
-          Activity File <Text sx={{ fontSize: "15px" }}>(.fit or .gpx)</Text>
+          Activity <Text sx={{ fontSize: "15px" }}>(.fit or .gpx)</Text>
         </Label>
         <Text sx={{ color: "textMuted" }} data-testid="processing-status">
           {processingGpxStatus}

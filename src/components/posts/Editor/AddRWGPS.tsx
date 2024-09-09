@@ -22,7 +22,7 @@ const RWGPSModal = () => {
 
   return isRWGPSModalOpen && editor ? (
     <StandardModal
-      title={"Embed"}
+      title={"Embed Route"}
       setIsOpen={setIsRWGPSModalOpen}
       isOpen={isRWGPSModalOpen}
     >
@@ -64,7 +64,7 @@ const AddRWGPS = () => {
         }}
       >
         <Flex sx={{ alignItems: "center", gap: "20px" }}>
-          <GenericMenuItem label="RWGPS Route" icon={<EmbedIcon />} />
+          <GenericMenuItem label="Route" icon={<EmbedIcon />} />
         </Flex>
       </Box>
     </>
