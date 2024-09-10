@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, ThemeUIStyleObject, Theme, useThemeUI } from "theme-ui";
+import { Box, ThemeUIStyleObject, Theme, useThemeUI, Flex } from "theme-ui";
 import BlackBox from "./layout/BlackBox";
 import MuxPlayer from "@mux/mux-player-react";
 
@@ -37,7 +37,7 @@ const VideoModal = ({
             position: ["fixed", "inherit", "inherit"],
             flexDirection: "column",
             maxHeight: ["100dvh", "800px", "800px"],
-            height: ["100dvh", "auto", "auto"],
+            height: ["", "auto", "auto"],
             width: ["100%", null, null],
             margin: "auto",
             // background: "background",
@@ -49,26 +49,30 @@ const VideoModal = ({
             zIndex: 51,
           } as ThemeUIStyleObject<Theme>
         }
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
       >
-        <MuxPlayer
-          // style={}
-          playbackId={"TCSrBsZ01mH1suSeT1foujC6EmIGiVwwcfDLnt2Ql5aU"}
-          metadata={{
-            video_id: "demo-video-id-123456",
-            video_title: "Public Website Demo",
-            // viewer_user_id: "user-id-bc-789",
+        <Flex
+          onClick={(e) => {
+            e.stopPropagation();
           }}
-          accentColor={theme?.colors?.accent as string}
-          streamType="on-demand"
-          style={{
-            width: "100%", // Make sure the player fills the available width
-            height: "100%", // Make sure the player fills the available height
-            objectFit: "cover", // Ensure the video scales without distortion
-          }}
-        />
+          sx={{ justifyContent: "center", alignItems: "center" }}
+        >
+          <MuxPlayer
+            // style={}
+            playbackId={"ZTfVbjHdYfTpGZkgVv01oihLAx37dHMckYbxOqKMQ6HQ"}
+            metadata={{
+              video_id: "demo-video-id-123456",
+              video_title: "Public Website Demo v1",
+              // viewer_user_id: "user-id-bc-789",
+            }}
+            accentColor={theme?.colors?.accent as string}
+            streamType="on-demand"
+            style={{
+              // width: "100%", // Make sure the player fills the available width
+              // height: "100%", // Make sure the player fills the available height
+              objectFit: "cover", // Ensure the video scales without distortion
+            }}
+          />
+        </Flex>
       </Box>
     </BlackBox>
   );
