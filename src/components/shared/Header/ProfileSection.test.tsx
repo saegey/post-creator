@@ -4,6 +4,7 @@ import { describe, it, expect, vi } from "vitest";
 import ProfileSection from "./ProfileSection";
 import { EditorContext } from "../../posts/Editor/EditorContext";
 import { IUser } from "../../../types/common";
+import { UserContext } from "../../UserContext";
 
 // Mock the getCldImageUrl function
 vi.mock("next-cloudinary", () => ({
@@ -33,14 +34,12 @@ vi.mock("./UserProfileMenu/UserProfileMenu", () => ({
   default: ({
     setProfileOpen,
     profileOpen,
-    user,
   }: {
     setProfileOpen: React.Dispatch<React.SetStateAction<boolean>>;
     profileOpen: boolean;
-    user: IUser;
   }) => (
     <div data-testid="user-profile-menu" data-profile-open={profileOpen}>
-      User Profile Menu {user.email}
+      User Profile Menu
     </div>
   ),
 }));
@@ -64,9 +63,11 @@ describe("ProfileSection", () => {
 
   const renderComponent = (contextValue: any) => {
     return render(
-      <EditorContext.Provider value={contextValue}>
-        <ProfileSection user={mockUser} />
-      </EditorContext.Provider>
+      <UserContext.Provider value={{ user: mockUser, setUser: vi.fn() }}>
+        <EditorContext.Provider value={contextValue}>
+          <ProfileSection />
+        </EditorContext.Provider>
+      </UserContext.Provider>
     );
   };
 

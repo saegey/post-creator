@@ -5,6 +5,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
+    supportFile: "cypress/support/index.ts", // Ensure this points to the correct file
   },
 
   component: {

@@ -133,11 +133,14 @@ const EditProfile = () => {
                   />
                 </Box>
                 <Box sx={{ marginTop: "10px" }}>
-                  <Button variant="primaryButton">
+                  <Button variant="primaryButton" id="save-profile">
                     <Flex sx={{ gap: "10px" }}>
                       <Text as="span">Save</Text>
                       {isSaving && (
-                        <Spinner sx={{ size: "20px", color: "secondary" }} />
+                        <Spinner
+                          sx={{ size: "20px", color: "secondary" }}
+                          id="loading-spinner"
+                        />
                       )}
                     </Flex>
                   </Button>

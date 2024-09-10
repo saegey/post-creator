@@ -11,7 +11,6 @@ import {
 import BlackBox from "../../../layout/BlackBox";
 import { useUnits } from "../../../UnitProvider";
 import { useViewport } from "../../../ViewportProvider";
-import { IUser } from "../../../../types/common";
 import ToggleSwitch from "./ToggleSwitch";
 import ProfileHeader from "./ProfileHeader";
 import MenuItem from "./MenuItem";

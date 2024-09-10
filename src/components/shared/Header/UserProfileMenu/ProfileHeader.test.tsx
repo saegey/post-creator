@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import ProfileHeader from "./ProfileHeader";
 import { IUser } from "../../../../types/common";
+import { UserContext } from "../../../UserContext";
 
 // Mock the CldImage component from next-cloudinary
 vi.mock("next-cloudinary", () => ({
@@ -49,7 +50,13 @@ describe("ProfileHeader", () => {
   };
 
   it("renders the profile picture when user has a picture", () => {
-    render(<ProfileHeader user={mockUserWithPicture} onClose={mockOnClose} />);
+    render(
+      <UserContext.Provider
+        value={{ user: mockUserWithPicture, setUser: vi.fn() }}
+      >
+        <ProfileHeader onClose={mockOnClose} />
+      </UserContext.Provider>
+    );
 
     const profilePicture = screen.getByTestId("profile-picture");
     expect(profilePicture).toBeInTheDocument();
@@ -59,7 +66,11 @@ describe("ProfileHeader", () => {
 
   it("renders the AvatarIcon when user has no picture", () => {
     render(
-      <ProfileHeader user={mockUserWithoutPicture} onClose={mockOnClose} />
+      <UserContext.Provider
+        value={{ user: mockUserWithoutPicture, setUser: vi.fn() }}
+      >
+        <ProfileHeader onClose={mockOnClose} />
+      </UserContext.Provider>
     );
 
     const avatarIcon = screen.getByTestId("avatar-icon");
@@ -67,14 +78,26 @@ describe("ProfileHeader", () => {
   });
 
   it("renders the user name and preferred username", () => {
-    render(<ProfileHeader user={mockUserWithPicture} onClose={mockOnClose} />);
+    render(
+      <UserContext.Provider
+        value={{ user: mockUserWithPicture, setUser: vi.fn() }}
+      >
+        <ProfileHeader onClose={mockOnClose} />
+      </UserContext.Provider>
+    );
 
     expect(screen.getByText("John Doe")).toBeInTheDocument();
     expect(screen.getByText("johndoe")).toBeInTheDocument();
   });
 
   it("calls the onClose function when the close button is clicked", () => {
-    render(<ProfileHeader user={mockUserWithPicture} onClose={mockOnClose} />);
+    render(
+      <UserContext.Provider
+        value={{ user: mockUserWithPicture, setUser: vi.fn() }}
+      >
+        <ProfileHeader onClose={mockOnClose} />
+      </UserContext.Provider>
+    );
 
     const closeButton = screen.getByTestId("close-profile");
     fireEvent.click(closeButton);
