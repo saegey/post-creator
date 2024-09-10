@@ -1,7 +1,5 @@
 import React from "react";
-import { Box, Flex, MenuButton, ThemeUIStyleObject, Theme } from "theme-ui";
-import Image from "next/image";
-import { getCldImageUrl } from "next-cloudinary";
+import { Flex, MenuButton, ThemeUIStyleObject, Theme } from "theme-ui";
 
 import AvatarIcon from "../../icons/AvatarIcon";
 import UserProfileMenu from "./UserProfileMenu/UserProfileMenu";
@@ -10,17 +8,10 @@ import { cloudUrl } from "../../../utils/cloudinary";
 import { EditorContext } from "../../posts/Editor/EditorContext";
 import { lighten } from "@theme-ui/color";
 
-type ProfileSectionProps = {
-  user: IUser;
-};
-
-const ProfileSection: React.FC<ProfileSectionProps> = ({
-  user,
-}: {
-  user: IUser;
-}) => {
+const ProfileSection: React.FC = () => {
   const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
   const { mobileMenu, setMobileMenu } = React.useContext(EditorContext);
+
   // const imageUrl = getCldImageUrl(
   //   {
   //     src: user.attributes.picture,
@@ -84,7 +75,6 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
       <UserProfileMenu
         setProfileOpen={setProfileOpen}
         profileOpen={profileOpen}
-        user={user}
       />
     </Flex>
   );

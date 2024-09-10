@@ -3,8 +3,6 @@ import { Box, Flex, ThemeUIStyleObject, Theme } from "theme-ui";
 
 import { IUser } from "../../../types/common";
 import ProfileSection from "./ProfileSection";
-import SettingsSection from "./SettingsSection";
-import { usePost } from "../../PostContext";
 
 type HeaderLayoutProps = {
   user: IUser;
@@ -19,7 +17,6 @@ const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
       sx={
         {
           width: "100vw",
-          // width: "100%",
           position: "sticky",
           top: 0,
           zIndex: 10,
@@ -39,7 +36,7 @@ const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
           } as ThemeUIStyleObject<Theme>
         }
       >
-        <ProfileSection user={user} />
+        <ProfileSection />
 
         <Flex
           sx={

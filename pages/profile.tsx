@@ -8,6 +8,7 @@ import EditProfile from "../src/components/user/EditProfile";
 import { IUser } from "../src/types/common";
 import Header from "../src/components/shared/Header/Header";
 import FavIcon from "../src/components/shared/FavIcon";
+import Router from "next/router";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const SSR = withSSRContext({ req });
@@ -58,6 +59,9 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
 };
 
 const Profile = ({ user }: { user: IUser }) => {
+  if (!user) {
+    Router.push("/login");
+  }
   return (
     <>
       <Box
@@ -67,12 +71,10 @@ const Profile = ({ user }: { user: IUser }) => {
           <title>Monopad - Profile</title>
           <FavIcon />
         </Head>
-        {user && (
-          <main>
-            <Header user={user} />
-            <EditProfile user={user} />
-          </main>
-        )}
+        <main>
+          <Header user={user} />
+          <EditProfile />
+        </main>
       </Box>
     </>
   );

@@ -1,10 +1,11 @@
 import { Auth, API } from "aws-amplify";
-import { Box } from "theme-ui";
+import { Button } from "theme-ui";
 import React from "react";
-import { CldUploadButton } from "next-cloudinary";
 
 import { updateUser } from "../../graphql/mutations";
-import { IUser, CloudinaryImage } from "../../types/common";
+import { IUser } from "../../types/common";
+import AddMediaComponent from "../posts/Editor/AddMediaComponent";
+import { UserContext } from "../UserContext";
 
 async function updateAvatar({ picture }: { picture: string }) {
   const user: IUser = await Auth.currentAuthenticatedUser();
@@ -25,75 +26,44 @@ async function updateAvatar({ picture }: { picture: string }) {
 }
 
 const EditAvatar = () => {
+  const newMediaRef = React.useRef<any>(null); // Ref for AddMediaComponent
+
+  const { user, setUser } = React.useContext(UserContext);
+  if (!user) {
+    return <></>;
+  }
+  console.log(user);
+
   return (
-    <Box
-      sx={{
-        ".cloudBtn": {
-          backgroundColor: "unset",
-          fontSize: "15px",
-          fontWeight: "500",
-          color: "text",
-          paddingY: "4px",
-          "&:hover": {
-            textDecoration: "underline",
-          },
-        },
-      }}
-    >
-      <CldUploadButton
-        className="cloudBtn"
-        uploadPreset="kippntej"
-        options={{
-          sources: [
-            "local",
-            "url",
-            "camera",
-            "image_search",
-            // 'google_drive',
-            // 'facebook',
-            // 'dropbox',
-            // 'instagram',
-            // 'shutterstock',
-            // 'getty',
-            // 'istock',
-            // 'unsplash',
-          ],
-          cropping: true,
-          styles: {
-            frame: {
-              background: "black",
-            },
-            palette: {
-              window: "#FFF",
-              windowBorder: "black",
-              tabIcon: "black",
-              menuIcons: "black",
-              textDark: "#000000",
-              textLight: "#FFFFFF",
-              link: "black",
-              action: "black",
-              inactiveTabIcon: "#888888",
-              error: "#F44235",
-              inProgress: "#0078FF",
-              complete: "#20B832",
-              sourceBg: "#e4e4e4",
-            },
-            fonts: {
-              "SF Pro Display": "",
-            },
-          },
+    <>
+      <AddMediaComponent
+        onClose={() => {
+          console.log("close media");
+          // setIsHeroImageModalOpen(false);
         }}
+        ref={newMediaRef}
+        uploadPreset="epcsmymp"
         onSuccess={async (d) => {
-          const image = d.info as CloudinaryImage;
-          console.log("Done! Here is the image info: ", d.info);
-          if (image && image.public_id) {
-            updateAvatar({ picture: image.public_id });
+          console.log(d);
+          if (typeof d.info !== "string" && d.info?.public_id && user) {
+            updateAvatar({ picture: d.info.public_id });
+            setUser({
+              ...user,
+              attributes: { ...user.attributes, picture: d.info.public_id },
+            });
+          } else {
+            console.log("Error uploading image", d.info, user);
           }
         }}
+      />
+      <Button
+        variant="primaryButton"
+        sx={{ width: "150px" }}
+        onClick={() => newMediaRef.current.openModal()}
       >
-        Change profile image
-      </CldUploadButton>
-    </Box>
+        Change image
+      </Button>
+    </>
   );
 };
 

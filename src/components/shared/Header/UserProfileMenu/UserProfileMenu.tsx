@@ -19,13 +19,11 @@ import MenuItem from "./MenuItem";
 interface UserProfileMenuProps {
   setProfileOpen: (arg: boolean) => void;
   profileOpen: boolean;
-  user: IUser;
 }
 
 const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
   setProfileOpen,
   profileOpen,
-  user,
 }) => {
   const [mode, setMode] = useColorMode();
   const { toggleUnit, unitOfMeasure } = useUnits();
@@ -76,7 +74,7 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
           }
           variant="boxes.menuItem"
         >
-          <ProfileHeader user={user} onClose={() => setProfileOpen(false)} />
+          <ProfileHeader onClose={() => setProfileOpen(false)} />
           <Box sx={{ paddingY: ["10px", 0, 0] } as ThemeUIStyleObject<Theme>}>
             <Box
               as="ul"
