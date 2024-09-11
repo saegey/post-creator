@@ -1,7 +1,6 @@
 // src/utils/theme.ts
 import { darken, lighten } from "@theme-ui/color";
 import { Theme } from "theme-ui";
-import FloatingMenu from "../components/posts/Editor/FloatingMenu";
 
 const palette = {
   white: "#ffffff",
@@ -200,10 +199,10 @@ export default {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "primary",
+      backgroundColor: "surface",
+      borderRadius: "5px",
       "&:hover": {
-        backgroundColor: lighten("primary", 0.2),
-        borderRadius: "5px",
+        backgroundColor: darken("surface", 0.1),
       },
     },
     publicMenuDropdown: {
@@ -239,7 +238,7 @@ export default {
       borderRadius: "5px",
       zIndex: "4",
       boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
-      animation: "fadeIn .2s;",
+      animation: "fadeIn .5s;",
     },
     sidebarMenuItem: {
       fontSize: "15px",

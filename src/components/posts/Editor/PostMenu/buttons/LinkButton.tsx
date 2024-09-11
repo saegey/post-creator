@@ -1,34 +1,46 @@
 import React from "react";
-import { Box, Input, Checkbox, Flex, Label, IconButton } from "theme-ui";
-import { BaseSelection, Transforms } from "slate";
+import { Box, Input, IconButton, Flex } from "theme-ui";
+import { BaseSelection, Editor, Transforms } from "slate";
 
 import { insertLink } from "../../../../../utils/link";
-import usePopup from "../../../../usePopup";
-import { CustomEditor } from "../../../../../types/common";
-import LinkIcon from "../../../../icons/LinkIcon";
+import { useSlateContext } from "../../../../SlateContext";
+import AddIcon from "../../../../icons/AddIcon";
+import { darken, lighten } from "@theme-ui/color";
+import { EditorContext } from "../../EditorContext";
+import { SelectionMenu } from "../../../../../hooks/useSelectionChangeHandler";
 
-const LinkButton = ({ editor }: { editor: CustomEditor }) => {
-  const linkInputRef = React.useRef<HTMLDivElement>(null);
-  const { showPopup, setShowPopup } = usePopup(linkInputRef);
+const LinkButton = ({
+  setSelectionMenu,
+}: {
+  setSelectionMenu: React.Dispatch<React.SetStateAction<SelectionMenu>>;
+}) => {
   const [url, setUrl] = React.useState("");
+  const { editor } = useSlateContext();
   const [showInNewTab, setShowInNewTab] = React.useState(false);
-  const [selection, setSelection] = React.useState<BaseSelection>();
+  const [selection, setSelection] = React.useState<BaseSelection | null>(null);
+
+  if (!editor) {
+    throw new Error("Editor is not defined");
+  }
+
+  // Store the selection when the component is first rendered
+  React.useEffect(() => {
+    if (editor.selection) {
+      setSelection(editor.selection);
+    }
+  }, [editor.selection]);
 
   const handleInsertLink = () => {
     if (!selection) {
       return;
     }
+    // Restore the selection before inserting the link
     Transforms.select(editor, selection);
     insertLink(editor, { url, showInNewTab });
     setUrl("");
-    setShowPopup((prev) => !prev);
     setShowInNewTab(false);
-  };
 
-  const toggleLink = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    setSelection(editor.selection);
-    setShowPopup((prev) => !prev);
+    setSelectionMenu(null);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,95 +52,41 @@ const LinkButton = ({ editor }: { editor: CustomEditor }) => {
   };
 
   return (
-    <>
-      <Box
-        ref={linkInputRef}
-        variant="boxes.floatingMenu"
-        // sx={{ position: "relative", display: "inline" }}
-        onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-          toggleLink(e)
-        }
-      >
-        <LinkIcon sx={{ color: "secondary" }} />
-      </Box>
-      {showPopup && (
-        <Box
+    <Box
+      sx={{
+        display: "flex",
+        gap: "4px",
+        margin: "5px 2px",
+        justifyItems: "center",
+      }}
+    >
+      <Input
+        id="url"
+        name="url"
+        value={url}
+        placeholder="Enter link url"
+        variant={"defaultInput"}
+        sx={{ padding: "6px" }}
+        onChange={(e) => handleInputChange(e)}
+        // Store the selection again when the input is focused, to ensure it's not lost
+        onFocus={() => {
+          if (editor.selection) {
+            setSelection(editor.selection);
+          }
+        }}
+      />
+      <Flex onClick={() => handleInsertLink()} sx={{ alignItems: "center" }}>
+        <IconButton
           sx={{
-            position: "absolute",
-            top: "40px",
-            left: "-105px",
-            width: "300px",
-            backgroundColor: "background",
-            borderColor: "border",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            height: "fit-content",
-            padding: "5px",
-            borderRadius: "5px",
-            zIndex: 1,
+            color: "primary",
+            cursor: "pointer",
+            "&:hover": { backgroundColor: darken("surface", 0.1) },
           }}
         >
-          <Box sx={{ display: "flex", gap: "4px", margin: "5px 2px" }}>
-            <Input
-              id="url"
-              name="url"
-              value={url}
-              placeholder="https://google.com"
-              variant={"defaultInput"}
-              onChange={(e) => handleInputChange(e)}
-            />
-            <Box onClick={() => handleInsertLink()}>
-              <IconButton>
-                <svg
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title />
-
-                  <g id="Complete">
-                    <g data-name="add" id="add-2">
-                      <g>
-                        <line
-                          fill="none"
-                          stroke="var(--theme-ui-colors-text)"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          x1="12"
-                          x2="12"
-                          y1="19"
-                          y2="5"
-                        />
-
-                        <line
-                          fill="none"
-                          stroke="var(--theme-ui-colors-text)"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          x1="5"
-                          x2="19"
-                          y1="12"
-                          y2="12"
-                        />
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              </IconButton>
-            </Box>
-          </Box>
-          <Flex>
-            <Label>
-              <Checkbox onChange={handleInputChange} />
-              <span style={{ fontSize: "14px" }}>Open in new tab</span>
-            </Label>
-          </Flex>
-        </Box>
-      )}
-    </>
+          <AddIcon />
+        </IconButton>
+      </Flex>
+    </Box>
   );
 };
 

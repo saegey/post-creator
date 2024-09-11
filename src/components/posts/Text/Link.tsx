@@ -1,25 +1,40 @@
 import React from "react";
 import { useFocused, useSelected, useSlateStatic } from "slate-react";
 
-import { Box, Close, Link as ThemeLink } from "theme-ui";
+import { Box, Close, IconButton, Link as ThemeLink } from "theme-ui";
 import { removeLink } from "../../../utils/link";
 import { LinkType } from "../../../types/common";
+import useClickOutside from "../../../hooks/useClickOutside";
+import DeleteIcon from "../../icons/DeleteIcon";
 
 const Link = ({ element, children }: { element: LinkType; children?: any }) => {
   const editor = useSlateStatic();
-  const selected = useSelected();
-  const focused = useFocused();
+  const wrapperRef = React.useRef();
+  const [isHover, setIsHover] = React.useState(false);
+
+  useClickOutside(
+    wrapperRef,
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      console.log("click outside");
+      setIsHover(false);
+      e.stopPropagation();
+    }
+  );
 
   return (
-    <Box sx={{ display: "inline", position: "relative" }}>
+    <Box ref={wrapperRef} sx={{ display: "inline", position: "relative" }}>
       <ThemeLink
         sx={{ textDecorationColor: "text", color: "text", cursor: "pointer" }}
         href={element.href}
         target={element.target}
+        onMouseDown={(e) => {
+          setIsHover(true);
+          console.log("Mouse over link", e);
+        }}
       >
         {children}
       </ThemeLink>
-      {selected && focused && (
+      {isHover && (
         <Box
           sx={{
             position: "absolute",
@@ -34,14 +49,21 @@ const Link = ({ element, children }: { element: LinkType; children?: any }) => {
             borderStyle: "solid",
             borderColor: "border",
             width: "fit-content",
+            boxShadow: "0 3px 8px rgba(0, 0, 0, 0.2)",
             zIndex: "1",
+            animation: "fadeIn .5s;",
           }}
           contentEditable={false}
         >
-          <a href={element.href} target={element.target}>
+          <a href={element.href} target="_blank">
             {element.href}
           </a>
-          <Close onClick={() => removeLink(editor)} />
+          <IconButton
+            onClick={() => removeLink(editor)}
+            sx={{ width: "24px", height: "24px", cursor: "pointer" }}
+          >
+            <DeleteIcon />
+          </IconButton>
         </Box>
       )}
     </Box>

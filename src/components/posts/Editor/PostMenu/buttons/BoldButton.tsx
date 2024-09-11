@@ -1,14 +1,20 @@
-import { Box, IconButton } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 
 import {
   isMarkActive,
   toggleMark,
 } from "../../../../../utils/SlateUtilityFunctions";
-import { CustomEditor } from "../../../../../types/common";
 import BoldIcon from "../../../../icons/BoldIcon";
+import { useSlateContext } from "../../../../SlateContext";
+import { lighten } from "@theme-ui/color";
 
-const BoldButton = ({ editor }: { editor: CustomEditor }) => {
+const BoldButton = () => {
+  const { editor } = useSlateContext();
+  if (!editor) {
+    throw new Error("Editor is not defined");
+  }
+
   return (
     <Box
       onMouseDown={(e) => {
@@ -20,7 +26,9 @@ const BoldButton = ({ editor }: { editor: CustomEditor }) => {
     >
       <BoldIcon
         sx={{
-          color: isMarkActive(editor, "bold") ? "accent" : "secondary",
+          color: isMarkActive(editor, "bold")
+            ? "accent"
+            : lighten("primary", 0.3),
         }}
       />
     </Box>

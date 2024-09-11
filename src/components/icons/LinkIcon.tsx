@@ -1,7 +1,7 @@
 import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
 const LinkIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => (
-  <IconButton title={"Toggle Bold Text"} sx={sx}>
+  <IconButton title={"Add Link"} sx={sx}>
     <svg
       width="100%"
       height="100%"

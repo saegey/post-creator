@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useContext, useRef } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { createEditor, Editor, Transforms } from "slate";
+import { createEditor, Editor, setSelection, Transforms } from "slate";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { withHistory } from "slate-history";
 
@@ -53,8 +53,12 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   // Store the path in a ref
   const realPathRef = useRef<number[] | null>(null); // Use ref to hold realPath
 
-  const { handleSelectionChange, selectionMenu, isChangingQuickly } =
-    useSelectionChangeHandler(editor);
+  const {
+    handleSelectionChange,
+    selectionMenu,
+    setSelectionMenu,
+    isChangingQuickly,
+  } = useSelectionChangeHandler(editor);
   const { id, title, postLocation, setPost, images } = useContext(PostContext);
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
 
@@ -261,7 +265,10 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           <AddVideoModal />
           {isOptionsOpen && <OptionsDropdown />}
           {selectionMenu && !isChangingQuickly && (
-            <FloatingMenu top={selectionMenu.top} left={selectionMenu.left} />
+            <FloatingMenu
+              selectionMenu={selectionMenu}
+              setSelectionMenu={setSelectionMenu}
+            />
           )}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
 

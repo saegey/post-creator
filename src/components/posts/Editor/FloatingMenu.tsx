@@ -1,38 +1,76 @@
 import { Box, Flex } from "theme-ui";
+import React from "react";
+import { BaseSelection } from "slate";
+import { lighten } from "@theme-ui/color";
+
 import BoldButton from "./PostMenu/buttons/BoldButton";
 import HeadingButton from "./PostMenu/buttons/HeadingButton";
 import BulletListButton from "./PostMenu/buttons/BulletListButton";
 import LinkButton from "./PostMenu/buttons/LinkButton";
 import { useSlateContext } from "../../SlateContext";
+import LinkIcon from "../../icons/LinkIcon";
+import { SelectionMenu } from "../../../hooks/useSelectionChangeHandler";
 
-const FloatingMenu = ({ top, left }: { top: number; left: number }) => {
+const FloatingMenu = ({
+  selectionMenu,
+  setSelectionMenu,
+}: {
+  selectionMenu: SelectionMenu;
+  setSelectionMenu: React.Dispatch<React.SetStateAction<SelectionMenu>>;
+}) => {
   const { editor } = useSlateContext();
+  const linkInputRef = React.useRef<HTMLDivElement>(null);
+  const [showPopup, setShowPopup] = React.useState<boolean>(false);
+  const [selection, setSelection] = React.useState<BaseSelection>();
+  console.log(selectionMenu);
 
   if (!editor) {
     return <></>;
   }
 
+  const toggleLink = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    setSelection(editor.selection);
+    setShowPopup((prev) => !prev);
+  };
+
   return (
     <Box
       sx={{
         position: "absolute",
-        top: `${top - 50}px`,
-        left: `${left - 5}px`,
+        top: `${selectionMenu.top - 50}px`,
+        left: `${selectionMenu.left - 5}px`,
         width: "fit-content",
         justifyItems: "center",
-        background: "primary",
-        padding: "8px",
+        background: lighten("surface", 0.05),
+        padding: "3px",
         zIndex: "300",
         borderRadius: "5px",
+        borderColor: "border",
         boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
         animation: "fadeIn .2s;",
       }}
     >
-      <Flex sx={{ gap: "5px" }}>
-        <BoldButton editor={editor} />
-        <HeadingButton editor={editor} />
-        <BulletListButton editor={editor} />
-        <LinkButton editor={editor} />
+      <Flex sx={{ gap: "5px", padding: "2px" }}>
+        {!showPopup && (
+          <>
+            <BoldButton />
+            <HeadingButton />
+            <BulletListButton />
+            <Box
+              ref={linkInputRef}
+              variant="boxes.floatingMenu"
+              onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+                toggleLink(e)
+              }
+            >
+              <LinkIcon
+                sx={{ color: lighten("primary", 0.3), cursor: "pointer" }}
+              />
+            </Box>
+          </>
+        )}
+        {showPopup && <LinkButton setSelectionMenu={setSelectionMenu} />}
       </Flex>
     </Box>
   );
