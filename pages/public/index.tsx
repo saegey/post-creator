@@ -27,10 +27,7 @@ const Home = () => {
         <FavIcon />
       </Head>
 
-      {/* {isDemoVideo && ( */}
       <VideoModal isOpen={isDemoVideo} setIsOpen={setIsDemoVideo} />
-      {/* )} */}
-
       <Box as="main" sx={{ width: "100vw", height: "fit-content" }}>
         <PublicHeader />
         <Flex

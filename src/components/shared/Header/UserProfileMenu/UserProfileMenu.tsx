@@ -11,7 +11,6 @@ import {
 import BlackBox from "../../../layout/BlackBox";
 import { useUnits } from "../../../UnitProvider";
 import { useViewport } from "../../../ViewportProvider";
-import { IUser } from "../../../../types/common";
 import ToggleSwitch from "./ToggleSwitch";
 import ProfileHeader from "./ProfileHeader";
 import MenuItem from "./MenuItem";
@@ -19,13 +18,11 @@ import MenuItem from "./MenuItem";
 interface UserProfileMenuProps {
   setProfileOpen: (arg: boolean) => void;
   profileOpen: boolean;
-  user: IUser;
 }
 
 const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
   setProfileOpen,
   profileOpen,
-  user,
 }) => {
   const [mode, setMode] = useColorMode();
   const { toggleUnit, unitOfMeasure } = useUnits();
@@ -76,7 +73,7 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
           }
           variant="boxes.menuItem"
         >
-          <ProfileHeader user={user} onClose={() => setProfileOpen(false)} />
+          <ProfileHeader onClose={() => setProfileOpen(false)} />
           <Box sx={{ paddingY: ["10px", 0, 0] } as ThemeUIStyleObject<Theme>}>
             <Box
               as="ul"

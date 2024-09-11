@@ -1,17 +1,18 @@
 import { Label, Input, Box, Flex, Button, Spinner, Text } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
-import Router from "next/router";
 import { Auth, API } from "aws-amplify";
 
 import EditAvatar from "./EditAvatar";
 import { IUser } from "../../types/common";
 import { updateUser } from "../../graphql/mutations";
 import { cloudUrl } from "../../utils/cloudinary";
+import { UserContext } from "../UserContext";
 
-const EditProfile = ({ user }: { user?: IUser }) => {
+const EditProfile = () => {
   const [isSaving, setIsSaving] = React.useState(false);
   const [_wasSaved, setWasSaved] = React.useState(false);
+  const { setUser, user } = React.useContext(UserContext);
 
   async function updateUserData({
     username,
@@ -43,14 +44,21 @@ const EditProfile = ({ user }: { user?: IUser }) => {
       },
     });
 
+    setUser((prevUser) => {
+      if (!prevUser) return prevUser;
+      return {
+        ...prevUser,
+        attributes: {
+          ...prevUser.attributes,
+          preferred_username: username,
+          name: fullName,
+          profile: profile,
+        },
+      };
+    });
+
     setIsSaving(false);
   }
-
-  React.useEffect(() => {
-    if (!user) {
-      Router.push("/login");
-    }
-  }, [user]);
 
   if (!user) {
     return <></>;
@@ -58,8 +66,8 @@ const EditProfile = ({ user }: { user?: IUser }) => {
 
   return (
     <>
-      <div
-        style={{
+      <Box
+        sx={{
           paddingTop: "40px",
           maxWidth: "900px",
           marginLeft: "auto",
@@ -125,11 +133,14 @@ const EditProfile = ({ user }: { user?: IUser }) => {
                   />
                 </Box>
                 <Box sx={{ marginTop: "10px" }}>
-                  <Button variant="primaryButton">
+                  <Button variant="primaryButton" id="save-profile">
                     <Flex sx={{ gap: "10px" }}>
                       <Text as="span">Save</Text>
                       {isSaving && (
-                        <Spinner sx={{ size: "20px", color: "secondary" }} />
+                        <Spinner
+                          sx={{ size: "20px", color: "secondary" }}
+                          id="loading-spinner"
+                        />
                       )}
                     </Flex>
                   </Button>
@@ -188,7 +199,7 @@ const EditProfile = ({ user }: { user?: IUser }) => {
             </Box>
           </Box>
         </Flex>
-      </div>
+      </Box>
     </>
     // </main>
   );

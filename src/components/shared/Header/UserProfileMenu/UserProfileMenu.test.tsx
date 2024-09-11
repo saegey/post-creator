@@ -54,9 +54,8 @@ vi.mock("../../../ViewportProvider", () => ({
 
 vi.mock("./ProfileHeader", () => ({
   __esModule: true,
-  default: ({ user, onClose }: { user: any; onClose: () => void }) => (
+  default: ({ onClose }: { onClose: () => void }) => (
     <div data-testid="profile-header">
-      <p>{user.attributes.name}</p>
       <button onClick={onClose}>Close</button>
     </div>
   ),
@@ -112,7 +111,6 @@ describe("UserProfileMenu", () => {
       <UserProfileMenu
         setProfileOpen={mockSetProfileOpen}
         profileOpen={profileOpen}
-        user={mockUser}
       />
     );
   };
