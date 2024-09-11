@@ -1,18 +1,17 @@
 import React from "react";
 import { Box, Input, IconButton, Flex } from "theme-ui";
-import { BaseSelection, Editor, Transforms } from "slate";
+import { BaseSelection, Transforms } from "slate";
+import { darken } from "@theme-ui/color";
 
 import { insertLink } from "../../../../../utils/link";
 import { useSlateContext } from "../../../../SlateContext";
 import AddIcon from "../../../../icons/AddIcon";
-import { darken, lighten } from "@theme-ui/color";
-import { EditorContext } from "../../EditorContext";
 import { SelectionMenu } from "../../../../../hooks/useSelectionChangeHandler";
 
 const LinkButton = ({
   setSelectionMenu,
 }: {
-  setSelectionMenu: React.Dispatch<React.SetStateAction<SelectionMenu>>;
+  setSelectionMenu: React.Dispatch<React.SetStateAction<SelectionMenu | null>>;
 }) => {
   const [url, setUrl] = React.useState("");
   const { editor } = useSlateContext();

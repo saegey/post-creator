@@ -16,7 +16,7 @@ const FloatingMenu = ({
   setSelectionMenu,
 }: {
   selectionMenu: SelectionMenu;
-  setSelectionMenu: React.Dispatch<React.SetStateAction<SelectionMenu>>;
+  setSelectionMenu: React.Dispatch<React.SetStateAction<SelectionMenu | null>>;
 }) => {
   const { editor } = useSlateContext();
   const linkInputRef = React.useRef<HTMLDivElement>(null);
