@@ -8,10 +8,9 @@ import {
   ThemeUIStyleObject,
   Theme,
   Grid,
-  // Link,
 } from "theme-ui";
-import RaceOverview from "../../src/components/posts/ActivityOverview/ActivityOverview";
 import Link from "next/link";
+
 import { palette } from "../../src/utils/theme";
 import ColorInfo from "../../src/components/shared/ColorInfo";
 
@@ -43,7 +42,6 @@ const ThemePreview = () => {
             {
               width: "fit-content",
               gap: "10px",
-              // padding: "5px",
               alignItems: "center",
               paddingY: "10px",
             } as ThemeUIStyleObject<Theme>

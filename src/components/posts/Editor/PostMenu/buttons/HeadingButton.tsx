@@ -4,8 +4,16 @@ import { Transforms, Editor, Element as SlateElement } from "slate";
 import { isBlockActive } from "../../../../../utils/SlateUtilityFunctions";
 import { CustomEditor } from "../../../../../types/common";
 import HeadingIcon from "../../../../icons/HeadingIcon";
+import { lighten } from "@theme-ui/color";
+import { useSlateContext } from "../../../../SlateContext";
 
-const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
+const HeadingButton = () => {
+  const { editor } = useSlateContext();
+
+  if (!editor) {
+    throw new Error("Editor is not defined");
+  }
+
   const { selection } = editor;
   return (
     <Box
@@ -39,7 +47,9 @@ const HeadingButton = ({ editor }: { editor: CustomEditor }) => {
     >
       <HeadingIcon
         sx={{
-          color: isBlockActive(editor, "heading-two") ? "accent" : "secondary",
+          color: isBlockActive(editor, "heading-two")
+            ? "accent"
+            : lighten("primary", 0.3),
         }}
       />
     </Box>

@@ -4,13 +4,18 @@ import { Editor } from "slate";
 import { useViewport } from "../components/ViewportProvider";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
 
+export interface SelectionMenu {
+  top: number;
+  left: number;
+}
+
 const useSelectionChangeHandler = (editor: Editor) => {
   const { setMobileMenu, setMenuPosition } = useContext(EditorContext);
   const { width } = useViewport();
-  const [selectionMenu, setSelectionMenu] = useState<{
-    top: number;
-    left: number;
-  } | null>(null);
+
+  const [selectionMenu, setSelectionMenu] = useState<SelectionMenu | null>(
+    null
+  );
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
   const [isChangingQuickly, setIsChangingQuickly] = useState(false);
 
@@ -96,7 +101,12 @@ const useSelectionChangeHandler = (editor: Editor) => {
     };
   }, [timerId]);
 
-  return { handleSelectionChange, selectionMenu, isChangingQuickly };
+  return {
+    handleSelectionChange,
+    selectionMenu,
+    isChangingQuickly,
+    setSelectionMenu,
+  };
 };
 
 export default useSelectionChangeHandler;
