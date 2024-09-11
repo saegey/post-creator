@@ -1,6 +1,5 @@
 import {
   Box,
-  useThemeUI,
   Flex,
   useColorMode,
   ThemeUIStyleObject,

@@ -13,6 +13,8 @@ backend:
 
     build:
       commands:
+        - env | grep -e NEXT_PUBLIC_ >> .env.production
+        - npm run build
         - npm install -g rimraf
         - npm install -g copyfiles
         - "# Execute Amplify CLI with the helper script"

@@ -45,7 +45,7 @@ const EditProfile = () => {
     });
 
     setUser((prevUser) => {
-      if (!prevUser) return prevUser;
+      if (!prevUser || !prevUser.attributes) return prevUser;
       return {
         ...prevUser,
         attributes: {
@@ -157,7 +157,7 @@ const EditProfile = () => {
                 position: "relative",
               }}
             >
-              {user.attributes.picture && (
+              {user.attributes && user.attributes.picture && (
                 <CldImage
                   width="400"
                   height="300"
@@ -182,17 +182,18 @@ const EditProfile = () => {
                   }}
                 />
               )}
-              {!user.attributes.picture && (
-                <svg
-                  fill="#8d8d8d"
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 512 512"
-                  id="_x30_1"
-                >
-                  <path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M256,90  " />
-                </svg>
-              )}
+              {!user.attributes ||
+                (!user.attributes.picture && (
+                  <svg
+                    fill="#8d8d8d"
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 512 512"
+                    id="_x30_1"
+                  >
+                    <path d="M256,0C114.615,0,0,114.615,0,256s114.615,256,256,256s256-114.615,256-256S397.385,0,256,0z M256,90  " />
+                  </svg>
+                ))}
               <Flex sx={{ justifyContent: "center" }}>
                 <EditAvatar />
               </Flex>
