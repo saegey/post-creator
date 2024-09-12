@@ -153,7 +153,7 @@
         },
         "publishPost": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/publishPost-6b34634b537a53734450-build.zip"
+          "s3Key": "amplify-builds/publishPost-537853425731314c784b-build.zip"
         },
         "routeAccessPoint": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
@@ -191,7 +191,7 @@
         },
         "omnigoCategories": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/omnigoCategories-5269356f4b5573703438-build.zip"
+          "s3Key": "amplify-builds/omnigoCategories-4743545736632f356636-build.zip"
         },
         "omniGoResults": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
@@ -199,16 +199,16 @@
         },
         "runsignupCategories": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/runsignupCategories-51393030496e53344642-build.zip"
+          "s3Key": "amplify-builds/runsignupCategories-384f6f30635830435a43-build.zip"
         },
         "runSignupResults": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/runSignupResults-4b4e345335464a436637-build.zip"
+          "s3Key": "amplify-builds/runSignupResults-694b725035546831376c-build.zip"
         },
         "requestResultsProvider": {
           "secretsPathAmplifyAppId": "d15noiwtuwwref",
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/requestResultsProvider-6942476f446764654670-build.zip"
+          "s3Key": "amplify-builds/requestResultsProvider-4d577449736752745942-build.zip"
         },
         "processGpxFile": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
@@ -220,7 +220,7 @@
         },
         "processFitFile": {
           "deploymentBucketName": "amplify-nextjsblog-dev-233823-deployment",
-          "s3Key": "amplify-builds/processFitFile-6a6c557674554774444c-build.zip"
+          "s3Key": "amplify-builds/processFitFile-36334a6d44462b564141-build.zip"
         }
       },
       "api": {

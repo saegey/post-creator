@@ -110,7 +110,16 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 			hearts = append(hearts, record.HeartRate)
 
 			// Store coordinate data
-			coordinates = append(coordinates, []float64{float64(record.PositionLong.Degrees()), float64(record.PositionLat.Degrees()), float64(record.EnhancedAltitude)})
+			if record.PositionLat.Degrees() != 0 && record.PositionLong.Degrees() != 0 {
+				lat := float64(record.PositionLat.Degrees())
+				long := float64(record.PositionLong.Degrees())
+				altitude := float64(record.EnhancedAltitude)
+
+				// Ensure no NaN values are added
+				if !math.IsNaN(lat) && !math.IsNaN(long) && !math.IsNaN(altitude) {
+					coordinates = append(coordinates, []float64{long, lat, altitude})
+				}
+			}
 
 			// Store distance data
 			distances = append(distances, (float32(record.Distance) / 100)) // convert to meters
