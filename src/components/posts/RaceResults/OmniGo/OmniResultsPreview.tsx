@@ -1,5 +1,13 @@
 import React from "react";
-import { Text, Box, Flex, Button, Spinner } from "theme-ui";
+import {
+  Text,
+  Box,
+  Flex,
+  Button,
+  Spinner,
+  ThemeUIStyleObject,
+  Theme,
+} from "theme-ui";
 import { Transforms } from "slate";
 
 import { usePost } from "../../../PostContext";
@@ -9,7 +17,9 @@ import { saveOmniResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 
 const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
-  const [selectedRow, setSelectedRow] = React.useState<number>();
+  const [selectedRow, setSelectedRow] = React.useState<number | undefined>(
+    undefined
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { omniResults, id, setPost } = usePost();
@@ -61,15 +71,13 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
               <Flex
                 key={`race-result-row-${i}`}
                 sx={{
-                  backgroundColor:
-                    selectedRow === i ? "selectedBackground" : null,
-                  color: selectedRow === i ? "selectedBackgroundText" : null,
+                  backgroundColor: selectedRow === i ? "surface" : null,
+                  color: "text",
                   borderRadius: selectedRow === i ? "5px" : null,
                   width: "100%",
                   cursor: "pointer",
                   "&:hover": {
-                    backgroundColor:
-                      selectedRow === i ? "selectedBackground" : "muted",
+                    backgroundColor: "surface",
                     borderRadius: "5px",
                   },
                   // paddingX: "5px",
@@ -135,11 +143,19 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
         <Flex>
           <Button
             title="Save"
-            sx={{
-              marginLeft: "auto",
-              backgroundColor: selectedRow ? null : "gray",
-            }}
-            disabled={selectedRow ? false : true}
+            sx={
+              {
+                marginLeft: "auto",
+                pointer: "cursor",
+                backgroundColor:
+                  selectedRow !== undefined && selectedRow >= 0
+                    ? null
+                    : "disabledBackground",
+              } as ThemeUIStyleObject<Theme>
+            }
+            disabled={
+              selectedRow !== undefined && selectedRow >= 0 ? false : true
+            }
             onClick={() => {
               setIsLoading(true);
               saveOmniResults({
@@ -155,6 +171,7 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                     category: omniMeta.category,
                     eventName: omniMeta.eventName,
                   },
+                  resultsUrl: resultsUrl,
                 });
                 Transforms.insertNodes(
                   editor,

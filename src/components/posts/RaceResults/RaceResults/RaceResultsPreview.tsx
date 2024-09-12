@@ -6,11 +6,12 @@ import { usePost } from "../../../PostContext";
 import { EditorContext } from "../../Editor/EditorContext";
 import { saveMyRaceResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
-import { useSlateStatic } from "slate-react";
 import { useSlateContext } from "../../../SlateContext";
 
 const RaceResultsPreview = ({ path }: { path: Path }) => {
-  const [selectedRow, setSelectedRow] = React.useState<number>();
+  const [selectedRow, setSelectedRow] = React.useState<number | undefined>(
+    undefined
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { raceResults, id, setPost } = usePost();
@@ -19,9 +20,11 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
     setMobileMenu,
     mobileMenu,
     setIsNewComponentMenuOpen,
+    menuPosition,
   } = React.useContext(EditorContext);
   const { raceResultsMeta, resultsUrl } = React.useContext(ResultsContext);
   const { editor } = useSlateContext();
+
   if (!editor) {
     throw new Error("Editor is not defined");
   }
@@ -93,34 +96,23 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                     width: "100%",
                     cursor: "pointer",
                     "&:hover": {
-                      backgroundColor:
-                        selectedRow === i ? "selectedBackground" : "muted",
+                      backgroundColor: selectedRow === i ? "accent" : "border",
                       borderRadius: "5px",
                     },
                     paddingX: "5px",
                     paddingY: "2px",
                   }}
                   onClick={() => {
-                    if (selectedRow === i) {
-                      setSelectedRow(undefined);
-                      setPost({
-                        raceResults: {
-                          ...raceResults,
-                          selected: undefined,
-                        },
-                      });
-                    } else {
-                      setSelectedRow(i);
-                      setPost({
-                        raceResults: {
-                          ...raceResults,
-                          selected:
-                            raceResults && raceResults.results
-                              ? raceResults.results[i]
-                              : undefined,
-                        },
-                      });
-                    }
+                    setSelectedRow(i);
+                    setPost({
+                      raceResults: {
+                        ...raceResults,
+                        selected:
+                          raceResults && raceResults.results
+                            ? raceResults.results[i]
+                            : undefined,
+                      },
+                    });
                   }}
                 >
                   <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
@@ -167,9 +159,15 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
             title="Save"
             sx={{
               marginLeft: "auto",
-              backgroundColor: selectedRow ? null : "disabledBackground",
+              pointer: "cursor",
+              backgroundColor:
+                selectedRow !== undefined && selectedRow >= 0
+                  ? null
+                  : "disabledBackground",
             }}
-            disabled={selectedRow ? false : true}
+            disabled={
+              selectedRow !== undefined && selectedRow >= 0 ? false : true
+            }
             onClick={() => {
               setIsLoading(true);
               saveMyRaceResults({
@@ -179,10 +177,18 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                 category: raceResultsMeta.category,
                 division: raceResultsMeta.division,
               }).then((r) => {
-                Transforms.insertNodes(editor, {
-                  type: "raceResultsDotCom",
-                  children: [{ text: "" }],
+                setPost({
+                  resultsUrl: resultsUrl,
                 });
+
+                Transforms.insertNodes(
+                  editor,
+                  {
+                    type: "raceResultsDotCom",
+                    children: [{ text: "" }],
+                  },
+                  { at: menuPosition.path }
+                );
 
                 if (path.length > 2) {
                   Transforms.liftNodes(editor);

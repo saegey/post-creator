@@ -17,7 +17,9 @@ import { saveCrossResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 
 const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
-  const [selectedRow, setSelectedRow] = React.useState<number>();
+  const [selectedRow, setSelectedRow] = React.useState<number | undefined>(
+    undefined
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { crossResults, id, setPost } = React.useContext(PostContext);
@@ -93,26 +95,17 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   } as unknown as ThemeUIStyleObject<Theme>
                 }
                 onClick={() => {
-                  if (selectedRow === i) {
-                    setSelectedRow(undefined);
-                    setPost({
-                      crossResults: {
-                        ...crossResults,
-                        selected: undefined,
-                      },
-                    });
-                  } else {
-                    setSelectedRow(i);
-                    setPost({
-                      crossResults: {
-                        ...crossResults!,
-                        selected:
-                          crossResults && crossResults.results
-                            ? crossResults.results[i]
-                            : undefined,
-                      },
-                    });
-                  }
+                  setSelectedRow(i);
+                  setPost({
+                    crossResults: {
+                      ...crossResults!,
+                      selected:
+                        crossResults && crossResults.results
+                          ? crossResults.results[i]
+                          : undefined,
+                    },
+                  });
+                  // }
                 }}
               >
                 <Text
@@ -191,10 +184,16 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
             sx={
               {
                 marginLeft: "auto",
-                backgroundColor: selectedRow ? null : "disabledBackground",
+                pointer: "cursor",
+                backgroundColor:
+                  selectedRow !== undefined && selectedRow >= 0
+                    ? null
+                    : "disabledBackground",
               } as ThemeUIStyleObject<Theme>
             }
-            disabled={selectedRow ? false : true}
+            disabled={
+              selectedRow !== undefined && selectedRow >= 0 ? false : true
+            }
             onClick={() => {
               setIsLoading(true);
               crossResults &&
@@ -216,6 +215,7 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                       category: crossResultsMeta.category,
                       eventName: crossResultsMeta.eventName,
                     },
+                    resultsUrl: resultsUrl,
                   });
 
                   Transforms.insertNodes(

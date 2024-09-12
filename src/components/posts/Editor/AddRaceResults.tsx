@@ -6,8 +6,12 @@ import ResultsIcon from "../../icons/ResultsIcon";
 import GenericMenuItem from "../../GenericMenuItem";
 
 const AddRaceResults = () => {
-  const { setIsRaceResultsModalOpen, menuPosition, setIsNewComponentMenuOpen } =
-    React.useContext(EditorContext);
+  const {
+    setIsRaceResultsModalOpen,
+    menuPosition,
+    setIsNewComponentMenuOpen,
+    setNewComponentPath,
+  } = React.useContext(EditorContext);
   const { path } = menuPosition;
 
   if (!path) {
@@ -15,6 +19,7 @@ const AddRaceResults = () => {
   }
 
   const addResults = () => {
+    setNewComponentPath(path);
     setIsRaceResultsModalOpen(true);
     setIsNewComponentMenuOpen(false);
   };
