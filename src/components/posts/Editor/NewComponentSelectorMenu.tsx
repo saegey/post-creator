@@ -2,7 +2,6 @@ import { Flex } from "theme-ui";
 import React from "react";
 
 import AddPowerCurve from "./AddPowerCurve";
-import AddStravaLink from "./AddStravaLink";
 import AddActivityOverview from "./AddActivityOverview";
 import AddVideo from "./AddVideo";
 import AddRaceResults from "./AddRaceResults";

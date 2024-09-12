@@ -16,11 +16,13 @@ const WebscorerResultsPreview = ({
   editor: CustomEditor;
   path: Path;
 }) => {
-  const [selectedRow, setSelectedRow] = React.useState<number>();
+  const [selectedRow, setSelectedRow] = React.useState<number | undefined>(
+    undefined
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { webscorerResults, id, setPost } = usePost();
-  const { setIsRaceResultsModalOpen, mobileMenu, setMobileMenu } =
+  const { setIsRaceResultsModalOpen, mobileMenu, setMobileMenu, menuPosition } =
     React.useContext(EditorContext);
   const { webScorerMeta, resultsUrl } = React.useContext(ResultsContext);
 
@@ -77,26 +79,16 @@ const WebscorerResultsPreview = ({
                     paddingY: "2px",
                   }}
                   onClick={() => {
-                    if (selectedRow === i) {
-                      setSelectedRow(undefined);
-                      setPost({
-                        webscorerResults: {
-                          ...webscorerResults,
-                          selected: undefined,
-                        },
-                      });
-                    } else {
-                      setSelectedRow(i);
-                      setPost({
-                        webscorerResults: {
-                          ...webscorerResults,
-                          selected:
-                            webscorerResults && webscorerResults.results
-                              ? webscorerResults.results[i]
-                              : undefined,
-                        },
-                      });
-                    }
+                    setSelectedRow(i);
+                    setPost({
+                      webscorerResults: {
+                        ...webscorerResults,
+                        selected:
+                          webscorerResults && webscorerResults.results
+                            ? webscorerResults.results[i]
+                            : undefined,
+                      },
+                    });
                   }}
                 >
                   <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
@@ -137,9 +129,15 @@ const WebscorerResultsPreview = ({
             title="Save"
             sx={{
               marginLeft: "auto",
-              backgroundColor: selectedRow ? null : "disabledBackground",
+              pointer: "cursor",
+              backgroundColor:
+                selectedRow !== undefined && selectedRow >= 0
+                  ? null
+                  : "disabledBackground",
             }}
-            disabled={selectedRow ? false : true}
+            disabled={
+              selectedRow !== undefined && selectedRow >= 0 ? false : true
+            }
             onClick={() => {
               setIsLoading(true);
               saveWebscorerResults({
@@ -157,14 +155,15 @@ const WebscorerResultsPreview = ({
                     eventName: webScorerMeta.eventName,
                     category: webScorerMeta.category,
                   },
+                  resultsUrl: resultsUrl,
                 });
                 Transforms.insertNodes(
                   editor,
                   {
                     type: "webscorerResults",
                     children: [{ text: "" }],
-                  }
-                  // { at: path }
+                  },
+                  { at: menuPosition.path }
                 );
                 if (path.length > 2) {
                   Transforms.liftNodes(editor);

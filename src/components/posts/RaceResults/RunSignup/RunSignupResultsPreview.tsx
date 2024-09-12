@@ -22,7 +22,9 @@ export interface RunSignupResultType extends IObjectKeys {
 }
 
 const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
-  const [selectedRow, setSelectedRow] = React.useState<number>();
+  const [selectedRow, setSelectedRow] = React.useState<number | undefined>(
+    undefined
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   const { runSignupResults, id, setPost } = usePost();
@@ -55,6 +57,7 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
         category: runSignupMeta.category,
         categoryName: runSignupMeta.categoryName,
       },
+      resultsUrl: resultsUrl,
     });
 
     Transforms.insertNodes(
@@ -150,33 +153,23 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                       cursor: "pointer",
                       "&:hover": {
                         backgroundColor:
-                          selectedRow === i ? "selectedBackground" : "muted",
+                          selectedRow === i ? "accent" : "border",
                         borderRadius: "5px",
                       },
-                      // paddingX: "5px",
+                      paddingX: "5px",
                       paddingY: "2px",
                     }}
                     onClick={() => {
-                      if (selectedRow === i) {
-                        setSelectedRow(undefined);
-                        setPost({
-                          runSignupResults: {
-                            ...runSignupResults,
-                            selected: undefined,
-                          },
-                        });
-                      } else {
-                        setSelectedRow(i);
-                        setPost({
-                          runSignupResults: {
-                            ...runSignupResults,
-                            selected:
-                              runSignupResults && runSignupResults.results
-                                ? formatResults()?.results[i]
-                                : undefined,
-                          },
-                        });
-                      }
+                      setSelectedRow(i);
+                      setPost({
+                        runSignupResults: {
+                          ...runSignupResults,
+                          selected:
+                            runSignupResults && runSignupResults.results
+                              ? formatResults()?.results[i]
+                              : undefined,
+                        },
+                      });
                     }}
                   >
                     <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
@@ -225,9 +218,16 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           <Button
             title="Save"
             sx={{
-              backgroundColor: selectedRow ? null : "disabledBackground",
+              marginLeft: "auto",
+              pointer: "cursor",
+              backgroundColor:
+                selectedRow !== undefined && selectedRow >= 0
+                  ? null
+                  : "disabledBackground",
             }}
-            disabled={selectedRow ? false : true}
+            disabled={
+              selectedRow !== undefined && selectedRow >= 0 ? false : true
+            }
             onClick={() => {
               saveResults();
             }}
