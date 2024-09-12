@@ -9,7 +9,6 @@ import { EditorContext } from "./posts/Editor/EditorContext";
 import { useSlateContext } from "./SlateContext";
 import GenericMenuItem from "./GenericMenuItem";
 import { CustomElement } from "../types/common";
-import { set } from "cypress/types/lodash";
 
 const OptionsDropdown = () => {
   const {
@@ -19,7 +18,7 @@ const OptionsDropdown = () => {
     setIsSettingsModalOpen,
     setIsPhotoCaptionOpen,
   } = React.useContext(EditorContext);
-  console.log("isOptionsOpen", isOptionsOpen);
+
   const { menuPosition } = React.useContext(EditorContext);
   const { editor } = useSlateContext();
   const { path } = menuPosition;
@@ -32,7 +31,6 @@ const OptionsDropdown = () => {
     CustomElement,
     Path
   ];
-  console.log("node", JSON.stringify(path), JSON.stringify([2]));
 
   return (
     <OptionsMenu

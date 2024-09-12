@@ -5,7 +5,7 @@ import { EditorContext } from "../Editor/EditorContext";
 import UploadIcon from "../../icons/UploadIcon";
 
 const DefaultImage = () => {
-  const { setIsHeroImageModalOpen } = React.useContext(EditorContext);
+  const { setIsChangeImageModalOpen } = React.useContext(EditorContext);
 
   return (
     <Flex
@@ -21,7 +21,8 @@ const DefaultImage = () => {
         <Box>
           <IconButton
             onClick={() => {
-              setIsHeroImageModalOpen(true);
+              // setIsHeroImageModalOpen(true);
+              setIsChangeImageModalOpen(true);
               console.log("default image clicked");
             }}
             sx={{
