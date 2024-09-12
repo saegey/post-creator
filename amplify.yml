@@ -10,9 +10,10 @@ backend:
         - export GOPATH=$HOME/go # Set GOPATH to use the custom directory
         - export GOMODCACHE=$GOPATH/pkg/mod # Set GOMODCACHE to the custom directory
         - go env # Print Go environment to verify
-
+        - env | grep -e NEXT_PUBLIC_ >> .env.production
     build:
       commands:
+        # - npm run build
         - npm install -g rimraf
         - npm install -g copyfiles
         - "# Execute Amplify CLI with the helper script"
@@ -24,7 +25,7 @@ frontend:
         # - npm install -g rimraf
         # - npm install -g copyfiles
         - npm ci
-
+        - env | grep -e NEXT_PUBLIC_ >> .env.production
     build:
       commands:
         - npm run build

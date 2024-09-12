@@ -1,6 +1,7 @@
-import { Box, Flex, Button } from "theme-ui";
+import { Flex } from "theme-ui";
 import React from "react";
 import Image from "next/image";
+
 import { HeroBannerType } from "../../../types/common";
 
 const HeroImage = ({

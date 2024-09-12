@@ -23,63 +23,63 @@ describe("renders a heading", () => {
     });
   });
 
-  test("return valid props", async () => {
-    User.getUser = vi.fn<typeof User.getUser>().mockImplementation(() => {
-      return Promise.resolve({
-        userId: "fsdafs",
-        email: "sfdf",
-        email_verified: true,
-        attributes: {
-          name: "bob doe",
-          zoneinfo: "metric",
-          preferred_username: "bobjoe",
-          picture: "fasfds",
-          sub: "sfsd32432434",
-          profile: "safsdfsdfsd",
-        },
-      });
-    });
+  // test("return valid props", async () => {
+  //   User.getUser = vi.fn<typeof User.getUser>().mockImplementation(() => {
+  //     return Promise.resolve({
+  //       userId: "fsdafs",
+  //       email: "sfdf",
+  //       email_verified: true,
+  //       attributes: {
+  //         name: "bob doe",
+  //         zoneinfo: "metric",
+  //         preferred_username: "bobjoe",
+  //         picture: "fasfds",
+  //         sub: "sfsd32432434",
+  //         profile: "safsdfsdfsd",
+  //       },
+  //     });
+  //   });
 
-    const req: NextApiRequest = {
-      url: "/",
-    } as NextApiRequest;
+  //   const req: NextApiRequest = {
+  //     url: "/",
+  //   } as NextApiRequest;
 
-    const props = {
-      props: {
-        user: {
-          userId: "fsdafs",
-          email: "sfdf",
-          email_verified: true,
-          attributes: {
-            name: "bob doe",
-            zoneinfo: "metric",
-            preferred_username: "bobjoe",
-            picture: "fasfds",
-            sub: "sfsd32432434",
-            profile: "safsdfsdfsd",
-          },
-        },
-        posts: [
-          {
-            id: "1234",
-            title: "this is a tittle",
-            images: "",
-            imagesObj: undefined,
-            author: {
-              fullName: "author fullname",
-              username: "useername",
-              image: "safsdfsd",
-            },
-            privacyStatus: "private",
-          },
-        ],
-      },
-    };
+  //   const props = {
+  //     props: {
+  //       user: {
+  //         userId: "fsdafs",
+  //         email: "sfdf",
+  //         email_verified: true,
+  //         attributes: {
+  //           name: "bob doe",
+  //           zoneinfo: "metric",
+  //           preferred_username: "bobjoe",
+  //           picture: "fasfds",
+  //           sub: "sfsd32432434",
+  //           profile: "safsdfsdfsd",
+  //         },
+  //       },
+  //       posts: [
+  //         {
+  //           id: "1234",
+  //           title: "this is a tittle",
+  //           images: "",
+  //           imagesObj: undefined,
+  //           author: {
+  //             fullName: "author fullname",
+  //             username: "useername",
+  //             image: "safsdfsd",
+  //           },
+  //           privacyStatus: "private",
+  //         },
+  //       ],
+  //     },
+  //   };
 
-    Post.explore = vi.fn<any>().mockImplementation(() => {
-      return Promise.resolve(props);
-    });
+  //   Post.explore = vi.fn<any>().mockImplementation(() => {
+  //     return Promise.resolve(props);
+  //   });
 
-    expect(await getServerSideProps({ req })).toEqual(props);
-  });
+  //   expect(await getServerSideProps({ req })).toEqual(props);
+  // });
 });

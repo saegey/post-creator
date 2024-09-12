@@ -20,27 +20,12 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
     };
   }
 
-  return await Post.explore({ req, user });
+  return { props: {} };
+
+  // return await Post.explore({ req, user });
 };
 
-type HomeProps = {
-  signOut: () => void;
-  user: IUser;
-  posts: Array<{
-    id: string;
-    title: string;
-    images: string;
-    imagesObj: Array<CloudinaryImage>;
-    author: {
-      fullName: string;
-      username: string;
-      image: string;
-    };
-    privacyStatus: string;
-  }>;
-};
-
-const Home = ({ posts = [], user }: HomeProps) => {
+const Home = () => {
   React.useEffect(() => {
     Router.push("/posts");
   }, []);
@@ -51,7 +36,7 @@ const Home = ({ posts = [], user }: HomeProps) => {
         <title>Monopad - Home</title>
         <FavIcon />
       </Head>
-      <PostsAllUsers posts={posts} user={user} />
+      {/* <PostsAllUsers posts={posts} user={user} /> */}
     </>
   );
 };
