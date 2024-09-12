@@ -12,7 +12,7 @@ const PhotoCaptionModal = () => {
   const { editor } = useSlateContext();
   const { menuPosition, setIsPhotoCaptionOpen, isPhotoCaptionOpen } =
     React.useContext(EditorContext);
-  console.log("currentPath", menuPosition);
+
   if (!editor) {
     throw new Error("Editor is not defined");
   }
@@ -24,21 +24,6 @@ const PhotoCaptionModal = () => {
     editor,
     menuPosition.path.length === 0 ? [0] : menuPosition.path
   ) as [ImageElementType | HeroBannerType, Path];
-
-  Transforms.setNodes(
-    editor,
-    {
-      ...node,
-      photoCaption: "image",
-    } as HeroBannerType,
-    {
-      at: menuPosition.path,
-    }
-  );
-
-  console.log("node", node);
-  // const editor = useSlateStatic();
-  // const path = ReactEditor.findPath(editor, element);
 
   return (
     <>
