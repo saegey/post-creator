@@ -1,5 +1,10 @@
 name: CI
-on: push
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -8,21 +13,42 @@ jobs:
         working-directory: ./
     steps:
       - uses: actions/checkout@v4
+
+      # Install Node.js dependencies
       - name: Install modules
         run: npm ci
-      - name: install lambda modules
+
+      - name: Install lambda modules for publishPost
         run: cd amplify/backend/function/publishPost/src && npm install
-      - name: install lambda modules
+
+      - name: Install lambda modules for omniGoResults
         run: cd amplify/backend/function/omniGoResults/lib && npm install
+
+      # Configure Amplify Mock
       - name: Configure Amplify Mock
         run: |
           echo "export default {};" > src/aws-exports.js
           cp aws-exports.mock.js src/aws-exports.js
 
-      - name: "Test"
+      # Install Go
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.5" # Set the Go version you need
+
+      # Install Go dependencies
+      - name: Install Go dependencies
+        run: cd amplify/backend/function/processFitFile/src && go mod tidy
+
+      # Run Go tests
+      - name: Run Go tests
+        run: cd amplify/backend/function/processFitFile/src && go test -v ./...
+
+      # Run Vitest (your Node.js tests)
+      - name: Run Vitest
         run: npx vitest --coverage.enabled true
-      - name: "Report Coverage"
-        # Set if: always() to also generate the report if tests are failing
-        # Only works if you set `reportOnFailure: true` in your vite config as specified above
+
+      # Report Coverage for Vitest
+      - name: Report Vitest Coverage
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
