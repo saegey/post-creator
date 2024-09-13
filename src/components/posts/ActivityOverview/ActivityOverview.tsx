@@ -33,13 +33,13 @@ const getItemData = (
       title: "Elevation Gain",
       value: elevationGain
         ? formatValue(elevationGain, units.unitOfMeasure)
-        : "N/A",
+        : "-",
     },
     {
       title: "Avg Heart Rate",
       value: heartAnalysis
         ? `${formatAnalysis(heartAnalysis, Object.keys(heartAnalysis))} bpm`
-        : "N/A",
+        : "-",
     },
     {
       title: "Distance",
@@ -50,14 +50,14 @@ const getItemData = (
     },
     {
       title: "Elapsed Time",
-      value: elapsedTime ? formatTime(elapsedTime?.seconds) : "N/A",
+      value: elapsedTime ? formatTime(elapsedTime?.seconds) : "-",
     },
     {
       title: "Moving Time",
       value:
         elapsedTime && stoppedTime
           ? `${formatTime(elapsedTime?.seconds - stoppedTime)}`
-          : "N/A",
+          : "-",
     },
     {
       title: "Avg Temperature",
@@ -72,7 +72,7 @@ const getItemData = (
                 (9 / 5) +
               32
             ).toFixed()} °F`
-          : "N/A",
+          : "-",
     },
     {
       title: "Avg Speed",
@@ -108,13 +108,13 @@ const getItemData = (
     },
     {
       title: "Time Stopped",
-      value: stoppedTime ? formatTime(stoppedTime) : "N/A",
+      value: stoppedTime ? formatTime(stoppedTime) : "-",
     },
     {
       title: "Avg Cadence",
       value: cadenceAnalysis
         ? `${formatAnalysis(cadenceAnalysis, Object.keys(cadenceAnalysis))} rpm`
-        : "N/A",
+        : "-",
     },
     // { title: "Time in Red", value: getTimeInRed(timeInRed) },
   ];

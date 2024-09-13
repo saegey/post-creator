@@ -16,8 +16,7 @@ const formatAnalysis = (
   analysis: Record<string, number>,
   keys: Array<string>
 ) => {
-  console.log(JSON.stringify(analysis, keys));
-  return analysis && keys ? analysis[keys[keys.length - 1]] : "N/A";
+  return analysis && keys ? analysis[keys[keys.length - 1]] : "-";
 };
 
 export { formatValue, formatTime, formatAnalysis };

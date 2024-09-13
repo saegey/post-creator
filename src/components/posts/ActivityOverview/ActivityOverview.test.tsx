@@ -67,12 +67,12 @@ describe("getItemData", () => {
       title: "Normalized Power",
       value: "no data",
     });
-    expect(items[1]).toEqual({ title: "Avg Heart Rate", value: "N/A" });
-    expect(items[2]).toEqual({ title: "Elapsed Time", value: "N/A" });
+    expect(items[1]).toEqual({ title: "Avg Heart Rate", value: "-" });
+    expect(items[2]).toEqual({ title: "Elapsed Time", value: "-" });
 
-    expect(items[3]).toEqual({ title: "Moving Time", value: "N/A" });
+    expect(items[3]).toEqual({ title: "Moving Time", value: "-" });
     expect(items[4]).toEqual({ title: "Avg Power", value: "200 watts" });
-    expect(items[5]).toEqual({ title: "Time Stopped", value: "N/A" });
+    expect(items[5]).toEqual({ title: "Time Stopped", value: "-" });
   });
 
   it("should format elevation gain correctly based on units", () => {
@@ -119,9 +119,9 @@ describe("getItemData", () => {
     const items = getItemData(incompleteData, mockUnits, selectedFields);
 
     expect(items.length).toBe(3);
-    expect(items[0].value).toBe("N/A");
-    expect(items[1].value).toBe("N/A");
-    expect(items[2].value).toBe("N/A");
+    expect(items[0].value).toBe("-");
+    expect(items[1].value).toBe("-");
+    expect(items[2].value).toBe("-");
   });
 });
 
