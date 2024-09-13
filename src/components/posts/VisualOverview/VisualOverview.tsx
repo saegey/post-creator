@@ -1,11 +1,25 @@
 import { Box } from "theme-ui";
 import React from "react";
 
-import Map from "./CustomMap";
+import CustomMap from "./CustomMap";
 import ElevationGraph from "./ElevationGraph";
 import ElevationSlice from "./ElevationSlice";
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
+
+function findMaxG(items: ActivityItem[]): number | undefined {
+  let maxG: number | undefined = undefined;
+
+  for (const item of items) {
+    if (item.e !== undefined) {
+      if (maxG === undefined || item.e > maxG) {
+        maxG = item.e;
+      }
+    }
+  }
+
+  return maxG;
+}
 
 interface Vizprops {
   activity: Array<ActivityItem>;
@@ -60,12 +74,9 @@ const VisualOverview = ({
     ? element.selectionEnd
     : undefined;
 
-  // console.log(
-  //   elevationsSynthetic,
-  //   selectionStart,
-  //   selectionEnd,
-  //   elevationsSynthetic[selectionStart ? selectionStart : 0].d
-  // );
+  if (top === undefined) {
+    return <></>;
+  }
 
   const graph = React.useMemo(
     () => (
@@ -76,22 +87,13 @@ const VisualOverview = ({
             ? Number(elevationsSynthetic[selectionStart].d)
             : Number(elevationsSynthetic[0].d)
         }
-        // left={0}
         right={
           selectionEnd
             ? Number(elevationsSynthetic[elevationsSynthetic.length - 1].d)
             : Number(elevationsSynthetic[elevationsSynthetic.length - 1].d)
         }
-        // right="dataMax"
-        // bottom={
-        //   (element && element.selectionEnd) || selection !== undefined
-        //     ? Math.min(
-        //         ...activity.slice(selectionStart, selectionEnd).map((d) => d.e)
-        //       )
-        //     : "dataMin"
-        // }
         bottom={0}
-        top="dataMax"
+        top={Number(findMaxG(elevationsSynthetic))}
         setMarker={setMarker}
         selection={selection}
         setSelection={setSelection}
@@ -110,7 +112,7 @@ const VisualOverview = ({
   return (
     <Box sx={{ borderRadius: [0, "5px", "5px"] }}>
       {coordinates !== undefined ? (
-        <Map
+        <CustomMap
           coordinates={coordinates}
           markerCoordinates={marker}
           token={token}

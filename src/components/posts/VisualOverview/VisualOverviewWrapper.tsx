@@ -72,7 +72,7 @@ const VisualOverviewWrapper = ({
         unitOfMeasure={unitOfMeasure}
       />
     );
-  }, [activity, elevations]);
+  }, [activity, elevations, unitOfMeasure]);
 
   if (!activity || activity.length === 0 || !unitOfMeasure) {
     return (
@@ -90,13 +90,6 @@ const VisualOverviewWrapper = ({
       </Flex>
     );
   }
-
-  // const vizOverviewMemo = React.useMemo(() => {
-  //   console.log("rendering visual overview wrapper memo");
-  //   return (
-
-  //   );
-  // }, [selection, activity, elevations]);
 
   return (
     <VisualOverviewContext.Provider

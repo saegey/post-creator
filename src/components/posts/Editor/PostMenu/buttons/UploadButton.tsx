@@ -17,36 +17,44 @@ const UploadButton = () => {
     const { phase } = payload;
     switch (phase) {
       case "go-start-processing":
-        // console.log("go start processing");
         setProcessingGpxStatus(`Analyzing Fit file`);
+
         break;
       case "go-finish-processing":
         setProcessingGpxStatus(`Refreshing post data`);
         await getPost(id, postCtx);
+
         setProcessingGpxStatus(`Fit file processed`);
         setIsProcessingFile(false);
+
         break;
       case "file-downloaded":
         setProcessingGpxStatus("File being downloaded for processing.");
+
         break;
       case "meta-downloaded":
         setProcessingGpxStatus("File metadata being fetched.");
+
         break;
       case "xml-parse":
         setProcessingGpxStatus("XML is being parsed.");
+
         break;
       case "gpx-parse":
         setProcessingGpxStatus("GPX XML is being converted to GeoJSON.");
+
         break;
       case "process-data":
         setProcessingGpxStatus(
           "Data is being processed and calculating metrics."
         );
+
         break;
       case "update-data":
         setProcessingGpxStatus("Metrics are being saved.");
         setIsProcessingFile(false);
         getPost(id, postCtx);
+
         break;
       default:
         break;
@@ -68,11 +76,9 @@ const UploadButton = () => {
     const file = event.target.files?.[0];
 
     if (!file || !file.name) {
-      // console.log("no file", file);
       return;
     }
 
-    // console.log("Selected file:", file);
     const user = await Auth.currentUserCredentials();
 
     await Storage.put(`uploads/${file.name.replace(" ", "_")}`, file, {
@@ -113,9 +119,6 @@ const UploadButton = () => {
             defaultValue={gpxFile ? gpxFile : ""}
             variant={"defaultInput"}
             readOnly={true}
-            // sx={{
-            //   width: "100%",
-            // }}
           />
         </Box>
         <Input
@@ -127,11 +130,8 @@ const UploadButton = () => {
         />
         <Button
           type="button"
-          disabled={processingFile || progress.loaded > 0}
+          disabled={processingFile}
           onClick={handleButtonClick}
-          // sx={{
-          //   width: "auto",
-          // }}
           variant="primaryButton"
         >
           <Flex sx={{ gap: "10px" }}>

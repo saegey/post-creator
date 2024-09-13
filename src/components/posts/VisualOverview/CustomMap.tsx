@@ -54,7 +54,7 @@ const currenPositionLayerSettings = {
   },
 };
 
-const Map = ({
+const CustomMap = ({
   coordinates,
   markerCoordinates,
   token,
@@ -226,21 +226,21 @@ const Map = ({
         return;
       }
 
-      // if (markerCoordinates) {
-      //   geojsonSource.setData({
-      //     type: "FeatureCollection",
-      //     features: [
-      //       {
-      //         type: "Feature",
-      //         properties: { name: "Null Island" },
-      //         geometry: {
-      //           type: "Point",
-      //           coordinates: coordinates[markerCoordinates.i],
-      //         },
-      //       },
-      //     ],
-      //   });
-      // }
+      if (markerCoordinates && markerCoordinates.i !== undefined) {
+        geojsonSource.setData({
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              properties: { name: "Null Island" },
+              geometry: {
+                type: "Point",
+                coordinates: coordinates[markerCoordinates.i],
+              },
+            },
+          ],
+        });
+      }
     }
   }, [markerCoordinates]);
 
@@ -260,7 +260,7 @@ const Map = ({
       doubleClickZoom: false,
     });
 
-    map.current.addControl(new mapboxgl.NavigationControl(), "bottom-left");
+    map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
 
     map.current.once("load", () => {
       setIsMapLoaded(true);
@@ -297,4 +297,4 @@ const Map = ({
   );
 };
 
-export default Map;
+export default CustomMap;
