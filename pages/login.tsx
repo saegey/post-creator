@@ -14,7 +14,6 @@ import Head from "next/head";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import LogoBlock from "../src/components/public/LogoBlock";
 import FavIcon from "../src/components/shared/FavIcon";
-import { darken } from "@theme-ui/color";
 
 const LoginPage: React.FC = () => {
   const { setNotification } = useContext(NotificationContext);
@@ -67,7 +66,7 @@ const LoginPage: React.FC = () => {
         sx={{
           alignItems: "center",
           width: "100%",
-          backgroundColor: darken("background", 0.04),
+          backgroundColor: "backgroundDark",
         }}
       >
         <Flex
@@ -78,7 +77,6 @@ const LoginPage: React.FC = () => {
             flexDirection: "column",
             height: ["fit-content", "100dvh", "100dvh"],
             overflow: ["scroll", "", ""],
-            // backgroundColor: "background",
             width: "100%",
             padding: ["20px", "0", "0"],
           }}
@@ -92,7 +90,7 @@ const LoginPage: React.FC = () => {
                 sx={{
                   flexDirection: "column",
                   marginBottom: "10px",
-                  gap: "30px",
+                  gap: "15px",
                 }}
               >
                 <AuthInput
@@ -113,7 +111,7 @@ const LoginPage: React.FC = () => {
                   <Box>
                     <Flex
                       sx={{
-                        justifyContent: "right",
+                        justifyContent: "left",
                         alignItems: "center",
                         marginTop: "10px",
                       }}

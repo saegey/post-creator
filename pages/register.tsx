@@ -2,6 +2,7 @@ import React from "react";
 import { Flex } from "theme-ui";
 import Router from "next/router";
 import Head from "next/head";
+
 import { NotificationContext } from "../src/components/NotificationContext";
 import LogoBlock from "../src/components/public/LogoBlock";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
@@ -76,6 +77,8 @@ const RegisterPage: React.FC = () => {
     console.error("Error:", error);
   };
 
+  console.log("RegisterPage");
+
   return (
     <>
       <Head>
@@ -90,7 +93,7 @@ const RegisterPage: React.FC = () => {
           flexDirection: "column",
           height: ["fit-content", "100dvh", "100dvh"],
           overflow: ["scroll", "", ""],
-          backgroundColor: "background",
+          backgroundColor: "backgroundDark",
         }}
       >
         <Flex sx={{ justifyContent: "center" }}>
@@ -109,7 +112,7 @@ const RegisterPage: React.FC = () => {
           )}
         </AuthFormContainer>
         <AuthLink
-          text={"alread have account?"}
+          text={"Already have an account?"}
           linkText={"Sign in →"}
           href="/login"
         />

@@ -34,6 +34,7 @@ const OptionsMenu = ({
       sx={
         {
           position: "absolute",
+          zIndex: 3,
           top: menuPosition.top - 20,
           left: menuPosition.left - 40,
         } as ThemeUIStyleObject<Theme>

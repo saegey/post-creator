@@ -25,7 +25,8 @@ const AuthInput: React.FC<AuthInputProps> = ({
         id={id}
         type={type}
         name={name}
-        variant="defaultInput"
+        variant={"defaultInput"}
+        // sx={{ color: "red" }}
         {...props}
       />
     </Box>

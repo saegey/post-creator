@@ -30,7 +30,7 @@ const ProfileSection: React.FC = () => {
         {
           justifyContent: "end",
           borderRadius: "5px",
-          backgroundColor: lighten("background", 0.05),
+          backgroundColor: "backgroundLight",
           padding: "1px 1px 1px 1px",
         } as ThemeUIStyleObject<Theme>
       }

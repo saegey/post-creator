@@ -11,6 +11,7 @@ import Head from "next/head";
 import LogoBlock from "../src/components/public/LogoBlock";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import AuthLink from "../src/components/auth/AuthLink";
+import FavIcon from "../src/components/shared/FavIcon";
 
 const Reset: React.FC = () => {
   const [isSubmit, setIsSubmit] = useState(false);
@@ -48,10 +49,7 @@ const Reset: React.FC = () => {
     <>
       <Head>
         <title>Forgot Password?</title>
-        <link
-          rel="icon"
-          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>M</text></svg>"
-        />
+        <FavIcon />
       </Head>
       <Flex
         sx={{
@@ -61,7 +59,7 @@ const Reset: React.FC = () => {
           flexDirection: "column",
           height: ["fit-content", "100dvh", "100dvh"],
           overflow: ["scroll", "", ""],
-          backgroundColor: "background",
+          backgroundColor: "backgroundDark",
         }}
       >
         <Flex sx={{ justifyContent: "center" }}>
@@ -69,7 +67,7 @@ const Reset: React.FC = () => {
         </Flex>
         <AuthFormContainer>
           {!isSubmit ? (
-            <form onSubmit={handleRequest}>
+            <form onSubmit={handleRequest} style={{ width: "100%" }}>
               <Flex sx={{ flexDirection: "column" }}>
                 <Flex sx={{ flexDirection: "column", gap: "15px" }}>
                   <Text as="h1" sx={{ fontSize: "16px" }}>
@@ -83,9 +81,11 @@ const Reset: React.FC = () => {
                     required
                   />
                   <ReCAPTCHAComponent setIsRobot={setIsRobot} />
-                  <AuthButton type="submit" disabled={isRobot}>
-                    Submit
-                  </AuthButton>
+                  <Flex sx={{ justifyContent: "end" }}>
+                    <AuthButton type="submit" disabled={isRobot}>
+                      Submit
+                    </AuthButton>
+                  </Flex>
                 </Flex>
               </Flex>
             </form>
