@@ -5,7 +5,14 @@ import {
   useSelected,
   useFocused,
 } from "slate-react";
-import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
+import {
+  AspectRatio,
+  Box,
+  Flex,
+  Text,
+  Theme,
+  ThemeUIStyleObject,
+} from "theme-ui";
 
 import ImageFullScreen from "./ImageFullScreen";
 import HoverAction from "../Editor/HoverAction";
@@ -15,6 +22,7 @@ import CloudImage from "./CloudImage";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import { CloudinaryImage, ImageElementType } from "../../../types/common";
 import useImageMeta from "../../../hooks/useImageMeta";
+import ImagesIcon from "../../icons/ImagesIcon";
 
 // Component for rendering the CloudImage with memoization
 const CloudImageMemo = ({
@@ -60,7 +68,44 @@ const ImageElement = ({
   const { width } = useViewport();
   const { optionsMenu } = useOptionsMenu(editor, path);
 
-  const { imageMeta, imageUrl, imageMetaIndex } = useImageMeta(element, width);
+  const imageData = useImageMeta(element, width);
+  const imageMeta =
+    imageData && imageData.imageMeta ? imageData.imageMeta : undefined;
+
+  if (!imageMeta) {
+    return (
+      <HoverAction element={element}>
+        <Box contentEditable={false}>
+          <Box>
+            <AspectRatio
+              ratio={16 / 9}
+              sx={{
+                // width: "100%",
+                // height: "auto",
+
+                backgroundColor: "error",
+                borderRadius: [0, "5px", "5px"],
+              }}
+            >
+              <Flex
+                sx={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
+                <ImagesIcon />
+                <Text>Missing image</Text>
+              </Flex>
+            </AspectRatio>
+            <OptionsMenuMemo optionsMenu={optionsMenu} />
+          </Box>
+        </Box>
+      </HoverAction>
+    );
+  }
+
+  const { imageUrl, imageMetaIndex } = imageData;
 
   const selected = useSelected();
   const focused = useFocused();

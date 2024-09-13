@@ -39,7 +39,7 @@ export default {
     surface: palette.grayMediumLight,
     inputText: palette.grayDark,
     inputBackground: lighten(palette.grayMediumLight, 0.1),
-    surfaceAccent: darken(palette.grayMediumLight, 0.1),
+    surfaceAccent: darken(palette.grayMediumLight, 0.2),
     accent: palette.blue,
     border: palette.grayMedium,
     disabledBackground: palette.grayMedium,
@@ -360,6 +360,10 @@ export default {
       fontWeight: "400",
       "&:hover": {
         backgroundColor: darken("error", 0.05),
+      },
+      "&:disabled": {
+        backgroundColor: lighten("error", 0.1),
+        cursor: "not-allowed",
       },
       cursor: "pointer",
     },
