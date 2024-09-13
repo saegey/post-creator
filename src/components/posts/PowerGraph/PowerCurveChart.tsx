@@ -105,13 +105,15 @@ const PowerCurveGraph = ({ data, ftp }: PowerCurveGraphProps) => {
           stroke={theme?.colors?.text as string}
           strokeDasharray="3 3"
         >
-          <Label
-            value={`FTP - ${ftp} watts`}
-            offset={10}
-            position="insideBottomLeft"
-            fill={theme?.colors?.text as string}
-            fontSize={"14px"}
-          />
+          {ftp > 0 && (
+            <Label
+              value={`FTP - ${ftp} watts`}
+              offset={10}
+              position="insideBottomLeft"
+              fill={theme?.colors?.text as string}
+              fontSize={"14px"}
+            />
+          )}
         </ReferenceLine>
       </LineChart>
     </ResponsiveContainer>

@@ -30,9 +30,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onClose }) => {
       }
     >
       <Flex sx={{ gap: "10px", width: "100%" } as ThemeUIStyleObject<Theme>}>
-        <Box
-          sx={{ width: "40px", height: "40px" } as ThemeUIStyleObject<Theme>}
-        >
+        <Box sx={{ width: "40px", height: "40px" }}>
           {user.attributes && user.attributes.picture ? (
             <CldImage
               width="400"
@@ -55,7 +53,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onClose }) => {
               }}
             />
           ) : (
-            <AvatarIcon />
+            <AvatarIcon sx={{ width: "100%", height: "100%", padding: 0 }} />
           )}
         </Box>
         <Flex sx={{ flexDirection: "column", gap: "5px" }}>
