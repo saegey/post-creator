@@ -15,6 +15,9 @@ const formatTime = (seconds: number) => {
 const formatAnalysis = (
   analysis: Record<string, number>,
   keys: Array<string>
-) => (analysis && keys ? analysis[keys[keys.length - 1]] : "N/A");
+) => {
+  console.log(JSON.stringify(analysis, keys));
+  return analysis && keys ? analysis[keys[keys.length - 1]] : "N/A";
+};
 
 export { formatValue, formatTime, formatAnalysis };

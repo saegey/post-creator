@@ -92,7 +92,8 @@ const getItemData = (
           : `${
               distance &&
               elapsedTime?.seconds &&
-              stoppedTime &&
+              stoppedTime !== undefined &&
+              stoppedTime !== null &&
               (
                 (distance / (elapsedTime.seconds - stoppedTime)) *
                 2236.9362920544
@@ -103,7 +104,7 @@ const getItemData = (
       title: "Avg Power",
       value: powerAnalysis
         ? formatAnalysis(powerAnalysis, Object.keys(powerAnalysis)) + " watts"
-        : "N/A",
+        : "-",
     },
     {
       title: "Time Stopped",

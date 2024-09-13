@@ -69,6 +69,7 @@ const getPost = async (id: string, postCtx: PostContextType) => {
     normalizedPower: post.normalizedPower,
     tempAnalysis: post.tempAnalysis ? JSON.parse(post.tempAnalysis) : {},
     heartAnalysis: post.heartAnalysis ? JSON.parse(post.heartAnalysis) : {},
+    powerAnalysis: post.powerAnalysis ? JSON.parse(post.powerAnalysis) : {},
     cadenceAnalysis: post.cadenceAnalysis
       ? JSON.parse(post.cadenceAnalysis)
       : {},
