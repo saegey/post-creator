@@ -13,7 +13,7 @@ const ReCAPTCHAComponent: React.FC<ReCAPTCHAComponentProps> = ({
   const { colorMode } = useThemeUI();
 
   return (
-    <Flex sx={{ justifyContent: "center" }}>
+    <Flex>
       <ReCAPTCHA
         sitekey="6LdW_CUpAAAAAOC--lA01wOnW1UA3RlZyc_LgX_0"
         onChange={() => setIsRobot(false)}

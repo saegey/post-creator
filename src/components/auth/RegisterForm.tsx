@@ -17,7 +17,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   setIsRobot,
 }) => {
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} style={{ width: "100%" }}>
       <Flex sx={{ flexDirection: "column", gap: "15px" }}>
         <Flex sx={{ flexDirection: "column" }}>
           <Label htmlFor="email" variant="defaultLabel">
@@ -73,13 +73,15 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           />
         </Flex>
         <ReCAPTCHAComponent setIsRobot={setIsRobot} />
-        <Button
-          type="submit"
-          variant="primaryButton"
-          disabled={isRobot || isLoading}
-        >
-          {isLoading ? "Registering..." : "Register"}
-        </Button>
+        <Flex sx={{ justifyContent: "end" }}>
+          <Button
+            type="submit"
+            variant="primaryButton"
+            disabled={isRobot || isLoading}
+          >
+            {isLoading ? "Registering..." : "Sign Up"}
+          </Button>
+        </Flex>
       </Flex>
     </form>
   );

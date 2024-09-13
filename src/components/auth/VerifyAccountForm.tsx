@@ -11,7 +11,7 @@ const VerifyAccountForm: React.FC<VerifyAccountFormProps> = ({
   isLoading,
 }) => {
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} style={{ width: "100%" }}>
       <Flex sx={{ flexDirection: "column", gap: "15px" }}>
         <Flex sx={{ flexDirection: "column" }}>
           <Label htmlFor="email" variant="defaultLabel">
@@ -19,9 +19,11 @@ const VerifyAccountForm: React.FC<VerifyAccountFormProps> = ({
           </Label>
           <Input id="code" variant="defaultInput" name="code" required />
         </Flex>
-        <Button type="submit" variant="primaryButton">
-          {isLoading ? "Verifying..." : "Verify"}
-        </Button>
+        <Flex sx={{ justifyContent: "end" }}>
+          <Button type="submit" variant="primaryButton">
+            {isLoading ? "Verifying..." : "Verify"}
+          </Button>
+        </Flex>
       </Flex>
     </form>
   );
