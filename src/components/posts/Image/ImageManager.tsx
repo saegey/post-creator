@@ -7,10 +7,13 @@ import {
   Theme,
   IconButton,
   Grid,
+  AspectRatio,
 } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Editor, Transforms } from "slate";
+import { GraphQLResult } from "@aws-amplify/api";
+import { API } from "aws-amplify";
 
 import { PostContext } from "../../PostContext";
 import {
@@ -25,10 +28,13 @@ import { useSlateContext } from "../../SlateContext";
 import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
 import UploadIcon from "../../icons/UploadIcon";
 import { lighten } from "@theme-ui/color";
+import { UpdatePostMutation } from "../../../API";
+import { updatePostImages } from "../../../graphql/customMutations";
+import ImagesIcon from "../../icons/ImagesIcon";
 
 const ImageManager = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
-  const { images } = React.useContext(PostContext);
+  const { images, setPost, id } = React.useContext(PostContext);
   const {
     menuPosition,
     setIsChangeImageModalOpen,
@@ -96,76 +102,95 @@ const ImageManager = () => {
             <Flex
               sx={{
                 flex: "1 1 auto",
-                gap: "20px",
-                marginTop: "20px",
+                // gap: "20px",
+                // marginTop: "20px",
                 overflow: "auto",
                 maxHeight: "calc(100% - 70px)",
                 flexDirection: "column",
               }}
             >
-              <Grid gap={2} columns={[2, 3, 4]}>
-                {images && images.length > 0
-                  ? images.map((image, i) => {
+              {images && (
+                <Grid
+                  gap={3}
+                  columns={[2, 3, 4]}
+                  sx={{ width: "100%", margin: "auto" }}
+                >
+                  {images &&
+                    images.length > 0 &&
+                    images.map((image, i) => {
                       return (
                         <Box
                           sx={{
-                            backgroundColor: "background",
-                            height: "100%",
-                            flexDirection: "row",
-                            borderRadius: "5px",
-                            border:
+                            borderStyle: "solid",
+
+                            borderWidth: "2px",
+                            borderColor:
                               selectedImage &&
                               image.secure_url === selectedImage.secure_url
-                                ? "2px solid blue"
-                                : "none",
+                                ? "accent"
+                                : "transparent",
+                            borderRadius: "5px",
                           }}
                           key={`image-media-${i}`}
                           onClick={() => {
                             setSelectedImage(image);
                           }}
                         >
-                          <Flex
+                          <AspectRatio
+                            ratio={4 / 3}
                             sx={{
-                              marginX: "auto",
+                              bg: "surface",
+                              borderRadius: 5,
+                              overflow: "hidden",
                             }}
-                            key={`image-${i}`}
                           >
-                            <Box sx={{ margin: "auto", height: "fit-content" }}>
-                              <CldImage
-                                width={250}
-                                height={250}
-                                src={image.public_id}
-                                underlay={image.public_id}
-                                quality={90}
-                                sizes="100vw"
-                                alt="Description of my image"
-                                style={{
-                                  height: "auto",
-                                  maxWidth: "100%",
-                                }}
-                                config={{
-                                  cloud: {
-                                    cloudName: cloudUrl,
-                                  },
-                                }}
-                              />
-                            </Box>
-                          </Flex>
+                            <CldImage
+                              width={250}
+                              height={250}
+                              src={image.public_id}
+                              underlay={image.public_id}
+                              quality={90}
+                              sizes="100vw"
+                              alt="Description of my image"
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "contain",
+                              }}
+                              config={{
+                                cloud: {
+                                  cloudName: cloudUrl,
+                                },
+                              }}
+                            />
+                          </AspectRatio>
                         </Box>
                       );
-                    })
-                  : boxesData.map((_, index) => (
-                      <Box
-                        key={index} // It's a good idea to provide a unique key
-                        sx={{
-                          width: "100%",
-                          height: "150px",
-                          backgroundColor: "surface",
-                          borderRadius: "5px",
-                        }}
-                      />
-                    ))}
-              </Grid>
+                    })}
+                </Grid>
+              )}
+              {!images ||
+                (images.length === 0 && (
+                  <Flex
+                    sx={{
+                      width: "100%",
+                      height: "300px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // color: "surfaceAccent",
+                      backgroundColor: "surface",
+                      borderRadius: "5px",
+                      borderStyle: "solid",
+                      borderWidth: "1px",
+                      borderColor: "border",
+                    }}
+                  >
+                    <ImagesIcon sx={{ color: "surfaceAccent" }} />
+                    <Text sx={{ fontSize: 3, color: "surfaceAccent" }}>
+                      No images uploaded yet.
+                    </Text>
+                  </Flex>
+                ))}
             </Flex>
           </Box>
         </Flex>
@@ -179,6 +204,43 @@ const ImageManager = () => {
             gap: "10px",
           }}
         >
+          <Button
+            id="delete-post"
+            variant="dangerButton"
+            type="button"
+            onClick={async (e) => {
+              console.log(e, JSON.stringify(selectedImage));
+              if (!images || !selectedImage) {
+                throw new Error("No images or selected image");
+              }
+              const updatedImages = images.filter(
+                (image) => image.public_id !== selectedImage.public_id
+              );
+              setPost({
+                images: updatedImages,
+              });
+
+              try {
+                const response = (await API.graphql({
+                  authMode: "AMAZON_COGNITO_USER_POOLS",
+                  query: updatePostImages,
+                  variables: {
+                    input: {
+                      images: JSON.stringify(updatedImages),
+                      id: id,
+                    },
+                  },
+                })) as GraphQLResult<UpdatePostMutation>;
+                console.log(response);
+              } catch (errors) {
+                console.error(errors);
+              }
+            }}
+            disabled={selectedImage ? false : true}
+          >
+            Delete
+          </Button>
+          <Box sx={{ flexGrow: 1 }} />
           <Button
             variant="secondaryButton"
             onClick={() => setIsChangeImageModalOpen(false)}

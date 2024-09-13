@@ -35,9 +35,13 @@ const useImageMeta = (element: ImageElementType, width: number) => {
         },
       }
     );
-    return { imageMeta, imageUrl, imageMetaIndex };
+    return {
+      imageMeta: imageMeta ? imageMeta : undefined,
+      imageUrl,
+      imageMetaIndex,
+    };
   }, [images, element, width]) as {
-    imageMeta: CloudinaryImage;
+    imageMeta: CloudinaryImage | undefined;
     imageUrl: string;
     imageMetaIndex: number;
   };
