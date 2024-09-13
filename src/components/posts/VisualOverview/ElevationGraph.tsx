@@ -43,18 +43,22 @@ const getNiceTickValues = (left: number, right: number) => {
 
 const getNiceTickValuesY = (min: number, max: number) => {
   const intervals = [10, 50, 100, 200, 500, 1000, 2000, 5000]; // Define possible intervals
-  const range = Math.max(1000, max) - min; // Ensure max is at least 1000
+  const range = Math.max(max) - min; // Ensure max is at least 1000
 
   // Calculate the rough interval based on the range
   const roughInterval = range / 4; // Targeting 4 intervals for 5 ticks
   const niceInterval =
     intervals.find((interval) => interval >= roughInterval) || intervals[0];
+  console.log("niceInterval", niceInterval);
 
   // Generate ticks starting from min and stepping by niceInterval
   const ticks = [];
-  for (let i = min; i <= Math.max(1000, max); i += niceInterval) {
+  const targetMax = Math.max(max) + niceInterval; // Add one more interval beyond max
+  for (let i = min; i <= targetMax; i += niceInterval) {
     ticks.push(i);
   }
+
+  console.log("ticks", ticks);
 
   return ticks;
 };
@@ -232,6 +236,8 @@ const ElevationGraph = ({
     (d, i) => new Object({ x: d.d, y: d.e, i: i })
   ) as Array<{ x: number; y: number; i: number }>;
 
+  const yTicks = getNiceTickValuesY(Number(bottom), Number(top));
+
   return (
     <Box
       sx={{
@@ -350,8 +356,9 @@ const ElevationGraph = ({
             dataKey="x"
             type="number"
             // domain={[0, 100]}
-            domain={left && right ? [left, right] : undefined}
+            // domain={left && right ? [left, right] : undefined}
             // tickCount={5}
+            domain={[0, "dataMax"]}
             label={{
               value: `Distance (${
                 units.unitOfMeasure === "metric" ? "km" : "mi"
@@ -373,7 +380,7 @@ const ElevationGraph = ({
           {/* {!hideAxes && ( */}
           <YAxis
             allowDataOverflow
-            domain={[bottom, Number(top) + 100]}
+            domain={[bottom, yTicks[yTicks.length - 1]]}
             type="number"
             label={{
               value: `Elevation (${
@@ -385,12 +392,8 @@ const ElevationGraph = ({
             }}
             allowDecimals={false}
             dataKey="y"
-            tick={{
-              fill: themeContext?.theme?.colors?.text as string,
-              fontSize: "14px",
-            }}
-            ticks={getNiceTickValuesY(Number(bottom), Number(top))} // Generate tick values
-            // tickFormatter={(t) => t.toFixed(0)}
+            ticks={yTicks} // Generate tick values
+            tickFormatter={(t) => t.toFixed(0)}
             stroke={themeContext?.theme?.colors?.primary as string}
             hide={hideAxes}
           />
