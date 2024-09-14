@@ -208,44 +208,6 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 		}
 	}
 
-	// // Simplify the points (with a tolerance of 1)
-	// var simplifiedCoordinates = simplify.SimplifyDouglasPeucker(coordinates, 0.00000001)
-
-	// timeElevationMap := make([][]float64, len(elevations))
-	// for i := range elevations {
-	// 	timeElevationMap[i] = []float64{float64(distances[i]), float64(i)}
-	// }
-	// var simplifiedElevations = simplify.Simplify(timeElevationMap, 3, true)
-	// // fmt.Println("Simplified Elevations len:", len(simplifiedElevations))
-
-	// // Merge distance, powers, and grades into a new map
-	// mergedData := make([]S3helper.MergedDataItem, len(simplifiedElevations))
-	// for i, val := range simplifiedElevations {
-	// 	var grade float64
-	// 	var gradeFinal float64
-	// 	if i == 0 {
-	// 		grade = 0
-	// 	} else {
-	// 		var elevationChange = elevations[int(val[1])] - elevations[int(simplifiedElevations[i-1][1])]
-	// 		var distanceChange = float64(distances[int(val[1])] - distances[int(simplifiedElevations[i-1][1])])
-	// 		grade = elevationChange / distanceChange
-	// 		if math.IsNaN(grade) || math.IsInf(grade, 0) {
-	// 			gradeFinal = 0.0
-	// 		} else {
-	// 			gradeFinal = grade
-	// 		}
-	// 	}
-
-	// 	mergedData[i] = S3helper.MergedDataItem{
-	// 		Power:     powers[int(val[1])],
-	// 		Distance:  val[0],
-	// 		Time:      val[1],
-	// 		Elevation: float32(elevations[int(val[1])]),
-	// 		HeartRate: hearts[int(val[1])],
-	// 		Grade:     gradeFinal,
-	// 	}
-	// }
-
 	// Generate S3 key
 	s3key := fmt.Sprintf("timeseries/%s.json", uuid.New().String())
 
