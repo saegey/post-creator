@@ -116,7 +116,7 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 				altitude := float64(record.EnhancedAltitude)
 
 				// Ensure no NaN values are added
-				if !math.IsNaN(lat) && !math.IsNaN(long) && !math.IsNaN(altitude) {
+				if !math.IsNaN(lat) && !math.IsNaN(long) && !math.IsNaN(altitude) && altitude != 4294967295 {
 					coordinates = append(coordinates, []float64{long, lat, altitude})
 				}
 			}
@@ -127,7 +127,7 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 			count++
 
 			// Calculate elevation gain
-			if record.Altitude != 0 {
+			if record.Altitude != 0 && record.Altitude != 65535 {
 				altitude := record.EnhancedAltitude
 				var decodedAltitude = fitHelper.DecodeAltitude(altitude)
 
