@@ -1,11 +1,11 @@
 # Monopad Journal
 
-**Monopad Journal** is a modular journal editor designed for activity-related posts. This project leverages Next.js and AWS Amplify (Gen 1) to provide a robust and scalable solution for managing and sharing your activities.
+**[Monopad Journal](https://www.monopad.app/)** is a modular journal editor designed for activity-related posts. This project leverages Next.js and AWS Amplify (Gen 1) to provide a robust and scalable solution for managing and sharing your activities.
 
 ## Features
 
 - Modular and customizable editor for activity-related posts.
-- Integrates with MUX, Mapbox, Cloudinary, and AWS for enhanced media and map capabilities.
+- Integrates with AWS, Cloudinary, Mapbox and MUX for enhanced media and map capabilities.
 - Built with modern technologies such as React, Slate.js, and Theme UI.
 
 ## Installation
@@ -15,8 +15,9 @@ To get started with Monopad Journal, follow these steps:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/saegey/monopad-journal.git
-   cd monopad-journal
+   git clone git@github.com:saegey/post-creator.git
+
+   cd post-creator
    ```
 
 2. **Install Dependencies**:
@@ -25,9 +26,9 @@ To get started with Monopad Journal, follow these steps:
    npm install
    ```
 
-3. **Configuration**:
+3. **Configure Environment Variables**:
 
-   Set up the necessary environment variables for MUX, Mapbox, Cloudinary, and AWS keys.
+   Set up the necessary environment variables for MUX, Mapbox, Cloudinary, and AWS keys into a `.env.local` file.
 
    ```bash
    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloudinary-cloud-name
@@ -35,7 +36,13 @@ To get started with Monopad Journal, follow these steps:
    MUX_TOKEN_SECRET=your-mux-token-secret
    ```
 
-4. **Run the Development Server**:
+4. **Configure Amplify**
+
+   ```bash
+   amplify pull -appId your-amplify-app-id -envName your-amplify-env-name
+   ```
+
+5. **Run the Development Server**:
 
    ```
    npm run dev
@@ -47,10 +54,10 @@ To get started with Monopad Journal, follow these steps:
 
 Monopad Journal requires the following configurations:
 
-- **MUX**: For video handling.
-- **Mapbox**: For map rendering and geolocation features.
-- **Cloudinary**: For image and video storage.
 - **AWS**: For backend services provided by Amplify.
+- **Cloudinary**: For image and video storage.
+- **Mapbox**: For map rendering and geolocation features.
+- **MUX**: For video handling.
 
 ## Testing
 
@@ -59,13 +66,10 @@ This project uses **Vitest** for unit testing and **Cypress** for end-to-end tes
 To run the tests:
 
 ```bash
-
 # Run Vitest tests
-
 npm run test
 
 # Run Cypress tests
-
 npm run cypress:open
 ```
 
@@ -81,19 +85,19 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 Monopad Journal was built using the following open-source projects:
 
-- [Slate.js](https://github.com/ianstormtaylor/slate)
-- [Next.js](https://github.com/vercel/next.js)
-- [Simply.js](https://github.com/your-username/simply.js)
-- [Moment.js](https://github.com/moment/moment)
-- [Recharts](https://github.com/recharts/recharts)
-- [React](https://github.com/facebook/react)
 - [Amplify](https://github.com/aws-amplify/amplify-js)
+- [Moment.js](https://github.com/moment/moment)
+- [Next.js](https://github.com/vercel/next.js)
+- [React](https://github.com/facebook/react)
+- [Recharts](https://github.com/recharts/recharts)
+- [Simply.js](https://github.com/your-username/simply.js)
+- [Slate.js](https://github.com/ianstormtaylor/slate)
 - [Theme UI](https://github.com/system-ui/theme-ui)
 
 ## Author
 
 **Adam Saegebarth**
-You can reach me at [your-email@example.com](mailto:your-email@example.com).
+You can reach me at [adam.saegebarth@gmail.com](mailto:adam.saegebarth@gmail.com).
 
 ## Dependencies
 
