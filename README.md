@@ -30,11 +30,9 @@ To get started with Monopad Journal, follow these steps:
    Set up the necessary environment variables for MUX, Mapbox, Cloudinary, and AWS keys.
 
    ```bash
-   NEXT_PUBLIC_MUX_API_KEY=your-mux-api-key
-   NEXT_PUBLIC_MAPBOX_API_KEY=your-mapbox-api-key
-   NEXT_PUBLIC_CLOUDINARY_API_KEY=your-cloudinary-api-key
-   AWS_ACCESS_KEY_ID=your-aws-access-key-id
-   AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloudinary-cloud-name
+   MUX_TOKEN_ID=your-mux-token-id
+   MUX_TOKEN_SECRET=your-mux-token-secret
    ```
 
 4. **Run the Development Server**:
