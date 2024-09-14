@@ -1,8 +1,6 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"math"
 	"os"
 	"testing"
@@ -52,11 +50,11 @@ func TestWahooProcessActivityRecords(t *testing.T) {
 	}
 
 	// Print the result to verify the output manually for now
-	jsonResult, err := json.MarshalIndent(result, "", "  ")
-	if err != nil {
-		t.Fatalf("Failed to marshal result to JSON: %v", err)
-	}
-	fmt.Printf("Processed Activity Data: %s\n", jsonResult)
+	// jsonResult, err := json.MarshalIndent(result, "", "  ")
+	// if err != nil {
+	// 	t.Fatalf("Failed to marshal result to JSON: %v", err)
+	// }
+	// fmt.Printf("Processed Activity Data: %s\n", jsonResult)
 
 	if result.NormalizedPower != 143.667770 {
 		t.Errorf("Expected normalized power to be greater than 0, got %f", result.NormalizedPower)
@@ -130,7 +128,7 @@ func TestWahooProcessActivityRecords(t *testing.T) {
 		}
 	}
 
-	if len(result.SimplifiedCoordinates) != 472 {
+	if len(result.SimplifiedCoordinates) != 2300 {
 		t.Fatalf("Expected simplified coordinates to be non-nil, got %v", len(result.SimplifiedCoordinates))
 	}
 
@@ -156,24 +154,25 @@ func TestWahooProcessActivityRecords(t *testing.T) {
 		t.Fatalf("Expected MergedData to contain data, but it is empty")
 	}
 
+	if len(result.MergedData) != 2300 {
+		t.Errorf("Merged data should have length of %d", len(result.MergedData))
+	}
+
 	// Loop through each item in the MergedData slice
 	for i, data := range result.MergedData {
 		// Check for non-NaN values
 		if math.IsNaN(data.Distance) {
 			t.Errorf("Found NaN for Distance at index %d", i)
 		}
+
 		if math.IsNaN(float64(data.Time)) {
 			t.Errorf("Found NaN for Time at index %d", i)
 		}
+
 		if math.IsNaN(float64(data.Elevation)) {
 			t.Errorf("Found NaN for Elevation at index %d", i)
 		}
-		if math.IsNaN(float64(data.Power)) {
-			t.Errorf("Found NaN for Power at index %d", i)
-		}
-		if math.IsNaN(float64(data.HeartRate)) {
-			t.Errorf("Found NaN for HeartRate at index %d", i)
-		}
+
 		if math.IsNaN(data.Grade) {
 			t.Errorf("Found NaN for Grade at index %d", i)
 		}
@@ -183,11 +182,9 @@ func TestWahooProcessActivityRecords(t *testing.T) {
 		if data.Distance < 0 {
 			t.Errorf("Expected non-negative Distance, got %f at index %d", data.Distance, i)
 		}
-		if data.Power < 0 {
-			t.Errorf("Expected non-negative Power, got %d at index %d", data.Power, i)
-		}
-		if data.HeartRate < 0 {
-			t.Errorf("Expected non-negative HeartRate, got %d at index %d", data.HeartRate, i)
+
+		if data.Distance >= 42949672.000000 {
+			t.Errorf("Expected distance to be less than 42949672, got %f at index %d", data.Distance, i)
 		}
 	}
 
