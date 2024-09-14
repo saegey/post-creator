@@ -116,18 +116,20 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 				altitude := float64(record.EnhancedAltitude)
 
 				// Ensure no NaN values are added
-				if !math.IsNaN(lat) && !math.IsNaN(long) && !math.IsNaN(altitude) {
+				if !math.IsNaN(lat) && !math.IsNaN(long) && !math.IsNaN(altitude) && altitude != 4294967295 {
 					coordinates = append(coordinates, []float64{long, lat, altitude})
 				}
 			}
 
 			// Store distance data
-			distances = append(distances, (float32(record.Distance) / 100)) // convert to meters
-
+			// 4,294,967,295
+			if record.Distance != 4294967295 {
+				distances = append(distances, (float32(record.Distance) / 100)) // convert to meters
+			}
 			count++
 
 			// Calculate elevation gain
-			if record.Altitude != 0 {
+			if record.Altitude != 0 && record.Altitude != 65535 {
 				altitude := record.EnhancedAltitude
 				var decodedAltitude = fitHelper.DecodeAltitude(altitude)
 
@@ -166,41 +168,43 @@ func ProcessActivityRecords(opts ProcessActivityOptions) (*ProcessedActivityData
 	var heartResults = myevent.CalculateMaxAveragePowers(timeIntervals, convertToUint16Slice(hearts))
 	var elapsedTime = activity.Records[len(activity.Records)-1].Timestamp.Sub(activity.Records[0].Timestamp)
 
-	// Simplify the points (with a tolerance of 1)
-	var simplifiedCoordinates = simplify.SimplifyDouglasPeucker(coordinates, 0.00000001)
+	// Simplify coordinates and get indices
+	simplifiedCoordinates, indices := simplify.SimplifyWithIndices(coordinates, 0.00001, true)
 
-	timeElevationMap := make([][]float64, len(elevations))
-	for i := range elevations {
-		timeElevationMap[i] = []float64{float64(distances[i]), float64(i)}
+	// Use indices to extract corresponding data
+	simplifiedElevations := make([]float64, len(indices))
+	simplifiedPowers := make([]uint16, len(indices))
+	simplifiedHearts := make([]uint8, len(indices))
+	simplifiedDistances := make([]float32, len(indices))
+
+	for i, idx := range indices {
+		simplifiedElevations[i] = elevations[idx]
+		simplifiedPowers[i] = powers[idx]
+		simplifiedHearts[i] = hearts[idx]
+		simplifiedDistances[i] = distances[idx]
 	}
-	var simplifiedElevations = simplify.Simplify(timeElevationMap, 3, true)
-	fmt.Println("Simplified Elevations len:", len(simplifiedElevations))
 
-	// Merge distance, powers, and grades into a new map
-	mergedData := make([]S3helper.MergedDataItem, len(simplifiedElevations))
-	for i, val := range simplifiedElevations {
+	// Now you can create MergedData using the simplified data
+	mergedData := make([]S3helper.MergedDataItem, len(indices))
+	for i := range indices {
 		var grade float64
-		var gradeFinal float64
 		if i == 0 {
 			grade = 0
 		} else {
-			var elevationChange = elevations[int(val[1])] - elevations[int(simplifiedElevations[i-1][1])]
-			var distanceChange = float64(distances[int(val[1])] - distances[int(simplifiedElevations[i-1][1])])
-			grade = elevationChange / distanceChange
-			if math.IsNaN(grade) || math.IsInf(grade, 0) {
-				gradeFinal = 0.0
-			} else {
-				gradeFinal = grade
+			elevationChange := simplifiedElevations[i] - simplifiedElevations[i-1]
+			distanceChange := float64(simplifiedDistances[i] - simplifiedDistances[i-1])
+			if distanceChange != 0 {
+				grade = elevationChange / distanceChange
 			}
 		}
 
 		mergedData[i] = S3helper.MergedDataItem{
-			Power:     powers[int(val[1])],
-			Distance:  val[0],
-			Time:      val[1],
-			Elevation: float32(elevations[int(val[1])]),
-			HeartRate: hearts[int(val[1])],
-			Grade:     gradeFinal,
+			Power:     simplifiedPowers[i],
+			Distance:  float64(simplifiedDistances[i]),
+			Time:      float64(indices[i]),
+			Elevation: float32(simplifiedElevations[i]),
+			HeartRate: simplifiedHearts[i],
+			Grade:     grade,
 		}
 	}
 

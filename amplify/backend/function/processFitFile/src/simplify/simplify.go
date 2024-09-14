@@ -44,36 +44,53 @@ func getSqSegDist(p, p1, p2 []float64) float64 {
 	return dx*dx + dy*dy
 }
 
-func SimplifyRadialDist(points [][]float64, sqTolerance float64) [][]float64 {
+// SimplifyRadialDistWithIndices simplifies points using radial distance and returns simplified points with indices.
+func SimplifyRadialDistWithIndices(points [][]float64, sqTolerance float64) ([][]float64, []int) {
 	prevPoint := points[0]
 	newPoints := [][]float64{prevPoint}
+	indices := []int{0}
 	var point []float64
 	for i := 1; i < len(points); i++ {
 		point = points[i]
 		if getSqDist(point, prevPoint) > sqTolerance {
 			newPoints = append(newPoints, point)
+			indices = append(indices, i)
 			prevPoint = point
 		}
 	}
 	if !ComparePoints(prevPoint, point) {
 		newPoints = append(newPoints, point)
+		indices = append(indices, len(points)-1)
 	}
-
-	return newPoints
+	return newPoints, indices
 }
 
-func SimplifyDouglasPeucker(points [][]float64, sqTolerance float64) [][]float64 {
+// SimplifyDouglasPeuckerWithIndices simplifies points using the Douglas-Peucker algorithm and returns simplified points with indices.
+func SimplifyDouglasPeuckerWithIndices(points [][]float64, sqTolerance float64) ([][]float64, []int) {
 	var l = len(points)
+	if l == 0 {
+		return nil, nil
+	}
 	markers := make([]int, l)
 	first := 0
 	last := l - 1
 	var stack Stack
 	var newPoints [][]float64
+	var indices []int
 	i, index := 0, 0
 	maxSqDist, sqDist := float64(0), float64(0)
 	markers[first], markers[last] = 1, 1
-	for last > 0 {
+
+	stack.Push(first)
+	stack.Push(last)
+
+	for len(stack) > 0 {
+		last = stack.Pop()
+		first = stack.Pop()
+
 		maxSqDist = 0
+		index = first + 1
+
 		for i = first + 1; i < last; i++ {
 			sqDist = getSqSegDist(points[i], points[first], points[last])
 			if sqDist > maxSqDist {
@@ -88,43 +105,48 @@ func SimplifyDouglasPeucker(points [][]float64, sqTolerance float64) [][]float64
 			stack.Push(index)
 			stack.Push(last)
 		}
-		last = stack.Pop()
-		first = stack.Pop()
 	}
+
 	for i = 0; i < l; i++ {
-		if checkArrIndex(markers, i) {
+		if markers[i] != 0 {
 			newPoints = append(newPoints, points[i])
-
+			indices = append(indices, i)
 		}
 	}
-	return newPoints
+	return newPoints, indices
 }
 
-func checkArrIndex(arr []int, index int) bool {
-	if index < len(arr) && index >= 0 {
-		if arr[index] > 0 {
-			return true
-		} else {
-			return false
+// SimplifyWithIndices simplifies points and returns the simplified points along with their original indices.
+// If highestQuality is true, radial distance simplification is skipped.
+func SimplifyWithIndices(points [][]float64, tolerance float64, highestQuality bool) ([][]float64, []int) {
+	if len(points) <= 2 {
+		indices := make([]int, len(points))
+		for i := range points {
+			indices[i] = i
 		}
-	} else {
-		return false
-	}
-}
-
-func Simplify(points [][]float64, tolerance float64, highestQuality bool) [][]float64 {
-	if len(points) <= 1 {
-		return points
+		return points, indices
 	}
 	sqTolerance := tolerance * tolerance
 	var _points [][]float64
+	var preIndices []int
 	if highestQuality {
 		_points = points
+		preIndices = make([]int, len(points))
+		for i := range points {
+			preIndices[i] = i
+		}
 	} else {
-		_points = SimplifyRadialDist(points, sqTolerance)
+		_points, preIndices = SimplifyRadialDistWithIndices(points, sqTolerance)
 	}
-	_points = SimplifyDouglasPeucker(_points, sqTolerance)
-	return _points
+	simplifiedPoints, indices := SimplifyDouglasPeuckerWithIndices(_points, sqTolerance)
+
+	// Map indices back to original points
+	finalIndices := make([]int, len(indices))
+	for i, idx := range indices {
+		finalIndices[i] = preIndices[idx]
+	}
+
+	return simplifiedPoints, finalIndices
 }
 
 // -------------------------------
@@ -142,9 +164,13 @@ func CompareSlices(p1, p2 [][]float64) bool {
 }
 
 func ComparePoints(p1, p2 []float64) bool {
-	if p1[0] == p2[0] && p1[1] == p2[1] {
-		return true
-	} else {
+	if len(p1) != len(p2) {
 		return false
 	}
+	for i := range p1 {
+		if p1[i] != p2[i] {
+			return false
+		}
+	}
+	return true
 }
