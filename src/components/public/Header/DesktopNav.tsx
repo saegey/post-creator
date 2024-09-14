@@ -36,7 +36,7 @@ const DesktopNav = () => {
     {
       title: "Docs",
       description: "Become a Monopad expert",
-      href: "https://monopad.gitbook.io/docs-1/v/1/",
+      href: "https://monopad.mintlify.app",
     },
     {
       title: "API",

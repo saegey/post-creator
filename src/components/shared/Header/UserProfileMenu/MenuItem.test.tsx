@@ -17,7 +17,7 @@ describe("MenuItem", () => {
   it("renders a link when href is provided", () => {
     render(<MenuItem href="/profile">Profile</MenuItem>);
 
-    const linkElement = screen.getByText("Profile");
+    const linkElement = screen.getByTestId("profile-menu-link");
     screen.debug();
     expect(linkElement).toBeInTheDocument();
     expect(linkElement.tagName).toBe("A"); // Check if it's a link element

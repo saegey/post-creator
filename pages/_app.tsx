@@ -10,13 +10,18 @@ import ViewportProvider from "../src/components/ViewportProvider";
 import UnitProvider from "../src/components/UnitProvider";
 import awsconfig from "../src/aws-exports";
 import ErrorBoundary from "../src/components/shared/ErrorBoundary";
-import "../styles/globals.css";
-import "mapbox-gl/dist/mapbox-gl.css";
 import { UserContext } from "../src/components/UserContext";
 import { IUser, NotificationType } from "../src/types/common";
 import { NotificationContext } from "../src/components/NotificationContext";
 import NotificationMessage from "../src/components/NotificationMessage";
 import ThemeChanger from "../src/components/ThemeChanger";
+import { Inter } from "next/font/google";
+
+// Initialize the font with desired subsets
+const inter = Inter({ subsets: ["latin"] });
+
+import "../styles/globals.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 
@@ -150,37 +155,39 @@ const app = ({ Component, pageProps }: AppProps) => {
           />
         </Head>
 
-        <UnitProvider.Provider
-          value={{
-            unitOfMeasure,
-            toggleUnit: async () => {
-              const newUnit =
-                unitOfMeasure === "imperial" ? "metric" : "imperial";
-              setUnitOfMeasure(newUnit);
-              const cUser: IUser = await Auth.currentAuthenticatedUser();
-              await Auth.updateUserAttributes(cUser, {
-                zoneinfo: newUnit,
-              });
-            },
-          }}
-        >
-          <ViewportProvider>
-            <ThemeUIProvider theme={theme}>
-              <NotificationContext.Provider
-                value={{
-                  notification,
-                  setNotification,
-                }}
-              >
-                <ThemeChanger />
-                <UserContext.Provider value={{ user, setUser }}>
-                  <Component {...pageProps} />
-                </UserContext.Provider>
-                <NotificationMessage />
-              </NotificationContext.Provider>
-            </ThemeUIProvider>
-          </ViewportProvider>
-        </UnitProvider.Provider>
+        <main className={inter.className} style={{ width: "100%" }}>
+          <UnitProvider.Provider
+            value={{
+              unitOfMeasure,
+              toggleUnit: async () => {
+                const newUnit =
+                  unitOfMeasure === "imperial" ? "metric" : "imperial";
+                setUnitOfMeasure(newUnit);
+                const cUser: IUser = await Auth.currentAuthenticatedUser();
+                await Auth.updateUserAttributes(cUser, {
+                  zoneinfo: newUnit,
+                });
+              },
+            }}
+          >
+            <ViewportProvider>
+              <ThemeUIProvider theme={theme}>
+                <NotificationContext.Provider
+                  value={{
+                    notification,
+                    setNotification,
+                  }}
+                >
+                  <ThemeChanger />
+                  <UserContext.Provider value={{ user, setUser }}>
+                    <Component {...pageProps} />
+                  </UserContext.Provider>
+                  <NotificationMessage />
+                </NotificationContext.Provider>
+              </ThemeUIProvider>
+            </ViewportProvider>
+          </UnitProvider.Provider>
+        </main>
       </>
     </ErrorBoundary>
   );

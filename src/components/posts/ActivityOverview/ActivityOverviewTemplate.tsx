@@ -33,7 +33,7 @@ const ActivityOverviewTemplate = ({ items }: { items: ActivityItems }) => (
           as="div"
           sx={
             {
-              fontFamily: "body",
+              // fontFamily: "body",
               fontSize: ["20px", "24px", "24px"],
               lineHeight: ["20px", "24px", "24px"],
               fontWeight: ["600", "600", "600"],

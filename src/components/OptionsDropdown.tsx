@@ -1,6 +1,6 @@
 import React from "react";
 import { Path, Transforms } from "slate";
-import { Box } from "theme-ui";
+import { Box, IconButton } from "theme-ui";
 import { Editor } from "slate";
 
 import OptionsMenu from "../components/posts/Editor/OptionsMenu";
@@ -9,6 +9,13 @@ import { EditorContext } from "./posts/Editor/EditorContext";
 import { useSlateContext } from "./SlateContext";
 import GenericMenuItem from "./GenericMenuItem";
 import { CustomElement } from "../types/common";
+import EditIcon from "./icons/EditIcon";
+import CaretDown from "./icons/CaretDown";
+import DeleteIcon from "./icons/DeleteIcon";
+import MoveUpIcon from "./icons/MoveUpIcon";
+import MoveDownIcoon from "./icons/MoveDownIcon";
+import ImagesIcon from "./icons/ImagesIcon";
+import SettingsIcon from "./icons/SettingsIcon";
 
 const OptionsDropdown = () => {
   const {
@@ -47,6 +54,11 @@ const OptionsDropdown = () => {
                 setIsOptionsOpen(false);
               }}
               label="Edit Caption"
+              icon={
+                <IconButton>
+                  <EditIcon />
+                </IconButton>
+              }
             />
           </Box>
         )}
@@ -59,6 +71,11 @@ const OptionsDropdown = () => {
                   setIsOptionsOpen(false);
                 }}
                 label="Move Up"
+                icon={
+                  <IconButton>
+                    <MoveUpIcon />
+                  </IconButton>
+                }
               />
             </Box>
           )}
@@ -70,6 +87,11 @@ const OptionsDropdown = () => {
                 setIsOptionsOpen(false);
               }}
               label="Move Down"
+              icon={
+                <IconButton>
+                  <MoveDownIcoon />
+                </IconButton>
+              }
             />
           </Box>
         )}
@@ -84,6 +106,11 @@ const OptionsDropdown = () => {
                 selection && selection.removeAllRanges();
               }}
               label="Delete"
+              icon={
+                <IconButton>
+                  <DeleteIcon />
+                </IconButton>
+              }
             />
           </Box>
         )}
@@ -96,6 +123,7 @@ const OptionsDropdown = () => {
                   setIsOptionsOpen(false);
                 }}
                 label="Change Image"
+                icon={<ImagesIcon />}
               />
             </Box>
             <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
@@ -105,6 +133,7 @@ const OptionsDropdown = () => {
                   setIsOptionsOpen(false);
                 }}
                 label="Settings"
+                icon={<SettingsIcon />}
               />
             </Box>
 
@@ -115,6 +144,11 @@ const OptionsDropdown = () => {
                   setIsOptionsOpen(false);
                 }}
                 label="Edit Caption"
+                icon={
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                }
               />
             </Box>
           </>
