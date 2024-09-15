@@ -46,6 +46,8 @@ import CloudCheck from "../../src/components/icons/CloudCheck";
 import ZoomOut from "../../src/components/icons/ZoomOut";
 import SaveIcon from "../../src/components/icons/SaveIcon";
 import DeleteIcon from "../../src/components/icons/DeleteIcon";
+import EditIcon from "../../src/components/icons/EditIcon";
+import ProfileIcon from "../../src/components/icons/ProfileIcon";
 
 const icons = [
   BulletListIcon,
@@ -84,6 +86,8 @@ const icons = [
   ZoomOut,
   SaveIcon,
   DeleteIcon,
+  EditIcon,
+  ProfileIcon,
 ];
 
 const ThemePreview = () => {

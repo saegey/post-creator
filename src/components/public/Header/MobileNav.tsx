@@ -97,7 +97,7 @@ const MobileNav = ({
                 onClick={() => setIsMenuOpen(false)}
                 isVisible={isResourcesMenuOpen}
                 title="Docs"
-                externalHref="https://monopad.gitbook.io/docs-1/v/1/"
+                externalHref="https://monopad.mintlify.app"
                 textColor="text"
               />
               <MenuListItem

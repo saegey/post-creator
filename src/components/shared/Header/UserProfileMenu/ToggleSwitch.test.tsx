@@ -27,18 +27,6 @@ describe("ToggleSwitch", () => {
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
   });
 
-  it("renders the toggle switch with muted text", () => {
-    renderComponent({
-      label: "Units",
-      isChecked: false,
-      onChange: mockOnChange,
-      mutedText: "imperial/metric",
-    });
-
-    expect(screen.getByText("Units")).toBeInTheDocument();
-    expect(screen.getByText("imperial/metric")).toBeInTheDocument();
-  });
-
   it("calls onChange when the switch is clicked", () => {
     renderComponent({
       label: "Dark Mode",

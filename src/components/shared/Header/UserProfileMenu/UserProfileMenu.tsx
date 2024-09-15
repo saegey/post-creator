@@ -14,6 +14,15 @@ import { useViewport } from "../../../ViewportProvider";
 import ToggleSwitch from "./ToggleSwitch";
 import ProfileHeader from "./ProfileHeader";
 import MenuItem from "./MenuItem";
+import ProfileIcon from "../../../icons/ProfileIcon";
+import JournalIcon from "../../../icons/JournalIcon";
+import DarkModeIcon from "../../../icons/DarkModeIcon";
+import RulerIcon from "../../../icons/RulerIcon";
+import DocsIcon from "../../../icons/DocsIcon";
+import LogIcon from "../../../icons/LogIcon";
+import SupportIcon from "../../../icons/SupportIcon";
+import RoadIcon from "../../../icons/RoadIcon";
+import LogoutIcon from "../../../icons/LogoutIcon";
 
 interface UserProfileMenuProps {
   setProfileOpen: (arg: boolean) => void;
@@ -79,42 +88,75 @@ const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
               as="ul"
               sx={
                 {
-                  marginTop: "10px",
+                  marginTop: "5px",
                   listStyleType: "none",
                   li: {
-                    paddingY: "5px",
+                    paddingY: "1px",
                   },
                 } as ThemeUIStyleObject<Theme>
               }
             >
-              <MenuItem href="/profile">Profile</MenuItem>
-              <MenuItem href="/posts">Posts</MenuItem>
+              <MenuItem href="/profile" icon={<ProfileIcon />}>
+                Profile
+              </MenuItem>
+              <MenuItem href="/posts" icon={<JournalIcon />}>
+                Posts
+              </MenuItem>
               {/* <MenuItem href="/">Explore</MenuItem> */}
-              <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
+              <Divider
+                sx={
+                  {
+                    color: "border",
+                    marginY: "5px",
+                  } as ThemeUIStyleObject<Theme>
+                }
+              />
               <ToggleSwitch
                 label="Dark Mode"
                 isChecked={mode === "dark"}
                 onChange={() => setMode(mode === "dark" ? "light" : "dark")}
+                icon={<DarkModeIcon />}
               />
               <ToggleSwitch
                 label="Metric Units"
                 // mutedText="imperial/metric"
                 isChecked={unitOfMeasure !== "imperial"}
                 onChange={toggleUnit}
+                icon={<RulerIcon />}
               />
               <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
-              <MenuItem href="https://monopad.gitbook.io/docs/">Docs</MenuItem>
-              <MenuItem href="https://monopad.productlane.com/changelog">
+              <MenuItem
+                icon={<DocsIcon />}
+                href="https://monopad.mintlify.app"
+                openNewWindow={true}
+              >
+                Docs
+              </MenuItem>
+              <MenuItem
+                href="https://monopad.productlane.com/changelog"
+                icon={<LogIcon />}
+                openNewWindow={true}
+              >
                 Changelog
               </MenuItem>
-              <MenuItem href="https://monopad.productlane.com/roadmap">
+              <MenuItem
+                href="https://monopad.productlane.com/roadmap"
+                icon={<SupportIcon />}
+                openNewWindow={true}
+              >
                 Support
               </MenuItem>
-              <MenuItem href="https://monopad.productlane.com/roadmap">
+              <MenuItem
+                href="https://monopad.productlane.com/roadmap"
+                icon={<RoadIcon />}
+                openNewWindow={true}
+              >
                 Roadmap
               </MenuItem>
               <Divider sx={{ color: "border" } as ThemeUIStyleObject<Theme>} />
-              <MenuItem href="/logout">Sign Out</MenuItem>
+              <MenuItem href="/logout" icon={<LogoutIcon />}>
+                Sign Out
+              </MenuItem>
             </Box>
           </Box>
         </Box>

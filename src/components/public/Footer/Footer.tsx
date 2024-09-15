@@ -59,10 +59,7 @@ const PublicFooter = () => {
             }}
           >
             <FooterSection title="Explore">
-              <FooterLink
-                href="https://monopad.gitbook.io/docs-1/v/1/"
-                external
-              >
+              <FooterLink href="https://monopad.mintlify.app" external>
                 Docs
               </FooterLink>
               <FooterLink
@@ -122,14 +119,14 @@ const PublicFooter = () => {
               onClick={() => setIsExploreMenuOpen(false)}
               isVisible={isExploreMenuOpen}
               title="Docs"
-              externalHref="https://monopad.gitbook.io/docs-1/v/1/"
+              externalHref="https://monopad.mintlify.app"
               textColor="background"
             />
             <MenuListItem
               onClick={() => setIsExploreMenuOpen(false)}
               title="Changelog"
               isVisible={isExploreMenuOpen}
-              externalHref="https://monopad.gitbook.io/docs-1/v/1/"
+              externalHref="https://monopad.productlane.com/changelog"
               textColor="background"
             />
             <MenuListItem

@@ -47,6 +47,7 @@ const MenuListItem = ({
         {externalHref && (
           <ThemeLink
             href={externalHref}
+            target="_blank"
             sx={{ textDecoration: "none" }}
             onClick={() => {
               onClick();

@@ -35,6 +35,7 @@ export default {
     backgroundTransparent: "rgba(255, 255, 255, 0.1)",
     primaryAccent: lighten(palette.black, 0.2),
     text: palette.black,
+    textLight: lighten(palette.black, 0.2),
     muted: palette.grayDark,
     surface: palette.grayMediumLight,
     inputText: palette.grayDark,
@@ -65,6 +66,7 @@ export default {
         backgroundOpaque: "rgba(0, 0, 0, 0.7)",
         backgroundTransparent: "rgba(255, 255, 255, 0.1)",
         text: palette.white,
+        textLight: darken(palette.white, 0.1),
         inputText: palette.white,
         inputBackground: lighten(palette.grayDarkest, 0.1),
         muted: palette.grayDark,
@@ -285,11 +287,11 @@ export default {
       "&:hover": {
         backgroundColor: "accent",
         borderRadius: "5px",
-        color: "text",
+        color: "textLight",
       },
     },
     profileMenuText: {
-      color: "text",
+      color: "textLight",
       fontSize: ["17px", "15px", "15px"],
     },
     profileMenuLink: {
@@ -299,7 +301,7 @@ export default {
       },
       backgroundColor: "background",
       textDecoration: "none",
-      color: "text",
+      color: "textLight",
       padding: "5px",
       width: "100%",
       fontSize: ["17px", "15px", "15px"],
@@ -398,9 +400,9 @@ export default {
     },
   },
   fonts: {
-    body: '"SF Pro Display", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+    body: '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading:
-      'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+      '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     monospace: "Menlo, monospace",
   },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],

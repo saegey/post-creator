@@ -5,6 +5,8 @@ import {
   ThemeUIStyleObject,
   Theme,
   Text,
+  IconButton,
+  Box,
 } from "theme-ui";
 import Link from "next/link";
 
@@ -13,6 +15,8 @@ interface MenuItemProps {
   onClick?: () => void;
   children: React.ReactNode;
   variant?: string;
+  icon?: React.ReactNode;
+  openNewWindow?: boolean;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -20,6 +24,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   onClick,
   children,
   variant = "profileMenuLink",
+  icon,
+  openNewWindow,
 }) => (
   <Flex
     as="li"
@@ -32,13 +38,37 @@ const MenuItem: React.FC<MenuItemProps> = ({
     onClick={href ? undefined : onClick}
   >
     {href ? (
-      <ThemeLink as={Link} variant={variant} href={href}>
-        {children}
-      </ThemeLink>
+      <>
+        <ThemeLink
+          as={Link}
+          variant={variant}
+          href={href}
+          data-testid="profile-menu-link"
+          target={openNewWindow ? "_blank" : ""}
+        >
+          <Flex sx={{ gap: "15px", height: "100%" }}>
+            {icon ? (
+              <Flex sx={{ height: "100%", alignItems: "center" }}>
+                <IconButton
+                  sx={{ padding: "0", width: "20px", height: "20px" }}
+                >
+                  {icon}
+                </IconButton>
+              </Flex>
+            ) : null}
+            <Flex sx={{ alignItems: "center" }}>
+              <Box>{children}</Box>
+            </Flex>
+          </Flex>
+        </ThemeLink>
+      </>
     ) : (
-      <Text as="span" variant={variant}>
-        {children}
-      </Text>
+      <>
+        {icon ? <IconButton sx={{ padding: "5px" }}>{icon}</IconButton> : null}
+        <Text as="span" variant={variant}>
+          {children}
+        </Text>
+      </>
     )}
   </Flex>
 );
