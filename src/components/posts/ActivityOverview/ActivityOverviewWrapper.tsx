@@ -8,7 +8,6 @@ import { EditorContext } from "../../posts/Editor/EditorContext";
 import { ActivityOverviewType } from "../../../types/common";
 import HoverAction from "../Editor/HoverAction";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
-import PowerGraphIcon from "../../icons/PowerGraphIcon";
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 
 const ActivityOverviewWrapper = ({
@@ -32,11 +31,11 @@ const ActivityOverviewWrapper = ({
     cadenceAnalysis,
     tempAnalysis,
     currentFtp,
+    gpxFile,
   } = React.useContext(PostContext);
   const { isFtpUpdating } = React.useContext(EditorContext);
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
-  const { isSettingsModalOpen, setIsSettingsModalOpen } =
-    React.useContext(EditorContext);
+  const { setIsSettingsModalOpen } = React.useContext(EditorContext);
 
   const activityData = React.useMemo(() => {
     return {
@@ -75,8 +74,7 @@ const ActivityOverviewWrapper = ({
     return optionsMenu;
   }, [isOptionsOpen]);
 
-  console.log(distance);
-  if (distance === null || distance === 0) {
+  if (!gpxFile) {
     return (
       <HoverAction element={element}>
         <>

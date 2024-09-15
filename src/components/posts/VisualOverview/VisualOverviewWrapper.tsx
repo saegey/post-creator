@@ -17,7 +17,6 @@ import HoverAction from "../Editor/HoverAction";
 import VisualOverview from "./VisualOverview";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import { EditorContext } from "../Editor/EditorContext";
-import PowerGraphIcon from "../../icons/PowerGraphIcon";
 import RouteIcon from "../../icons/RouteIcon";
 
 const VisualOverviewWrapper = ({
