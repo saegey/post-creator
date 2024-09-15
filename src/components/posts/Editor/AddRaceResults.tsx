@@ -34,7 +34,10 @@ const AddRaceResults = () => {
         }}
         id="add-race-results"
       >
-        <GenericMenuItem label={"Results"} icon={<ResultsIcon />} />
+        <GenericMenuItem
+          label={"Results"}
+          icon={<ResultsIcon sx={{ padding: "6px" }} />}
+        />
       </Box>
     </>
   );

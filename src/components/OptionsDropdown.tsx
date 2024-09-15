@@ -64,7 +64,7 @@ const OptionsDropdown = () => {
         )}
         {node.type !== undefined &&
           JSON.stringify(path) !== JSON.stringify([2]) && (
-            <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+            <Box variant="boxes.sidebarMenuItem">
               <GenericMenuItem
                 onClick={() => {
                   moveNodeUp(editor, path);
@@ -80,7 +80,7 @@ const OptionsDropdown = () => {
             </Box>
           )}
         {node.type !== undefined && (
-          <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+          <Box variant="boxes.sidebarMenuItem">
             <GenericMenuItem
               onClick={() => {
                 moveNodeDown(editor, path);
@@ -96,7 +96,7 @@ const OptionsDropdown = () => {
           </Box>
         )}
         {node.type !== undefined && (
-          <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+          <Box variant="boxes.sidebarMenuItem">
             <GenericMenuItem
               onClick={() => {
                 Transforms.removeNodes(editor, { at: path });
@@ -107,7 +107,7 @@ const OptionsDropdown = () => {
               }}
               label="Delete"
               icon={
-                <IconButton>
+                <IconButton sx={{ padding: "8px" }}>
                   <DeleteIcon />
                 </IconButton>
               }
@@ -116,28 +116,28 @@ const OptionsDropdown = () => {
         )}
         {node.type === undefined && (
           <>
-            <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+            <Box variant="boxes.sidebarMenuItem">
               <GenericMenuItem
                 onClick={() => {
                   setIsChangeImageModalOpen(true);
                   setIsOptionsOpen(false);
                 }}
                 label="Change Image"
-                icon={<ImagesIcon />}
+                icon={<ImagesIcon sx={{ padding: "6px" }} />}
               />
             </Box>
-            <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+            <Box variant="boxes.sidebarMenuItem">
               <GenericMenuItem
                 onClick={() => {
                   setIsSettingsModalOpen(true);
                   setIsOptionsOpen(false);
                 }}
                 label="Settings"
-                icon={<SettingsIcon />}
+                icon={<SettingsIcon sx={{ padding: "6px" }} />}
               />
             </Box>
 
-            <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+            <Box variant="boxes.sidebarMenuItem">
               <GenericMenuItem
                 onClick={() => {
                   setIsPhotoCaptionOpen(true);
@@ -145,7 +145,7 @@ const OptionsDropdown = () => {
                 }}
                 label="Edit Caption"
                 icon={
-                  <IconButton>
+                  <IconButton sx={{ padding: "6px" }}>
                     <EditIcon />
                   </IconButton>
                 }

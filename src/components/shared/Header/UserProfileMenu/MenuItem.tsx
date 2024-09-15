@@ -50,7 +50,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
             {icon ? (
               <Flex sx={{ height: "100%", alignItems: "center" }}>
                 <IconButton
-                  sx={{ padding: "0", width: "20px", height: "20px" }}
+                  sx={{ padding: "0", width: "16px", height: "16px" }}
                 >
                   {icon}
                 </IconButton>

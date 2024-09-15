@@ -30,11 +30,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onClose }) => {
       }
     >
       <Flex sx={{ gap: "10px", width: "100%" } as ThemeUIStyleObject<Theme>}>
-        <Box sx={{ width: "40px", height: "40px" }}>
+        <Box sx={{ width: "32px", height: "32px" }}>
           {user.attributes && user.attributes.picture ? (
             <CldImage
-              width="400"
-              height="400"
+              width="200"
+              height="200"
               src={user.attributes.picture}
               style={{
                 width: "100%",
@@ -57,7 +57,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onClose }) => {
           )}
         </Box>
         <Flex sx={{ flexDirection: "column", gap: "5px" }}>
-          <Text as="div" variant="profileMenuLink">
+          <Text as="div" variant="profileMenuLink" sx={{ fontSize: "14px" }}>
             {user.attributes.name}
           </Text>
           <Text
@@ -66,6 +66,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onClose }) => {
               {
                 lineHeight: "12px",
                 fontWeight: 700,
+                fontSize: "14px",
               } as ThemeUIStyleObject<Theme>
             }
             variant="profileMenuLink"

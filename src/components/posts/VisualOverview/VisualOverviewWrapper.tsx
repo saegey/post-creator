@@ -1,6 +1,14 @@
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { Box, Spinner, Flex, ThemeUIStyleObject, Theme } from "theme-ui";
+import {
+  Box,
+  Spinner,
+  Flex,
+  ThemeUIStyleObject,
+  Theme,
+  Text,
+  Button,
+} from "theme-ui";
 
 import { PostContext } from "../../PostContext";
 import { VisualOverviewType } from "../../../types/common";
@@ -8,6 +16,8 @@ import { VisualOverviewContext } from "./VisualOverviewContext";
 import HoverAction from "../Editor/HoverAction";
 import VisualOverview from "./VisualOverview";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
+import { EditorContext } from "../Editor/EditorContext";
+import RouteIcon from "../../icons/RouteIcon";
 
 const VisualOverviewWrapper = ({
   element,
@@ -20,10 +30,12 @@ const VisualOverviewWrapper = ({
   unitOfMeasure: string;
   children: JSX.Element;
 }) => {
-  const { activity, elevations } = React.useContext(PostContext);
+  const { activity, elevations, gpxFile } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
+  const { isSettingsModalOpen, setIsSettingsModalOpen } =
+    React.useContext(EditorContext);
 
   const [selection, setSelection] = React.useState<
     [number, number] | undefined
@@ -73,6 +85,60 @@ const VisualOverviewWrapper = ({
       />
     );
   }, [activity, elevations, unitOfMeasure]);
+
+  if (!gpxFile) {
+    return (
+      <HoverAction element={element}>
+        <>
+          <Box variant="boxes.componentCard" contentEditable={false}>
+            <Flex
+              sx={
+                {
+                  backgroundColor: "surface",
+                  borderRadius: "5px",
+                  width: "100%",
+                  height: ["250px", "450px", "450px"],
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "20px",
+                  flexDirection: "column",
+                } as ThemeUIStyleObject<Theme>
+              }
+            >
+              <Flex sx={{ alignItems: "center", gap: "5px" }}>
+                <RouteIcon
+                  sx={{
+                    color: "surfaceAccent",
+                    width: "40px",
+                    height: "40px",
+                    // backgroundColor: "yellow",
+                    padding: "0px",
+                  }}
+                />
+                <Text
+                  sx={{
+                    color: "surfaceAccent",
+                    fontSize: "20px",
+                    fontWeight: 610,
+                  }}
+                >
+                  Map requires activity
+                </Text>
+              </Flex>
+              <Button
+                variant="primaryButton"
+                sx={{ width: "fit-content" }}
+                onClick={() => setIsSettingsModalOpen(true)}
+              >
+                Upload
+              </Button>
+            </Flex>
+            {optionsMenu}
+          </Box>
+        </>
+      </HoverAction>
+    );
+  }
 
   if (!activity || activity.length === 0 || !unitOfMeasure) {
     return (

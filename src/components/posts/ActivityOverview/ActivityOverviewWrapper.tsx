@@ -1,4 +1,4 @@
-import { Box } from "theme-ui";
+import { Box, Button, Flex, Text } from "theme-ui";
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
@@ -8,6 +8,7 @@ import { EditorContext } from "../../posts/Editor/EditorContext";
 import { ActivityOverviewType } from "../../../types/common";
 import HoverAction from "../Editor/HoverAction";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
+import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 
 const ActivityOverviewWrapper = ({
   element,
@@ -30,9 +31,11 @@ const ActivityOverviewWrapper = ({
     cadenceAnalysis,
     tempAnalysis,
     currentFtp,
+    gpxFile,
   } = React.useContext(PostContext);
   const { isFtpUpdating } = React.useContext(EditorContext);
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
+  const { setIsSettingsModalOpen } = React.useContext(EditorContext);
 
   const activityData = React.useMemo(() => {
     return {
@@ -70,6 +73,50 @@ const ActivityOverviewWrapper = ({
   const menuMemo = React.useMemo(() => {
     return optionsMenu;
   }, [isOptionsOpen]);
+
+  if (!gpxFile) {
+    return (
+      <HoverAction element={element}>
+        <>
+          <Box variant="boxes.componentCard" contentEditable={false}>
+            <Flex
+              sx={{
+                backgroundColor: "surface",
+                borderRadius: "5px",
+                width: "100%",
+                height: ["250px", "250px", "250px"],
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "20px",
+                flexDirection: "column",
+              }}
+            >
+              <Flex sx={{ alignItems: "center", gap: "10px" }}>
+                <ActivityOverviewIcon sx={{ color: "surfaceAccent" }} />
+                <Text
+                  sx={{
+                    color: "surfaceAccent",
+                    fontSize: "20px",
+                    fontWeight: 610,
+                  }}
+                >
+                  Metrics requires activity
+                </Text>
+              </Flex>
+              <Button
+                variant="primaryButton"
+                sx={{ width: "fit-content" }}
+                onClick={() => setIsSettingsModalOpen(true)}
+              >
+                Upload
+              </Button>
+            </Flex>
+            {optionsMenu}
+          </Box>
+        </>
+      </HoverAction>
+    );
+  }
 
   return (
     <HoverAction element={element}>

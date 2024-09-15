@@ -18,6 +18,7 @@ const GraphSelectorMenu = () => {
           flexDirection: "column",
           margin: "0px",
           width: "100%",
+          gap: "5px",
         }}
       >
         <AddText />

@@ -17,49 +17,31 @@ const AddRouteOverview = () => {
   const { path } = menuPosition;
 
   if (!editor) {
-    return;
+    throw new Error("Editor is not defined");
   }
 
   const addMap = () => {
-    if (gpxFile) {
-      Transforms.insertNodes(
-        editor,
-        { type: "visualOverview", children: [{ text: "" }], void: true },
-        { at: path }
-      );
-      if (path.length > 2) {
-        Transforms.liftNodes(editor);
-      }
-      setIsNewComponentMenuOpen(false);
-      setMobileMenu({
-        top: 0,
-        left: 0,
-        display: false,
-        path: path,
-        isFullScreen: false,
-      });
-      const selection = window.getSelection();
-      // console.log(selection)
-      selection && selection.removeAllRanges();
+    Transforms.insertNodes(
+      editor,
+      { type: "visualOverview", children: [{ text: "" }], void: true },
+      { at: path }
+    );
+    if (path.length > 2) {
+      Transforms.liftNodes(editor);
     }
+    setIsNewComponentMenuOpen(false);
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
+    const selection = window.getSelection();
+    selection && selection.removeAllRanges();
   };
 
-  return !gpxFile ? (
-    <Tooltip text="Upload an activity file in settings to Enable">
-      <Box
-        sx={{
-          cursor: "not-allowed",
-        }}
-        variant="boxes.sidebarMenuItem"
-      >
-        <GenericMenuItem
-          icon={<RouteIcon />}
-          label="Route Overview"
-          isDisabled={gpxFile ? false : true}
-        />
-      </Box>
-    </Tooltip>
-  ) : (
+  return (
     <Box
       onClick={addMap}
       sx={{
@@ -67,7 +49,10 @@ const AddRouteOverview = () => {
       }}
       variant="boxes.sidebarMenuItem"
     >
-      <GenericMenuItem icon={<RouteIcon />} label="Map" />
+      <GenericMenuItem
+        icon={<RouteIcon sx={{ padding: "6px" }} />}
+        label="Map"
+      />
     </Box>
   );
 };

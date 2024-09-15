@@ -20,7 +20,7 @@ const AddPowerCurve = () => {
     editor: CustomEditor | undefined,
     path: Path
   ) => {
-    if (gpxFile && editor) {
+    if (editor) {
       Transforms.insertNodes(
         editor,
         {
@@ -40,7 +40,7 @@ const AddPowerCurve = () => {
     return <></>;
   }
 
-  return gpxFile ? (
+  return (
     <Box
       onClick={() => {
         insertPowerGraphNode(editor, path);
@@ -51,23 +51,11 @@ const AddPowerCurve = () => {
         cursor: "pointer",
       }}
     >
-      <GenericMenuItem icon={<PowerGraphIcon />} label="Graph" />
+      <GenericMenuItem
+        icon={<PowerGraphIcon sx={{ padding: "3px" }} />}
+        label="Graph"
+      />
     </Box>
-  ) : (
-    <Tooltip text="Upload an activity file in settings to Enable">
-      <Box
-        variant="boxes.sidebarMenuItem"
-        sx={{
-          cursor: "not-allowed",
-        }}
-      >
-        <GenericMenuItem
-          icon={<PowerGraphIcon />}
-          label="Graph"
-          isDisabled={gpxFile ? false : true}
-        />
-      </Box>
-    </Tooltip>
   );
 };
 
