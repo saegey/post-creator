@@ -1,6 +1,14 @@
 import React from "react";
-import { Box, Flex, Text, Badge, Link as ThemeLink } from "theme-ui";
+import {
+  Box,
+  Flex,
+  Text,
+  Badge,
+  Link as ThemeLink,
+  IconButton,
+} from "theme-ui";
 import Link from "next/link";
+import NewWindowIcon from "../../icons/NewWindowIcon";
 
 type MenuDropdownProps = {
   isOpen: boolean;
@@ -11,7 +19,9 @@ type MenuDropdownProps = {
     externalHref?: string;
     soon?: boolean;
     disabled?: boolean;
+    openInNewTab?: boolean;
   }>;
+  openInNewTab?: true;
   onItemClick?: () => void;
 };
 
@@ -25,6 +35,7 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
               <ThemeLink
                 as={Link}
                 href={item.href}
+                target={item.openInNewTab ? "_blank" : ""}
                 sx={{
                   textDecoration: "none",
                   padding: "5px",
@@ -44,10 +55,7 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
                   }}
                   onClick={onItemClick}
                 >
-                  {item.title}{" "}
-                  {item.soon && (
-                    <Badge sx={{ backgroundColor: "primary" }}>Soon</Badge>
-                  )}
+                  {item.title}
                 </Text>
                 <Text
                   sx={{
@@ -60,26 +68,17 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
               </ThemeLink>
             ) : (
               <Flex sx={{ padding: "5px", flexDirection: "column" }}>
-                <Text
-                  sx={{
-                    fontWeight: "600",
-                    color: item.disabled ? "disabledText" : "link",
-                    marginBottom: "5px",
-                  }}
-                >
-                  {item.title}{" "}
-                  {item.soon && (
-                    <Badge
-                      sx={{
-                        backgroundColor: "primary",
-                        color: "secondary",
-                        padding: "2px 4px",
-                      }}
-                    >
-                      Coming Soon
-                    </Badge>
-                  )}
-                </Text>
+                <Flex>
+                  <Text
+                    sx={{
+                      fontWeight: "600",
+                      color: item.disabled ? "disabledText" : "link",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    {item.title}
+                  </Text>
+                </Flex>
                 <Text
                   sx={{
                     fontSize: "14px",
@@ -90,6 +89,22 @@ const MenuDropdown = ({ isOpen, items, onItemClick }: MenuDropdownProps) => {
                 </Text>
               </Flex>
             )}
+            {item.openInNewTab ? (
+              <Box
+                sx={{
+                  position: "absolute",
+                  right: 0,
+                  marginRight: "5px",
+                  marginTop: "5px",
+                }}
+              >
+                <IconButton
+                  sx={{ width: "24px", marginRight: "5px", color: "textLight" }}
+                >
+                  <NewWindowIcon />
+                </IconButton>
+              </Box>
+            ) : null}
           </Flex>
         ))}
       </Flex>

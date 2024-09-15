@@ -73,8 +73,8 @@ const PublicFooter = () => {
 
             <FooterSection title="Company">
               <FooterLink href="/about">About</FooterLink>
-              <FooterLink href="/manifesto">Manifesto</FooterLink>
-              <FooterLink href="/status">Status</FooterLink>
+              {/* <FooterLink href="/manifesto">Manifesto</FooterLink>
+              <FooterLink href="/status">Status</FooterLink> */}
             </FooterSection>
 
             <FooterSection title="Legal">
