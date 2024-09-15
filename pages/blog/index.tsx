@@ -60,19 +60,12 @@ export default function Post({ allPosts }: Props) {
               flexDirection: "column",
               justifyContent: "center",
               gap: "40px",
-              marginTop: ["20px", "20px", "200px"],
-              marginBottom: ["20px", "20px", "200px"],
+              marginTop: ["20px", "20px", "40px"],
+              marginBottom: ["20px", "20px", "40px"],
             }}
           >
             <Text as="h1">Blog</Text>
-            <Text as="p">
-              Delve into a blog encompassing diverse articles on training
-              methodologies, UI/UX insights, software innovations, and the
-              intricacies of cycling in the professional realm.
-            </Text>
-            <Text as="p">
-              Stay up to date by subscribing to our newsletter.
-            </Text>
+
             <Flex sx={{ flexDirection: "column", gap: "80px" }}>
               <BlogPostList allPosts={allPosts} />
             </Flex>

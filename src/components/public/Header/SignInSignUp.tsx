@@ -31,7 +31,6 @@ const SignInSignUp = () => {
           },
           textDecoration: "none",
           color: "text",
-          fontSize: ["17px", "15px", "15px"],
         }}
       >
         <Button
@@ -41,6 +40,7 @@ const SignInSignUp = () => {
             color: "text",
             "&:hover": { backgroundColor: "surface" },
             width: "fit-content",
+            fontSize: ["17px", "14px", "14px"],
           }}
         >
           Sign In
@@ -59,6 +59,8 @@ const SignInSignUp = () => {
             // color: "red",
             // "&:hover": { backgroundColor: "surface" },
             width: "fit-content",
+            // paddingX: "50px",
+            fontSize: ["17px", "14px", "14px"],
           }}
         >
           Sign Up

@@ -1,4 +1,12 @@
-import { Avatar, Box, Flex, Grid, Text, Link as ThemeLink } from "theme-ui";
+import {
+  AspectRatio,
+  Avatar,
+  Box,
+  Flex,
+  Grid,
+  Text,
+  Link as ThemeLink,
+} from "theme-ui";
 import Link from "next/link";
 import Image from "next/image";
 import moment from "moment";
@@ -13,30 +21,41 @@ const BlogPostListItem = ({ post }: PostItemProps) => {
   return (
     <Grid
       columns={["1fr", ".85fr 1fr", ".85fr 1fr"]}
-      sx={{ rowGap: ["30px", "30px", "64px"] }}
+      sx={{
+        rowGap: ["30px", "30px", "64px"],
+        // padding: "20px",
+        backgroundColor: "surfaceLight",
+        borderRadius: "5px",
+      }}
     >
       <Link href={`/blog/${post.slug}`}>
-        <Image
-          src={post.coverImage}
-          alt="cover image"
-          style={{
-            width: "100%",
-            height: "auto",
-            borderRadius: "5px",
-          }}
-          width={800}
-          height={400}
-        />
+        <AspectRatio ratio={4 / 3}>
+          <Image
+            src={post.coverImage}
+            alt="cover image"
+            style={{
+              width: "100%",
+              height: "100%",
+              // width: "100%",
+              // height: "100%",
+              objectFit: "cover",
+              borderTopLeftRadius: "5px",
+              borderBottomLeftRadius: "5px",
+            }}
+            width={800}
+            height={400}
+          />
+        </AspectRatio>
       </Link>
-      <Box>
+      <Flex sx={{ flexDirection: "column", gap: "20px", margin: "10px" }}>
         <Text
           as="div"
           sx={{
-            marginBottom: "24px",
+            // marginBottom: "12px",
             textTransform: "uppercase",
             fontSize: "14px",
             lineHeight: "20px",
-            fontWeight: "400",
+            fontWeight: "530",
           }}
         >
           {post.topic}
@@ -51,8 +70,9 @@ const BlogPostListItem = ({ post }: PostItemProps) => {
             sx={{
               color: "text",
               fontSize: "26px",
-              lineHeight: "34px",
-              fontWeight: "400",
+              letterSpacing: "-0.5px",
+              lineHeight: "30px",
+              fontWeight: "530",
             }}
           >
             {post.title}
@@ -62,15 +82,18 @@ const BlogPostListItem = ({ post }: PostItemProps) => {
           as="div"
           sx={{
             fontSize: "16px",
-            lineHeight: "28px",
-            paddingTop: "16px",
-            marginBottom: "30px",
+            lineHeight: "20px",
+            // paddingTop: "16px",
+            // marginBottom: "30px",
           }}
         >
           {post.excerpt}
         </Text>
         <Flex sx={{ gap: "16px" }}>
-          <Avatar src={post.author.picture} />
+          <Avatar
+            src={post.author.picture}
+            sx={{ width: "40px", height: "40px" }}
+          />
           <Box>
             <Text
               as="div"
@@ -94,7 +117,7 @@ const BlogPostListItem = ({ post }: PostItemProps) => {
             </Text>
           </Box>
         </Flex>
-      </Box>
+      </Flex>
     </Grid>
   );
 };

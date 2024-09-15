@@ -99,10 +99,14 @@ const FeatureHiglight = ({
           <Text
             as="h2"
             sx={{
-              fontSize: ["36px", "48px", "48px"],
+              // fontSize: ["36px", "48px", "48px"],
+              fontWeight: 630,
+              fontSize: ["40px", "57px", "57px"],
               lineHeight: ["43px", "56px", "56px"],
-              fontWeight: 400,
+              // fontWeight: 400,
+              letterSpacing: "-1px",
               marginBottom: "24px",
+              color: "textLight",
             }}
           >
             {headline}
@@ -114,6 +118,8 @@ const FeatureHiglight = ({
               // fontStyle: "italic",
               lineHeight: ["24px", "27px", "27px"],
               marginBottom: ["20px", "24px", "24px"],
+              fontWeight: 530,
+              color: "textLight",
             }}
           >
             {subHeadline}

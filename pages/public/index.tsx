@@ -2,18 +2,11 @@ import Head from "next/head";
 import React from "react";
 import { Box, Button, Flex, Text, Link as ThemeLink } from "theme-ui";
 import Link from "next/link";
-// import MuxPlayer from "@mux/mux-player-react";
 import { lighten } from "@theme-ui/color";
 
 import PublicHeader from "../../src/components/public/Header/PublicHeader";
 import PublicFooter from "../../src/components/public/Footer/Footer";
-import VideoIcon from "../../src/components/icons/VideoIcon";
-import ResultsIcon from "../../src/components/icons/ResultsIcon";
-import PowerGraphIcon from "../../src/components/icons/PowerGraphIcon";
 import FeatureHiglight from "../../src/components/public/FeatureHighlight";
-import EyeIcon from "../../src/components/icons/EyeIcon";
-import HeroBannerIcon from "../../src/components/icons/HeroBannerIcon";
-import AvatarIcon from "../../src/components/icons/AvatarIcon";
 import FavIcon from "../../src/components/shared/FavIcon";
 import VideoModal from "../../src/components/VideoModal";
 import ForwardIcon from "../../src/components/icons/ForwardIcon";
@@ -73,15 +66,16 @@ const Home = () => {
                 as="h1"
                 sx={{
                   color: "text",
-                  fontWeight: 600,
-                  fontSize: ["40px", "62px", "62px"],
+                  fontWeight: 630,
+                  fontSize: ["40px", "57px", "57px"],
                   lineHeight: ["48px", "60px", "60px"],
                   marginBottom: "20px",
-                  textAlign: "center",
+                  letterSpacing: "-1px",
+                  textAlign: "left",
                 }}
               >
                 {/* Track, Trek, Triumph: Your Journey, Your Journal.. */}
-                Write, Reflect, Achieve: Your Adventure, Your Journal
+                Write, reflect, and achieve more with Monopad Journal.
               </Text>
               <Text
                 as="p"
@@ -89,14 +83,15 @@ const Home = () => {
                   marginBottom: "20px",
                   lineHeight: ["24px", "27px", "27px"],
                   fontSize: ["16px", "18px", "18px"],
+                  fontWeight: 530,
+                  color: "textLight",
                   // fontStyle: "italic",
                   // textAlign: "center",
                 }}
               >
-                Effortlessly craft a comprehensive bike race recap within
-                minutes. Enhance your narrative by seamlessly incorporating
-                photos and videos. Dive into insightful data analysis,
-                discussing pivotal moments and key highlights of the race.
+                Effortlessly create a detailed bike race recap with integrated
+                photos, videos, and data analysis to highlight key moments and
+                race insights.
               </Text>
               <Flex
                 sx={{
@@ -166,7 +161,7 @@ const Home = () => {
           <FeatureHiglight
             featureName="Activity Analytics"
             imagePath="/RaceResults-4.png"
-            headline={<>Explore insightful analytics for your race activity.</>}
+            headline={<>Explore insightful analytics</>}
             subHeadline={
               <>
                 Gain a competitive edge with detailed activity analytics.
@@ -177,7 +172,7 @@ const Home = () => {
             imagePosition="right"
             highlights={[
               {
-                icon: <ForwardIcon />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Zones time breakdown in a race is essential for strategic
@@ -187,7 +182,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ForwardIcon />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Explore your performance evolution with our app's power
@@ -199,7 +194,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ForwardIcon />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Analyze your race intensity with a feature showcasing a
@@ -225,7 +220,7 @@ const Home = () => {
             imagePosition="left"
             highlights={[
               {
-                icon: <ForwardIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Automatically embed and display your race results within
@@ -234,7 +229,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ForwardIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Streamlined integration keeps your race history organized
@@ -243,7 +238,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ForwardIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Instantly view your performance metrics, rankings, and
@@ -253,7 +248,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ForwardIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Eliminates the need to search through external sources,
@@ -273,11 +268,11 @@ const Home = () => {
                 options.
               </>
             }
-            headline={<>Share Your Racing Story with Precision and Control</>}
+            headline={<>Share Your Story</>}
             imagePosition="right"
             highlights={[
               {
-                icon: <ForwardIcon />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Invite-Only Access. Control access by sharing through
@@ -286,7 +281,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ForwardIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Public Visibility. Opt for public sharing to inspire and
@@ -295,7 +290,7 @@ const Home = () => {
                 ),
               },
               {
-                icon: <ForwardIcon sx={{ color: "primary" }} />,
+                icon: <ForwardIcon sx={{ color: "textLight" }} />,
                 content: (
                   <>
                     Effortlessly publish and share your journal entries from

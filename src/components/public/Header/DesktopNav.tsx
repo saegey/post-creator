@@ -32,11 +32,13 @@ const DesktopNav = () => {
       title: "Changelog",
       description: "Updates and new features",
       href: "https://monopad.productlane.com/changelog",
+      openInNewTab: true,
     },
     {
       title: "Docs",
       description: "Become a Monopad expert",
       href: "https://monopad.mintlify.app",
+      openInNewTab: true,
     },
     {
       title: "API",
@@ -54,6 +56,7 @@ const DesktopNav = () => {
           cursor: "pointer",
           justifyContent: "center",
           alignContent: "center",
+          fontSize: "14px",
         }}
         p={2}
         onMouseEnter={() => setIsProductMenuOpen(true)}
@@ -81,6 +84,7 @@ const DesktopNav = () => {
           cursor: "pointer",
           justifyContent: "center",
           alignContent: "center",
+          fontSize: "14px",
         }}
         p={2}
         onMouseEnter={() => setIsResourcesMenuOpen(true)}

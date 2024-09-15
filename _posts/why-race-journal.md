@@ -1,6 +1,6 @@
 ---
-title: "The Transformative Role of Race Journaling: A Comprehensive Guide to Athletic Improvement"
-excerpt: "Race journaling, a multifaceted practice encompassing reflection, strategic planning, data-driven analysis, and emotional motivation, stands as an indispensable tool, propelling athletes toward continuous improvement and personal growth."
+title: "The Transformative Role of Race Journaling"
+excerpt: "Race journaling stands as an indispensable tool, propelling athletes toward continuous improvement and personal growth."
 coverImage: "/assets/blog/dynamic-routing/DSC07860.jpg"
 date: "2024-01-01"
 author:
