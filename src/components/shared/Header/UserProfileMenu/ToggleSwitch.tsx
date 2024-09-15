@@ -33,7 +33,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         // paddingLeft: "10px",
         // backgroundColor: "red",
         fontWeight: 500,
-        fontSize: "15px",
+        fontSize: "14px",
         paddingY: "5px",
         marginX: "5px",
         marginY: "10px",
@@ -46,8 +46,8 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         <IconButton
           sx={{
             padding: "0",
-            width: "20px",
-            height: "20px",
+            width: "16px",
+            height: "16px",
             color: "textLight",
           }}
         >

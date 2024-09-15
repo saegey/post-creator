@@ -21,7 +21,7 @@ const AddRouteOverview = () => {
   }
 
   const addMap = () => {
-    if (gpxFile) {
+    if (true) {
       Transforms.insertNodes(
         editor,
         { type: "visualOverview", children: [{ text: "" }], void: true },
@@ -44,7 +44,7 @@ const AddRouteOverview = () => {
     }
   };
 
-  return !gpxFile ? (
+  return false ? (
     <Tooltip text="Upload an activity file in settings to Enable">
       <Box
         sx={{
@@ -67,7 +67,10 @@ const AddRouteOverview = () => {
       }}
       variant="boxes.sidebarMenuItem"
     >
-      <GenericMenuItem icon={<RouteIcon />} label="Map" />
+      <GenericMenuItem
+        icon={<RouteIcon sx={{ padding: "6px" }} />}
+        label="Map"
+      />
     </Box>
   );
 };

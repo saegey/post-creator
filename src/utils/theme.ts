@@ -251,8 +251,8 @@ export default {
       animation: "fadeIn .5s;",
     },
     sidebarMenuItem: {
-      fontSize: "15px",
-      paddingY: "5px",
+      fontSize: "14px",
+      // paddingY: "5px",
       borderRadius: "5px",
       width: "100%",
       "&:hover": {
@@ -304,7 +304,7 @@ export default {
       color: "textLight",
       padding: "5px",
       width: "100%",
-      fontSize: ["17px", "15px", "15px"],
+      fontSize: ["17px", "14px", "14px"],
     },
   },
   buttons: {

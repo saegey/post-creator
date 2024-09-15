@@ -62,7 +62,10 @@ const AddVideo = () => {
         cursor: "pointer",
       }}
     >
-      <GenericMenuItem icon={<VideoIcon />} label="Video" />
+      <GenericMenuItem
+        icon={<VideoIcon sx={{ padding: "6px" }} />}
+        label="Video"
+      />
     </Box>
   );
 };

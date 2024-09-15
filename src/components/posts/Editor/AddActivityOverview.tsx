@@ -8,6 +8,7 @@ import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
 import GenericMenuItem from "../../GenericMenuItem";
 import Tooltip from "../../shared/Tooltip";
+import { f } from "@cloudinary-util/url-loader/dist/schema-B3oovOzA.cjs";
 
 const AddActivityOverview = () => {
   const { gpxFile } = React.useContext(PostContext);
@@ -23,7 +24,7 @@ const AddActivityOverview = () => {
   }
 
   const addActivityOverview = () => {
-    if (gpxFile) {
+    if (true) {
       Transforms.insertNodes(
         editor,
         {
@@ -53,7 +54,7 @@ const AddActivityOverview = () => {
     }
   };
 
-  return !gpxFile ? (
+  return false ? (
     <Tooltip text="Upload an activity file in settings to Enable">
       <Box
         variant="boxes.sidebarMenuItem"
@@ -76,7 +77,10 @@ const AddActivityOverview = () => {
         cursor: "pointer",
       }}
     >
-      <GenericMenuItem label="Metrics" icon={<ActivityOverviewIcon />} />
+      <GenericMenuItem
+        label="Metrics"
+        icon={<ActivityOverviewIcon sx={{ padding: "6px" }} />}
+      />
     </Box>
   );
 };

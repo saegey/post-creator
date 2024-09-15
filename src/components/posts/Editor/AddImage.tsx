@@ -32,7 +32,10 @@ const AddImage = () => {
         cursor: "pointer",
       }}
     >
-      <GenericMenuItem label="Image" icon={<ImagesIcon />} />
+      <GenericMenuItem
+        label="Image"
+        icon={<ImagesIcon sx={{ padding: "6px" }} />}
+      />
     </Box>
   );
 };
