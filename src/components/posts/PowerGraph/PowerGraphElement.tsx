@@ -84,7 +84,6 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
       })
       .filter((p) => p !== undefined) as any;
 
-    console.log("data", data);
     return (
       <PowerCurveGraph ftp={currentFtp ? Number(currentFtp) : 0} data={data} />
     );

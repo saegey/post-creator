@@ -25,15 +25,12 @@ const AddText = () => {
     }
 
     // Get the point (cursor position) at the end of the inserted node
-    // console.log(menuPosition.path);
     const newPoint = Editor.end(editor, Editor.path(editor, menuPosition.path));
 
-    console.log(newPoint);
     ReactEditor.focus(editor);
 
     // Move the selection (cursor) to the new point
     if (newPoint) {
-      console.log("selecting new point");
       Transforms.select(editor, newPoint);
     }
 

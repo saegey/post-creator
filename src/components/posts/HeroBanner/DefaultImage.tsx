@@ -1,4 +1,4 @@
-import { Box, Flex, Button, IconButton } from "theme-ui";
+import { Box, Flex, IconButton } from "theme-ui";
 import React from "react";
 
 import { EditorContext } from "../Editor/EditorContext";
@@ -21,9 +21,7 @@ const DefaultImage = () => {
         <Box>
           <IconButton
             onClick={() => {
-              // setIsHeroImageModalOpen(true);
               setIsChangeImageModalOpen(true);
-              console.log("default image clicked");
             }}
             sx={{
               backgroundColor: "primary",

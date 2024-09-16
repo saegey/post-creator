@@ -36,7 +36,6 @@ export const getWebScorerCategories = async ({ url }: { url: string }) => {
       sport: string;
     };
   };
-  console.log(response);
   return response;
 };
 
@@ -167,7 +166,7 @@ export const getCategories = async ({ url }: { url: string }) => {
   const myInit = {
     response: true, // OPTIONAL (return the entire Axios response object instead of only response.data)
   };
-  // console.log(apiName, path);
+
   const response = (await API.get(apiName, path, myInit)) as {
     data: {
       filterValues: Array<{
@@ -180,8 +179,6 @@ export const getCategories = async ({ url }: { url: string }) => {
       eventName: string;
     };
   };
-
-  console.log(response);
 
   return response;
 };
@@ -225,7 +222,7 @@ export const getResults = async ({
       ) as string;
       temp[key] = column;
     });
-    // console.log(temp);
+
     return temp;
   }) as Array<RaceResultRowType>;
 };
@@ -313,7 +310,7 @@ export const saveCrossResults = async ({
       id: id,
       resultsUrl: resultsUrl,
     };
-    console.log(payload.crossResults);
+
     const response = await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
       query: updateCrossResults,
@@ -391,7 +388,6 @@ export const getRunSignupResults = async ({
   const path = `/results/runsignup?url=${encodeURIComponent(
     url.split("#")[0]
   )}&category=${category}`;
-  console.log(path);
 
   try {
     const res = (await API.get("api12660653", path, {
@@ -417,7 +413,6 @@ export const saveRequestProvider = async ({
 }) => {
   // const raceId = new URL(url).pathname.split("/")[2];
   const path = `/request/results-provider/`;
-  console.log(path);
 
   const res = (await API.post("api12660653", path, {
     body: {

@@ -13,7 +13,6 @@ const Menu = ({
 }) => {
   const wrapperRef = React.useRef();
   const { setIsNewComponentMenuOpen } = React.useContext(EditorContext);
-  // console.log("Men/u");
 
   useClickOutside(
     wrapperRef,
@@ -22,7 +21,6 @@ const Menu = ({
       e.stopPropagation();
     }
   );
-  // console.log("menu positiion", menuPosition);
 
   const menuMemo = React.useMemo(() => {
     return (

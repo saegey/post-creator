@@ -19,14 +19,11 @@ const CloudImage = ({
   focused,
   onMaximize,
 }: MemoizedImageProps) => {
-  // console.log("rendering CloudImage", imageMeta);
   return (
     <figure>
       <AspectRatio
         ratio={16 / 9}
         sx={{
-          // width: "100%",
-          // height: "auto",
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: imageMeta?.colors ? imageMeta.colors[0] : "white",
@@ -39,8 +36,6 @@ const CloudImage = ({
           width={600}
           height={500}
           style={{
-            // maxWidth: "100%",
-            // height: "auto",
             height: "100%",
             width: "100%",
             objectFit: "contain",

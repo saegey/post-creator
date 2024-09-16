@@ -51,7 +51,7 @@ const AddStravaLink = () => {
     setIsNewComponentMenuOpen(false);
     // setMobileMenu({ ...mobileMenu, isFullScreen: false, display: false });
   };
-  // console.log("AddStravaLink");
+
   return (
     <>
       <Box

@@ -21,8 +21,7 @@ const FloatingMenu = ({
   const { editor } = useSlateContext();
   const linkInputRef = React.useRef<HTMLDivElement>(null);
   const [showPopup, setShowPopup] = React.useState<boolean>(false);
-  const [selection, setSelection] = React.useState<BaseSelection>();
-  console.log(selectionMenu);
+  const [_, setSelection] = React.useState<BaseSelection>();
 
   if (!editor) {
     return <></>;

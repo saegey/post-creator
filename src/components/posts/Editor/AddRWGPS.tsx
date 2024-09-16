@@ -1,11 +1,10 @@
-import { Flex, Text, Box } from "theme-ui";
+import { Flex, Box } from "theme-ui";
 import React from "react";
 
 import { EditorContext } from "./EditorContext";
 import EmbedIcon from "../../icons/EmbedIcon";
 import StandardModal from "../../shared/StandardModal";
 import EmbedSettings from "../Embed/EmbedSettings";
-import { Path } from "slate";
 import { useSlateContext } from "../../SlateContext";
 import GenericMenuItem from "../../GenericMenuItem";
 
@@ -18,7 +17,6 @@ const RWGPSModal = () => {
   if (newComponentPath === undefined) {
     return <></>;
   }
-  // console.log("RWGPSModal");
 
   return isRWGPSModalOpen && editor ? (
     <StandardModal

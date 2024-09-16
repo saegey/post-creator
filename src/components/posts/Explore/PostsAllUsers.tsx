@@ -26,13 +26,6 @@ const PostsAllUsers = ({
   user?: IUser;
   posts: PostType | undefined;
 }) => {
-  // React.useEffect(() => {
-  //   console.log(user);
-  //   if (!user) {
-  //     Router.push("/login");
-  //   }
-  // }, [user]);
-
   if (!user) {
     return <></>;
   }

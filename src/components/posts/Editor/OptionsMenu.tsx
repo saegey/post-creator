@@ -27,7 +27,6 @@ const OptionsMenu = ({
       e.stopPropagation();
     }
   );
-  console.log("menuPosition", menuPosition);
 
   return (
     <Box

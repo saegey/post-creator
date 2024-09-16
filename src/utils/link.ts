@@ -59,7 +59,6 @@ export const insertLink = (
 };
 
 export const removeLink = (editor: CustomEditor) => {
-  console.log("removeLink");
   Transforms.unwrapNodes(editor, {
     match: (n) =>
       !Editor.isEditor(n) && Element.isElement(n) && n.type === "link",

@@ -15,7 +15,6 @@ const Link = ({ element, children }: { element: LinkType; children?: any }) => {
   useClickOutside(
     wrapperRef,
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      console.log("click outside");
       setIsHover(false);
       e.stopPropagation();
     }
@@ -29,7 +28,6 @@ const Link = ({ element, children }: { element: LinkType; children?: any }) => {
         target={element.target}
         onMouseDown={(e) => {
           setIsHover(true);
-          console.log("Mouse over link", e);
         }}
       >
         {children}

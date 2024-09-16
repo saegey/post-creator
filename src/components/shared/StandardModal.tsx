@@ -33,12 +33,8 @@ const StandardModal = ({
   }, [isOpen]);
 
   React.useEffect(() => {
-    // console.log("escape key eevent");
     const handleKeyDown = (event: KeyboardEvent) => {
-      // console.log("escape key eevent", event);
       if (event.key === "Escape") {
-        // closeModal(); // Close modal on Escape key
-        console.log("escape key pressed");
         setIsOpen(false);
       }
     };

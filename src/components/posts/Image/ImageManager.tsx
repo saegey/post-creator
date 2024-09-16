@@ -11,9 +11,10 @@ import {
 } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
-import { Editor, Transforms } from "slate";
+import { Transforms } from "slate";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
+import { lighten } from "@theme-ui/color";
 
 import { PostContext } from "../../PostContext";
 import {
@@ -25,9 +26,8 @@ import { cloudUrl } from "../../../utils/cloudinary";
 import StandardModal from "../../shared/StandardModal";
 import { EditorContext } from "../Editor/EditorContext";
 import { useSlateContext } from "../../SlateContext";
-import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
 import UploadIcon from "../../icons/UploadIcon";
-import { lighten } from "@theme-ui/color";
+
 import { UpdatePostMutation } from "../../../API";
 import { updatePostImages } from "../../../graphql/customMutations";
 import ImagesIcon from "../../icons/ImagesIcon";
@@ -42,12 +42,11 @@ const ImageManager = () => {
     setIsHeroImageModalOpen,
   } = React.useContext(EditorContext);
 
-  const { editor, slateRef } = useSlateContext();
+  const { editor } = useSlateContext();
 
   if (!editor && menuPosition.path) {
     return;
   }
-  const boxesData = [1, 2, 3, 4];
 
   return (
     <>
@@ -59,7 +58,6 @@ const ImageManager = () => {
         topRight={
           <IconButton
             onClick={() => {
-              // console.log("open modal");
               setIsHeroImageModalOpen(true);
             }}
             sx={{
@@ -102,8 +100,6 @@ const ImageManager = () => {
             <Flex
               sx={{
                 flex: "1 1 auto",
-                // gap: "20px",
-                // marginTop: "20px",
                 overflow: "auto",
                 maxHeight: "calc(100% - 70px)",
                 flexDirection: "column",
@@ -205,11 +201,10 @@ const ImageManager = () => {
           }}
         >
           <Button
-            id="delete-post"
+            id="delete-image"
             variant="dangerButton"
             type="button"
             onClick={async (e) => {
-              console.log(e, JSON.stringify(selectedImage));
               if (!images || !selectedImage) {
                 throw new Error("No images or selected image");
               }
@@ -231,7 +226,6 @@ const ImageManager = () => {
                     },
                   },
                 })) as GraphQLResult<UpdatePostMutation>;
-                console.log(response);
               } catch (errors) {
                 console.error(errors);
               }
@@ -250,62 +244,43 @@ const ImageManager = () => {
           <Button
             variant="primaryButton"
             onClick={async () => {
-              console.log("selectedImage", selectedImage);
               if (!selectedImage) {
                 throw new Error("No image selected");
               }
-              if (editor && menuPosition.path) {
-                // Fetch the existing node data at the specific path
-                // const existingNode = Node.get(editor, menuPosition.path);
-                // Get the node at the specified path
-                const [node] = Editor.node(editor, menuPosition.path);
-
-                // If you're targeting a specific child node (like the heroBanner), ensure you're at the correct path
-                // const heroBannerElement = node.children?.find(
-                //   (child) => "type" in child && child.type === "heroBanner"
-                // );
-
-                const heroBannerElement = (
-                  node.children as CustomElement[]
-                ).find(
-                  (child) => "type" in child && child.type === "heroBanner"
-                );
-
-                if (heroBannerElement) {
-                  updateHeroImage({
-                    editor,
-                    element: heroBannerElement,
-                    path:
-                      menuPosition.path.length == 0 ? [0] : menuPosition.path,
-                    image: selectedImage,
-                  });
-                } else {
-                  console.log({
-                    ...node,
-                    asset_id: selectedImage.asset_id,
-                    public_id: selectedImage.public_id,
-                  });
-                  Transforms.insertNodes(
-                    editor,
-                    {
-                      type: "image",
-                      asset_id: selectedImage.asset_id,
-                      public_id: selectedImage.public_id,
-                      children: [{ text: "" }],
-                      void: true,
-                      photoCaption: "",
-                    } as ImageElementType,
-                    {
-                      at:
-                        menuPosition.path.length === 0
-                          ? [0]
-                          : menuPosition.path,
-                    }
-                  );
-                }
-
-                setIsChangeImageModalOpen(false); // Close the modal
+              if (!editor) {
+                throw new Error("Editor is not defined");
               }
+              if (
+                menuPosition.path.length === 0 ||
+                (menuPosition.path.length === 1 && menuPosition.path[0] === 0)
+              ) {
+                Transforms.setNodes<CustomElement>(
+                  editor,
+                  { image: selectedImage },
+                  {
+                    at: [0],
+                  }
+                );
+                setIsChangeImageModalOpen(false);
+                return;
+              }
+
+              Transforms.insertNodes(
+                editor,
+                {
+                  type: "image",
+                  asset_id: selectedImage.asset_id,
+                  public_id: selectedImage.public_id,
+                  children: [{ text: "" }],
+                  void: true,
+                  photoCaption: "",
+                } as ImageElementType,
+                {
+                  at: menuPosition.path,
+                }
+              );
+
+              setIsChangeImageModalOpen(false); // Close the modal
             }}
             disabled={selectedImage ? false : true}
           >

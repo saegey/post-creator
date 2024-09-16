@@ -20,7 +20,6 @@ const BulletList = ({
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const bulletListMemo = React.useMemo(() => {
-    console.log("bulletListMemo");
     return (
       <Box
         as="ul"
