@@ -1,22 +1,16 @@
 import { GraphQLResult } from "@aws-amplify/api";
-import { Storage, API, PubSub, Auth } from "aws-amplify";
+import { API } from "aws-amplify";
 
-import {
-  ActivityItem,
-  PostContextType,
-  TimeSeriesDataType,
-} from "../types/common";
-import { GetPostInitialQuery, UpdatePostMutation } from "../API";
+import { PostContextType, TimeSeriesDataType } from "../types/common";
+import { GetPostInitialQuery } from "../API";
 import { getPostInitial } from "../graphql/customQueries";
 import { getActivityData } from "../../lib/editorApi";
-import { usePost } from "../components/PostContext";
 
 function isDefined<T>(argument: T | undefined): argument is T {
   return argument !== undefined;
 }
 
 const getActivity = async (post: TimeSeriesDataType) => {
-  // console.log(post);
   const coordinates = post.coordinates ? post.coordinates : [];
   const times = post.times ? post.times : [];
   if (!coordinates) {
@@ -33,7 +27,6 @@ const getActivity = async (post: TimeSeriesDataType) => {
       }
     })
     .filter(isDefined);
-  // console.log(coords);
   return coords;
 };
 
@@ -58,7 +51,6 @@ const getPost = async (id: string, postCtx: PostContextType) => {
     console.log("no data found for post");
     return;
   }
-  console.log("payload:", payload);
 
   setPost({
     gpxFile: post.gpxFile,

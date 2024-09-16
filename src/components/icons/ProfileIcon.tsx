@@ -1,5 +1,3 @@
-import Profile from "../../../pages/profile";
-
 const ProfileIcon = () => (
   <svg
     width="100%"
@@ -11,13 +9,7 @@ const ProfileIcon = () => (
     <title>profile [#1335]</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g
-      id="Page-1"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-    >
+    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g
         id="Dribbble-Light-Preview"
         transform="translate(-420.000000, -2159.000000)"

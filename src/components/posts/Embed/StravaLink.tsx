@@ -23,7 +23,6 @@ const StravaLink = ({
 
   React.useEffect(() => {
     const resizeParentToIframe = (event: MessageEvent) => {
-      // console.log(event, event.data[2]);
       if (event.origin !== "https://strava-embeds.com") return;
       // Change to match the origin of the iframe content
 
@@ -43,10 +42,10 @@ const StravaLink = ({
   if (!element.activityId) {
     return <></>;
   }
-  console.log("render StravaLink");
+  // console.log("render StravaLink");
 
   const stravaEmbed = React.useMemo(() => {
-    console.log("stravaEmbed", element.activityId);
+    // console.log("stravaEmbed", element.activityId);
     return (
       <Box
         sx={

@@ -52,7 +52,7 @@ const PostSaveImages = async ({
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
-    console.log(results);
+    // console.log(results);
   } catch (error) {
     console.error(error);
   }

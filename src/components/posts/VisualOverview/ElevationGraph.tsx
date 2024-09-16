@@ -49,7 +49,6 @@ const getNiceTickValuesY = (min: number, max: number) => {
   const roughInterval = range / 4; // Targeting 4 intervals for 5 ticks
   const niceInterval =
     intervals.find((interval) => interval >= roughInterval) || intervals[0];
-  // console.log("niceInterval", niceInterval);
 
   // Generate ticks starting from min and stepping by niceInterval
   const ticks = [];
@@ -57,8 +56,6 @@ const getNiceTickValuesY = (min: number, max: number) => {
   for (let i = min; i <= targetMax; i += niceInterval) {
     ticks.push(i);
   }
-
-  // console.log("ticks", ticks);
 
   return ticks;
 };
@@ -315,12 +312,11 @@ const ElevationGraph = ({
             }));
           }}
           onMouseMove={(e) => {
-            // console.log(e);
             if (!e || !e.activePayload) {
               setMarker(undefined);
               return;
             }
-            // console.log(e);
+
             setMarker(e.activePayload[0].payload as ActivityItem);
 
             if (!selection) {

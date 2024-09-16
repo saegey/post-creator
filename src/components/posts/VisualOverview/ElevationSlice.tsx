@@ -61,21 +61,23 @@ const ElevationSlice = ({
             color: grade ? gradeToColor(Number(grade) * 100) : "black",
           }}
         >
-          {grade ? `${(Number(grade) * 100).toFixed(1)}%` : "-"}
+          {grade && grade !== "-"
+            ? `${(Number(grade) * 100).toFixed(1)}%`
+            : "-"}
         </Text>
       </Box>
       <Box>
         <Text as="p">Distance</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {distance
+          {distance && distance !== "-"
             ? `${distance} ${unitOfMeasure === "metric" ? "km" : "mi"}`
-            : ""}
+            : "-"}
         </Text>
       </Box>
       <Box>
         <Text as="p">Elevation</Text>
         <Text sx={{ fontSize: "20px" }}>
-          {elevation
+          {elevation && elevation !== "-"
             ? `${elevation} ${unitOfMeasure === "metric" ? "m" : "ft"}`
             : "-"}
         </Text>

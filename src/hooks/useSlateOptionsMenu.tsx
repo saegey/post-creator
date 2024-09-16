@@ -34,7 +34,7 @@ const useOptionsMenu = (
         event.preventDefault();
         editor.deselect();
         const rect = event.currentTarget.getBoundingClientRect();
-        console.log("rect", rect);
+
         const scrollX = window.scrollX || window.pageXOffset;
         const scrollY = window.scrollY || window.pageYOffset;
         const adjustedTop = rect.bottom + scrollY - 10;
@@ -54,7 +54,6 @@ const useOptionsMenu = (
           isFullScreen: false,
         });
 
-        console.log(adjustedTop, adjustedLeft, path);
         setIsOptionsOpen(true);
       }}
     >

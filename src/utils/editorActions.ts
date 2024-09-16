@@ -17,7 +17,6 @@ const updateImages = async (id: string, images: CloudinaryImage[]) => {
         },
       },
     })) as GraphQLResult<UpdatePostMutation>;
-    console.log(response);
   } catch (errors) {
     console.error(errors);
   }

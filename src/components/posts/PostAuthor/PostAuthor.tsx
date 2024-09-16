@@ -36,7 +36,6 @@ const PostAuthor = () => {
         )
       : undefined;
 
-    console.log("rendering PostAuthor", imageUrl);
     return (
       <div contentEditable={false}>
         <Box

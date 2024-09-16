@@ -32,19 +32,16 @@ const EditAvatar = () => {
   if (!user) {
     return <></>;
   }
-  console.log(user);
 
   return (
     <>
       <AddMediaComponent
         onClose={() => {
-          console.log("close media");
           // setIsHeroImageModalOpen(false);
         }}
         ref={newMediaRef}
         uploadPreset="epcsmymp"
         onSuccess={async (d) => {
-          console.log(d);
           if (typeof d.info !== "string" && d.info?.public_id && user) {
             updateAvatar({ picture: d.info.public_id });
             setUser({

@@ -15,7 +15,7 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
     const res = (await API.get("api12660653", `/video/upload?postId=${id}`, {
       response: true,
     })) as any;
-    console.log(res);
+
     setUploadId(res.data.id);
     return res.data.url;
   };
@@ -28,7 +28,6 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
         response: true,
       }
     )) as any;
-    console.log(res);
     return res;
   };
 
@@ -38,7 +37,6 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
       endpoint={getEndpoint}
       onSuccess={(e) => {
         getAssetId().then((res) => {
-          // console.log(res);
           Transforms.insertNodes(
             editor,
             {

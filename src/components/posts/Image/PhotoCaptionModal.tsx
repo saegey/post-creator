@@ -17,9 +17,6 @@ const PhotoCaptionModal = () => {
     throw new Error("Editor is not defined");
   }
 
-  if (menuPosition.path.length === 0) {
-    console.log("menuPosition.path.length === 0");
-  }
   const [node] = Editor.node(
     editor,
     menuPosition.path.length === 0 ? [0] : menuPosition.path
@@ -45,11 +42,6 @@ const PhotoCaptionModal = () => {
               event.preventDefault();
               const form = new FormData(event.target);
               const caption = form.get("caption");
-
-              console.log({
-                photoCaption: caption?.toString(),
-                at: menuPosition.path.length === 0 ? [0] : menuPosition.path,
-              });
 
               Transforms.setNodes(
                 editor,
@@ -92,7 +84,6 @@ const PhotoCaptionModal = () => {
                 onClick={(event) => {
                   event.preventDefault();
                   setIsPhotoCaptionOpen(false);
-                  console.log("cancelled");
                 }}
               >
                 Cancel

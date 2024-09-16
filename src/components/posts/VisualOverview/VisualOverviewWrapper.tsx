@@ -54,7 +54,6 @@ const VisualOverviewWrapper = ({
   }, [isOptionsOpen]);
 
   const renderMap = React.useMemo(() => {
-    console.log("render map");
     const formatted =
       activity?.map((a, i) => {
         return {

@@ -19,7 +19,6 @@ const HeadingButton = () => {
     <Box
       onMouseDown={(e) => {
         e.preventDefault();
-        console.log(selection);
         if (!selection) return false;
 
         const [match] = Array.from(

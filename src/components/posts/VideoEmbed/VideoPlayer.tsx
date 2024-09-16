@@ -16,7 +16,6 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
   const { optionsMenu } = useOptionsMenu(editor, path);
 
   const videoPlayer = React.useMemo(() => {
-    console.log("element", element);
     return (
       <HoverAction element={element}>
         <Box contentEditable={false}>

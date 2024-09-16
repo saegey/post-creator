@@ -63,9 +63,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const [timeoutLink, setTimeoutLink] = React.useState<NodeJS.Timeout>();
 
   usePubSubSubscription(id, (payload: VideoAssetEvent) => {
-    console.log("video payload", payload);
     if (payload.type === "video.asset.ready") {
-      console.log("asseet reead");
       Transforms.setNodes<CustomElement>(
         editor,
         {
@@ -105,10 +103,8 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   } = useContext(EditorContext);
 
   useFetchData();
-  console.log("initialState", initialState);
 
   const updateMenuPosition = useCallback(() => {
-    console.log("updateMenuPosition");
     const selection = editor.selection;
     if (selection) {
       const domSelection = window.getSelection();
@@ -145,7 +141,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   }, [isNewPostImageUploadOpen]);
 
   React.useEffect(() => {
-    console.log("isHeroImageModalOpen", isHeroImageModalOpen);
     if (isHeroImageModalOpen) {
       openHeroImageModal();
     }
@@ -153,16 +148,13 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
 
   // Function to capture and store the current Slate editor path
   const capturePath = useCallback(() => {
-    // if (isNewComponentMenuOpen) {
-    console.log("Captured realPath:", menuPosition.path);
     realPathRef.current = [...menuPosition.path]; // Update the ref instead of state
-    // }/
   }, [isNewPostImageUploadOpen]);
 
   // Handle success when an image is uploaded
   const handleImageUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
     const newImage = result.info; // The uploaded image result from Cloudinary
-    console.log("Uploaded image:", newImage, "At path:", realPathRef.current); // Now realPathRef.current has the latest path
+
     if (images === undefined || images === null) {
       throw new Error("Images is undefined");
     }
@@ -216,7 +208,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             editor={editor}
             initialValue={initialState}
             onChange={(newValue) => {
-              console.log(newValue);
               updateMenuPosition();
               handleSelectionChange();
               setPost({ components: newValue as Array<CustomElement> });
@@ -283,7 +274,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           />
           <AddMediaComponent
             onClose={() => {
-              console.log("close media");
               setIsHeroImageModalOpen(false);
             }}
             ref={heroMediaRef}
@@ -295,15 +285,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
                 setPost({ images: [...images] });
                 updateImages(id, images);
               }
-              const [node] = Editor.node(editor, [0]);
-              console.log(node);
-
-              // updateHeroImage({
-              //   editor,
-              //   element: node as HeroBannerType,
-              //   path: [0],
-              //   image: d.info as CloudinaryImage,
-              // });
             }}
           />
         </SlateProvider>

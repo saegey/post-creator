@@ -18,7 +18,6 @@ const ParagraphElement = ({
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
 
   const textMemo = React.useMemo(() => {
-    console.log("ParagraphElementMemoo path:", path);
     return (
       <Text
         as="div"

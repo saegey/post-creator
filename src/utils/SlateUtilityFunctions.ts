@@ -89,7 +89,6 @@ export const updateHeroImage = ({
   path: Path;
   image: CloudinaryImage;
 }) => {
-  console.log("element", element);
   Transforms.setNodes(
     editor,
     {

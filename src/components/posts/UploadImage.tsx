@@ -26,7 +26,6 @@ const UploadImage = forwardRef(
     const { menuPosition } = React.useContext(EditorContext);
     const { editor } = useSlateContext();
     const { images, setPost, id } = React.useContext(PostContext);
-    console.log("upload image");
 
     return (
       <AddMediaComponent
@@ -44,7 +43,7 @@ const UploadImage = forwardRef(
           const heroBannerElement = (node.children as CustomElement[]).find(
             (child) => "type" in child && child.type === "heroBanner"
           );
-          console.log(heroBannerElement, menuPosition.path);
+
           if (heroBannerElement === undefined) {
             throw new Error("Hero banner element not found");
           }
