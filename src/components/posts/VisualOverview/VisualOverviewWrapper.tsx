@@ -14,28 +14,25 @@ import { PostContext } from "../../PostContext";
 import { VisualOverviewType } from "../../../types/common";
 import { VisualOverviewContext } from "./VisualOverviewContext";
 import HoverAction from "../Editor/HoverAction";
-import VisualOverview from "./VisualOverview";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import { EditorContext } from "../Editor/EditorContext";
 import RouteIcon from "../../icons/RouteIcon";
+import VisualOverviewBase from "./VisualOverviewBase";
 
 const VisualOverviewWrapper = ({
   element,
   view,
   unitOfMeasure,
-  children,
 }: {
   element: VisualOverviewType;
   view: boolean;
   unitOfMeasure: string;
-  children: JSX.Element;
 }) => {
   const { activity, elevations, gpxFile } = React.useContext(PostContext);
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
-  const { isSettingsModalOpen, setIsSettingsModalOpen } =
-    React.useContext(EditorContext);
+  const { setIsSettingsModalOpen } = React.useContext(EditorContext);
 
   const [selection, setSelection] = React.useState<
     [number, number] | undefined
@@ -55,7 +52,7 @@ const VisualOverviewWrapper = ({
 
   const renderMap = React.useMemo(() => {
     const formatted =
-      activity?.map((a, i) => {
+      activity?.map((a) => {
         return {
           ...a,
           g: a.g !== null ? a.g : 0,
@@ -72,7 +69,7 @@ const VisualOverviewWrapper = ({
       }) || [];
 
     return (
-      <VisualOverview
+      <VisualOverviewBase
         activity={formatted}
         elevations={elevations ? elevations : []}
         token={
@@ -162,20 +159,8 @@ const VisualOverviewWrapper = ({
     >
       <HoverAction element={element}>
         <>
-          <Box
-            sx={
-              {
-                position: "relative",
-                maxWidth: "690px",
-                marginX: "auto",
-              } as ThemeUIStyleObject<Theme>
-            }
-            contentEditable={false}
-          >
-            {renderMap}
-            {optionsMenuMemo}
-          </Box>
-          {children}
+          {renderMap}
+          {optionsMenuMemo}
         </>
       </HoverAction>
     </VisualOverviewContext.Provider>

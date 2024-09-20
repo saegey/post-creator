@@ -29,7 +29,6 @@ const GraphSelectorMenu = () => {
         <AddPowerCurve />
         <AddActivityOverview />
         <AddRouteOverview />
-        {/* <AddStravaLink /> */}
       </Flex>
     </>
   );

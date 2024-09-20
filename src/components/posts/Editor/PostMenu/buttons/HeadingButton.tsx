@@ -2,7 +2,6 @@ import { Box } from "theme-ui";
 import { Transforms, Editor, Element as SlateElement } from "slate";
 
 import { isBlockActive } from "../../../../../utils/SlateUtilityFunctions";
-import { CustomEditor } from "../../../../../types/common";
 import HeadingIcon from "../../../../icons/HeadingIcon";
 import { lighten } from "@theme-ui/color";
 import { useSlateContext } from "../../../../SlateContext";
@@ -27,7 +26,7 @@ const HeadingButton = () => {
             match: (n) =>
               !Editor.isEditor(n) &&
               SlateElement.isElement(n) &&
-              n["type"] === "heading-two",
+              n["type"] === "heading",
           })
         );
 
@@ -37,16 +36,16 @@ const HeadingButton = () => {
           Transforms.setNodes<SlateElement>(editor, newProperties);
         } else {
           let newProperties: Partial<SlateElement>;
-          newProperties = { type: "heading-two" } as any;
+          newProperties = { type: "heading" } as any;
           Transforms.setNodes<SlateElement>(editor, newProperties);
         }
       }}
       variant="boxes.floatingMenu"
-      key="headingtwo"
+      key="heading"
     >
       <HeadingIcon
         sx={{
-          color: isBlockActive(editor, "heading-two")
+          color: isBlockActive(editor, "heading")
             ? "accent"
             : lighten("primary", 0.3),
         }}

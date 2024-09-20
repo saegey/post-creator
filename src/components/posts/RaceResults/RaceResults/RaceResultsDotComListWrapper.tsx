@@ -20,25 +20,30 @@ const RaceResultsDotComListWrapper = ({
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
   const hoverAct = React.useMemo(() => {
     return (
-      <HoverAction element={element}>
-        <Box
-          variant="boxes.componentCard"
-          contentEditable={false}
-          sx={{ backgroundColor: "background" }}
-        >
-          <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
-            <RaceResultsDotComList
-              raceResults={raceResults ? raceResults : undefined}
-              resultsUrl={resultsUrl ? resultsUrl : ""}
-            />
-          </Box>
-          {optionsMenu}
+      <Box
+        variant="boxes.componentCard"
+        contentEditable={false}
+        sx={{ backgroundColor: "background" }}
+      >
+        <Box sx={{ position: "relative" }}>
+          <RaceResultsDotComList
+            raceResults={raceResults ? raceResults : undefined}
+            resultsUrl={resultsUrl ? resultsUrl : ""}
+          />
         </Box>
-      </HoverAction>
+        {/* {optionsMenu} */}
+      </Box>
     );
   }, [raceResults, isOptionsOpen]);
 
-  return hoverAct;
+  return (
+    <HoverAction element={element}>
+      <>
+        {hoverAct}
+        {optionsMenu}
+      </>
+    </HoverAction>
+  );
 };
 
 export default RaceResultsDotComListWrapper;

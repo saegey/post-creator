@@ -139,7 +139,7 @@ export type PostAuthor = {
 };
 
 export interface HeadingElement extends BaseElement {
-  type: "heading-two";
+  type: "heading";
   children: CustomText[];
 }
 
@@ -155,7 +155,6 @@ export type ImageElementType = {
   asset_id: string;
   public_id: string;
   children: CustomText[];
-  caption: string;
   photoCaption: string;
   void: boolean;
 };
@@ -315,10 +314,10 @@ declare module "slate" {
 
 export interface ActivityItem {
   c: Array<number>;
-  d?: number;
+  d: number;
   e?: number;
   g?: number;
-  t: number;
+  t?: number;
   i?: number;
   p?: number;
   h?: number;

@@ -31,7 +31,7 @@ export const isMarkActive = (editor: CustomEditor, format: "bold") => {
 
 export const isBlockActive = (
   editor: CustomEditor,
-  format: "heading-two" | "bulleted-list"
+  format: "heading" | "bulleted-list"
 ) => {
   const [match] = Array.from(
     Editor.nodes(editor, {

@@ -42,9 +42,12 @@ const VisualOverview = ({
     VisualOverviewContext
   );
   const [marker, setMarker] = React.useState<ActivityItem | undefined>();
+
   const [isZoomedOut, setIsZoomedOut] = React.useState(false);
+
   const coordinates =
     activity !== undefined ? activity.map((a) => a.c) : undefined;
+
   const elevationsSynthetic =
     elevations && elevations.length
       ? elevations.map((e) => ({
@@ -73,10 +76,6 @@ const VisualOverview = ({
     : element.selectionEnd
     ? element.selectionEnd
     : undefined;
-
-  if (top === undefined) {
-    return <></>;
-  }
 
   const graph = React.useMemo(
     () => (

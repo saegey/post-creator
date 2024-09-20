@@ -11,22 +11,21 @@ import PowerGraphElement from "../PowerGraph/PowerGraphElement";
 import ImageWrapper from "../Image/ImageWrapper";
 import VisualOverviewWrapper from "../VisualOverview/VisualOverviewWrapper";
 import ActivityOverviewWrapper from "../ActivityOverview/ActivityOverviewWrapper";
-import TimePowerZonesWrapper from "../TimeInZones/TimePowerZonesWrapper";
-import StravaLink from "../Embed/StravaLink";
 import HeroBanner from "../HeroBanner/HeroBanner";
-import EmbedElemnt from "../Embed/EmbedElement";
+import EmbedElement from "../Embed/EmbedElement";
 import Link from "../Text/Link";
 import PostAuthorWrapper from "../PostAuthor/PostAuthorWrapper";
 import VideoPlayer from "../VideoEmbed/VideoPlayer";
+
 import CrossResultstListWrapper from "../RaceResults/CrossResults/CrossResultsListWrapper";
 import OmniResultsListWrapper from "../RaceResults/OmniGo/OmniResultsListWrapper";
 import WebscorerListWrapper from "../RaceResults/WebScorer/WebscorerListWrapper";
 import RaceResultsDotComListWrapper from "../RaceResults/RaceResults/RaceResultsDotComListWrapper";
 import RunSignupListWrapper from "../RaceResults/RunSignup/RunSignupListWrapper";
+
 import ParagraphElement from "../Text/ParagraphElement";
 import BulletList from "./BulletList/BulletList";
 import Heading from "../Text/Heading";
-import { Text } from "theme-ui";
 
 const renderElement = (props: {
   attributes: object;
@@ -37,43 +36,48 @@ const renderElement = (props: {
   const units = useUnits();
 
   switch (element.type) {
-    case "postAuthor": // Post Author
+    case "postAuthor":
       return <PostAuthorWrapper />;
-    case "embed": // Ridewithgps
-      return <EmbedElemnt children={children} element={element} />;
-    case "stravaEmbed": // Strava
-      return <StravaLink children={children} element={element} />;
-    case "powergraph": // Power curve graph
+
+    case "embed": // Ridewithgps *
+      return <EmbedElement element={element} />;
+
+    case "powergraph": // Power curve graph *
       return <PowerGraphElement element={element} />;
-    case "timeInZones": // Time in zones
-      return <TimePowerZonesWrapper element={element} />;
-    case "activityOverview": // activity metrics
+
+    case "activityOverview": // activity metrics *
       return <ActivityOverviewWrapper children={children} element={element} />;
-    case "visualOverview":
+
+    case "visualOverview": // map and elevation graph *
       return (
         <VisualOverviewWrapper
           element={element}
-          children={children}
           view={false}
           unitOfMeasure={units.unitOfMeasure}
         />
       );
-    case "image":
-      return <ImageWrapper children={children} element={element} />;
-    case "heroBanner":
+
+    case "image": // Image *
+      return <ImageWrapper element={element} />;
+
+    case "heroBanner": // Hero banner *
       return <HeroBanner element={element} />;
-    case "link":
+
+    case "link": // Link *
       return <Link element={element} children={children} />;
-    case "videoEmbed":
+
+    case "videoEmbed": // Video *
       return <VideoPlayer element={element} />;
-    case "heading-two":
+
+    case "heading": // Heading *
       return (
         <Heading
           children={props.children}
           element={props.element as HeadingElement}
         />
       );
-    case "bulleted-list":
+
+    case "bulleted-list": // Bulleted list *
       return (
         <BulletList
           children={props.children}
@@ -81,19 +85,26 @@ const renderElement = (props: {
           attributes={props.attributes}
         />
       );
-    case "list-item":
+
+    case "list-item": // List item *
       return <li {...attributes}>{children}</li>;
+
     case "raceResultsDotCom":
       return <RaceResultsDotComListWrapper {...props} />;
+
     case "webscorerResults":
       return <WebscorerListWrapper {...props} />;
+
     case "crossResults":
       return <CrossResultstListWrapper element={props.element} />;
+
     case "omniResults":
       return <OmniResultsListWrapper element={props.element} />;
+
     case "runSignupResults":
       return <RunSignupListWrapper element={props.element} />;
-    case "paragraph":
+
+    case "paragraph": // Paragraph *
       return (
         <ParagraphElement
           children={props.children}
@@ -101,15 +112,7 @@ const renderElement = (props: {
         />
       );
     default:
-      return (
-        <>
-          <Text>This is default</Text>
-          <ParagraphElement
-            children={props.children}
-            element={props.element as ParagraphElementType}
-          />
-        </>
-      );
+      return <></>;
   }
 };
 
