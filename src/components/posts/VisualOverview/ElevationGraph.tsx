@@ -9,17 +9,12 @@ import {
   ReferenceArea,
   Rectangle,
 } from "recharts";
-import { Box, Button, Flex, IconButton, Spinner, useThemeUI } from "theme-ui";
+import { Box, Spinner, useThemeUI } from "theme-ui";
 import React from "react";
-import { useSlateStatic, ReactEditor } from "slate-react";
-import { Transforms } from "slate";
 
 import { ActivityItem, VisualOverviewType } from "../../../types/common";
 import { useUnits } from "../../UnitProvider";
 import { useViewport } from "../../ViewportProvider";
-import ZoomOut from "../../icons/ZoomOut";
-import SaveIcon from "../../icons/SaveIcon";
-import BackIcon from "../../icons/BackIcon";
 
 const getNiceTickValues = (left: number, right: number) => {
   const range = right - left;
@@ -85,18 +80,10 @@ const ElevationGraph = ({
   data,
   setMarker,
   selection,
-  setSelection,
-  isSaved,
-  element,
-  view = true,
   left,
   right,
   top,
   bottom,
-  showZoom = false,
-  showSaveButton = false,
-  showZoomOut = false,
-  setIsZoomedOut,
 }: ElevationGraphProps) => {
   if (!data || data.length === 0) {
     return (
@@ -107,11 +94,6 @@ const ElevationGraph = ({
   }
 
   const { width } = useViewport();
-  const editor = element && !view && useSlateStatic();
-  const path =
-    element && !view && editor
-      ? ReactEditor.findPath(editor, element)
-      : undefined;
   const themeContext = useThemeUI();
   const units = useUnits();
   const hideAxes = width > 500 ? false : true;
@@ -120,53 +102,6 @@ const ElevationGraph = ({
     refAreaRight: "",
   };
   const [zoomGraph, setZoomGraph] = React.useState(initialState);
-
-  const saveState = () => {
-    if (editor && selection && path) {
-      Transforms.setNodes(
-        editor,
-        {
-          ...element,
-          selectionStart: selection[0],
-          selectionEnd: selection[1],
-        } as VisualOverviewType,
-        {
-          at: path,
-        }
-      );
-      // setZoomGraph((prev) => ({
-      //   ...prev,
-      //   showSaveButton: false,
-      // }));
-    }
-  };
-
-  const clearSelection = () => {
-    if (editor && path) {
-      Transforms.setNodes(
-        editor,
-        {
-          ...element,
-          selectionStart: undefined,
-          selectionEnd: undefined,
-          left: undefined,
-          right: undefined,
-          top: undefined,
-          bottom: undefined,
-        } as VisualOverviewType,
-        {
-          at: path,
-        }
-      );
-    }
-    setSelection(undefined);
-    setIsZoomedOut(true);
-  };
-
-  const zoomOut = () => {
-    setSelection(undefined);
-    setIsZoomedOut(true);
-  };
 
   const CustomCursor = (props: {
     height?: number;
@@ -189,44 +124,6 @@ const ElevationGraph = ({
       />
     );
   };
-
-  const backToSegment = () => {
-    if (element.selectionStart && element.selectionEnd) {
-      setSelection([element.selectionStart, element.selectionEnd]);
-      setIsZoomedOut(false);
-    }
-  };
-
-  const zoom = () => {
-    let { refAreaLeft, refAreaRight } = zoomGraph;
-
-    if (refAreaLeft === refAreaRight || refAreaRight === "") {
-      setZoomGraph((prev) => ({
-        ...prev,
-        refAreaLeft: "",
-        refAreaRight: "",
-      }));
-      return;
-    }
-
-    if (refAreaLeft && refAreaRight && refAreaLeft > refAreaRight)
-      [refAreaLeft, refAreaRight] = [refAreaRight, refAreaLeft];
-
-    // const [bottom2, top2] = getAxisYDomain(refAreaLeft, refAreaRight, "e", 50);
-
-    setZoomGraph((prev) => ({
-      ...prev,
-      refAreaLeft: "",
-      refAreaRight: "",
-    }));
-    const lowBound = data.findIndex((d) => Number(d.d) === Number(refAreaLeft));
-    const highBound = data.findIndex((d) => {
-      return Number(d.d) === Number(refAreaRight);
-    });
-    setSelection([lowBound, highBound]);
-    setIsZoomedOut(false);
-  };
-
   const { refAreaLeft, refAreaRight } = zoomGraph;
 
   const points = data.map(
@@ -241,76 +138,14 @@ const ElevationGraph = ({
         width: "100%",
         height: ["130px", "200px", "200px"],
         borderWidth: "1px",
-        // paddingBottom: [0, "20px", "40px"],
         paddingX: 0,
         userSelect: "none",
       }}
     >
-      <Flex
-        sx={{
-          gap: "10px",
-          marginBottom: "10px",
-          marginX: ["10px", "0px", "0px"],
-        }}
-      >
-        <IconButton
-          variant="primaryButton"
-          sx={{
-            display: showZoomOut ? "inherit" : "none",
-            width: "fit-content",
-          }}
-          onClick={() => zoomOut()}
-        >
-          <ZoomOut />
-        </IconButton>
-
-        <IconButton
-          variant="primaryButton"
-          sx={{
-            display: isSaved && !showSaveButton ? "inherit" : "none",
-            width: "fit-content",
-          }}
-          onClick={() => backToSegment()}
-        >
-          <BackIcon />
-        </IconButton>
-
-        <Button
-          variant="primaryButton"
-          sx={{
-            display: !view && element && element.left ? "inherit" : "none",
-          }}
-          onClick={() => clearSelection()}
-        >
-          Clear Selection
-        </Button>
-        <IconButton
-          variant="primaryButton"
-          sx={{
-            width: "fit-content",
-            // color: "red",
-            visibility:
-              selection && !view && showSaveButton ? "visible" : "hidden",
-          }}
-          onClick={() => saveState()}
-        >
-          <SaveIcon />
-        </IconButton>
-      </Flex>
       <ResponsiveContainer width={"100%"} height={"100%"}>
         <AreaChart
           height={300}
-          // key={data[0].e}
           data={points}
-          onMouseDown={(e) => {
-            if (selection) {
-              return;
-            }
-            setZoomGraph((prev) => ({
-              ...prev,
-              refAreaLeft: e && e.activeLabel ? e.activeLabel : "",
-            }));
-          }}
           onMouseMove={(e) => {
             if (!e || !e.activePayload) {
               setMarker(undefined);
@@ -327,12 +162,6 @@ const ElevationGraph = ({
                 }));
             }
           }}
-          onMouseUp={() => {
-            if (selection) {
-              return;
-            }
-            zoom();
-          }}
           margin={{ top: 10, right: 0, left: hideAxes ? 0 : 20, bottom: 30 }}
         >
           {!hideAxes && (
@@ -340,20 +169,11 @@ const ElevationGraph = ({
           )}
 
           <Tooltip active={false} cursor={<CustomCursor />} content={<></>} />
-          {/* <defs>
-            <linearGradient id="splitColor" x1="0" y1="0" x2="1" y2="0">
-              <GradeGradient data={downSampledData} xMax={xMax} />
-            </linearGradient>
-          </defs> */}
-          {/* {!hideAxes && ( */}
           <XAxis
             hide={hideAxes}
             allowDataOverflow
             dataKey="x"
             type="number"
-            // domain={[0, 100]}
-            // domain={left && right ? [left, right] : undefined}
-            // tickCount={5}
             domain={[0, "dataMax"]}
             label={{
               value: `Distance (${
@@ -368,12 +188,9 @@ const ElevationGraph = ({
               fill: themeContext?.theme?.colors?.primary as string,
               fontSize: "14px",
             }}
-            ticks={left && right ? getNiceTickValues(left, right) : undefined} // Use calculated tick values
-            // hide={hideAxes}
+            ticks={left && right ? getNiceTickValues(left, right) : undefined}
             stroke={themeContext?.theme?.colors?.primary as string}
           />
-          {/* )} */}
-          {/* {!hideAxes && ( */}
           <YAxis
             allowDataOverflow
             domain={[bottom, yTicks[yTicks.length - 1]]}
@@ -393,7 +210,6 @@ const ElevationGraph = ({
             stroke={themeContext?.theme?.colors?.primary as string}
             hide={hideAxes}
           />
-          {/* )} */}
           <Area
             type={"linear"}
             dataKey="y"

@@ -13,7 +13,6 @@ const ResultsRow = ({
   racerTeam: string;
   racerTime: string;
 }) => {
-  // return <pre>{JSON.stringify(row)}</pre>;
   return (
     <Flex
       sx={

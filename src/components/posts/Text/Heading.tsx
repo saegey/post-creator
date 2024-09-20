@@ -5,6 +5,7 @@ import React from "react";
 import { HeadingElement } from "../../../types/common";
 import HoverAction from "../Editor/HoverAction";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
+import HeadingBase from "./HeadingBase";
 
 const Heading = ({
   children,
@@ -21,21 +22,7 @@ const Heading = ({
     return (
       <HoverAction element={element}>
         <>
-          <Text
-            as="h2"
-            sx={
-              {
-                fontWeight: 700,
-                maxWidth: "690px",
-                width: ["100%", "690px", "690px"],
-                marginLeft: "auto",
-                marginRight: "auto",
-                paddingX: ["10px", "0px", "0px"],
-              } as ThemeUIStyleObject<Theme>
-            }
-          >
-            {children}
-          </Text>
+          <HeadingBase>{children}</HeadingBase>
           {optionsMenu}
         </>
       </HoverAction>

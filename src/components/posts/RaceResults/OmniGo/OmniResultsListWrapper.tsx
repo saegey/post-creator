@@ -17,21 +17,21 @@ const OmniResultsListWrapper = ({ element }: { element: CustomElement }) => {
 
   const hoverAct = React.useMemo(() => {
     return (
-      <HoverAction element={element}>
-        <Box variant="boxes.componentCard" contentEditable={false}>
-          <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
-            <OmniResultsList
-              raceResults={omniResults ? omniResults : undefined}
-              resultsUrl={resultsUrl ? resultsUrl : ""}
-            />
-          </Box>
-          {optionsMenu}
-        </Box>
-      </HoverAction>
+      <OmniResultsList
+        raceResults={omniResults ? omniResults : undefined}
+        resultsUrl={resultsUrl ? resultsUrl : ""}
+      />
     );
   }, [isOptionsOpen, omniResults]);
 
-  return hoverAct;
+  return (
+    <HoverAction element={element}>
+      <>
+        {hoverAct}
+        {optionsMenu}
+      </>
+    </HoverAction>
+  );
 };
 
 export default OmniResultsListWrapper;

@@ -8,7 +8,6 @@ import { EditorContext } from "./EditorContext";
 import AddText from "./AddText";
 import AddPowerCurve from "./AddPowerCurve";
 import AddActivityOverview from "./AddActivityOverview";
-import AddStravaLink from "./AddStravaLink";
 import AddRWGPS from "./AddRWGPS";
 import AddRaceResults from "./AddRaceResults";
 import AddRouteOverview from "./AddRouteOverview";
@@ -108,24 +107,6 @@ const MobileMenu = () => {
               }}
             >
               <AddActivityOverview />
-            </Box>
-            {/* <Box
-              sx={{
-                borderBottomWidth: "1px",
-                borderBottomStyle: "solid",
-                borderBottomColor: "border",
-              }}
-            >
-              <AddTimeZones path={mobileMenu.path} />
-            </Box> */}
-            <Box
-              sx={{
-                borderBottomWidth: "1px",
-                borderBottomStyle: "solid",
-                borderBottomColor: "border",
-              }}
-            >
-              <AddStravaLink />
             </Box>
             <Box
               sx={{

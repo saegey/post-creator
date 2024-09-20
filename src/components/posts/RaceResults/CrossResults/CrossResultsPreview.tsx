@@ -221,7 +221,8 @@ const CrossResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                   Transforms.insertNodes(
                     editor,
                     {
-                      type: "crossResults",
+                      type: "raceResults",
+                      subType: "crossResults",
                       children: [{ text: "" }],
                     },
                     { at: menuPosition.path }

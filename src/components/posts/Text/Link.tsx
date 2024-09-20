@@ -1,11 +1,12 @@
 import React from "react";
-import { useFocused, useSelected, useSlateStatic } from "slate-react";
+import { useSlateStatic } from "slate-react";
 
-import { Box, Close, IconButton, Link as ThemeLink } from "theme-ui";
+import { Box, IconButton, Link as ThemeLink } from "theme-ui";
 import { removeLink } from "../../../utils/link";
 import { LinkType } from "../../../types/common";
 import useClickOutside from "../../../hooks/useClickOutside";
 import DeleteIcon from "../../icons/DeleteIcon";
+import LinkBase from "./LinkBase";
 
 const Link = ({ element, children }: { element: LinkType; children?: any }) => {
   const editor = useSlateStatic();
@@ -22,16 +23,9 @@ const Link = ({ element, children }: { element: LinkType; children?: any }) => {
 
   return (
     <Box ref={wrapperRef} sx={{ display: "inline", position: "relative" }}>
-      <ThemeLink
-        sx={{ textDecorationColor: "text", color: "text", cursor: "pointer" }}
-        href={element.href}
-        target={element.target}
-        onMouseDown={(e) => {
-          setIsHover(true);
-        }}
-      >
+      <LinkBase element={element} onMouseDown={() => setIsHover(true)}>
         {children}
-      </ThemeLink>
+      </LinkBase>
       {isHover && (
         <Box
           sx={{

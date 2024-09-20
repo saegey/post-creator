@@ -63,7 +63,8 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
     Transforms.insertNodes(
       editor,
       {
-        type: "runSignupResults",
+        type: "raceResults",
+        subType: "runSignupResults",
         children: [{ text: "" }],
       },
       { at: menuPosition.path }

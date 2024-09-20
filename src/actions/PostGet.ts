@@ -1,7 +1,11 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 
-import { PostContextType, TimeSeriesDataType } from "../types/common";
+import {
+  ActivityItem,
+  PostContextType,
+  TimeSeriesDataType,
+} from "../types/common";
 import { GetPostInitialQuery } from "../API";
 import { getPostInitial } from "../graphql/customQueries";
 import { getActivityData } from "../../lib/editorApi";
@@ -71,7 +75,9 @@ const getPost = async (id: string, postCtx: PostContextType) => {
       : {},
     timeInRed: post.timeInRed,
     elevations: payload.elevation,
-    activity: payload.activity?.map((item) => ({ ...item })) ?? [],
+    activity:
+      (payload.activity?.map((item) => ({ ...item })) as ActivityItem[]) ??
+      ([] as ActivityItem[]),
   });
 };
 

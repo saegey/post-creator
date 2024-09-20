@@ -1,0 +1,3426 @@
+{
+  "results": [
+    {
+      "id": "21edce5e-3d89-4ff6-a456-b0cd31f369e8",
+      "classId": 5365,
+      "firstName": "Eric",
+      "lastName": "Flanders",
+      "bib": 26,
+      "team": "Kaladi-Trek",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685310105233,
+      "totalTime": 27696868,
+      "timeFormattted": "7:41:36",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 26,
+          "ts": 1685309574106
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 26,
+          "ts": 1685305845040
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 26,
+          "ts": 1685298116865
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 26,
+          "ts": 1685288912493
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 26,
+          "ts": 1685286403569
+        }
+      ]
+    },
+    {
+      "id": "d67b08cc-60f4-4914-9c36-71d1a4fdeacd",
+      "classId": 5365,
+      "firstName": "Paul",
+      "lastName": "Moffat",
+      "bib": 79,
+      "team": "Bici Factory Racing",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685310895481,
+      "totalTime": 28487116,
+      "timeFormattted": "7:54:47",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 79,
+          "ts": 1685310334398
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 79,
+          "ts": 1685306609826
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 79,
+          "ts": 1685298701426
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 79,
+          "ts": 1685289052061
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 79,
+          "ts": 1685286525250
+        }
+      ]
+    },
+    {
+      "id": "b3851d14-5f41-4154-9575-c911c14f4a16",
+      "classId": 5365,
+      "firstName": "Graeme",
+      "lastName": "Hill",
+      "bib": 153,
+      "team": "Victoria Wheelers",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685311032372,
+      "totalTime": 28624007,
+      "timeFormattted": "7:57:04",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 153,
+          "ts": 1685310440608
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 153,
+          "ts": 1685306610957
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 153,
+          "ts": 1685298700415
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 153,
+          "ts": 1685289040283
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 153,
+          "ts": 1685286532511
+        }
+      ]
+    },
+    {
+      "id": "255f0e11-afe8-461f-8911-b8be587479fd",
+      "classId": 5365,
+      "firstName": "Sebastian",
+      "lastName": "Salas",
+      "bib": 45,
+      "team": "DIVERSION p/b Enroute.cc",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685311933225,
+      "totalTime": 29524860,
+      "timeFormattted": "8:12:04",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 45,
+          "ts": 1685311349939
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 45,
+          "ts": 1685306868268
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 45,
+          "ts": 1685298148802
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 45,
+          "ts": 1685288908807
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 45,
+          "ts": 1685286436325
+        }
+      ]
+    },
+    {
+      "id": "fe1613bf-c4f1-4019-86f8-f7617fb948a4",
+      "classId": 5365,
+      "firstName": "Sean",
+      "lastName": "Rodgers",
+      "bib": 167,
+      "team": "Bicicletta Factory Racing",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685312364383,
+      "totalTime": 29956018,
+      "timeFormattted": "8:19:16",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 167,
+          "ts": 1685311797435
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 167,
+          "ts": 1685307555579
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 167,
+          "ts": 1685299206563
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 167,
+          "ts": 1685289259318
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 167,
+          "ts": 1685286668575
+        }
+      ]
+    },
+    {
+      "id": "abcd260c-3bf7-4380-bb0a-ca99f6b88fb0",
+      "classId": 5365,
+      "firstName": "Adam",
+      "lastName": "Greene",
+      "bib": 105,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685312368716,
+      "totalTime": 29960351,
+      "timeFormattted": "8:19:20",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 105,
+          "ts": 1685311829774
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 105,
+          "ts": 1685307552020
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 105,
+          "ts": 1685299141419
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 105,
+          "ts": 1685289407375
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 105,
+          "ts": 1685286859031
+        }
+      ]
+    },
+    {
+      "id": "c5522f4a-e85d-48cf-b39a-0cef067c0829",
+      "classId": 5365,
+      "firstName": "William",
+      "lastName": "Bell",
+      "bib": 196,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685312821135,
+      "totalTime": 30412770,
+      "timeFormattted": "8:26:52",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 196,
+          "ts": 1685312227825
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 196,
+          "ts": 1685307699051
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 196,
+          "ts": 1685298847213
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 196,
+          "ts": 1685289061285
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 196,
+          "ts": 1685286558766
+        }
+      ]
+    },
+    {
+      "id": "131e33ad-83bb-4436-a180-b9cce310a535",
+      "classId": 5365,
+      "firstName": "John",
+      "lastName": "Churchill",
+      "bib": 216,
+      "team": "TCR Bike Shop",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685313100457,
+      "totalTime": 30692092,
+      "timeFormattted": "8:31:32",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 216,
+          "ts": 1685312544351
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 216,
+          "ts": 1685308261837
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 216,
+          "ts": 1685299208056
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 216,
+          "ts": 1685289344694
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 216,
+          "ts": 1685286705563
+        }
+      ]
+    },
+    {
+      "id": "c7448333-bd37-46bc-95b7-735e92c56ebc",
+      "classId": 5365,
+      "firstName": "Brian",
+      "lastName": "Waldo",
+      "bib": 380,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685313672249,
+      "totalTime": 31263884,
+      "timeFormattted": "8:41:03",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 380,
+          "ts": 1685313095102
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 380,
+          "ts": 1685308754945
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 380,
+          "ts": 1685300225673
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 380,
+          "ts": 1685289762915
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 380,
+          "ts": 1685287096499
+        }
+      ]
+    },
+    {
+      "id": "7c107ba5-c62e-42d0-bfd9-e5c055bb6602",
+      "classId": 5365,
+      "firstName": "Jonathan",
+      "lastName": "Lamar",
+      "bib": 113,
+      "team": "Sonic Boom Racing",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685313840330,
+      "totalTime": 31431965,
+      "timeFormattted": "8:43:51",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 113,
+          "ts": 1685313226629
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 113,
+          "ts": 1685308699360
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 113,
+          "ts": 1685299757604
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 113,
+          "ts": 1685289417579
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 113,
+          "ts": 1685286861067
+        }
+      ]
+    },
+    {
+      "id": "69cb6806-7f58-4b5d-94e1-81636f6fb152",
+      "classId": 5365,
+      "firstName": "Kevan",
+      "lastName": "Wilkie",
+      "bib": 387,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685313996470,
+      "totalTime": 31588105,
+      "timeFormattted": "8:46:28",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 387,
+          "ts": 1685313335812
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 387,
+          "ts": 1685308756395
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 387,
+          "ts": 1685300153717
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 387,
+          "ts": 1685289728002
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 387,
+          "ts": 1685287020430
+        }
+      ]
+    },
+    {
+      "id": "9d7a5b88-a982-4edb-b6dd-158623569fcb",
+      "classId": 5365,
+      "firstName": "David",
+      "lastName": "Huntley",
+      "bib": 274,
+      "team": "Cycle Therapy",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685314170572,
+      "totalTime": 31762207,
+      "timeFormattted": "8:49:22",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 274,
+          "ts": 1685313520872
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 274,
+          "ts": 1685308795695
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 274,
+          "ts": 1685299539874
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 274,
+          "ts": 1685289419688
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 274,
+          "ts": 1685286863696
+        }
+      ]
+    },
+    {
+      "id": "e04cde3a-bbb0-40e3-8efc-e05837408935",
+      "classId": 5365,
+      "firstName": "Chad",
+      "lastName": "Grice",
+      "bib": 72,
+      "team": "Fort Street Cycle",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685314208507,
+      "totalTime": 31800142,
+      "timeFormattted": "8:50:00",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 72,
+          "ts": 1685313643048
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 72,
+          "ts": 1685309229128
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 72,
+          "ts": 1685300261170
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 72,
+          "ts": 1685289584567
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 72,
+          "ts": 1685286904347
+        }
+      ]
+    },
+    {
+      "id": "c8b4bdfd-11b3-4b23-a08c-13df0e61996a",
+      "classId": 5365,
+      "firstName": "Ariel",
+      "lastName": "Erez",
+      "bib": 144,
+      "team": "Tekne",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685314387729,
+      "totalTime": 31979364,
+      "timeFormattted": "8:52:59",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 144,
+          "ts": 1685313723067
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 144,
+          "ts": 1685308763856
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 144,
+          "ts": 1685299471147
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 144,
+          "ts": 1685289338928
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 144,
+          "ts": 1685286742163
+        }
+      ]
+    },
+    {
+      "id": "014ccee9-8826-42fd-a652-679d42774814",
+      "classId": 5365,
+      "firstName": "Gavin",
+      "lastName": "Kirkpatrick",
+      "bib": 111,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685314673569,
+      "totalTime": 32265204,
+      "timeFormattted": "8:57:45",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 111,
+          "ts": 1685314020857
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 111,
+          "ts": 1685308793321
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 111,
+          "ts": 1685299427466
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 111,
+          "ts": 1685289335174
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 111,
+          "ts": 1685286732101
+        }
+      ]
+    },
+    {
+      "id": "61491c2a-4fd0-4c24-9b23-9769f8139fd7",
+      "classId": 5365,
+      "firstName": "Arthur",
+      "lastName": "Murray",
+      "bib": 81,
+      "team": "Baring performance",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685314751193,
+      "totalTime": 32342828,
+      "timeFormattted": "8:59:02",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 81,
+          "ts": 1685314172958
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 81,
+          "ts": 1685309874873
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 81,
+          "ts": 1685300668411
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 81,
+          "ts": 1685290003850
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 81,
+          "ts": 1685287251416
+        }
+      ]
+    },
+    {
+      "id": "666c96b3-324a-441b-8ff6-893a5fd302fa",
+      "classId": 5365,
+      "firstName": "Andrea",
+      "lastName": "Carrino",
+      "bib": 210,
+      "team": "Norco Bicycles - Live To Play",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685314809470,
+      "totalTime": 32401105,
+      "timeFormattted": "9:00:01",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 210,
+          "ts": 1685314132867
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 210,
+          "ts": 1685309296300
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 210,
+          "ts": 1685299860597
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 210,
+          "ts": 1685289553655
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 210,
+          "ts": 1685286734603
+        }
+      ]
+    },
+    {
+      "id": "a035adaa-ec36-4d12-b28f-a2a56bc3ff50",
+      "classId": 5365,
+      "firstName": "Roger",
+      "lastName": "Counihan",
+      "bib": 220,
+      "team": "Jaws",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685314988458,
+      "totalTime": 32580093,
+      "timeFormattted": "9:03:00",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 220,
+          "ts": 1685314385749
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 220,
+          "ts": 1685309978532
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 220,
+          "ts": 1685301109119
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 220,
+          "ts": 1685290285477
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 220,
+          "ts": 1685287501548
+        }
+      ]
+    },
+    {
+      "id": "f57cb414-edd3-4546-a070-ddbd4aab5e84",
+      "classId": 5365,
+      "firstName": "Andy",
+      "lastName": "Paton",
+      "bib": 333,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685315146158,
+      "totalTime": 32737793,
+      "timeFormattted": "9:05:37",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 333,
+          "ts": 1685314573433
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 333,
+          "ts": 1685309972272
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 333,
+          "ts": 1685300342899
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 333,
+          "ts": 1685289758685
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 333,
+          "ts": 1685287082284
+        }
+      ]
+    },
+    {
+      "id": "ea95665a-09b8-4e15-a961-a9d4546911cc",
+      "classId": 5365,
+      "firstName": "Ira",
+      "lastName": "Armad",
+      "bib": 92,
+      "team": "RCC SEA",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685315166012,
+      "totalTime": 32757647,
+      "timeFormattted": "9:05:57",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 92,
+          "ts": 1685314570381
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 92,
+          "ts": 1685310195723
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 92,
+          "ts": 1685300916252
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 92,
+          "ts": 1685289973504
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 92,
+          "ts": 1685287174950
+        }
+      ]
+    },
+    {
+      "id": "e5c7ff8e-5619-4258-b1bb-6f408fcf848e",
+      "classId": 5365,
+      "firstName": "Adam",
+      "lastName": "Saegebarth",
+      "bib": 168,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685315166230,
+      "totalTime": 32757865,
+      "timeFormattted": "9:05:57",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 168,
+          "ts": 1685314578924
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 168,
+          "ts": 1685310197059
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 168,
+          "ts": 1685300917030
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 168,
+          "ts": 1685289980341
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 168,
+          "ts": 1685287174242
+        }
+      ]
+    },
+    {
+      "id": "b35ff1bd-90ea-49ae-9564-f384e70570d1",
+      "classId": 5365,
+      "firstName": "Dean",
+      "lastName": "Steinke",
+      "bib": 364,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685315381249,
+      "totalTime": 32972884,
+      "timeFormattted": "9:09:32",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 364,
+          "ts": 1685314772455
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 364,
+          "ts": 1685310080044
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 364,
+          "ts": 1685300521536
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 364,
+          "ts": 1685289587245
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 364,
+          "ts": 1685286898665
+        }
+      ]
+    },
+    {
+      "id": "ee5bea57-c6ce-467b-8e5f-eb30f064b5de",
+      "classId": 5365,
+      "firstName": "Michael",
+      "lastName": "Bidniak",
+      "bib": 60,
+      "team": "PRW",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685315785641,
+      "totalTime": 33377276,
+      "timeFormattted": "9:16:17",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 60,
+          "ts": 1685315149198
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 60,
+          "ts": 1685310281847
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 60,
+          "ts": 1685300770320
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 60,
+          "ts": 1685290009185
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 60,
+          "ts": 1685287178943
+        }
+      ]
+    },
+    {
+      "id": "9303a8d1-8a3b-49a2-814e-d2b4217e21e3",
+      "classId": 5365,
+      "firstName": "Scott",
+      "lastName": "Rusnak",
+      "bib": 125,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685315819227,
+      "totalTime": 33410862,
+      "timeFormattted": "9:16:50",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 125,
+          "ts": 1685315167034
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 125,
+          "ts": 1685309976471
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 125,
+          "ts": 1685300149876
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 125,
+          "ts": 1685289571381
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 125,
+          "ts": 1685286895189
+        }
+      ]
+    },
+    {
+      "id": "2c0879d9-1f2e-476d-bd83-13993f7785d9",
+      "classId": 5365,
+      "firstName": "Jeremy",
+      "lastName": "Caissie",
+      "bib": 94,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685316134306,
+      "totalTime": 33725941,
+      "timeFormattted": "9:22:05",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 94,
+          "ts": 1685315535225
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 94,
+          "ts": 1685311167807
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 94,
+          "ts": 1685301356648
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 94,
+          "ts": 1685289646185
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 94,
+          "ts": 1685286919377
+        }
+      ]
+    },
+    {
+      "id": "6498fb81-859b-4dad-98c7-962aba3c2e20",
+      "classId": 5365,
+      "firstName": "Justin",
+      "lastName": "Ohr",
+      "bib": 120,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685316164454,
+      "totalTime": 33756089,
+      "timeFormattted": "9:22:36",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 120,
+          "ts": 1685315563052
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 120,
+          "ts": 1685310630708
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 120,
+          "ts": 1685300922022
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 120,
+          "ts": 1685290217439
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 120,
+          "ts": 1685287421588
+        }
+      ]
+    },
+    {
+      "id": "b411aed7-1ddd-4843-9023-bdcd29ae3f17",
+      "classId": 5365,
+      "firstName": "Ben",
+      "lastName": "Siepermann",
+      "bib": 126,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685316219182,
+      "totalTime": 33810817,
+      "timeFormattted": "9:23:30",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 126,
+          "ts": 1685315534629
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 126,
+          "ts": 1685310629508
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 126,
+          "ts": 1685301535905
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 126,
+          "ts": 1685289725263
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 126,
+          "ts": 1685287004134
+        }
+      ]
+    },
+    {
+      "id": "e984d67c-7dfc-41e9-821a-44b170056fe8",
+      "classId": 5365,
+      "firstName": "Jeff",
+      "lastName": "Kuby",
+      "bib": 157,
+      "team": "Future Racing",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685316339033,
+      "totalTime": 33930668,
+      "timeFormattted": "9:25:30",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 157,
+          "ts": 1685310804946
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 157,
+          "ts": 1685300772901
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 157,
+          "ts": 1685289729348
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 157,
+          "ts": 1685287017714
+        },
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 157,
+          "ts": 0
+        }
+      ]
+    },
+    {
+      "id": "bf50f57c-bd99-400d-a2a8-36b1d9a442ac",
+      "classId": 5365,
+      "firstName": "Graham",
+      "lastName": "Frost",
+      "bib": 147,
+      "team": "Nolan Riding",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685316443016,
+      "totalTime": 34034651,
+      "timeFormattted": "9:27:14",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 147,
+          "ts": 1685315828517
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 147,
+          "ts": 1685311177924
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 147,
+          "ts": 1685301412758
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 147,
+          "ts": 1685290036557
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 147,
+          "ts": 1685287255711
+        }
+      ]
+    },
+    {
+      "id": "782884b8-a09e-4e4f-a691-9d056976dcef",
+      "classId": 5365,
+      "firstName": "Phil",
+      "lastName": "Birchard",
+      "bib": 203,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685316754577,
+      "totalTime": 34346212,
+      "timeFormattted": "9:32:26",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 203,
+          "ts": 1685316078576
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 203,
+          "ts": 1685310647591
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 203,
+          "ts": 1685300156761
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 203,
+          "ts": 1685289730593
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 203,
+          "ts": 1685287024845
+        }
+      ]
+    },
+    {
+      "id": "b7c80821-5f4e-48b9-af0e-cdb4cb42c5dd",
+      "classId": 5365,
+      "firstName": "Jason",
+      "lastName": "Metcalfe",
+      "bib": 318,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685317072780,
+      "totalTime": 34664415,
+      "timeFormattted": "9:37:44",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 318,
+          "ts": 1685316498829
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 318,
+          "ts": 1685311999169
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 318,
+          "ts": 1685301632468
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 318,
+          "ts": 1685290372113
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 318,
+          "ts": 1685287502865
+        }
+      ]
+    },
+    {
+      "id": "866ad695-24c7-444e-8e66-d431a9ea5307",
+      "classId": 5365,
+      "firstName": "David",
+      "lastName": "Dallin",
+      "bib": 139,
+      "team": "Tripleshot Cycling Club",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685317565109,
+      "totalTime": 35156744,
+      "timeFormattted": "9:45:56",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 139,
+          "ts": 1685316964313
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 139,
+          "ts": 1685312078581
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 139,
+          "ts": 1685302159764
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 139,
+          "ts": 1685290194351
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 139,
+          "ts": 1685287342256
+        }
+      ]
+    },
+    {
+      "id": "b2ba71e5-fcb0-4045-a2d0-abe56d80999b",
+      "classId": 5365,
+      "firstName": "Darren",
+      "lastName": "Meiner",
+      "bib": 316,
+      "team": "Darren Meiner",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685317879944,
+      "totalTime": 35471579,
+      "timeFormattted": "9:51:11",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 316,
+          "ts": 1685317169666
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 316,
+          "ts": 1685312076990
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 316,
+          "ts": 1685301987186
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 316,
+          "ts": 1685290275393
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 316,
+          "ts": 1685287446470
+        }
+      ]
+    },
+    {
+      "id": "36735a26-467e-4f3d-b44c-f9c081e9f41f",
+      "classId": 5365,
+      "firstName": "Stephen",
+      "lastName": "Fontenot",
+      "bib": 146,
+      "team": "OMG Racing",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685318049544,
+      "totalTime": 35641179,
+      "timeFormattted": "9:54:01",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 146,
+          "ts": 1685317422629
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 146,
+          "ts": 1685312649474
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 146,
+          "ts": 1685302322284
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 146,
+          "ts": 1685290486047
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 146,
+          "ts": 1685287579869
+        }
+      ]
+    },
+    {
+      "id": "a433bf95-267e-47b8-8ad4-f3bbb9f2129e",
+      "classId": 5365,
+      "firstName": "Alastair",
+      "lastName": "Smith",
+      "bib": 417,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685318049679,
+      "totalTime": 35641314,
+      "timeFormattted": "9:54:01",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 417,
+          "ts": 1685317373183
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 417,
+          "ts": 1685312000686
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 417,
+          "ts": 1685301632471
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 417,
+          "ts": 1685290429285
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 417,
+          "ts": 1685287709281
+        }
+      ]
+    },
+    {
+      "id": "fd5cbab1-907c-48f4-b25f-593e7c8854fb",
+      "classId": 5365,
+      "firstName": "Eric",
+      "lastName": "Stoehr",
+      "bib": 421,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685318075613,
+      "totalTime": 35667248,
+      "timeFormattted": "9:54:27",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 421,
+          "ts": 1685317447097
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 421,
+          "ts": 1685312283276
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 421,
+          "ts": 1685301929401
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 421,
+          "ts": 1685290321358
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 421,
+          "ts": 1685287467381
+        }
+      ]
+    },
+    {
+      "id": "0ea564d7-90c6-43f1-9d93-1629a6629e4b",
+      "classId": 5365,
+      "firstName": "John",
+      "lastName": "Sprague",
+      "bib": 414,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685318936545,
+      "totalTime": 36528180,
+      "timeFormattted": "10:08:48",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 414,
+          "ts": 1685318155520
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 414,
+          "ts": 1685312236147
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 414,
+          "ts": 1685301488714
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 414,
+          "ts": 1685289561193
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 414,
+          "ts": 1685286897716
+        }
+      ]
+    },
+    {
+      "id": "291ecfad-ba13-4be7-9eff-9b03624d4935",
+      "classId": 5365,
+      "firstName": "Matt",
+      "lastName": "Grossnickle",
+      "bib": 106,
+      "team": "Cycle Therapy",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685319074235,
+      "totalTime": 36665870,
+      "timeFormattted": "10:11:05",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 106,
+          "ts": 1685318295491
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 106,
+          "ts": 1685312455107
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 106,
+          "ts": 1685301991383
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 106,
+          "ts": 1685290279752
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 106,
+          "ts": 1685287440756
+        }
+      ]
+    },
+    {
+      "id": "f1b09802-3cad-4e36-8c16-0907ff0873b3",
+      "classId": 5365,
+      "firstName": "Jeff",
+      "lastName": "Bartlett",
+      "bib": 194,
+      "team": "HTFU",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685319137131,
+      "totalTime": 36728766,
+      "timeFormattted": "10:12:08",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 194,
+          "ts": 1685318381180
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 194,
+          "ts": 1685313112835
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 194,
+          "ts": 1685302431265
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 194,
+          "ts": 1685290139481
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 194,
+          "ts": 1685287394647
+        }
+      ]
+    },
+    {
+      "id": "7d16cec9-5a9a-4cb6-a651-108f441dbcbf",
+      "classId": 5365,
+      "firstName": "Yue",
+      "lastName": "Xie",
+      "bib": 395,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685319386791,
+      "totalTime": 36978426,
+      "timeFormattted": "10:16:18",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 395,
+          "ts": 1685318706022
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 395,
+          "ts": 1685313388073
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 395,
+          "ts": 1685303135020
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 395,
+          "ts": 1685290517845
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 395,
+          "ts": 1685287711952
+        }
+      ]
+    },
+    {
+      "id": "63d5e7e4-71fe-49d4-b808-ba2fdb5d2e71",
+      "classId": 5365,
+      "firstName": "Jesse",
+      "lastName": "Moore",
+      "bib": 325,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685319585976,
+      "totalTime": 37177611,
+      "timeFormattted": "10:19:37",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 325,
+          "ts": 1685318787936
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 325,
+          "ts": 1685313398873
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 325,
+          "ts": 1685302493180
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 325,
+          "ts": 1685290348517
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 325,
+          "ts": 1685287455148
+        }
+      ]
+    },
+    {
+      "id": "f2644fd2-95ea-4706-87f6-cd56fa058a88",
+      "classId": 5365,
+      "firstName": "Thomas",
+      "lastName": "Meyer",
+      "bib": 411,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685319737945,
+      "totalTime": 37329580,
+      "timeFormattted": "10:22:09",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 411,
+          "ts": 1685319027860
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 411,
+          "ts": 1685313280169
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 411,
+          "ts": 1685303136559
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 411,
+          "ts": 1685290546643
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 411,
+          "ts": 1685287581152
+        }
+      ]
+    },
+    {
+      "id": "87a5bc8b-2f62-438a-b3d3-b3321a88f83c",
+      "classId": 5365,
+      "firstName": "Tyrone",
+      "lastName": "Siglos",
+      "bib": 413,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685319799994,
+      "totalTime": 37391629,
+      "timeFormattted": "10:23:11",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 413,
+          "ts": 1685319194969
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 413,
+          "ts": 1685314537010
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 413,
+          "ts": 1685303841235
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 413,
+          "ts": 1685291203402
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 413,
+          "ts": 1685287868077
+        }
+      ]
+    },
+    {
+      "id": "6f6f9962-ba98-4859-9c20-be45297654fd",
+      "classId": 5365,
+      "firstName": "Adam",
+      "lastName": "Nash",
+      "bib": 82,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685319990390,
+      "totalTime": 37582025,
+      "timeFormattted": "10:26:22",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 82,
+          "ts": 1685319357855
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 82,
+          "ts": 1685314644064
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 82,
+          "ts": 1685304399645
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 82,
+          "ts": 1685291491599
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 82,
+          "ts": 1685288272734
+        }
+      ]
+    },
+    {
+      "id": "828d0356-9b68-4836-8e67-ccb8c7ef6202",
+      "classId": 5365,
+      "firstName": "Micheal",
+      "lastName": "Dufresne",
+      "bib": 232,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320013070,
+      "totalTime": 37604705,
+      "timeFormattted": "10:26:44",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 232,
+          "ts": 1685319361791
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 232,
+          "ts": 1685313763978
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 232,
+          "ts": 1685302802831
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 232,
+          "ts": 1685290835057
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 232,
+          "ts": 1685287757433
+        }
+      ]
+    },
+    {
+      "id": "02b73344-b4a5-485b-a6e7-9d50b73cd810",
+      "classId": 5365,
+      "firstName": "Grant",
+      "lastName": "Fraser",
+      "bib": 247,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320302484,
+      "totalTime": 37894119,
+      "timeFormattted": "10:31:34",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 247,
+          "ts": 1685319294821
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 247,
+          "ts": 1685313453271
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 247,
+          "ts": 1685302856247
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 247,
+          "ts": 1685290311204
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 247,
+          "ts": 1685287416815
+        }
+      ]
+    },
+    {
+      "id": "b97bf21b-7803-454f-b3ac-f9424b181629",
+      "classId": 5365,
+      "firstName": "Peter",
+      "lastName": "Ferrucci",
+      "bib": 145,
+      "team": "Red Kilo",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320302752,
+      "totalTime": 37894387,
+      "timeFormattted": "10:31:34",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 145,
+          "ts": 1685319103303
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 145,
+          "ts": 1685313451085
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 145,
+          "ts": 1685302853925
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 145,
+          "ts": 1685290305284
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 145,
+          "ts": 1685287393598
+        }
+      ]
+    },
+    {
+      "id": "93a18221-faf3-43d7-be10-d9bbf6fa9577",
+      "classId": 5365,
+      "firstName": "Alex",
+      "lastName": "Sandberg",
+      "bib": 352,
+      "team": "Endureit!",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320334860,
+      "totalTime": 37926495,
+      "timeFormattted": "10:32:06",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 352,
+          "ts": 1685319734736
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 352,
+          "ts": 1685314794488
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 352,
+          "ts": 1685304240120
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 352,
+          "ts": 1685291468562
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 352,
+          "ts": 1685288066012
+        }
+      ]
+    },
+    {
+      "id": "b97f4e7a-de0a-436e-9734-a0ecb6b4f1e4",
+      "classId": 5365,
+      "firstName": "Julien",
+      "lastName": "Millan",
+      "bib": 320,
+      "team": "Minerals",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320446190,
+      "totalTime": 38037825,
+      "timeFormattted": "10:33:57",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 320,
+          "ts": 1685319793561
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 320,
+          "ts": 1685314854198
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 320,
+          "ts": 1685303625265
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 320,
+          "ts": 1685290857780
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 320,
+          "ts": 1685287758260
+        }
+      ]
+    },
+    {
+      "id": "6f5c69a4-fbc4-4307-9091-17275d74952a",
+      "classId": 5365,
+      "firstName": "Ander",
+      "lastName": "Monro",
+      "bib": 324,
+      "team": "Cycle Therapy",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320522944,
+      "totalTime": 38114579,
+      "timeFormattted": "10:35:14",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 324,
+          "ts": 1685319821008
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 324,
+          "ts": 1685313865544
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 324,
+          "ts": 1685303436805
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 324,
+          "ts": 1685290815773
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 324,
+          "ts": 1685287865265
+        }
+      ]
+    },
+    {
+      "id": "f3ed2e95-de77-4089-bef6-15853b70848a",
+      "classId": 5365,
+      "firstName": "Ryan",
+      "lastName": "Kean",
+      "bib": 285,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320579975,
+      "totalTime": 38171610,
+      "timeFormattted": "10:36:11",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 285,
+          "ts": 1685319968986
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 285,
+          "ts": 1685314427442
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 285,
+          "ts": 1685303320649
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 285,
+          "ts": 1685290669238
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 285,
+          "ts": 1685287691422
+        }
+      ]
+    },
+    {
+      "id": "4c955aac-4635-401f-b4fb-b2de6ac4dc9d",
+      "classId": 5365,
+      "firstName": "Dustin",
+      "lastName": "Harder",
+      "bib": 151,
+      "team": "Harder Cycling",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320789459,
+      "totalTime": 38381094,
+      "timeFormattted": "10:39:41",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 151,
+          "ts": 1685320144701
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 151,
+          "ts": 1685314538544
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 151,
+          "ts": 1685303365928
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 151,
+          "ts": 1685290702911
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 151,
+          "ts": 1685287553701
+        }
+      ]
+    },
+    {
+      "id": "9d6de41c-49b6-4876-b704-dfc4543f1ff1",
+      "classId": 5365,
+      "firstName": "Erik",
+      "lastName": "Walter",
+      "bib": 383,
+      "team": "Endure It! Sports",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685320902468,
+      "totalTime": 38494103,
+      "timeFormattted": "10:41:34",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 383,
+          "ts": 1685320185014
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 383,
+          "ts": 1685314812301
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 383,
+          "ts": 1685304239018
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 383,
+          "ts": 1685291469412
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 383,
+          "ts": 1685288063543
+        }
+      ]
+    },
+    {
+      "id": "1c21cfba-6696-492e-ad77-58a3c8d13779",
+      "classId": 5365,
+      "firstName": "Steven",
+      "lastName": "Biss",
+      "bib": 204,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685321670894,
+      "totalTime": 39262529,
+      "timeFormattted": "10:54:22",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 204,
+          "ts": 1685320989316
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 204,
+          "ts": 1685315321671
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 204,
+          "ts": 1685304390023
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 204,
+          "ts": 1685291288799
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 204,
+          "ts": 1685287980547
+        }
+      ]
+    },
+    {
+      "id": "5fe4024c-8067-46f6-8ada-76ff5dcabbb8",
+      "classId": 5365,
+      "firstName": "William",
+      "lastName": "Jackson",
+      "bib": 276,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685321718866,
+      "totalTime": 39310501,
+      "timeFormattted": "10:55:10",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 276,
+          "ts": 1685320921967
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 276,
+          "ts": 1685315158087
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 276,
+          "ts": 1685303847804
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 276,
+          "ts": 1685290764227
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 276,
+          "ts": 1685287673726
+        }
+      ]
+    },
+    {
+      "id": "bf387cd5-a91f-4bec-9bb4-e2ec9d34e5f8",
+      "classId": 5365,
+      "firstName": "Alan",
+      "lastName": "Hepples",
+      "bib": 264,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685321825270,
+      "totalTime": 39416905,
+      "timeFormattted": "10:56:56",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 264,
+          "ts": 1685321166337
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 264,
+          "ts": 1685316055203
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 264,
+          "ts": 1685304198735
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 264,
+          "ts": 1685290469550
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 264,
+          "ts": 1685287516032
+        }
+      ]
+    },
+    {
+      "id": "52fc3117-f92c-44c3-a6b0-64dbb470d374",
+      "classId": 5365,
+      "firstName": "Joshua",
+      "lastName": "Jones",
+      "bib": 279,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685321895937,
+      "totalTime": 39487572,
+      "timeFormattted": "10:58:07",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 279,
+          "ts": 1685321074855
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 279,
+          "ts": 1685315265189
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 279,
+          "ts": 1685304762978
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 279,
+          "ts": 1685291317487
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 279,
+          "ts": 1685287785634
+        }
+      ]
+    },
+    {
+      "id": "a68aa1ad-0ea2-44b7-ab44-81a10ed381ce",
+      "classId": 5365,
+      "firstName": "Richard",
+      "lastName": "Hewitt",
+      "bib": 410,
+      "team": "Healthy Habits",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685321902766,
+      "totalTime": 39494401,
+      "timeFormattted": "10:58:14",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 410,
+          "ts": 1685321193772
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 410,
+          "ts": 1685315235767
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 410,
+          "ts": 1685304196413
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 410,
+          "ts": 1685291119964
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 410,
+          "ts": 1685287860140
+        }
+      ]
+    },
+    {
+      "id": "44653b32-d170-4bd4-a9b7-577f97506f13",
+      "classId": 5365,
+      "firstName": "Jason",
+      "lastName": "Simmons",
+      "bib": 358,
+      "team": "Cannondale",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685321948009,
+      "totalTime": 39539644,
+      "timeFormattted": "10:58:59",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 358,
+          "ts": 1685321203809
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 358,
+          "ts": 1685315270423
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 358,
+          "ts": 1685304261772
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 358,
+          "ts": 1685290989521
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 358,
+          "ts": 1685287710669
+        }
+      ]
+    },
+    {
+      "id": "c36038bd-6ae3-477a-aa1b-c5eeb202d245",
+      "classId": 5365,
+      "firstName": "Graham",
+      "lastName": "Michaelson",
+      "bib": 319,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685321948209,
+      "totalTime": 39539844,
+      "timeFormattted": "10:58:59",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 319,
+          "ts": 1685321257621
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 319,
+          "ts": 1685315272292
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 319,
+          "ts": 1685304262715
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 319,
+          "ts": 1685290993037
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 319,
+          "ts": 1685287738003
+        }
+      ]
+    },
+    {
+      "id": "ca35def0-470b-4604-8f3c-b13721fd3bb3",
+      "classId": 5365,
+      "firstName": "Michael",
+      "lastName": "Geuss",
+      "bib": 252,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685322056086,
+      "totalTime": 39647721,
+      "timeFormattted": "11:00:47",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 252,
+          "ts": 1685321431515
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 252,
+          "ts": 1685315690103
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 252,
+          "ts": 1685304147452
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 252,
+          "ts": 1685290811280
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 252,
+          "ts": 1685287575029
+        }
+      ]
+    },
+    {
+      "id": "8242dad7-5c5a-4bcb-b3d2-cdad0a6ee21e",
+      "classId": 5365,
+      "firstName": "Jason",
+      "lastName": "Howlett",
+      "bib": 272,
+      "team": "Current Millwork",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685322338864,
+      "totalTime": 39930499,
+      "timeFormattted": "11:05:30",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 272,
+          "ts": 1685321718595
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 272,
+          "ts": 1685316314184
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 272,
+          "ts": 1685304822105
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 272,
+          "ts": 1685291250247
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 272,
+          "ts": 1685287876264
+        }
+      ]
+    },
+    {
+      "id": "c9722230-c508-4a4c-b978-aedd89feb390",
+      "classId": 5365,
+      "firstName": "Tyler",
+      "lastName": "Bollmann",
+      "bib": 206,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685322411050,
+      "totalTime": 40002685,
+      "timeFormattted": "11:06:42",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 206,
+          "ts": 1685321621785
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 206,
+          "ts": 1685315689059
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 206,
+          "ts": 1685304150155
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 206,
+          "ts": 1685290828285
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 206,
+          "ts": 1685287818548
+        }
+      ]
+    },
+    {
+      "id": "3ff13798-527b-4303-bf30-40d3154d155f",
+      "classId": 5365,
+      "firstName": "Scott",
+      "lastName": "Robles",
+      "bib": 344,
+      "team": "Legs of Steel Cycling",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685323083118,
+      "totalTime": 40674753,
+      "timeFormattted": "11:17:54",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 344,
+          "ts": 1685322227747
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 344,
+          "ts": 1685316312707
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 344,
+          "ts": 1685305015259
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 344,
+          "ts": 1685291181002
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 344,
+          "ts": 1685288077795
+        }
+      ]
+    },
+    {
+      "id": "ef1f01b7-50a8-444b-90d5-97a0d1582c36",
+      "classId": 5365,
+      "firstName": "Scott",
+      "lastName": "Kiefer",
+      "bib": 288,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685323601775,
+      "totalTime": 41193410,
+      "timeFormattted": "11:26:33",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 288,
+          "ts": 1685322730225
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 288,
+          "ts": 1685316116939
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 288,
+          "ts": 1685304056822
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 288,
+          "ts": 1685291064998
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 288,
+          "ts": 1685287838904
+        }
+      ]
+    },
+    {
+      "id": "ba08f4b3-5e22-40cf-b7cf-903e150b7f42",
+      "classId": 5365,
+      "firstName": "Kai",
+      "lastName": "Jones",
+      "bib": 280,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685323941286,
+      "totalTime": 41532921,
+      "timeFormattted": "11:32:12",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 280,
+          "ts": 1685323247146
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 280,
+          "ts": 1685317146830
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 280,
+          "ts": 1685301128671
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 280,
+          "ts": 1685290054551
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 280,
+          "ts": 1685287293390
+        }
+      ]
+    },
+    {
+      "id": "c115de60-8980-4c98-a682-8678b6a16962",
+      "classId": 5365,
+      "firstName": "Dan",
+      "lastName": "Cathro",
+      "bib": 213,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685324255493,
+      "totalTime": 41847128,
+      "timeFormattted": "11:37:27",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 213,
+          "ts": 1685323513226
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 213,
+          "ts": 1685317296245
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 213,
+          "ts": 1685305162096
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 213,
+          "ts": 1685291304972
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 213,
+          "ts": 1685288071079
+        }
+      ]
+    },
+    {
+      "id": "b6f87d75-627a-429c-9ea7-d369a46cd8dc",
+      "classId": 5365,
+      "firstName": "Jake",
+      "lastName": "Kostelyk",
+      "bib": 292,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685324569863,
+      "totalTime": 42161498,
+      "timeFormattted": "11:42:41",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 292,
+          "ts": 1685323785195
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 292,
+          "ts": 1685317217495
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 292,
+          "ts": 1685304935003
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 292,
+          "ts": 1685291143398
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 292,
+          "ts": 1685287824399
+        }
+      ]
+    },
+    {
+      "id": "dff6e9a1-47d8-4ac6-9107-717bb3c1bcdd",
+      "classId": 5365,
+      "firstName": "David",
+      "lastName": "Kostelyk",
+      "bib": 176,
+      "team": "Groupo",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685324570088,
+      "totalTime": 42161723,
+      "timeFormattted": "11:42:41",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 176,
+          "ts": 1685323783377
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 176,
+          "ts": 1685317216417
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 176,
+          "ts": 1685304927504
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 176,
+          "ts": 1685291142573
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 176,
+          "ts": 1685287821339
+        }
+      ]
+    },
+    {
+      "id": "d6c33538-435b-4f9b-8f41-756694423ffb",
+      "classId": 5365,
+      "firstName": "Gregory",
+      "lastName": "Baird",
+      "bib": 188,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685325224460,
+      "totalTime": 42816095,
+      "timeFormattted": "11:53:36",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 188,
+          "ts": 1685324388292
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 188,
+          "ts": 1685318520973
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 188,
+          "ts": 1685306602421
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 188,
+          "ts": 1685291703110
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 188,
+          "ts": 1685288053626
+        }
+      ]
+    },
+    {
+      "id": "5d5807f9-d071-4b53-9dcf-d38d120e765e",
+      "classId": 5365,
+      "firstName": "Jon",
+      "lastName": "Clark",
+      "bib": 415,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685325303983,
+      "totalTime": 42895618,
+      "timeFormattted": "11:54:55",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 415,
+          "ts": 1685324572541
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 415,
+          "ts": 1685318230095
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 415,
+          "ts": 1685305352540
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 415,
+          "ts": 1685290763226
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 415,
+          "ts": 1685287574535
+        }
+      ]
+    },
+    {
+      "id": "94d8ee54-5a21-42eb-8e10-302a3c243022",
+      "classId": 5365,
+      "firstName": "Eric",
+      "lastName": "Sy",
+      "bib": 369,
+      "team": "Regina Cycle Club",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685325871361,
+      "totalTime": 43462996,
+      "timeFormattted": "12:04:22",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 369,
+          "ts": 1685324947251
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 369,
+          "ts": 1685318488513
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 369,
+          "ts": 1685306183945
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 369,
+          "ts": 1685290497162
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 369,
+          "ts": 1685287499305
+        }
+      ]
+    },
+    {
+      "id": "603a992a-87b4-4b02-bce4-c9208901f086",
+      "classId": 5365,
+      "firstName": "Bradley",
+      "lastName": "Shannon",
+      "bib": 356,
+      "team": "Blitz",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685326653825,
+      "totalTime": 44245460,
+      "timeFormattted": "12:17:25",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 356,
+          "ts": 1685325878199
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 356,
+          "ts": 1685319237604
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 356,
+          "ts": 1685305209575
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 356,
+          "ts": 1685290238190
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 356,
+          "ts": 1685287436246
+        }
+      ]
+    },
+    {
+      "id": "82f14175-bc6b-43f1-9d0e-1ef993fcb33c",
+      "classId": 5365,
+      "firstName": "Bill",
+      "lastName": "Leslie",
+      "bib": 299,
+      "team": "Coureur",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685326841905,
+      "totalTime": 44433540,
+      "timeFormattted": "12:20:33",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 299,
+          "ts": 1685325934158
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 299,
+          "ts": 1685319418652
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 299,
+          "ts": 1685307410053
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 299,
+          "ts": 1685291467132
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 299,
+          "ts": 1685288057451
+        }
+      ]
+    },
+    {
+      "id": "306d1217-1e9a-44ec-bcb0-2b08d447f78c",
+      "classId": 5365,
+      "firstName": "Justin",
+      "lastName": "Cooper",
+      "bib": 172,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685327040579,
+      "totalTime": 44632214,
+      "timeFormattted": "12:23:52",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 172,
+          "ts": 1685326234857
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 172,
+          "ts": 1685320128233
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 172,
+          "ts": 1685306028680
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 172,
+          "ts": 1685291433746
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 172,
+          "ts": 1685288072933
+        }
+      ]
+    },
+    {
+      "id": "45408ddf-5c40-4770-a844-b14c4bc1572c",
+      "classId": 5365,
+      "firstName": "Julius",
+      "lastName": "Estrada",
+      "bib": 239,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": null,
+      "finishTime": 1685328572281,
+      "totalTime": 46163916,
+      "timeFormattted": "12:49:23",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 239,
+          "ts": 1685327555647
+        },
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 239,
+          "ts": 1685320362970
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 239,
+          "ts": 1685307756114
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 239,
+          "ts": 1685292766906
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 239,
+          "ts": 1685289275115
+        }
+      ]
+    },
+    {
+      "id": "5391430f-5c7a-4762-8e2b-3bce6c74964c",
+      "classId": 5365,
+      "firstName": "Steven",
+      "lastName": "Storwick",
+      "bib": 368,
+      "team": "Bear Grinders",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": "DNF",
+      "finishTime": 1685324841792,
+      "totalTime": 42433427,
+      "timeFormattted": "11:47:13",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 368,
+          "ts": 1685321802543
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 368,
+          "ts": 1685308292125
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 368,
+          "ts": 1685292120596
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 368,
+          "ts": 1685288681726
+        }
+      ]
+    },
+    {
+      "id": "1213d698-0482-4b13-b91b-3dc6dcc0f7da",
+      "classId": 5365,
+      "firstName": "Andy",
+      "lastName": "Guiardinu",
+      "bib": 257,
+      "team": "Bear Grinders",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": "DNF",
+      "finishTime": 1685324842672,
+      "totalTime": 42434307,
+      "timeFormattted": "11:47:14",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 257,
+          "ts": 1685321802850
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 257,
+          "ts": 1685308135365
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 257,
+          "ts": 1685292104586
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 257,
+          "ts": 1685288682362
+        }
+      ]
+    },
+    {
+      "id": "bacab895-acdb-42e6-8e0f-d6379ae73876",
+      "classId": 5365,
+      "firstName": "Mitch",
+      "lastName": "Nelson",
+      "bib": 328,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": "DNF",
+      "finishTime": 1685332828624,
+      "totalTime": 50420259,
+      "timeFormattted": "14:00:20",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+          "bib": 328,
+          "ts": 1685331658111
+        },
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 328,
+          "ts": 1685309472673
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 328,
+          "ts": 1685292779615
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 328,
+          "ts": 1685288987522
+        }
+      ]
+    },
+    {
+      "id": "854bac4b-0bf0-45ae-9bb1-157f126d66a0",
+      "classId": 5365,
+      "firstName": "Mathew",
+      "lastName": "Baker",
+      "bib": 189,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": "DNF",
+      "finishTime": null,
+      "totalTime": null,
+      "timeFormattted": "0:00:00",
+      "checkpointTimes": []
+    },
+    {
+      "id": "8a938218-0d60-4e24-a37a-5cafce59ff46",
+      "classId": 5365,
+      "firstName": "Tai Wai",
+      "lastName": "Lam",
+      "bib": 112,
+      "team": "DIVERSION by Enroute.cc",
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": "DNF",
+      "finishTime": null,
+      "totalTime": null,
+      "timeFormattted": "0:00:00",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+          "bib": 112,
+          "ts": 1685302824522
+        },
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 112,
+          "ts": 1685290175736
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 112,
+          "ts": 1685287196648
+        }
+      ]
+    },
+    {
+      "id": "7662d385-ec9a-4526-ae4c-ce6a59d9c69c",
+      "classId": 5365,
+      "firstName": "Benjamin",
+      "lastName": "Siler",
+      "bib": 127,
+      "team": null,
+      "startTs": 0,
+      "start": 1685282408365,
+      "adjustment": null,
+      "status": "DNF",
+      "finishTime": null,
+      "totalTime": null,
+      "timeFormattted": "0:00:00",
+      "checkpointTimes": [
+        {
+          "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+          "bib": 127,
+          "ts": 1685289771322
+        },
+        {
+          "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+          "bib": 127,
+          "ts": 1685287012636
+        }
+      ]
+    }
+  ],
+  "selected": {
+    "id": "e5c7ff8e-5619-4258-b1bb-6f408fcf848e",
+    "classId": 5365,
+    "firstName": "Adam",
+    "lastName": "Saegebarth",
+    "bib": 168,
+    "team": null,
+    "startTs": 0,
+    "start": 1685282408365,
+    "adjustment": null,
+    "status": null,
+    "finishTime": 1685315166230,
+    "totalTime": 32757865,
+    "timeFormattted": "9:05:57",
+    "checkpointTimes": [
+      {
+        "eventCheckpointId": "0799774b-1f09-4627-ab4b-f6256633a45d",
+        "bib": 168,
+        "ts": 1685314578924
+      },
+      {
+        "eventCheckpointId": "0699774b-1f09-4627-ab4b-f6256633a45d",
+        "bib": 168,
+        "ts": 1685310197059
+      },
+      {
+        "eventCheckpointId": "0429019d-6634-4e02-8281-1a406a5e4106",
+        "bib": 168,
+        "ts": 1685300917030
+      },
+      {
+        "eventCheckpointId": "02e6b0c9-d243-4b67-905d-e7925051d2c4",
+        "bib": 168,
+        "ts": 1685289980341
+      },
+      {
+        "eventCheckpointId": "01adb4f1-fc6b-48f4-8bb4-d02cd0ad0520",
+        "bib": 168,
+        "ts": 1685287174242
+      }
+    ]
+  },
+  "category": "Waffle: Men 35 to 44",
+  "eventName": "2023 BWR Canada"
+}

@@ -5,6 +5,7 @@ import { useSlateStatic, ReactEditor } from "slate-react";
 import HoverAction from "../../posts/Editor/HoverAction";
 import { ParagraphElement as ParagraphElementType } from "../../../types/common";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
+import ParagraphBase from "./ParagraphBase";
 
 const ParagraphElement = ({
   children,
@@ -19,19 +20,10 @@ const ParagraphElement = ({
 
   const textMemo = React.useMemo(() => {
     return (
-      <Text
-        as="div"
-        sx={
-          {
-            fontSize: ["16px", "19px", "19px"],
-            marginX: ["10px", "0px", "0px"],
-            lineHeight: "1.5",
-          } as ThemeUIStyleObject<Theme>
-        }
-      >
-        {children}
+      <>
+        <ParagraphBase>{children}</ParagraphBase>
         {optionsMenu}
-      </Text>
+      </>
     );
   }, [isOptionsOpen, element]);
 

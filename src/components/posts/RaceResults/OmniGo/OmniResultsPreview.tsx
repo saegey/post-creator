@@ -176,7 +176,8 @@ const OmniResultsPreview = ({ editor }: { editor: CustomEditor }) => {
                 Transforms.insertNodes(
                   editor,
                   {
-                    type: "omniResults",
+                    type: "raceResults",
+                    subType: "omniResults",
                     children: [{ text: "" }],
                   },
                   { at: menuPosition.path }

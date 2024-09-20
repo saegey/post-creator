@@ -3,6 +3,7 @@ import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
 import { createEditor, Editor, setSelection, Transforms } from "slate";
 import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { withHistory } from "slate-history";
+import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 
 import renderElement from "./RenderElement";
 import { PostContext } from "../../PostContext";
@@ -30,10 +31,8 @@ import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
 import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddMediaComponent
 import { updateImages } from "../../../utils/editorActions";
-import { CloudinaryUploadWidgetResults } from "next-cloudinary";
-import { updateHeroImage } from "../../../utils/SlateUtilityFunctions";
+
 import ImageManager from "../Image/ImageManager";
-import { StravaModal } from "./AddStravaLink";
 import PostSettings from "./PostSettings";
 import PhotoCaptionModal from "../Image/PhotoCaptionModal";
 import usePubSubSubscription from "../../../hooks/usePubSubSubscription";
@@ -181,7 +180,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           children: [{ text: "" }],
           void: true,
           photoCaption: "",
-          caption: "",
         },
         { at: realPathRef.current }
       );
@@ -251,7 +249,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           </Slate>
           {isRaceResultsModalOpen && <RaceResultsImport />}
           <RWGPSModal />
-          {isStravaModalOpen && <StravaModal />}
           <MobileMenu />
           <AddVideoModal />
           {isOptionsOpen && <OptionsDropdown />}

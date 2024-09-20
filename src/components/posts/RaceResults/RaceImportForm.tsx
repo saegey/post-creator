@@ -7,9 +7,8 @@ import {
   Text,
   Spinner,
   Message,
-  Link,
 } from "theme-ui";
-import React, { FormEvent } from "react";
+import React from "react";
 
 import {
   getCategories,
@@ -123,6 +122,7 @@ const RaceImportForm = () => {
         break;
 
       // https://runsignup.com/Race/Results/86159
+      // TODO: some links are bikesignup.com now
       case "runsignup.com":
         getRunSignupCategories({ url })
           .then((res) => {
@@ -137,9 +137,9 @@ const RaceImportForm = () => {
               });
             }
           })
-          .catch((e) =>
+          .catch(() =>
             setNotification({
-              message: "Failed to get race info",
+              message: "Failed to get race info ",
               type: "Error",
             })
           )

@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../../PostContext";
@@ -17,21 +16,21 @@ const CrossResultstListWrapper = ({ element }: { element: CustomElement }) => {
 
   const hoverAct = React.useMemo(() => {
     return (
-      <HoverAction element={element}>
-        <Box variant="boxes.componentCard" contentEditable={false}>
-          <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
-            <CrossResultsList
-              raceResults={crossResults}
-              resultsUrl={resultsUrl ? resultsUrl : ""}
-            />
-          </Box>
-          {optionsMenu}
-        </Box>
-      </HoverAction>
+      <CrossResultsList
+        raceResults={crossResults}
+        resultsUrl={resultsUrl ? resultsUrl : ""}
+      />
     );
   }, [crossResults, isOptionsOpen]);
 
-  return hoverAct;
+  return (
+    <HoverAction element={element}>
+      <>
+        {hoverAct}
+        {optionsMenu}
+      </>
+    </HoverAction>
+  );
 };
 
 export default CrossResultstListWrapper;

@@ -11,6 +11,7 @@ import { useSlateContext } from "../../SlateContext";
 import DefaultImage from "./DefaultImage";
 import HeroImage from "./HeroImage";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
+import HeroBannerBase from "./HeroBannerBase";
 
 const HeroBanner = ({ element }: { element: HeroBannerType }) => {
   const { title, postLocation, date, subhead } = React.useContext(PostContext);
@@ -45,39 +46,14 @@ const HeroBanner = ({ element }: { element: HeroBannerType }) => {
       : undefined;
 
     return (
-      <>
-        <Box
-          sx={{
-            width: "100%",
-            marginBottom: "60px",
-            backgroundColor: "surface",
-          }}
-          contentEditable={false}
-        >
-          <Flex
-            sx={{
-              height: "fit-content",
-              flexDirection: ["column", "row", "row"],
-              width: "100%",
-            }}
-          >
-            {element.image && element !== null && imageUrl ? (
-              <HeroImage element={element} imageUrl={imageUrl} />
-            ) : (
-              <DefaultImage />
-            )}
-
-            <PostHeaderTextBlock
-              type={""}
-              title={title ? title : "Title"}
-              teaser={subhead ? subhead : "Subhead"}
-              date={date ? date : "Event date"}
-              location={postLocation ? postLocation : "Location"}
-              headerImageCaption={element.photoCaption}
-            />
-          </Flex>
-        </Box>
-      </>
+      <HeroBannerBase
+        element={element}
+        imageUrl={imageUrl}
+        title={title}
+        subhead={subhead ? subhead : ""}
+        date={date ? date : ""}
+        postLocation={postLocation ? postLocation : ""}
+      />
     );
   }, [title, postLocation, date, subhead, element.image, element.photoCaption]);
 
