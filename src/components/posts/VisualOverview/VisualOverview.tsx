@@ -123,9 +123,7 @@ const VisualOverview = ({
 
       <ElevationSlice
         marker={marker}
-        selection={selection}
         data={elevationsSynthetic}
-        element={element}
         unitOfMeasure={unitOfMeasure}
       />
       {graph}

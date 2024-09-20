@@ -89,20 +89,22 @@ const renderElement = (props: {
     case "list-item": // List item *
       return <li {...attributes}>{children}</li>;
 
-    case "raceResultsDotCom":
-      return <RaceResultsDotComListWrapper {...props} />;
-
-    case "webscorerResults":
-      return <WebscorerListWrapper {...props} />;
-
-    case "crossResults":
-      return <CrossResultstListWrapper element={props.element} />;
-
-    case "omniResults":
-      return <OmniResultsListWrapper element={props.element} />;
-
-    case "runSignupResults":
-      return <RunSignupListWrapper element={props.element} />;
+    case "raceResults": // raceresults *
+      if (element.subType === "raceResultsDotCom") {
+        return <RaceResultsDotComListWrapper {...props} />;
+      }
+      if (element.subType === "webscorerResults") {
+        return <WebscorerListWrapper {...props} />;
+      }
+      if (element.subType === "crossResults") {
+        return <CrossResultstListWrapper element={props.element} />;
+      }
+      if (element.subType === "omniResults") {
+        return <OmniResultsListWrapper element={props.element} />;
+      }
+      if (element.subType === "runSignupResults") {
+        return <RunSignupListWrapper element={props.element} />;
+      }
 
     case "paragraph": // Paragraph *
       return (

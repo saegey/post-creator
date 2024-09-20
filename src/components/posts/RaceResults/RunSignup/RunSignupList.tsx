@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, Text, Theme, ThemeUIStyleObject } from "theme-ui";
+import { Box } from "theme-ui";
 
 import { RunSignupResultType } from "./RunSignupResultsPreview";
 import { RunSignupType } from "../../../../types/common";
@@ -7,19 +7,19 @@ import ResultsListHeader from "../shared/ResultsListHeader";
 import ResultsRow from "../shared/ResultsRow";
 import ResultsListContainer from "../shared/ResultsListContainer";
 
-const RunSignupList = ({
-  raceResults,
-  resultsUrl,
-}: {
+const RunSignupList = (props: {
   raceResults?: RunSignupType;
   resultsUrl: string;
 }) => {
+  const { raceResults, resultsUrl } = props;
+
   const formatResults = () => {
     if (raceResults === undefined) {
       return;
     }
     const { results } = raceResults;
     const divisionId = results?.divisions[0].race_division_id;
+
     return {
       divisionId: divisionId,
       results: results?.resultSet.results.map((r, i) => {
@@ -39,30 +39,31 @@ const RunSignupList = ({
   };
 
   return (
-    <>
-      <ResultsListHeader
-        headerText={`${raceResults?.eventName}`}
-        subText={`${raceResults?.categoryName}`}
-        resultsUrl={resultsUrl}
-      />
-      <ResultsListContainer>
-        {raceResults &&
-          formatResults()?.results.map((row, i) => {
-            // return <pre>{JSON.stringify(row)}</pre>;
-            return (
-              <ResultsRow
-                place={String(row.race_placement)}
-                isSelected={
-                  row.name === raceResults?.selected?.name ? true : false
-                }
-                racerName={row.name}
-                racerTeam={`${row.city} ${row.state}`}
-                racerTime={String(row.clock_time)}
-              />
-            );
-          })}
-      </ResultsListContainer>
-    </>
+    <Box variant="boxes.componentCard" contentEditable={false}>
+      <Box sx={{ position: "relative" }}>
+        <ResultsListHeader
+          headerText={`${raceResults?.eventName}`}
+          subText={`${raceResults?.categoryName}`}
+          resultsUrl={resultsUrl}
+        />
+        <ResultsListContainer>
+          {raceResults &&
+            formatResults()?.results.map((row, _) => {
+              return (
+                <ResultsRow
+                  place={String(row.race_placement)}
+                  isSelected={
+                    row.name === raceResults?.selected?.name ? true : false
+                  }
+                  racerName={row.name}
+                  racerTeam={`${row.city} ${row.state}`}
+                  racerTime={String(row.clock_time)}
+                />
+              );
+            })}
+        </ResultsListContainer>
+      </Box>
+    </Box>
   );
 };
 

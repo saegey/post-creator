@@ -180,7 +180,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           children: [{ text: "" }],
           void: true,
           photoCaption: "",
-          caption: "",
         },
         { at: realPathRef.current }
       );

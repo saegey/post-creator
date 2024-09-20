@@ -116,7 +116,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                   }}
                 >
                   <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
-                    {row.CatPlace}
+                    {row.CatRank}
                   </Text>
                   <Box sx={{ width: "300px", flexGrow: "2" }}>
                     <Text as="div">{row.Name}</Text>
@@ -184,7 +184,8 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                 Transforms.insertNodes(
                   editor,
                   {
-                    type: "raceResultsDotCom",
+                    type: "raceResults",
+                    subType: "raceResultsDotCom",
                     children: [{ text: "" }],
                   },
                   { at: menuPosition.path }

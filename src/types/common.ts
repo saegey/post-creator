@@ -1,9 +1,9 @@
 import { CognitoUser } from "@aws-amplify/auth";
-import { BaseEditor, Element, Path } from "slate";
+import { BaseEditor } from "slate";
 import { ReactEditor } from "slate-react";
 import { HistoryEditor } from "slate-history";
 import { BaseElement } from "slate";
-import { RunSignupMetaType } from "../components/posts/RaceResults/ResultsContext";
+
 import { RunSignupResultType } from "../components/posts/RaceResults/RunSignup/RunSignupResultsPreview";
 
 export type ResultsRow = [
@@ -176,7 +176,6 @@ export type TimeInZonesType = {
   type: "timeInZones";
   children: CustomText[];
   void: true;
-  // at?: Path;
 };
 
 export type MatchesBurnedType = {
@@ -188,7 +187,6 @@ export type ActivityOverviewType = {
   type: "activityOverview";
   children: CustomText[];
   void: true;
-  // at?: Path;
 };
 
 export type VisualOverviewType = {
@@ -234,7 +232,13 @@ export type ListItemType = {
 };
 
 export type RaceResultsDotComType = {
-  type: "raceResultsDotCom";
+  type: "raceResults";
+  subType:
+    | "raceResultsDotCom"
+    | "webscorerResults"
+    | "crossResults"
+    | "omniResults"
+    | "runSignupResults";
   children: CustomText[];
 };
 
@@ -314,7 +318,7 @@ declare module "slate" {
 
 export interface ActivityItem {
   c: Array<number>;
-  d: number;
+  d?: number;
   e?: number;
   g?: number;
   t?: number;
@@ -441,15 +445,14 @@ export interface PostType {
 }
 
 export type RaceResultRowType = {
-  CatPlace: string;
+  CatRank: string;
+  GenderRank: string;
+  OverallRank: string;
   AgeSex: string;
   Name: string;
   Age: string;
   Time: string;
   Speed: string;
-  SexPlace: string;
-  GenderPlace: string;
-  OverallPlace: string;
   Bib: string;
   Team: string;
 };

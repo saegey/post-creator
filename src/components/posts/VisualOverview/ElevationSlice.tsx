@@ -2,8 +2,7 @@ import { Box, Grid, Text } from "theme-ui";
 import React from "react";
 
 import { formatTime } from "../../../utils/time";
-import { ActivityItem, VisualOverviewType } from "../../../types/common";
-import { usePost } from "../../PostContext";
+import { ActivityItem } from "../../../types/common";
 
 export const gradeToColor = (grade: number): string => {
   if (grade > 0 && grade < 4) return "green";
@@ -15,15 +14,11 @@ export const gradeToColor = (grade: number): string => {
 
 const ElevationSlice = ({
   marker,
-  selection,
   data,
-  element,
   unitOfMeasure,
 }: {
   marker: ActivityItem | undefined;
-  selection: [number, number] | undefined;
   data: Array<ActivityItem> | undefined;
-  element: VisualOverviewType;
   unitOfMeasure: string;
 }) => {
   if (!data) return null;
@@ -39,7 +34,7 @@ const ElevationSlice = ({
       ? data[marker.i].e?.toFixed(0)
       : "-";
 
-  const time = marker && marker.i ? data[marker.i].t.toFixed(0) : "";
+  const time = marker && marker.i ? data[marker.i]?.t?.toFixed(0) : "";
 
   const power = marker && marker.i ? data[marker.i].p : undefined;
 

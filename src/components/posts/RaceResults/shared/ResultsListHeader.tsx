@@ -12,7 +12,7 @@ const ResultsListHeader = ({
   return (
     <>
       <Flex>
-        <Flex sx={{ flexGrow: 1 } as ThemeUIStyleObject<Theme>}>
+        <Flex sx={{ flexGrow: 1 }}>
           <Text
             as="h2"
             sx={
@@ -25,13 +25,24 @@ const ResultsListHeader = ({
           </Text>
         </Flex>
       </Flex>
-      <Link
-        href={resultsUrl}
-        target="_blank"
-        sx={{ color: "text" } as ThemeUIStyleObject<Theme>}
-      >
-        <Text>{`${headerText} - ${subText}`}</Text>
-      </Link>
+      <Flex>
+        <Link
+          href={resultsUrl}
+          target="_blank"
+          sx={
+            {
+              color: "text",
+              width: "fit-content",
+              flexGrow: 1,
+            } as ThemeUIStyleObject<Theme>
+          }
+        >
+          <Text
+            as="p"
+            sx={{ whiteSpace: "nowrap" }}
+          >{`${headerText} - ${subText}`}</Text>
+        </Link>
+      </Flex>
     </>
   );
 };

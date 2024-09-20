@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../../PostContext";
@@ -15,17 +14,22 @@ const RunSignupListWrapper = ({ element }: { element: CustomElement }) => {
 
   const { optionsMenu } = useOptionsMenu(editor, path);
 
+  const resultsList = React.useMemo(
+    () => (
+      <RunSignupList
+        raceResults={runSignupResults ? runSignupResults : undefined}
+        resultsUrl={resultsUrl ? resultsUrl : ""}
+      />
+    ),
+    [runSignupResults]
+  );
+
   return (
     <HoverAction element={element}>
-      <Box variant="boxes.componentCard" contentEditable={false}>
-        <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
-          <RunSignupList
-            raceResults={runSignupResults ? runSignupResults : undefined}
-            resultsUrl={resultsUrl ? resultsUrl : ""}
-          />
-        </Box>
+      <>
+        {resultsList}
         {optionsMenu}
-      </Box>
+      </>
     </HoverAction>
   );
 };

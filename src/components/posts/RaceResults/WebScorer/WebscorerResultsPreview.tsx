@@ -160,7 +160,8 @@ const WebscorerResultsPreview = ({
                 Transforms.insertNodes(
                   editor,
                   {
-                    type: "webscorerResults",
+                    type: "raceResults",
+                    subType: "webscorerResults",
                     children: [{ text: "" }],
                   },
                   { at: menuPosition.path }
@@ -174,7 +175,7 @@ const WebscorerResultsPreview = ({
                   isFullScreen: false,
                 });
                 const selection = window.getSelection();
-                // console.log(selection)
+
                 selection && selection.removeAllRanges();
                 setIsLoading(false);
                 setIsRaceResultsModalOpen(false);

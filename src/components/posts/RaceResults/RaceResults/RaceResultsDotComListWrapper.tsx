@@ -18,21 +18,13 @@ const RaceResultsDotComListWrapper = ({
   const path = ReactEditor.findPath(editor, element);
 
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
+
   const hoverAct = React.useMemo(() => {
     return (
-      <Box
-        variant="boxes.componentCard"
-        contentEditable={false}
-        sx={{ backgroundColor: "background" }}
-      >
-        <Box sx={{ position: "relative" }}>
-          <RaceResultsDotComList
-            raceResults={raceResults ? raceResults : undefined}
-            resultsUrl={resultsUrl ? resultsUrl : ""}
-          />
-        </Box>
-        {/* {optionsMenu} */}
-      </Box>
+      <RaceResultsDotComList
+        raceResults={raceResults ? raceResults : undefined}
+        resultsUrl={resultsUrl ? resultsUrl : ""}
+      />
     );
   }, [raceResults, isOptionsOpen]);
 

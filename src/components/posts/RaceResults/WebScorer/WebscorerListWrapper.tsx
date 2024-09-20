@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Theme, ThemeUIStyleObject } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import { PostContext } from "../../../PostContext";
@@ -16,25 +15,21 @@ const WebscorerListWrapper = ({ element }: { element: CustomElement }) => {
 
   const hoverAct = React.useMemo(() => {
     return (
-      <HoverAction element={element}>
-        <Box
-          variant="boxes.componentCard"
-          contentEditable={false}
-          sx={{ backgroundColor: "background" }}
-        >
-          <Box sx={{ position: "relative" } as ThemeUIStyleObject<Theme>}>
-            <WebscorerList
-              raceResults={webscorerResults ? webscorerResults : undefined}
-              resultsUrl={resultsUrl ? resultsUrl : ""}
-            />
-          </Box>
-          {optionsMenu}
-        </Box>
-      </HoverAction>
+      <WebscorerList
+        raceResults={webscorerResults ? webscorerResults : undefined}
+        resultsUrl={resultsUrl ? resultsUrl : ""}
+      />
     );
   }, [isOptionsOpen, webscorerResults]);
 
-  return hoverAct;
+  return (
+    <HoverAction element={element}>
+      <>
+        {hoverAct}
+        {optionsMenu}
+      </>
+    </HoverAction>
+  );
 };
 
 export default WebscorerListWrapper;
