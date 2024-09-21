@@ -18,11 +18,11 @@ const BulletListButton = () => {
       onMouseDown={(e) => {
         e.preventDefault();
 
-        const isActive = isBlockActive(editor, "bulleted-list");
+        const isActive = isBlockActive(editor, "bulletedList");
         Transforms.unwrapNodes(editor, {
           match: (n: any) =>
             !Editor.isEditor(n) &&
-            n.type === "bulleted-list" &&
+            n.type === "bulletedList" &&
             SlateElement.isElement(n),
 
           split: true,
@@ -32,7 +32,7 @@ const BulletListButton = () => {
         } as any);
 
         if (!isActive) {
-          Transforms.wrapNodes(editor, { type: "bulleted-list", children: [] });
+          Transforms.wrapNodes(editor, { type: "bulletedList", children: [] });
         }
       }}
       variant="boxes.floatingMenu"
@@ -41,7 +41,7 @@ const BulletListButton = () => {
     >
       <BulletListIcon
         sx={{
-          color: isBlockActive(editor, "bulleted-list")
+          color: isBlockActive(editor, "bulletedList")
             ? "accent"
             : lighten("primary", 0.3),
           width: "24px",

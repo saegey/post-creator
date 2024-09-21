@@ -218,7 +218,7 @@ export type LinkType = {
 };
 
 export type BulletedListType = {
-  type: "bulleted-list";
+  type: "bulletedList";
   children: Array<{
     text: string;
     bold?: true;

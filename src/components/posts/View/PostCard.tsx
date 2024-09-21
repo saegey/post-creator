@@ -34,7 +34,7 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
         href={
           post.privacyStatus === "draft"
             ? `/posts/${post.id}/edit`
-            : `/j/${post.id}`
+            : `/posts/${post.id}/edit`
         }
         key={`link-post-${post.id}`}
       >

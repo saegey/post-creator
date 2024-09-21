@@ -20,7 +20,7 @@ const OptionsMenuMemo = ({ optionsMenu }: { optionsMenu: JSX.Element }) => {
   return optionsMenu;
 };
 
-const ImageElement = ({ element }: { element: ImageElementType }) => {
+const ImageWrapper = ({ element }: { element: ImageElementType }) => {
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
 
@@ -81,4 +81,4 @@ const ImageElement = ({ element }: { element: ImageElementType }) => {
   );
 };
 
-export default ImageElement;
+export default ImageWrapper;

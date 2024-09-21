@@ -56,8 +56,8 @@ describe("fetchUserAndPost", () => {
     };
     const mockPostData = {
       getPost: {
-        components: JSON.stringify([]),
-        images: JSON.stringify([]),
+        components: JSON.stringify(null),
+        images: JSON.stringify(null),
         heartAnalysis: JSON.stringify({ "1": 180, "30": 150, "60": 120 }),
         powerAnalysis: JSON.stringify(null),
         cadenceAnalysis: JSON.stringify(null),
@@ -95,8 +95,8 @@ describe("fetchUserAndPost", () => {
         },
         postRaw: {
           ...mockPostData.getPost,
-          components: [],
-          images: [],
+          components: null,
+          images: null,
           heartAnalysis: { "1": 180, "30": 150, "60": 120 },
           powerAnalysis: null,
           cadenceAnalysis: null,
@@ -175,8 +175,8 @@ describe("fetchUserAndPost", () => {
         },
         postRaw: {
           ...mockPostData.getPost,
-          components: [],
-          images: [],
+          components: null,
+          images: null,
           heartAnalysis: null,
           powerAnalysis: null,
           cadenceAnalysis: null,

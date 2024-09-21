@@ -74,13 +74,13 @@ const PostsAll = ({ user }: { user: IUser }) => {
     const response = (await API.graphql({
       query: listMyPostsCustom,
       authMode: "AMAZON_COGNITO_USER_POOLS",
-      variables: {
-        filter: {
-          privacyStatus: {
-            eq: type,
-          },
-        },
-      },
+      // variables: {
+      //   filter: {
+      //     privacyStatus: {
+      //       eq: type,
+      //     },
+      //   },
+      // },
     })) as GraphQLResult<ListPostsByCreatedAtTypes>;
 
     setPosts(

@@ -15,8 +15,7 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
   const path = ReactEditor.findPath(editor, element);
   const { powerAnalysis, currentFtp } = React.useContext(PostContext);
   const { optionsMenu, isOptionsOpen } = useOptionsMenu(editor, path);
-  const { isSettingsModalOpen, setIsSettingsModalOpen } =
-    React.useContext(EditorContext);
+  const { setIsSettingsModalOpen } = React.useContext(EditorContext);
 
   if (powerAnalysis === undefined || powerAnalysis === null) {
     return (

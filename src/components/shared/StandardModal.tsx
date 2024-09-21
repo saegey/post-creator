@@ -12,6 +12,7 @@ const StandardModal = ({
   onClose,
   heading = undefined,
   topRight = undefined,
+  maxWidth = "690px",
 }: {
   children: any;
   isOpen: boolean;
@@ -21,6 +22,7 @@ const StandardModal = ({
   onClose?: () => void;
   heading?: React.ReactNode;
   topRight?: React.ReactNode;
+  maxWidth?: string;
 }) => {
   React.useEffect(() => {
     if (isOpen) {
@@ -65,7 +67,7 @@ const StandardModal = ({
         <Box
           sx={
             {
-              maxWidth: "690px",
+              maxWidth: maxWidth,
               display: ["flex", "inherit", "inherit"],
               position: ["fixed", "inherit", "inherit"],
               flexDirection: "column",
@@ -74,22 +76,25 @@ const StandardModal = ({
               width: ["100%", null, null],
               margin: "auto",
               background: "background",
-              borderRadius: [null, "5px", "5px"],
-              padding: "20px",
+              borderRadius: [null, "15px", "15px"],
+              paddingX: "20px",
+              paddingY: "40px",
               zIndex: 51,
             } as ThemeUIStyleObject<Theme>
           }
           onClick={(e) => {
+            // alert("clicked");
             e.stopPropagation();
           }}
         >
           <Flex
             sx={
               {
-                borderBottomWidth: title ? "1px" : "0px",
-                borderBottomColor: "border",
-                borderBottomStyle: "solid",
+                // borderBottomWidth: title ? "1px" : "0px",
+                // borderBottomColor: "border",
+                // borderBottomStyle: "solid",
                 // paddingY: "5px",
+                // paddingY: "40px",
               } as ThemeUIStyleObject<Theme>
             }
           >
@@ -144,14 +149,12 @@ const StandardModal = ({
                     (document.activeElement as HTMLElement)?.blur(); // Blur the active element to remove focus
                   }}
                   id="close-button"
-                  sx={
-                    {
-                      padding: "0px",
-                      // alignItems: "center",
-                      // height: "100%",
-                      // marginLeft: "auto",
-                    } as ThemeUIStyleObject<Theme>
-                  }
+                  sx={{
+                    padding: "0px",
+                    height: "24px",
+                    width: "24px",
+                    cursor: "pointer",
+                  }}
                 />
               </Flex>
             )}

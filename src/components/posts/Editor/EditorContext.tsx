@@ -38,14 +38,14 @@ export type EditorContextType = {
   isPublishedConfirmationOpen: boolean;
   setIsPublishedConfirmationOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
+  isPublishing: boolean;
+  setIsPublishing: React.Dispatch<React.SetStateAction<boolean>>;
+
   isVideoUploadOpen: boolean;
   setIsVideoUploadOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   isNewComponentMenuOpen: boolean;
   setIsNewComponentMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-
-  isStravaModalOpen: boolean;
-  setIsStravaModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   isRWGPSModalOpen: boolean;
   setIsRWGPSModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -114,8 +114,6 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsNewComponentMenuOpen: () => {},
   menuPosition: { top: 0, left: 0, path: [0] },
   setMenuPosition: () => {},
-  isStravaModalOpen: false,
-  setIsStravaModalOpen: () => {},
   isRWGPSModalOpen: false,
   setIsRWGPSModalOpen: () => {},
   mobileMenu: {
@@ -136,6 +134,8 @@ const EditorContext = React.createContext<EditorContextType>({
   setIsNewPostImageUploadOpen: () => {},
   isChangeImageModalOpen: false,
   setIsChangeImageModalOpen: () => {},
+  isPublishing: false,
+  setIsPublishing: () => {},
 });
 
 export { EditorContext };

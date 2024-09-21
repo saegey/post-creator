@@ -1,15 +1,24 @@
 import React from "react";
-import { Box, Flex, IconButton, Spinner, Text } from "theme-ui";
+import { Box, Button, Flex, IconButton, Spinner, Text } from "theme-ui";
+import { API } from "aws-amplify";
+import { AxiosError } from "axios";
+
 import { EditorContext } from "../../posts/Editor/EditorContext";
 import CloudCheck from "../../icons/CloudCheck";
 import RefreshIcon from "../../icons/RefreshIcon";
+import RocketIcon from "../../icons/RocketIcon";
+import { PostContext } from "../../PostContext";
 
 const SettingsSection = () => {
-  const { isSavingPost, savingStatus } = React.useContext(EditorContext);
+  const {
+    isSavingPost,
+    savingStatus,
+    setIsPublishedConfirmationOpen,
+    setIsPublishing,
+    isPublishing,
+  } = React.useContext(EditorContext);
 
-  if (!isSavingPost && !savingStatus) {
-    return <></>;
-  }
+  const { id } = React.useContext(PostContext);
 
   return (
     <>
@@ -37,6 +46,44 @@ const SettingsSection = () => {
           <CloudCheck />
         </IconButton>
       )}
+      <Button
+        onClick={async () => {
+          setIsPublishing(true);
+
+          try {
+            const res = (await API.post("api12660653", `/post/publish`, {
+              body: {
+                postId: id,
+              },
+              response: true,
+            })) as {
+              data: any;
+            };
+            setIsPublishing(false);
+            setIsPublishedConfirmationOpen(true);
+
+            // console.log(res);
+          } catch (err) {
+            if (err instanceof AxiosError) {
+              setIsPublishing(false);
+
+              throw new Error("network error");
+            }
+          }
+        }}
+        sx={{ borderRadius: "10px", cursor: "pointer" }}
+      >
+        <Flex sx={{ alignItems: "center", gap: "2px" }}>
+          <IconButton as="div" sx={{ width: "24px", height: "24px" }}>
+            {isPublishing ? (
+              <Spinner sx={{ color: "white" }} />
+            ) : (
+              <RocketIcon />
+            )}
+          </IconButton>
+          <Text>Publish</Text>
+        </Flex>
+      </Button>
     </>
   );
 };
