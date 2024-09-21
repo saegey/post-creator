@@ -184,7 +184,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
                 Router.push("/posts?status=draft");
               }}
             >
-              Drafts
+              All
             </NavLink>
             <NavLink
               href="#!"
@@ -266,7 +266,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
             <Grid columns={[1, 2, 3]}>
               {posts.map((post, i) => (
                 <div key={`post-${i}`}>
-                  <PostCard post={post} showAuthor={false} />
+                  <PostCard post={post} showAuthor={false} status={status} />
                 </div>
               ))}
             </Grid>
