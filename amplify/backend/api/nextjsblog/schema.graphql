@@ -9,8 +9,8 @@ type User
   @auth(
     rules: [
       { allow: owner, operations: [create, update, delete, read] }
-      { allow: public, operations: [read] }
-      { allow: private, provider: iam }
+      { allow: public, operations: [read], provider: identityPool }
+      # { allow: private, provider: identityPool }
     ]
   ) {
   id: ID!
@@ -18,6 +18,8 @@ type User
   email: String!
   image: String
   username: String
+
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
 }
 
 type Blog
@@ -26,20 +28,25 @@ type Blog
     rules: [
       { allow: owner }
       { allow: public, operations: [read] }
-      { allow: private, provider: iam }
+      { allow: private, provider: identityPool }
     ]
   ) {
   id: ID!
   name: String!
   posts: [Post] @hasMany
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
 }
 
 type PublishedPost
   @model
   @auth(
     rules: [
-      { allow: public, operations: [read] }
-      { allow: owner, operations: [create, update, delete, read] }
+      { allow: public, operations: [read], provider: identityPool }
+      {
+        allow: owner
+        operations: [create, update, delete, read]
+        provider: userPools
+      }
     ]
   ) {
   id: ID!
@@ -64,13 +71,6 @@ type PublishedPost
   currentFtp: String
   components: AWSJSON
   powerAnalysis: AWSJSON
-  # coordinates: AWSJSON
-  # powers: AWSJSON
-  # elevation: AWSJSON
-  # elevationGrades: AWSJSON
-  # distances: AWSJSON
-  # blog: Blog @belongsTo
-  # related: [Post] @hasMany
   author: AWSJSON
   elevationTotal: Float
   normalizedPower: Float
@@ -105,6 +105,9 @@ type PublishedPost
       sortKeyFields: ["createdAt"]
     )
   originalPost: Post @hasOne
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
+  _version: Int
+  _lastChangedAt: AWSTimestamp
 }
 
 type Post
@@ -113,7 +116,7 @@ type Post
     rules: [
       { allow: owner, operations: [create, delete, read, update] }
       # { allow: public, operations: [read] }
-      { allow: private, provider: iam }
+      { allow: private, provider: identityPool }
     ]
   ) {
   type: String!
@@ -134,17 +137,11 @@ type Post
   stravaUrl: String
   resultsUrl: String
   timeSeriesFile: String
-  # type: String
   subType: String
   teaser: String
   currentFtp: String
   components: AWSJSON
   powerAnalysis: AWSJSON
-  # coordinates: AWSJSON
-  # powers: AWSJSON
-  # elevation: AWSJSON
-  # elevationGrades: AWSJSON
-  # distances: AWSJSON
   blog: Blog @belongsTo
   related: [Post] @hasMany
   author: User @hasOne
@@ -175,6 +172,8 @@ type Post
   privacyStatus: String
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
+
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
 }
 
 # type Comment @model {

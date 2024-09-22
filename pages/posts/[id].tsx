@@ -2,9 +2,8 @@ import Head from "next/head";
 import React from "react";
 import { Box } from "theme-ui";
 
-import { Post, PostContextType } from "../../src/types/common";
+import { IUser, Post, PostContextType } from "../../src/types/common";
 import FavIcon from "../../src/components/shared/FavIcon";
-import { getPublishedPost } from "../../src/graphql/customQueries";
 import { withSSRContext } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import { GetPublishedPostQuery } from "../../src/API";
@@ -12,6 +11,8 @@ import { parseJsonFields } from "../../src/utils/parseJsonFields";
 import Header from "../../src/components/shared/Header/Header";
 import { PostContext } from "../../src/components/PostContext";
 import Viewer from "../../src/components/posts/Viewer/Viewer";
+import { GetServerSideProps } from "next";
+import { getPublishedPost } from "../../src/graphql/queries";
 
 type ServerSideProps = {
   req: object;
@@ -20,20 +21,54 @@ type ServerSideProps = {
   };
 };
 
-export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
+// pages/posts/[id].tsx
+
+interface PostViewProps extends Post {
+  authenticatedUser: IUser | null;
+}
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  params,
+}) => {
   const SSR = withSSRContext({ req });
+  const { Auth, API } = SSR;
+
+  let authenticatedUser: IUser | null = null;
+
+  // Fetch the authenticated user if any
+  try {
+    const currentUser = await Auth.currentAuthenticatedUser();
+    authenticatedUser = {
+      userId: currentUser.username ?? null,
+      email: currentUser.attributes.email ?? null,
+      email_verified: currentUser.attributes.email_verified ?? null,
+      role: currentUser.attributes["custom:role"] ?? null, // Ensure role is not undefined
+      attributes: {
+        picture: currentUser.attributes.picture ?? null,
+        name: currentUser.attributes.name ?? null,
+        preferred_username: currentUser.attributes.preferred_username ?? null,
+        sub: currentUser.attributes.sub ?? null,
+        profile: currentUser.attributes.profile ?? null,
+        zoneinfo: currentUser.attributes.zoneinfo ?? null,
+      },
+    };
+  } catch (err) {
+    // User is not authenticated; proceed without error
+  }
 
   try {
-    const res = (await SSR.API.graphql({
+    const res = (await API.graphql({
       query: getPublishedPost,
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-      variables: { id: params.id },
+      variables: { id: params?.id },
+      authMode: authenticatedUser ? undefined : "AWS_IAM",
     })) as GraphQLResult<GetPublishedPostQuery>;
 
     const post = res?.data?.getPublishedPost;
     if (!post) {
-      return { props: { errorCode: 403 } };
+      return { notFound: true };
     }
+
     const jsonFields = [
       "components",
       "images",
@@ -52,10 +87,16 @@ export const getServerSideProps = async ({ req, params }: ServerSideProps) => {
     ] as const;
 
     const parsedPost = parseJsonFields(post, [...jsonFields]);
-    return { props: parsedPost };
+
+    return {
+      props: {
+        ...parsedPost,
+        user: authenticatedUser ? authenticatedUser : null,
+      },
+    };
   } catch (e) {
-    console.log(e);
-    return { redirect: { destination: "/login", permanent: false } };
+    console.error(e);
+    return { props: { errorCode: 500 } };
   }
 };
 
@@ -73,7 +114,7 @@ const PostView = (props: Post) => {
     activity: [],
     elevations: [],
   });
-
+  console.log(components);
   return (
     <PostContext.Provider value={post}>
       <Head>
@@ -88,6 +129,7 @@ const PostView = (props: Post) => {
         }}
       >
         <Header />
+        {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
         <Viewer components={components} />
       </Box>
     </PostContext.Provider>

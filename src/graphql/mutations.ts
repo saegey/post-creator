@@ -18,9 +18,9 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     email
     image
     username
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -38,9 +38,9 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     email
     image
     username
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -58,9 +58,9 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     email
     image
     username
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -117,19 +117,19 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
       __typename
     }
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -186,19 +186,19 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
       __typename
     }
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -255,19 +255,19 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
       __typename
     }
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -343,9 +343,9 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
       blog {
         id
         name
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       related {
@@ -358,9 +358,9 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
         email
         image
         username
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       elevationTotal
@@ -385,16 +385,18 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
       runSignupResults
       raceResultsProvider
       privacyStatus
+      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
-      owner
       __typename
     }
+    owner
+    _version
+    _lastChangedAt
     updatedAt
     publishedPostOriginalPostId
-    owner
     __typename
   }
 }
@@ -470,9 +472,9 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
       blog {
         id
         name
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       related {
@@ -485,9 +487,9 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
         email
         image
         username
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       elevationTotal
@@ -512,16 +514,18 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
       runSignupResults
       raceResultsProvider
       privacyStatus
+      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
-      owner
       __typename
     }
+    owner
+    _version
+    _lastChangedAt
     updatedAt
     publishedPostOriginalPostId
-    owner
     __typename
   }
 }
@@ -597,9 +601,9 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
       blog {
         id
         name
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       related {
@@ -612,9 +616,9 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
         email
         image
         username
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       elevationTotal
@@ -639,16 +643,18 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
       runSignupResults
       raceResultsProvider
       privacyStatus
+      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
-      owner
       __typename
     }
+    owner
+    _version
+    _lastChangedAt
     updatedAt
     publishedPostOriginalPostId
-    owner
     __typename
   }
 }
@@ -686,9 +692,9 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
         nextToken
         __typename
       }
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     related {
@@ -733,11 +739,11 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
@@ -749,9 +755,9 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
       email
       image
       username
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     elevationTotal
@@ -776,11 +782,11 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
+    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
-    owner
     __typename
   }
 }
@@ -818,9 +824,9 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
         nextToken
         __typename
       }
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     related {
@@ -865,11 +871,11 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
@@ -881,9 +887,9 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
       email
       image
       username
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     elevationTotal
@@ -908,11 +914,11 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
+    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
-    owner
     __typename
   }
 }
@@ -950,9 +956,9 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
         nextToken
         __typename
       }
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     related {
@@ -997,11 +1003,11 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
@@ -1013,9 +1019,9 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
       email
       image
       username
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     elevationTotal
@@ -1040,11 +1046,11 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
+    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
-    owner
     __typename
   }
 }
