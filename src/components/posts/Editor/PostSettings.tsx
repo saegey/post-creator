@@ -20,10 +20,11 @@ import { DeletePostMutation } from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
 import UploadButton from "./PostMenu/buttons/UploadButton";
 import {
-  deletePost,
+  // deletePost,
   updatePostSettings,
   UpdatePostSettingsMutation,
 } from "../../../graphql/customMutations";
+import { deletePost } from "../../../graphql/mutations";
 
 const PostSettings = () => {
   const { id, currentFtp, title, postLocation, date, subhead, setPost } =

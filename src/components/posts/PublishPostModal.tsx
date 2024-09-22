@@ -14,14 +14,25 @@ import { EditorContext } from "./Editor/EditorContext";
 import StandardModal from "../shared/StandardModal";
 import { useSlateContext } from "../SlateContext";
 import CopyIcon from "../icons/CopyIcon";
+import { PostContext } from "../PostContext";
 
 const PublishPostModal = () => {
   const { editor } = useSlateContext();
   const { isPublishedConfirmationOpen, setIsPublishedConfirmationOpen } =
     React.useContext(EditorContext);
+  const { id } = React.useContext(PostContext);
   const [checked, setChecked] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { isPublishing } = React.useContext(EditorContext);
+  const [postUrl, setPostUrl] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const hostname =
+        window.location.origin || process.env.NEXT_PUBLIC_BASE_URL;
+      setPostUrl(`${hostname}/posts/${id}`);
+    }
+  }, []);
 
   if (!editor) {
     throw new Error("Editor is not defined");
@@ -94,36 +105,56 @@ const PublishPostModal = () => {
             </Box>
             <Box sx={{ position: "relative" }}>
               {isPublishing ? <Text>Publishing...</Text> : null}
-              <Input
-                defaultValue={"htttp://localhost:3000/posts/123"}
+              <Box
                 sx={{
                   backgroundColor: "surfaceLight",
-                  borderWidth: 0,
-                  fontSize: "22px",
-                  padding: "25px",
                   borderRadius: "10px",
+                  padding: "10px",
                 }}
-                readOnly={true}
-                ref={inputRef}
-              />
-              <Button
-                sx={{
-                  top: "50%",
-                  right: "10px",
-                  position: "absolute",
-                  transform: "translateY(-50%)",
-                  paddingY: "15px",
-                  borderRadius: "10px",
-                }}
-                onClick={handleCopyClick}
               >
-                <Flex sx={{ gap: "3px", alignItems: "center" }}>
-                  <IconButton sx={{ width: "25px", height: "25px" }}>
-                    <CopyIcon />
-                  </IconButton>
-                  <Text>Copy Link</Text>
+                <Flex
+                  sx={{
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%", // Make sure the Flex container takes up full width
+                    gap: "10px", // Add some spacing between the Input and Button
+                  }}
+                >
+                  <Input
+                    value={postUrl}
+                    sx={{
+                      borderWidth: 0,
+                      fontSize: "22px",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      width: "100%", // Make Input take up available space
+                      maxWidth: "calc(100% - 120px)", // Ensure it doesn't overflow the container
+                    }}
+                    readOnly={true}
+                    ref={inputRef}
+                  />
+                  <Button
+                    sx={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      whiteSpace: "nowrap", // Ensures text doesn't wrap
+                      paddingY: "10px",
+                      paddingX: "15px",
+                      borderRadius: "10px",
+                      flexShrink: 0, // Prevent the button from shrinking
+                    }}
+                    onClick={handleCopyClick}
+                  >
+                    <Flex sx={{ gap: "5px", alignItems: "center" }}>
+                      <IconButton sx={{ width: "25px", height: "25px" }}>
+                        <CopyIcon />
+                      </IconButton>
+                      <Text>Copy Link</Text>
+                    </Flex>
+                  </Button>
                 </Flex>
-              </Button>
+              </Box>
             </Box>
           </Flex>
         </Flex>

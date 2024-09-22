@@ -193,47 +193,47 @@ exports.handler = async (event) => {
     .split(":")
     .pop();
 
-  const getParams = {
-    TableName: publishedPostTable,
-    IndexName: "PublishedPostByOriginalPostId",
-    KeyConditionExpression: "#originalPostId = :originalPostId",
-    ExpressionAttributeNames: {
-      "#originalPostId": "originalPostId",
-    },
-    ExpressionAttributeValues: {
-      ":originalPostId": postId,
-    },
-  };
+  // const getParams = {
+  //   TableName: publishedPostTable,
+  //   IndexName: "PublishedPostByOriginalPostId",
+  //   KeyConditionExpression: "#originalPostId = :originalPostId",
+  //   ExpressionAttributeNames: {
+  //     "#originalPostId": "originalPostId",
+  //   },
+  //   ExpressionAttributeValues: {
+  //     ":originalPostId": postId,
+  //   },
+  // };
 
   // Start timing for DynamoDB query
-  operationStartTime = Date.now();
-  console.log(
-    "Starting DynamoDB query to check for existing published post at",
-    new Date(operationStartTime).toISOString()
-  );
+  // operationStartTime = Date.now();
+  // console.log(
+  //   "Starting DynamoDB query to check for existing published post at",
+  //   new Date(operationStartTime).toISOString()
+  // );
 
-  let existingId = undefined;
+  // let existingId = undefined;
 
-  try {
-    const res = await docClient.query(getParams).promise();
-    if (res && res.Items && res.Items.length > 0) {
-      existingId = res.Items[0].id;
-    }
-  } catch (e) {
-    console.error("Error querying DynamoDB:", e);
-  }
+  // try {
+  //   const res = await docClient.query(getParams).promise();
+  //   if (res && res.Items && res.Items.length > 0) {
+  //     existingId = res.Items[0].id;
+  //   }
+  // } catch (e) {
+  //   console.error("Error querying DynamoDB:", e);
+  // }
 
-  operationEndTime = Date.now();
-  duration = operationEndTime - operationStartTime;
-  console.log(
-    "Finished DynamoDB query at",
-    new Date(operationEndTime).toISOString(),
-    "Duration:",
-    duration,
-    "ms"
-  );
+  // operationEndTime = Date.now();
+  // duration = operationEndTime - operationStartTime;
+  // console.log(
+  //   "Finished DynamoDB query at",
+  //   new Date(operationEndTime).toISOString(),
+  //   "Duration:",
+  //   duration,
+  //   "ms"
+  // );
 
-  const publishedPostId = existingId ? existingId : uuid.v1();
+  // const publishedPostId = existingId ? existingId : postId;
 
   // Start timing for S3 getObject
   operationStartTime = Date.now();
@@ -314,7 +314,7 @@ exports.handler = async (event) => {
 
   const docParams = {
     TableName: publishedPostTable,
-    Key: { id: publishedPostId },
+    Key: { id: postId },
     UpdateExpression:
       "SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, powerAnalysis = :powerAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, webscorerResults = :webscorerResults, crossResults = :crossResults, omniResults = :omniResults, runSignupResults = :runSignupResults, raceResultsProvider = :raceResultsProvider, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile",
     ExpressionAttributeNames: {
