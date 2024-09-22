@@ -26,7 +26,7 @@ const EditUserPost = ({ user }: { user: IUser }) => {
         <Header user={user} right={<SettingsSection />} />
         <PostEditor
           initialState={
-            components.length === 0
+            !components || components.length === 0
               ? [
                   {
                     children: [
