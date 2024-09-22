@@ -1,27 +1,18 @@
 import Head from "next/head";
 import React from "react";
 import { Box } from "theme-ui";
+import { withSSRContext } from "aws-amplify";
+import { GraphQLResult } from "@aws-amplify/api";
+import { GetServerSideProps } from "next";
 
 import { IUser, Post, PostContextType } from "../../src/types/common";
 import FavIcon from "../../src/components/shared/FavIcon";
-import { withSSRContext } from "aws-amplify";
-import { GraphQLResult } from "@aws-amplify/api";
 import { GetPublishedPostQuery } from "../../src/API";
 import { parseJsonFields } from "../../src/utils/parseJsonFields";
 import Header from "../../src/components/shared/Header/Header";
 import { PostContext } from "../../src/components/PostContext";
 import Viewer from "../../src/components/posts/Viewer/Viewer";
-import { GetServerSideProps } from "next";
 import { getPublishedPost } from "../../src/graphql/queries";
-
-type ServerSideProps = {
-  req: object;
-  params: {
-    id: string;
-  };
-};
-
-// pages/posts/[id].tsx
 
 interface PostViewProps extends Post {
   authenticatedUser: IUser | null;
@@ -100,8 +91,12 @@ export const getServerSideProps: GetServerSideProps = async ({
   }
 };
 
-const PostView = (props: Post) => {
-  const { components } = props;
+interface PostViewProps extends Post {
+  user: IUser | null;
+}
+
+const PostView = (props: PostViewProps) => {
+  const { components, user } = props;
 
   const [post, setPostState] = React.useState<PostContextType>({
     ...props,
@@ -114,7 +109,7 @@ const PostView = (props: Post) => {
     activity: [],
     elevations: [],
   });
-  console.log(components);
+
   return (
     <PostContext.Provider value={post}>
       <Head>
@@ -128,8 +123,7 @@ const PostView = (props: Post) => {
           minHeight: "100%",
         }}
       >
-        <Header />
-        {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
+        <Header user={user ?? undefined} />
         <Viewer components={components} />
       </Box>
     </PostContext.Provider>
