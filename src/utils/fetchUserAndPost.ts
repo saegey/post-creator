@@ -3,7 +3,7 @@ import { GraphQLResult } from "@aws-amplify/api";
 
 import { GetPostInitialQuery } from "../API";
 import { getPostInitial } from "../graphql/customQueries";
-import { GraphQLError, IUser } from "../types/common";
+import { CloudinaryImage, GraphQLError, IUser } from "../types/common";
 import { parseJsonFields } from "./parseJsonFields";
 
 export const fetchUserAndPost = async (req: object, postId: string) => {
@@ -63,6 +63,8 @@ export const fetchUserAndPost = async (req: object, postId: string) => {
     ] as const;
 
     const parsedPost = parseJsonFields(post, [...jsonFields]);
+
+    parsedPost.images = parsedPost.images ?? ([] as CloudinaryImage[]);
 
     return {
       props: {
