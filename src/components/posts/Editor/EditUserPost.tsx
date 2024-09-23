@@ -13,69 +13,61 @@ import SettingsSection from "../../shared/Header/SettingsSection";
 const EditUserPost = ({ user }: { user: IUser }) => {
   const editorState = useEditorState();
   const { components } = usePost();
-  console.log("components", components);
 
   return (
-    <>
-      <Box
-        as="main"
-        sx={
-          {
-            width: "100%",
-            // backgroundColor: "red",
-            // flexGrow: 1,
-            // height: "100vh",
-            minHeight: "100%",
-          } as ThemeUIStyleObject<Theme>
-        }
-      >
-        <EditorContext.Provider value={editorState}>
-          <Header user={user} right={<SettingsSection />} />
-          <PostEditor
-            initialState={
-              components.length === 0
-                ? [
-                    {
-                      children: [
-                        {
-                          text: "",
-                        },
-                      ],
-                      photoCaption: "",
-                      type: "heroBanner",
-                      void: true,
-                    },
-                    {
-                      children: [
-                        {
-                          text: "",
-                        },
-                      ],
-                      type: "postAuthor",
-                    },
-                    {
-                      children: [
-                        {
-                          text: "Discuss your activity...",
-                        },
-                      ],
-                      type: "paragraph",
-                    },
-                    {
-                      children: [
-                        {
-                          text: "",
-                        },
-                      ],
-                      type: "paragraph",
-                    },
-                  ]
-                : components
-            }
-          />
-        </EditorContext.Provider>
-      </Box>
-    </>
+    <Box
+      as="main"
+      sx={{
+        width: "100%",
+        minHeight: "100%",
+      }}
+    >
+      <EditorContext.Provider value={editorState}>
+        <Header user={user} right={<SettingsSection />} />
+        <PostEditor
+          initialState={
+            !components || components.length === 0
+              ? [
+                  {
+                    children: [
+                      {
+                        text: "",
+                      },
+                    ],
+                    photoCaption: "",
+                    type: "heroBanner",
+                    void: true,
+                  },
+                  {
+                    children: [
+                      {
+                        text: "",
+                      },
+                    ],
+                    type: "postAuthor",
+                  },
+                  {
+                    children: [
+                      {
+                        text: "Discuss your activity...",
+                      },
+                    ],
+                    type: "paragraph",
+                  },
+                  {
+                    children: [
+                      {
+                        text: "",
+                      },
+                    ],
+                    type: "paragraph",
+                  },
+                ]
+              : components
+          }
+        />
+      </EditorContext.Provider>
+    </Box>
   );
 };
 

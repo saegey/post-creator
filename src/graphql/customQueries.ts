@@ -172,6 +172,7 @@ export const getPublishedPost =
     # elevation
     # elevationGrades
     # distances
+		webscorerResults
     author
     elevationTotal
     normalizedPower

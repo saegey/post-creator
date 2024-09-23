@@ -9,14 +9,9 @@ import { CloudinaryImage } from "../types/common";
 interface PostSaveProps {
   postId: string | undefined;
   components: Array<any>;
-  // heroImage: string | null;
 }
 
-const PostSaveComponents = async ({
-  components,
-  postId,
-}: // heroImage,
-PostSaveProps) => {
+const PostSaveComponents = async ({ components, postId }: PostSaveProps) => {
   try {
     const response = (await API.graphql({
       authMode: "AMAZON_COGNITO_USER_POOLS",
@@ -24,7 +19,6 @@ PostSaveProps) => {
       variables: {
         input: {
           id: postId,
-          // heroImage: heroImage ? heroImage : null,
           components: JSON.stringify(components),
         },
       },

@@ -20,9 +20,10 @@ interface PostCardProps {
     imagesObj: Array<CloudinaryImage>;
   };
   showAuthor?: boolean;
+  status: "draft" | "published";
 }
 
-const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
+const PostCard = ({ post, showAuthor = true, status }: PostCardProps) => {
   return (
     <Box
       sx={{ listStyleType: "none", "&:hover": { cursor: "pointer" } }}
@@ -32,9 +33,9 @@ const PostCard = ({ post, showAuthor = true }: PostCardProps) => {
         as={Link}
         sx={{ textDecoration: "none" }}
         href={
-          post.privacyStatus === "draft"
+          post.privacyStatus === "draft" || status === "draft"
             ? `/posts/${post.id}/edit`
-            : `/j/${post.id}`
+            : `/posts/${post.id}/`
         }
         key={`link-post-${post.id}`}
       >

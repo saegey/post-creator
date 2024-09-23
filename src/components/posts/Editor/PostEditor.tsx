@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback, useContext, useRef } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { createEditor, Editor, setSelection, Transforms } from "slate";
-import { Flex, Box, Theme, ThemeUIStyleObject } from "theme-ui";
+import { createEditor, Transforms } from "slate";
+import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
 
@@ -23,27 +23,24 @@ import useFetchData from "../../../hooks/useFetchData";
 import {
   CloudinaryImage,
   CustomElement,
-  HeroBannerType,
   VideoAssetEvent,
   VideoEmbedType,
 } from "../../../types/common";
 import RaceResultsImport from "../RaceResults/RaceResultsImport";
 import OptionsDropdown from "../../OptionsDropdown";
-import AddMediaComponent from "../Editor/AddMediaComponent"; // Import your AddMediaComponent
+import AddMediaComponent from "../Editor/AddMediaComponent";
 import { updateImages } from "../../../utils/editorActions";
-
 import ImageManager from "../Image/ImageManager";
 import PostSettings from "./PostSettings";
 import PhotoCaptionModal from "../Image/PhotoCaptionModal";
 import usePubSubSubscription from "../../../hooks/usePubSubSubscription";
+import PublishPostModal from "../PublishPostModal";
 
 const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const editor = useMemo(
     () => withLayout(withHistory(withLinks(withReact(createEditor())))),
     []
   );
-
-  // const [isFocused, setIsFocused] = React.useState(false);
 
   const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
   const heroMediaRef = useRef<any>(null); // Ref for AddMediaComponent
@@ -96,9 +93,9 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
     isNewPostImageUploadOpen,
     setIsNewPostImageUploadOpen,
     isChangeImageModalOpen,
-    isStravaModalOpen,
     isSettingsModalOpen,
     isPhotoCaptionOpen,
+    isPublishedConfirmationOpen,
   } = useContext(EditorContext);
 
   useFetchData();
@@ -192,14 +189,12 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   return (
     <Flex>
       <Box
-        sx={
-          {
-            width: "100%",
-            backgroundColor: "background",
-            position: "relative",
-            minHeight: "100vh",
-          } as ThemeUIStyleObject<Theme>
-        }
+        sx={{
+          width: "100%",
+          backgroundColor: "background",
+          position: "relative",
+          minHeight: "100vh",
+        }}
       >
         <SlateProvider editor={editor} ref={slateRef}>
           <Slate
@@ -263,6 +258,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
           {isChangeImageModalOpen && <ImageManager />}
           {isSettingsModalOpen && <PostSettings />}
           {isPhotoCaptionOpen && <PhotoCaptionModal />}
+          {isPublishedConfirmationOpen && <PublishPostModal />}
           <AddMediaComponent
             ref={newMediaRef}
             uploadPreset="epcsmymp"

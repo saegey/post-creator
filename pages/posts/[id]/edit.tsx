@@ -38,6 +38,8 @@ const Post = ({ user, postRaw, errorCode }: PostType) => {
     elevations: [],
   });
 
+  console.log("post", post);
+
   return (
     <PostContext.Provider value={post}>
       <Head>

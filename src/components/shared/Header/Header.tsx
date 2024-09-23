@@ -1,11 +1,11 @@
 import React from "react";
-import { Box, Flex, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Box, Flex, ThemeUIStyleObject, Theme, MenuButton } from "theme-ui";
 
 import { IUser } from "../../../types/common";
 import ProfileSection from "./ProfileSection";
 
 type HeaderLayoutProps = {
-  user: IUser;
+  user?: IUser;
   right?: React.ReactNode;
 };
 
@@ -36,7 +36,14 @@ const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
           } as ThemeUIStyleObject<Theme>
         }
       >
-        <ProfileSection />
+        {user ? (
+          <ProfileSection />
+        ) : (
+          <MenuButton
+            sx={{ marginY: "auto", cursor: "pointer" }}
+            aria-label="Toggle Menu"
+          />
+        )}
 
         <Flex
           sx={

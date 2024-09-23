@@ -18,9 +18,9 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
     email
     image
     username
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -38,9 +38,9 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
     email
     image
     username
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -58,9 +58,9 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
     email
     image
     username
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -117,19 +117,19 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
       __typename
     }
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -186,19 +186,19 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
       __typename
     }
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -255,19 +255,19 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
       __typename
     }
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -343,9 +343,9 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
       blog {
         id
         name
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       related {
@@ -358,9 +358,9 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
         email
         image
         username
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       elevationTotal
@@ -385,16 +385,18 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
       runSignupResults
       raceResultsProvider
       privacyStatus
+      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
-      owner
       __typename
     }
+    owner
+    _version
+    _lastChangedAt
     updatedAt
     publishedPostOriginalPostId
-    owner
     __typename
   }
 }
@@ -470,9 +472,9 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
       blog {
         id
         name
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       related {
@@ -485,9 +487,9 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
         email
         image
         username
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       elevationTotal
@@ -512,16 +514,18 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
       runSignupResults
       raceResultsProvider
       privacyStatus
+      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
-      owner
       __typename
     }
+    owner
+    _version
+    _lastChangedAt
     updatedAt
     publishedPostOriginalPostId
-    owner
     __typename
   }
 }
@@ -597,9 +601,9 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
       blog {
         id
         name
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       related {
@@ -612,9 +616,9 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
         email
         image
         username
+        owner
         createdAt
         updatedAt
-        owner
         __typename
       }
       elevationTotal
@@ -639,16 +643,18 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
       runSignupResults
       raceResultsProvider
       privacyStatus
+      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
-      owner
       __typename
     }
+    owner
+    _version
+    _lastChangedAt
     updatedAt
     publishedPostOriginalPostId
-    owner
     __typename
   }
 }
@@ -686,9 +692,9 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
         nextToken
         __typename
       }
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     related {
@@ -733,11 +739,11 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
@@ -749,9 +755,9 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
       email
       image
       username
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     elevationTotal
@@ -776,11 +782,11 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
+    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
-    owner
     __typename
   }
 }
@@ -818,9 +824,9 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
         nextToken
         __typename
       }
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     related {
@@ -865,11 +871,11 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
@@ -881,9 +887,9 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
       email
       image
       username
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     elevationTotal
@@ -908,11 +914,11 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
+    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
-    owner
     __typename
   }
 }
@@ -950,9 +956,9 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
         nextToken
         __typename
       }
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     related {
@@ -997,11 +1003,11 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
+        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
-        owner
         __typename
       }
       nextToken
@@ -1013,9 +1019,9 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
       email
       image
       username
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     elevationTotal
@@ -1040,11 +1046,11 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
+    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
-    owner
     __typename
   }
 }

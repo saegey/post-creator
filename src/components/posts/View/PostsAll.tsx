@@ -1,4 +1,4 @@
-import { Grid, Box, Button, Flex, Text, NavLink, IconButton } from "theme-ui";
+import { Grid, Box, Flex, Text, NavLink, IconButton } from "theme-ui";
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import React from "react";
@@ -74,13 +74,13 @@ const PostsAll = ({ user }: { user: IUser }) => {
     const response = (await API.graphql({
       query: listMyPostsCustom,
       authMode: "AMAZON_COGNITO_USER_POOLS",
-      variables: {
-        filter: {
-          privacyStatus: {
-            eq: type,
-          },
-        },
-      },
+      // variables: {
+      //   filter: {
+      //     privacyStatus: {
+      //       eq: type,
+      //     },
+      //   },
+      // },
     })) as GraphQLResult<ListPostsByCreatedAtTypes>;
 
     setPosts(
@@ -153,7 +153,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
       <Header user={user} />
       <Box
         sx={{
-          // marginTop: '60px',
           maxWidth: "900px",
           marginLeft: ["0px", "auto", "auto"],
           marginRight: ["0px", "auto", "auto"],
@@ -184,7 +183,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
                 Router.push("/posts?status=draft");
               }}
             >
-              Drafts
+              All
             </NavLink>
             <NavLink
               href="#!"
@@ -208,18 +207,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
             >
               Published
             </NavLink>
-            {/* <NavLink
-              href="#!"
-              p={2}
-              sx={{
-                borderBottomWidth: "1px",
-                borderBottomStyle: "solid",
-                borderBottomColor: "border",
-                fontWeight: "500",
-              }}
-            >
-              Unlisted
-            </NavLink> */}
           </Box>
           <Flex
             sx={{
@@ -236,7 +223,6 @@ const PostsAll = ({ user }: { user: IUser }) => {
                 "&:hover": { backgroundColor: "primaryHover" },
                 cursor: "pointer",
               }}
-              // variant="primaryButton"
             >
               <AddIcon />
             </IconButton>
@@ -266,7 +252,11 @@ const PostsAll = ({ user }: { user: IUser }) => {
             <Grid columns={[1, 2, 3]}>
               {posts.map((post, i) => (
                 <div key={`post-${i}`}>
-                  <PostCard post={post} showAuthor={false} />
+                  <PostCard
+                    post={post}
+                    showAuthor={false}
+                    status={status as "draft" | "published"}
+                  />
                 </div>
               ))}
             </Grid>

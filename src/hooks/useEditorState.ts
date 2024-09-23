@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Path } from "slate";
 import { EditorContextType } from "../components/posts/Editor/EditorContext";
 
@@ -33,7 +33,6 @@ const useEditorState = (): EditorContextType => {
     path: [0, 0],
     isFullScreen: false,
   });
-  const [isStravaModalOpen, setIsStravaModalOpen] = useState(false);
   const [isRWGPSModalOpen, setIsRWGPSModalOpen] = useState(false);
   const [newComponentPath, setNewComponentPath] = useState<Path | undefined>(
     undefined
@@ -44,6 +43,8 @@ const useEditorState = (): EditorContextType => {
     useState(false);
 
   const [isChangeImageModalOpen, setIsChangeImageModalOpen] = useState(false);
+
+  const [isPublishing, setIsPublishing] = useState(false);
 
   return {
     isGraphMenuOpen,
@@ -76,8 +77,6 @@ const useEditorState = (): EditorContextType => {
     setMenuPosition,
     mobileMenu,
     setMobileMenu,
-    isStravaModalOpen,
-    setIsStravaModalOpen,
     isRWGPSModalOpen,
     setIsRWGPSModalOpen,
     newComponentPath,
@@ -90,6 +89,8 @@ const useEditorState = (): EditorContextType => {
     setIsNewPostImageUploadOpen,
     isChangeImageModalOpen,
     setIsChangeImageModalOpen,
+    isPublishing,
+    setIsPublishing,
   };
 };
 

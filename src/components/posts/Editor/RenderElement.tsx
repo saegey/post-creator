@@ -77,7 +77,7 @@ const renderElement = (props: {
         />
       );
 
-    case "bulleted-list": // Bulleted list *
+    case "bulletedList": // Bulleted list *
       return (
         <BulletList
           children={props.children}

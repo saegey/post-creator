@@ -15,16 +15,6 @@ const AWS = require("aws-sdk");
 const uuid = require("uuid");
 const fetch = require("node-fetch");
 
-const generateUID = () => {
-  // I generate the UID from two parts here
-  // to ensure the random number provide enough bits.
-  var firstPart = (Math.random() * 46656) | 0;
-  var secondPart = (Math.random() * 46656) | 0;
-  firstPart = ("000" + firstPart.toString(36)).slice(-3);
-  secondPart = ("000" + secondPart.toString(36)).slice(-3);
-  return firstPart + secondPart;
-};
-
 const query = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
@@ -43,12 +33,6 @@ const query = /* GraphQL */ `
       subType
       currentFtp
       components
-      # powerAnalysis
-      # coordinates
-      # powers
-      # elevation
-      # elevationGrades
-      # distances
       author {
         id
         fullName
@@ -65,6 +49,7 @@ const query = /* GraphQL */ `
       distance
       heartAnalysis
       cadenceAnalysis
+      powerAnalysis
       tempAnalysis
       elapsedTime
       stoppedTime
@@ -74,7 +59,6 @@ const query = /* GraphQL */ `
       createdAt
       heroImage
       subhead
-      shortUrl
 
       raceResults
       webscorerResults
@@ -96,7 +80,9 @@ const query = /* GraphQL */ `
 `;
 
 exports.handler = async (event) => {
-  // console.log(`EVENT: ${JSON.stringify(event)}`);
+  const startTime = Date.now();
+  console.log("Lambda function started at", new Date(startTime).toISOString());
+
   const crypto = require("@aws-crypto/sha256-js");
   const { defaultProvider } = require("@aws-sdk/credential-provider-node");
   const { SignatureV4 } = require("@aws-sdk/signature-v4");
@@ -114,18 +100,14 @@ exports.handler = async (event) => {
   const { body } = event;
   const { postId, origin } = JSON.parse(body);
 
-  // console.log(
-  //   `postId: ${postId}, identityId: ${JSON.stringify(
-  //     event.requestContext.identity.cognitoIdentityId
-  //   )}`
-  // );
-
   let date = new Date();
-  console.log(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
+  console.log(
+    "GraphQL Endpoint:",
+    process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT
+  );
   const endpoint = new URL(process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT);
 
   const creds = defaultProvider();
-  // console.log(creds, creds);
   const signer = new SignatureV4({
     credentials: creds,
     region: AWS_REGION,
@@ -148,13 +130,14 @@ exports.handler = async (event) => {
     path: endpoint.pathname,
   });
 
-  // console.log(requestToBeSigned);
+  // Start timing for GraphQL query
+  let operationStartTime = Date.now();
+  console.log(
+    "Starting GraphQL query to get post data at",
+    new Date(operationStartTime).toISOString()
+  );
 
   const signed = await signer.sign(requestToBeSigned);
-  // const request = new Request(
-  //   process.env.API_NEXTJSBLOG_GRAPHQLAPIENDPOINTOUTPUT,
-  //   signed
-  // );
 
   let statusCode = 200;
   let resBody;
@@ -167,10 +150,17 @@ exports.handler = async (event) => {
     );
 
     resBody = await response.json();
-    console.log("response", resBody);
     if (resBody.errors) statusCode = 400;
   } catch (error) {
-    // console.log("error", error);
+    const operationEndTime = Date.now();
+    const duration = operationEndTime - operationStartTime;
+    console.log(
+      "GraphQL query failed at",
+      new Date(operationEndTime).toISOString(),
+      "Duration:",
+      duration,
+      "ms"
+    );
     return {
       statusCode: 500,
       headers: {
@@ -187,87 +177,90 @@ exports.handler = async (event) => {
     };
   }
 
-  // const identityId =
-  // 	event.requestContext.identity.cognitoIdentityId.split(':')[1];
+  let operationEndTime = Date.now();
+  let duration = operationEndTime - operationStartTime;
+  console.log(
+    "Finished GraphQL query at",
+    new Date(operationEndTime).toISOString(),
+    "Duration:",
+    duration,
+    "ms"
+  );
+
+  // Now proceed to the next operation
 
   const identityId = event.requestContext.identity.cognitoAuthenticationProvider
     .split(":")
     .pop();
 
-  // console.log("identityId", identityId);
+  // const getParams = {
+  //   TableName: publishedPostTable,
+  //   IndexName: "PublishedPostByOriginalPostId",
+  //   KeyConditionExpression: "#originalPostId = :originalPostId",
+  //   ExpressionAttributeNames: {
+  //     "#originalPostId": "originalPostId",
+  //   },
+  //   ExpressionAttributeValues: {
+  //     ":originalPostId": postId,
+  //   },
+  // };
 
-  const getParams = {
-    TableName: publishedPostTable,
-    IndexName: "PublishedPostByOriginalPostId",
-    KeyConditionExpression: "#originalPostId = :originalPostId",
-    ExpressionAttributeNames: {
-      "#originalPostId": "originalPostId",
-    },
-    ExpressionAttributeValues: {
-      ":originalPostId": postId,
-    },
-    // ProjectionExpression: 'ATTRIBUTE_NAME',
-  };
+  // Start timing for DynamoDB query
+  // operationStartTime = Date.now();
+  // console.log(
+  //   "Starting DynamoDB query to check for existing published post at",
+  //   new Date(operationStartTime).toISOString()
+  // );
 
-  // console.log(getParams);
+  // let existingId = undefined;
 
-  // Call DynamoDB to read the item from the table
+  // try {
+  //   const res = await docClient.query(getParams).promise();
+  //   if (res && res.Items && res.Items.length > 0) {
+  //     existingId = res.Items[0].id;
+  //   }
+  // } catch (e) {
+  //   console.error("Error querying DynamoDB:", e);
+  // }
 
-  let existingId = undefined;
-  let shortUrl = undefined;
+  // operationEndTime = Date.now();
+  // duration = operationEndTime - operationStartTime;
+  // console.log(
+  //   "Finished DynamoDB query at",
+  //   new Date(operationEndTime).toISOString(),
+  //   "Duration:",
+  //   duration,
+  //   "ms"
+  // );
 
+  // const publishedPostId = existingId ? existingId : postId;
+
+  // Start timing for S3 getObject
+  operationStartTime = Date.now();
+  console.log(
+    "Starting S3 getObject to download private time series file at",
+    new Date(operationStartTime).toISOString()
+  );
+
+  let privateTimeSeriesFile;
   try {
-    await docClient
-      .query(getParams, function (err, res) {
-        // console.log(res.data.Items.length);
-        if (res.data && res.data.Items && res.data.Items.length > 0) {
-          // console.log(res.data.Items[0]);
-          existingId = res.data.Items[0].id;
-          shortUrl = res.data.Items[0].shortUrl;
-        }
-      })
-      .promise();
+    privateTimeSeriesFile = await S3.getObject({
+      Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
+      Key: `private/${event.requestContext.identity.cognitoIdentityId}/${resBody.data.getPost.timeSeriesFile}`,
+    }).promise();
   } catch (e) {
-    console.error(JSON.stringify(e));
+    console.error("Error getting object from S3:", e);
   }
 
-  const publishedPostId = existingId ? existingId : uuid.v1();
-
-  if (!existingId) {
-    let resShort;
-    try {
-      const shortUrlParams = {
-        TableName: "url-short-LinkTable-1GWGF5F1ZD65K",
-        Key: {
-          id: generateUID(),
-        },
-        UpdateExpression: "SET #url = :u, #owner = :o",
-        ExpressionAttributeValues: {
-          ":u": `${origin}j/${publishedPostId}`,
-          ":o": `${identityId}::${identityId}`,
-        },
-        ExpressionAttributeNames: {
-          "#url": "url",
-          "#owner": "owner",
-        },
-        ReturnValues: "ALL_NEW",
-      };
-
-      resShort = await docClient.update(shortUrlParams).promise();
-    } catch (e) {
-      console.error(e);
-    }
-
-    // console.log("shorturlres", resShort);
-    shortUrl = resShort.Attributes.id;
-    // shortUrl = 't';
-  }
-
-  // console.log(resBody);
-  const privateTimeSeriesFile = await S3.getObject({
-    Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
-    Key: `private/${event.requestContext.identity.cognitoIdentityId}/${resBody.data.getPost.timeSeriesFile}`,
-  }).promise();
+  operationEndTime = Date.now();
+  duration = operationEndTime - operationStartTime;
+  console.log(
+    "Finished S3 getObject at",
+    new Date(operationEndTime).toISOString(),
+    "Duration:",
+    duration,
+    "ms"
+  );
 
   const {
     coordinates,
@@ -292,23 +285,39 @@ exports.handler = async (event) => {
     }),
     Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
     Key: `public/${s3key}`,
-    // ACL: 'public-read',
   };
+
+  // Start timing for S3 putObject
+  operationStartTime = Date.now();
+  console.log(
+    "Starting S3 putObject to upload time series data at",
+    new Date(operationStartTime).toISOString()
+  );
 
   try {
     const s3res = await S3.putObject(s3Putparams).promise();
-    // console.log(s3res);
   } catch (e) {
-    console.error(JSON.stringify(e));
+    console.error("Error putting object to S3:", e);
   }
+
+  operationEndTime = Date.now();
+  duration = operationEndTime - operationStartTime;
+  console.log(
+    "Finished S3 putObject at",
+    new Date(operationEndTime).toISOString(),
+    "Duration:",
+    duration,
+    "ms"
+  );
+
+  // Now prepare to update DynamoDB
 
   const docParams = {
     TableName: publishedPostTable,
-    Key: { id: publishedPostId },
+    Key: { id: postId },
     UpdateExpression:
-      "SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, webscorerResults = :webscorerResults,crossResults = :crossResults, omniResults = :omniResults, runSignupResults = :runSignupResults, raceResultsProvider = :raceResultsProvider, shortUrl = if_not_exists(shortUrl, :shortUrl), createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile",
+      "SET #typename = :typename, #ownername = :owner, originalPostId = :originalPostId, title = :title, gpxFile = :gpxFile, images = :images, postLocation = :postLocation, currentFtp = :currentFtp, components = :components, distance = :distance, author = :author, elevationTotal = :elevationTotal, normalizedPower = :normalizedPower, heartAnalysis = :heartAnalysis, powerAnalysis = :powerAnalysis, cadenceAnalysis = :cadenceAnalysis, tempAnalysis = :tempAnalysis, elapsedTime = :elapsedTime, stoppedTime = :stoppedTime, timeInRed = :timeInRed, powerZones = :powerZones, powerZoneBuckets = :powerZoneBuckets, heroImage = :heroImage, subhead = :subhead, raceResults = :raceResults, webscorerResults = :webscorerResults, crossResults = :crossResults, omniResults = :omniResults, runSignupResults = :runSignupResults, raceResultsProvider = :raceResultsProvider, createdAt = if_not_exists(createdAt, :createdAt), updatedAt = :updatedAt, #typelabel = :type, #datelabel = :date, stravaUrl = :stravaUrl, timeSeriesFile = :timeSeriesFile",
     ExpressionAttributeNames: {
-      // '#id': 'id',
       "#typename": "__typename",
       "#ownername": "owner",
       "#typelabel": "type",
@@ -317,133 +326,223 @@ exports.handler = async (event) => {
     ExpressionAttributeValues: {
       ":typename": "PublishedPost",
       ":owner": `${identityId}::${identityId}`,
-      ":originalPostId": resBody.data.getPost.id,
-      ":title": resBody.data.getPost.title,
-      ":gpxFile": resBody.data.getPost.gpxFile
-        ? resBody.data.getPost.gpxFile
-        : "",
-      ":images": resBody.data.getPost.images
-        ? JSON.parse(resBody.data.getPost.images)
-        : "[]",
-      ":postLocation": resBody.data.getPost.postLocation
-        ? resBody.data.getPost.postLocation
-        : "",
+      ":originalPostId":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.id,
+      ":title":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.title,
+      ":gpxFile":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.gpxFile
+          ? resBody.data.getPost.gpxFile
+          : "",
+      ":images":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.images
+          ? JSON.parse(resBody.data.getPost.images)
+          : "[]",
+      ":postLocation":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.postLocation
+          ? resBody.data.getPost.postLocation
+          : "",
       ":createdAt": date.toISOString(),
       ":updatedAt": date.toISOString(),
-      ":currentFtp": resBody.data.getPost.currentFtp
-        ? resBody.data.getPost.currentFtp
-        : 0,
-      ":components": resBody.data.getPost.components
-        ? JSON.parse(resBody.data.getPost.components)
-        : "[]",
-      ":author": resBody.data.getPost.author
-        ? resBody.data.getPost.author
-        : "{}",
-      ":elevationTotal": resBody.data.getPost.elevationTotal
-        ? resBody.data.getPost.elevationTotal
-        : 0,
-      ":normalizedPower": resBody.data.getPost.normalizedPower
-        ? resBody.data.getPost.normalizedPower
-        : 0,
-      ":heartAnalysis": resBody.data.getPost.heartAnalysis
-        ? JSON.parse(resBody.data.getPost.heartAnalysis)
-        : "{}",
-      ":cadenceAnalysis": resBody.data.getPost.cadenceAnalysis
-        ? JSON.parse(resBody.data.getPost.cadenceAnalysis)
-        : "{}",
-      ":tempAnalysis": resBody.data.getPost.tempAnalysis
-        ? JSON.parse(resBody.data.getPost.tempAnalysis)
-        : "{}",
-      ":elapsedTime": resBody.data.getPost.elapsedTime
-        ? resBody.data.getPost.elapsedTime
-        : 0,
-      ":stoppedTime": resBody.data.getPost.stoppedTime
-        ? resBody.data.getPost.stoppedTime
-        : 0,
-      ":timeInRed": resBody.data.getPost.timeInRed
-        ? resBody.data.getPost.timeInRed
-        : 0,
-      ":powerZones": resBody.data.getPost.powerZones
-        ? JSON.parse(resBody.data.getPost.powerZones)
-        : "{}",
-      ":powerZoneBuckets": resBody.data.getPost.powerZoneBuckets
-        ? JSON.parse(resBody.data.getPost.powerZoneBuckets)
-        : "{}",
-      ":heroImage": resBody.data.getPost.heroImage
-        ? JSON.parse(resBody.data.getPost.heroImage)
-        : "{}",
-      ":subhead": resBody.data.getPost.subhead
-        ? resBody.data.getPost.subhead
-        : "",
-      ":raceResults": resBody.data.getPost.raceResults
-        ? JSON.parse(resBody.data.getPost.raceResults)
-        : "{}",
-      ":webscorerResults": resBody.data.getPost.webscorerResults
-        ? JSON.parse(resBody.data.getPost.webscorerResults)
-        : "{}",
-      ":crossResults": resBody.data.getPost.crossResults
-        ? JSON.parse(resBody.data.getPost.crossResults)
-        : "{}",
-      ":omniResults": resBody.data.getPost.omniResults
-        ? JSON.parse(resBody.data.getPost.omniResults)
-        : "{}",
-      ":runSignupResults": resBody.data.getPost.runSignupResults
-        ? JSON.parse(resBody.data.getPost.runSignupResults)
-        : "{}",
-      ":raceResultsProvider": resBody.data.getPost.raceResults
-        ? resBody.data.getPost.raceResultsProvider
-        : "",
-      ":shortUrl": shortUrl ? shortUrl : "",
+      ":currentFtp":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.currentFtp
+          ? resBody.data.getPost.currentFtp
+          : 0,
+      ":components":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.components
+          ? JSON.parse(resBody.data.getPost.components)
+          : "[]",
+      ":author":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.author
+          ? resBody.data.getPost.author
+          : "{}",
+      ":elevationTotal":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.elevationTotal
+          ? resBody.data.getPost.elevationTotal
+          : 0,
+      ":normalizedPower":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.normalizedPower
+          ? resBody.data.getPost.normalizedPower
+          : 0,
+      ":heartAnalysis":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.heartAnalysis
+          ? JSON.parse(resBody.data.getPost.heartAnalysis)
+          : "{}",
+      ":powerAnalysis":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.powerAnalysis
+          ? JSON.parse(resBody.data.getPost.powerAnalysis)
+          : "{}",
+      ":cadenceAnalysis":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.cadenceAnalysis
+          ? JSON.parse(resBody.data.getPost.cadenceAnalysis)
+          : "{}",
+      ":tempAnalysis":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.tempAnalysis
+          ? JSON.parse(resBody.data.getPost.tempAnalysis)
+          : "{}",
+      ":elapsedTime":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.elapsedTime
+          ? resBody.data.getPost.elapsedTime
+          : 0,
+      ":stoppedTime":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.stoppedTime
+          ? resBody.data.getPost.stoppedTime
+          : 0,
+      ":timeInRed":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.timeInRed
+          ? resBody.data.getPost.timeInRed
+          : 0,
+      ":powerZones":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.powerZones
+          ? JSON.parse(resBody.data.getPost.powerZones)
+          : "{}",
+      ":powerZoneBuckets":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.powerZoneBuckets
+          ? JSON.parse(resBody.data.getPost.powerZoneBuckets)
+          : "{}",
+      ":heroImage":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.heroImage
+          ? JSON.parse(resBody.data.getPost.heroImage)
+          : "{}",
+      ":subhead":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.subhead
+          ? resBody.data.getPost.subhead
+          : "",
+      ":raceResults":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.raceResults
+          ? JSON.parse(resBody.data.getPost.raceResults)
+          : "{}",
+      ":webscorerResults":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.webscorerResults
+          ? JSON.parse(resBody.data.getPost.webscorerResults)
+          : "{}",
+      ":crossResults":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.crossResults
+          ? JSON.parse(resBody.data.getPost.crossResults)
+          : "{}",
+      ":omniResults":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.omniResults
+          ? JSON.parse(resBody.data.getPost.omniResults)
+          : "{}",
+      ":runSignupResults":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.runSignupResults
+          ? JSON.parse(resBody.data.getPost.runSignupResults)
+          : "{}",
+      ":raceResultsProvider":
+        resBody.data &&
+        resBody.data.getPost &&
+        resBody.data.getPost.raceResultsProvider
+          ? resBody.data.getPost.raceResultsProvider
+          : "",
       ":type": "PublishedPost",
-      ":date": resBody.data.getPost.date ? resBody.data.getPost.date : "",
-      ":stravaUrl": resBody.data.getPost.stravaUrl
-        ? resBody.data.getPost.stravaUrl
-        : "",
+      ":date":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.date
+          ? resBody.data.getPost.date
+          : "",
+      ":stravaUrl":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.stravaUrl
+          ? resBody.data.getPost.stravaUrl
+          : "",
       ":timeSeriesFile": s3key,
-      ":distance": resBody.data.getPost.distance
-        ? resBody.data.getPost.distance
-        : "",
+      ":distance":
+        resBody.data && resBody.data.getPost && resBody.data.getPost.distance
+          ? resBody.data.getPost.distance
+          : "",
     },
     ReturnValues: "ALL_NEW",
   };
-  // console.log(docParams);
+
+  // Start timing for DynamoDB update
+  operationStartTime = Date.now();
+  console.log(
+    "Starting DynamoDB update to create/update published post at",
+    new Date(operationStartTime).toISOString()
+  );
 
   let res;
 
   try {
     res = await docClient.update(docParams).promise();
-    // console.log(res);
   } catch (err) {
-    console.log("Error", err);
-    // console.log(JSON.stringify(err.__type));
+    console.log("Error updating DynamoDB", err);
   }
+
+  operationEndTime = Date.now();
+  duration = operationEndTime - operationStartTime;
+  console.log(
+    "Finished DynamoDB update at",
+    new Date(operationEndTime).toISOString(),
+    "Duration:",
+    duration,
+    "ms"
+  );
+
+  // Now update the original post
 
   const postUpdateParams = {
     Key: { id: postId },
     UpdateExpression: "SET privacyStatus = :privacyStatus",
     TableName: postTable,
-    // IndexName: 'PublishedPostByOriginalPostId',
-    // KeyConditionExpression: '#originalPostId = :originalPostId',
     ExpressionAttributeValues: {
       ":privacyStatus": "published",
     },
     ReturnValues: "ALL_NEW",
   };
-  // console.log(postUpdateParams);
+
+  // Start timing for DynamoDB update of original post
+  operationStartTime = Date.now();
+  console.log(
+    "Starting DynamoDB update to set privacyStatus of original post at",
+    new Date(operationStartTime).toISOString()
+  );
 
   try {
-    await docClient
-      .update(postUpdateParams, function (err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          // console.log("Success", data);
-        }
-      })
-      .promise();
+    await docClient.update(postUpdateParams).promise();
   } catch (e) {
-    console.error(e);
+    console.error("Error updating original post in DynamoDB:", e);
   }
+
+  operationEndTime = Date.now();
+  duration = operationEndTime - operationStartTime;
+  console.log(
+    "Finished DynamoDB update of original post at",
+    new Date(operationEndTime).toISOString(),
+    "Duration:",
+    duration,
+    "ms"
+  );
+
+  const endTime = Date.now();
+  const totalDuration = endTime - startTime;
+  console.log(
+    "Lambda function completed at",
+    new Date(endTime).toISOString(),
+    "Total Duration:",
+    totalDuration,
+    "ms"
+  );
 
   return {
     statusCode: 200,

@@ -11,13 +11,16 @@ type StorageGetResult = {
   Metadata?: { [key: string]: string };
 };
 
-const getActivityData = async (timeSeriesFile: string | null | undefined) => {
+const getActivityData = async (
+  timeSeriesFile: string | null | undefined,
+  securityLevel?: "private" | "public"
+) => {
   if (!timeSeriesFile) {
     return;
   }
   const result = (await Storage.get(timeSeriesFile, {
     download: true,
-    level: "private",
+    level: securityLevel ? securityLevel : "private",
   })) as unknown as StorageGetResult;
 
   const timeSeriesData = (await new Response(
