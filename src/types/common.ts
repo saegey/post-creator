@@ -421,7 +421,7 @@ export interface Post
     | "__typename"
   > {
   components: Array<CustomElement>;
-  images: Array<CloudinaryImage> | null;
+  images: Array<CloudinaryImage>;
   heartAnalysis: Record<string, number> | null;
   powerAnalysis: Record<string, number> | null;
   cadenceAnalysis: Record<string, number> | null;

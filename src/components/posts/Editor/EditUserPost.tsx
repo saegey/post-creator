@@ -1,6 +1,5 @@
-import { Box, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
-import Router from "next/router";
 
 import PostEditor from "./PostEditor";
 import Header from "../../shared/Header/Header";
