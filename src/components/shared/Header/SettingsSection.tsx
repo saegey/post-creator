@@ -74,14 +74,17 @@ const SettingsSection = () => {
         sx={{ borderRadius: "10px", cursor: "pointer" }}
       >
         <Flex sx={{ alignItems: "center", gap: "2px" }}>
-          <IconButton as="div" sx={{ width: "24px", height: "24px" }}>
+          <IconButton
+            as="div"
+            sx={{ width: "24px", height: "24px", color: "background" }}
+          >
             {isPublishing ? (
-              <Spinner sx={{ color: "white" }} />
+              <Spinner sx={{ color: "background" }} />
             ) : (
               <RocketIcon />
             )}
           </IconButton>
-          <Text>Publish</Text>
+          <Text sx={{ color: "background" }}>Publish</Text>
         </Flex>
       </Button>
     </>

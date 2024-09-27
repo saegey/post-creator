@@ -42,6 +42,7 @@ type PublishedPost
   @auth(
     rules: [
       { allow: public, operations: [read], provider: identityPool }
+      { allow: private, operations: [read], provider: userPools }
       {
         allow: owner
         operations: [create, update, delete, read]
