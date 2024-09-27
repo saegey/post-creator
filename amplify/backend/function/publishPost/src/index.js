@@ -193,48 +193,6 @@ exports.handler = async (event) => {
     .split(":")
     .pop();
 
-  // const getParams = {
-  //   TableName: publishedPostTable,
-  //   IndexName: "PublishedPostByOriginalPostId",
-  //   KeyConditionExpression: "#originalPostId = :originalPostId",
-  //   ExpressionAttributeNames: {
-  //     "#originalPostId": "originalPostId",
-  //   },
-  //   ExpressionAttributeValues: {
-  //     ":originalPostId": postId,
-  //   },
-  // };
-
-  // Start timing for DynamoDB query
-  // operationStartTime = Date.now();
-  // console.log(
-  //   "Starting DynamoDB query to check for existing published post at",
-  //   new Date(operationStartTime).toISOString()
-  // );
-
-  // let existingId = undefined;
-
-  // try {
-  //   const res = await docClient.query(getParams).promise();
-  //   if (res && res.Items && res.Items.length > 0) {
-  //     existingId = res.Items[0].id;
-  //   }
-  // } catch (e) {
-  //   console.error("Error querying DynamoDB:", e);
-  // }
-
-  // operationEndTime = Date.now();
-  // duration = operationEndTime - operationStartTime;
-  // console.log(
-  //   "Finished DynamoDB query at",
-  //   new Date(operationEndTime).toISOString(),
-  //   "Duration:",
-  //   duration,
-  //   "ms"
-  // );
-
-  // const publishedPostId = existingId ? existingId : postId;
-
   // Start timing for S3 getObject
   operationStartTime = Date.now();
   console.log(
@@ -243,38 +201,24 @@ exports.handler = async (event) => {
   );
 
   let privateTimeSeriesFile;
+  let s3key;
   try {
     privateTimeSeriesFile = await S3.getObject({
       Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
       Key: `private/${event.requestContext.identity.cognitoIdentityId}/${resBody.data.getPost.timeSeriesFile}`,
     }).promise();
-  } catch (e) {
-    console.error("Error getting object from S3:", e);
-  }
 
-  operationEndTime = Date.now();
-  duration = operationEndTime - operationStartTime;
-  console.log(
-    "Finished S3 getObject at",
-    new Date(operationEndTime).toISOString(),
-    "Duration:",
-    duration,
-    "ms"
-  );
+    operationEndTime = Date.now();
+    duration = operationEndTime - operationStartTime;
+    console.log(
+      "Finished S3 getObject at",
+      new Date(operationEndTime).toISOString(),
+      "Duration:",
+      duration,
+      "ms"
+    );
 
-  const {
-    coordinates,
-    elevation,
-    powers,
-    distances,
-    elevationGrades,
-    powerAnalysis,
-    hearts,
-  } = JSON.parse(privateTimeSeriesFile.Body.toString("utf-8"));
-
-  const s3key = `timeseries/${uuid.v1()}.json`;
-  const s3Putparams = {
-    Body: JSON.stringify({
+    const {
       coordinates,
       elevation,
       powers,
@@ -282,33 +226,48 @@ exports.handler = async (event) => {
       elevationGrades,
       powerAnalysis,
       hearts,
-    }),
-    Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
-    Key: `public/${s3key}`,
-  };
+    } = JSON.parse(privateTimeSeriesFile.Body.toString("utf-8"));
 
-  // Start timing for S3 putObject
-  operationStartTime = Date.now();
-  console.log(
-    "Starting S3 putObject to upload time series data at",
-    new Date(operationStartTime).toISOString()
-  );
+    s3key = `timeseries/${uuid.v1()}.json`;
+    const s3Putparams = {
+      Body: JSON.stringify({
+        coordinates,
+        elevation,
+        powers,
+        distances,
+        elevationGrades,
+        powerAnalysis,
+        hearts,
+      }),
+      Bucket: process.env.STORAGE_ROUTEFILES_BUCKETNAME,
+      Key: `public/${s3key}`,
+    };
 
-  try {
-    const s3res = await S3.putObject(s3Putparams).promise();
+    // Start timing for S3 putObject
+    operationStartTime = Date.now();
+    console.log(
+      "Starting S3 putObject to upload time series data at",
+      new Date(operationStartTime).toISOString()
+    );
+
+    try {
+      const s3res = await S3.putObject(s3Putparams).promise();
+    } catch (e) {
+      console.error("Error putting object to S3:", e);
+    }
+
+    operationEndTime = Date.now();
+    duration = operationEndTime - operationStartTime;
+    console.log(
+      "Finished S3 putObject at",
+      new Date(operationEndTime).toISOString(),
+      "Duration:",
+      duration,
+      "ms"
+    );
   } catch (e) {
-    console.error("Error putting object to S3:", e);
+    console.error("Error getting object from S3:", e);
   }
-
-  operationEndTime = Date.now();
-  duration = operationEndTime - operationStartTime;
-  console.log(
-    "Finished S3 putObject at",
-    new Date(operationEndTime).toISOString(),
-    "Duration:",
-    duration,
-    "ms"
-  );
 
   // Now prepare to update DynamoDB
 
@@ -465,11 +424,11 @@ exports.handler = async (event) => {
         resBody.data && resBody.data.getPost && resBody.data.getPost.stravaUrl
           ? resBody.data.getPost.stravaUrl
           : "",
-      ":timeSeriesFile": s3key,
+      ":timeSeriesFile": s3key ? s3key : "",
       ":distance":
         resBody.data && resBody.data.getPost && resBody.data.getPost.distance
           ? resBody.data.getPost.distance
-          : "",
+          : 0,
     },
     ReturnValues: "ALL_NEW",
   };
