@@ -531,6 +531,22 @@
         }
       ]
     },
+    "AMPLIFY_function_postUpdateCalc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postUpdateCalc"
+        }
+      ]
+    },
+    "AMPLIFY_function_postUpdateCalc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postUpdateCalc"
+        }
+      ]
+    },
     "AMPLIFY_function_processFitFile_deploymentBucketName": {
       "usedBy": [
         {

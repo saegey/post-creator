@@ -174,7 +174,7 @@ type Post
   # user: User @belongsTo(fields: ["userId"])
   # comments: [Comment] @hasMany
 
-  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
+  # owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
 }
 
 # type Comment @model {
