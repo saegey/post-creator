@@ -79,6 +79,8 @@ export const getServerSideProps: GetServerSideProps = async ({
 
     const parsedPost = parseJsonFields(post, [...jsonFields]);
 
+    console.log(parsedPost);
+
     return {
       props: {
         ...parsedPost,
