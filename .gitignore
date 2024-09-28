@@ -32,6 +32,18 @@ yarn-error.log*
 *.tsbuildinfo
 **.env
 
+
+src/ui-components
+playright/
+cypress/report/
+cypress/screenshots/
+**coverage/
+
+# amplify/backend/function/**/src/
+
+# Sentry Config File
+.env.sentry-build-plugin
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
@@ -53,11 +65,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-
-src/ui-components
-playright/
-cypress/report/
-cypress/screenshots/
-**coverage/
-
-# amplify/backend/function/**/src/

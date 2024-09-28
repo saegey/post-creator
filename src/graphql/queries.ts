@@ -90,11 +90,11 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -173,79 +173,6 @@ export const getPublishedPost =
     omniResults
     runSignupResults
     raceResultsProvider
-    # originalPostId
-    # originalPost {
-    #   type
-    #   id
-    #   title
-    #   gpxFile
-    #   images
-    #   headerImage
-    #   date
-    #   publishedDate
-    #   location
-    #   postLocation
-    #   stravaUrl
-    #   resultsUrl
-    #   timeSeriesFile
-    #   subType
-    #   teaser
-    #   currentFtp
-    #   components
-    #   powerAnalysis
-    #   blog {
-    #     id
-    #     name
-    #     owner
-    #     createdAt
-    #     updatedAt
-    #     __typename
-    #   }
-    #   related {
-    #     nextToken
-    #     __typename
-    #   }
-    #   author {
-    #     id
-    #     fullName
-    #     email
-    #     image
-    #     username
-    #     owner
-    #     createdAt
-    #     updatedAt
-    #     __typename
-    #   }
-    #   elevationTotal
-    #   normalizedPower
-    #   distance
-    #   heartAnalysis
-    #   cadenceAnalysis
-    #   tempAnalysis
-    #   elapsedTime
-    #   stoppedTime
-    #   timeInRed
-    #   powerZones
-    #   powerZoneBuckets
-    #   createdAt
-    #   heroImage
-    #   subhead
-    #   shortUrl
-    #   raceResults
-    #   webscorerResults
-    #   crossResults
-    #   omniResults
-    #   runSignupResults
-    #   raceResultsProvider
-    #   privacyStatus
-    #   owner
-    #   updatedAt
-    #   blogPostsId
-    #   postRelatedId
-    #   postAuthorId
-    #   __typename
-    # }
-    # owner
     _version
     _lastChangedAt
     updatedAt
@@ -304,55 +231,6 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       omniResults
       runSignupResults
       raceResultsProvider
-      originalPostId
-      originalPost {
-        type
-        id
-        title
-        gpxFile
-        images
-        headerImage
-        date
-        publishedDate
-        location
-        postLocation
-        stravaUrl
-        resultsUrl
-        timeSeriesFile
-        subType
-        teaser
-        currentFtp
-        components
-        powerAnalysis
-        elevationTotal
-        normalizedPower
-        distance
-        heartAnalysis
-        cadenceAnalysis
-        tempAnalysis
-        elapsedTime
-        stoppedTime
-        timeInRed
-        powerZones
-        powerZoneBuckets
-        createdAt
-        heroImage
-        subhead
-        shortUrl
-        raceResults
-        webscorerResults
-        crossResults
-        omniResults
-        runSignupResults
-        raceResultsProvider
-        privacyStatus
-        owner
-        updatedAt
-        blogPostsId
-        postRelatedId
-        postAuthorId
-        __typename
-      }
       owner
       _version
       _lastChangedAt
@@ -468,11 +346,11 @@ export const listPublishedPostsByCreatedAt =
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       owner
@@ -590,11 +468,11 @@ export const PublishedPostByOriginalPostId =
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       owner
@@ -686,11 +564,11 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -729,11 +607,11 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     runSignupResults
     raceResultsProvider
     privacyStatus
-    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
+    owner
     __typename
   }
 }
@@ -808,11 +686,11 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     nextToken
@@ -900,11 +778,11 @@ export const listPostsByCreatedAt = /* GraphQL */ `query ListPostsByCreatedAt(
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     nextToken

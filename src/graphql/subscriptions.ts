@@ -117,11 +117,11 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -186,11 +186,11 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -255,11 +255,11 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -385,11 +385,11 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     owner
@@ -514,11 +514,11 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     owner
@@ -643,11 +643,11 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     owner
@@ -739,11 +739,11 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -782,11 +782,11 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
-    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
+    owner
     __typename
   }
 }
@@ -871,11 +871,11 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -914,11 +914,11 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
-    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
+    owner
     __typename
   }
 }
@@ -1003,11 +1003,11 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -1046,11 +1046,11 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
-    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
+    owner
     __typename
   }
 }

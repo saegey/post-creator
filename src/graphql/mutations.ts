@@ -117,11 +117,11 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -186,11 +186,11 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -255,11 +255,11 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -385,11 +385,11 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     owner
@@ -514,11 +514,11 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     owner
@@ -643,11 +643,11 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
       runSignupResults
       raceResultsProvider
       privacyStatus
-      owner
       updatedAt
       blogPostsId
       postRelatedId
       postAuthorId
+      owner
       __typename
     }
     owner
@@ -739,11 +739,11 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -782,11 +782,11 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
-    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
+    owner
     __typename
   }
 }
@@ -871,11 +871,11 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
         runSignupResults
         raceResultsProvider
         privacyStatus
-        owner
         updatedAt
         blogPostsId
         postRelatedId
         postAuthorId
+        owner
         __typename
       }
       nextToken
@@ -914,11 +914,11 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     runSignupResults
     raceResultsProvider
     privacyStatus
-    owner
     updatedAt
     blogPostsId
     postRelatedId
     postAuthorId
+    owner
     __typename
   }
 }
@@ -933,125 +933,6 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
   deletePost(input: $input, condition: $condition) {
     type
     id
-    title
-    gpxFile
-    images
-    headerImage
-    date
-    publishedDate
-    location
-    postLocation
-    stravaUrl
-    resultsUrl
-    timeSeriesFile
-    subType
-    teaser
-    currentFtp
-    components
-    powerAnalysis
-    blog {
-      id
-      name
-      posts {
-        nextToken
-        __typename
-      }
-      owner
-      createdAt
-      updatedAt
-      __typename
-    }
-    related {
-      items {
-        type
-        id
-        title
-        gpxFile
-        images
-        headerImage
-        date
-        publishedDate
-        location
-        postLocation
-        stravaUrl
-        resultsUrl
-        timeSeriesFile
-        subType
-        teaser
-        currentFtp
-        components
-        powerAnalysis
-        elevationTotal
-        normalizedPower
-        distance
-        heartAnalysis
-        cadenceAnalysis
-        tempAnalysis
-        elapsedTime
-        stoppedTime
-        timeInRed
-        powerZones
-        powerZoneBuckets
-        createdAt
-        heroImage
-        subhead
-        shortUrl
-        raceResults
-        webscorerResults
-        crossResults
-        omniResults
-        runSignupResults
-        raceResultsProvider
-        privacyStatus
-        owner
-        updatedAt
-        blogPostsId
-        postRelatedId
-        postAuthorId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    author {
-      id
-      fullName
-      email
-      image
-      username
-      owner
-      createdAt
-      updatedAt
-      __typename
-    }
-    elevationTotal
-    normalizedPower
-    distance
-    heartAnalysis
-    cadenceAnalysis
-    tempAnalysis
-    elapsedTime
-    stoppedTime
-    timeInRed
-    powerZones
-    powerZoneBuckets
-    createdAt
-    heroImage
-    subhead
-    shortUrl
-    raceResults
-    webscorerResults
-    crossResults
-    omniResults
-    runSignupResults
-    raceResultsProvider
-    privacyStatus
-    owner
-    updatedAt
-    blogPostsId
-    postRelatedId
-    postAuthorId
-    __typename
   }
 }
 ` as GeneratedMutation<

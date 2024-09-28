@@ -157,8 +157,8 @@
           "additionalAuthenticationProviders": [
             {
               "apiKeyConfig": {
-                "apiKeyExpirationDate": "2023-09-09T16:25:52.986Z",
-                "apiKeyExpirationDays": 30,
+                "apiKeyExpirationDate": "2025-09-28T17:45:32.945Z",
+                "apiKeyExpirationDays": 365,
                 "description": "dev"
               },
               "authenticationType": "API_KEY"
@@ -499,6 +499,14 @@
         }
       ]
     },
+    "AMPLIFY_function_nextjsblog24b60079_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "nextjsblog24b60079"
+        }
+      ]
+    },
     "AMPLIFY_function_omniGoResults_deploymentBucketName": {
       "usedBy": [
         {
@@ -528,6 +536,22 @@
         {
           "category": "function",
           "resourceName": "omnigoCategories"
+        }
+      ]
+    },
+    "AMPLIFY_function_postUpdateCalc_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postUpdateCalc"
+        }
+      ]
+    },
+    "AMPLIFY_function_postUpdateCalc_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postUpdateCalc"
         }
       ]
     },
