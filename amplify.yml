@@ -5,6 +5,7 @@ backend:
       commands:
         - echo "Checking cache directory structure"
         - pwd
+        - amplify -v # Print out the Amplify CLI version to confirm
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
     build:
@@ -17,6 +18,7 @@ frontend:
       commands:
         - echo "Checking cache directory structure"
         - pwd
+        - amplify -v # Print out the Amplify CLI version to confirm
         # Install Node.js dependencies
         - npm ci
         # Export environment variables for production
@@ -30,10 +32,10 @@ frontend:
     files:
       - "**/*"
   cache:
-    paths: []
-  #     - node_modules/**/*
-  # - $HOME/go/**/*
-  # - /usr/local/go/**/*
+    paths:
+      - node_modules/**/*
+      - $HOME/go/**/*
+      - /usr/local/go/**/*
 test:
   phases:
     preTest:
