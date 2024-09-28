@@ -135,12 +135,12 @@ export const listMyPostsCustom = /* GraphQL */ `
         title
         createdAt
         images
-        author {
-          id
-          username
-          fullName
-          image
-        }
+        # author {
+        #   id
+        #   username
+        #   fullName
+        #   image
+        # }
         privacyStatus
         # postAuthorId
       }

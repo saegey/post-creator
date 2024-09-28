@@ -130,7 +130,8 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
   }
 }
 ` as GeneratedQuery<APITypes.ListBlogsQueryVariables, APITypes.ListBlogsQuery>;
-export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) {
+export const getPublishedPost =
+  /* GraphQL */ `query GetPublishedPost($id: ID!) {
   getPublishedPost(id: $id) {
     id
     title
@@ -172,79 +173,6 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
     omniResults
     runSignupResults
     raceResultsProvider
-    originalPostId
-    originalPost {
-      type
-      id
-      title
-      gpxFile
-      images
-      headerImage
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      timeSeriesFile
-      subType
-      teaser
-      currentFtp
-      components
-      powerAnalysis
-      blog {
-        id
-        name
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      related {
-        nextToken
-        __typename
-      }
-      author {
-        id
-        fullName
-        email
-        image
-        username
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      elevationTotal
-      normalizedPower
-      distance
-      heartAnalysis
-      cadenceAnalysis
-      tempAnalysis
-      elapsedTime
-      stoppedTime
-      timeInRed
-      powerZones
-      powerZoneBuckets
-      createdAt
-      heroImage
-      subhead
-      shortUrl
-      raceResults
-      webscorerResults
-      crossResults
-      omniResults
-      runSignupResults
-      raceResultsProvider
-      privacyStatus
-      updatedAt
-      blogPostsId
-      postRelatedId
-      postAuthorId
-      owner
-      __typename
-    }
-    owner
     _version
     _lastChangedAt
     updatedAt
@@ -253,9 +181,9 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetPublishedPostQueryVariables,
-  APITypes.GetPublishedPostQuery
->;
+    APITypes.GetPublishedPostQueryVariables,
+    APITypes.GetPublishedPostQuery
+  >;
 export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
   $filter: ModelPublishedPostFilterInput
   $limit: Int
@@ -303,55 +231,6 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       omniResults
       runSignupResults
       raceResultsProvider
-      originalPostId
-      originalPost {
-        type
-        id
-        title
-        gpxFile
-        images
-        headerImage
-        date
-        publishedDate
-        location
-        postLocation
-        stravaUrl
-        resultsUrl
-        timeSeriesFile
-        subType
-        teaser
-        currentFtp
-        components
-        powerAnalysis
-        elevationTotal
-        normalizedPower
-        distance
-        heartAnalysis
-        cadenceAnalysis
-        tempAnalysis
-        elapsedTime
-        stoppedTime
-        timeInRed
-        powerZones
-        powerZoneBuckets
-        createdAt
-        heroImage
-        subhead
-        shortUrl
-        raceResults
-        webscorerResults
-        crossResults
-        omniResults
-        runSignupResults
-        raceResultsProvider
-        privacyStatus
-        updatedAt
-        blogPostsId
-        postRelatedId
-        postAuthorId
-        owner
-        __typename
-      }
       owner
       _version
       _lastChangedAt
@@ -367,7 +246,8 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
   APITypes.ListPublishedPostsQueryVariables,
   APITypes.ListPublishedPostsQuery
 >;
-export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedPostsByCreatedAt(
+export const listPublishedPostsByCreatedAt =
+  /* GraphQL */ `query ListPublishedPostsByCreatedAt(
   $type: String!
   $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
@@ -485,10 +365,11 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListPublishedPostsByCreatedAtQueryVariables,
-  APITypes.ListPublishedPostsByCreatedAtQuery
->;
-export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostByOriginalPostId(
+    APITypes.ListPublishedPostsByCreatedAtQueryVariables,
+    APITypes.ListPublishedPostsByCreatedAtQuery
+  >;
+export const PublishedPostByOriginalPostId =
+  /* GraphQL */ `query PublishedPostByOriginalPostId(
   $originalPostId: String!
   $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
@@ -606,9 +487,9 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
   }
 }
 ` as GeneratedQuery<
-  APITypes.PublishedPostByOriginalPostIdQueryVariables,
-  APITypes.PublishedPostByOriginalPostIdQuery
->;
+    APITypes.PublishedPostByOriginalPostIdQueryVariables,
+    APITypes.PublishedPostByOriginalPostIdQuery
+  >;
 export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {
     type

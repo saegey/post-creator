@@ -27,6 +27,7 @@
     "@floating-ui/react": "^0.26.6",
     "@mux/mux-player-react": "^2.2.0",
     "@mux/mux-uploader-react": "^1.0.0-beta.13",
+    "@sentry/nextjs": "^8.32.0",
     "@slate-serializers/react": "^2.2.1",
     "@theme-ui/color": "^0.16.2",
     "@vitejs/plugin-react": "^4.3.1",

@@ -1,4 +1,57 @@
 {
+  "devadam": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nextjsblog-devadam-bd430-authRole",
+      "UnauthRoleArn": "arn:aws:iam::373376418880:role/amplify-nextjsblog-devadam-bd430-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::373376418880:role/amplify-nextjsblog-devadam-bd430-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-nextjsblog-devadam-bd430-deployment",
+      "UnauthRoleName": "amplify-nextjsblog-devadam-bd430-unauthRole",
+      "StackName": "amplify-nextjsblog-devadam-bd430",
+      "StackId": "arn:aws:cloudformation:us-east-1:373376418880:stack/amplify-nextjsblog-devadam-bd430/71d52000-7d16-11ef-8737-1227a5accc5b",
+      "AmplifyAppId": "d15noiwtuwwref"
+    },
+    "categories": {
+      "auth": {
+        "nextjsbloga585e058": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "nextjsblog24b60079": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        },
+        "S3Trigger71ba5706": {},
+        "UserPostConfirmation": {},
+        "crossresults": {},
+        "omniGoResults": {},
+        "omnigoCategories": {},
+        "processFitFile": {},
+        "processGpxFile": {},
+        "publishPost": {},
+        "raceresult": {},
+        "raceresultgetResults": {},
+        "requestResultsProvider": {},
+        "routeAccessPoint": {},
+        "runSignupResults": {},
+        "runsignupCategories": {},
+        "shorturl": {},
+        "videoUploadToAsset": {},
+        "videoUploadUrl": {},
+        "videoWebhook": {},
+        "webscorer": {},
+        "webscorerResults": {},
+        "nextjsblog": {},
+        "routeFiles": {},
+        "api12660653": {},
+        "dynamo1a552de1": {},
+        "nextjsbloga585e058": {}
+      },
+      "storage": {
+        "dynamo1a552de1": {},
+        "routeFiles": {}
+      }
+    }
+  },
   "prod": {
     "awscloudformation": {
       "AuthRoleName": "amplify-nextjsblog-prod-201134-authRole",
@@ -262,7 +315,8 @@
         },
         "nextjsblog24b60079": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/nextjsblog24b60079-4b36542f455162397654-build.zip"
+          "s3Key": "amplify-builds/nextjsblog24b60079-4b36542f455162397654-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
         },
         "postUpdateCalc": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
@@ -355,13 +409,6 @@
       "storage": {
         "dynamo1a552de1": {},
         "routeFiles": {}
-      }
-    }
-  },
-  "devadam": {
-    "categories": {
-      "auth": {
-        "nextjsbloga585e058": {}
       }
     }
   }
