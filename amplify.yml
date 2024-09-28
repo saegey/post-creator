@@ -6,6 +6,7 @@ backend:
         - echo "Checking cache directory structure"
         - pwd
         - amplify -v # Print out the Amplify CLI version to confirm
+        - amplify push --yes
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
         - printenv
@@ -27,6 +28,7 @@ frontend:
         - env | grep -e NEXT_PUBLIC_ >> .env.production
         - printenv
         - cat .env.production
+        - amplify push --yes
     build:
       commands:
         # Build the frontend application
