@@ -31,8 +31,11 @@ ENV GOMODCACHE="${GOPATH}/pkg/mod"
 RUN mkdir -p "${GOMODCACHE}"
 
 # Install global NPM packages
+
 RUN npm install -g rimraf copyfiles pm2 wait-on mocha \
 	mochawesome mochawesome-merge mochawesome-report-generator
+
+RUN npm install -g @aws-amplify/cli@12.12.1 && amplify -v
 
 # Set the working directory
 WORKDIR /app

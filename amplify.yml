@@ -4,7 +4,7 @@ backend:
     preBuild:
       commands:
         - echo "Checking cache directory structure"
-        - ls -la /custom/cache/path
+        - pwd
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
     build:
@@ -16,7 +16,7 @@ frontend:
     preBuild:
       commands:
         - echo "Checking cache directory structure"
-        - ls -la /custom/cache/path
+        - pwd
         # Install Node.js dependencies
         - npm ci
         # Export environment variables for production
@@ -29,8 +29,8 @@ frontend:
     baseDirectory: .next
     files:
       - "**/*"
-  # cache:
-  #   paths:
+  cache:
+    paths: []
   #     - node_modules/**/*
   # - $HOME/go/**/*
   # - /usr/local/go/**/*
