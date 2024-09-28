@@ -28,8 +28,8 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - $HOME/go/**/*
-      - /usr/local/go/**/*
+      # - $HOME/go/**/*
+      # - /usr/local/go/**/*
 test:
   phases:
     preTest:
