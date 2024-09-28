@@ -3,31 +3,23 @@ backend:
   phases:
     preBuild:
       commands:
-        # Check if Go is already cached, if not download and extract it
-        - if [ ! -d /usr/local/go ]; then wget https://dl.google.com/go/go1.22.5.linux-amd64.tar.gz && sudo tar -C /usr/local -xzf go1.22.5.linux-amd64.tar.gz; fi
-        - export PATH=$PATH:/usr/local/go/bin
-        - mkdir -p $HOME/go/pkg/mod # Create a custom module cache directory
-        - export GOPATH=$HOME/go # Set GOPATH to use the custom directory
-        - export GOMODCACHE=$GOPATH/pkg/mod # Set GOMODCACHE to the custom directory
-        - go env # Print Go environment to verify
+        # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
     build:
       commands:
-        # - npm run build
-        - npm install -g rimraf
-        - npm install -g copyfiles
-        - "# Execute Amplify CLI with the helper script"
+        # Push backend resources with Amplify CLI
         - amplifyPush --simple
 frontend:
   phases:
     preBuild:
       commands:
-        # - npm install -g rimraf
-        # - npm install -g copyfiles
+        # Install Node.js dependencies
         - npm ci
+        # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
     build:
       commands:
+        # Build the frontend application
         - npm run build
   artifacts:
     baseDirectory: .next
@@ -42,20 +34,23 @@ test:
   phases:
     preTest:
       commands:
+        # Install Node.js dependencies
         - npm ci
-        - npm install -g pm2
-        - npm install -g wait-on
-        - npm install mocha mochawesome mochawesome-merge mochawesome-report-generator
+        # Start the application using PM2
         - pm2 start npm -- start
+        # Wait for the application to be ready
         - wait-on http://localhost:3000
     test:
       commands:
-        # - "npm run test:ci"
-        - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"'
-        - 'npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss" --component'
+        # Run Cypress end-to-end tests
+        - npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss"
+        # Run Cypress component tests
+        - npx cypress run --reporter mochawesome --reporter-options "reportDir=cypress/report/mochawesome-report,overwrite=false,html=false,json=true,timestamp=mmddyyyy_HHMMss" --component
     postTest:
       commands:
+        # Merge test reports
         - npx mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/mochawesome.json
+        # Stop PM2 processes
         - pm2 kill
   artifacts:
     baseDirectory: cypress
