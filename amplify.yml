@@ -29,8 +29,6 @@ frontend:
         - env | grep -e NEXT_PUBLIC_ >> .env.production
         - printenv
         - cat .env.production
-        - echo "AMPLIFY_APP_ID: $AMPLIFY_BACKEND_APP_ID"
-        - echo "AMPLIFY_ENV: $USER_BRANCH"
         - amplify pull --appId $AMPLIFY_BACKEND_APP_ID --envName $USER_BRANCH --yes
     build:
       commands:
