@@ -8,6 +8,8 @@ backend:
         - amplify -v # Print out the Amplify CLI version to confirm
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
+        - printenv
+        - cat .env.production
     build:
       commands:
         # Push backend resources with Amplify CLI
@@ -23,6 +25,8 @@ frontend:
         - npm ci
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
+        - printenv
+        - cat .env.production
     build:
       commands:
         # Build the frontend application
