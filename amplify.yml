@@ -22,8 +22,6 @@ frontend:
         - if [ $(git diff HEAD~1 package-lock.json | wc -l) -gt 0 ]; then echo "package-lock.json changed, running npm ci"; npm ci; else echo "No changes in package-lock.json, skipping npm ci"; fi
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
-        # - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
-        # - echo "Amplify pull completed"
     build:
       commands:
         # Build the frontend application
@@ -75,3 +73,4 @@ test:
       - $HOME/go/**/*
       - /usr/local/go/**/*
       - .next/cache/**/* # Cache Next.js build artifacts
+      - /root/.cache/Cypress/**/*
