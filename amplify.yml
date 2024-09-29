@@ -11,7 +11,7 @@ backend:
         - env | grep -e NEXT_PUBLIC_ >> .env.production
         - printenv
         - cat .env.production
-        - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
+        # - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
         - echo "Amplify pull completed"
     build:
       commands:
@@ -29,7 +29,7 @@ frontend:
         - env | grep -e NEXT_PUBLIC_ >> .env.production
         - printenv
         - cat .env.production
-        - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
+        # - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
         - echo "Amplify pull completed"
     build:
       commands:
