@@ -28,17 +28,13 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   <Flex
     data-testid="toggle-switch"
     as="li"
-    sx={
-      {
-        // paddingLeft: "10px",
-        // backgroundColor: "red",
-        fontWeight: 500,
-        fontSize: "14px",
-        paddingY: "5px",
-        marginX: "5px",
-        marginY: "10px",
-      } as ThemeUIStyleObject<Theme>
-    }
+    sx={{
+      fontWeight: 500,
+      fontSize: "16px",
+      paddingY: "5px",
+      marginX: "5px",
+      marginY: "10px",
+    }}
     onClick={(e) => e.stopPropagation()}
   >
     <Flex sx={{ gap: "15px", height: "100%" }}>
@@ -55,22 +51,20 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         </IconButton>
       ) : null}
       <Flex sx={{ alignItems: "center" }}>
-        <Text as="span" variant="profileMenuText" sx={{ color: "textLight" }}>
+        <Text
+          as="span"
+          sx={{ color: "textLight", fontSize: ["16px", "14px", "14px"] }}
+        >
           {label}
         </Text>
       </Flex>
     </Flex>
-    <Box sx={{ marginLeft: "auto" } as ThemeUIStyleObject<Theme>}>
+    <Box sx={{ marginLeft: "auto" }}>
       <Switch
         checked={isChecked}
         onChange={onChange}
         sx={{
           backgroundColor: "surface",
-          // This will not be visible since the input is hidden
-          // '&:checked': {
-          //   backgroundColor: 'primary'
-          // },
-          // This will be visible
           "input:checked ~ &": {
             backgroundColor: darken("surface", 0.4),
           },

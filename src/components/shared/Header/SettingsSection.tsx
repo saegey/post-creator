@@ -71,12 +71,21 @@ const SettingsSection = () => {
             }
           }
         }}
-        sx={{ borderRadius: "10px", cursor: "pointer" }}
+        sx={{
+          borderRadius: ["10px", "10px", "10px"],
+          cursor: "pointer",
+          paddingX: ["10px", "3px", "12px"],
+          paddingY: ["3px", "3px", "6px"],
+        }}
       >
         <Flex sx={{ alignItems: "center", gap: "2px" }}>
           <IconButton
             as="div"
-            sx={{ width: "24px", height: "24px", color: "background" }}
+            sx={{
+              width: ["24px", "24px", "24px"],
+              height: ["24px", "24px", "24px"],
+              color: "background",
+            }}
           >
             {isPublishing ? (
               <Spinner sx={{ color: "background" }} />

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Link as ThemeLink, Text, Flex } from "theme-ui";
 import Link from "next/link";
+import Logo from "../icons/Logo";
 
 const LogoBlock = ({
   size,
@@ -11,31 +12,9 @@ const LogoBlock = ({
 }) => {
   return (
     <Flex sx={{ gap: "10px", alignItems: "center" }}>
-      <Box
-        sx={{
-          width: size === "small" ? "16px" : "20px",
-          height: size === "small" ? "16px" : "20px",
-          backgroundColor: inheritColor ? "currentColor" : "text",
-        }}
-      ></Box>
-      <ThemeLink
-        as={Link}
-        href="/"
-        sx={{
-          color: inheritColor ? "inherit" : "text",
-          textDecoration: "none",
-        }}
-      >
-        <Text
-          sx={{
-            fontSize: size === "small" ? "20px" : "22px",
-            fontWeight: "600",
-            letterSpacing: "-.5px",
-          }}
-        >
-          Monopad
-        </Text>
-      </ThemeLink>
+      <Box sx={{ color: "primary", width: "120px" }}>
+        <Logo />
+      </Box>
     </Flex>
   );
 };
