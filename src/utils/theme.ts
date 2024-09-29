@@ -294,7 +294,7 @@ export default {
     },
     profileMenuText: {
       color: "textLight",
-      fontSize: ["17px", "15px", "15px"],
+      fontSize: ["16px", "16px", "16px"],
     },
     profileMenuLink: {
       "&:hover": {
@@ -321,8 +321,10 @@ export default {
       backgroundColor: "text",
       width: "104px",
       // width: 104px;
+      borderColor: "text",
       display: "flex",
       alignItems: "center",
+      borderWidth: "1px",
       justifyContent: "center",
       color: "background",
       fontSize: "14px",
@@ -343,8 +345,11 @@ export default {
       backgroundColor: "secondary",
       borderColor: lighten("primary", 0.2),
       borderStyle: "solid",
+      paddingY: "6px",
+      paddingX: ["20px", "10px", "10px"],
       width: "104px",
       fontSize: "14px",
+      lineHeight: "20px",
       borderWidth: "1px",
       color: "text",
       fontWeight: "400",

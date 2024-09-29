@@ -3,6 +3,8 @@ import { Box, Flex, ThemeUIStyleObject, Theme, MenuButton } from "theme-ui";
 
 import { IUser } from "../../../types/common";
 import ProfileSection from "./ProfileSection";
+import Logo from "../../icons/Logo";
+import PublicMenu from "./PublicMenu";
 
 type HeaderLayoutProps = {
   user?: IUser;
@@ -14,37 +16,39 @@ const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
     <Box
       id="header"
       as="header"
-      sx={
-        {
-          width: "100vw",
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-          backgroundColor: "background",
-        } as ThemeUIStyleObject<Theme>
-      }
+      sx={{
+        width: "100vw",
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
+        backgroundColor: "background",
+      }}
     >
-      <Box
-        sx={
-          {
-            display: "flex",
-            flexDirection: "row",
-            padding: "10px",
-            borderBottomWidth: "1px",
-            borderBottomColor: "border",
-            borderBottomStyle: "solid",
-          } as ThemeUIStyleObject<Theme>
-        }
+      <Flex
+        sx={{
+          flexDirection: "row",
+          padding: "10px",
+          borderBottomWidth: "1px",
+          borderBottomColor: "border",
+          borderBottomStyle: "solid",
+          justifyContent: "center",
+        }}
       >
-        {user ? (
-          <ProfileSection />
-        ) : (
-          <MenuButton
-            sx={{ marginY: "auto", cursor: "pointer" }}
-            aria-label="Toggle Menu"
+        <Flex
+          sx={{
+            display: "inline-block",
+            width: "fit-content",
+            height: "fit-content",
+            justifyContent: "center",
+            paddingTop: "5px",
+          }}
+        >
+          <Logo
+            sx={{
+              width: ["100px", "120px", "120px"],
+            }}
           />
-        )}
-
+        </Flex>
         <Flex
           sx={
             {
@@ -56,8 +60,9 @@ const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
           }
         >
           {right}
+          {user ? <ProfileSection /> : <PublicMenu />}
         </Flex>
-      </Box>
+      </Flex>
     </Box>
   );
 };

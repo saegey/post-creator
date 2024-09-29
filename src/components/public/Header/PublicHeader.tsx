@@ -38,7 +38,7 @@ const PublicHeader = () => {
             alignContent: "center",
             justifyContent: "space-between",
             alignItems: "center",
-            marginY: "5px",
+            // marginTop: "5px",
             marginX: "20px",
             width: "calc(100% - 40px)",
             maxWidth: "1280px",

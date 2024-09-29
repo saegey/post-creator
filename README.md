@@ -73,6 +73,14 @@ npm run test
 npm run cypress:open
 ```
 
+## Updating Container
+
+```bash
+docker build -t monopad/editor .
+docker tag monopad/editor:latest public.ecr.aws/k9z6w6x3/monopad/editor:latest
+docker push public.ecr.aws/k9z6w6x3/monopad/editor:latest
+```
+
 ## Contribution Guidelines
 
 Contributions are welcome! Please follow the [Contributing Guidelines](https://github.com/nayafia/contributing-template) commonly used in popular open-source projects.

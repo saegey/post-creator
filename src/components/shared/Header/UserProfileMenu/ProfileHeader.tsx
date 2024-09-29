@@ -14,22 +14,34 @@ interface ProfileHeaderProps {
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onClose }) => {
   const { user } = React.useContext(UserContext);
   if (!user) {
-    return <></>;
+    return (
+      <>
+        <Close
+          data-testid="close-profile"
+          onClick={onClose}
+          sx={
+            {
+              display: ["inherit", "none", "none"],
+              backgroundColor: "background",
+              marginLeft: "auto",
+            } as ThemeUIStyleObject<Theme>
+          }
+        />
+      </>
+    );
   }
 
   return (
     <Flex
-      sx={
-        {
-          margin: ["10px", 0, 0],
-          padding: "10px",
-          borderBottomStyle: "solid",
-          borderBottomWidth: "1px",
-          borderBottomColor: "border",
-        } as ThemeUIStyleObject<Theme>
-      }
+      sx={{
+        marginY: ["10px", 0, 0],
+        paddingY: "10px",
+        borderBottomStyle: "solid",
+        borderBottomWidth: "1px",
+        borderBottomColor: "border",
+      }}
     >
-      <Flex sx={{ gap: "10px", width: "100%" } as ThemeUIStyleObject<Theme>}>
+      <Flex sx={{ gap: "10px", width: "100%" }}>
         <Box sx={{ width: "32px", height: "32px" }}>
           {user.attributes && user.attributes.picture ? (
             <CldImage
@@ -57,18 +69,20 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ onClose }) => {
           )}
         </Box>
         <Flex sx={{ flexDirection: "column", gap: "5px" }}>
-          <Text as="div" variant="profileMenuLink" sx={{ fontSize: "14px" }}>
+          <Text
+            as="div"
+            variant="profileMenuLink"
+            sx={{ fontSize: ["16px", "14px", "14px"] }}
+          >
             {user.attributes.name}
           </Text>
           <Text
             as="div"
-            sx={
-              {
-                lineHeight: "12px",
-                fontWeight: 700,
-                fontSize: "14px",
-              } as ThemeUIStyleObject<Theme>
-            }
+            sx={{
+              lineHeight: "12px",
+              fontWeight: 700,
+              fontSize: ["16px", "14px", "14px"],
+            }}
             variant="profileMenuLink"
           >
             {user.attributes.preferred_username}
