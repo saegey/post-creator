@@ -18,7 +18,7 @@ jobs:
           node-version: "18"
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
       - name: Install Amplify CLI
         run: npm install -g @aws-amplify/cli
