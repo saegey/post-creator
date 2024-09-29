@@ -11,7 +11,7 @@ backend:
         - env | grep -e NEXT_PUBLIC_ >> .env.production
         - printenv
         - cat .env.production
-        - amplify pull --appId $AMPLIFY_BACKEND_APP_ID --envName $USER_BRANCH --yes
+        - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
     build:
       commands:
         # Push backend resources with Amplify CLI
@@ -29,7 +29,7 @@ frontend:
         - env | grep -e NEXT_PUBLIC_ >> .env.production
         - printenv
         - cat .env.production
-        - amplify pull --appId $AMPLIFY_BACKEND_APP_ID --envName $USER_BRANCH --yes
+        - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
     build:
       commands:
         # Build the frontend application
