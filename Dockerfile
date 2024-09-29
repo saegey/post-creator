@@ -4,6 +4,8 @@ FROM public.ecr.aws/amazonlinux/amazonlinux:2023.5.20240916.0
 # Install necessary dependencies
 RUN dnf update -y && dnf install -y wget tar gzip xz git openssh bash shadow-utils util-linux
 
+RUN dnf install -y gtk3 libnotify libX11 libxshmfence libXcomposite libXdamage libXi libXtst nss atk pango cairo libXrandr alsa-lib Xvfb mesa-libgbm
+
 # Install NVM (Node Version Manager)
 ENV NVM_DIR=/root/.nvm
 ENV NODE_VERSION=18.18.0

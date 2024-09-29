@@ -3,13 +3,7 @@ backend:
   phases:
     preBuild:
       commands:
-        - echo "Checking cache directory structure"
-        - pwd
-        # - amplify -v # Print out the Amplify CLI version to confirm
-        # - amplify push --yes
-        # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
-        - printenv
         - cat .env.production
         - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
         - echo "Amplify pull completed"
@@ -21,14 +15,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - echo "Checking cache directory structure"
-        - pwd
         # Install Node.js dependencies
         - npm ci
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
-        - printenv
-        - cat .env.production
         - amplify pull --appId $AWS_APP_ID --envName $USER_BRANCH --yes
         - echo "Amplify pull completed"
     build:
