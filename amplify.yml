@@ -16,7 +16,8 @@ frontend:
     preBuild:
       commands:
         # Install Node.js dependencies
-        - if [ $(git diff HEAD~1 package-lock.json | wc -l) -gt 0 ]; then echo "package-lock.json changed, running npm ci"; npm ci; else echo "No changes in package-lock.json, skipping npm ci"; fi
+        - npm run ci
+        # - if [ $(git diff HEAD~1 package-lock.json | wc -l) -gt 0 ]; then echo "package-lock.json changed, running npm ci"; npm ci; else echo "No changes in package-lock.json, skipping npm ci"; fi
         # Export environment variables for production
         - env | grep -e NEXT_PUBLIC_ >> .env.production
     build:
