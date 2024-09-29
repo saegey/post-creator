@@ -15,6 +15,9 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "Before npm ci - checking cache paths"
+        - pwd
+        - ls -la node_modules
         # Install Node.js dependencies
         - if [ $(git diff HEAD~1 package-lock.json | wc -l) -gt 0 ]; then echo "package-lock.json changed, running npm ci"; npm ci; else echo "No changes in package-lock.json, skipping npm ci"; fi
         # Export environment variables for production
@@ -25,6 +28,8 @@ frontend:
       commands:
         # Build the frontend application
         - npm run build
+        - echo "After npm ci - checking node_modules cache"
+        - ls -la node_modules
   artifacts:
     baseDirectory: .next
     files:
@@ -40,7 +45,7 @@ test:
     preTest:
       commands:
         # Install Node.js dependencies
-        - npm ci
+        - if [ $(git diff HEAD~1 package-lock.json | wc -l) -gt 0 ]; then echo "package-lock.json changed, running npm ci"; npm ci; else echo "No changes in package-lock.json, skipping npm ci"; fi
         # Start the application using PM2
         - pm2 start npm -- start
         # Wait for the application to be ready
@@ -66,3 +71,7 @@ test:
   cache:
     paths:
       - cypress/report/mochawesome-report/*.json
+      - node_modules/**/*
+      - $HOME/go/**/*
+      - /usr/local/go/**/*
+      - .next/cache/**/* # Cache Next.js build artifacts
