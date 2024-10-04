@@ -1,7 +1,7 @@
 import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
 const BoldIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => (
-  <IconButton sx={sx}>
+  <IconButton title={"Bold"} sx={sx}>
     <svg
       fill="currentcolor"
       width="100%"
