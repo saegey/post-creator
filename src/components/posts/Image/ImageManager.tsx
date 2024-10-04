@@ -56,7 +56,8 @@ const ImageManager = () => {
         setIsOpen={setIsChangeImageModalOpen}
         isOpen={isChangeImageModalOpen}
         topRight={
-          <IconButton
+          <Button
+            variant="primaryButton"
             onClick={() => {
               setIsHeroImageModalOpen(true);
             }}
@@ -68,8 +69,8 @@ const ImageManager = () => {
               marginBottom: "5px",
             }}
           >
-            <UploadIcon />
-          </IconButton>
+            Upload
+          </Button>
         }
         heading={
           <Flex sx={{ flexDirection: "row" }}>
@@ -225,7 +226,7 @@ const ImageManager = () => {
                       id: id,
                     },
                   },
-                })) as GraphQLResult<UpdatePostMutation>;
+                }))  as GraphQLResult<UpdatePostMutation>;
               } catch (errors) {
                 console.error(errors);
               }
