@@ -321,82 +321,8 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
     runSignupResults
     raceResultsProvider
     originalPostId
-    originalPost {
-      type
-      id
-      title
-      gpxFile
-      images
-      headerImage
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      timeSeriesFile
-      subType
-      teaser
-      currentFtp
-      components
-      powerAnalysis
-      blog {
-        id
-        name
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      related {
-        nextToken
-        __typename
-      }
-      author {
-        id
-        fullName
-        email
-        image
-        username
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      elevationTotal
-      normalizedPower
-      distance
-      heartAnalysis
-      cadenceAnalysis
-      tempAnalysis
-      elapsedTime
-      stoppedTime
-      timeInRed
-      powerZones
-      powerZoneBuckets
-      createdAt
-      heroImage
-      subhead
-      shortUrl
-      raceResults
-      webscorerResults
-      crossResults
-      omniResults
-      runSignupResults
-      raceResultsProvider
-      privacyStatus
-      updatedAt
-      blogPostsId
-      postRelatedId
-      postAuthorId
-      owner
-      __typename
-    }
-    owner
-    _version
-    _lastChangedAt
     updatedAt
-    publishedPostOriginalPostId
+    owner
     __typename
   }
 }
@@ -450,82 +376,8 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
     runSignupResults
     raceResultsProvider
     originalPostId
-    originalPost {
-      type
-      id
-      title
-      gpxFile
-      images
-      headerImage
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      timeSeriesFile
-      subType
-      teaser
-      currentFtp
-      components
-      powerAnalysis
-      blog {
-        id
-        name
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      related {
-        nextToken
-        __typename
-      }
-      author {
-        id
-        fullName
-        email
-        image
-        username
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      elevationTotal
-      normalizedPower
-      distance
-      heartAnalysis
-      cadenceAnalysis
-      tempAnalysis
-      elapsedTime
-      stoppedTime
-      timeInRed
-      powerZones
-      powerZoneBuckets
-      createdAt
-      heroImage
-      subhead
-      shortUrl
-      raceResults
-      webscorerResults
-      crossResults
-      omniResults
-      runSignupResults
-      raceResultsProvider
-      privacyStatus
-      updatedAt
-      blogPostsId
-      postRelatedId
-      postAuthorId
-      owner
-      __typename
-    }
-    owner
-    _version
-    _lastChangedAt
     updatedAt
-    publishedPostOriginalPostId
+    owner
     __typename
   }
 }
@@ -579,82 +431,8 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
     runSignupResults
     raceResultsProvider
     originalPostId
-    originalPost {
-      type
-      id
-      title
-      gpxFile
-      images
-      headerImage
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      timeSeriesFile
-      subType
-      teaser
-      currentFtp
-      components
-      powerAnalysis
-      blog {
-        id
-        name
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      related {
-        nextToken
-        __typename
-      }
-      author {
-        id
-        fullName
-        email
-        image
-        username
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      elevationTotal
-      normalizedPower
-      distance
-      heartAnalysis
-      cadenceAnalysis
-      tempAnalysis
-      elapsedTime
-      stoppedTime
-      timeInRed
-      powerZones
-      powerZoneBuckets
-      createdAt
-      heroImage
-      subhead
-      shortUrl
-      raceResults
-      webscorerResults
-      crossResults
-      omniResults
-      runSignupResults
-      raceResultsProvider
-      privacyStatus
-      updatedAt
-      blogPostsId
-      postRelatedId
-      postAuthorId
-      owner
-      __typename
-    }
-    owner
-    _version
-    _lastChangedAt
     updatedAt
-    publishedPostOriginalPostId
+    owner
     __typename
   }
 }

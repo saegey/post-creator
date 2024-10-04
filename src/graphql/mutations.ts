@@ -321,82 +321,8 @@ export const createPublishedPost = /* GraphQL */ `mutation CreatePublishedPost(
     runSignupResults
     raceResultsProvider
     originalPostId
-    originalPost {
-      type
-      id
-      title
-      gpxFile
-      images
-      headerImage
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      timeSeriesFile
-      subType
-      teaser
-      currentFtp
-      components
-      powerAnalysis
-      blog {
-        id
-        name
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      related {
-        nextToken
-        __typename
-      }
-      author {
-        id
-        fullName
-        email
-        image
-        username
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      elevationTotal
-      normalizedPower
-      distance
-      heartAnalysis
-      cadenceAnalysis
-      tempAnalysis
-      elapsedTime
-      stoppedTime
-      timeInRed
-      powerZones
-      powerZoneBuckets
-      createdAt
-      heroImage
-      subhead
-      shortUrl
-      raceResults
-      webscorerResults
-      crossResults
-      omniResults
-      runSignupResults
-      raceResultsProvider
-      privacyStatus
-      updatedAt
-      blogPostsId
-      postRelatedId
-      postAuthorId
-      owner
-      __typename
-    }
-    owner
-    _version
-    _lastChangedAt
     updatedAt
-    publishedPostOriginalPostId
+    owner
     __typename
   }
 }
@@ -450,82 +376,8 @@ export const updatePublishedPost = /* GraphQL */ `mutation UpdatePublishedPost(
     runSignupResults
     raceResultsProvider
     originalPostId
-    originalPost {
-      type
-      id
-      title
-      gpxFile
-      images
-      headerImage
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      timeSeriesFile
-      subType
-      teaser
-      currentFtp
-      components
-      powerAnalysis
-      blog {
-        id
-        name
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      related {
-        nextToken
-        __typename
-      }
-      author {
-        id
-        fullName
-        email
-        image
-        username
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      elevationTotal
-      normalizedPower
-      distance
-      heartAnalysis
-      cadenceAnalysis
-      tempAnalysis
-      elapsedTime
-      stoppedTime
-      timeInRed
-      powerZones
-      powerZoneBuckets
-      createdAt
-      heroImage
-      subhead
-      shortUrl
-      raceResults
-      webscorerResults
-      crossResults
-      omniResults
-      runSignupResults
-      raceResultsProvider
-      privacyStatus
-      updatedAt
-      blogPostsId
-      postRelatedId
-      postAuthorId
-      owner
-      __typename
-    }
-    owner
-    _version
-    _lastChangedAt
     updatedAt
-    publishedPostOriginalPostId
+    owner
     __typename
   }
 }
@@ -578,84 +430,6 @@ export const deletePublishedPost = /* GraphQL */ `mutation DeletePublishedPost(
     omniResults
     runSignupResults
     raceResultsProvider
-    originalPostId
-    originalPost {
-      type
-      id
-      title
-      gpxFile
-      images
-      headerImage
-      date
-      publishedDate
-      location
-      postLocation
-      stravaUrl
-      resultsUrl
-      timeSeriesFile
-      subType
-      teaser
-      currentFtp
-      components
-      powerAnalysis
-      blog {
-        id
-        name
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      related {
-        nextToken
-        __typename
-      }
-      author {
-        id
-        fullName
-        email
-        image
-        username
-        owner
-        createdAt
-        updatedAt
-        __typename
-      }
-      elevationTotal
-      normalizedPower
-      distance
-      heartAnalysis
-      cadenceAnalysis
-      tempAnalysis
-      elapsedTime
-      stoppedTime
-      timeInRed
-      powerZones
-      powerZoneBuckets
-      createdAt
-      heroImage
-      subhead
-      shortUrl
-      raceResults
-      webscorerResults
-      crossResults
-      omniResults
-      runSignupResults
-      raceResultsProvider
-      privacyStatus
-      updatedAt
-      blogPostsId
-      postRelatedId
-      postAuthorId
-      owner
-      __typename
-    }
-    owner
-    _version
-    _lastChangedAt
-    updatedAt
-    publishedPostOriginalPostId
-    __typename
   }
 }
 ` as GeneratedMutation<
@@ -933,6 +707,50 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
   deletePost(input: $input, condition: $condition) {
     type
     id
+    title
+    gpxFile
+    images
+    headerImage
+    date
+    publishedDate
+    location
+    postLocation
+    stravaUrl
+    resultsUrl
+    timeSeriesFile
+    subType
+    teaser
+    currentFtp
+    components
+    powerAnalysis
+    elevationTotal
+    normalizedPower
+    distance
+    heartAnalysis
+    cadenceAnalysis
+    tempAnalysis
+    elapsedTime
+    stoppedTime
+    timeInRed
+    powerZones
+    powerZoneBuckets
+    createdAt
+    heroImage
+    subhead
+    shortUrl
+    raceResults
+    webscorerResults
+    crossResults
+    omniResults
+    runSignupResults
+    raceResultsProvider
+    privacyStatus
+    updatedAt
+    blogPostsId
+    postRelatedId
+    postAuthorId
+    owner
+    __typename
   }
 }
 ` as GeneratedMutation<

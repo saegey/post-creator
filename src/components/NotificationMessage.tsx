@@ -16,6 +16,7 @@ const NotificationMessage = () => {
       sx={{
         position: "absolute",
         width: "100%",
+        top: 0,
         marginTop: ["", "5px", "5px"],
         flexGrow: 1,
         justifyContent: "center",

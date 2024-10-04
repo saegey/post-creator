@@ -9,8 +9,7 @@ import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import RegisterForm from "../src/components/auth/RegisterForm";
 import VerifyAccountForm from "../src/components/auth/VerifyAccountForm";
 import AuthLink from "../src/components/auth/AuthLink";
-import { registerUser, verifyUser } from "../src/utils/authActions"; // Import from centralized actions
-import FavIcon from "../src/components/shared/FavIcon";
+import { registerUser, verifyUser } from "../src/utils/authActions";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = React.useState<string>();
@@ -77,13 +76,10 @@ const RegisterPage: React.FC = () => {
     console.error("Error:", error);
   };
 
-  console.log("RegisterPage");
-
   return (
     <>
       <Head>
         <title>Monopad - Create account</title>
-        <FavIcon />
       </Head>
       <Flex
         sx={{
@@ -91,8 +87,10 @@ const RegisterPage: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          height: ["fit-content", "100dvh", "100dvh"],
+          minHeight: ["100dvh", "100dvh", "100dvh"],
           overflow: ["scroll", "", ""],
+          width: "100%",
+          padding: ["20px", "0", "0"],
           backgroundColor: "backgroundDark",
         }}
       >

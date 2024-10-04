@@ -10,7 +10,11 @@ type AuthButtonProps = {
 const AuthButton: React.FC<AuthButtonProps> = ({ children, ...props }) => {
   return (
     <Button
-      sx={{ fontSize: "15px", fontWeight: "500" }}
+      sx={{
+        fontSize: "15px",
+        fontWeight: "500",
+        width: ["100%", "104px", "104px"],
+      }}
       variant="primaryButton"
       {...props}
     >

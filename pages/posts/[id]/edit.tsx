@@ -5,7 +5,6 @@ import { PostContext } from "../../../src/components/PostContext";
 import EditUserPost from "../../../src/components/posts/Editor/EditUserPost";
 import { PostType, PostContextType } from "../../../src/types/common";
 import { fetchUserAndPost } from "../../../src/utils/fetchUserAndPost";
-import FavIcon from "../../../src/components/shared/FavIcon";
 
 type ServerSideProps = {
   req: object;
@@ -41,8 +40,9 @@ const Post = ({ user, postRaw, errorCode }: PostType) => {
   return (
     <PostContext.Provider value={post}>
       <Head>
-        <title>{post.title}</title>
-        <FavIcon />
+        <title>
+          {post.title ? `Monopad - ${post.title}` : "Monopad - Draft"}
+        </title>
       </Head>
       <EditUserPost user={user} />
     </PostContext.Provider>

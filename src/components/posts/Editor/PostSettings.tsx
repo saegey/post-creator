@@ -17,15 +17,18 @@ import Router from "next/router";
 
 import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
-import { DeletePostMutation } from "../../../../src/API";
+import {
+  DeletePostMutation,
+  DeletePublishedPostMutation,
+} from "../../../../src/API";
 import StandardModal from "../../shared/StandardModal";
 import UploadButton from "./PostMenu/buttons/UploadButton";
 import {
   updatePostSettings,
   UpdatePostSettingsMutation,
 } from "../../../graphql/customMutations";
-import { deletePost } from "../../../graphql/mutations";
 import DeleteIcon from "../../icons/DeleteIcon";
+import { deletePost, deletePublishedPost } from "../../../graphql/mutations";
 
 const PostSettings = () => {
   const { id, currentFtp, title, postLocation, date, subhead, setPost } =
@@ -45,11 +48,22 @@ const PostSettings = () => {
             id: id,
           },
         },
+        query: deletePublishedPost,
+      })) as GraphQLResult<DeletePublishedPostMutation>;
+
+      (await API.graphql({
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+        variables: {
+          input: {
+            id: id,
+          },
+        },
         query: deletePost,
       })) as GraphQLResult<DeletePostMutation>;
+
       Router.push(`/posts`);
     } catch (errors) {
-      console.error(errors);
+      console.error(JSON.stringify(errors));
     }
   };
 
