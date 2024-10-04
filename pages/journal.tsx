@@ -4,17 +4,7 @@ import { Box, Button, Flex, Text } from "theme-ui";
 
 import PublicHeader from "../src/components/public/Header/PublicHeader";
 import PublicFooter from "../src/components/public/Footer/Footer";
-import FavIcon from "../src/components/shared/FavIcon";
 import FeatureHiglight from "../src/components/public/FeatureHighlight";
-import ResultsIcon from "../src/components/icons/ResultsIcon";
-import PowerGraphIcon from "../src/components/icons/PowerGraphIcon";
-import VideoIcon from "../src/components/icons/VideoIcon";
-import TimePowerZonesIcon from "../src/components/icons/TimePowerZonesIcon";
-import ActivityOverviewIcon from "../src/components/icons/ActivityOverviewIcon";
-import StravaIcon from "../src/components/icons/StravaIcon";
-import AvatarIcon from "../src/components/icons/AvatarIcon";
-import HeroBannerIcon from "../src/components/icons/HeroBannerIcon";
-import EyeIcon from "../src/components/icons/EyeIcon";
 import VideoModal from "../src/components/VideoModal";
 import ForwardIcon from "../src/components/icons/ForwardIcon";
 
@@ -25,7 +15,6 @@ const Journal = () => {
     <>
       <Head>
         <title>Monopad - Journal</title>
-        <FavIcon />
       </Head>
 
       <VideoModal isOpen={isDemoVideo} setIsOpen={setIsDemoVideo} />
@@ -60,7 +49,6 @@ const Journal = () => {
                 textAlign: "center",
               }}
             >
-              {/* Track, Trek, Triumph: Your Journey, Your Journal.. */}
               Monopad Journal
             </Text>
             <Text
@@ -69,8 +57,6 @@ const Journal = () => {
                 marginBottom: "20px",
                 lineHeight: ["24px", "27px", "27px"],
                 fontSize: ["16px", "18px", "18px"],
-                // fontStyle: "italic",
-                // textAlign: "center",
               }}
             >
               Effortlessly craft a comprehensive bike race recap within minutes.
@@ -98,13 +84,10 @@ const Journal = () => {
         </Box>
         <Flex
           sx={{
-            // height: ["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh)"],
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "background",
-            // zIndex: 1,
             position: "relative",
-
             marginBottom: "50px",
           }}
         >
@@ -112,8 +95,6 @@ const Journal = () => {
             sx={{
               justifyItems: "center",
               flexDirection: "column",
-              // width: "100%",
-              // alignItems: "center",
             }}
           >
             <Box sx={{ marginTop: ["80px", "0px", "0px"] }}>

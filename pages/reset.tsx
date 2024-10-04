@@ -11,7 +11,6 @@ import Head from "next/head";
 import LogoBlock from "../src/components/public/LogoBlock";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import AuthLink from "../src/components/auth/AuthLink";
-import FavIcon from "../src/components/shared/FavIcon";
 
 const Reset: React.FC = () => {
   const [isSubmit, setIsSubmit] = useState(false);
@@ -48,8 +47,7 @@ const Reset: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Forgot Password?</title>
-        <FavIcon />
+        <title>Monopad - Forgot Password?</title>
       </Head>
       <Flex
         sx={{

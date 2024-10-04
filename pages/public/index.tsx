@@ -7,7 +7,6 @@ import { lighten } from "@theme-ui/color";
 import PublicHeader from "../../src/components/public/Header/PublicHeader";
 import PublicFooter from "../../src/components/public/Footer/Footer";
 import FeatureHiglight from "../../src/components/public/FeatureHighlight";
-import FavIcon from "../../src/components/shared/FavIcon";
 import VideoModal from "../../src/components/VideoModal";
 import ForwardIcon from "../../src/components/icons/ForwardIcon";
 
@@ -17,7 +16,6 @@ const Home = () => {
     <>
       <Head>
         <title>Monopad - Home</title>
-        <FavIcon />
       </Head>
 
       <VideoModal isOpen={isDemoVideo} setIsOpen={setIsDemoVideo} />
@@ -159,6 +157,7 @@ const Home = () => {
         </Flex>
         <Box sx={{ marginTop: ["80px", "0px", "0px"] }}>
           <FeatureHiglight
+            key={`feature-1`}
             featureName="Activity Analytics"
             imagePath="/RaceResults-4.png"
             headline={<>Explore insightful analytics</>}
@@ -206,6 +205,7 @@ const Home = () => {
             ]}
           />
           <FeatureHiglight
+            key={`feature-2`}
             featureName="Race Results"
             imagePath="/RaceResults-7.png"
             subHeadline={
@@ -260,6 +260,7 @@ const Home = () => {
             ]}
           />
           <FeatureHiglight
+            key={`feature-3`}
             featureName="Journal Sharing"
             imagePath="https://placehold.co/800x800"
             subHeadline={

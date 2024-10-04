@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Flex, Link as ThemeLink, Text, Label, Box } from "theme-ui";
+import { Flex, Link as ThemeLink, Box } from "theme-ui";
 import Link from "next/link";
 import Router from "next/router";
 
@@ -7,13 +7,10 @@ import AuthInput from "../src/components/auth/AuthInput";
 import AuthButton from "../src/components/auth/AuthButton";
 import { NotificationContext } from "../src/components/NotificationContext";
 import { loginUser } from "../src/utils/authActions";
-import EyeIcon from "../src/components/icons/EyeIcon";
-import EyeHideIcon from "../src/components/icons/EyeHideIcon";
 import AuthLink from "../src/components/auth/AuthLink";
 import Head from "next/head";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import LogoBlock from "../src/components/public/LogoBlock";
-import FavIcon from "../src/components/shared/FavIcon";
 
 const LoginPage: React.FC = () => {
   const { setNotification } = useContext(NotificationContext);
@@ -60,7 +57,6 @@ const LoginPage: React.FC = () => {
     <>
       <Head>
         <title>Monopad - Sign In</title>
-        <FavIcon />
       </Head>
       <Flex
         sx={{

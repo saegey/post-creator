@@ -9,7 +9,6 @@ import PublicFooter from "../src/components/public/Footer/Footer";
 import AboutUs from "../src/components/public/About";
 import Team from "../src/components/public/Team";
 import Timeline from "../src/components/public/Timeline";
-import FavIcon from "../src/components/shared/FavIcon";
 
 const About = () => {
   const { query } = useRouter();
@@ -23,7 +22,6 @@ const About = () => {
     <>
       <Head>
         <title>Monopad - About</title>
-        <FavIcon />
       </Head>
 
       <Box
