@@ -19,18 +19,24 @@ const AuthLink = ({
         borderWidth: "1px",
         borderStyle: "solid",
         borderRadius: "5px",
-        // maxWidth: "400px",
         maxWidth: ["100%", "400px", "400px"],
         width: ["100%", "400px", "400px"],
-        // width: ["calc(100% - 40px)", "400px", "400px"],
-        // margin: "20px",
         padding: "20px",
         gap: "10px",
         backgroundColor: "background",
+        alignItems: "center", // Ensure vertical alignment
       }}
     >
-      <Text sx={{ fontWeight: "400", fontSize: "15px" }}>
-        {/* Already have an account? */}
+      <Text
+        sx={{
+          fontWeight: "400",
+          fontSize: ["14px", "15px", "15px"],
+          flexGrow: 1, // Allows it to take up remaining space
+          overflow: "hidden", // Prevents overflow
+          whiteSpace: "nowrap", // Prevents text from wrapping
+          textOverflow: "ellipsis", // Adds ellipsis if needed
+        }}
+      >
         {text}
       </Text>
       <ThemeLink
@@ -40,9 +46,18 @@ const AuthLink = ({
           textDecoration: "none",
           color: "text",
           "&:hover": { textDecoration: "underline" },
+          flexShrink: 0, // Prevents shrinking of the link
         }}
       >
-        <Text sx={{ fontSize: "16px", fontWeight: "600" }}>{linkText}</Text>
+        <Text
+          sx={{
+            fontSize: ["14px", "15px", "15px"],
+            fontWeight: "600",
+            whiteSpace: "nowrap", // Prevents wrapping of the link text
+          }}
+        >
+          {linkText}
+        </Text>
       </ThemeLink>
     </Flex>
   );

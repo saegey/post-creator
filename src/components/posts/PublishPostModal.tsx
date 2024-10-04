@@ -147,10 +147,16 @@ const PublishPostModal = () => {
                     onClick={handleCopyClick}
                   >
                     <Flex sx={{ gap: "5px", alignItems: "center" }}>
-                      <IconButton sx={{ width: "25px", height: "25px" }}>
+                      <IconButton
+                        sx={{
+                          width: "25px",
+                          height: "25px",
+                          color: "secondary",
+                        }}
+                      >
                         <CopyIcon />
                       </IconButton>
-                      <Text>Copy Link</Text>
+                      <Text sx={{ color: "secondary" }}>Copy Link</Text>
                     </Flex>
                   </Button>
                 </Flex>

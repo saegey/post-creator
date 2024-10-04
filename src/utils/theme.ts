@@ -320,7 +320,6 @@ export default {
     primaryButton: {
       backgroundColor: "text",
       width: "104px",
-      // width: 104px;
       borderColor: "text",
       display: "flex",
       alignItems: "center",
@@ -386,7 +385,7 @@ export default {
       },
       color: "inputText",
       backgroundColor: "inputBackground",
-      fontSize: "16px",
+      fontSize: ["15px", "16px", "16px"],
       padding: "10px",
     },
     errorInput: {
@@ -400,7 +399,7 @@ export default {
       padding: "10px",
     },
     defaultLabel: {
-      fontSize: "15px",
+      fontSize: ["14px", "15px", "15px"],
       marginBottom: "5px",
       display: "block",
       width: "unset",

@@ -75,7 +75,7 @@ const LoginPage: React.FC = () => {
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
-            height: ["fit-content", "100dvh", "100dvh"],
+            minHeight: ["100dvh", "100dvh", "100dvh"],
             overflow: ["scroll", "", ""],
             width: "100%",
             padding: ["20px", "0", "0"],

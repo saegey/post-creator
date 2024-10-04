@@ -399,7 +399,7 @@
         },
         "processFitFile": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/processFitFile-4c6b6c78305143687964-build.zip"
+          "s3Key": "amplify-builds/processFitFile-4266714c626d67545254-build.zip"
         }
       },
       "api": {

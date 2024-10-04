@@ -62,7 +62,7 @@ const PublicHeader = () => {
           display: ["flex", "flex", "none"],
         }}
       >
-        <LogoBlock size="small" />
+        <LogoBlock />
         <MenuToggle isMenuOpen={isMenuOpen} toggleMenu={setIsMenuOpen} />
       </Flex>
 
