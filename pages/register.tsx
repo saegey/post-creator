@@ -10,7 +10,6 @@ import RegisterForm from "../src/components/auth/RegisterForm";
 import VerifyAccountForm from "../src/components/auth/VerifyAccountForm";
 import AuthLink from "../src/components/auth/AuthLink";
 import { registerUser, verifyUser } from "../src/utils/authActions";
-import FavIcon from "../src/components/shared/FavIcon";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = React.useState<string>();
@@ -81,7 +80,6 @@ const RegisterPage: React.FC = () => {
     <>
       <Head>
         <title>Monopad - Create account</title>
-        <FavIcon />
       </Head>
       <Flex
         sx={{

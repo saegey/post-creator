@@ -24,7 +24,7 @@ type Props = {
 
 // https://claritydev.net/blog/nextjs-blog-remark-interactive-table-of-contents
 
-export default function Post({ post, morePosts, preview, imageSizes }: Props) {
+export default function Post({ post, imageSizes }: Props) {
   const router = useRouter();
 
   if (!router.isFallback && !post?.slug) {
@@ -35,7 +35,6 @@ export default function Post({ post, morePosts, preview, imageSizes }: Props) {
     <>
       <Head>
         <title>{post.title}</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <BlogPostLayout>

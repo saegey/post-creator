@@ -6,7 +6,6 @@ import { GraphQLResult } from "@aws-amplify/api";
 import { GetServerSideProps } from "next";
 
 import { IUser, Post, PostContextType } from "../../src/types/common";
-import FavIcon from "../../src/components/shared/FavIcon";
 import { GetPublishedPostQuery } from "../../src/API";
 import { parseJsonFields } from "../../src/utils/parseJsonFields";
 import Header from "../../src/components/shared/Header/Header";
@@ -116,7 +115,6 @@ const PostView = (props: PostViewProps) => {
     <PostContext.Provider value={post}>
       <Head>
         <title>Post</title>
-        <FavIcon />
       </Head>
       <Box
         as="main"
