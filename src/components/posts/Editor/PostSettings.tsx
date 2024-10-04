@@ -8,6 +8,7 @@ import {
   Spinner,
   ThemeUIStyleObject,
   Theme,
+  IconButton,
 } from "theme-ui";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
@@ -26,6 +27,7 @@ import {
   updatePostSettings,
   UpdatePostSettingsMutation,
 } from "../../../graphql/customMutations";
+import DeleteIcon from "../../icons/DeleteIcon";
 import { deletePost, deletePublishedPost } from "../../../graphql/mutations";
 
 const PostSettings = () => {
@@ -216,7 +218,18 @@ const PostSettings = () => {
                     type="button"
                     onClick={processDeletePost}
                   >
-                    Delete
+                    <Flex sx={{ alignItems: "center", gap: "2px" }}>
+                      <IconButton
+                        as="div"
+                        sx={{
+                          width: ["24px", "24px", "24px"],
+                          height: ["24px", "24px", "24px"],
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                      <Text>Delete</Text>
+                    </Flex>
                   </Button>
                 </Flex>
               </Box>

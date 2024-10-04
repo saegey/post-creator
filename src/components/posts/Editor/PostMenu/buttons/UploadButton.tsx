@@ -1,9 +1,10 @@
-import { Box, Button, Flex, Input, Label, Spinner, Text } from "theme-ui";
+import { Box, Button, Flex, IconButton, Input, Label, Spinner, Text } from "theme-ui";
 import React from "react";
 import { Auth, Storage } from "aws-amplify";
 import { usePost } from "../../../../PostContext";
 import usePubSubSubscription from "../../../../../hooks/usePubSubSubscription";
 import { getPost } from "../../../../../actions/PostGet";
+import UploadIcon from "../../../../icons/UploadIcon";
 
 const UploadButton = () => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -134,7 +135,16 @@ const UploadButton = () => {
           onClick={handleButtonClick}
           variant="primaryButton"
         >
-          <Flex sx={{ gap: "10px" }}>
+          <Flex sx={{ alignItems: "center", gap: "2px" }}>
+            <IconButton
+              as="div"
+              sx={{
+                width: ["24px", "24px", "24px"],
+                height: ["24px", "24px", "24px"],
+              }}
+            >
+              <UploadIcon />
+            </IconButton>
             <Text>Upload</Text>
             {processingFile && (
               <Spinner

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, ThemeUIStyleObject, Theme, MenuButton } from "theme-ui";
+import { Box, Flex, ThemeUIStyleObject, Theme } from "theme-ui";
 
 import { IUser } from "../../../types/common";
 import ProfileSection from "./ProfileSection";
@@ -43,11 +43,13 @@ const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
             paddingTop: "5px",
           }}
         >
-          <Logo
-            sx={{
-              width: ["100px", "120px", "120px"],
-            }}
-          />
+          <a href="https://www.monopad.app/" target="_blank">
+            <Logo
+              sx={{
+                width: ["100px", "120px", "120px"],
+              }}
+            />
+          </a>
         </Flex>
         <Flex
           sx={
