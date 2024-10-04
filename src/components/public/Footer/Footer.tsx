@@ -1,7 +1,6 @@
 // src/components/PublicFooter.tsx
 import React from "react";
 import { Box, Flex, Grid, Text } from "theme-ui";
-// import LogoBlock from "./LogoBlock";
 import FooterSection from "./FooterSection";
 import FooterLink from "./FooterLink";
 import FooterSocialLinks from "./FooterSocialLinks";
@@ -105,8 +104,8 @@ const PublicFooter = () => {
           color: "background",
         }}
       >
-        <Box sx={{ marginBottom: "16px" }}>
-          <LogoBlock size="small" inheritColor={true} />
+        <Box sx={{ marginBottom: "16px", color: "text" }}>
+          <LogoBlock sx={{ color: "secondary", width: "120px" }} />
         </Box>
         <MenuHeadingItem
           name="Explore"
