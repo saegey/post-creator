@@ -31,6 +31,7 @@ import UploadIcon from "../../icons/UploadIcon";
 import { UpdatePostMutation } from "../../../API";
 import { updatePostImages } from "../../../graphql/customMutations";
 import ImagesIcon from "../../icons/ImagesIcon";
+import DeleteIcon from "../../icons/DeleteIcon";
 
 const ImageManager = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
@@ -244,7 +245,18 @@ const ImageManager = () => {
             }}
             disabled={selectedImage ? false : true}
           >
-            Delete
+            <Flex sx={{ alignItems: "center", gap: "2px" }}>
+              <IconButton
+                as="div"
+                sx={{
+                  width: ["24px", "24px", "24px"],
+                  height: ["24px", "24px", "24px"],
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+              <Text>Delete</Text>
+            </Flex>
           </Button>
           <Box sx={{ flexGrow: 1 }} />
           <Button
