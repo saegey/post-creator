@@ -69,7 +69,18 @@ const ImageManager = () => {
               marginBottom: "5px",
             }}
           >
-            Upload
+            <Flex sx={{ alignItems: "center", gap: "2px" }}>
+              <IconButton
+                as="div"
+                sx={{
+                  width: ["24px", "24px", "24px"],
+                  height: ["24px", "24px", "24px"],
+                }}
+              >
+                <UploadIcon />
+              </IconButton>
+              <Text>Upload</Text>
+            </Flex>
           </Button>
         }
         heading={
