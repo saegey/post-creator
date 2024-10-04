@@ -77,6 +77,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           <Button
             type="submit"
             variant="primaryButton"
+            sx={{ width: ["100%", "104px", "104px"] }}
             disabled={isRobot || isLoading}
           >
             {isLoading ? "Registering..." : "Sign Up"}

@@ -17,6 +17,7 @@ const ReCAPTCHAComponent: React.FC<ReCAPTCHAComponentProps> = ({
       <ReCAPTCHA
         sitekey="6LdW_CUpAAAAAOC--lA01wOnW1UA3RlZyc_LgX_0"
         onChange={() => setIsRobot(false)}
+        size="compact" // Options: 'normal', 'compact', 'invisible'
         theme={colorMode === "dark" ? "dark" : "light"}
       />
     </Flex>
