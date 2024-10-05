@@ -1,6 +1,5 @@
 import React from "react";
 import { Editor, Path, Transforms } from "slate";
-import AddComponentButton from "./AddComponentButton";
 import { Box, IconButton, Text } from "theme-ui";
 import { CustomEditor } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
@@ -9,7 +8,7 @@ import { useSlateContext } from "../../SlateContext";
 import { ReactEditor } from "slate-react";
 
 const AddText = () => {
-  const { menuPosition, setIsNewComponentMenuOpen } =
+  const { menuPosition, setIsNewComponentMenuOpen, setMobileMenu } =
     React.useContext(EditorContext);
   const { editor } = useSlateContext();
 
@@ -20,7 +19,7 @@ const AddText = () => {
       { at: path }
     );
 
-    if (path.length > 2) {
+    if (path.length > 1) {
       Transforms.liftNodes(editor);
     }
 
@@ -33,6 +32,13 @@ const AddText = () => {
     if (newPoint) {
       Transforms.select(editor, newPoint);
     }
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
 
     setTimeout(() => {
       ReactEditor.focus(editor);

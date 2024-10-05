@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useContext, useRef } from "react";
 import { Slate, Editable, withReact, RenderLeafProps } from "slate-react";
-import { createEditor, Transforms } from "slate";
+import { createEditor, Node, Transforms } from "slate";
 import { Flex, Box } from "theme-ui";
 import { withHistory } from "slate-history";
 import { CloudinaryUploadWidgetResults } from "next-cloudinary";
@@ -45,6 +45,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
   const slateRef = useRef<HTMLDivElement>(null); // Ref for Slate element
   const heroMediaRef = useRef<any>(null); // Ref for AddMediaComponent
   const newMediaRef = useRef<any>(null); // Ref for AddMediaComponent
+  const [selectedElement, setSelectedElement] = React.useState(null);
 
   // Store the path in a ref
   const realPathRef = useRef<number[] | null>(null); // Use ref to hold realPath
@@ -203,6 +204,7 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             onChange={(newValue) => {
               updateMenuPosition();
               handleSelectionChange();
+
               setPost({ components: newValue as Array<CustomElement> });
 
               slateApi.saveEditor({
@@ -254,7 +256,6 @@ const PostEditor = ({ initialState }: { initialState: CustomElement[] }) => {
             />
           )}
           {isNewComponentMenuOpen && <Menu menuPosition={menuPosition} />}
-
           {isChangeImageModalOpen && <ImageManager />}
           {isSettingsModalOpen && <PostSettings />}
           {isPhotoCaptionOpen && <PhotoCaptionModal />}

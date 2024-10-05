@@ -118,17 +118,16 @@ const PostSettings = () => {
         }}
       >
         <Flex
-          sx={
-            {
-              gap: "15px",
-              flexDirection: "column",
-              maxHeight: ["", "600px", "70vh"],
-              height: ["calc(100vh - 120px)", "", ""], // dynamically fill height on mobile
-              overflow: "auto", // make the content scrollable
-            } as ThemeUIStyleObject<Theme>
-          }
+          sx={{
+            gap: "15px",
+            flexDirection: "column",
+            maxHeight: ["", "600px", "70vh"],
+            height: ["calc(100vh - 120px)", "", ""], // dynamically fill height on mobile
+            overflow: "auto", // make the content scrollable
+            marginBottom: "100px",
+          }}
         >
-          <Box sx={{ marginTop: "20px" } as ThemeUIStyleObject<Theme>}>
+          <Box sx={{ marginTop: "20px" }}>
             <Label htmlFor="title" variant={"defaultLabel"}>
               Title
             </Label>
@@ -224,31 +223,21 @@ const PostSettings = () => {
           </Box>
         </Flex>
         <Flex
-          sx={
-            {
-              borderTopWidth: "1px",
-              borderTopColor: "border",
-              borderTopStyle: "solid",
-              backgroundColor: "background",
-              marginTop: "5px",
-              paddingTop: "5px",
-              position: ["fixed", "inherit", "inherit"],
-              bottom: ["0", "", ""],
-              width: "100%",
-              marginBottom: ["20px", "0px", "0px"],
-            } as ThemeUIStyleObject<Theme>
-          }
+          sx={{
+            borderTopWidth: "1px",
+            borderTopColor: "border",
+            borderTopStyle: "solid",
+            backgroundColor: "background",
+            marginTop: "5px",
+            paddingTop: "5px",
+            position: ["fixed", "inherit", "inherit"],
+            bottom: ["0", "", ""],
+            width: "100%",
+            marginBottom: ["20px", "0px", "0px"],
+          }}
         >
-          <Box
-            sx={
-              { marginLeft: ["", "auto", "auto"] } as ThemeUIStyleObject<Theme>
-            }
-          >
-            <Flex
-              sx={
-                { gap: "10px", marginTop: "10px" } as ThemeUIStyleObject<Theme>
-              }
-            >
+          <Box sx={{ marginLeft: ["", "auto", "auto"] }}>
+            <Flex sx={{ gap: "10px", marginTop: "10px" }}>
               <Button
                 type="button"
                 variant="secondaryButton"
@@ -257,16 +246,14 @@ const PostSettings = () => {
                 Cancel
               </Button>
               <Button variant="primaryButton">
-                <Flex sx={{ gap: "10px" } as ThemeUIStyleObject<Theme>}>
+                <Flex sx={{ gap: "10px" }}>
                   <Text as="span">Save</Text>
                   {isSaving && (
                     <Spinner
-                      sx={
-                        {
-                          size: "20px",
-                          color: "secondary",
-                        } as ThemeUIStyleObject<Theme>
-                      }
+                      sx={{
+                        size: "20px",
+                        color: "secondary",
+                      }}
                     />
                   )}
                 </Flex>

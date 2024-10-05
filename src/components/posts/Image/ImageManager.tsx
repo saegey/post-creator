@@ -41,7 +41,7 @@ const ImageManager = () => {
     isChangeImageModalOpen,
     setIsHeroImageModalOpen,
   } = React.useContext(EditorContext);
-
+  const { path } = menuPosition;
   const { editor } = useSlateContext();
 
   if (!editor && menuPosition.path) {
@@ -280,7 +280,11 @@ const ImageManager = () => {
                 }
               );
 
-              setIsChangeImageModalOpen(false); // Close the modal
+              if (path.length > 1) {
+                Transforms.liftNodes(editor);
+              }
+
+              setIsChangeImageModalOpen(false);
             }}
             disabled={selectedImage ? false : true}
           >

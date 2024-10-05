@@ -1,10 +1,7 @@
-// import { EditorContext } from "./EditorContext";
-import { Flex, Text, Box } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
-import { useSlateStatic } from "slate-react";
 
 import { EditorContext } from "./EditorContext";
-
 import VideoIcon from "../../icons/VideoIcon";
 import StandardModal from "../../shared/StandardModal";
 import VideoUploader from "../VideoEmbed/VideoUploader";
@@ -14,11 +11,10 @@ import GenericMenuItem from "../../GenericMenuItem";
 const AddVideoModal = () => {
   const { setIsVideoUploadOpen, isVideoUploadOpen } =
     React.useContext(EditorContext);
-
   const { editor } = useSlateContext();
 
   if (!editor) {
-    return <></>;
+    throw new Error("Editor is not defined");
   }
 
   return isVideoUploadOpen ? (
@@ -42,6 +38,7 @@ const AddVideo = () => {
     setIsNewComponentMenuOpen,
     menuPosition,
     setNewComponentPath,
+    setMobileMenu,
   } = React.useContext(EditorContext);
 
   const { path } = menuPosition;
@@ -50,6 +47,13 @@ const AddVideo = () => {
     setNewComponentPath(path);
     setIsVideoUploadOpen(true);
     setIsNewComponentMenuOpen(false);
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
   };
 
   return (

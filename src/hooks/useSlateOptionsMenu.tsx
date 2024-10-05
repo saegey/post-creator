@@ -1,11 +1,12 @@
 import React from "react";
-import { Box, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Box, ThemeUIStyleObject } from "theme-ui";
 import { Path } from "slate";
-import { darken, lighten } from "@theme-ui/color";
+import { lighten } from "@theme-ui/color";
 
 import { CustomEditor } from "../types/common";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
 import OptionsIcon from "../components/icons/OptionsIcon";
+import { useViewport } from "../components/ViewportProvider";
 
 const useOptionsMenu = (
   editor: CustomEditor,
@@ -14,6 +15,7 @@ const useOptionsMenu = (
 ) => {
   const { isOptionsOpen, setIsOptionsOpen, setMobileMenu, setMenuPosition } =
     React.useContext(EditorContext);
+  const { width, height } = useViewport();
 
   const toggleOptionsMenu = () => {
     setIsOptionsOpen((prev) => !prev);
@@ -24,11 +26,11 @@ const useOptionsMenu = (
       sx={
         sx
           ? sx
-          : ({
+          : {
               position: "absolute",
-              right: "-30px",
+              right: width < 480 ? "10px" : "-30px",
               top: "0px",
-            } as ThemeUIStyleObject<Theme>)
+            }
       }
       onClick={(event) => {
         event.preventDefault();

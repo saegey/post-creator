@@ -23,18 +23,16 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
         <>
           <Box variant="boxes.componentCard" contentEditable={false}>
             <Flex
-              sx={
-                {
-                  backgroundColor: "surface",
-                  borderRadius: "5px",
-                  width: "100%",
-                  height: ["250px", "450px", "450px"],
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "20px",
-                  flexDirection: "column",
-                } as ThemeUIStyleObject<Theme>
-              }
+              sx={{
+                backgroundColor: "surface",
+                borderRadius: "5px",
+                width: "100%",
+                height: ["250px", "450px", "450px"],
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "20px",
+                flexDirection: "column",
+              }}
             >
               <Flex sx={{ alignItems: "center", gap: "5px" }}>
                 <PowerGraphIcon
@@ -42,7 +40,6 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
                     color: "surfaceAccent",
                     width: "40px",
                     height: "40px",
-                    // backgroundColor: "yellow",
                     padding: "0px",
                   }}
                 />
@@ -105,7 +102,6 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
             </Box>
             {optionsMenu}
           </Box>
-          {/* {children} */}
         </>
       </HoverAction>
     );

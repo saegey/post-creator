@@ -142,6 +142,7 @@ const VisualOverviewWrapper = ({
         sx={
           {
             width: "900px",
+            height: "900px",
             marginX: "auto",
             backgroundColor: "border",
             borderRadius: "5px",
@@ -160,7 +161,7 @@ const VisualOverviewWrapper = ({
       <HoverAction element={element}>
         <>
           {renderMap}
-          {optionsMenuMemo}
+          {/* {optionsMenuMemo} */}
         </>
       </HoverAction>
     </VisualOverviewContext.Provider>

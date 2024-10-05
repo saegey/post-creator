@@ -28,7 +28,7 @@ const MobileNav = ({
         overflowX: "hidden",
         overflowY: "auto",
         display: isMenuOpen ? "flex" : "none",
-        top: "48px",
+        top: "0px",
         bottom: "0px",
         left: "0px",
         right: "0px",

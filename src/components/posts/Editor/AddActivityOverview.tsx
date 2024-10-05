@@ -30,7 +30,7 @@ const AddActivityOverview = () => {
       { at: path }
     );
 
-    if (path.length > 2) {
+    if (path.length > 1) {
       Transforms.liftNodes(editor);
     }
 

@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  ActivityOverviewType,
   BulletedListType,
   CustomElement,
   HeadingElement,
@@ -46,7 +47,7 @@ const renderElement = (props: {
       return <PowerGraphElement element={element} />;
 
     case "activityOverview": // activity metrics *
-      return <ActivityOverviewWrapper children={children} element={element} />;
+      return <ActivityOverviewWrapper element={element} children={children} />;
 
     case "visualOverview": // map and elevation graph *
       return (

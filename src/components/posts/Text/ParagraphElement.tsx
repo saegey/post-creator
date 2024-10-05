@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, ThemeUIStyleObject, Theme } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
 import HoverAction from "../../posts/Editor/HoverAction";

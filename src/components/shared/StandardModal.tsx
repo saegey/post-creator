@@ -65,39 +65,26 @@ const StandardModal = ({
         fullScreen={fullScreen}
       >
         <Box
-          sx={
-            {
-              maxWidth: maxWidth,
-              display: ["flex", "inherit", "inherit"],
-              position: ["fixed", "inherit", "inherit"],
-              flexDirection: "column",
-              maxHeight: ["100dvh", "800px", "800px"],
-              height: ["100dvh", "auto", "auto"],
-              width: ["100%", null, null],
-              margin: "auto",
-              background: "background",
-              borderRadius: [null, "15px", "15px"],
-              paddingX: "20px",
-              paddingY: "40px",
-              zIndex: 51,
-            } as ThemeUIStyleObject<Theme>
-          }
+          sx={{
+            maxWidth: maxWidth,
+            display: ["flex", "inherit", "inherit"],
+            position: ["fixed", "inherit", "inherit"],
+            flexDirection: "column",
+            maxHeight: ["100dvh", "800px", "800px"],
+            height: ["100dvh", "auto", "auto"],
+            width: ["100%", null, null],
+            margin: "auto",
+            background: "background",
+            borderRadius: [null, "15px", "15px"],
+            paddingX: "20px",
+            paddingY: "40px",
+            zIndex: 51,
+          }}
           onClick={(e) => {
-            // alert("clicked");
             e.stopPropagation();
           }}
         >
-          <Flex
-            sx={
-              {
-                // borderBottomWidth: title ? "1px" : "0px",
-                // borderBottomColor: "border",
-                // borderBottomStyle: "solid",
-                // paddingY: "5px",
-                // paddingY: "40px",
-              } as ThemeUIStyleObject<Theme>
-            }
-          >
+          <Flex>
             {heading ? (
               heading
             ) : (
