@@ -9,6 +9,7 @@ import { ActivityOverviewType } from "../../../types/common";
 import HoverAction from "../Editor/HoverAction";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
+import withComponentClick from "../withComponentClick";
 
 const ActivityOverviewWrapper = ({
   element,
@@ -118,27 +119,31 @@ const ActivityOverviewWrapper = ({
     );
   }
 
+  const EnhancedBox = withComponentClick(Box);
+
   return (
     <HoverAction element={element}>
-      <Box variant="boxes.componentCard" contentEditable={false}>
-        <ActivityOverview
-          data={activityData}
-          selectedFields={[
-            "Normalized Power",
-            "Avg Heart Rate",
-            "Distance",
-            "Elevation Gain",
-            "Avg Temperature",
-            "Avg Speed",
-            "Elapsed Time",
-            "Stopped Time",
-            "Avg Cadence",
-            "Avg Power",
-          ]}
-        />
-        {menuMemo}
-        {children}
-      </Box>
+      <EnhancedBox element={element} path={path} sx={{ cursor: "pointer" }}>
+        <Box variant="boxes.componentCard" contentEditable={false}>
+          <ActivityOverview
+            data={activityData}
+            selectedFields={[
+              "Normalized Power",
+              "Avg Heart Rate",
+              "Distance",
+              "Elevation Gain",
+              "Avg Temperature",
+              "Avg Speed",
+              "Elapsed Time",
+              "Stopped Time",
+              "Avg Cadence",
+              "Avg Power",
+            ]}
+          />
+          {menuMemo}
+          {children}
+        </Box>
+      </EnhancedBox>
     </HoverAction>
   );
 };

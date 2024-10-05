@@ -27,6 +27,7 @@ const VideoPlayer = ({ element }: { element: VideoEmbedType }) => {
             />
           ) : (
             <AspectRatio
+              contentEditable={false}
               ratio={16 / 9}
               sx={{
                 p: 4,

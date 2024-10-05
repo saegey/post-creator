@@ -52,29 +52,26 @@ const DropdownMenu: React.FC<UserProfileMenuProps> = ({
       noModal
     >
       <Flex
-        sx={
-          {
-            marginLeft: ["auto", 0, 0],
-            position: "relative",
-            flexGrow: 1,
-          } as ThemeUIStyleObject<Theme>
-        }
+        sx={{
+          marginLeft: ["auto", 0, 0],
+          position: "relative",
+          flexGrow: 1,
+        }}
       >
         <Box
-          sx={
-            {
-              flexDirection: "column",
-              width: ["100%", "300px", "300px"],
-              height: ["100%", "fit-content", "fit-content"],
-              position: "absolute",
-              top: ["", "53px", "53px"],
-              right: ["", "10px", "10px"],
-            } as ThemeUIStyleObject<Theme>
-          }
+          sx={{
+            flexDirection: "column",
+            width: ["100%", "300px", "300px"],
+            height: ["100%", "fit-content", "fit-content"],
+            position: "absolute",
+            top: ["", "53px", "53px"],
+            right: ["", "10px", "10px"],
+            borderRadius: [0, "5px", "5px"],
+          }}
           variant="boxes.menuItem"
         >
           <ProfileHeader onClose={() => setProfileOpen(false)} />
-          <Box sx={{ paddingY: ["10px", 0, 0] } as ThemeUIStyleObject<Theme>}>
+          <Box sx={{ paddingY: ["10px", 0, 0] }}>
             <Box
               as="ul"
               sx={

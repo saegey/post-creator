@@ -1,4 +1,3 @@
-import { Box } from "theme-ui";
 import React from "react";
 
 import { UnitContextType, useUnits } from "../../UnitProvider";
@@ -147,11 +146,7 @@ const ActivityOverview = ({
     [data, units, selectedFields]
   );
 
-  return (
-    <Box>
-      <ActivityOverviewTemplate items={items} />
-    </Box>
-  );
+  return <ActivityOverviewTemplate items={items} />;
 };
 
 export default ActivityOverview;

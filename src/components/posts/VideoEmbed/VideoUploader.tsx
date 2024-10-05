@@ -1,6 +1,7 @@
 import MuxUploader from "@mux/mux-uploader-react";
 import { API } from "aws-amplify";
 import React from "react";
+
 import { CustomEditor } from "../../../types/common";
 import { Transforms } from "slate";
 import { usePost } from "../../PostContext";
@@ -35,7 +36,7 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
     <MuxUploader
       id="this-is-a-test"
       endpoint={getEndpoint}
-      onSuccess={(e) => {
+      onSuccess={() => {
         getAssetId().then((res) => {
           Transforms.insertNodes(
             editor,
@@ -49,6 +50,10 @@ const VideoUploader = ({ editor }: { editor: CustomEditor }) => {
             },
             { at: menuPosition.path }
           );
+
+          if (menuPosition.path.length > 1) {
+            Transforms.liftNodes(editor);
+          }
         });
       }}
     />

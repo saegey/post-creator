@@ -24,7 +24,7 @@ const FloatingMenu = ({
   const [_, setSelection] = React.useState<BaseSelection>();
 
   if (!editor) {
-    return <></>;
+    throw new Error("Editor is not defined");
   }
 
   const toggleLink = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

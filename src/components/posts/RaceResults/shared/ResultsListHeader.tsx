@@ -15,11 +15,9 @@ const ResultsListHeader = ({
         <Flex sx={{ flexGrow: 1 }}>
           <Text
             as="h2"
-            sx={
-              {
-                fontSize: ["16px", "20px", "20px"],
-              } as ThemeUIStyleObject<Theme>
-            }
+            sx={{
+              fontSize: ["15px", "20px", "20px"],
+            }}
           >
             Results
           </Text>
@@ -29,13 +27,11 @@ const ResultsListHeader = ({
         <Link
           href={resultsUrl}
           target="_blank"
-          sx={
-            {
-              color: "text",
-              width: "fit-content",
-              flexGrow: 1,
-            } as ThemeUIStyleObject<Theme>
-          }
+          sx={{
+            color: "text",
+            width: "fit-content",
+            flexGrow: 1,
+          }}
         >
           <Text
             as="p"

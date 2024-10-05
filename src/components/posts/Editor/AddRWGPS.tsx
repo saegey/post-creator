@@ -41,6 +41,7 @@ const AddRWGPS = () => {
     setIsNewComponentMenuOpen,
     setNewComponentPath,
     menuPosition,
+    setMobileMenu,
   } = React.useContext(EditorContext);
   const { path } = menuPosition;
 
@@ -48,6 +49,13 @@ const AddRWGPS = () => {
     setNewComponentPath(path);
     setIsRWGPSModalOpen(true);
     setIsNewComponentMenuOpen(false);
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
   };
 
   return (

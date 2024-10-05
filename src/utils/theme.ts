@@ -250,11 +250,10 @@ export default {
       borderRadius: "5px",
       zIndex: "4",
       boxShadow: "0 3px 8px rgba(0, 0, 0, 0.3)",
-      animation: "fadeIn .5s;",
+      animation: "fadeIn .2s;",
     },
     sidebarMenuItem: {
       fontSize: "14px",
-      // paddingY: "5px",
       borderRadius: "5px",
       width: "100%",
       "&:hover": {
@@ -271,6 +270,7 @@ export default {
       borderRadius: ["0px", "5px", "5px"],
       position: "relative",
       marginY: ["0px", "20px", "20px"],
+      marginX: ["5px", "0px", "0px"],
     },
     dropdownMenuItem: {
       padding: "10px",

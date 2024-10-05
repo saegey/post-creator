@@ -18,7 +18,7 @@ import {
   HeroBannerType,
   ImageElementType,
 } from "../../src/types/common";
-import PowerCurveGraph from "../../src/components/posts/PowerGraph/PowerCurveChart";
+import PowerCurveGraph from "../../src/components/posts/PowerGraph/PowerCurveGraph";
 import ParagraphBase from "../../src/components/posts/Text/ParagraphBase";
 import EmbedBase from "../../src/components/posts/Embed/EmbedBase";
 import VisualOverviewBase from "../../src/components/posts/VisualOverview/VisualOverviewBase";

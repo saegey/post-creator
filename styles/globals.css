@@ -63,27 +63,6 @@ a {
   display: flex;
 }
 
-/* .skeleton {
-  animation: skeleton-loading 1s linear infinite alternate;
-} */
-
-/* @keyframes skeleton-loading {
-  0% {
-    background-color: var(--theme-ui-colors-skeletonDark);
-  }
-
-  100% {
-    background-color: var(--theme-ui-colors-skeletonLight);
-  }
-} */
-
-/* @media screen and (max-width: 480px) {
-  body {
-    overflow-x: hidden;
-
-  }
-} */
-
 .react-slideshow-container {
   height: 100vh;
   width: 100%;

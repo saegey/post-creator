@@ -3,16 +3,14 @@ import React, { useContext } from "react";
 import { Box } from "theme-ui";
 
 import PowerGraphIcon from "../../icons/PowerGraphIcon";
-import { PostContext } from "../../PostContext";
 import { CustomEditor } from "../../../types/common";
 import { EditorContext } from "./EditorContext";
 import GenericMenuItem from "../../GenericMenuItem";
 import { useSlateContext } from "../../SlateContext";
-import Tooltip from "../../shared/Tooltip";
 
 const AddPowerCurve = () => {
-  const { gpxFile } = useContext(PostContext);
-  const { menuPosition, setIsNewComponentMenuOpen } = useContext(EditorContext);
+  const { menuPosition, setIsNewComponentMenuOpen, setMobileMenu } =
+    useContext(EditorContext);
   const { path } = menuPosition;
   const { editor } = useSlateContext();
 
@@ -31,18 +29,27 @@ const AddPowerCurve = () => {
         { at: path }
       );
 
-      if (path.length > 2) {
+      if (path.length > 1) {
         Transforms.liftNodes(editor);
       }
+
+      setMobileMenu({
+        top: 0,
+        left: 0,
+        display: false,
+        path: path,
+        isFullScreen: false,
+      });
     }
   };
   if (!editor) {
-    return <></>;
+    throw new Error("Editor is not defined");
   }
 
   return (
     <Box
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation;
         insertPowerGraphNode(editor, path);
         setIsNewComponentMenuOpen(false);
       }}

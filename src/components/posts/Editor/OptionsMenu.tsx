@@ -30,16 +30,16 @@ const OptionsMenu = ({
 
   return (
     <Box
-      sx={
-        {
-          position: "absolute",
-          zIndex: 3,
-          top: menuPosition.top - 20,
-          left: menuPosition.left - 40,
-        } as ThemeUIStyleObject<Theme>
-      }
+      sx={{
+        position: "absolute",
+        zIndex: 3,
+        // backgroundColor: "red",
+        top: menuPosition.top - 20,
+        left: menuPosition.left - 40,
+      }}
       ref={wrapperRef}
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         setMobileMenu({
           display: false,
           left: 0,
@@ -48,6 +48,7 @@ const OptionsMenu = ({
           isFullScreen: false,
         });
       }}
+      className=".optionsMenu"
     >
       <Dropdown isOpen={isOpen}>
         <Flex

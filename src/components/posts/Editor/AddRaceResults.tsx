@@ -11,6 +11,7 @@ const AddRaceResults = () => {
     menuPosition,
     setIsNewComponentMenuOpen,
     setNewComponentPath,
+    setMobileMenu,
   } = React.useContext(EditorContext);
   const { path } = menuPosition;
 
@@ -22,6 +23,13 @@ const AddRaceResults = () => {
     setNewComponentPath(path);
     setIsRaceResultsModalOpen(true);
     setIsNewComponentMenuOpen(false);
+    setMobileMenu({
+      top: 0,
+      left: 0,
+      display: false,
+      path: path,
+      isFullScreen: false,
+    });
   };
 
   return (

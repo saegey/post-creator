@@ -1,7 +1,6 @@
 import { Box } from "theme-ui";
 import React from "react";
 
-import { PostContext } from "../../PostContext";
 import { EditorContext } from "./EditorContext";
 import { useSlateContext } from "../../SlateContext";
 import GenericMenuItem from "../../GenericMenuItem";
@@ -11,9 +10,12 @@ const AddImage = () => {
   const {
     setIsNewComponentMenuOpen,
     menuPosition,
-    setIsNewPostImageUploadOpen,
     setIsChangeImageModalOpen,
+    setMobileMenu,
   } = React.useContext(EditorContext);
+
+  const { path } = menuPosition;
+
   const { editor } = useSlateContext();
 
   if (!editor) {
@@ -24,7 +26,13 @@ const AddImage = () => {
     <Box
       onClick={() => {
         setIsNewComponentMenuOpen(false);
-        // setIsNewPostImageUploadOpen(true);
+        setMobileMenu({
+          top: 0,
+          left: 0,
+          display: false,
+          path: path,
+          isFullScreen: false,
+        });
         setIsChangeImageModalOpen(true);
       }}
       variant="boxes.sidebarMenuItem"

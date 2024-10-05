@@ -14,6 +14,9 @@ import { ImageElementType } from "../../../types/common";
 import useImageMeta from "../../../hooks/useImageMeta";
 import ImageMissing from "./ImageMissing";
 import ImageBase from "./ImageBase";
+import { Box } from "theme-ui";
+import { EditorContext } from "../Editor/EditorContext";
+import withComponentClick from "../withComponentClick";
 
 // Component for rendering the options menu with memoization
 const OptionsMenuMemo = ({ optionsMenu }: { optionsMenu: JSX.Element }) => {
@@ -23,7 +26,6 @@ const OptionsMenuMemo = ({ optionsMenu }: { optionsMenu: JSX.Element }) => {
 const ImageWrapper = ({ element }: { element: ImageElementType }) => {
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
-
   const [isMaximized, setIsMaximized] = useState(false);
   const { width } = useViewport();
   const { optionsMenu } = useOptionsMenu(editor, path);
@@ -65,19 +67,32 @@ const ImageWrapper = ({ element }: { element: ImageElementType }) => {
     );
   }, [imageUrl, imageMeta, selected, focused, element]);
 
+  const EnhancedBox = withComponentClick(Box);
+
   return (
-    <HoverAction element={element}>
-      <>
-        {isMaximized && imageMeta && (
-          <ImageFullScreen
-            setIsMaximized={setIsMaximized}
-            index={imageMetaIndex}
-          />
-        )}
-        {imageBase}
-        <OptionsMenuMemo optionsMenu={optionsMenu} />
-      </>
-    </HoverAction>
+    <>
+      <HoverAction element={element}>
+        <EnhancedBox
+          element={element}
+          path={path} // Pass the required props to the HOC
+          sx={{
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            alert("clicked");
+          }}
+        >
+          {imageBase}
+          <OptionsMenuMemo optionsMenu={optionsMenu} />
+        </EnhancedBox>
+      </HoverAction>
+      {isMaximized && imageMeta && (
+        <ImageFullScreen
+          setIsMaximized={setIsMaximized}
+          index={imageMetaIndex}
+        />
+      )}
+    </>
   );
 };
 

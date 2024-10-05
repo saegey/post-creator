@@ -10,7 +10,6 @@ import { useSlateContext } from "./SlateContext";
 import GenericMenuItem from "./GenericMenuItem";
 import { CustomElement } from "../types/common";
 import EditIcon from "./icons/EditIcon";
-import CaretDown from "./icons/CaretDown";
 import DeleteIcon from "./icons/DeleteIcon";
 import MoveUpIcon from "./icons/MoveUpIcon";
 import MoveDownIcoon from "./icons/MoveDownIcon";

@@ -1,4 +1,3 @@
-import { Box, Flex, Embed, Text, ThemeUIStyleObject, Theme } from "theme-ui";
 import { useSlateStatic, ReactEditor } from "slate-react";
 import React from "react";
 
@@ -8,13 +7,7 @@ import HoverAction from "../Editor/HoverAction";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import EmbedBase from "./EmbedBase";
 
-const EmbedElement = ({
-  element,
-}: // children,
-{
-  element: EmbedElementType;
-  // children: JSX.Element;
-}) => {
+const EmbedElement = ({ element }: { element: EmbedElementType }) => {
   const { unitOfMeasure } = useUnits();
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);

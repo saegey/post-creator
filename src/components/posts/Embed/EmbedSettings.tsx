@@ -1,5 +1,5 @@
 import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
-import { Transforms, Element as SlateElement, Path } from "slate";
+import { Transforms, Path } from "slate";
 import React from "react";
 
 import { CustomEditor } from "../../../types/common";
@@ -14,7 +14,7 @@ const EmbedSettings = ({
   isModalOpen: (arg0: boolean) => void;
   path: Path;
 }) => {
-  const { mobileMenu, setMobileMenu, setIsNewComponentMenuOpen } =
+  const { setMobileMenu, setIsNewComponentMenuOpen } =
     React.useContext(EditorContext);
 
   return (
@@ -42,7 +42,7 @@ const EmbedSettings = ({
             },
             { at: path }
           );
-          if (path.length > 2) {
+          if (path.length > 1) {
             Transforms.liftNodes(editor);
           }
           isModalOpen(false);
@@ -55,7 +55,6 @@ const EmbedSettings = ({
             isFullScreen: false,
           });
           const selection = window.getSelection();
-          // console.log(selection)
           selection && selection.removeAllRanges();
         }}
         style={{ width: "100%" }}
