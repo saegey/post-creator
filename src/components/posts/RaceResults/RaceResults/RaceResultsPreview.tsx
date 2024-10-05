@@ -191,7 +191,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
                   { at: menuPosition.path }
                 );
 
-                if (path.length > 2) {
+                if (path.length > 1) {
                   Transforms.liftNodes(editor);
                 }
                 setIsLoading(false);
