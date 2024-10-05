@@ -20,18 +20,16 @@ const PowerGraphView = () => {
       >
         <Box variant="boxes.componentCard" contentEditable={false}>
           <Flex
-            sx={
-              {
-                backgroundColor: "surface",
-                borderRadius: "5px",
-                width: "100%",
-                height: ["250px", "450px", "450px"],
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "20px",
-                flexDirection: "column",
-              } as ThemeUIStyleObject<Theme>
-            }
+            sx={{
+              backgroundColor: "surface",
+              borderRadius: "5px",
+              width: "100%",
+              height: ["250px", "450px", "450px"],
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "20px",
+              flexDirection: "column",
+            }}
           >
             <Flex sx={{ alignItems: "center", gap: "5px" }}>
               <PowerGraphIcon

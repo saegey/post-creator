@@ -260,7 +260,7 @@ const CustomMap = ({
       doubleClickZoom: false,
     });
 
-    map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
+    map.current.addControl(new mapboxgl.NavigationControl(), "top-left");
 
     map.current.once("load", () => {
       setIsMapLoaded(true);

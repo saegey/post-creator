@@ -3,6 +3,7 @@ import { Editor } from "slate";
 
 import { useViewport } from "../components/ViewportProvider";
 import { EditorContext } from "../components/posts/Editor/EditorContext";
+import MobileMenu from "../components/posts/Editor/MobileMenu";
 
 export interface SelectionMenu {
   top: number;
@@ -10,7 +11,8 @@ export interface SelectionMenu {
 }
 
 const useSelectionChangeHandler = (editor: Editor) => {
-  const { setMobileMenu, setMenuPosition } = useContext(EditorContext);
+  const { setMobileMenu, setMenuPosition, mobileMenu } =
+    useContext(EditorContext);
   const { width } = useViewport();
 
   const [selectionMenu, setSelectionMenu] = useState<SelectionMenu | null>(
@@ -81,6 +83,7 @@ const useSelectionChangeHandler = (editor: Editor) => {
             top: rect.bottom + scrollY,
             left: rect.left + scrollX,
           });
+          setMobileMenu({ ...mobileMenu, display: false });
         } else {
           setSelectionMenu(null);
         }

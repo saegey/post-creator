@@ -18,6 +18,7 @@ import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import { EditorContext } from "../Editor/EditorContext";
 import RouteIcon from "../../icons/RouteIcon";
 import VisualOverviewBase from "./VisualOverviewBase";
+import withComponentClick from "../withComponentClick";
 
 const VisualOverviewWrapper = ({
   element,
@@ -45,6 +46,8 @@ const VisualOverviewWrapper = ({
   const [isSaved, setIsSaved] = React.useState<boolean>(
     element && element.selectionStart ? true : false
   );
+
+  const EnhancedBox = withComponentClick(Box);
 
   const optionsMenuMemo = React.useMemo(() => {
     return optionsMenu;
@@ -88,18 +91,16 @@ const VisualOverviewWrapper = ({
         <>
           <Box variant="boxes.componentCard" contentEditable={false}>
             <Flex
-              sx={
-                {
-                  backgroundColor: "surface",
-                  borderRadius: "5px",
-                  width: "100%",
-                  height: ["250px", "450px", "450px"],
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "20px",
-                  flexDirection: "column",
-                } as ThemeUIStyleObject<Theme>
-              }
+              sx={{
+                backgroundColor: "surface",
+                borderRadius: "5px",
+                width: "100%",
+                height: ["250px", "450px", "450px"],
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "20px",
+                flexDirection: "column",
+              }}
             >
               <Flex sx={{ alignItems: "center", gap: "5px" }}>
                 <RouteIcon
@@ -139,17 +140,15 @@ const VisualOverviewWrapper = ({
   if (!activity || activity.length === 0 || !unitOfMeasure) {
     return (
       <Flex
-        sx={
-          {
-            width: "900px",
-            height: "900px",
-            marginX: "auto",
-            backgroundColor: "border",
-            borderRadius: "5px",
-          } as ThemeUIStyleObject<Theme>
-        }
+        sx={{
+          width: "900px",
+          height: "900px",
+          marginX: "auto",
+          backgroundColor: "border",
+          borderRadius: "5px",
+        }}
       >
-        <Spinner sx={{ margin: "auto" } as ThemeUIStyleObject<Theme>} />
+        <Spinner sx={{ margin: "auto" }} />
       </Flex>
     );
   }
@@ -161,7 +160,7 @@ const VisualOverviewWrapper = ({
       <HoverAction element={element}>
         <>
           {renderMap}
-          {/* {optionsMenuMemo} */}
+          {optionsMenuMemo}
         </>
       </HoverAction>
     </VisualOverviewContext.Provider>

@@ -26,7 +26,7 @@ const AddRouteOverview = () => {
       { type: "visualOverview", children: [{ text: "" }], void: true },
       { at: path }
     );
-    if (path.length > 2) {
+    if (path.length > 1) {
       Transforms.liftNodes(editor);
     }
     setIsNewComponentMenuOpen(false);

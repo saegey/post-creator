@@ -15,7 +15,7 @@ const useOptionsMenu = (
 ) => {
   const { isOptionsOpen, setIsOptionsOpen, setMobileMenu, setMenuPosition } =
     React.useContext(EditorContext);
-  const { width, height } = useViewport();
+  const { width } = useViewport();
 
   const toggleOptionsMenu = () => {
     setIsOptionsOpen((prev) => !prev);
@@ -28,7 +28,7 @@ const useOptionsMenu = (
           ? sx
           : {
               position: "absolute",
-              right: width < 480 ? "10px" : "-30px",
+              right: width < 500 ? "10px" : "-30px",
               top: "0px",
             }
       }

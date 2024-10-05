@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, ReactNode } from "react";
-import { Box, Flex, Grid, Text } from "theme-ui";
+import { Box, Flex, Text } from "theme-ui";
 
 import CaretDown from "../../icons/CaretDown";
 import AddImage from "./AddImage";
@@ -13,7 +13,6 @@ import { EditorContext } from "./EditorContext";
 import AddVideo from "./AddVideo";
 
 // Reusable Menu Item Component
-
 const MenuItem = ({ children }: { children: ReactNode }) => (
   <Box
     sx={{
@@ -42,6 +41,23 @@ const menuItems = [
 const MobileMenu = () => {
   const { mobileMenu, setMobileMenu } = useContext(EditorContext);
 
+  const wrapperRef = React.useRef<HTMLElement | undefined>(undefined);
+
+  useEffect(() => {
+    // Function to handle scroll event
+    const handleScroll = () => {
+      setMobileMenu({ ...mobileMenu, display: false });
+    };
+
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup function to remove event listener on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     document.body.style.overflow = mobileMenu.isFullScreen ? "hidden" : "auto";
     return () => {
@@ -54,7 +70,7 @@ const MobileMenu = () => {
   }
 
   return (
-    <Box className="activity-menu">
+    <Box className="activity-menu" ref={wrapperRef}>
       {mobileMenu.isFullScreen && (
         <Flex
           sx={{
@@ -93,7 +109,11 @@ const MobileMenu = () => {
             <Box sx={{ flex: 1, textAlign: "right" }}>
               <Text
                 onClick={() =>
-                  setMobileMenu({ ...mobileMenu, isFullScreen: false })
+                  setMobileMenu({
+                    ...mobileMenu,
+                    isFullScreen: false,
+                    display: false,
+                  })
                 }
                 sx={{ cursor: "pointer", fontSize: "15px" }}
               >

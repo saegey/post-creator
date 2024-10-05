@@ -1,7 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import PowerCurveChart from "./PowerCurveChart";
 import { useThemeUI } from "theme-ui";
+
+import PowerCurveGraph from "./PowerCurveGraph";
 import { useViewport } from "../../ViewportProvider";
 import { PowerCurveGraphProps } from "./types";
 
@@ -59,7 +60,7 @@ describe("PowerCurveChart", () => {
   it("renders the chart with data", () => {
     render(
       <div style={{ width: "400px", height: "300px" }}>
-        <PowerCurveChart {...defaultProps} />
+        <PowerCurveGraph {...defaultProps} />
       </div>
     );
 
@@ -70,7 +71,7 @@ describe("PowerCurveChart", () => {
   it("does not render Y-axis label when hideAxes is true", () => {
     (useViewport as jest.Mock).mockReturnValue({ width: 400 });
 
-    render(<PowerCurveChart {...defaultProps} />);
+    render(<PowerCurveGraph {...defaultProps} />);
 
     expect(screen.queryByText("Watts")).not.toBeInTheDocument();
   });
@@ -81,7 +82,7 @@ describe("PowerCurveChart", () => {
       ftp: 1,
     };
 
-    render(<PowerCurveChart {...minimalProps} />);
+    render(<PowerCurveGraph {...minimalProps} />);
 
     expect(screen.getByText("FTP - 1 watts")).toBeInTheDocument();
   });

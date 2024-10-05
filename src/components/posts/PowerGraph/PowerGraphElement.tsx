@@ -1,5 +1,5 @@
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { Box, ThemeUIStyleObject, Theme, Text, Flex, Button } from "theme-ui";
+import { Box, Text, Flex, Button } from "theme-ui";
 import React from "react";
 
 import PowerCurveGraph from "./PowerCurveGraph";
@@ -9,8 +9,9 @@ import HoverAction from "../Editor/HoverAction";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import { EditorContext } from "../Editor/EditorContext";
 import PowerGraphIcon from "../../icons/PowerGraphIcon";
+import withComponentClick from "../withComponentClick";
 
-const PowerGraph = ({ element }: { element: PowerGraphType }) => {
+const PowerGraphComponent = ({ element }: { element: PowerGraphType }) => {
   const editor = useSlateStatic();
   const path = ReactEditor.findPath(editor, element);
   const { powerAnalysis, currentFtp } = React.useContext(PostContext);
@@ -85,29 +86,40 @@ const PowerGraph = ({ element }: { element: PowerGraphType }) => {
     );
   }, [powerAnalysis, currentFtp]);
 
+  const EnhancedBox = withComponentClick(Box);
+
   const hoverActMemo = React.useMemo(() => {
     return (
       <HoverAction element={element}>
-        <>
+        <EnhancedBox
+          element={element}
+          path={path} // Pass the required props to the HOC
+          sx={{
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            alert("clicked");
+          }}
+        >
           <Box variant="boxes.componentCard" contentEditable={false}>
             <Box
-              sx={
-                {
-                  width: "100%",
-                  height: ["250px", "450px", "450px"],
-                } as ThemeUIStyleObject<Theme>
-              }
+              sx={{
+                width: "100%",
+                height: ["250px", "450px", "450px"],
+              }}
             >
               {powerGraph}
             </Box>
             {optionsMenu}
           </Box>
-        </>
+        </EnhancedBox>
       </HoverAction>
     );
-  }, [isOptionsOpen, powerAnalysis, currentFtp]);
+  }, [powerAnalysis, currentFtp]);
 
   return hoverActMemo;
 };
 
-export default PowerGraph;
+const PowerGraphElement = PowerGraphComponent;
+
+export default PowerGraphElement;
