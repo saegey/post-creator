@@ -130,7 +130,8 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
   }
 }
 ` as GeneratedQuery<APITypes.ListBlogsQueryVariables, APITypes.ListBlogsQuery>;
-export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) {
+export const getPublishedPost =
+  /* GraphQL */ `query GetPublishedPost($id: ID!) {
   getPublishedPost(id: $id) {
     id
     title
@@ -172,16 +173,14 @@ export const getPublishedPost = /* GraphQL */ `query GetPublishedPost($id: ID!) 
     omniResults
     runSignupResults
     raceResultsProvider
-    originalPostId
     updatedAt
-    owner
     __typename
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetPublishedPostQueryVariables,
-  APITypes.GetPublishedPostQuery
->;
+    APITypes.GetPublishedPostQueryVariables,
+    APITypes.GetPublishedPostQuery
+  >;
 export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
   $filter: ModelPublishedPostFilterInput
   $limit: Int
@@ -242,7 +241,8 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
   APITypes.ListPublishedPostsQueryVariables,
   APITypes.ListPublishedPostsQuery
 >;
-export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedPostsByCreatedAt(
+export const listPublishedPostsByCreatedAt =
+  /* GraphQL */ `query ListPublishedPostsByCreatedAt(
   $type: String!
   $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
@@ -309,10 +309,11 @@ export const listPublishedPostsByCreatedAt = /* GraphQL */ `query ListPublishedP
   }
 }
 ` as GeneratedQuery<
-  APITypes.ListPublishedPostsByCreatedAtQueryVariables,
-  APITypes.ListPublishedPostsByCreatedAtQuery
->;
-export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostByOriginalPostId(
+    APITypes.ListPublishedPostsByCreatedAtQueryVariables,
+    APITypes.ListPublishedPostsByCreatedAtQuery
+  >;
+export const PublishedPostByOriginalPostId =
+  /* GraphQL */ `query PublishedPostByOriginalPostId(
   $originalPostId: String!
   $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
@@ -379,9 +380,9 @@ export const PublishedPostByOriginalPostId = /* GraphQL */ `query PublishedPostB
   }
 }
 ` as GeneratedQuery<
-  APITypes.PublishedPostByOriginalPostIdQueryVariables,
-  APITypes.PublishedPostByOriginalPostIdQuery
->;
+    APITypes.PublishedPostByOriginalPostIdQueryVariables,
+    APITypes.PublishedPostByOriginalPostIdQuery
+  >;
 export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
   getPost(id: $id) {
     type
