@@ -2070,9 +2070,7 @@ export type GetPublishedPostQuery = {
     omniResults?: string | null;
     runSignupResults?: string | null;
     raceResultsProvider?: string | null;
-    originalPostId?: string | null;
     updatedAt: string;
-    owner?: string | null;
   } | null;
 };
 
