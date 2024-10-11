@@ -400,6 +400,15 @@
         "processFitFile": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
           "s3Key": "amplify-builds/processFitFile-4266714c626d67545254-build.zip"
+        },
+        "syncUsersToSendGrid": {
+          "secretsPathAmplifyAppId": "d15noiwtuwwref"
+        },
+        "syncUserToSendgrid": {
+          "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
+          "s3Key": "amplify-builds/syncUserToSendgrid-307573614c78434a796d-build.zip",
+          "secretsPathAmplifyAppId": "d15noiwtuwwref",
+          "sendgridListId": "de73bcf1-4324-439a-966e-67e57ff1cc7c"
         }
       },
       "api": {

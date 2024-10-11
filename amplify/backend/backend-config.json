@@ -395,6 +395,20 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "syncUserToSendgrid": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "nextjsbloga585e058"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "videoUploadToAsset": {
       "build": true,
       "dependsOn": [],
@@ -720,6 +734,46 @@
         {
           "category": "function",
           "resourceName": "shorturl"
+        }
+      ]
+    },
+    "AMPLIFY_function_syncUserToSendgrid_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "syncUserToSendgrid"
+        }
+      ]
+    },
+    "AMPLIFY_function_syncUserToSendgrid_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "syncUserToSendgrid"
+        }
+      ]
+    },
+    "AMPLIFY_function_syncUserToSendgrid_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "syncUserToSendgrid"
+        }
+      ]
+    },
+    "AMPLIFY_function_syncUserToSendgrid_sendgridListId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "syncUserToSendgrid"
+        }
+      ]
+    },
+    "AMPLIFY_function_syncUsersToSendGrid_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "syncUsersToSendGrid"
         }
       ]
     },

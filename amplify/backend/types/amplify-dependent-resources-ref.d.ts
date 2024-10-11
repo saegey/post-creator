@@ -139,6 +139,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
+    "syncUserToSendgrid": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
     "videoUploadToAsset": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
