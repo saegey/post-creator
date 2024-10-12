@@ -81,7 +81,7 @@ exports.handler = async (event) => {
   } catch (error) {
     console.error(
       "Error syncing Cognito users to SendGrid:",
-      error.response.body.errors
+      JSON.stringify(error)
     );
   }
 };

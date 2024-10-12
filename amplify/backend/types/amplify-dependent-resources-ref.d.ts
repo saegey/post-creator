@@ -141,6 +141,7 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "syncUserToSendgrid": {
       "Arn": "string",
+      "CloudWatchEventRule": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",

@@ -1,24 +1,4 @@
 {
-  "permissions": {
-    "api": {
-      "api12660653": [
-        "create"
-      ],
-      "nextjsblog": [
-        "Query",
-        "Mutation"
-      ]
-    },
-    "function": {
-      "nextjsblog24b60079": [
-        "create"
-      ],
-      "processGpxFile": [
-        "create",
-        "read",
-        "update"
-      ]
-    }
-  },
+  "permissions": {},
   "lambdaLayers": []
 }

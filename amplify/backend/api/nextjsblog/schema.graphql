@@ -43,7 +43,11 @@ type PublishedPost
     rules: [
       { allow: public, operations: [read], provider: identityPool }
       { allow: private, operations: [read], provider: userPools }
-      { allow: owner, operations: [create, delete, read, update] }
+      {
+        allow: owner
+        operations: [create, update, delete, read]
+        provider: userPools
+      }
     ]
   ) {
   id: ID!
@@ -101,10 +105,10 @@ type PublishedPost
       queryField: "PublishedPostByOriginalPostId"
       sortKeyFields: ["createdAt"]
     )
-  # originalPost: Post @hasOne
-  # owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
-  # _version: Int
-  # _lastChangedAt: AWSTimestamp
+  originalPost: Post @hasOne
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
+  _version: Int
+  _lastChangedAt: AWSTimestamp
 }
 
 type Post

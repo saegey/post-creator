@@ -227,6 +227,7 @@
   "function": {
     "S3Trigger71ba5706": {
       "build": true,
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -761,11 +762,11 @@
         }
       ]
     },
-    "AMPLIFY_function_syncUsersToSendGrid_secretsPathAmplifyAppId": {
+    "AMPLIFY_function_syncUserToSendgrid_sendgridListId": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "syncUsersToSendGrid"
+          "resourceName": "syncUserToSendgrid"
         }
       ]
     },
