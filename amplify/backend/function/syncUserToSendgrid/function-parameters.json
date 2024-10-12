@@ -10,10 +10,5 @@
   "secretNames": [
     "SENDGRID_API_KEY"
   ],
-  "environmentVariableList": [
-    {
-      "cloudFormationParameterName": "sendgridListId",
-      "environmentVariableName": "SENDGRID_LIST_ID"
-    }
-  ]
+  "environmentVariableList": []
 }
