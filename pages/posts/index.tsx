@@ -60,7 +60,7 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
         zoneinfo,
       },
     };
-    console.log(user);
+    // console.log(user);
   } catch (e) {
     console.log(e);
     return {

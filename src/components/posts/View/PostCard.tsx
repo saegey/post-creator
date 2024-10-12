@@ -51,31 +51,33 @@ const PostCard = ({ post, showAuthor = true, status }: PostCardProps) => {
             backgroundColor: lighten("surface", 0.1),
           }}
         >
-          {post.imagesObj && post.imagesObj.length > 0 && (
-            <CldImage
-              width="400"
-              height="300"
-              src={post.imagesObj[0].public_id}
-              style={{
-                objectFit: "cover",
-                width: "100%",
-                height: "100%",
-                marginTop: "auto",
-                marginBottom: "auto",
-                borderTopLeftRadius: "5px",
-                borderTopRightRadius: "5px",
-              }}
-              underlay={post.imagesObj[0].public_id}
-              quality={90}
-              sizes="100vw"
-              alt="Description of my image"
-              config={{
-                cloud: {
-                  cloudName: cloudUrl,
-                },
-              }}
-            />
-          )}
+          {post.imagesObj &&
+            post.imagesObj.length > 0 &&
+            post.imagesObj[0].public_id && (
+              <CldImage
+                width="400"
+                height="300"
+                src={post.imagesObj[0].public_id}
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  borderTopLeftRadius: "5px",
+                  borderTopRightRadius: "5px",
+                }}
+                underlay={post.imagesObj[0].public_id}
+                quality={90}
+                sizes="100vw"
+                alt="Description of my image"
+                config={{
+                  cloud: {
+                    cloudName: cloudUrl,
+                  },
+                }}
+              />
+            )}
           {!post.imagesObj && (
             <Box
               sx={{

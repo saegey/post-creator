@@ -326,11 +326,11 @@
         },
         "UserPostConfirmation": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/UserPostConfirmation-534e4f32496452374a32-build.zip"
+          "s3Key": "amplify-builds/UserPostConfirmation-51762f33617343574475-build.zip"
         },
         "nextjsblog24b60079": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/nextjsblog24b60079-4b36542f455162397654-build.zip",
+          "s3Key": "amplify-builds/nextjsblog24b60079-323066734c773933452b-build.zip",
           "secretsPathAmplifyAppId": "d15noiwtuwwref"
         },
         "postUpdateCalc": {
@@ -343,11 +343,11 @@
         },
         "raceresult": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/raceresult-6c75736b35316b484671-build.zip"
+          "s3Key": "amplify-builds/raceresult-784d4965796578305859-build.zip"
         },
         "raceresultgetResults": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/raceresultgetResults-2b397334707368386774-build.zip"
+          "s3Key": "amplify-builds/raceresultgetResults-6d364266783635525957-build.zip"
         },
         "routeAccessPoint": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
@@ -355,7 +355,7 @@
         },
         "shorturl": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/shorturl-3047525a763137716c78-build.zip"
+          "s3Key": "amplify-builds/shorturl-6c657174475845346137-build.zip"
         },
         "videoUploadToAsset": {
           "secretsPathAmplifyAppId": "d15noiwtuwwref",
@@ -369,7 +369,7 @@
         },
         "videoWebhook": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",
-          "s3Key": "amplify-builds/videoWebhook-6252694d664d4a763965-build.zip"
+          "s3Key": "amplify-builds/videoWebhook-6e3871756576422f4156-build.zip"
         },
         "webscorer": {
           "deploymentBucketName": "amplify-nextjsblog-staging-132519-deployment",

@@ -173,7 +173,11 @@ export const getPublishedPost =
     omniResults
     runSignupResults
     raceResultsProvider
+    owner
+    _version
+    _lastChangedAt
     updatedAt
+    publishedPostOriginalPostId
     __typename
   }
 }
@@ -229,8 +233,11 @@ export const listPublishedPosts = /* GraphQL */ `query ListPublishedPosts(
       runSignupResults
       raceResultsProvider
       originalPostId
-      updatedAt
       owner
+      _version
+      _lastChangedAt
+      updatedAt
+      publishedPostOriginalPostId
       __typename
     }
     nextToken
@@ -300,8 +307,11 @@ export const listPublishedPostsByCreatedAt =
       runSignupResults
       raceResultsProvider
       originalPostId
-      updatedAt
       owner
+      _version
+      _lastChangedAt
+      updatedAt
+      publishedPostOriginalPostId
       __typename
     }
     nextToken
@@ -371,8 +381,11 @@ export const PublishedPostByOriginalPostId =
       runSignupResults
       raceResultsProvider
       originalPostId
-      updatedAt
       owner
+      _version
+      _lastChangedAt
+      updatedAt
+      publishedPostOriginalPostId
       __typename
     }
     nextToken

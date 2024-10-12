@@ -106,7 +106,14 @@ type PublishedPost
       sortKeyFields: ["createdAt"]
     )
   originalPost: Post @hasOne
-  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) # Prevent owners from updating 'owner'
+  owner: String
+  # @auth(
+  #   rules: [
+  #     { allow: owner, operations: [read, delete] }
+  #     { allow: private, operations: [read], provider: identityPool }
+  #     { allow: public, operations: [read] }
+  #   ]
+  # ) # Prevent owners from updating 'owner'
   _version: Int
   _lastChangedAt: AWSTimestamp
 }

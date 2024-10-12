@@ -275,7 +275,8 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog(
   APITypes.OnDeleteBlogSubscriptionVariables,
   APITypes.OnDeleteBlogSubscription
 >;
-export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublishedPost(
+export const onCreatePublishedPost =
+  /* GraphQL */ `subscription OnCreatePublishedPost(
   $filter: ModelSubscriptionPublishedPostFilterInput
   $owner: String
 ) {
@@ -321,16 +322,20 @@ export const onCreatePublishedPost = /* GraphQL */ `subscription OnCreatePublish
     runSignupResults
     raceResultsProvider
     originalPostId
-    updatedAt
     owner
+    _version
+    _lastChangedAt
+    updatedAt
+    publishedPostOriginalPostId
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreatePublishedPostSubscriptionVariables,
-  APITypes.OnCreatePublishedPostSubscription
->;
-export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublishedPost(
+    APITypes.OnCreatePublishedPostSubscriptionVariables,
+    APITypes.OnCreatePublishedPostSubscription
+  >;
+export const onUpdatePublishedPost =
+  /* GraphQL */ `subscription OnUpdatePublishedPost(
   $filter: ModelSubscriptionPublishedPostFilterInput
   $owner: String
 ) {
@@ -376,16 +381,20 @@ export const onUpdatePublishedPost = /* GraphQL */ `subscription OnUpdatePublish
     runSignupResults
     raceResultsProvider
     originalPostId
-    updatedAt
     owner
+    _version
+    _lastChangedAt
+    updatedAt
+    publishedPostOriginalPostId
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdatePublishedPostSubscriptionVariables,
-  APITypes.OnUpdatePublishedPostSubscription
->;
-export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublishedPost(
+    APITypes.OnUpdatePublishedPostSubscriptionVariables,
+    APITypes.OnUpdatePublishedPostSubscription
+  >;
+export const onDeletePublishedPost =
+  /* GraphQL */ `subscription OnDeletePublishedPost(
   $filter: ModelSubscriptionPublishedPostFilterInput
   $owner: String
 ) {
@@ -431,15 +440,18 @@ export const onDeletePublishedPost = /* GraphQL */ `subscription OnDeletePublish
     runSignupResults
     raceResultsProvider
     originalPostId
-    updatedAt
     owner
+    _version
+    _lastChangedAt
+    updatedAt
+    publishedPostOriginalPostId
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeletePublishedPostSubscriptionVariables,
-  APITypes.OnDeletePublishedPostSubscription
->;
+    APITypes.OnDeletePublishedPostSubscriptionVariables,
+    APITypes.OnDeletePublishedPostSubscription
+  >;
 export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
   $filter: ModelSubscriptionPostFilterInput
   $owner: String
