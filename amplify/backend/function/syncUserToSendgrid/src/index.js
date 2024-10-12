@@ -73,6 +73,8 @@ exports.handler = async (event) => {
       },
     };
 
+    console.log(JSON.stringify(request));
+
     await sgClient.request(request);
 
     console.log("Successfully synced Cognito users with SendGrid.");

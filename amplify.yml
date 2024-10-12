@@ -10,7 +10,7 @@ backend:
     build:
       commands:
         # Push backend resources with Amplify CLI
-        - amplifyPush --simple
+        - amplifyPush --yes
 frontend:
   phases:
     preBuild:
