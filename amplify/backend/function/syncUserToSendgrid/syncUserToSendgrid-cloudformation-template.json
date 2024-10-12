@@ -22,9 +22,6 @@
     },
     "secretsPathAmplifyAppId": {
       "Type": "String"
-    },
-    "sendgridListId": {
-      "Type": "String"
     }
   },
   "Conditions": {
@@ -104,9 +101,6 @@
                   "SENDGRID_API_KEY"
                 ]
               ]
-            },
-            "SENDGRID_LIST_ID": {
-              "Ref": "sendgridListId"
             }
           }
         },

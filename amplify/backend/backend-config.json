@@ -761,14 +761,6 @@
         }
       ]
     },
-    "AMPLIFY_function_syncUserToSendgrid_sendgridListId": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "syncUserToSendgrid"
-        }
-      ]
-    },
     "AMPLIFY_function_syncUsersToSendGrid_secretsPathAmplifyAppId": {
       "usedBy": [
         {
