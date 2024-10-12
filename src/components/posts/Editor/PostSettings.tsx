@@ -50,7 +50,11 @@ const PostSettings = () => {
         },
         query: deletePublishedPost,
       })) as GraphQLResult<DeletePublishedPostMutation>;
+    } catch (errors) {
+      console.error("failed to delete published post", JSON.stringify(errors));
+    }
 
+    try {
       (await API.graphql({
         authMode: "AMAZON_COGNITO_USER_POOLS",
         variables: {
@@ -63,7 +67,7 @@ const PostSettings = () => {
 
       Router.push(`/posts`);
     } catch (errors) {
-      console.error(JSON.stringify(errors));
+      console.error("failed to delete draft", JSON.stringify(errors));
     }
   };
 

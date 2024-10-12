@@ -120,8 +120,8 @@ export const listPostsCustom = /* GraphQL */ `
         createdAt
         images
         author
+        # owner
         # privacyStatus
-        # postAuthorId
       }
     }
   }

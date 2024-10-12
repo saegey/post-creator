@@ -91,20 +91,29 @@ const PostsAll = ({ user }: { user: IUser }) => {
   };
 
   const getPublishedPost = async () => {
-    const response = (await API.graphql({
-      query: listPostsCustom,
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-    })) as GraphQLResult<ListPublishedPostsByCreatedAtTypes>;
+    try {
+      const response = (await API.graphql({
+        query: listPostsCustom,
+        variables: {
+          filter: {
+            owner: { eq: `${user.attributes.sub}::${user.attributes.sub}` },
+          },
+        },
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+      })) as GraphQLResult<ListPublishedPostsByCreatedAtTypes>;
 
-    setPosts(
-      response.data?.listPublishedPostsByCreatedAt.items.map((d) => {
-        return {
-          ...d,
-          imagesObj: JSON.parse(d.images),
-          author: JSON.parse(d.author),
-        };
-      })
-    );
+      setPosts(
+        response.data?.listPublishedPostsByCreatedAt.items.map((d) => {
+          return {
+            ...d,
+            imagesObj: JSON.parse(d.images),
+            author: JSON.parse(d.author),
+          };
+        })
+      );
+    } catch (e) {
+      console.error(JSON.stringify(e));
+    }
   };
 
   React.useEffect(() => {
