@@ -1,24 +1,14 @@
 import React from "react";
-import { Box, Button, Flex, IconButton, Spinner, Text } from "theme-ui";
-import { API } from "aws-amplify";
-import { AxiosError } from "axios";
+import { Button, Flex, IconButton, Text } from "theme-ui";
 
 import { EditorContext } from "../../posts/Editor/EditorContext";
 import CloudCheck from "../../icons/CloudCheck";
 import RefreshIcon from "../../icons/RefreshIcon";
 import RocketIcon from "../../icons/RocketIcon";
-import { PostContext } from "../../PostContext";
 
 const SettingsSection = () => {
-  const {
-    isSavingPost,
-    savingStatus,
-    setIsPublishedConfirmationOpen,
-    setIsPublishing,
-    isPublishing,
-  } = React.useContext(EditorContext);
-
-  const { id } = React.useContext(PostContext);
+  const { isSavingPost, savingStatus, setIsPublishedConfirmationOpen } =
+    React.useContext(EditorContext);
 
   return (
     <>
@@ -39,7 +29,6 @@ const SettingsSection = () => {
             <RefreshIcon />
           </IconButton>
           <Text>{savingStatus}</Text>
-          {/* <Spinner /> */}
         </Flex>
       ) : (
         <IconButton sx={{ color: "success" }}>
@@ -48,31 +37,9 @@ const SettingsSection = () => {
       )}
       <Button
         onClick={async () => {
-          setIsPublishing(true);
-
-          try {
-            const res = (await API.post("api12660653", `/post/publish`, {
-              body: {
-                postId: id,
-              },
-              response: true,
-            })) as {
-              data: any;
-            };
-            setIsPublishing(false);
-            setIsPublishedConfirmationOpen(true);
-
-            // console.log(res);
-          } catch (err) {
-            if (err instanceof AxiosError) {
-              setIsPublishing(false);
-
-              throw new Error("network error");
-            }
-          }
+          setIsPublishedConfirmationOpen(true);
         }}
         sx={{
-          // borderRadius: ["10px", "10px", "10px"],
           cursor: "pointer",
           paddingX: ["10px", "3px", "12px"],
           paddingY: ["3px", "3px", "6px"],
@@ -87,13 +54,9 @@ const SettingsSection = () => {
               color: "background",
             }}
           >
-            {isPublishing ? (
-              <Spinner sx={{ color: "background" }} />
-            ) : (
-              <RocketIcon />
-            )}
+            <RocketIcon />
           </IconButton>
-          <Text sx={{ color: "background" }}>Publish</Text>
+          <Text sx={{ color: "background" }}>Share</Text>
         </Flex>
       </Button>
     </>

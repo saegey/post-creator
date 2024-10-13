@@ -1,14 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Flex,
-  Text,
-  Box,
-  Input,
-  Button,
-  Checkbox,
-  IconButton,
-  Label,
-} from "theme-ui";
+import { Flex, Text, Box, Input, Button, Checkbox, Label } from "theme-ui";
+import { API } from "aws-amplify";
+import { AxiosError } from "axios";
 
 import { EditorContext } from "./Editor/EditorContext";
 import StandardModal from "../shared/StandardModal";
@@ -19,12 +12,15 @@ import { NotificationContext } from "../NotificationContext";
 
 const PublishPostModal = () => {
   const { editor } = useSlateContext();
-  const { isPublishedConfirmationOpen, setIsPublishedConfirmationOpen } =
-    React.useContext(EditorContext);
-  const { id } = React.useContext(PostContext);
+  const {
+    isPublishedConfirmationOpen,
+    setIsPublishedConfirmationOpen,
+    setIsPublishing,
+    isPublishing,
+  } = React.useContext(EditorContext);
+  const { id, privacyStatus, setPost } = React.useContext(PostContext);
   const [checked, setChecked] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { isPublishing } = React.useContext(EditorContext);
   const [postUrl, setPostUrl] = useState("");
   const { setNotification } = React.useContext(NotificationContext);
 
@@ -41,6 +37,7 @@ const PublishPostModal = () => {
   }
 
   const handleCopyClick = () => {
+    console.log("handleCopyClick");
     if (inputRef.current) {
       const inputValue = inputRef.current.value;
       navigator.clipboard.writeText(inputValue).then(() => {
@@ -50,6 +47,29 @@ const PublishPostModal = () => {
           type: "Info",
         });
       });
+    }
+  };
+
+  const handlePublish = async () => {
+    try {
+      setIsPublishing(true);
+      const res = (await API.post("api12660653", `/post/publish`, {
+        body: {
+          postId: id,
+        },
+        response: true,
+      })) as {
+        data: any;
+      };
+
+      setPost({ privacyStatus: "published" });
+
+      setIsPublishing(false);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setIsPublishing(false);
+        throw new Error("network error");
+      }
     }
   };
 
@@ -66,7 +86,7 @@ const PublishPostModal = () => {
   return (
     <>
       <StandardModal
-        title="Public link created"
+        title="Share post link"
         isOpen={isPublishedConfirmationOpen}
         setIsOpen={setIsPublishedConfirmationOpen}
         maxWidth="600px"
@@ -110,11 +130,10 @@ const PublishPostModal = () => {
               </Flex>
             </Box>
             <Box sx={{ position: "relative" }}>
-              {isPublishing ? <Text>Publishing...</Text> : null}
               <Box
                 sx={{
                   backgroundColor: "surfaceLight",
-                  borderRadius: "10px",
+                  borderRadius: "3px",
                   padding: "10px",
                 }}
               >
@@ -127,7 +146,7 @@ const PublishPostModal = () => {
                   }}
                 >
                   <Input
-                    value={postUrl}
+                    value={privacyStatus === "draft" ? "" : postUrl}
                     sx={{
                       borderWidth: 0,
                       fontSize: "22px",
@@ -135,39 +154,50 @@ const PublishPostModal = () => {
                       whiteSpace: "nowrap",
                       textOverflow: "ellipsis",
                       width: "100%", // Make Input take up available space
-                      maxWidth: "calc(100% - 120px)", // Ensure it doesn't overflow the container
+                      maxWidth: "calc(100% - 20px)", // Ensure it doesn't overflow the container
                     }}
                     readOnly={true}
                     ref={inputRef}
                   />
                   <Button
+                    variant="primaryButton"
                     sx={{
                       display: "inline-flex",
                       alignItems: "center",
-                      whiteSpace: "nowrap", // Ensures text doesn't wrap
-                      paddingY: "10px",
-                      paddingX: "15px",
-                      borderRadius: "10px",
+                      whiteSpace: "nowrap",
+                      paddingX: ["8px", "10px", "10px"],
+                      width: "fit-content",
+                      borderRadius: "3px",
+                      "&:disabled": {
+                        backgroundColor: "disabledBackground",
+                      },
                       flexShrink: 0, // Prevent the button from shrinking
                     }}
+                    disabled={privacyStatus === "draft"}
                     onClick={handleCopyClick}
                   >
                     <Flex sx={{ gap: "5px", alignItems: "center" }}>
-                      <IconButton
+                      <Box
                         sx={{
-                          width: "25px",
-                          height: "25px",
+                          width: ["15px", "15px", "15px"],
+                          height: ["15px", "15px", "15px"],
                           color: "secondary",
                         }}
                       >
                         <CopyIcon />
-                      </IconButton>
-                      <Text sx={{ color: "secondary" }}>Copy Link</Text>
+                      </Box>
                     </Flex>
                   </Button>
                 </Flex>
               </Box>
             </Box>
+            <Flex sx={{ flexGrow: 1, justifyContent: "right" }}>
+              <Button variant="primaryButton" onClick={handlePublish}>
+                <Text sx={{ fontSize: "16px" }}>
+                  {isPublishing ? "Publishing..." : "Publish"}
+                </Text>
+              </Button>
+            </Flex>
           </Flex>
         </Flex>
       </StandardModal>
