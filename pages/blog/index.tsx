@@ -59,7 +59,7 @@ export default function Post({ allPosts }: Props) {
               justifyContent: "center",
               gap: "40px",
               marginTop: ["20px", "20px", "40px"],
-              marginBottom: ["20px", "20px", "40px"],
+              marginBottom: ["20px", "20px", "80px"],
             }}
           >
             <Text as="h1">Blog</Text>

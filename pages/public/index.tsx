@@ -24,32 +24,10 @@ const Home = () => {
         <Flex
           sx={{
             height: ["calc(100vh - 48px)", "calc(100vh - 48px)", "calc(100vh)"],
-            // paddingTop: "64px",
-            // backgroundColor: "red",
             justifyContent: "center",
             alignItems: "center",
             marginBottom: "50px",
-            // zIndex: 1,
             position: "relative",
-            // ":before": {
-            //   content: '""', // Required to render the pseudo-element
-            //   position: "absolute",
-            //   top: 0,
-            //   left: 0,
-            //   right: 0,
-            //   bottom: 0,
-            //   zIndex: -1,
-            //   filter: "grayscale(100%) blur(200px) brightness(150%)",
-            //   // filter:
-            //   //   "brightness(150%) blur(200px) saturate(3000%) blur(200px) ",
-
-            //   // background: blur(5px);
-            //   //   "conic-gradient(from 90deg at 50% 50%, #fafafa, #eaeaea, #d9d9d9, #c9c9c9, #fafafa);",
-            //   background:
-            //     "conic-gradient(red 0deg 120deg,yellow 120deg 240deg,blue 240deg 360deg)",
-            //   // filter: "blur(150px)",
-            //   // backdropFilter: "blur(100px)",
-            // },
           }}
         >
           <Flex sx={{ justifyItems: "center", flexDirection: "column" }}>
@@ -72,7 +50,6 @@ const Home = () => {
                   textAlign: "left",
                 }}
               >
-                {/* Track, Trek, Triumph: Your Journey, Your Journal.. */}
                 Write, reflect, and achieve more with Monopad Journal.
               </Text>
               <Text
@@ -83,13 +60,11 @@ const Home = () => {
                   fontSize: ["16px", "18px", "18px"],
                   fontWeight: 530,
                   color: "textLight",
-                  // fontStyle: "italic",
-                  // textAlign: "center",
                 }}
               >
-                Effortlessly create a detailed bike race recap with integrated
+                Effortlessly create a detailed activity recap with integrated
                 photos, videos, and data analysis to highlight key moments and
-                race insights.
+                insights.
               </Text>
               <Flex
                 sx={{
@@ -103,7 +78,6 @@ const Home = () => {
                   href="/register"
                   onClick={(e) => {
                     e.preventDefault();
-                    console.log("themelink");
                     //https://platform.d15noiwtuwwref/login
                     window.open(
                       location.protocol +

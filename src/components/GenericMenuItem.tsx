@@ -27,11 +27,12 @@ const GenericMenuItem: React.FC<MenuItemProps> = ({
         cursor: isDisabled ? "not-allowed" : "pointer",
         opacity: isDisabled ? 0.6 : 1,
         width: "100%",
+        height: "fit-content",
       }}
       onClick={handleClick}
       onMouseDown={(e) => e.preventDefault()} // Prevents the editor from losing focus
     >
-      {icon && <Box>{icon}</Box>}
+      {icon && <Box sx={{ width: "30px", height: "30px" }}>{icon}</Box>}
       <Text
         as="span"
         sx={{

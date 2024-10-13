@@ -52,14 +52,12 @@ const Header: React.FC<HeaderLayoutProps> = ({ user, right }) => {
           </a>
         </Flex>
         <Flex
-          sx={
-            {
-              justifyContent: "end",
-              gap: "10px",
-              flexGrow: 1,
-              alignItems: "center",
-            } as ThemeUIStyleObject<Theme>
-          }
+          sx={{
+            justifyContent: "end",
+            gap: "10px",
+            flexGrow: 1,
+            alignItems: "center",
+          }}
         >
           {right}
           {user ? <ProfileSection /> : <PublicMenu />}

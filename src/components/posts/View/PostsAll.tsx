@@ -1,7 +1,7 @@
-import { Grid, Box, Flex, Text, NavLink, IconButton } from "theme-ui";
+import { Grid, Box, Flex, Text, NavLink, IconButton, Button } from "theme-ui";
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
-import React from "react";
+import React, { useContext } from "react";
 import Router from "next/router";
 import { useSearchParams } from "next/navigation";
 
@@ -18,6 +18,7 @@ import { createPostNew } from "../../../graphql/customMutations";
 import ShareIcon from "../../icons/ShareIcon";
 import BlackBox from "../../layout/BlackBox";
 import AddIcon from "../../icons/AddIcon";
+import { NotificationContext } from "../../NotificationContext";
 
 interface ListPostsByCreatedAtTypes {
   listPostsByCreatedAt: {
@@ -51,15 +52,16 @@ interface ListPublishedPostsByCreatedAtTypes {
 }
 
 const PostsAll = ({ user }: { user: IUser }) => {
+  const { setNotification } = useContext(NotificationContext);
+  const [status, setStatus] = React.useState<string | undefined>();
+  const [posts, setPosts] = React.useState<PostType>();
+  const [isLoading, setIsLoading] = React.useState(false);
+
   React.useEffect(() => {
     if (!user) {
       Router.push("/login");
     }
   }, [user]);
-
-  const [status, setStatus] = React.useState<string | undefined>();
-  const [posts, setPosts] = React.useState<PostType>();
-  const [isLoading, setIsLoading] = React.useState(false);
 
   const searchParams = useSearchParams();
 
@@ -71,23 +73,27 @@ const PostsAll = ({ user }: { user: IUser }) => {
   }
 
   const getDraftPosts = async (type = "draft") => {
-    const response = (await API.graphql({
-      query: listMyPostsCustom,
-      authMode: "AMAZON_COGNITO_USER_POOLS",
-      // variables: {
-      //   filter: {
-      //     privacyStatus: {
-      //       eq: type,
-      //     },
-      //   },
-      // },
-    })) as GraphQLResult<ListPostsByCreatedAtTypes>;
+    try {
+      const response = (await API.graphql({
+        query: listMyPostsCustom,
+        authMode: "AMAZON_COGNITO_USER_POOLS",
+        // variables: {
+        //   filter: {
+        //     privacyStatus: {
+        //       eq: type,
+        //     },
+        //   },
+        // },
+      })) as GraphQLResult<ListPostsByCreatedAtTypes>;
 
-    setPosts(
-      response.data?.listPostsByCreatedAt.items.map((d) => {
-        return { ...d, imagesObj: JSON.parse(d.images) };
-      })
-    );
+      setPosts(
+        response.data?.listPostsByCreatedAt.items.map((d) => {
+          return { ...d, imagesObj: JSON.parse(d.images) };
+        })
+      );
+    } catch (e) {
+      setNotification({ type: "Error", message: "Failed fetching posts" });
+    }
   };
 
   const getPublishedPost = async () => {
@@ -112,6 +118,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
         })
       );
     } catch (e) {
+      setNotification({ type: "Error", message: "Failed fetching posts" });
       console.error(JSON.stringify(e));
     }
   };
@@ -156,7 +163,7 @@ const PostsAll = ({ user }: { user: IUser }) => {
     <Box as="main" sx={{ minHeight: "100vw" }}>
       {isLoading && (
         <BlackBox>
-          <Text>Loading</Text>
+          <></>
         </BlackBox>
       )}
       <Header user={user} />
@@ -223,18 +230,20 @@ const PostsAll = ({ user }: { user: IUser }) => {
               justifyContent: "right",
             }}
           >
-            <IconButton
+            <Button
+              variant="primaryButton"
+              sx={{ width: "fit-content" }}
               onClick={() => createNewPost()}
-              id="create-new-post"
-              sx={{
-                color: "background",
-                backgroundColor: "primary",
-                "&:hover": { backgroundColor: "primaryHover" },
-                cursor: "pointer",
-              }}
             >
-              <AddIcon />
-            </IconButton>
+              <Flex sx={{ gap: "5px" }}>
+                <Box sx={{ width: "20px", height: "20px" }}>
+                  <AddIcon />
+                  ``
+                </Box>
+
+                <Text>New Post</Text>
+              </Flex>
+            </Button>
           </Flex>
         </Flex>
 

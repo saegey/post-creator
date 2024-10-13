@@ -1,9 +1,11 @@
 import Head from "next/head";
 import React from "react";
-import { Box } from "theme-ui";
+import { Box, Button, Flex, Text } from "theme-ui";
 import { withSSRContext } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import { GetServerSideProps } from "next";
+import { Link as ThemeLink } from "theme-ui";
+import Link from "next/link";
 
 import { IUser, Post, PostContextType } from "../../src/types/common";
 import { GetPublishedPostQuery } from "../../src/API";
@@ -12,6 +14,7 @@ import Header from "../../src/components/shared/Header/Header";
 import { PostContext } from "../../src/components/PostContext";
 import Viewer from "../../src/components/posts/Viewer/Viewer";
 import { getPublishedPost } from "../../src/graphql/queries";
+import EditIcon from "../../src/components/icons/EditIcon";
 
 interface PostViewProps extends Post {
   authenticatedUser: IUser | null;
@@ -114,7 +117,7 @@ const PostView = (props: PostViewProps) => {
   return (
     <PostContext.Provider value={post}>
       <Head>
-        <title>Post</title>
+        <title>{post.title}</title>
       </Head>
       <Box
         as="main"
@@ -123,7 +126,30 @@ const PostView = (props: PostViewProps) => {
           minHeight: "100%",
         }}
       >
-        <Header user={user ?? undefined} />
+        <Header
+          user={user ?? undefined}
+          right={
+            user ? (
+              <ThemeLink
+                href={`/posts/${post.id}/edit`}
+                as={Link}
+                sx={{ textDecoration: "none" }}
+                title="Edit Post"
+              >
+                <Button variant="primaryButton" sx={{ width: "fit-content" }}>
+                  <Flex sx={{ gap: "5px" }}>
+                    <Box sx={{ width: "20px", height: "20px" }}>
+                      <EditIcon />
+                    </Box>
+                    <Text>Edit</Text>
+                  </Flex>
+                </Button>
+              </ThemeLink>
+            ) : (
+              <></>
+            )
+          }
+        />
         <Viewer components={components} />
       </Box>
     </PostContext.Provider>

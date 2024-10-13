@@ -36,6 +36,7 @@ const HeroBannerView = ({ element }: { element: HeroBannerType }) => {
         subhead={subhead ? subhead : ""}
         date={date ? date : ""}
         postLocation={postLocation ? postLocation : ""}
+        isView={true}
       />
     );
   }, [title, postLocation, date, subhead, element.image, element.photoCaption]);

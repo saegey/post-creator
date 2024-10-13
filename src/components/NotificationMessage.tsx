@@ -1,5 +1,6 @@
 import { Close, Flex, Message, Text } from "theme-ui";
 import React from "react";
+import { darken } from "@theme-ui/color";
 
 import { NotificationContext } from "./NotificationContext";
 
@@ -28,10 +29,13 @@ const NotificationMessage = () => {
           width: ["100vw", "400px", "400px"],
           padding: ["20px", "10px", "10px"],
           color: "white",
-          backgroundColor: "error",
+          backgroundColor: notification.type === "Error" ? "error" : "success",
           borderRadius: ["0px", "5px", "5px"],
           borderLeftWidth: ["0px", "5px", "5px"],
-          borderLeftColor: "#970808",
+          borderLeftColor:
+            notification.type === "Error"
+              ? darken("error", 0.1)
+              : darken("success", 0.1),
         }}
       >
         <Flex>

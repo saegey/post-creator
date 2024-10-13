@@ -124,7 +124,7 @@ const ActivityOverviewWrapper = ({
   return (
     <HoverAction element={element}>
       <EnhancedBox element={element} path={path} sx={{ cursor: "pointer" }}>
-        <Box variant="boxes.componentCard" contentEditable={false}>
+        <Box variant="boxes.componentCard">
           <ActivityOverview
             data={activityData}
             selectedFields={[

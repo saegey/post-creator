@@ -72,7 +72,7 @@ const SettingsSection = () => {
           }
         }}
         sx={{
-          borderRadius: ["10px", "10px", "10px"],
+          // borderRadius: ["10px", "10px", "10px"],
           cursor: "pointer",
           paddingX: ["10px", "3px", "12px"],
           paddingY: ["3px", "3px", "6px"],

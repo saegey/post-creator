@@ -1,5 +1,6 @@
 import { Box, Text, Grid, ThemeUIStyleObject, Theme } from "theme-ui";
 import React from "react";
+
 import { ActivityItems } from "./types";
 
 const ActivityOverviewTemplate = ({ items }: { items: ActivityItems }) => (

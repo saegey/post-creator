@@ -15,6 +15,7 @@ import StandardModal from "../shared/StandardModal";
 import { useSlateContext } from "../SlateContext";
 import CopyIcon from "../icons/CopyIcon";
 import { PostContext } from "../PostContext";
+import { NotificationContext } from "../NotificationContext";
 
 const PublishPostModal = () => {
   const { editor } = useSlateContext();
@@ -25,6 +26,7 @@ const PublishPostModal = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { isPublishing } = React.useContext(EditorContext);
   const [postUrl, setPostUrl] = useState("");
+  const { setNotification } = React.useContext(NotificationContext);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -42,7 +44,11 @@ const PublishPostModal = () => {
     if (inputRef.current) {
       const inputValue = inputRef.current.value;
       navigator.clipboard.writeText(inputValue).then(() => {
-        alert("Text copied to clipboard: " + inputValue);
+        // alert("Text copied to clipboard: " + inputValue);
+        setNotification({
+          message: "Link copied to clipboard",
+          type: "Info",
+        });
       });
     }
   };

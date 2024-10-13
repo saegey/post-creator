@@ -46,7 +46,7 @@ const OptionsDropdown = () => {
     >
       <>
         {node.type === "image" && (
-          <Box variant="boxes.sidebarMenuItem" sx={{ paddingX: "5px" }}>
+          <Box variant="boxes.sidebarMenuItem">
             <GenericMenuItem
               onClick={() => {
                 setIsPhotoCaptionOpen(true);

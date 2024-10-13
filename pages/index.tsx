@@ -3,10 +3,7 @@ import React from "react";
 import { NextApiRequest } from "next";
 import Router from "next/router";
 
-import PostsAllUsers from "../src/components/posts/Explore/PostsAllUsers";
-import { CloudinaryImage, IUser } from "../src/types/common";
 import User from "../src/actions/User";
-import Post from "../src/actions/PostExplore";
 
 export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   const user = await User.getUser({ req });
@@ -20,8 +17,6 @@ export const getServerSideProps = async ({ req }: { req: NextApiRequest }) => {
   }
 
   return { props: {} };
-
-  // return await Post.explore({ req, user });
 };
 
 const Home = () => {
@@ -34,7 +29,6 @@ const Home = () => {
       <Head>
         <title>Monopad - Home</title>
       </Head>
-      {/* <PostsAllUsers posts={posts} user={user} /> */}
     </>
   );
 };
