@@ -59,10 +59,9 @@ const Journal = () => {
                 fontSize: ["16px", "18px", "18px"],
               }}
             >
-              Effortlessly craft a comprehensive bike race recap within minutes.
-              Enhance your narrative by seamlessly incorporating photos and
-              videos. Dive into insightful data analysis, discussing pivotal
-              moments and key highlights of the race.
+              Effortlessly create a detailed activity recap with integrated
+              photos, videos, and data analysis to highlight key moments and
+              insights.
             </Text>
             <Flex sx={{ width: "100%", justifyContent: "center" }}>
               <Button

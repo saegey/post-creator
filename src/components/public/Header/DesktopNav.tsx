@@ -11,12 +11,12 @@ const DesktopNav = () => {
   const productMenuItems = [
     {
       title: "Journal",
-      description: "Capture the experience of your competition",
+      description: "Capture the highlights of your experience",
       href: "/journal",
     },
     {
-      title: "Race Calendar",
-      description: "Publish your schedule and coordinate with fellow racers",
+      title: "Event Calendar",
+      description: "Publish your schedule and coordinate with others",
       soon: true,
       disabled: true,
     },

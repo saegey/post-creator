@@ -36,18 +36,18 @@ const PublicFooter = () => {
         >
           <Box
             sx={{
-              display: ["none", "inherit", "none"],
-              paddingLeft: "60px",
-              paddingTop: "60px",
+              display: ["none", "inherit", "inherit"],
+              // paddingLeft: "60px",
+              paddingBottom: "30px",
             }}
           >
             <LogoBlock />
           </Box>
           <Grid
-            columns={["2fr auto auto 2fr", "1fr 1fr 1fr", "2fr auto auto 2fr"]}
+            columns={["auto auto auto 2fr", "1fr 1fr 1fr", "1fr 1fr 1fr"]}
             sx={{
               gridTemplateRows: "auto",
-              width: "100%",
+              width: ["100%", "100%", "900px"],
               alignContent: "center",
               gridColumnGap: "80px",
               gridRowGap: "30px",
@@ -55,6 +55,7 @@ const PublicFooter = () => {
               position: "relative",
               overflow: "hidden",
               borderRadius: "5px",
+              // backgroundColor: "red",
             }}
           >
             <FooterSection title="Explore">
@@ -72,26 +73,41 @@ const PublicFooter = () => {
 
             <FooterSection title="Company">
               <FooterLink href="/about">About</FooterLink>
-              {/* <FooterLink href="/manifesto">Manifesto</FooterLink>
-              <FooterLink href="/status">Status</FooterLink> */}
             </FooterSection>
 
             <FooterSection title="Legal">
               <FooterLink href="/terms">Terms of Service</FooterLink>
               <FooterLink href="/privacy">Privacy Policy</FooterLink>
             </FooterSection>
-
-            <FooterSocialLinks />
-
+          </Grid>
+          <Flex
+            sx={{
+              flexGrow: 1,
+              marginTop: "20px",
+              // backgroundColor: "red",
+              alignItems: "center",
+              // ,
+            }}
+          >
             <Text
               sx={{
                 fontSize: "14px",
-                gridArea: "span 1/span 3/span 1/span 3",
+                // backgroundColor: "pink",
+                // gridArea: "span 1/span 3/span 1/span 3",
               }}
             >
               © Monopad. 2024 — All rights reserved.
             </Text>
-          </Grid>
+            <Flex
+              sx={{
+                flexGrow: 1,
+                // backgroundColor: "yellow",
+                justifyContent: "end",
+              }}
+            >
+              <FooterSocialLinks />
+            </Flex>
+          </Flex>
         </Box>
       </Flex>
       <Box

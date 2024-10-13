@@ -11,10 +11,19 @@ interface HeroBannerBaseProps {
   subhead?: string;
   date?: string;
   postLocation?: string;
+  isView?: boolean;
 }
 
 const HeroBannerBase: React.FC<HeroBannerBaseProps> = (props) => {
-  const { element, imageUrl, title, subhead, date, postLocation } = props;
+  const {
+    element,
+    imageUrl,
+    title,
+    subhead,
+    date,
+    postLocation,
+    isView = false,
+  } = props;
 
   return (
     <Box
@@ -34,6 +43,16 @@ const HeroBannerBase: React.FC<HeroBannerBaseProps> = (props) => {
       >
         {element.image && element !== null && imageUrl ? (
           <HeroImage element={element} imageUrl={imageUrl} />
+        ) : isView ? (
+          <Flex
+            sx={{
+              width: ["100%", "65%", "65%"],
+              height: "400px",
+              background: "surfaceAccent",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          ></Flex>
         ) : (
           <DefaultImage />
         )}

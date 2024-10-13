@@ -72,7 +72,6 @@ const Element: React.FC<ElementProps> = ({ attributes, children, element }) => {
 
     case "raceResults":
       if (element.subType === "webscorerResults") {
-        // return <WebscorerListWrapper {...props} />;
         return <WebscorerListView element={element} />;
       }
 

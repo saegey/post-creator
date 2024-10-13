@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton } from "theme-ui";
+import { Box, Button, Flex, Text } from "theme-ui";
 import React from "react";
 
 import { EditorContext } from "../Editor/EditorContext";
@@ -19,18 +19,20 @@ const DefaultImage = () => {
     >
       <Flex sx={{ alignItems: "center" }}>
         <Box>
-          <IconButton
+          <Button
             onClick={() => {
               setIsChangeImageModalOpen(true);
             }}
-            sx={{
-              backgroundColor: "primary",
-              color: "background",
-              "&:hover": { backgroundColor: "primaryHover" },
-            }}
+            sx={{ width: "fit-content" }}
+            variant="primaryButton"
           >
-            <UploadIcon />
-          </IconButton>
+            <Flex sx={{ gap: "10px" }}>
+              <Box sx={{ width: "20px", height: "20px" }}>
+                <UploadIcon />
+              </Box>
+              <Text>Upload Image</Text>
+            </Flex>
+          </Button>
         </Box>
       </Flex>
     </Flex>

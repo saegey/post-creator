@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Input, Label, Spinner, Text } from "theme-ui";
 import React from "react";
 import { Auth, Storage } from "aws-amplify";
+
 import { usePost } from "../../../../PostContext";
 import usePubSubSubscription from "../../../../../hooks/usePubSubSubscription";
 import { getPost } from "../../../../../actions/PostGet";
@@ -79,6 +80,14 @@ const UploadButton = () => {
       return;
     }
 
+    // Check if the file extension is .fit
+    const fileExtension = file.name.split(".").pop()?.toLowerCase();
+    if (fileExtension !== "fit") {
+      setIsProcessingFile(false);
+      setProcessingGpxStatus("Invalid file type. Please upload a .fit file.");
+      return;
+    }
+
     const user = await Auth.currentUserCredentials();
 
     await Storage.put(`uploads/${file.name.replace(" ", "_")}`, file, {
@@ -105,7 +114,7 @@ const UploadButton = () => {
     <>
       <Flex sx={{ gap: "10px" }}>
         <Label htmlFor="gpxFile" variant="defaultLabel">
-          Activity <Text sx={{ fontSize: "15px" }}>(.fit or .gpx)</Text>
+          Activity <Text sx={{ fontSize: "15px" }}>(.fit)</Text>
         </Label>
         <Text sx={{ color: "textMuted" }} data-testid="processing-status">
           {processingGpxStatus}
@@ -145,6 +154,18 @@ const UploadButton = () => {
           </Flex>
         </Button>
       </Flex>
+      <Box sx={{ marginTop: "5px" }}>
+        <Text sx={{ fontSize: "13px", color: "muted" }}>
+          Need help exporting a .fit file?{" "}
+          <a
+            href="https://monopad.mintlify.app/export"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn how to export from different platforms.
+          </a>
+        </Text>
+      </Box>
     </>
   );
 };
