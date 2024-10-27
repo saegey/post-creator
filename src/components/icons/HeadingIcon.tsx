@@ -1,7 +1,7 @@
 import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
 const HeadingIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => (
-  <IconButton sx={sx}>
+  <IconButton title={"Header"} sx={sx}>
     <svg
       aria-label="Toggle header"
       fill={"currentcolor"}

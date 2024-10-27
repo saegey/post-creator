@@ -1,7 +1,7 @@
 import { IconButton, ThemeUIStyleObject } from "theme-ui";
 
 const BulletListIcon = ({ sx }: { sx?: ThemeUIStyleObject | undefined }) => (
-  <IconButton sx={sx}>
+  <IconButton title={"Bullet List"} sx={sx}>
     <svg width="100%" height="100%" viewBox="0 -3.5 29 29" version="1.1">
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g

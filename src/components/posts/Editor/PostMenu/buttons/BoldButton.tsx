@@ -21,7 +21,6 @@ const BoldButton = () => {
         e.preventDefault();
         toggleMark(editor, "bold");
       }}
-      title={"Toggle Bold Text"}
       variant="boxes.floatingMenu"
     >
       <BoldIcon

@@ -16,6 +16,7 @@ import {
   updatePostSettings,
   UpdatePostSettingsMutation,
 } from "../../../graphql/customMutations";
+import DeleteIcon from "../../icons/DeleteIcon";
 import { deletePost, deletePublishedPost } from "../../../graphql/mutations";
 import { NotificationContext } from "../../NotificationContext";
 import Button from "../../shared/Button";
@@ -219,7 +220,18 @@ const PostSettings = () => {
                       }
                     }}
                   >
-                    Delete
+                    <Flex sx={{ alignItems: "center", gap: "2px" }}>
+                      <IconButton
+                        as="div"
+                        sx={{
+                          width: ["24px", "24px", "24px"],
+                          height: ["24px", "24px", "24px"],
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                      <Text>Delete</Text>
+                    </Flex>
                   </Button>
                 </Flex>
               </Box>

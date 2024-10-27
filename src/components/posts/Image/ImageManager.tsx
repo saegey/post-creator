@@ -21,6 +21,7 @@ import { UpdatePostMutation } from "../../../API";
 import { updatePostImages } from "../../../graphql/customMutations";
 import ImagesIcon from "../../icons/ImagesIcon";
 import Button from "../../shared/Button";
+import DeleteIcon from "../../icons/DeleteIcon";
 
 const ImageManager = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
@@ -207,11 +208,12 @@ const ImageManager = () => {
                       id: id,
                     },
                   },
-                })) as GraphQLResult<UpdatePostMutation>;
+                }))  as GraphQLResult<UpdatePostMutation>;
               } catch (errors) {
                 console.error(errors);
               }
             }}
+            icon={DeleteIcon}
             disabled={selectedImage ? false : true}
           >
             Delete

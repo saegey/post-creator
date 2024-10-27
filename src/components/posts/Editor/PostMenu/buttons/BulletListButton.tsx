@@ -37,7 +37,6 @@ const BulletListButton = () => {
       }}
       variant="boxes.floatingMenu"
       key="bulletedlist"
-      title={"Toggle bullet list"}
     >
       <BulletListIcon
         sx={{
