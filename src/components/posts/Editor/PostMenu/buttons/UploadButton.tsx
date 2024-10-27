@@ -6,6 +6,7 @@ import { usePost } from "../../../../PostContext";
 import usePubSubSubscription from "../../../../../hooks/usePubSubSubscription";
 import { getPost } from "../../../../../actions/PostGet";
 import Button from "../../../../shared/Button";
+import UploadIcon from "../../../../icons/UploadIcon";
 
 const UploadButton = () => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -144,6 +145,7 @@ const UploadButton = () => {
           onClick={handleButtonClick}
           variant="primaryButton"
           loading={processingFile}
+          icon={UploadIcon}
         >
           Upload
         </Button>

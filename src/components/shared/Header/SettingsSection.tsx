@@ -40,6 +40,7 @@ const SettingsSection = () => {
         onClick={async () => {
           setIsPublishedConfirmationOpen(true);
         }}
+        variant="primaryButton"
         icon={RocketIcon}
         sx={{
           cursor: "pointer",

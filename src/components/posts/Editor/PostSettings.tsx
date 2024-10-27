@@ -1,4 +1,4 @@
-import { Box, Flex, Text, Input, Label, Spinner, Theme } from "theme-ui";
+import { Box, Flex, Text, Input, Label } from "theme-ui";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -219,19 +219,9 @@ const PostSettings = () => {
                         processDeletePost();
                       }
                     }}
+                    icon={DeleteIcon}
                   >
-                    <Flex sx={{ alignItems: "center", gap: "2px" }}>
-                      <IconButton
-                        as="div"
-                        sx={{
-                          width: ["24px", "24px", "24px"],
-                          height: ["24px", "24px", "24px"],
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                      <Text>Delete</Text>
-                    </Flex>
+                    Delete
                   </Button>
                 </Flex>
               </Box>

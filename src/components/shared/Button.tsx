@@ -36,7 +36,7 @@ const Button = ({
       }}
       {...props}
     >
-      <Flex sx={{ gap: "10px", alignItems: "center" }}>
+      <Flex sx={{ gap: "4px", alignItems: "center" }}>
         {Icon && (
           <Box sx={{ width: "20px", height: "20px" }}>
             <Icon />
