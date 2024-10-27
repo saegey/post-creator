@@ -1,17 +1,8 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Text,
-  Link as ThemeLink,
-  Image as ThemeImage,
-} from "theme-ui";
+import { Box, Flex, Grid, Text, Image as ThemeImage } from "theme-ui";
 import Image from "next/image";
 
 import FeatureHighlightItem from "./FeatureHighlightItem";
-import Theme from "../../utils/theme";
 
 const FeatureHiglight = ({
   featureName,
@@ -99,11 +90,9 @@ const FeatureHiglight = ({
           <Text
             as="h2"
             sx={{
-              // fontSize: ["36px", "48px", "48px"],
               fontWeight: 630,
               fontSize: ["40px", "57px", "57px"],
               lineHeight: ["43px", "56px", "56px"],
-              // fontWeight: 400,
               letterSpacing: "-1px",
               marginBottom: "24px",
               color: "textLight",
@@ -142,9 +131,6 @@ const FeatureHiglight = ({
                 />
               ))}
           </Grid>
-          {/* <Box sx={{ marginTop: "32px" }}>
-            <Button variant="secondaryButton">Learn More</Button>
-          </Box> */}
         </Box>
       </Grid>
     </Flex>

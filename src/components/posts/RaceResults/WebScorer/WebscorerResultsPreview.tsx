@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box, Flex, Button, Spinner } from "theme-ui";
+import { Text, Box, Flex } from "theme-ui";
 import { Path, Transforms } from "slate";
 
 import { usePost } from "../../../PostContext";
@@ -8,6 +8,7 @@ import { CustomEditor } from "../../../../types/common";
 import { ResultsContext } from "../ResultsContext";
 import { saveWebscorerResults } from "../api";
 import ResultsBox from "../shared/ResultsBox";
+import Button from "../../../shared/Button";
 
 const WebscorerResultsPreview = ({
   editor,
@@ -26,13 +27,71 @@ const WebscorerResultsPreview = ({
     React.useContext(EditorContext);
   const { webScorerMeta, resultsUrl } = React.useContext(ResultsContext);
 
+  const handleRowSelection = (index: number) => {
+    setSelectedRow(index);
+    setPost({
+      webscorerResults: {
+        ...webscorerResults,
+        selected: webscorerResults?.results
+          ? webscorerResults.results[index]
+          : undefined,
+        category: webscorerResults?.category ?? "",
+        eventName: webscorerResults?.eventName ?? "",
+      },
+    });
+  };
+
+  const handleSaveResults = async () => {
+    setIsLoading(true);
+    try {
+      await saveWebscorerResults({
+        webscorerResults: webscorerResults ?? undefined,
+        id,
+        category: webScorerMeta.category,
+        resultsUrl,
+        eventName: webScorerMeta.eventName,
+      });
+
+      setPost({
+        webscorerResults: {
+          ...webscorerResults,
+          eventName: webScorerMeta.eventName,
+          category: webScorerMeta.category,
+        },
+        resultsUrl,
+      });
+
+      Transforms.insertNodes(
+        editor,
+        {
+          type: "raceResults",
+          subType: "webscorerResults",
+          children: [{ text: "" }],
+        },
+        { at: menuPosition.path }
+      );
+
+      if (path.length > 1) {
+        Transforms.liftNodes(editor);
+      }
+
+      setMobileMenu({ ...mobileMenu, display: false, isFullScreen: false });
+      const selection = window.getSelection();
+      selection && selection.removeAllRanges();
+      setIsRaceResultsModalOpen(false);
+    } catch (error) {
+      console.error("Error saving webscorer results:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <Box sx={{ marginY: "10px" }}>
         <Text as="h3">
           {webScorerMeta.eventName} - {webScorerMeta.category}
         </Text>
-
         <Text>{resultsUrl}</Text>
       </Box>
       <Flex sx={{ width: "100%" }}>
@@ -57,62 +116,47 @@ const WebscorerResultsPreview = ({
       </Flex>
       <ResultsBox>
         <>
-          {webscorerResults &&
-            webscorerResults.results &&
-            webscorerResults.results.map((row, i) => {
-              return (
-                <Flex
-                  key={`race-result-row-${i}`}
-                  sx={{
-                    backgroundColor:
-                      selectedRow === i ? "selectedBackground" : null,
-                    color: selectedRow === i ? "selectedBackgroundText" : null,
-                    borderRadius: selectedRow === i ? "5px" : null,
-                    width: "100%",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor:
-                        selectedRow === i ? "selectedBackground" : "muted",
-                      borderRadius: "5px",
-                    },
-                    paddingX: "5px",
-                    paddingY: "2px",
-                  }}
-                  onClick={() => {
-                    setSelectedRow(i);
-                    setPost({
-                      webscorerResults: {
-                        ...webscorerResults,
-                        selected:
-                          webscorerResults && webscorerResults.results
-                            ? webscorerResults.results[i]
-                            : undefined,
-                      },
-                    });
-                  }}
-                >
-                  <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
-                    {i + 1}
-                  </Text>
-                  <Box sx={{ width: "300px", flexGrow: "2" }}>
-                    <Text as="div">{row.Name}</Text>
-                    <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
-                      {row.TeamName ? row.TeamName : " "}
-                    </Text>
-                  </Box>
-                  <Text
-                    as="span"
-                    sx={{
-                      display: "flex",
-                      justifyContent: "right",
-                      width: "100px",
-                    }}
-                  >
-                    {row.Time}
-                  </Text>
-                </Flex>
-              );
-            })}
+          {webscorerResults?.results?.map((row, i) => (
+            <Flex
+              key={`race-result-row-${i}`}
+              sx={{
+                backgroundColor:
+                  selectedRow === i ? "selectedBackground" : null,
+                color: selectedRow === i ? "selectedBackgroundText" : null,
+                borderRadius: selectedRow === i ? "5px" : null,
+                width: "100%",
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor:
+                    selectedRow === i ? "selectedBackground" : "muted",
+                  borderRadius: "5px",
+                },
+                paddingX: "5px",
+                paddingY: "2px",
+              }}
+              onClick={() => handleRowSelection(i)}
+            >
+              <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
+                {i + 1}
+              </Text>
+              <Box sx={{ width: "300px", flexGrow: "2" }}>
+                <Text as="div">{row.Name}</Text>
+                <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                  {row.TeamName || " "}
+                </Text>
+              </Box>
+              <Text
+                as="span"
+                sx={{
+                  display: "flex",
+                  justifyContent: "right",
+                  width: "100px",
+                }}
+              >
+                {row.Time}
+              </Text>
+            </Flex>
+          ))}
         </>
       </ResultsBox>
       <Box
@@ -127,65 +171,11 @@ const WebscorerResultsPreview = ({
         <Flex>
           <Button
             title="Save"
-            sx={{
-              marginLeft: "auto",
-              pointer: "cursor",
-              backgroundColor:
-                selectedRow !== undefined && selectedRow >= 0
-                  ? null
-                  : "disabledBackground",
-            }}
-            disabled={
-              selectedRow !== undefined && selectedRow >= 0 ? false : true
-            }
-            onClick={() => {
-              setIsLoading(true);
-              saveWebscorerResults({
-                webscorerResults: webscorerResults
-                  ? webscorerResults
-                  : undefined,
-                id,
-                category: webScorerMeta.category,
-                resultsUrl: resultsUrl,
-                eventName: webScorerMeta.eventName,
-              }).then((r) => {
-                setPost({
-                  webscorerResults: {
-                    ...webscorerResults,
-                    eventName: webScorerMeta.eventName,
-                    category: webScorerMeta.category,
-                  },
-                  resultsUrl: resultsUrl,
-                });
-                Transforms.insertNodes(
-                  editor,
-                  {
-                    type: "raceResults",
-                    subType: "webscorerResults",
-                    children: [{ text: "" }],
-                  },
-                  { at: menuPosition.path }
-                );
-                if (path.length > 1) {
-                  Transforms.liftNodes(editor);
-                }
-                setMobileMenu({
-                  ...mobileMenu,
-                  display: false,
-                  isFullScreen: false,
-                });
-                const selection = window.getSelection();
-
-                selection && selection.removeAllRanges();
-                setIsLoading(false);
-                setIsRaceResultsModalOpen(false);
-              });
-            }}
+            disabled={selectedRow === undefined}
+            loading={isLoading}
+            onClick={handleSaveResults}
           >
-            <Flex sx={{ gap: "10px" }}>
-              <Text as="span">Save</Text>
-              {isLoading && <Spinner sx={{ size: "20px", color: "white" }} />}
-            </Flex>
+            Save
           </Button>
         </Flex>
       </Box>

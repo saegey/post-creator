@@ -1,5 +1,5 @@
 import { useSlateStatic, ReactEditor } from "slate-react";
-import { Box, Text, Flex, Button } from "theme-ui";
+import { Box, Text, Flex } from "theme-ui";
 import React from "react";
 
 import PowerCurveGraph from "./PowerCurveGraph";
@@ -10,6 +10,7 @@ import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import { EditorContext } from "../Editor/EditorContext";
 import PowerGraphIcon from "../../icons/PowerGraphIcon";
 import withComponentClick from "../withComponentClick";
+import Button from "../../shared/Button";
 
 const PowerGraphComponent = ({ element }: { element: PowerGraphType }) => {
   const editor = useSlateStatic();

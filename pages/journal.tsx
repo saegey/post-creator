@@ -1,12 +1,13 @@
 import Head from "next/head";
 import React from "react";
-import { Box, Button, Flex, Text } from "theme-ui";
+import { Box, Flex, Text } from "theme-ui";
 
 import PublicHeader from "../src/components/public/Header/PublicHeader";
 import PublicFooter from "../src/components/public/Footer/Footer";
 import FeatureHiglight from "../src/components/public/FeatureHighlight";
 import VideoModal from "../src/components/VideoModal";
 import ForwardIcon from "../src/components/icons/ForwardIcon";
+import Button from "../src/components/shared/Button";
 
 const Journal = () => {
   const [isDemoVideo, setIsDemoVideo] = React.useState(false);

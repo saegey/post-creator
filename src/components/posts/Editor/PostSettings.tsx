@@ -1,14 +1,4 @@
-import {
-  Box,
-  Flex,
-  Text,
-  Input,
-  Button,
-  Label,
-  Spinner,
-  ThemeUIStyleObject,
-  Theme,
-} from "theme-ui";
+import { Box, Flex, Text, Input, Label, Spinner, Theme } from "theme-ui";
 import React from "react";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -28,6 +18,7 @@ import {
 } from "../../../graphql/customMutations";
 import { deletePost, deletePublishedPost } from "../../../graphql/mutations";
 import { NotificationContext } from "../../NotificationContext";
+import Button from "../../shared/Button";
 
 const PostSettings = () => {
   const { id, currentFtp, title, postLocation, date, subhead, setPost } =
@@ -199,17 +190,15 @@ const PostSettings = () => {
                 <Text as="p" sx={{ fontWeight: "700", fontSize: "15px" }}>
                   Delete this post
                 </Text>
-                <Text sx={{ fontSize: "15px" } as ThemeUIStyleObject<Theme>}>
+                <Text sx={{ fontSize: "15px" }}>
                   Once you delete a post, there is no going back. Please be
                   certain.
                 </Text>
               </Box>
               <Box
-                sx={
-                  {
-                    flexGrow: 1,
-                  } as ThemeUIStyleObject<Theme>
-                }
+                sx={{
+                  flexGrow: 1,
+                }}
               >
                 <Flex
                   sx={{
@@ -220,7 +209,6 @@ const PostSettings = () => {
                   <Button
                     id="delete-post"
                     variant="dangerButton"
-                    type="button"
                     onClick={() => {
                       if (
                         window.confirm(
@@ -261,18 +249,8 @@ const PostSettings = () => {
               >
                 Cancel
               </Button>
-              <Button variant="primaryButton">
-                <Flex sx={{ gap: "10px" }}>
-                  <Text as="span">Save</Text>
-                  {isSaving && (
-                    <Spinner
-                      sx={{
-                        size: "20px",
-                        color: "secondary",
-                      }}
-                    />
-                  )}
-                </Flex>
+              <Button variant="primaryButton" loading={isSaving}>
+                Save
               </Button>
             </Flex>
           </Box>

@@ -1,9 +1,10 @@
-import { Flex, Box, Button, Text, Spinner } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 
 import { getWebscorerResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { usePost } from "../../../PostContext";
+import Button from "../../../shared/Button";
 
 const WebscorerSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -11,34 +12,39 @@ const WebscorerSubmitButton = () => {
     React.useContext(ResultsContext);
   const { setPost } = usePost();
 
+  const handleImportResults = async () => {
+    setIsLoading(true);
+    try {
+      const results = await getWebscorerResults({
+        url: resultsUrl,
+        category: webScorerMeta.category,
+      });
+
+      setPost({
+        webscorerResults: {
+          results: results.data,
+          selected: undefined,
+          eventName: webScorerMeta.eventName,
+          category: webScorerMeta.category,
+        },
+      });
+      setPreviewWebscorerResults(true);
+    } catch (error) {
+      console.error("Error importing Webscorer results:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Box sx={{ marginLeft: "auto" }}>
       <Button
-        disabled={isLoading ? true : false}
+        disabled={isLoading}
         variant="primaryButton"
-        onClick={() => {
-          setIsLoading(true);
-          getWebscorerResults({
-            url: resultsUrl,
-            category: webScorerMeta.category,
-          }).then((results) => {
-            setPost({
-              webscorerResults: {
-                results: results.data,
-                selected: undefined,
-                eventName: webScorerMeta.eventName,
-                category: webScorerMeta.category,
-              },
-            });
-            setPreviewWebscorerResults(true);
-          });
-          setIsLoading(false);
-        }}
+        loading={isLoading}
+        onClick={handleImportResults}
       >
-        <Flex sx={{ gap: "10px" }}>
-          <Text as="span">Import</Text>
-          {isLoading && <Spinner sx={{ size: "20px", color: "secondary" }} />}
-        </Flex>
+        Import
       </Button>
     </Box>
   );

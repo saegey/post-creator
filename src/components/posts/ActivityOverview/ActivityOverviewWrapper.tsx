@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text } from "theme-ui";
+import { Box, Flex, Text } from "theme-ui";
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
 
@@ -10,6 +10,7 @@ import HoverAction from "../Editor/HoverAction";
 import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import ActivityOverviewIcon from "../../icons/ActivityOverviewIcon";
 import withComponentClick from "../withComponentClick";
+import Button from "../../shared/Button";
 
 const ActivityOverviewWrapper = ({
   element,

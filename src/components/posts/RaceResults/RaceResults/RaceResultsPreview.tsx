@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box, Flex, Button, Spinner } from "theme-ui";
+import { Text, Box, Flex } from "theme-ui";
 import { Transforms, Path } from "slate";
 
 import { usePost } from "../../../PostContext";
@@ -7,6 +7,7 @@ import { EditorContext } from "../../Editor/EditorContext";
 import { saveMyRaceResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { useSlateContext } from "../../../SlateContext";
+import Button from "../../../shared/Button";
 
 const RaceResultsPreview = ({ path }: { path: Path }) => {
   const [selectedRow, setSelectedRow] = React.useState<number | undefined>(
@@ -28,6 +29,55 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
   if (!editor) {
     throw new Error("Editor is not defined");
   }
+
+  const handleRowSelection = (index: number) => {
+    setSelectedRow(index);
+    setPost({
+      raceResults: {
+        ...raceResults,
+        selected: raceResults?.results ? raceResults.results[index] : undefined,
+      },
+    });
+  };
+
+  const handleSaveResults = async () => {
+    setIsLoading(true);
+    try {
+      await saveMyRaceResults({
+        raceResults,
+        id,
+        resultsUrl,
+        category: raceResultsMeta.category,
+        division: raceResultsMeta.division,
+      });
+
+      setPost({ resultsUrl });
+
+      Transforms.insertNodes(
+        editor,
+        {
+          type: "raceResults",
+          subType: "raceResultsDotCom",
+          children: [{ text: "" }],
+        },
+        { at: menuPosition.path }
+      );
+
+      if (path.length > 1) {
+        Transforms.liftNodes(editor);
+      }
+
+      setIsRaceResultsModalOpen(false);
+      setMobileMenu({ ...mobileMenu, display: false, isFullScreen: false });
+      const selection = window.getSelection();
+      selection && selection.removeAllRanges();
+      setIsNewComponentMenuOpen(false);
+    } catch (error) {
+      console.error("Error saving race results:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Flex
@@ -52,12 +102,7 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
           borderRadius: "5px",
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-          }}
-          id="race-results-list"
-        >
+        <Box sx={{ width: "100%" }} id="race-results-list">
           <Flex sx={{ width: "100%", paddingX: "5px" }}>
             <Text
               as="span"
@@ -81,68 +126,50 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
               Time
             </Text>
           </Flex>
-          {raceResults &&
-            raceResults.results &&
-            raceResults.results.map((row, i) => {
-              return (
-                <Flex
-                  id={`race-result-row-${i}`}
-                  key={`race-result-row-${i}`}
-                  sx={{
-                    backgroundColor:
-                      selectedRow === i ? "selectedBackground" : null,
-                    color: selectedRow === i ? "selectedBackgroundText" : null,
-                    borderRadius: selectedRow === i ? "5px" : null,
-                    width: "100%",
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: selectedRow === i ? "accent" : "border",
-                      borderRadius: "5px",
-                    },
-                    paddingX: "5px",
-                    paddingY: "2px",
-                  }}
-                  onClick={() => {
-                    setSelectedRow(i);
-                    setPost({
-                      raceResults: {
-                        ...raceResults,
-                        selected:
-                          raceResults && raceResults.results
-                            ? raceResults.results[i]
-                            : undefined,
-                      },
-                    });
-                  }}
-                >
-                  <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
-                    {row.CatRank}
-                  </Text>
-                  <Box sx={{ width: "300px", flexGrow: "2" }}>
-                    <Text as="div">{row.Name}</Text>
-                    <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
-                      {row.Team ? row.Team : " "}
-                    </Text>
-                  </Box>
-                  <Text
-                    as="span"
-                    sx={{ display: ["none", "inherit", "inherit"] }}
-                  >
-                    {row.Speed}
-                  </Text>
-                  <Text
-                    as="span"
-                    sx={{
-                      display: "flex",
-                      justifyContent: "right",
-                      width: "100px",
-                    }}
-                  >
-                    {row.Time}
-                  </Text>
-                </Flex>
-              );
-            })}
+          {raceResults?.results?.map((row, i) => (
+            <Flex
+              id={`race-result-row-${i}`}
+              key={`race-result-row-${i}`}
+              sx={{
+                backgroundColor:
+                  selectedRow === i ? "selectedBackground" : null,
+                color: selectedRow === i ? "selectedBackgroundText" : null,
+                borderRadius: selectedRow === i ? "5px" : null,
+                width: "100%",
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: selectedRow === i ? "accent" : "border",
+                  borderRadius: "5px",
+                },
+                paddingX: "5px",
+                paddingY: "2px",
+              }}
+              onClick={() => handleRowSelection(i)}
+            >
+              <Text as="span" sx={{ width: ["30px", "60px", "60px"] }}>
+                {row.CatRank}
+              </Text>
+              <Box sx={{ width: "300px", flexGrow: "2" }}>
+                <Text as="div">{row.Name}</Text>
+                <Text as="div" sx={{ fontSize: "13px", minHeight: "13px" }}>
+                  {row.Team ? row.Team : " "}
+                </Text>
+              </Box>
+              <Text as="span" sx={{ display: ["none", "inherit", "inherit"] }}>
+                {row.Speed}
+              </Text>
+              <Text
+                as="span"
+                sx={{
+                  display: "flex",
+                  justifyContent: "right",
+                  width: "100px",
+                }}
+              >
+                {row.Time}
+              </Text>
+            </Flex>
+          ))}
         </Box>
       </Flex>
       <Flex
@@ -157,60 +184,11 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
         <Flex>
           <Button
             title="Save"
-            sx={{
-              marginLeft: "auto",
-              pointer: "cursor",
-              backgroundColor:
-                selectedRow !== undefined && selectedRow >= 0
-                  ? null
-                  : "disabledBackground",
-            }}
-            disabled={
-              selectedRow !== undefined && selectedRow >= 0 ? false : true
-            }
-            onClick={() => {
-              setIsLoading(true);
-              saveMyRaceResults({
-                raceResults,
-                id,
-                resultsUrl,
-                category: raceResultsMeta.category,
-                division: raceResultsMeta.division,
-              }).then((r) => {
-                setPost({
-                  resultsUrl: resultsUrl,
-                });
-
-                Transforms.insertNodes(
-                  editor,
-                  {
-                    type: "raceResults",
-                    subType: "raceResultsDotCom",
-                    children: [{ text: "" }],
-                  },
-                  { at: menuPosition.path }
-                );
-
-                if (path.length > 1) {
-                  Transforms.liftNodes(editor);
-                }
-                setIsLoading(false);
-                setIsRaceResultsModalOpen(false);
-                setMobileMenu({
-                  ...mobileMenu,
-                  display: false,
-                  isFullScreen: false,
-                });
-                const selection = window.getSelection();
-                selection && selection.removeAllRanges();
-                setIsNewComponentMenuOpen(false);
-              });
-            }}
+            disabled={selectedRow === undefined}
+            loading={isLoading}
+            onClick={handleSaveResults}
           >
-            <Flex sx={{ gap: "10px" }}>
-              <Text as="span">Save</Text>
-              {isLoading && <Spinner sx={{ size: "20px", color: "white" }} />}
-            </Flex>
+            Save
           </Button>
         </Flex>
       </Flex>

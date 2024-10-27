@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import { Box, Button, Flex, Text } from "theme-ui";
+import { Box, Text } from "theme-ui";
 import { withSSRContext } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import { GetServerSideProps } from "next";
@@ -15,6 +15,7 @@ import { PostContext } from "../../src/components/PostContext";
 import Viewer from "../../src/components/posts/Viewer/Viewer";
 import { getPublishedPost } from "../../src/graphql/queries";
 import EditIcon from "../../src/components/icons/EditIcon";
+import Button from "../../src/components/shared/Button";
 
 interface PostViewProps extends Post {
   authenticatedUser: IUser | null;
@@ -136,13 +137,12 @@ const PostView = (props: PostViewProps) => {
                 sx={{ textDecoration: "none" }}
                 title="Edit Post"
               >
-                <Button variant="primaryButton" sx={{ width: "fit-content" }}>
-                  <Flex sx={{ gap: "5px" }}>
-                    <Box sx={{ width: "20px", height: "20px" }}>
-                      <EditIcon />
-                    </Box>
-                    <Text>Edit</Text>
-                  </Flex>
+                <Button
+                  variant="primaryButton"
+                  sx={{ width: "fit-content" }}
+                  icon={EditIcon}
+                >
+                  <Text>Edit</Text>
                 </Button>
               </ThemeLink>
             ) : (

@@ -1,14 +1,14 @@
 import Head from "next/head";
 import React from "react";
-import { Box, Button, Flex, Text, Link as ThemeLink } from "theme-ui";
+import { Box, Flex, Text, Link as ThemeLink } from "theme-ui";
 import Link from "next/link";
-import { lighten } from "@theme-ui/color";
 
 import PublicHeader from "../../src/components/public/Header/PublicHeader";
 import PublicFooter from "../../src/components/public/Footer/Footer";
 import FeatureHiglight from "../../src/components/public/FeatureHighlight";
 import VideoModal from "../../src/components/VideoModal";
 import ForwardIcon from "../../src/components/icons/ForwardIcon";
+import Button from "../../src/components/shared/Button";
 
 const Home = () => {
   const [isDemoVideo, setIsDemoVideo] = React.useState(false);
@@ -75,6 +75,7 @@ const Home = () => {
               >
                 <ThemeLink
                   as={Link}
+                  sx={{ textDecoration: "none" }}
                   href="/register"
                   onClick={(e) => {
                     e.preventDefault();
@@ -94,19 +95,11 @@ const Home = () => {
                 >
                   <Button
                     sx={{
-                      background: "background",
-                      borderColor: "text",
-                      borderStyle: "solid",
-                      borderWidth: "1px",
-                      color: "text",
                       padding: "10px",
                       fontSize: "16px",
                       width: ["100%", "130px", "130px"],
-                      cursor: "pointer",
-                      "&:hover": {
-                        background: lighten("background", 0.05),
-                      },
                     }}
+                    variant="secondaryButton"
                   >
                     Sign Up
                   </Button>
@@ -120,7 +113,6 @@ const Home = () => {
                     width: ["100%", "130px", "130px"],
                     padding: "10px",
                     fontSize: "16px",
-                    cursor: "pointer",
                   }}
                 >
                   Watch Demo

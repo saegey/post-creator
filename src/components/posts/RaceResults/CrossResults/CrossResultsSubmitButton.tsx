@@ -1,63 +1,51 @@
-import {
-  Flex,
-  Box,
-  Button,
-  Text,
-  Spinner,
-  ThemeUIStyleObject,
-  Theme,
-} from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 
 import { getCrossResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { usePost } from "../../../PostContext";
+import Button from "../../../shared/Button";
 
 const CrossResultsSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { resultsUrl, crossResultsMeta, setPreviewCrossResults } =
     React.useContext(ResultsContext);
-
   const { setPost } = usePost();
   const { category, eventName } = crossResultsMeta;
 
-  return (
-    <Box sx={{ marginLeft: "auto" } as ThemeUIStyleObject<Theme>}>
-      <Button
-        disabled={isLoading ? true : false}
-        variant="primaryButton"
-        onClick={() => {
-          setIsLoading(true);
-          getCrossResults({ url: resultsUrl }).then((results) => {
-            const catResults = results.data
-              .filter((row) => row["RaceCategoryName"] === category)
-              .sort((a, b) => (a["Place"] > b["Place"] ? 1 : -1));
+  // Handler function for the Import action
+  const handleImportResults = async () => {
+    setIsLoading(true);
+    try {
+      const results = await getCrossResults({ url: resultsUrl });
+      const catResults = results.data
+        .filter((row) => row["RaceCategoryName"] === category)
+        .sort((a, b) => (a["Place"] > b["Place"] ? 1 : -1));
 
-            setPost({
-              crossResults: {
-                results: catResults,
-                selected: undefined,
-                eventName: eventName,
-              },
-            });
-            setPreviewCrossResults(true);
-          });
-          setIsLoading(false);
-        }}
+      setPost({
+        crossResults: {
+          results: catResults,
+          selected: undefined,
+          eventName: eventName,
+        },
+      });
+      setPreviewCrossResults(true);
+    } catch (error) {
+      console.error("Error importing cross results:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Box sx={{ marginLeft: "auto" }}>
+      <Button
+        disabled={isLoading}
+        loading={isLoading}
+        variant="primaryButton"
+        onClick={handleImportResults}
       >
-        <Flex sx={{ gap: "10px" } as ThemeUIStyleObject<Theme>}>
-          <Text as="span">Import</Text>
-          {isLoading && (
-            <Spinner
-              sx={
-                {
-                  size: "20px",
-                  color: "secondary",
-                } as ThemeUIStyleObject<Theme>
-              }
-            />
-          )}
-        </Flex>
+        Import
       </Button>
     </Box>
   );

@@ -1,7 +1,8 @@
 import React from "react";
-import { Flex, Button, Input, Label } from "theme-ui";
+import { Flex, Input, Label } from "theme-ui";
 
 import ReCAPTCHAComponent from "./ReCAPTCHAComponent";
+import Button from "../shared/Button";
 
 type RegisterFormProps = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -79,8 +80,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
             variant="primaryButton"
             sx={{ width: ["100%", "104px", "104px"] }}
             disabled={isRobot || isLoading}
+            isLoading={isLoading}
           >
-            {isLoading ? "Registering..." : "Sign Up"}
+            Sign Up
           </Button>
         </Flex>
       </Flex>

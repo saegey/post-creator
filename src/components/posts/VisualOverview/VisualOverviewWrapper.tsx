@@ -1,14 +1,6 @@
 import React from "react";
 import { useSlateStatic, ReactEditor } from "slate-react";
-import {
-  Box,
-  Spinner,
-  Flex,
-  ThemeUIStyleObject,
-  Theme,
-  Text,
-  Button,
-} from "theme-ui";
+import { Box, Flex, Text, Spinner } from "theme-ui";
 
 import { PostContext } from "../../PostContext";
 import { VisualOverviewType } from "../../../types/common";
@@ -18,7 +10,7 @@ import useOptionsMenu from "../../../hooks/useSlateOptionsMenu";
 import { EditorContext } from "../Editor/EditorContext";
 import RouteIcon from "../../icons/RouteIcon";
 import VisualOverviewBase from "./VisualOverviewBase";
-import withComponentClick from "../withComponentClick";
+import Button from "../../shared/Button";
 
 const VisualOverviewWrapper = ({
   element,
@@ -46,8 +38,6 @@ const VisualOverviewWrapper = ({
   const [isSaved, setIsSaved] = React.useState<boolean>(
     element && element.selectionStart ? true : false
   );
-
-  const EnhancedBox = withComponentClick(Box);
 
   const optionsMenuMemo = React.useMemo(() => {
     return optionsMenu;

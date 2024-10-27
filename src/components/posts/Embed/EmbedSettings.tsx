@@ -1,9 +1,10 @@
-import { Flex, Box, Label, Input, Button, Text } from "theme-ui";
+import { Flex, Box, Label, Input, Text } from "theme-ui";
 import { Transforms, Path } from "slate";
 import React from "react";
 
 import { CustomEditor } from "../../../types/common";
 import { EditorContext } from "../Editor/EditorContext";
+import Button from "../../shared/Button";
 
 const EmbedSettings = ({
   editor,
@@ -67,11 +68,7 @@ const EmbedSettings = ({
             <Input id="url" name="url" variant={"defaultInput"} />
           </Box>
           <Box sx={{ marginLeft: "auto" }}>
-            <Button variant="primaryButton">
-              <Flex sx={{ gap: "10px" }}>
-                <Text as="span">Save</Text>
-              </Flex>
-            </Button>
+            <Button variant="primaryButton">Save</Button>
           </Box>
         </Flex>
       </form>

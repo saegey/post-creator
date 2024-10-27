@@ -1,12 +1,13 @@
 import React from "react";
-import { Label, Textarea, Button, Flex } from "theme-ui";
+import { Label, Textarea, Flex } from "theme-ui";
 import { Editor, Path, Transforms } from "slate";
+import { lighten } from "@theme-ui/color";
 
 import { EditorContext } from "../Editor/EditorContext";
 import StandardModal from "../../shared/StandardModal";
 import { HeroBannerType, ImageElementType } from "../../../types/common";
 import { useSlateContext } from "../../SlateContext";
-import { lighten } from "@theme-ui/color";
+import Button from "../../shared/Button";
 
 const PhotoCaptionModal = () => {
   const { editor } = useSlateContext();
@@ -25,7 +26,6 @@ const PhotoCaptionModal = () => {
   return (
     <>
       <StandardModal
-        // title=""
         topRight={<></>}
         isOpen={isPhotoCaptionOpen}
         setIsOpen={setIsPhotoCaptionOpen}
@@ -75,13 +75,12 @@ const PhotoCaptionModal = () => {
               id="caption"
               rows={6}
               mb={3}
-              // value={"sfdf"}
               defaultValue={node.photoCaption}
             ></Textarea>
             <Flex sx={{ justifyContent: "flex-end", gap: "10px" }}>
               <Button
                 variant="secondaryButton"
-                onClick={(event) => {
+                onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                   event.preventDefault();
                   setIsPhotoCaptionOpen(false);
                 }}

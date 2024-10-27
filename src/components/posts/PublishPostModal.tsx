@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Flex, Text, Box, Input, Button, Checkbox, Label } from "theme-ui";
+import { Flex, Text, Box, Input, Checkbox, Label } from "theme-ui";
 import { API } from "aws-amplify";
 import { AxiosError } from "axios";
 
@@ -9,6 +9,7 @@ import { useSlateContext } from "../SlateContext";
 import CopyIcon from "../icons/CopyIcon";
 import { PostContext } from "../PostContext";
 import { NotificationContext } from "../NotificationContext";
+import Button from "../shared/Button";
 
 const PublishPostModal = () => {
   const { editor } = useSlateContext();
@@ -44,13 +45,13 @@ const PublishPostModal = () => {
         setNotification({
           message: "Link copied to clipboard",
           type: "Success",
-          autoDismiss: false,
         });
       });
     }
   };
 
   const handlePublish = async () => {
+    console.log("handlePublish");
     try {
       setIsPublishing(true);
       const res = await API.post("api12660653", `/post/publish`, {
@@ -166,9 +167,6 @@ const PublishPostModal = () => {
                       paddingX: ["8px", "10px", "10px"],
                       width: "fit-content",
                       borderRadius: "3px",
-                      "&:disabled": {
-                        backgroundColor: "disabledBackground",
-                      },
                       flexShrink: 0, // Prevent the button from shrinking
                     }}
                     disabled={privacyStatus === "draft"}
@@ -190,10 +188,12 @@ const PublishPostModal = () => {
               </Box>
             </Box>
             <Flex sx={{ flexGrow: 1, justifyContent: "right" }}>
-              <Button variant="primaryButton" onClick={handlePublish}>
-                <Text sx={{ fontSize: "16px" }}>
-                  {isPublishing ? "Publishing..." : "Publish"}
-                </Text>
+              <Button
+                variant="primaryButton"
+                onClick={handlePublish}
+                loading={isPublishing}
+              >
+                <Text sx={{ fontSize: "16px" }}>Publish</Text>
               </Button>
             </Flex>
           </Flex>

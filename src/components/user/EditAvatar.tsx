@@ -1,11 +1,11 @@
 import { Auth, API } from "aws-amplify";
-import { Button } from "theme-ui";
 import React from "react";
 
 import { updateUser } from "../../graphql/mutations";
 import { IUser } from "../../types/common";
 import AddMediaComponent from "../posts/Editor/AddMediaComponent";
 import { UserContext } from "../UserContext";
+import Button from "../shared/Button";
 
 async function updateAvatar({ picture }: { picture: string }) {
   const user: IUser = await Auth.currentAuthenticatedUser();
@@ -58,7 +58,7 @@ const EditAvatar = () => {
         sx={{ width: "150px" }}
         onClick={() => newMediaRef.current.openModal()}
       >
-        Change image
+        Change avatar
       </Button>
     </>
   );

@@ -4,13 +4,14 @@ import Link from "next/link";
 import Router from "next/router";
 
 import AuthInput from "../src/components/auth/AuthInput";
-import AuthButton from "../src/components/auth/AuthButton";
+// import AuthButton from "../src/components/auth/AuthButton";
 import { NotificationContext } from "../src/components/NotificationContext";
 import { loginUser } from "../src/utils/authActions";
 import AuthLink from "../src/components/auth/AuthLink";
 import Head from "next/head";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import LogoBlock from "../src/components/public/LogoBlock";
+import Button from "../src/components/shared/Button";
 
 const LoginPage: React.FC = () => {
   const { setNotification } = useContext(NotificationContext);
@@ -128,13 +129,14 @@ const LoginPage: React.FC = () => {
                   </Box>
                 </Box>
                 <Flex sx={{ justifyContent: "right" }}>
-                  <AuthButton
+                  <Button
                     type="submit"
                     disabled={isLoading}
                     id="submit-login"
+                    isLoading={isLoading}
                   >
-                    {isLoading ? "Signing in..." : "Sign In"}
-                  </AuthButton>
+                    Sign In
+                  </Button>
                 </Flex>
               </Flex>
             </form>

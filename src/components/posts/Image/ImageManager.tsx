@@ -1,20 +1,9 @@
-import {
-  Box,
-  Flex,
-  Button,
-  Text,
-  ThemeUIStyleObject,
-  Theme,
-  IconButton,
-  Grid,
-  AspectRatio,
-} from "theme-ui";
+import { Box, Flex, Text, Grid, AspectRatio } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Transforms } from "slate";
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import { lighten } from "@theme-ui/color";
 
 import { PostContext } from "../../PostContext";
 import {
@@ -31,6 +20,7 @@ import UploadIcon from "../../icons/UploadIcon";
 import { UpdatePostMutation } from "../../../API";
 import { updatePostImages } from "../../../graphql/customMutations";
 import ImagesIcon from "../../icons/ImagesIcon";
+import Button from "../../shared/Button";
 
 const ImageManager = () => {
   const [selectedImage, setSelectedImage] = React.useState<CloudinaryImage>();
@@ -56,31 +46,24 @@ const ImageManager = () => {
         setIsOpen={setIsChangeImageModalOpen}
         isOpen={isChangeImageModalOpen}
         topRight={
-          <IconButton
+          <Button
+            variant="primaryButton"
             onClick={() => {
               setIsHeroImageModalOpen(true);
             }}
-            sx={{
-              cursor: "pointer",
-              color: "primary",
-              backgroundColor: "surface",
-              "&:hover": { backgroundColor: lighten("surface", 0.05) },
-              marginBottom: "5px",
-            }}
+            icon={UploadIcon}
           >
-            <UploadIcon />
-          </IconButton>
+            Upload
+          </Button>
         }
         heading={
           <Flex sx={{ flexDirection: "row" }}>
             <Text
               as="div"
-              sx={
-                {
-                  fontSize: "20px",
-                  fontWeight: 600,
-                } as ThemeUIStyleObject<Theme>
-              }
+              sx={{
+                fontSize: "20px",
+                fontWeight: 600,
+              }}
             >
               Images
             </Text>
@@ -173,7 +156,6 @@ const ImageManager = () => {
                       height: "300px",
                       justifyContent: "center",
                       alignItems: "center",
-                      // color: "surfaceAccent",
                       backgroundColor: "surface",
                       borderRadius: "5px",
                       borderStyle: "solid",
@@ -204,7 +186,7 @@ const ImageManager = () => {
             id="delete-image"
             variant="dangerButton"
             type="button"
-            onClick={async (e) => {
+            onClick={async () => {
               if (!images || !selectedImage) {
                 throw new Error("No images or selected image");
               }
