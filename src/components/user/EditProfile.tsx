@@ -1,4 +1,4 @@
-import { Label, Input, Box, Flex, Button, Spinner, Text } from "theme-ui";
+import { Label, Input, Box, Flex, Text } from "theme-ui";
 import React from "react";
 import { CldImage } from "next-cloudinary";
 import { Auth, API } from "aws-amplify";
@@ -8,6 +8,7 @@ import { IUser } from "../../types/common";
 import { updateUser } from "../../graphql/mutations";
 import { cloudUrl } from "../../utils/cloudinary";
 import { UserContext } from "../UserContext";
+import Button from "../shared/Button";
 
 const EditProfile = () => {
   const [isSaving, setIsSaving] = React.useState(false);
@@ -61,7 +62,7 @@ const EditProfile = () => {
   }
 
   if (!user) {
-    return <></>;
+    return null;
   }
 
   return (
@@ -133,16 +134,14 @@ const EditProfile = () => {
                   />
                 </Box>
                 <Box sx={{ marginTop: "10px" }}>
-                  <Button variant="primaryButton" id="save-profile">
-                    <Flex sx={{ gap: "10px" }}>
-                      <Text as="span">Save</Text>
-                      {isSaving && (
-                        <Spinner
-                          sx={{ size: "20px", color: "secondary" }}
-                          id="loading-spinner"
-                        />
-                      )}
-                    </Flex>
+                  <Button
+                    type="submit"
+                    variant="primaryButton"
+                    id="save-profile"
+                    loading={isSaving}
+                    disabled={isSaving}
+                  >
+                    <Text>Save</Text>
                   </Button>
                 </Box>
               </Flex>

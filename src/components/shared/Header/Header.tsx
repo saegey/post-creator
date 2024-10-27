@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Flex, ThemeUIStyleObject, Theme } from "theme-ui";
+import { Box, Flex } from "theme-ui";
 
 import { IUser } from "../../../types/common";
 import ProfileSection from "./ProfileSection";

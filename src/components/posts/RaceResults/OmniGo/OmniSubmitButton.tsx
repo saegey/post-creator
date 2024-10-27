@@ -1,9 +1,10 @@
-import { Flex, Box, Button, Text, Spinner } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 
 import { getOmniResults } from "./../api";
 import { usePost } from "../../../PostContext";
 import { ResultsContext } from "./../ResultsContext";
+import Button from "../../../shared/Button";
 
 const OmniSubmitButton = () => {
   const { resultsUrl, omniMeta, setPreviewOmniResults } =
@@ -13,36 +14,39 @@ const OmniSubmitButton = () => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const handleImportResults = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getOmniResults({ url: resultsUrl, category });
+
+      setPost({
+        omniResults: {
+          ...omniResults,
+          results: result.data,
+          selected: undefined,
+          category: omniMeta.category,
+          eventName: omniMeta.eventName,
+        },
+      });
+
+      setPreviewOmniResults(true);
+    } catch (error) {
+      console.error("Error importing omni results:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Box sx={{ marginLeft: "auto" }}>
       <Button
         id="get-race-results-omni"
         type="button"
         variant="primaryButton"
-        onClick={() => {
-          setIsLoading(true);
-
-          getOmniResults({ url: resultsUrl, category }).then((r) => {
-            console.log(r);
-            setPost({
-              omniResults: {
-                ...omniResults,
-                results: r.data,
-                selected: undefined,
-                category: omniMeta.category,
-                eventName: omniMeta.eventName,
-              },
-            });
-
-            setPreviewOmniResults(true);
-            setIsLoading(false);
-          });
-        }}
+        loading={isLoading}
+        onClick={handleImportResults}
       >
-        <Flex sx={{ gap: "10px" }}>
-          <Text as="span">Import</Text>
-          {isLoading && <Spinner sx={{ size: "20px", color: "secondary" }} />}
-        </Flex>
+        Import
       </Button>
     </Box>
   );

@@ -1,10 +1,11 @@
 import React from "react";
-import { Button, Flex, IconButton, Text } from "theme-ui";
+import { Flex, IconButton, Text } from "theme-ui";
 
 import { EditorContext } from "../../posts/Editor/EditorContext";
 import CloudCheck from "../../icons/CloudCheck";
 import RefreshIcon from "../../icons/RefreshIcon";
 import RocketIcon from "../../icons/RocketIcon";
+import Button from "../Button";
 
 const SettingsSection = () => {
   const { isSavingPost, savingStatus, setIsPublishedConfirmationOpen } =
@@ -39,25 +40,15 @@ const SettingsSection = () => {
         onClick={async () => {
           setIsPublishedConfirmationOpen(true);
         }}
+        variant="primaryButton"
+        icon={RocketIcon}
         sx={{
           cursor: "pointer",
           paddingX: ["10px", "3px", "12px"],
           paddingY: ["3px", "3px", "6px"],
         }}
       >
-        <Flex sx={{ alignItems: "center", gap: "2px" }}>
-          <IconButton
-            as="div"
-            sx={{
-              width: ["24px", "24px", "24px"],
-              height: ["24px", "24px", "24px"],
-              color: "background",
-            }}
-          >
-            <RocketIcon />
-          </IconButton>
-          <Text sx={{ color: "background" }}>Share</Text>
-        </Flex>
+        Share
       </Button>
     </>
   );

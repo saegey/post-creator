@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Flex, Button, Link as ThemeLink, Text } from "theme-ui";
+import { Box, Flex, Link as ThemeLink, Text } from "theme-ui";
 import Link from "next/link";
 
 import MenuHeadingItem from "../MenuHeadingItem";
 import MenuWrapper from "../MenuWrapper";
 import MenuListItem from "../MenuListItem";
+import Button from "../../shared/Button";
 
 const MobileNav = ({
   isMenuOpen,

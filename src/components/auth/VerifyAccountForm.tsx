@@ -1,5 +1,6 @@
 import React from "react";
-import { Flex, Button, Input, Label } from "theme-ui";
+import { Flex, Input, Label } from "theme-ui";
+import Button from "../shared/Button";
 
 type VerifyAccountFormProps = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -20,8 +21,8 @@ const VerifyAccountForm: React.FC<VerifyAccountFormProps> = ({
           <Input id="code" variant="defaultInput" name="code" required />
         </Flex>
         <Flex sx={{ justifyContent: "end" }}>
-          <Button type="submit" variant="primaryButton">
-            {isLoading ? "Verifying..." : "Verify"}
+          <Button type="submit" variant="primaryButton" isLoading={isLoading}>
+            Verify
           </Button>
         </Flex>
       </Flex>

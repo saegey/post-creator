@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Box, Flex, Button, Spinner } from "theme-ui";
+import { Text, Box, Flex } from "theme-ui";
 import { Transforms } from "slate";
 
 import { usePost } from "../../../PostContext";
@@ -8,6 +8,7 @@ import { CustomEditor } from "../../../../types/common";
 import { ResultsContext } from "../ResultsContext";
 import { saveRunSignupResults } from "../api";
 import ResultsBox from "../shared/ResultsBox";
+import Button from "../../../shared/Button";
 
 interface IObjectKeys {
   [key: string]: string | number | null;
@@ -218,14 +219,6 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
           </Button>
           <Button
             title="Save"
-            sx={{
-              marginLeft: "auto",
-              pointer: "cursor",
-              backgroundColor:
-                selectedRow !== undefined && selectedRow >= 0
-                  ? null
-                  : "disabledBackground",
-            }}
             disabled={
               selectedRow !== undefined && selectedRow >= 0 ? false : true
             }
@@ -233,11 +226,9 @@ const RunSignUpResultsPreview = ({ editor }: { editor: CustomEditor }) => {
               saveResults();
             }}
             variant="primaryButton"
+            loading={isLoading}
           >
-            <Flex sx={{ gap: "10px" }}>
-              <Text as="span">Save</Text>
-              {isLoading && <Spinner sx={{ size: "20px", color: "white" }} />}
-            </Flex>
+            Save
           </Button>
         </Flex>
       </Box>

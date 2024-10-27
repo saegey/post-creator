@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   Divider,
   Flex,
   MenuButton,
@@ -20,6 +19,7 @@ import RoadIcon from "../../icons/RoadIcon";
 import SupportIcon from "../../icons/SupportIcon";
 import LogIcon from "../../icons/LogIcon";
 import DocsIcon from "../../icons/DocsIcon";
+import Button from "../Button";
 
 const PublicMenu: React.FC = () => {
   const [profileOpen, setProfileOpen] = React.useState<boolean>(false);

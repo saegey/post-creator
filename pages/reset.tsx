@@ -4,13 +4,13 @@ import Link from "next/link";
 import Router from "next/router";
 
 import AuthInput from "../src/components/auth/AuthInput";
-import AuthButton from "../src/components/auth/AuthButton";
 import { resetPassword, requestPasswordReset } from "../src/utils/authActions";
 import ReCAPTCHAComponent from "../src/components/auth/ReCAPTCHAComponent";
 import Head from "next/head";
 import LogoBlock from "../src/components/public/LogoBlock";
 import AuthFormContainer from "../src/components/auth/AuthFormContainer";
 import AuthLink from "../src/components/auth/AuthLink";
+import Button from "../src/components/shared/Button";
 
 const Reset: React.FC = () => {
   const [isSubmit, setIsSubmit] = useState(false);
@@ -80,9 +80,9 @@ const Reset: React.FC = () => {
                   />
                   <ReCAPTCHAComponent setIsRobot={setIsRobot} />
                   <Flex sx={{ justifyContent: "end" }}>
-                    <AuthButton type="submit" disabled={isRobot}>
+                    <Button type="submit" disabled={isRobot}>
                       Submit
-                    </AuthButton>
+                    </Button>
                   </Flex>
                 </Flex>
               </Flex>
@@ -127,7 +127,7 @@ const Reset: React.FC = () => {
                 name="password2"
                 required
               />
-              <AuthButton type="submit">Submit</AuthButton>
+              <Button type="submit">Submit</Button>
               <Flex
                 sx={{
                   justifyContent: "center",

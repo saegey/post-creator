@@ -1,13 +1,4 @@
-import {
-  Flex,
-  Box,
-  Label,
-  Input,
-  Button,
-  Text,
-  Spinner,
-  Message,
-} from "theme-ui";
+import { Flex, Box, Label, Input, Text, Message } from "theme-ui";
 import React from "react";
 
 import {
@@ -31,6 +22,7 @@ import CrossResultsSelect from "./CrossResults/CrossResultsSelect";
 import RunSignupSelect from "./RunSignup/RunSignupSelect";
 import RunSignupSubmitButton from "./RunSignup/RunSignupSubmitButton";
 import { NotificationContext } from "../../NotificationContext";
+import Button from "../../shared/Button";
 
 const RaceImportForm = () => {
   const {
@@ -187,43 +179,14 @@ const RaceImportForm = () => {
 
               <Flex sx={{ flexDirection: "column", justifyContent: "center" }}>
                 <Button
-                  sx={{
-                    paddingY: "8px",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    "&:hover": {
-                      backgroundColor: "accent",
-                    },
-                    "&:disabled": {
-                      backgroundColor: "disabledBackground",
-                      cursor: "not-allowed",
-                    },
-                  }}
+                  loading={requestImportLoading}
+                  variant="primaryButton"
                   disabled={
                     requestImportLoading || importRequested ? true : false
                   }
                   onClick={submitImportRequest}
                 >
-                  <Flex
-                    sx={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    <Text sx={{ lineHeight: "20px" }}>
-                      {importRequested ? "Requested" : "Request Import"}
-                    </Text>
-                    <Spinner
-                      sx={{
-                        width: "20px",
-                        height: "20px",
-                        color: "white",
-                        display: requestImportLoading ? "inherit" : "none",
-                      }}
-                    />
-                  </Flex>
+                  {importRequested ? "Requested" : "Request"}
                 </Button>
               </Flex>
             </Flex>
@@ -285,13 +248,9 @@ const RaceImportForm = () => {
                     disabled={isLoading ? true : false}
                     variant="primaryButton"
                     id="import-results"
+                    loading={isLoading}
                   >
-                    <Flex sx={{ gap: "10px" }}>
-                      <Text as="span">Import</Text>
-                      {isLoading && (
-                        <Spinner sx={{ size: "20px", color: "secondary" }} />
-                      )}
-                    </Flex>
+                    Import
                   </Button>
                 </Box>
               )}

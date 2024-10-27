@@ -1,4 +1,4 @@
-import { Grid, Box, Flex, Text, NavLink, IconButton, Button } from "theme-ui";
+import { Grid, Box, Flex, Text, NavLink } from "theme-ui";
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import React, { useContext } from "react";
@@ -19,6 +19,7 @@ import ShareIcon from "../../icons/ShareIcon";
 import BlackBox from "../../layout/BlackBox";
 import AddIcon from "../../icons/AddIcon";
 import { NotificationContext } from "../../NotificationContext";
+import Button from "../../shared/Button";
 
 interface ListPostsByCreatedAtTypes {
   listPostsByCreatedAt: {
@@ -232,17 +233,10 @@ const PostsAll = ({ user }: { user: IUser }) => {
           >
             <Button
               variant="primaryButton"
-              sx={{ width: "fit-content" }}
               onClick={() => createNewPost()}
+              icon={AddIcon}
             >
-              <Flex sx={{ gap: "5px" }}>
-                <Box sx={{ width: "20px", height: "20px" }}>
-                  <AddIcon />
-                  ``
-                </Box>
-
-                <Text>New Post</Text>
-              </Flex>
+              <Text>New</Text>
             </Button>
           </Flex>
         </Flex>

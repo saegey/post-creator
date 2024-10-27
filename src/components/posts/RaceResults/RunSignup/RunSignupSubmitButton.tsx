@@ -1,10 +1,11 @@
-import { Flex, Box, Button, Text, Spinner } from "theme-ui";
+import { Box } from "theme-ui";
 import React from "react";
 
 import { getRunSignupResults } from "../api";
 import { ResultsContext } from "../ResultsContext";
 import { usePost } from "../../../PostContext";
 import { NotificationContext } from "../../../NotificationContext";
+import Button from "../../../shared/Button";
 
 const RunSignupSubmitButton = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -14,47 +15,43 @@ const RunSignupSubmitButton = () => {
   const { setNotification } = React.useContext(NotificationContext);
 
   const getResults = async () => {
-    console.log(runSignupMeta.category);
     setIsLoading(true);
 
-    const results = await getRunSignupResults({
-      url: resultsUrl,
-      category: runSignupMeta.category,
-    });
-
-    setPost({
-      runSignupResults: {
-        results: results?.data,
-        selected: undefined,
-        eventName: runSignupMeta.eventName,
+    try {
+      const results = await getRunSignupResults({
+        url: resultsUrl,
         category: runSignupMeta.category,
-        categoryName: runSignupMeta.categoryName,
-      },
-    });
-    setPreviewRunSignupResults(true);
-    setIsLoading(false);
+      });
+
+      setPost({
+        runSignupResults: {
+          results: results?.data,
+          selected: undefined,
+          eventName: runSignupMeta.eventName,
+          category: runSignupMeta.category,
+          categoryName: runSignupMeta.categoryName,
+        },
+      });
+      setPreviewRunSignupResults(true);
+    } catch (error) {
+      setNotification({
+        message: "Failed to get race results",
+        type: "Error",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Box sx={{ marginLeft: "auto" }}>
       <Button
-        disabled={isLoading ? true : false}
+        loading={isLoading}
+        disabled={isLoading}
         variant="primaryButton"
-        onClick={() => {
-          getResults()
-            .catch((e) => {
-              setNotification({
-                message: "Failed to get race results",
-                type: "Error",
-              });
-            })
-            .then(() => setIsLoading(false));
-        }}
+        onClick={getResults}
       >
-        <Flex sx={{ gap: "10px" }}>
-          <Text as="span">Import</Text>
-          {isLoading && <Spinner sx={{ size: "20px", color: "secondary" }} />}
-        </Flex>
+        Import
       </Button>
     </Box>
   );

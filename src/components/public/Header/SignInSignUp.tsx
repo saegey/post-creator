@@ -1,5 +1,6 @@
 import React from "react";
-import { Flex, Button, Link as ThemeLink } from "theme-ui";
+import { Flex, Link as ThemeLink } from "theme-ui";
+import Button from "../../shared/Button";
 
 const SignInSignUp = () => {
   const handleExternalLink = (
@@ -56,10 +57,7 @@ const SignInSignUp = () => {
         <Button
           variant="primaryButton"
           sx={{
-            // color: "red",
-            // "&:hover": { backgroundColor: "surface" },
             width: "fit-content",
-            // paddingX: "50px",
             fontSize: ["17px", "14px", "14px"],
           }}
         >

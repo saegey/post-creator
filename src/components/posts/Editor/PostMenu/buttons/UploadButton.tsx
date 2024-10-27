@@ -1,10 +1,11 @@
-import { Box, Button, Flex, IconButton, Input, Label, Spinner, Text } from "theme-ui";
+import { Box, Flex, Input, Label, Text } from "theme-ui";
 import React from "react";
 import { Auth, Storage } from "aws-amplify";
 
 import { usePost } from "../../../../PostContext";
 import usePubSubSubscription from "../../../../../hooks/usePubSubSubscription";
 import { getPost } from "../../../../../actions/PostGet";
+import Button from "../../../../shared/Button";
 import UploadIcon from "../../../../icons/UploadIcon";
 
 const UploadButton = () => {
@@ -143,25 +144,10 @@ const UploadButton = () => {
           disabled={processingFile}
           onClick={handleButtonClick}
           variant="primaryButton"
+          loading={processingFile}
+          icon={UploadIcon}
         >
-          <Flex sx={{ alignItems: "center", gap: "2px" }}>
-            <IconButton
-              as="div"
-              sx={{
-                width: ["24px", "24px", "24px"],
-                height: ["24px", "24px", "24px"],
-              }}
-            >
-              <UploadIcon />
-            </IconButton>
-            <Text>Upload</Text>
-            {processingFile && (
-              <Spinner
-                data-testid="spinner"
-                sx={{ size: "20px", color: "secondary" }}
-              />
-            )}
-          </Flex>
+          Upload
         </Button>
       </Flex>
       <Box sx={{ marginTop: "5px" }}>

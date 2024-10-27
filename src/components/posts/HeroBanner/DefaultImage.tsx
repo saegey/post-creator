@@ -1,8 +1,9 @@
-import { Box, Button, Flex, Text } from "theme-ui";
+import { Box, Flex } from "theme-ui";
 import React from "react";
 
 import { EditorContext } from "../Editor/EditorContext";
 import UploadIcon from "../../icons/UploadIcon";
+import Button from "../../shared/Button";
 
 const DefaultImage = () => {
   const { setIsChangeImageModalOpen } = React.useContext(EditorContext);
@@ -23,15 +24,11 @@ const DefaultImage = () => {
             onClick={() => {
               setIsChangeImageModalOpen(true);
             }}
+            icon={UploadIcon}
             sx={{ width: "fit-content" }}
             variant="primaryButton"
           >
-            <Flex sx={{ gap: "10px" }}>
-              <Box sx={{ width: "20px", height: "20px" }}>
-                <UploadIcon />
-              </Box>
-              <Text>Upload Image</Text>
-            </Flex>
+            Add Image
           </Button>
         </Box>
       </Flex>
