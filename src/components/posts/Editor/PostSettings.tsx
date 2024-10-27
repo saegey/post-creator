@@ -27,15 +27,15 @@ import {
   UpdatePostSettingsMutation,
 } from "../../../graphql/customMutations";
 import { deletePost, deletePublishedPost } from "../../../graphql/mutations";
+import { NotificationContext } from "../../NotificationContext";
 
 const PostSettings = () => {
   const { id, currentFtp, title, postLocation, date, subhead, setPost } =
     React.useContext(PostContext);
-
   const { setIsFtpUpdating, isSettingsModalOpen, setIsSettingsModalOpen } =
     React.useContext(EditorContext);
-
   const [isSaving, setIsSaving] = React.useState(false);
+  const { setNotification } = React.useContext(NotificationContext);
 
   const processDeletePost = async () => {
     try {
@@ -65,6 +65,10 @@ const PostSettings = () => {
 
       Router.push(`/posts`);
     } catch (errors) {
+      setNotification({
+        type: "Error",
+        message: "Failed to delete draft post",
+      });
       console.error("failed to delete draft", JSON.stringify(errors));
     }
   };
@@ -217,7 +221,15 @@ const PostSettings = () => {
                     id="delete-post"
                     variant="dangerButton"
                     type="button"
-                    onClick={processDeletePost}
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this post?"
+                        )
+                      ) {
+                        processDeletePost();
+                      }
+                    }}
                   >
                     Delete
                   </Button>

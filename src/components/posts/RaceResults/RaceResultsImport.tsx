@@ -1,6 +1,5 @@
 import { Text } from "theme-ui";
 import React from "react";
-import { Path } from "slate";
 
 import { EditorContext } from "../Editor/EditorContext";
 import RaceResultsPreview from "./RaceResults/RaceResultsPreview";

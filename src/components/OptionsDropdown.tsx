@@ -98,8 +98,11 @@ const OptionsDropdown = () => {
           <Box variant="boxes.sidebarMenuItem">
             <GenericMenuItem
               onClick={() => {
-                Transforms.removeNodes(editor, { at: path });
-
+                if (
+                  window.confirm("Are you sure you want to delete this item?")
+                ) {
+                  Transforms.removeNodes(editor, { at: path });
+                }
                 setIsOptionsOpen(false);
                 const selection = window.getSelection();
                 selection && selection.removeAllRanges();
