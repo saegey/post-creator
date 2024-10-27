@@ -36,6 +36,10 @@ const RaceResultsPreview = ({ path }: { path: Path }) => {
       raceResults: {
         ...raceResults,
         selected: raceResults?.results ? raceResults.results[index] : undefined,
+        results: raceResults?.results || [],
+        category: raceResults?.category || "",
+        division: raceResults?.division || "",
+        eventName: raceResults?.eventName || "",
       },
     });
   };
