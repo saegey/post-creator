@@ -4,7 +4,6 @@ import Link from "next/link";
 import Router from "next/router";
 
 import AuthInput from "../src/components/auth/AuthInput";
-// import AuthButton from "../src/components/auth/AuthButton";
 import { NotificationContext } from "../src/components/NotificationContext";
 import { loginUser } from "../src/utils/authActions";
 import AuthLink from "../src/components/auth/AuthLink";
