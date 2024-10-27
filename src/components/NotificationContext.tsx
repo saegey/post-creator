@@ -1,17 +1,33 @@
-import React from "react";
+// NotificationContext.tsx
+import React, { createContext, useState } from "react";
 
-import { NotificationType } from "../types/common";
+interface Notification {
+  type: "Error" | "Success";
+  message: string;
+  duration?: number; // Duration in milliseconds
+  autoDismiss?: boolean; // Whether to auto-dismiss
+}
 
-export type NotificationContextType = {
-  notification: NotificationType | undefined;
-  setNotification: React.Dispatch<
-    React.SetStateAction<NotificationType | undefined>
-  >;
-};
+interface NotificationContextProps {
+  notification?: Notification;
+  setNotification: (notification?: Notification) => void;
+}
 
-const NotificationContext = React.createContext<NotificationContextType>({
+export const NotificationContext = createContext<NotificationContextProps>({
   notification: undefined,
   setNotification: () => {},
 });
 
-export { NotificationContext };
+export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [notification, setNotification] = useState<Notification | undefined>(
+    undefined
+  );
+
+  return (
+    <NotificationContext.Provider value={{ notification, setNotification }}>
+      {children}
+    </NotificationContext.Provider>
+  );
+};

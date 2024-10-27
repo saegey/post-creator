@@ -41,10 +41,10 @@ const PublishPostModal = () => {
     if (inputRef.current) {
       const inputValue = inputRef.current.value;
       navigator.clipboard.writeText(inputValue).then(() => {
-        // alert("Text copied to clipboard: " + inputValue);
         setNotification({
           message: "Link copied to clipboard",
-          type: "Info",
+          type: "Success",
+          autoDismiss: false,
         });
       });
     }
@@ -53,14 +53,12 @@ const PublishPostModal = () => {
   const handlePublish = async () => {
     try {
       setIsPublishing(true);
-      const res = (await API.post("api12660653", `/post/publish`, {
+      const res = await API.post("api12660653", `/post/publish`, {
         body: {
           postId: id,
         },
         response: true,
-      })) as {
-        data: any;
-      };
+      });
 
       setPost({ privacyStatus: "published" });
 
