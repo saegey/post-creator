@@ -12,7 +12,7 @@ import awsconfig from "../src/aws-exports";
 import ErrorBoundary from "../src/components/shared/ErrorBoundary";
 import { UserContext } from "../src/components/UserContext";
 import { IUser, NotificationType } from "../src/types/common";
-import { NotificationContext } from "../src/components/NotificationContext";
+import { NotificationProvider } from "../src/components/NotificationContext";
 import NotificationMessage from "../src/components/NotificationMessage";
 import ThemeChanger from "../src/components/ThemeChanger";
 import { Inter } from "next/font/google";
@@ -174,18 +174,13 @@ const app = ({ Component, pageProps }: AppProps) => {
           >
             <ViewportProvider>
               <ThemeUIProvider theme={theme}>
-                <NotificationContext.Provider
-                  value={{
-                    notification,
-                    setNotification,
-                  }}
-                >
+                <NotificationProvider>
                   <ThemeChanger />
                   <UserContext.Provider value={{ user, setUser }}>
                     <Component {...pageProps} />
                   </UserContext.Provider>
                   <NotificationMessage />
-                </NotificationContext.Provider>
+                </NotificationProvider>
               </ThemeUIProvider>
             </ViewportProvider>
           </UnitProvider.Provider>
