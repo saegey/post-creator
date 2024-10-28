@@ -1,4 +1,9 @@
-"use strict";
+/* Amplify Params - DO NOT EDIT
+	ENV
+	FUNCTION_PROCESSFITFILE_NAME
+	FUNCTION_PROCESSGPXFILE_NAME
+	REGION
+Amplify Params - DO NOT EDIT */"use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

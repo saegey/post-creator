@@ -227,7 +227,22 @@
   "function": {
     "S3Trigger71ba5706": {
       "build": true,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "processFitFile"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "processGpxFile"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },

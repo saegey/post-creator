@@ -1,4 +1,19 @@
 {
-  "permissions": {},
+  "permissions": {
+    "function": {
+      "processFitFile": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "processGpxFile": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
   "lambdaLayers": []
 }
